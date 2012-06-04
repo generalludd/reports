@@ -1,0 +1,308 @@
+<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+
+class Student_model extends CI_Model
+{
+	var $kTeach;
+	var $stuFirst;
+	var $stuLast;
+	var $stuNickname;
+	var $stuGender;
+	var $stuDOB;
+	var $stuGrade;
+	var $baseGrade;
+	var $baseYear;
+	var $isEnrolled;
+	var $stuEmail;
+	var $stuEmailPermission;
+	var $stuEmailPassword;
+	var $recModified;
+	var $recModifier;
+
+	function __construct()
+	{
+		parent::__construct();
+	}
+
+	function prepare_variables()
+	{
+		$variables = array('kTeach','stuFirst','stuLast','stuNickname','stuGender','stuDOB','stuGrade','baseGrade','baseYear','isEnrolled','stuEmail','stuEmailPermission','stuEmailPassword');
+		for($i = 0; $i < count($variables); $i++){
+			$myVariable = $variables[$i];
+			if($this->input->post($myVariable)){
+				if($myVariable == "stuGrade" && $this->input->post($myVariable) == "") {
+					$this->$myVariable = 0;
+				}elseif($myVariable == "stuDOB"){
+					$this->stuDOB = format_date($this->input->post('stuDOB'),'mysql');
+				}else{
+					$this->$myVariable = $this->input->post($myVariable);
+				}
+			}
+		}
+
+		$this->recModified = mysql_timestamp();
+		$this->recModifier = $this->session->userdata('userID');
+
+
+	}
+
+
+	/**
+	 * Getter
+	 */
+	function get($kStudent, $fields = NULL)
+	{
+		$this->db->where('kStudent', $kStudent);
+		$this->db->from('student');
+		if($fields){
+			$this->db->select($fields);
+		}
+		$result = $this->db->get()->row();
+		if($result){
+			return $result;
+		}else{
+			return false;
+		}
+	}
+
+
+	function get_value($kStudent, $fieldName)
+	{
+
+		$this->db->where('kStudent', $kStudent);
+		if(is_array($fieldName)){
+			foreach($field as $fieldName){
+				$this->db->select($field);
+			}
+		}
+		$this->db->from('student');
+		$result = $this->db->get()->row();
+		return $result->$fieldName;
+
+	}
+
+
+	function find_students($stuName)
+	{
+		$this->db->where("isEnrolled", 1);
+		$this->db->where("(CONCAT(`stuFirst`,' ', `stuLast`) LIKE '%$stuName%' OR CONCAT(`stuNickname`,' ', `stuLast`) LIKE '%$stuName%')");
+		$this->db->order_by('stuFirst','ASC');
+		$result = $this->db->get('student')->result();
+		return $result;
+	}
+
+	function count($field_name,$field_value, $where = FALSE)
+	{
+		$this->db->select("COUNT(`$field_name`) AS `$field_name`");
+		$this->db->where($field_name,$field_value);
+		if($where){
+			if(is_array($where)){
+				$where_keys = array_keys($where);
+				$where_values = array_values($where);
+				for($i=0; $i < count($where); $i++){
+					$key = $where_keys[$i];
+					$value = $where_values[$i];
+					$this->db->where("$key != $value");
+				}
+			}
+		}
+
+		$this->db->from("student");
+		$output = $this->db->get()->row();
+		return $output->$field_name;
+	}
+
+	/**
+	 *
+	 * @param $kTeach
+	 * This returns the students assigned to either a classroom teacher or middle school
+	 * advisor depending on the grade of the student
+	 *
+	 */
+	function get_students_by_class($kTeach)
+	{
+		$this->db->where('student.isEnrolled', 1);
+		$this->db->where('student.kTeach', $kTeach);
+		$this->db->where("`student`.`kTeach`=`teacher`.`kTeach`");
+		$this->db->order_by("stuGrade", "ASC");
+		$this->db->order_by('stuLast', 'ASC');
+		$this->db->from('student');
+		$this->db->from("teacher");
+		$result = $this->db->get()->result();
+		return $result;
+	}
+
+	/**
+	 *
+	 * @param $kTeach
+	 * alias for get_students_by_class. This has been deprecated for clarification purposes.
+	 */
+	function get_students_by_teacher($kTeach)
+	{
+		return $this->get_students_by_class($kTeach);
+	}
+
+	/**
+	 *
+	 * Lists enrolled students by grade with added constraints.
+	 * The constraints array can contain kTeach, and a select variable with
+	 * a list of fields to include in the result
+	 * @param int $gradeStart
+	 * @param int $gradeEnd
+	 * @param array $constraints
+	 */
+	function get_students_by_grade($gradeStart, $gradeEnd, $constraints = array()){
+		if($gradeStart == $gradeEnd){
+			$this->db->where("stuGrade",$gradeStart);
+		}else{
+			$this->db->where("stuGrade BETWEEN $gradeStart AND $gradeEnd");
+		}
+
+		if(get_array_value($constraints, "kTeach")){
+			$this->db->where("kTeach", $constraints["kTeach"]);
+		}elseif(get_array_value( $constraints, 'humanitiesTeacher')){
+			$this->db->where("humanitiesTeacher", $constraints['humanitiesTeacher']);
+		}
+		//@TODO It seems unlikely that one would need to generate a list with former students
+		$this->db->where("isEnrolled", 1);
+		if(array_key_exists("select",$constraints)){
+			$this->db->select($constraints["select"]);
+		}
+		$this->db->order_by("stuGrade");
+		$this->db->from("student");
+		$result = $this->db->get()->result();
+		return $result;
+	}
+
+
+	/**
+	 *
+	 * Find students based on a range of parameters
+	 * @param int $year
+	 * @param array $grades
+	 * @param boolean $hasNeeds
+	 * @param boolean $includeFormerStudents
+	 */
+	function advanced_find($year, $grades = array(),  $hasNeeds = 0, $includeFormerStudents = 0)
+	{
+		$this->db->select("student.*,(baseGrade+$year-baseYear) AS listGrade");
+		if(!empty($grades)){
+			$this->db->where_in("`baseGrade`+$year-`baseYear`", $grades);
+		}
+
+		$this->db->where("`baseGrade`+$year-`baseYear` < 9");
+
+		if($includeFormerStudents == 1 ){
+			$this->db->where_in("isEnrolled", array(0,1));
+		}else{
+			$this->db->where("isEnrolled", 1);
+
+		}
+
+		if($hasNeeds == 1){
+			$this->db->join("need", "student.kStudent = need.kStudent");
+			$this->db->group_by("need.kStudent");
+		}
+
+		$this->db->from("student");
+
+		$this->db->order_by("stuGrade,stuLast,stuFirst", "ASC");
+
+		$result = $this->db->get()->result();
+
+		return $result;
+	}
+
+
+	/**
+	 * DEPRECATED/UNUSED
+	 * I don't think this is used anywhere else.
+	 * @param string $fields fields to select
+	 * @param string $order_fields fields to order the results
+	 * @param array $where_pairs field=>value pairs for "where" constraints
+	 */
+	function get_distinct_values($fields, $order_fields = null, $where_pairs = array())
+	{
+
+		$this->db->from('student');
+		$this->db->distinct();
+
+		if(is_array($fields)){
+			foreach($fields as $field){
+				$this->db->select($field);
+			}
+		}else{
+			$this->db->select($fields);
+		}
+
+		if($order_fields){
+			if(is_array($order_fields)){
+				foreach($order_fields as $order){
+					$this->db->order_by($order);
+				}
+			}else{
+				$this->db->order_by($order_fields);
+			}
+		}
+
+		if(is_array($where_pairs)){
+			$keys = array_keys($where_pairs);
+			$values = array_values($where_pairs);
+			for($i = 0; $i < count($where_pairs); $i++){
+				$this->db->where($keys[$i], $values[$i]);
+			}
+		}
+
+		$result = $this->db->get()->result();
+		return $result;
+
+	}
+
+
+	function get_grade($kStudent, $narrYear = NULL)
+	{
+		$baseGrade = $this->get_value($kStudent, 'baseGrade');
+		$baseYear =  $this->get_value($kStudent, 'baseYear');
+		return get_current_grade($baseGrade, $baseYear, $narrYear);
+	}
+
+
+	function get_name($kStudent)
+	{
+		$student = $this->get($kStudent, 'stuFirst,stuLast,stuNickname');
+		$output = format_name($student->stuFirst, $student->stuLast, $student->stuNickname);
+		return $output;
+
+	}
+
+
+	/**
+	 * Setter
+	 */
+	function insert()
+	{
+
+		$this->prepare_variables();
+		$this->db->insert('student', $this);
+		return $this->db->insert_id();
+
+	}
+
+	function update($kStudent)
+	{
+
+		$this->prepare_variables();
+		$this->kStudent = $kStudent;
+		$this->db->where('kStudent', $kStudent);
+		$this->db->update('student', $this);
+
+	}
+
+	function update_value($kStudent,$data)
+	{
+		$this->db->where('kStudent',$kStudent);
+		$this->db->update('student', $data);
+	}
+
+
+
+}

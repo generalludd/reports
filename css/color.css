@@ -1,0 +1,338 @@
+/*
+buttons: #55770E
+borders (dark): #087CD5
+borders (light): #6CAADC
+link: #2A3194
+link-hover: #424ef4
+warnings: #ff8538
+warning borders (light) #EC9C6C
+warning borders (dark) #FF8538
+notices: #e69528
+backgrounds: #C7D7E9
+*/
+.narrText {
+	border-color: silver gray gray silver;
+}
+
+.highlight {
+	background-color: yellow;
+}
+
+.message {
+	background-color: #F8DA4E;
+}
+
+.striped {
+	background-color: #c7d7e9;
+}
+
+/*
+loggedin style changes the background to make sure users can tell they are logged in.
+
+loggedout indicates the opposite.
+*/
+.loggedout {
+	background-color: #C7D7E9;
+	border-color: #087CD5 black black #087CD5;
+}
+
+.loggedin {
+	background-color: #C7D7E9;
+	border-color: #087CD5 #6CAADC #6CAADC #087CD5;
+}
+
+/*Login Form elements*/
+div.login {
+	background-color: #C7D7E9;
+}
+
+div.error {
+	color: white;
+	background-color: #C7D7E9;
+	border-color: #087CD5 #6CAADC #6CAADC #087CD5;
+}
+
+div.error a {
+	color: yellow;
+}
+
+div.error-text {
+	color: #000;
+	background-color: #FFA500;
+	box-shadow-color: #F00;
+}
+
+div.login-title {
+	color: black;
+	background-color: white;
+}
+
+#notice {
+	background-color: #fcfcaa;
+	border-color: black;
+}
+
+/*student search elements*/
+div.result {
+	background-color: white;
+}
+
+/*student list elements*/
+div.entry,div.list {
+	border-top-color: silver;
+	border-right-color: silver;
+	border-left-color: silver;
+}
+
+div.list {
+	background-color: #e9e9e9;
+}
+
+/*form elements*/
+.button {
+	border: 1px solid #327e04;
+	color: #ffffff;
+	opacity: .90;
+	filter: Alpha(Opacity =               90);
+	background: #67b021 url(images/button_20.png) 50% 50% repeat-x;
+}
+
+.button:hover {
+	opacity: .90;
+	filter: Alpha(Opacity =               90);
+	background: #91b347 url(images/button_20_over.png) 50% 50% repeat-x;
+}
+
+.button.help, .button.active {
+	border: 1px solid #DFE119;
+	background-color: #DFE119;
+	background-image: url(images/help_button.png);
+	color: black;
+}
+
+.button.help:hover, .button.active:hover {
+	background-color: #DFE119;
+	background-image: url(images/help_button_hover.png);
+}
+.button.active {
+	border: 1px solid #dadada;
+	background-color: #e6e6e6;
+	background-image: url(images/active_button.png);
+	color: black;
+}
+
+.button.active:hover {
+	background-color: #e6e6e6;
+	background-image: url(images/active_button_hover.png);
+}
+
+.button.edit {
+	border: 1px solid #0077bd;
+	background-color: #0077bd;
+	background-image: url(images/edit_button.png);
+	color: #fff;
+}
+
+.button.edit:hover {
+	background-color: #6caadc;
+	background-image: url(images/edit_button_hover.png);
+}
+.new {
+	*border: 1px solid #DFE119;
+	background-color: #DFE119;
+	background-image: url(images/new_button.png);
+	color: black;
+}
+
+.new:hover {
+	background-color: #DFE119;
+	background-image: url(images/new_button_hover.png);
+}
+
+.delete {
+	opacity: .90;
+	filter: Alpha(Opacity =               90);
+	background: #E14F1C url(images/delete.png) 50% 50% repeat-x;
+	color: white;
+	border: 1px solid #CD0A0A;
+}
+
+.delete:hover {
+	color: black;
+	background: white url(images/delete_hover.png) 50% 50% repeat-x;
+	border: 1px solid #cdcdcd;
+}
+
+/* header page layout elements */
+#navigation {
+	opacity: .90;
+	filter: Alpha(Opacity =               90);
+	background: #C7D7E9 url(images/header.png) 50% 50% repeat-x;
+	border-color: #087CD5;
+}
+
+#stuSearch {
+	color: #666;
+}
+
+#navigation li {
+	color: black;
+}
+
+#navigation li a a {
+	color: white;
+}
+
+/* end header page layout elements */ /*main div layout elements */
+#content {
+	background-color: transparent;
+}
+
+#sidebar,#searchList {
+	border-color: #087CD5;
+}
+
+#sidebar h3 {
+	*color: white;
+	*background-color: black;
+}
+
+#sidebar ol {
+	background-color: white;
+	border-color: black;
+}
+
+/* end div layout elements */
+#advancedSearch {
+	border-color: #087CD5;
+	background-color: #C7D7E9;
+}
+
+#advancedSearch h5 {
+	background-color: #C7D7E9;
+	color: black;
+}
+
+#advancedSearch h6 {
+	background-color: #C7D7E9;
+	color: black;
+}
+
+#addConcept {
+	background-color: #fdfdd8;
+	border-color: black;
+}
+
+h2 {
+	background-color: #C7D7E9;
+	border-color: #087CD5 #6CAADC #6CAADC #087CD5;
+}
+
+h3,.support-view legend {
+	color: black;
+	background-color: #C7D7E9;
+	border-color: #087CD5;
+}
+
+h4,h5,h6, tr.benchmark-grade {
+	background-color: #C7D7E9;
+	border-color: #087CD5 #6CAADC #6CAADC #087CD5;
+}
+
+.invert {
+	background-color: blue;
+	color: white;
+}
+
+.warning,.notice {
+	color: black;
+	opacity: .90;
+	filter: Alpha(Opacity =90);
+	background: #ff8538 url(images/warning.png) 50% 50% repeat-x;
+}
+
+.warning h4,.notice h4 {
+	border-color: black;
+}
+
+/*attendance values*/
+ol.attendance {
+	padding: 0;
+	margin: 0;
+	display: inline;
+}
+
+li.attendance {
+	border-left-color: black;
+	color: black
+}
+
+/*column boxes (see attendance_list.inc.html)*/
+.quartercolumn {
+	border-bottom-color: black;
+}
+
+/* Editor for Student Info page */
+#editor {
+	background-color: silver;
+}
+
+#searchForm fieldset {
+	border-color: #6CAADC;
+}
+
+#searchList {
+	background-color: white;
+}
+
+a.link,input.link {
+	color: blue;
+}
+
+a.link:visited {
+	*color: purple;
+}
+
+span.link {
+	color: blue;
+	text-decoration: underline;
+	cursor: pointer;
+}
+
+input.link {
+	background-color: transparent;
+	border-width: 0px;
+	padding: 0px;
+}
+
+.highlight-text {
+	color: #f00;
+}
+
+.highlight-text a {
+	color: #f00;
+}
+
+tr.benchmark-grade {
+	
+}
+
+tr.benchmark-subject {
+	
+}
+
+tr.benchmark-category {
+	
+}
+
+tr.benchmark-term {
+	
+}
+
+tr.benchmark-row td.benchmark-text:hover {
+	background-color: #fcfcaa;
+}
+
+table.list tr:hover{
+	background-color: #cdcdcd;
+}

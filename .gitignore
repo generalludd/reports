@@ -1,0 +1,9 @@
+/uploads
+.settings
+/application/logs
+/application/cache
+*.sql
+/application/config/email.php
+email.php
+*email.php
+*/email.php

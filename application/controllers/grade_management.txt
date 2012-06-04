@@ -1,0 +1,6 @@
+The process of grade management requires the following tables
+
+assignment (kAssignment, assignment, date, category*, points) are grade categories more global or can they be added on the fly?
+
+grade (kStudent, kTeach, kAssignment, points), neeed to have a verification process to make sure that the points given do not exceed the points of kAssignment
+Points can include an excused option that disregards the assignment from the student final grade. 

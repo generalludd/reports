@@ -1,0 +1,987 @@
+@import "color.css";
+
+@import "ui.all.css";
+
+@import "ui.datepicker.css";
+
+.narrText {
+	padding: 3px;
+	border-style: solid;
+	border-width: 1px;
+}
+
+.handle { /*cursor:move*/
+	
+}
+
+body {
+	font-size: 12px;
+	font-family: tahoma, sans-serif;
+	margin: 10px;
+	padding: 10px;
+}
+
+#page {
+	width: 90%;
+	margin-left: auto;
+	margin-right: auto;
+	min-width: 1028px;
+}
+
+.highlight {
+	padding: 2px;
+	width: 80%;
+}
+
+.hidden {
+	display: none;
+}
+
+.message {
+	font-size: .9em;
+	padding: 2px;
+	border: 1px solid black;
+	display: none;
+	margin: 3px;
+}
+
+.student_roster {
+	height: 85%;
+	overflow: auto;
+	width: 50%
+}
+
+/*
+loggedin style changes the background to make sure users can tell they are logged in.
+
+loggedout indicates the opposite.
+*/
+.loggedout {
+	font-size: 1.5em;
+	stext-align: center;
+	margin-top: -45px;
+	padding: 10px;
+	position: fixed;
+	left: 10%;
+	right: 10%;
+	width: auto;
+	border-style: solid;
+	border-width: 1px;
+}
+
+.not-logged-in #main {
+	width: 960px;
+	position: relative;
+	display: block;
+}
+
+.loggedin {
+	position: absolute;
+	right: 10%;
+	float: right;
+	margin-top: -45px;
+	padding: 10px;
+	border-style: solid;
+	border-width: 1px;
+}
+
+.editForm {
+	width: 100%;
+	padding-top: 1%;
+}
+
+/*Login Form elements*/
+div.login {
+	position: relative;
+	top: 3em;
+	padding: 2em 5em;
+	text-align: left;
+	width: 30em;
+	margin: auto;
+	display: block;
+	border-radius: 5px;
+	box-shadow: 4px 4px 11px #000;
+	height: 250px;
+}
+
+div.login.errors {
+	height: 300px;
+}
+
+#login_form {
+	margin-top:3em;
+}
+
+
+div.login-inputs {
+	margin: auto;
+	width: 250px;
+}
+
+.login-inputs input[type="text"] {
+	font-size: 1.2em;
+}
+
+div.error {
+	text-align: left;
+	margin: 10%;
+	padding: 2em 5em;
+	position: fixed;
+	top: 1%;
+	right: 25%;
+	left: 25%;
+	width: auto;
+	z-index: 1;
+	border-style: solid;
+	border-width: 1px;
+}
+
+div.error a {
+	text-decoration: underline;
+}
+
+div.error-text {
+	padding: 10px;
+	margin: 5px;
+	border-radius: 5px;
+	text-align: center;
+	box-shadow: 1px 1px 1px #f00;
+}
+
+div.login-title {
+	font-size: 1.5em;
+	text-align: center;
+	position: relative;
+	border-radius: 5px;
+	padding: 5px;
+	box-shadow: 1px 1px 1px #000;
+}
+
+#login_form .login-text,.reset-fields input,.reset-fields label {
+	width: 90%;
+	margin-left: auto;
+	margin-right: auto;
+	padding: 5px;
+}
+
+#password-resetter {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	width: 300px;
+}
+
+/* general notices */
+#notice {
+	position: absolute;
+	top: 25%;
+	left: 15%;
+	overflow: auto;
+	visibility: hidden;
+	float: none;
+	padding: 12px;
+	border-style: solid;
+	border-width: 1px;
+}
+
+.notice {
+	font-size: 1em;
+	font-weight: bold;
+	cursor: pointer;
+	padding: 3px;
+}
+
+#new_popup {
+	display: none;
+	visibility: block;
+}
+
+/*general display elements */
+.info-box {
+	margin-left: auto;
+	margin-right: auto;
+	width: 950px;
+}
+
+.info-box .content {
+	margin-left: auto;
+	margin-right: auto;
+	width: 950px;
+	padding-top: 1em;
+}
+
+.studentList.info-box {
+	width: 250px;
+	margin-left: 0;
+}
+
+/*student search elements*/
+div.result {
+	font-size: 1em;
+	position: absolute;
+	left: 200px;
+	max-height: 600px;
+	margin: 2%;
+	padding-right: 2%;
+	padding-left: 2%;
+}
+
+/*student list elements*/
+div.entry,div.list {
+	width: 60%;
+	text-indent: 2%;
+	height: 2ex;
+	padding: 2px;
+	border-top-width: 1px;
+	border-top-style: solid;
+	border-right-width: 1px;
+	border-right-style: solid;
+	border-left-width: 1px;
+	border-left-style: solid;
+}
+
+div.student {
+	position: absolute;
+}
+
+div.grade {
+	position: absolute;
+	font-weight: bold
+}
+
+div.teacher {
+	position: absolute;
+	left: 20%;
+}
+
+div.student-top {
+	position: absolute;
+}
+
+div.teacher-top {
+	position: absolute;
+	left: 20%;
+}
+
+div.narrative {
+	position: absolute;
+	left: 40%
+}
+
+/*form elements*/
+.label {
+	font-size: 1em;
+	font-weight: bold
+}
+
+/* form dimensions mainly defined here */
+.form {
+	position: absolute;
+	width: 70%;
+}
+
+.phrases {
+	font-size: .8em;
+	position: absolute;
+	overflow: scroll;
+	visibility: hidden;
+}
+
+.button,#navigation,#advancedSearch,#browser_warning,.notice,.warning,#searchForm fieldset,h2,h3,h4,h5,.support-view legend
+	{
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	border-radius: 3px;
+}
+
+.button,.help {
+	text-align: center;
+	position: static;
+	padding: .35em;
+	border-style: solid;
+	border-width: 1px;
+	cursor: pointer;
+	font-size: 1em;
+	font-weight: normal;
+}
+
+td .button,.row .button {
+	font-size: .9em;
+	padding: .35em .5em;
+}
+
+.button:hover {
+	
+}
+
+.image_button {
+	display: inline;
+	margin-bottom: -5px;
+	text-align: center;
+	cursor: pointer;
+}
+
+ul.button-list {
+	list-style: none;
+	padding-left: 0px;
+}
+
+ul.button-list li {
+	display: inline;
+	padding: .35em 0 .35em .25em
+}
+
+ul.button-list li .button {
+	margin: 0 5px;
+}
+
+.help {
+	
+}
+
+textarea {
+	font-size: 1em;
+}
+
+.delete {
+	float: right;
+}
+
+label {
+	font-weight: bold;
+}
+
+legend {
+	font-weight: bold;
+}
+
+/* header page layout elements */
+#header {
+	padding: 0;
+	position: relative;
+	height: 40px;
+}
+
+#navigation,#advancedSearch {
+	border-width: 1px;
+	border-style: solid;
+}
+
+#navigation {
+	position: relative;
+	float: left;
+	width: 95%;
+	padding: .75em 1em 0 1em;
+	height: 2.5em;
+	min-width: 700px;
+	margin-bottom: .5em;
+}
+
+#navigation ul {
+	padding: 0;
+	margin: 0;
+}
+
+#navigation li {
+	display: inline;
+	margin-left: 0.25em;
+	margin-top: 0.5em;
+	margin-left: 0.25em;
+	/*border-left-width:0.1em;
+	border-left-style:solid;*/
+}
+
+#navigation li:first-child {
+	display: inline;
+	padding-left: 0;
+	margin-left: 0;
+	/*border-left:none;*/
+}
+
+#navigation li a a {
+	text-decoration: none;
+}
+
+#navigation .button-box {
+	float: left;
+	top: 2px;
+	position: absolute;
+}
+
+#navigation #user_menu {
+	float: right;
+	top: 5px;
+	position: absolute;
+	right: 10px;
+}
+
+.user_menu p,#user_menu p {
+	margin: 0em;
+}
+
+/* end header page layout elements */ /*main div layout elements */
+#main {
+	position: relative;
+	padding: 0 5em 2em 2em;
+	margin-top: 1.5em;
+}
+
+#content {
+	
+}
+
+#sidebar {
+	position: absolute;
+	font-size: 11px;
+	top: 1%;
+	left: 65%;
+	right: 10%;
+	width: 15%;
+	height: 100%;
+	overflow: auto;
+	display: none;
+	padding: 5px;
+	margin-left: 15px;
+	border-style: solid;
+	border-width: 1px;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	border-radius: 3px;
+	-moz-box-shadow: 3px 3px 4px #666;
+	-webkit-box-shadow: 3px 3px 4px #666;
+	box-shadow: 3px 3px 4px #666;
+}
+
+#sidebar h3 {
+	
+}
+
+#sidebar ol {
+	margin: 0 0 1em 0;
+	border-width: 2px;
+	border-style: solid;
+}
+
+#sidebar ul {
+	margin: 1em 0;
+	padding: 0;
+	list-style-type: disc;
+}
+
+#sidebar li {
+	list-style-type: disc;
+	margin: 0 0 0 15px;
+}
+
+/* end div layout elements */
+.search ol {
+	padding: 0;
+	margin: 0;
+}
+
+.search li {
+	display: inline;
+	padding-left: 1em;
+	margin-left: 0em;
+}
+
+#yearSearch {
+	text-align: center;
+}
+
+#advancedSearch {
+	border-width: 1px;
+	border-style: solid;
+	margin-right: auto;
+	margin-left: auto;
+	width: 50%;
+	min-width: 500px;
+	width: 50%;
+}
+
+#advancedSearch h5 {
+	font-size: 14px;
+	text-align: center;
+	margin: 2px;
+	padding: 2px;
+	border-width: 0;
+	background-color: transparent;
+}
+
+#advancedSearch h6 {
+	font-size: 13px;
+	text-align: center;
+	margin: 0;
+	padding: 0;
+	border-width: 0;
+	background-color: transparent;
+}
+
+#advancedSearch  label {
+	padding-left: 2em;
+}
+
+#addConcept {
+	width: 800px;
+	left: 50px;
+	top: 122px;
+	position: absolute;
+	visibility: hidden;
+	padding: 25px;
+	border-style: solid;
+	border-width: 1px;
+}
+
+div.phraseEntry {
+	position: static;
+	top: 25px;
+}
+
+div.rank div.phrase {
+	position: static;
+	right: 11em;
+	bottom: 12px;
+	float: right;
+}
+
+div.phrase {
+	position: static;
+}
+
+h1 {
+	font-size: 18px;
+	font-weight: bold;
+	margin: 0;
+}
+
+h2 {
+	font-weight: bold;
+	text-transform: uppercase;
+	text-align: left;
+	position: relative;
+	border-style: solid;
+	border-width: 1px;
+	margin-top: 10px;
+	margin-bottom: 10px;;
+	padding: 10px;
+}
+
+h3,.support-view legend {
+	font-size: 1.5em;
+	font-weight: bold;
+	margin: 1em 0;
+	border-style: solid;
+	border-width: 1px;
+}
+
+h4 {
+	font-weight: bold;
+	text-transform: uppercase;
+	text-align: left;
+	position: relative;
+	border-style: solid;
+	border-width: 1px;
+	margin: 0;
+}
+
+h5 {
+	font-size: 1em;
+	font-weight: bold;
+	text-align: left;
+	border-top-style: solid;
+	border-top-width: 1px;
+	margin: 0;
+}
+
+h3,h4,h5,.support-view legend {
+	margin-top: 4px;
+	margin-bottom: 4px;
+	padding: 5px;
+	padding-left: 10px;
+}
+
+/*attendance values*/
+ol.attendance {
+	padding: 0;
+	margin: 0;
+	display: inline
+}
+
+li.attendance {
+	display: inline;
+	padding-left: .5em;
+	margin-left: .5em;
+	margin-top: .5em;
+	border-left: .01em solid black;
+	color: black
+}
+
+li.attendance:first-child {
+	padding-left: 0;
+	border-left: none;
+	margin-left: 0
+}
+
+/*column boxes (see attendance_list.inc.html)
+*/
+.columnbox {
+	width: 100%;
+}
+
+.quartercolumn {
+	width: 25%;
+	float: left;
+	padding-top: 5px;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+.fifthcolumn {
+	width: 20%;
+	float: left;
+}
+
+/* Editor for Student Info page */
+#editor {
+	height: 130px;
+	width: 380px;
+	left: 280px;
+	top: 100px;
+	position: absolute;
+	visibility: hidden;
+}
+
+.chartbox {
+	width: 100%;
+	height: 25px;
+}
+
+.chartcol20 {
+	width: 20%;
+	height: 100px;
+	float: left;
+}
+
+.chartcol15 {
+	width: 15%;
+	height: 100px;
+	float: left;
+}
+
+.chartcol12 {
+	width: 12.5%;
+	height: 100px;
+	float: left;
+}
+
+.charttop {
+	width: 100%
+}
+
+.chartbottom {
+	width: 100%;
+}
+
+img:hover {
+	cursor: pointer;
+}
+
+label {
+	font-weight: bold;
+}
+
+.spacer {
+	width: 25em;
+}
+
+.footnote {
+	font-size: .8em;
+	vertical-align: super;
+}
+
+.ui-accordion-content {
+	height: auto;
+}
+
+.warning {
+	padding: 5px;
+	height: 150px;
+	width: 320px;
+	left: 20px;
+	top: 50px;
+	position: absolute;
+	visibility: hidden;
+}
+
+#browser_warning {
+	font-size: 1.2em;
+	width: 50%;
+	padding: 5px;
+	text-align: center;
+}
+
+#searchForm fieldset {
+	border-width: 1px;
+	margin: 5%; *
+	box-shadow: 3px 3px 5px black;
+	background-color: white;
+}
+
+#searchForm fieldset label {
+	font-weight: normal;
+}
+
+#searchForm fieldset legend {
+	padding: 6px;
+	border-radius: 5px; *
+	box-shadow: 3px 3px 5px black;
+	background-color: #C7D7E9;
+	border-width: 1px;
+	border-style: solid;
+	border-color: #087CD5;
+}
+
+a.button {
+	text-decoration: none;
+}
+
+.button-box {
+	height: 25px;
+}
+
+.button-box .delete {
+	margin-top: -5px;
+}
+
+.button-bar {
+	margin-top: 5px;
+	margin-bottom: 5px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
+
+#searchList {
+	position: absolute;
+	display: none;
+	z-index: 1000;
+	padding: 10px;
+	padding-top: 0px;
+	-moz-box-shadow: 3px 3px 4px #666;
+	-webkit-box-shadow: 3px 3px 4px #666;
+	box-shadow: 3px 3px 4px #666;
+}
+
+table.list td {
+	padding: 5px;
+	border-width: 0px;
+}
+
+table.list {
+	border-spacing: 0px;
+	padding-bottom: 5px;
+	padding-top: 5px;
+}
+
+table.list th {
+	border-bottom-style: solid;
+	border-bottom-width: 1px;
+	border-bottom-color: #000;
+}
+
+table.list tbody tr {
+	
+}
+
+table.files {
+	border-spacing: 5px;
+}
+
+table.files th {
+	
+}
+
+table.files td {
+	
+}
+
+table.files td.file-name {
+	width: 150px;
+}
+
+table.files td.file-description {
+	width: 275px;
+}
+
+a.link,input.link {
+	text-decoration: underline;
+}
+
+a.link:hover,input.link:hover {
+	cursor: pointer;
+}
+
+table.attendance {
+	border-spacing: 0px;
+	border: 1px #ccc solid;
+}
+
+table.attendance td,table.attendance th {
+	padding: 5px;
+	border-right: 1px #ccc solid;
+	border-bottom: 1px #ccc solid;
+}
+
+table.attendance td:last-child,table.attendance th:last-child {
+	border-right: 0;
+}
+
+table.attendance tr:last-child td {
+	border-bottom: 0;
+}
+
+.attendance th {
+	text-align: left;
+	width: 150px;
+}
+
+.attendance th.a-date {
+	width: 80px;
+}
+
+.attendance th.a-button {
+	width: 30px;
+}
+
+.attendance th.a-note {
+	width: 300px;
+}
+
+.support-view {
+	margin-bottom: 5px;
+	margin-top: 5px;
+}
+
+.support-view legend {
+	font-size: 1.25em;
+}
+
+.icon {
+	vertical-align: middle;
+	padding-right: 5px;
+	padding-left: 5px;
+}
+
+fieldset.advanced div.advanced {
+	padding-left: 55px;
+}
+
+.search_fieldset {
+	width: 250px;
+	padding-bottom: 20px;
+	padding-left: 10px;
+	padding-right: 10px;
+	display: block;
+	position: relative;
+	margin-bottom: 20px;
+}
+
+.search_fieldset legend {
+	font-size: 1.2em;
+}
+
+.search_fieldset .button-box {
+	display: block;
+	float: right;
+	position: relative;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.student-row {
+	width: 250px;
+	padding-left: 5px;
+}
+
+.studentName {
+	font-weight: bold;
+	padding-top: .5em;
+	padding-bottom: .5em;
+}
+
+.student-row .button-box {
+	padding-bottom: .5em;
+}
+
+#searchList .studentName {
+	padding-top: 0;
+}
+
+.button-box {
+	margin-top: .5em;
+	*padding-bottom: .5em;
+}
+
+ul.buttons {
+	list-style: none;
+	margin-left: -38px;
+}
+
+ul.buttons li {
+	display: inline;
+}
+
+#feedback-editor {
+	width: 30em;
+}
+
+#stuEmail {
+	width: 60%;
+}
+/*** BENCHMARK STYLES ***/
+table#benchmarks {
+	font-size: 1em;
+}
+
+td.benchmark-label {
+	width: 25em;
+}
+
+td input.benchmark-comment {
+	width: 25em;
+}
+
+tr.benchmark-header {
+	font-weight: bold
+}
+
+tr.benchmark-grade {
+	font-size: 1.25em;
+}
+
+tr.benchmark-term td:first-child {
+	padding-left: 10px;
+}
+
+tr.benchmark-category td:first-child {
+	padding-left: 15px;
+}
+
+tr.benchmark-row td {
+	border-bottom: 1px solid black;
+	vertical-align: top;
+}
+
+tr.benchmark-row td.benchmark-text {
+	padding-left: 20px;
+	cursor: pointer;
+}
+
+tr.benchmark-row td.benchmark-info {
+	width: 150px;
+}
+
+#footer {
+	font-size: .8em;
+	width: 150px;
+	float: right;
+}

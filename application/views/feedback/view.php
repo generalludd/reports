@@ -1,0 +1,1 @@
+<?php ?><p>Submitted by: <? print "$user ($email)"; ?></p><p>Level of Urgency: <? print $rank; ?> </p><p>Subject: <? print $subject; ?></p><p><? print $feedback; ?></p><p>You should receive a copy of this email in your inbox shortly. If you do not, please send your concern to me directly at chrisd@fsmn.org</p>
