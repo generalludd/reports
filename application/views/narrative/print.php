@@ -108,8 +108,6 @@ body {
 		if($stuGrade>4){
 			print "<div class='grade'>$gradeString</div>";
 		}
-		$insert_chart = FALSE;
-		//$insert_chart = $this->preference_model->get($narrative->kTeach, "chart_insert");
 		//@TODO modify insert chart issues here.
 		$data['legend'] = $this->legend->get_one(array("kTeach"=>$narrative->kTeach, "subject"=>$narrative->narrSubject, "term"=> $narrative->narrTerm, "year"=>$narrative->narrYear ));
 		$has_benchmarks = $this->benchmark_model->student_has_benchmarks($narrative->kStudent, $narrative->narrSubject, $narrative->stuGrade, $narrative->narrTerm, $narrative->narrYear);
@@ -117,15 +115,11 @@ body {
 		if($has_benchmarks){
 			$data["benchmarks"] = $this->benchmark_model->get_for_student($narrative->kStudent,$narrative->narrSubject,$stuGrade, $narrTerm, $narrYear);
 		}
-		if($insert_chart && $has_benchmarks){
-			//$narrText = str_replace("READING_CHART", $this->load->view("benchmark/chart",$data,$narrText));
-		}
+		
 		$narrText = strip_slashes($narrative->narrText);
 		print "<p>$narrText</p>";
-		if(!$insert_chart  && $has_benchmarks){
-			if(count($data["benchmarks"] > 0)){
+		if($has_benchmarks){
 				$this->load->view("benchmark/chart", $data);
-			}
 		}
 	}
 	//end area for clean up
