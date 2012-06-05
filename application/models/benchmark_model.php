@@ -3,16 +3,16 @@
 
 class benchmark_model extends CI_Model
 {
-	var $term = "";
-	var $year = "";
-	var $gradeStart = "";
-	var $gradeEnd = "";
-	var $subject = "";
-	var $category = "";
-	var $weight = "";
-	var $benchmark = "";
-	var $recModifier = "";
-	var $recModified = "";
+	var $term;
+	var $year;
+	var $gradeStart;
+	var $gradeEnd;
+	var $subject;
+	var $category;
+	var $weight;
+	var $benchmark;
+	var $recModifier;
+	var $recModified;
 
 	function prepare_variables()
 	{
@@ -158,7 +158,28 @@ class benchmark_model extends CI_Model
 		$result = $this->db->get()->num_rows();
 		return $result;
 	}
+	
+	function student_has_benchmarks($kStudent, $subject, $grade, $term, $year, $category = FALSE)
+	{
 
+		//@TODO Real Problem here is finding the benchmarks for grade ranges
+		if($subject != "all"){
+			$this->db->where("benchmark.subject", $subject);
+		}
+		$this->db->where("(benchmark.gradeStart = $grade OR benchmark.gradeEnd = $grade)");
+		$this->db->where("benchmark.term", $term);
+		$this->db->where("benchmark.year", $year);
+		if($category){
+			$this->db->where("benchmark.category", $category);
+		}
+		$this->db->order_by("benchmark.subject, benchmark.category, benchmark.weight ASC");
+		$this->db->join("student_benchmark","benchmark.kBenchmark=student_benchmark.kBenchmark AND student_benchmark.kStudent=$kStudent", "RIGHT");
+		$this->db->select("student_benchmark.kStudent");
+		$this->db->from("benchmark");
+		$result = $this->db->get()->result();
+		return $result;
+
+	}
 
 	function benchmarks_available($subject, $grade, $term, $year)
 	{

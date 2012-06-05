@@ -104,8 +104,8 @@ class Narrative extends MY_Controller
 		$kStudent = $narrative->kStudent;
 		$kTeach = $narrative->kTeach;
 		$data['narrative'] = $narrative;
-		$data['has_benchmarks'] = $this->benchmark_model->benchmarks_available($narrative->narrSubject, $narrative->stuGrade, $narrative->narrTerm, $narrative->narrYear);
-
+		$data['has_benchmarks'] = $this->benchmark_model->student_has_benchmarks($kStudent, $narrative->narrSubject, $narrative->stuGrade, $narrative->narrTerm, $narrative->narrYear);
+		$data['benchmarks_available'] = $this->benchmark_model->benchmarks_available($narrative->narrSubject, $narrative->stuGrade, $narrative->narrTerm, $narrative->narrYear);
 		if($data['has_benchmarks']){
 			$data['legend'] = $this->legend->get_one(array("kTeach"=>$kTeach, "subject"=>$narrative->narrSubject, "term"=> $narrative->narrTerm, "year"=>$narrative->narrYear ));
 			$data["benchmarks"] = $this->benchmark_model->get_for_student($kStudent, $narrative->narrSubject, $narrative->stuGrade, $narrative->narrTerm, $narrative->narrYear);
