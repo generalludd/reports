@@ -14,9 +14,11 @@
 <script type="text/javascript">
 var base_url = '<?=base_url();?>';
 </script>
-<script type="text/javascript" src="<?=base_url();?>js/jquery.min.js"></script>
-<script type="text/javascript" src="<?=base_url();?>js/jquery.validate.js"></script>
-<script type="text/javascript" src="<?=base_url();?>js/jquery-ui.min.js"></script>
+<!--<script type="text/javascript" src="<?=base_url();?>js/jquery.min.js"></script>-->
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+ <script type="text/javascript" src="http://jzaefferer.github.com/jquery-validation/jquery.validate.js"></script> 
+<!--<script type="text/javascript" src="<?=base_url();?>js/jquery-ui.min.js"></script> -->
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.min.js"></script>
 <script type="text/javascript" src="<?=base_url();?>js/forms.jquery.js"></script>
 <script type="text/javascript" src="<?=base_url();?>js/cookie.jquery.js"></script>
 

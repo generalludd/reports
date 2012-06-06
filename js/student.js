@@ -162,18 +162,8 @@ $(document).ready(function() {
 				}// end function(event);
 				);// end home.click
 
-				// $("input.required").live('blur',
-				// function(event){
-				// var fieldValue=$(this).val();
-				// validateField(this.id,fieldValue);
-				// }//end function(event)
-				// )//end blur
 
-				$("select.required").live('change', function(event) {
-					var fieldName = $(this).attr('name');
-					var fieldValue = $(this).val();
-					validateField(fieldName, fieldValue);
-				});
+			
 
 				$("#baseYear").live('blur', function(event) {
 					var baseYear = parseInt(this.value);
@@ -186,19 +176,7 @@ $(document).ready(function() {
 					getStuGrade();
 				}// end function(event)
 				);// end keyup
-				$("input.required").live('blur', function(event) {
-					if ($(this).val() == '') {
-						$(this).css( {
-							'background-color' : '#ff8538'
-						});
-					} else {
-						$(this).css( {
-							'background-color' : 'white'
-						});
-					}
-				});
-				// $("select.required[value='']").next().html("Required
-				// Field!");
+				
 				$("#studentEditor").validate();
 		$("#advanced_search").live('click', function(){
 			studentSearch();
@@ -206,15 +184,7 @@ $(document).ready(function() {
 }// end ready
 );// end $(document)
 
-function validateField(fieldName, fieldValue) {
-	var errField = fieldName + "Err";
-	var errorList = $('#errors').val();
-	if (fieldValue == "") {
-		$("#" + errField).html("Required Field!");
-	} else {
-		$("#" + errField).html("");
-	}
-}
+
 
 function getStuGrade() {
 	myGrade = $('#baseGrade').val();

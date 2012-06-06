@@ -13,15 +13,14 @@ class Feedback extends My_Controller {
 	function create()
 	{
 		$path = $this->input->get_post("path");
-
 		$segments = explode("/", $path);
 		$data["subject"] = "";
 		$data["action"] = "";
 		$data["feedback"] = "";
 		$data["urgency"] = "";
-		$data["subject"] = "";
-		$data["subject"] = implode(" ", $segments);
-		if($data["subject"] == ""){
+	
+		$data["subject"] = $path;//implode(",", $segments);
+		if(!$data["subject"]){
 			$data["subject"] = "General";
 		}
 		$data["target"] = "feedback/edit";

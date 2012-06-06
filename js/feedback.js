@@ -25,7 +25,7 @@ $(document).ready(function(){
 	$(".create_feedback").live('click',function(data){
 		var myUrl = base_url + "index.php/feedback/create";
 		var myLocation = document.location;
-		var myPath = myLocation.toString().split(base_url + "index.php/");
+		var myPath = myLocation.toString().split(base_url);
 		form_data = {
 				path: myPath[1]
 		};
@@ -40,5 +40,7 @@ $(document).ready(function(){
 		});
 		
 	});
+	
+	
 
 });

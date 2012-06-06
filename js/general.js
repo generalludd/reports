@@ -105,9 +105,25 @@
 	});
 	
 
-
+	$("select.required").live('change', function(event) {
+		var fieldName = $(this).attr('name');
+		var fieldValue = $(this).val();
+		validateField(fieldName, fieldValue);
+	});
 	
-	
+	$("input.required").live('blur', function(event) {
+		if ($(this).val() == '') {
+			$(this).css( {
+				'background-color' : '#ff8538'
+			});
+		} else {
+			$(this).css( {
+				'background-color' : 'white'
+			});
+		}
+	});
+	// $("select.required[value='']").next().html("Required
+	// Field!");
 
 	
 	$("#browser_warning").live('click',
@@ -199,4 +215,14 @@ function format_grade(grade){
 		output = "K";
 	}
 	return output;
+}
+
+function validateField(fieldName, fieldValue) {
+	var errField = fieldName + "Err";
+	var errorList = $('#errors').val();
+	if (fieldValue == "") {
+		$("#" + errField).html("Required Field!");
+	} else {
+		$("#" + errField).html("");
+	}
 }
