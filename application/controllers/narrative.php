@@ -193,7 +193,8 @@ class Narrative extends MY_Controller
 		$this->load->model("subject_model");
 		$this->load->model("suggestion_model");
 		$this->load->model("report_model");
-
+		$this->load->model("preference_model");
+		$data["accordion"] = $this->preference_model->get($this->session->userdata("userID"), "accordion");
 		$data["defaultYear"] = get_current_year();
 		$data["defaultTerm"] = get_current_term();
 

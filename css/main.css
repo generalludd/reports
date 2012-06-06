@@ -1,9 +1,9 @@
-@import "color.css";
+
 
 @import "ui.all.css";
 
 @import "ui.datepicker.css";
-
+@import "color.css";
 .narrText {
 	padding: 3px;
 	border-style: solid;
@@ -984,4 +984,9 @@ tr.benchmark-row td.benchmark-info {
 	font-size: .8em;
 	width: 150px;
 	float: right;
+}
+
+h4.ui-accordion-header {
+	padding: 4px;
+	padding-left: 30px;
 }

@@ -97,6 +97,8 @@ div.list {
 	background: #67b021 url(images/button_20.png) 50% 50% repeat-x;
 }
 
+
+
 .button:hover {
 	opacity: .90;
 	filter: Alpha(Opacity =               90);
@@ -121,6 +123,10 @@ div.list {
 	color: black;
 }
 
+a.button {
+	color: #fff;
+}
+
 .button.active:hover {
 	background-color: #e6e6e6;
 	background-image: url(images/active_button_hover.png);
@@ -137,7 +143,7 @@ div.list {
 	background-color: #6caadc;
 	background-image: url(images/edit_button_hover.png);
 }
-.new {
+.new, a.new {
 	*border: 1px solid #DFE119;
 	background-color: #DFE119;
 	background-image: url(images/new_button.png);
