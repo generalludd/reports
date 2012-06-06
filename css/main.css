@@ -990,3 +990,7 @@ h4.ui-accordion-header {
 	padding: 4px;
 	padding-left: 30px;
 }
+
+.ui-widget {
+	font-size: 12px;
+}
