@@ -37,6 +37,4 @@ class Preference extends MY_Controller {
 		}
 	}
 
-
-
 }

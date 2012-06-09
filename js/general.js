@@ -104,6 +104,41 @@
 		});
 	});
 	
+	$('.edit_preference_type').live("click", function(event){
+		var myType = this.id.split("-")[1];
+		var myUrl = base_url + "preference_type/edit";
+		form_data = {
+				type: myType,
+				ajax: '1'
+		};
+		$.ajax({
+			url: myUrl,
+			type: "GET",
+			data: form_data,
+			success: function(data){
+				showPopup("Edit Preference Type", data, "auto");
+			}
+			
+		});
+		
+	});
+	
+	$('.create_preference_type').live("click", function(event){
+		var myUrl = base_url + "preference_type/create";
+		form_data = {
+				ajax: '1'
+		};
+		
+		$.ajax({
+			url: myUrl,
+			type: "GET",
+			data: form_data,
+			success: function(data){
+				showPopup("Create Preference Type", data, "auto");
+			}
+		});
+	});
+	
 
 	$("select.required").live('change', function(event) {
 		var fieldName = $(this).attr('name');
