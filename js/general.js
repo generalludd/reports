@@ -181,13 +181,13 @@
 	
 	$("input.required").live('blur', function(event) {
 		if ($(this).val() == '') {
-			$(this).css( {
-				'background-color' : '#ff8538'
-			});
+			$(this).addClass('error');
+			$("form input[type='submit'].button").prop('disabled',true);
+			$("form input[type='submit'].button").addClass("active");
 		} else {
-			$(this).css( {
-				'background-color' : 'white'
-			});
+			$(this).removeClass('error');
+			$("form input[type='submit'].button").removeClass("active");
+			$("form input[type='submit'].button").prop('disabled',false);
 		}
 	});
 	// $("select.required[value='']").next().html("Required

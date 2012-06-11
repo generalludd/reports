@@ -44,7 +44,6 @@ class Subject_model extends CI_Model
 		$this->db->order_by('subject.subject','ASC');
 		$this->db->from('subject');
 		$result = $this->db->get()->result();
-		print $this->db->last_query();
 		return $result;
 
 	}

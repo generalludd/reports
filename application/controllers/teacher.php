@@ -15,8 +15,22 @@ class Teacher extends MY_Controller
 
 	function index()
 	{
-		$data["teachers"] = $this->teacher_model->get_all();
 		$data["target"] = "teacher/list";
+		$data["options"] = FALSE;
+		if($this->input->get_post("showInactive")){
+			$data["options"]["showInactive"] = TRUE;
+		}
+		
+		if($this->input->get_post("showAdmin")){
+			$data["options"]["showAdmin"] = TRUE;
+		}
+		if($this->input->get_post("gradeStart") && $this->input->get_post("gradeEnd")){
+			$data["options"]["grade_range"]["gradeStart"] = $this->input->get_post("gradeStart");
+			$data["options"]["grade_range"]["gradeEnd"] = $this->input->get_post("gradeEnd");
+				
+		}
+		$data["teachers"] = $this->teacher_model->get_all($data["options"]);
+		
 		$data["title"] = "List of Teachers";
 		$this->load->view("page/index", $data);
 	}
@@ -119,6 +133,11 @@ class Teacher extends MY_Controller
 			$kTeach = $this->teacher_model->insert();
 			redirect("teacher/view/$kTeach");
 		}
+		
+	}
+	
+	function show_search()
+	{
 		
 	}
 

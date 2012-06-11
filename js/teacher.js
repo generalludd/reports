@@ -1,6 +1,5 @@
 $(document).ready(function(){
 	
-	
 	$('.add_subject').live('click', function(event){
 			var myTeach = $("#kTeach").val();
 			var myStart = $("#gradeStart").val();
@@ -127,6 +126,22 @@ $(document).ready(function(){
 	$('.teacher_templates_print').live('click',function(event){
 		var myTeach=this.id.split('_')[1];
 		printTeacherTemplates(myTeach);
+	});
+	
+	$('.teacher_create').live("click", function(event){
+		var myUrl = base_url + "index.php/teacher/create";
+		var form_data = {
+				ajax: 1
+		};
+		$.ajax({
+			type:"post",
+			url: myUrl,
+			data: form_data,
+			success: function(data){
+				showPopup("Add a new teacher",data,"auto");
+			}
+		});
+		return false;
 	});
 	
 });// end ready

@@ -250,11 +250,15 @@ h4,h5,h6, tr.benchmark-grade {
 	color: white;
 }
 
-.warning,.notice {
+.warning,.notice, .error {
 	color: black;
 	opacity: .90;
 	filter: Alpha(Opacity =90);
 	background: #ff8538 url(images/warning.png) 50% 50% repeat-x;
+}
+
+.error {
+	background: #ff0;
 }
 
 .warning h4,.notice h4 {

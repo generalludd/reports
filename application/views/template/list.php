@@ -32,7 +32,7 @@ if(!empty($options)){
 }
 	
 }else{
-	echo "<p>Showing all templates.</p>";
+	echo "<p>Showing all Templates.</p>";
 
 }
 ?>

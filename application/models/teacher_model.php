@@ -58,6 +58,10 @@ class Teacher_model extends CI_Model
 			if(array_key_exists("showAdmin", $options)){
 				$this->db->where_in("dbRole", array(1,2,3));
 			}
+			if(array_key_exists("gradeRange", $options)){
+				$this->db->where("gradeStart >= " .$options["gradeRange"]["gradeStart"]);
+				$this->db->where("gradeStart >= " . $options["gradeRange"]["gradeEnd"]);
+			}
 		}else{
 			$this->db->where("dbRole != " , 1);
 			$this->db->where("status", 1);

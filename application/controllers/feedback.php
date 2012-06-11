@@ -61,6 +61,10 @@ class Feedback extends My_Controller {
 		echo "<p>Your feedback has been sent.<br/>A copy of your message will appear in your inbox at $teacher->email</p>";
 
 	}
+	/** 
+	 * This function is unused due to complications with authenticated SMTP sending in CI
+	 * @return boolean
+	 */
 
 	function initialize()
 	{
