@@ -33,8 +33,8 @@ class Feedback extends My_Controller {
 	{
 		$this->load->model("teacher_model","teacher");
 		$kTeach = $this->session->userdata("userID");
-		$config = $this->initialize();
-		$this->email->initialize($config);
+		//$config = $this->initialize();
+		//$this->email->initialize($config);
 
 		$teacher = $this->teacher->get($kTeach,"email,teachFirst,teachLast");
 		$message = "Database Feedback from $teacher->teachFirst $teacher->teachLast";
@@ -50,11 +50,14 @@ class Feedback extends My_Controller {
 		$this->email->from($teacher->email);
 		$this->email->to("technology@fsmn.org");
 		$this->email->cc($teacher->email);
-		$this->email->print_debugger();
-		
+
+
 		$this->email->subject($subject);
 		$this->email->message($message);
 		$this->email->send();
+		if($this->session->userdata("userID") == 1000){
+			$this->email->print_debugger();
+		}
 		echo "<p>Your feedback has been sent.<br/>A copy of your message will appear in your inbox at $teacher->email</p>";
 
 	}
