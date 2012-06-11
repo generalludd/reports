@@ -39,7 +39,40 @@
 		}
 	});
 
+	$(".email_create").live("click",function(){
+		var form_data = {
+				ajax: '1'
+		};
+		var myUrl = base_url + "index.php/email/create";
+		$.ajax({
+			type:"get",
+			url: myUrl,
+			data: form_data,
+			success: function(data){
+				showPopup("Create New System Email",data,"auto");
+			}
+		});
+		return false;
+	});
 	
+	$(".email_edit").live("click",function(){
+		var myId = this.id.split("_")[1];
+		var form_data = {
+				kEmail:myId,
+				ajax: '1'
+		};
+		
+		var myUrl = base_url + "index.php/email/edit/" + myId;
+		$.ajax({
+			type:"post",
+			url: myUrl,
+			data: form_data,
+			success: function(data){
+				showPopup("Edit System Email Record", data,"auto");
+			}
+		});
+		
+	});
 	
 	
 /*** MISCELLANEOUS SCRIPTS ****/	

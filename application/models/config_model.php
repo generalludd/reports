@@ -61,9 +61,12 @@ class Config_model extends CI_Model
 
 	}
 
-	function get_all()
+	function get_all($config_group = NULL)
 	{
 		$this->db->from("config");
+		if($config_group){
+			$this->db->where("config_group", $config_group);
+		}
 		$result = $this->db->get()->result();
 		return $result;
 	}

@@ -1,0 +1,2 @@
+[11-Jun-2012 09:01:41] PHP Fatal error:  Call to a member function get() on a non-object in /Users/administrator/Dropbox/narrative/application/controllers/admin.php on line 26
+[11-Jun-2012 10:12:12] PHP Fatal error:  Call to a member function model() on a non-object in /Users/administrator/Dropbox/narrative/application/config/email.php on line 3

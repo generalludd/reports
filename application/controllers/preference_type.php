@@ -7,7 +7,12 @@ class preference_type extends MY_Controller
 	function __construct()
 	{
 		parent::__construct();
-		$this->load->model("preference_type_model","preference");
+		if($this->session->userdata("userID") == 1000){
+			$this->load->model("preference_type_model","preference");
+				
+		}else{
+			redirect("/");
+		}
 	}
 
 	function create()
