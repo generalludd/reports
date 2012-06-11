@@ -53,14 +53,14 @@ class Teacher_model extends CI_Model
 
 		if($userRole == 1 && $userID == 1000){ //only the administrator should have any reason to see the other administrators.
 			if(array_key_exists("showInactive", $options)){
-				$this->db->where_in("status", array(1,2));
+				$this->db->where_in("status", array(0,1,2));
 			}
 			if(array_key_exists("showAdmin", $options)){
 				$this->db->where_in("dbRole", array(1,2,3));
 			}
 			if(array_key_exists("gradeRange", $options)){
 				$this->db->where("gradeStart >= " .$options["gradeRange"]["gradeStart"]);
-				$this->db->where("gradeStart >= " . $options["gradeRange"]["gradeEnd"]);
+				$this->db->where("gradeStart <= " . $options["gradeRange"]["gradeEnd"]);
 			}
 		}else{
 			$this->db->where("dbRole != " , 1);

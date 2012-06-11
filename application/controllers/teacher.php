@@ -25,8 +25,8 @@ class Teacher extends MY_Controller
 			$data["options"]["showAdmin"] = TRUE;
 		}
 		if($this->input->get_post("gradeStart") && $this->input->get_post("gradeEnd")){
-			$data["options"]["grade_range"]["gradeStart"] = $this->input->get_post("gradeStart");
-			$data["options"]["grade_range"]["gradeEnd"] = $this->input->get_post("gradeEnd");
+			$data["options"]["gradeRange"]["gradeStart"] = $this->input->get_post("gradeStart");
+			$data["options"]["gradeRange"]["gradeEnd"] = $this->input->get_post("gradeEnd");
 				
 		}
 		$data["teachers"] = $this->teacher_model->get_all($data["options"]);

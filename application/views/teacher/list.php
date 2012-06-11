@@ -14,9 +14,9 @@
 			for($i = 0; $i < count($options); $i++){
 				if($keys[$i] == "showAdmin" || $keys[$i] == "showInactive"){
 					echo "<li>" . ucfirst($keys[$i]) .": <strong>Yes</strong></li>";
-				}elseif($keys[$i] == "grade_range"){
-					$gradeStart = $options["grade_range"]["gradeStart"];
-					$gradeEnd = $options["grade_range"]["gradeEnd"];
+				}elseif($keys[$i] == "gradeRange"){
+					$gradeStart = $options["gradeRange"]["gradeStart"];
+					$gradeEnd = $options["gradeRange"]["gradeEnd"];
 					if($gradeStart == $gradeEnd){
 						echo "<li>Grade: <strong>$gradeStart</strong></li>";
 					}else{
