@@ -34,18 +34,22 @@ $(document).ready(function() {
 					kTeach: myTeach,
 			};
 			var myUrl = base_url + "index.php/narrative/edit_inline";
+
 			$.ajax({
 				url: myUrl,
 				type: 'POST',
 				data: form_data,
 				success: function(data){
-					if(data){
+
 						$("#text_" + myNarrative).html(data);
-						$("#enil_" + myNarrative).hide();
-					}
+						
+						$("#enil_" + myNarrative).focus().hide();
+						document.location = document.location + "enil_" + myNarrative;
 				} //end function
 			});//end ajax
+
 		}//end if
+
 	}); //end edit_narrative_inline
 		
 	$('.save_narrative_inline').live('click', function(event){
