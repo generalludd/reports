@@ -183,7 +183,8 @@ class Narrative extends MY_Controller
 		if($kTeach == $userID || $dbRole == 1){
 			$this->narrative_model->update_text($kNarrative,$narrText);
 		}
-		echo $this->narrative_model->get_value($kNarrative, "narrText");
+		$output =  $this->narrative_model->get($kNarrative, FALSE, "narrText, recModified");
+		echo $output->narrText . "||" . format_timestamp($output->recModified);
 	}
 
 

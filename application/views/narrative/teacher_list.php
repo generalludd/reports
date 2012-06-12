@@ -30,7 +30,7 @@ if(!empty($narratives)){
 		echo "<p><b>$narrative->narrSubject</b></p>";
 		$edit_buttons[] = array("item"=>"view","text"=>"View","href"=> site_url("narrative/view/$narrative->kNarrative"), "title"=>"$narrSummary");
 		$edit_buttons[] = array("item" =>"edit_inline","text"=>"Edit Inline","class" =>"button edit edit_narrative_inline", "id" => "enil_$narrative->kNarrative", "title" => "Edit this narrative here" );
-		$edit_buttons[] = array("item" => "message","type" => "pass-through", "text" => "(Last edited on $narrative->recModified)");
+		$edit_buttons[] = array("item" => "message", "type" => "span", "class" => "text","text" => "(Last edited on " . format_timestamp($narrative->recModified) . ")", "id" => "time_$narrative->kNarrative");
 		echo create_button_bar($edit_buttons);
 		echo  "<div id='text_$narrative->kNarrative'>$narrText</div>";
 		$thisTerm = $sortTerm;

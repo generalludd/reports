@@ -68,7 +68,9 @@ $(document).ready(function() {
 				type: 'POST',
 				data: form_data,
 				success: function(data){
-					$("#text_" + myNarrative).html(data);
+					output = data.split("||");
+					$("#text_" + myNarrative).html(output[0]);
+					$("#time_" + myNarrative).html(output[1]);
 					$("#enil_" + myNarrative).fadeIn();
 				}// end success-function
 			}); //end ajax
@@ -290,13 +292,8 @@ $(document).ready(function() {
 	$('.cancel_narrative').live('click',function(event) {
 		var myNarrative = $("#kNarrative").val();
 		var narrText = $('#narrText').val();
-//		showSidebar("compare",narrText, '95%', '60%', '35%').delay(6000);
-//		var hasChanged = has_narrative_changed(myNarrative, narrText);
 		var myStudent = $("#kStudent").val();
-//		action = true;
-//		if (hasChanged) {
-			action = confirm("You sure you want to cancel? Any changes you have made will not be saved.\r(Some day I'll be able to tell if you have actually made any changes since the last save.)");
-//		}
+		action = confirm("You sure you want to cancel? Any changes you have made will not be saved.\r(Some day I'll be able to tell if you have actually made any changes since the last save.)");
 		if (action) {
 			if (myNarrative != "") {
 				document.location = base_url + "index.php/narrative/view/" + myNarrative;
@@ -440,26 +437,6 @@ function mergeSentences(myCount) {
 		narrText = document.getElementById('narrText');
 		narrText.value = myText;
 	}
-}
-
-
-
-function has_narrative_changed(myNarrative, myText) {
-	var output = true;
-	var form_data = {
-			narrText: myText,
-			changedText: myNarrative
-	};
-	var myUrl = base_url + "index.php/narrative/compare_text";
-	$.ajax({
-		type: "POST",
-		url: myUrl,
-		data: form_data,
-		success: function(data){
-			output = data;
-		}
-	});
-	return output;
 }
 
 /*
