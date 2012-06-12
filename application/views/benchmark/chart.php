@@ -1,5 +1,6 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');?>
 <? if($legend): ?>
+<div class='legend'>
 <p><strong><?=$legend->title;?></strong></p>
 <div><?=$legend->legend;?></div>
 <? endif; ?>
@@ -35,3 +36,6 @@ if(count($benchmarks)>0 && $benchmarks != 0){
 	}
 	print "</div>";
 }
+
+?>
+</div>
