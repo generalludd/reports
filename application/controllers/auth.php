@@ -27,6 +27,7 @@ class Auth extends CI_Controller
 			$password =  $this->input->post("password");
 			$result = $this->auth_model->validate($username, $password);
 			if($result){
+				$this->auth_model->log($result->kTeach, "login");
 				$data["username"] = $username;
 				$data["dbRole"] = $result->dbRole;
 				$data["userID"] = $result->kTeach;
@@ -44,6 +45,7 @@ class Auth extends CI_Controller
 
 	function logout()
 	{
+		$this->auth_model->log($this->session->userdata("userID"),"logout");
 		$this->session->sess_destroy();
 		$this->index();
 	}

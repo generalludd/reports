@@ -124,5 +124,14 @@ class Auth_model extends CI_Model
 		$username = $this->get_username($kTeach);
 		return $this->validate($username, $password);
 	}
+	
+	function log($kTeach, $action)
+	{
+		$data["kTeach"] = $kTeach;
+		$data["action"] = $action;
+		$data["time"] = mysql_timestamp();
+		$data["username"] = $this->get_username($kTeach);
+		$this->db->insert("user_log",$data);
+	}
 
 }
