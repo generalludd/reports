@@ -16,7 +16,7 @@ class Teacher extends MY_Controller
 	function index()
 	{
 		$data["target"] = "teacher/list";
-		$data["options"] = FALSE;
+		$data["options"] = array();
 		if($this->input->get_post("showInactive")){
 			$data["options"]["showInactive"] = TRUE;
 		}
