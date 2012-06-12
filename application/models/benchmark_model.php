@@ -166,7 +166,7 @@ class benchmark_model extends CI_Model
 		if($subject != "all"){
 			$this->db->where("benchmark.subject", $subject);
 		}
-		$this->db->where("(benchmark.gradeStart = $grade OR benchmark.gradeEnd = $grade)");
+		$this->db->where("(benchmark.gradeStart <= $grade OR benchmark.gradeEnd >= $grade)");
 		$this->db->where("benchmark.term", $term);
 		$this->db->where("benchmark.year", $year);
 		if($category){
@@ -189,8 +189,8 @@ class benchmark_model extends CI_Model
 			$this->db->where("subject", $subject);
 			$this->db->where("term",$term);
 			$this->db->where("year", $year);
-			$this->db->where("benchmark.gradeStart >= $grade");
-			$this->db->where("benchmark.gradeEnd <= $grade");
+			$this->db->where("benchmark.gradeStart <= $grade");
+			$this->db->where("benchmark.gradeEnd >= $grade");
 			$this->db->from("benchmark");
 			$result = $this->db->get()->num_rows();
 			return $result;
