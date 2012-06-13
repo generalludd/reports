@@ -1,5 +1,5 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
- 
+
 
 class Auth_model extends CI_Model
 {
@@ -102,7 +102,7 @@ class Auth_model extends CI_Model
 		}
 		return $output;
 	}
-	
+
 	function set_reset_hash($kTeach)
 	{
 		$hash = $this->encrypt(now());
@@ -111,8 +111,8 @@ class Auth_model extends CI_Model
 		$this->db->update("teacher",$data);
 		return $hash;
 	}
-	
-	
+
+
 	function reset_password($kTeach, $reset_hash, $password)
 	{
 		$this->db->where("kTeach", $kTeach);
@@ -124,7 +124,7 @@ class Auth_model extends CI_Model
 		$username = $this->get_username($kTeach);
 		return $this->validate($username, $password);
 	}
-	
+
 	function log($kTeach, $action)
 	{
 		$data["kTeach"] = $kTeach;
@@ -132,6 +132,37 @@ class Auth_model extends CI_Model
 		$data["time"] = mysql_timestamp();
 		$data["username"] = $this->get_username($kTeach);
 		$this->db->insert("user_log",$data);
+	}
+	
+	function get_usernames()
+	{
+		$this->db->select("username");
+		$this->db->select("CONCAT(teachFirst,' ', teachLast) as user",FALSE);
+		$this->db->where("status",1);
+		$this->db->from("teacher");
+		$this->db->order_by("username");
+		$result = $this->db->get()->result();
+		return $result;
+	}
+
+	function get_log($options = array())
+	{
+		if(!empty($options)){
+			$keys = array_keys($options);
+			$values = array_values($options);
+			for($i = 0; $i < count($options); $i++ ){
+				$myKey = $keys[$i];
+				$myValue = $values[$i];
+				$this->db->where($myKey, $myValue);
+			}
+		}
+		$this->db->select("username,time,action");
+		$this->db->from("user_log");
+		$this->db->order_by("username","ASC");
+		$this->db->order_by("time","DESC");
+		
+		$result = $this->db->get()->result();
+		return $result;
 	}
 
 }

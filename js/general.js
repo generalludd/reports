@@ -74,6 +74,16 @@
 		
 	});
 	
+	$(".log_search").live("click",function(){
+		$.ajax({
+			type: "get",
+			url: base_url +  "index.php/auth/search_log",
+			success: function(data){
+				showPopup("Search System Logs", data, "auto");
+			}
+		});
+	});
+	
 	
 /*** MISCELLANEOUS SCRIPTS ****/	
 	

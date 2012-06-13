@@ -177,5 +177,33 @@ class Auth extends CI_Controller
 			}
 		}
 	}
+	
+	function show_log()
+	{
+		$options = array();
+		if($this->input->get_post("kTeach")){
+			$options["kTeach"] = $this->input->get_post("kTeach");
+		}
+		if($this->input->get_post("username")){
+			$options["username"] = $this->input->get_post("username");
+		}
+		if($this->input->get_post("action")){
+			$options["action"] = $this->input->get_post("action");
+		}
+		$data["header"] = array("username","timestamp","action");
+		$data["logs"] = $this->auth_model->get_log($options);
+		$data["options"] = $options;
+		$data["target"] = "auth/log";
+		$data["title"] = "User Log";
+		$this->load->view("page/index",$data);
+	}
+	
+	function search_log()
+	{
+		$users = $this->auth_model->get_usernames();
+		$data["users"] = get_keyed_pairs($users,array("username","user"),TRUE);
+		$data["actions"] = array("login" => "login","logout" => "logout");
+		$this->load->view("auth/search_log",$data);
+	}
 
 }

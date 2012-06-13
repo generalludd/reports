@@ -83,14 +83,18 @@ function format_time($time, $showSeconds = false){
 
 
 function format_timestamp($timeStamp){
-	$items = explode(" ", $timeStamp);
-	$date = format_date($items[0], 'standard');
-	$time = $items[1];
-	if(count($items) > 2){
-		$time .= " " . $items[2];
+	$output = $timeStamp;
+	$pattern = $pattern = '/^[0-9]{4}\-[0-9]{2}\-[0-9]{2}\ [0-9]{2}\:[0-9]{2}\:[0-9]{2}$/';
+	if(preg_match($pattern,$timeStamp)){
+		$items = explode(" ", $timeStamp);
+		$date = format_date($items[0], 'standard');
+		$time = $items[1];
+		if(count($items) > 2){
+			$time .= " " . $items[2];
+		}
+		$time = format_time($time);
+		$output = "$date, $time";
 	}
-	$time = format_time($time);
-	$output = "$date, $time";
 	return $output;
 }
 
@@ -267,7 +271,7 @@ function format_grade_range($gradeStart, $gradeEnd, $show_label = FALSE)
 				break;
 			default:
 				$output = format_grade($gradeStart) . "-" . format_grade($gradeEnd);
-			$label = "Grades:";
+				$label = "Grades:";
 		}
 	}
 	if($show_label){
@@ -343,7 +347,7 @@ function format_name($firstName, $lastName, $nickname=NULL, $separator=NULL){
 			$closeSeparator = ")</span>";
 		default:
 			$openSeparator="\"";
-		$closeSeparator="\"";
+			$closeSeparator="\"";
 	}
 	if($informal){
 		if($nickname != NULL){
@@ -459,23 +463,38 @@ function get_age($dob){
 
 function format_table($data,$header = array(),$options = array()){
 	$table = array();
-	$table[] = "<table>";
+	$table_class = "";
+	if(array_key_exists("table_class", $options)){
+		$table_class = "class='" . $options["table_class"] . "'";
+	}
+	$table[] = "<table $table_class >";
+
+
 	if(!empty($header)){
-		$table[] = "<thead><tr>";
+		$thead_class = "";
+		if(array_key_exists("thead_class", $options)){
+			$thead_class = "class='" . $options["thead_class"] . "'";
+		}
+		$table[] = "<thead $thead_class><tr>";
 		foreach($header as $head){
 			$table[] = "<th>$head</th>";
 		}
 		$table[] = "</tr></thead>";
 	}
-	$table[] = "<tbody>";
+
+	$tbody_class = "";
+	if(array_key_exists("tbody_class", $options)){
+		$tbody_class = "class='" . $options["tbody_class"] . "'";
+	}
+	$table[] = "<tbody $tbody_class>";
 	foreach($data as $row){
 		$table[] = "<tr>";
 		foreach($row as $item){
-			$table[] = "<td>$item</td>";
+			$table[] = "<td>" . format_timestamp($item) . "</td>";
 		}
 		$table[] = "</tr>";
 	}
 	$table[] ="</tbody></table>";
-	
+
 	return implode("",$table);
 }
