@@ -455,3 +455,27 @@ function get_age($dob){
 	$interval = date_diff($birth, $today);
 	return $interval->format('%Y');
 }
+
+
+function format_table($data,$header = array(),$options = array()){
+	$table = array();
+	$table[] = "<table>";
+	if(!empty($header)){
+		$table[] = "<thead><tr>";
+		foreach($header as $head){
+			$table[] = "<th>$head</th>";
+		}
+		$table[] = "</tr></thead>";
+	}
+	$table[] = "<tbody>";
+	foreach($data as $row){
+		$table[] = "<tr>";
+		foreach($row as $item){
+			$table[] = "<td>$item</td>";
+		}
+		$table[] = "</tr>";
+	}
+	$table[] ="</tbody></table>";
+	
+	return implode("",$table);
+}
