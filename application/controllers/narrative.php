@@ -99,6 +99,7 @@ class Narrative extends MY_Controller
 		$this->load->model('suggestion_model');
 		$this->load->model('benchmark_model');
 		$this->load->model('benchmark_legend_model','legend');
+		$this->load->model('backup_model');
 		$kNarrative = $this->uri->segment(3);
 		$narrative = $this->narrative_model->get($kNarrative, TRUE);
 		$kStudent = $narrative->kStudent;
@@ -117,6 +118,7 @@ class Narrative extends MY_Controller
 		$data['title'] = "Viewing Narrative Report for $studentName for $narrative->narrSubject";
 		//@TODO edits/suggestions checking.
 		$data["hasSuggestions"] = $this->suggestion_model->exists($kNarrative);
+		$data["backups"] = $this->backup_model->get_all($kNarrative);
 		$data['studentName'] = $studentName;
 		$data['teacher'] = format_name($teacher->teachFirst, $teacher->teachLast);
 		$this->load->view("page/index", $data);
@@ -412,6 +414,18 @@ class Narrative extends MY_Controller
 		$data["target"] = "narrative/search_results";
 		$data["title"] = "Narrative Search & Replace Results";
 		$this->load->view("page/index", $data);
+	}
+	
+	
+	function list_backups()
+	{
+		$kNarrative = $this->uri->segment(3);
+		$this->load->model("backup_model");
+		$data["backups"] = $this->backup_model->get_all($kNarrative,"recModified,narrText");
+		$data["kNarrative"] = $kNarrative;
+		$data["target"] = "narrative/backup_list";
+		$data["title"] = "Narrative Backups";
+		$this->load->view("page/index",$data);
 	}
 
 

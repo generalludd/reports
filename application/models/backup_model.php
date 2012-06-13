@@ -39,10 +39,14 @@ class Backup_model extends CI_Model
 	/**
 	 * Getter
 	 */
-	function get_backups($kNarrative)
+	function get_all($kNarrative,$select = NULL)
 	{
+		if($select){
+			$this->db->select($select);
+		}
 		$this->db->where('kNarrative', $kNarrative);
-		$this->db->from('narrative');
+		$this->db->from('backup');
+		$this->db->order_by("recModified","DESC");
 		$query = $this->db->get();
 		return $query->result();
 	}
