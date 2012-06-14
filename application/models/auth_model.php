@@ -133,7 +133,7 @@ class Auth_model extends CI_Model
 		$data["username"] = $this->get_username($kTeach);
 		$this->db->insert("user_log",$data);
 	}
-	
+
 	function get_usernames()
 	{
 		$this->db->select("username");
@@ -153,14 +153,18 @@ class Auth_model extends CI_Model
 			for($i = 0; $i < count($options); $i++ ){
 				$myKey = $keys[$i];
 				$myValue = $values[$i];
-				$this->db->where($myKey, $myValue);
+				if($myKey != "date_range"){
+					$this->db->where($myKey, $myValue);
+				}else{
+					$this->db->where("(time >= '" . $myValue["time_start"] . "' AND time <= '" . $myValue["time_end"] . "')");	
+				}
 			}
 		}
 		$this->db->select("username,time,action");
 		$this->db->from("user_log");
 		$this->db->order_by("username","ASC");
 		$this->db->order_by("time","DESC");
-		
+
 		$result = $this->db->get()->result();
 		return $result;
 	}

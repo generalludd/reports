@@ -12,8 +12,13 @@
 		echo "<ul>";
 
 		for($i = 0; $i < count($options); $i++){
-
-			echo "<li>" . $keys[$i] .": <strong>" . $values[$i]. "</strong></li>";
+			if($keys[$i] != "date_range"){
+				echo "<li>" . $keys[$i] .": <strong>" . $values[$i]. "</strong></li>";
+			}else{
+				$time_start = format_date($values[$i]["time_start"],"standard");
+				$time_end = format_timestamp($values[$i]["time_end"],FALSE);
+				echo "<li>Date Range: <strong>$time_start-$time_end</strong></li>";
+			}
 		}
 		echo "</ul>";
 

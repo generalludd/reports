@@ -82,18 +82,23 @@ function format_time($time, $showSeconds = false){
 
 
 
-function format_timestamp($timeStamp){
+function format_timestamp($timeStamp,$include_time = TRUE){
 	$output = $timeStamp;
 	$pattern = $pattern = '/^[0-9]{4}\-[0-9]{2}\-[0-9]{2}\ [0-9]{2}\:[0-9]{2}\:[0-9]{2}$/';
 	if(preg_match($pattern,$timeStamp)){
 		$items = explode(" ", $timeStamp);
 		$date = format_date($items[0], 'standard');
-		$time = $items[1];
-		if(count($items) > 2){
-			$time .= " " . $items[2];
+		$time = "";
+		if($include_time){
+			$time = $items[1];
+
+			if(count($items) > 2 ){
+				$time .= " " . $items[2];
+			}
+			$time = ", " . format_time($time);
+				
 		}
-		$time = format_time($time);
-		$output = "$date, $time";
+		$output = "$date$time";
 	}
 	return $output;
 }

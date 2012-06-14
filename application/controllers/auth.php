@@ -45,12 +45,12 @@ class Auth extends CI_Controller
 
 	function logout()
 	{
-		
-		//make sure someone is logged in before logging the logout 
+
+		//make sure someone is logged in before logging the logout
 		if($this->session->userdata("userID")){
 			$this->auth_model->log($this->session->userdata("userID"),"logout");
 		}
-		//destroy the session anyway. 
+		//destroy the session anyway.
 		$this->session->sess_destroy();
 		redirect("/");
 	}
@@ -189,12 +189,23 @@ class Auth extends CI_Controller
 		if($this->input->get_post("kTeach")){
 			$options["kTeach"] = $this->input->get_post("kTeach");
 		}
+
 		if($this->input->get_post("username")){
 			$options["username"] = $this->input->get_post("username");
 		}
+
 		if($this->input->get_post("action")){
 			$options["action"] = $this->input->get_post("action");
 		}
+
+		if($this->input->get_post("time_start") && $this->input->get_post("time_end")){
+			$time_start = format_date($this->input->get_post("time_start"),"mysql");
+			$time_end = format_date($this->input->get_post("time_end"),"mysql");
+			$time_end .= " 23:59:59";// make the end time the end of the same day
+			$options["date_range"]["time_start"] = $time_start;
+			$options["date_range"]["time_end"] = $time_end;
+		}
+
 		$data["header"] = array("username","timestamp","action");
 		$data["logs"] = $this->auth_model->get_log($options);
 		$data["options"] = $options;
