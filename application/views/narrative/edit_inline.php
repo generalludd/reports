@@ -1,7 +1,7 @@
 <?php
 ?>
 <form id="narrative_inline_editor" name="narrative_inline_editor"
-	action="ajax.switch.php" method="post">
+	action="<?=site_url("narrative/update_inline");?>" method="post">
 	<input type="hidden"
 	name="kNarrative" id="kNarrative" value='<?="$narrative->kNarrative"; ?>' />
 	<input type="hidden"
