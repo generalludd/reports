@@ -45,9 +45,14 @@ class Auth extends CI_Controller
 
 	function logout()
 	{
-		$this->auth_model->log($this->session->userdata("userID"),"logout");
+		
+		//make sure someone is logged in before logging the logout 
+		if($this->session->userdata("userID")){
+			$this->auth_model->log($this->session->userdata("userID"),"logout");
+		}
+		//destroy the session anyway. 
 		$this->session->sess_destroy();
-		$this->index();
+		redirect("/");
 	}
 
 
@@ -161,7 +166,7 @@ class Auth extends CI_Controller
 			$this->start_reset("An error occurred. Please try again or ask for technical support");
 		}
 	}
-	
+
 	function masquerade()
 	{
 		if($this->session->userdata("username") == "administrator"){
@@ -177,7 +182,7 @@ class Auth extends CI_Controller
 			}
 		}
 	}
-	
+
 	function show_log()
 	{
 		$options = array();
@@ -197,7 +202,7 @@ class Auth extends CI_Controller
 		$data["title"] = "User Log";
 		$this->load->view("page/index",$data);
 	}
-	
+
 	function search_log()
 	{
 		$users = $this->auth_model->get_usernames();
