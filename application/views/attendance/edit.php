@@ -35,11 +35,12 @@ if(get_value($attendance,"attendDate",FALSE)){
 <p><label for="attendNote">Note:</label><input type="text"
 	name="attendNote" id="attendNote" size="50"
 	value="<?=get_value($attendance, "attendNote");?>" /></p>
-<p><input type='submit' class='button' value='Save'/>
+<div class='button-box'>
+<input type='submit' class='button' value='Save'/>
 
 <?php if($action == "update"):?>
 <span class='delete_attendance delete button'>Delete</span>
 <?php endif ?>
 
-</p>
+</div>
 </form>

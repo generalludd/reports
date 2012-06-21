@@ -46,7 +46,7 @@ define('FOPEN_READ_WRITE_CREATE_STRICT',		'x+b');
 */
 define('OK', "<img src='/images/ok.png' alt='' width='12' height='12' border='0'>"); 
 define('X',"<img src='/images/delete.png' alt='' width='12' height='12' border='0'>");
-define('APP_VERSION', "3.0");
+define('APP_VERSION', "3.5");
 
 /* End of file constants.php */
 /* Location: ./application/config/constants.php */

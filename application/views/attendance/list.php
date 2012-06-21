@@ -80,7 +80,7 @@ if(!empty($attendance)):
 		<tr>
 			<td>
 			<? if($this->session->userdata("dbRole") == 1): ?>
-			<a class='edit_attendance button small'
+			<a class='edit_attendance edit button small'
 				id='a_<?=$item->kAttendance;?>' title="Edit">Edit</a>
 				
 				<? endif; ?>

@@ -335,6 +335,10 @@ ul.button-list li .button {
 	margin: 0 5px;
 }
 
+ul.button-list li .button.delete {
+	margin-top: -5px;
+}
+
 .help {
 	
 }
@@ -750,7 +754,7 @@ a.button {
 }
 
 .button-box .delete {
-	margin-top: -5px;
+	*margin-top: -5px;
 }
 
 .button-bar {

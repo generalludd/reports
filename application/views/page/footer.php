@@ -1,4 +1,4 @@
-<?php
+<?php if(!$print):
 ?>
 <div id="ci-version">
 <?="CI Version: " . CI_VERSION;?>
@@ -6,3 +6,5 @@
 <div id="app-version">
 <?="App Version: " . APP_VERSION; ?>
 </div>
+
+<?endif;
