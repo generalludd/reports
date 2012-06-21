@@ -32,6 +32,9 @@ if(!empty($narratives)){
 		$edit_buttons[] = array("item" =>"edit_inline","text"=>"Edit Inline","class" =>"button edit edit_narrative_inline", "id" => "enil_$narrative->kNarrative", "title" => "Edit this narrative here" );
 		$edit_buttons[] = array("item" => "message", "type" => "span", "class" => "text","text" => "(Last edited on " . format_timestamp($narrative->recModified) . ")", "id" => "time_$narrative->kNarrative");
 		echo create_button_bar($edit_buttons);
+		if($narrative->narrGrade){
+			echo "<p>Grade: $narrative->narrGrade</p>";
+		}
 		echo  "<div id='text_$narrative->kNarrative'>$narrText</div>";
 		$thisTerm = $sortTerm;
 
