@@ -9,10 +9,12 @@ echo create_button_bar($buttons);
 		?>
 <? foreach($preferences as $preference): 
 $buttons = array();?>
-<h4 id="<?=$preference->type;?>">
+<div id="ptdisplay-<?=$preference->type;?>"><h4 id="<?=$preference->type;?>">
 	<?=$preference->name;?>
 </h4>
-<? $buttons[] = array("item"=>"preference_type", "text"=>"Edit","class"=>"button edit edit_preference_type","id"=>"pt-$preference->type");
+<? $buttons[] = array("item"=>"preference_type", "text"=>"Edit","class"=>"button edit edit_preference_type","id"=>"pt!$preference->type");
+$buttons[] = array("item" => "preference_type","text"=>"Delete","class"=>"button delete delete_preference_type","id"=>"dt!$preference->type");
+
 echo create_button_bar($buttons);?>
 
 <div 
@@ -35,7 +37,7 @@ echo create_button_bar($buttons);?>
 		<?=$preference->format;?>
 	</p>
 </div>
-
+</div>
 
 
 

@@ -88,4 +88,10 @@ class preference_type_model extends CI_Model
 		$result = $this->db->get()->result();
 		return $result;
 	}
+	
+	function delete($type)
+	{
+		
+		$this->db->delete("preference_type",array("type"=>$type));
+	}
 }

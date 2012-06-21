@@ -9,7 +9,7 @@ class preference_type extends MY_Controller
 		parent::__construct();
 		if($this->session->userdata("userID") == 1000){
 			$this->load->model("preference_type_model","preference");
-				
+
 		}else{
 			redirect();
 		}
@@ -27,7 +27,7 @@ class preference_type extends MY_Controller
 			echo "<div class='notice'>You do not have authorization to edit preference types</div>";
 		}
 	}
-	
+
 	function type_list()
 	{
 		$data["type"] = NULL;
@@ -71,6 +71,21 @@ class preference_type extends MY_Controller
 		$this->preference->update($this->input->get_post("type"));
 		redirect("preference_type/type_list/$type/#$type");
 
+	}
+
+
+	function delete()
+	{
+		if($this->session->userdata("userID") == 1000)
+		{
+			$type = $this->input->post("type");
+			$this->preference->delete($type);
+			if($this->input->post("ajax") == 1){
+				echo "The preference type $type has been deleted.";
+			}else{
+				redirect("preference_type/type_list");
+			}
+		}
 	}
 
 }

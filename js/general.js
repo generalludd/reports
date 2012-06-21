@@ -148,7 +148,7 @@
 	});
 	
 	$('.edit_preference_type').live("click", function(event){
-		var myType = this.id.split("-")[1];
+		var myType = this.id.split("!")[1];
 		var myUrl = base_url + "preference_type/edit";
 		form_data = {
 				type: myType,
@@ -180,6 +180,30 @@
 				showPopup("Create Preference Type", data, "auto");
 			}
 		});
+	});
+	
+	$('.delete_preference_type').live("click",function(event){
+		var myType = this.id.split("!")[1];
+		form_data = {
+			type: myType,
+			ajax: 1
+		};
+		$question = confirm("Are you sure you want to delete " + myType + "? This cannot be undone!");
+		if($question){
+			$ask_again = confirm("Are you really, really sure? This could be problematic if users are taking advantage of this preference!");
+			if($ask_again){
+				$.ajax({
+					url: base_url + "preference_type/delete",
+					type: "POST",
+					data: form_data,
+					success: function(data){
+						alert(data);
+						$("#ptdisplay-" + myType ).hide();
+					}
+					
+				});
+			}
+		}
 	});
 	
 
