@@ -1,4 +1,4 @@
-<?php if(!$print):
+<?php if(!isset($print)):
 ?>
 <div id="ci-version">
 <?="CI Version: " . CI_VERSION;?>
