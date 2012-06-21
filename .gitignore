@@ -8,3 +8,5 @@ email.php
 *email.php
 */email.php
 /application/config/database.php
+*/.DS_Store
+.DS_Store
