@@ -14,12 +14,6 @@ class Student extends MY_Controller
 
 
 
-	function index()
-	{
-
-		redirect("home");
-	}
-
 	function view()
 	{
 		$kStudent = $this->uri->segment(3);

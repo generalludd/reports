@@ -415,8 +415,8 @@ class Narrative extends MY_Controller
 		$data["title"] = "Narrative Search & Replace Results";
 		$this->load->view("page/index", $data);
 	}
-	
-	
+
+
 	function list_backups()
 	{
 		$kNarrative = $this->uri->segment(3);

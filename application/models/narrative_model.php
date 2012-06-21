@@ -258,6 +258,7 @@ class Narrative_model extends CI_Model
 		$this->db->delete('narrative', $delete_array);
 	}
 
+	
 
 	function text_replace($search, $replace, $kTeach, $narrYear, $narrTerm, $gradeStart, $gradeEnd)
 	{
@@ -281,7 +282,7 @@ class Narrative_model extends CI_Model
 			foreach($narrative_list as $narrative){
 				$text = $this->get_value($narrative->kNarrative, "narrText");
 				$position = strpos($text, $search);
-				if($position){
+				if($position >= 0){
 					$text = str_replace($search, $replace, $text);
 					$this->backup($narrative->kNarrative);
 					$this->update_text($narrative->kNarrative, $text );
@@ -294,6 +295,8 @@ class Narrative_model extends CI_Model
 		return array("count" => $count, "narratives" => $narratives);
 	}
 
+	
+	
 	function update_text($kNarrative, $narrText, $backup = FALSE)
 	{
 		if($backup){

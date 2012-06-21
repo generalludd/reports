@@ -10,11 +10,6 @@ class Attendance extends MY_Controller {
 		
 	}
 
-	function index()
-	{
-		redirect("/");
-	}
-
 	
 	function create()
 	{

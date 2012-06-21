@@ -11,7 +11,7 @@ class preference_type extends MY_Controller
 			$this->load->model("preference_type_model","preference");
 				
 		}else{
-			redirect("/");
+			redirect();
 		}
 	}
 

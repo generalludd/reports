@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class My_Controller extends CI_Controller
+class MY_Controller extends CI_Controller
 {
 	function __construct()
 	{
@@ -11,6 +11,9 @@ class My_Controller extends CI_Controller
 		}
 	}
 
-
+	function index()
+	{
+		redirect();
+	}
 
 }
