@@ -7,7 +7,7 @@ $('#popupContainer').ready(function(){
 		}else if($('#kTeach')) {
 			 myTeach=$('#kTeach').val();
 		}
-		var myUrl = base_url + "index.php/auth/edit_password";
+		var myUrl = base_url + "index.php/user/edit_password";
 		var form_data = {
 				kTeach: myTeach,
 				ajax: 1
@@ -44,14 +44,14 @@ $('#popupContainer').ready(function(){
 				check_password: myCheckPassword,
 				ajax: 1
 		};
-		var myUrl = base_url + "index.php/auth/change_password";
+		var myUrl = base_url + "index.php/user/change_password";
 		if(validPassword=="true" && myCurrentPassword!="") {
 			$.ajax({
 				type: "POST",
 				url: myUrl,
 				data: form_data,
 				success: function(data){
-				$("#password_form").html("<h3>" + data + "</h3>");
+				$("#password_form").html("<div class='notice'>" + data + "</div>");
 				
 			}
 			});
@@ -71,7 +71,7 @@ $('#popupContainer').ready(function(){
 			
 			alert(message);
 		}// end if validPassword;
-
+		return false;
 			
 	});
 	

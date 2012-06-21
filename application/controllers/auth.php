@@ -56,16 +56,6 @@ class Auth extends CI_Controller
 	}
 
 
-	function edit_password()
-	{
-		$kTeach = $this->input->post("kTeach");
-		$userID = $this->session->userdata("userID");
-		if($kTeach == $userID || $userID == 1000){
-			$data["kTeach"] = $kTeach;
-			$this->load->view("auth/changepass", $data);
-		}
-	}
-
 	function change_password()
 	{
 		$output = "You are not authorized to do this!";
@@ -167,59 +157,5 @@ class Auth extends CI_Controller
 		}
 	}
 
-	function masquerade()
-	{
-		if($this->session->userdata("username") == "administrator"){
-			$userID = $this->uri->segment(3);
-			$this->load->model("teacher_model");
-			$teacher = $this->teacher_model->get($userID);
-			if($teacher){
-				$data['username'] = $teacher->username;
-				$data['dbRole'] = $teacher->dbRole;
-				$data['userID'] = $teacher->kTeach;
-				$this->session->set_userdata($data);
-				redirect("/");
-			}
-		}
-	}
-
-	function show_log()
-	{
-		$options = array();
-		if($this->input->get_post("kTeach")){
-			$options["kTeach"] = $this->input->get_post("kTeach");
-		}
-
-		if($this->input->get_post("username")){
-			$options["username"] = $this->input->get_post("username");
-		}
-
-		if($this->input->get_post("action")){
-			$options["action"] = $this->input->get_post("action");
-		}
-
-		if($this->input->get_post("time_start") && $this->input->get_post("time_end")){
-			$time_start = format_date($this->input->get_post("time_start"),"mysql");
-			$time_end = format_date($this->input->get_post("time_end"),"mysql");
-			$time_end .= " 23:59:59";// make the end time the end of the same day
-			$options["date_range"]["time_start"] = $time_start;
-			$options["date_range"]["time_end"] = $time_end;
-		}
-
-		$data["header"] = array("username","timestamp","action");
-		$data["logs"] = $this->auth_model->get_log($options);
-		$data["options"] = $options;
-		$data["target"] = "auth/log";
-		$data["title"] = "User Log";
-		$this->load->view("page/index",$data);
-	}
-
-	function search_log()
-	{
-		$users = $this->auth_model->get_usernames();
-		$data["users"] = get_keyed_pairs($users,array("username","user"),TRUE);
-		$data["actions"] = array("login" => "login","logout" => "logout");
-		$this->load->view("auth/search_log",$data);
-	}
 
 }

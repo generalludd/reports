@@ -31,7 +31,7 @@ if($kTeach == $this->session->userdata("userID") || $this->session->userdata("db
 
 	$edit_buttons[] = array("item"=>"edit", "class"=>"teacher_edit button edit", "id"=>"et_$kTeach", "text"=>"Edit Info");
 	if($this->session->userdata("username") == "administrator"){
-		$edit_buttons[] = array("item" => "edit", "class" => "masquerade button","href" => site_url("/auth/masquerade/$kTeach"), "text" => "Masquerade" );
+		$edit_buttons[] = array("item" => "edit", "class" => "masquerade button","href" => site_url("/user/masquerade/$kTeach"), "text" => "Masquerade" );
 	}
 	
 	print create_button_bar($edit_buttons);
