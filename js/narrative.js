@@ -24,8 +24,8 @@ $(document).ready(function() {
 	
 	
 	$('.edit_narrative_inline').live('click', function(event){
-		var action = confirm("Are you sure you want to edit this here? This provides limited editing here and provides text only in raw html.");
-		if(action) {
+		//var action = confirm("Are you sure you want to edit this here? This provides limited editing here and provides text only in raw html.");
+		//if(action) {
 			var myTeach = $("#kTeach").val();
 			var myNarrative = this.id.split('_')[1];
 			
@@ -40,15 +40,13 @@ $(document).ready(function() {
 				type: 'POST',
 				data: form_data,
 				success: function(data){
-
 						$("#text_" + myNarrative).html(data);
-						
-						$("#enil_" + myNarrative).focus().hide();
+						$("#enil_" + myNarrative).html("Save").addClass("new").removeClass("edit").removeClass("edit_narrative_inline").addClass("save_narrative_inline");
 						document.location = document.location + "enil_" + myNarrative;
 				} //end function
 			});//end ajax
 
-		}//end if
+		//}//end if
 
 	}); //end edit_narrative_inline
 		
@@ -71,16 +69,59 @@ $(document).ready(function() {
 					output = data.split("||");
 					$("#text_" + myNarrative).html(output[0]);
 					$("#time_" + myNarrative).html(output[1]);
-					$("#enil_" + myNarrative).fadeIn();
+					$("#enil_" + myNarrative).html("Edit Inline").addClass("edit").removeClass("new").removeClass("save_narrative_inline").addClass("edit_narrative_inline").focus();
 				}// end success-function
 			}); //end ajax
 			
 	});//end edit_narrative_inplace
 	
+
+	$('.grade_edit').live("click",function(event){
+		var myId = this.id.split("_")[1];
+		var myValue = $("#ngtext_" + myId).html();
+		$("#ngtext_" + myId).html("<input type='text' id='grade_" + myId + "' value='" + myValue + "'/>");
+		$(this).html("Save").removeClass("grade_edit").addClass("grade_save").removeClass("edit").removeClass("new");
+	});
+	
+	$('.grade_save').live("click",function(event){
+		var myId = this.id.split("_")[1];
+		var myValue = $("#grade_" + myId).val();
+		var myUrl = base_url + "narrative/update_grade";
+		form_data = {
+				kNarrative: myId,
+				narrGrade: myValue
+		};
+		$(this).html("Edit Grade").addClass("edit").removeClass("grade_save").addClass("grade_edit");
+		$.ajax({
+			type:"POST",
+			url: myUrl,
+			data: form_data,
+			success: function(data){
+				$("#ngtext_" + myId).html(data);//expecting the grade returned. 
+			}
+		});
+		
+	});
+	
+	$('.teacher_narrative_search').live("click", function(event){
+		myTeach =  this.id.split("_")[1];
+
+		$.ajax({
+			type:"POST",
+			url: base_url + "narrative/search_teacher_narratives/"+ myTeach,
+			success:function(data){
+				showPopup("Search Teacher Narratives",data,"auto");
+			}
+		});
+		
+		
+	});
+	
+	
 	$('.missing_narrative_search').live('click', function(event){
-		var myTeach = this.id.split("_")[1];
-		var myUrl = base_url + "narrative/search_missing";
-		var form_data = {
+		 myTeach = this.id.split("_")[1];
+		 myUrl = base_url + "narrative/search_missing";
+		form_data = {
 				kTeach: myTeach,
 				ajax: 1
 		};
@@ -118,16 +159,16 @@ $(document).ready(function() {
 			var defaultTerm = $('#defaultTerm').val();
 			var defaultYear = $('#defaultYear').val();
 			var myStudent = this.id.split("_")[1];
-			var myTeach = $("#userID").val();
+			 myTeach = $("#userID").val();
 			
-			var form_data = {
+			form_data = {
 					kTeach: myTeach,
 					kStudent: myStudent,
 					narrYear: defaultYear,
 					narrTerm: defaultTerm,
 					ajax: 1
 			};
-			var myUrl = base_url + "index.php/narrative/select_type";
+			 myUrl = base_url + "index.php/narrative/select_type";
 			$.ajax({
 				url: myUrl,
 				type: 'POST',
@@ -151,7 +192,7 @@ $(document).ready(function() {
 	});
 
 	$('.print_teacher_narratives').live('click', function(event) {
-				var myTeach = this.id.split('_')[1];
+				 myTeach = this.id.split('_')[1];
 				// var myWindow=new Window();
 			// myWindow.document="ajax.switch.php?target=narrative&action_task=print_teacher_narratives&kTeach="
 			// + myTeach;
@@ -161,13 +202,13 @@ $(document).ready(function() {
 		var myStudent = $("#kStudent").val();
 		var myTerm = this.id.split("_")[1];
 		var myYear = this.id.split("_")[2];
-		var form_data = {
+		form_data = {
 				kStudent: myStudent,
 				narrTerm: myTerm,
 				narrYear: myYear,
 				ajax: 1
 		};
-		var myUrl = base_url + "index.php/narrative/student_print";
+		 myUrl = base_url + "index.php/narrative/student_print";
 		$.ajax({
 			url: myUrl,
 			type: 'POST',
@@ -188,12 +229,12 @@ $(document).ready(function() {
 		var myStudent = $("#kStudent").val();
 		var myTerm = this.id.split("_")[1];
 		var myYear = this.id.split("_")[2];
-		var form_data = {
+		form_data = {
 				kStudent: myStudent,
 				narrTerm: myTerm,
 				narrYear: myYear
 		};
-		var myUrl = base_url + "index.php/narrative/show_sorter/";
+		 myUrl = base_url + "index.php/narrative/show_sorter/";
 		$.ajax({
 			url: myUrl,	
 			type: 'POST',
@@ -224,7 +265,7 @@ $(document).ready(function() {
 		} else {
 			$("#ajax").val(1);
 			var formData = $("#narrativeEditor").serialize();
-			var myUrl = base_url + "index.php/narrative/" + action;
+			 myUrl = base_url + "index.php/narrative/" + action;
 			$.ajax({
 				url: myUrl,
 				type: 'POST',
@@ -303,8 +344,31 @@ $(document).ready(function() {
 			}
 		}
 	});
+	
+	$("#teacher_narratives_search #kTeach").live("change",function(event){
+		myTeach = $(this).val();
+		$.ajax({
+			type:"GET",
+			data: {kTeach:myTeach},
+			url: base_url + "teacher/subject_menu",
+			success: function(data){
+				$("#teacher_narratives_search #subject_menu").html(data);
+			}
+		});
+		
+		$.ajax({
+			type:"GET",
+			data: {kTeach:myTeach},
+			url: base_url + "teacher/grade_range",
+			success: function(data){
+				$("#teacher_narratives_search #grade_range").html(data);
+			}
+		});
+	});
+	
 
-	$('#kTeach').live('change', function(event) {
+	/*
+ 	$('#kTeach').live('change', function(event) {
 		var myTeach = $('#kTeach').val();
 		$.get('ajax.switch.php', {
 			target : 'teacher',
@@ -315,7 +379,7 @@ $(document).ready(function() {
 			$('#subjectMenu').html(data);
 		});
 	});
-
+*/
 	
 	$('.add_narrative').live('click',
 
@@ -331,10 +395,10 @@ $(document).ready(function() {
 
 	
 	$('.view_edits').live('click',function() {
-		var form_data = {
+		 form_data = {
 				kNarrative: $('#kNarrative').val()
 		};
-		var myUrl = base_url + "suggestion/view";
+		 myUrl = base_url + "suggestion/view";
 		$.get('ajax.switch.php', {
 			target : 'narrative',
 			action_task : "show_edits",
@@ -448,7 +512,7 @@ function mergeSentences(myCount) {
 function delete_narrative(myNarrative, myStudent) {
 	action = confirm("You sure you want to delete this?");
 	if (action) {
-		var form_data = {
+		form_data = {
 			kNarrative : myNarrative,
 			kStudent : myStudent
 		};

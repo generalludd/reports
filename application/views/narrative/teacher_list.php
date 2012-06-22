@@ -1,4 +1,56 @@
-<?php
+<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+?>
+
+<fieldset class="search_fieldset">
+<legend>Search Parameters</legend>
+<?
+if(!empty($options)){
+
+	$keys = array_keys($options);
+	$values = array_values($options);
+
+	echo "<ul>";
+
+	for($i = 0; $i < count($options); $i++){
+		$key = $keys[$i];
+		$value = $values[$i];
+		switch($key){
+			case "kTeach":
+				echo "<li>Teacher: <strong>$teacher</strong></li>";
+				break;
+			case "gradeStart":
+							echo "<li>Starting Grade: <strong>$value</strong></li>";
+				break;
+			case "gradeEnd":
+				echo "<li>Ending Grade: <strong>$value</strong></li>";
+				break;
+			case "narrSubject":
+				echo "<li>Subject: <strong>$value</strong></li>";
+				break;
+			case "narrTerm":
+				echo "<li>Term: <strong>$value</strong></li>";
+				break;
+			case "narrYear":
+				echo "<li>School Year: <strong>" . format_schoolyear($value) . "</strong></li>";
+				break;
+			default:
+				echo "<li>" .ucfirst($key) . "<strong>$value</strong></li>";
+		}
+	}
+		
+		echo "</ul>";
+
+}else{
+echo "<p>Showing all Users.</p>";
+
+}
+?>
+
+		<div class="button-box">
+			<a class="button teacher_narrative_search" id="tns_<?=$kTeach;?>">Refine Search</a>
+		</div>
+	</fieldset>
+<?
 if(!empty($narratives)){
 	$thisTerm="";
 	$thisStudent="";
@@ -30,11 +82,19 @@ if(!empty($narratives)){
 		echo "<p><b>$narrative->narrSubject</b></p>";
 		$edit_buttons[] = array("item"=>"view","text"=>"View","href"=> site_url("narrative/view/$narrative->kNarrative"), "title"=>"$narrSummary");
 		$edit_buttons[] = array("item" =>"edit_inline","text"=>"Edit Inline","class" =>"button edit edit_narrative_inline", "id" => "enil_$narrative->kNarrative", "title" => "Edit this narrative here" );
-		$edit_buttons[] = array("item" => "message", "type" => "span", "class" => "text","text" => "(Last edited on " . format_timestamp($narrative->recModified) . ")", "id" => "time_$narrative->kNarrative");
-		echo create_button_bar($edit_buttons);
-		if($narrative->narrGrade){
-			echo "<p>Grade: $narrative->narrGrade</p>";
+		
+		if($narrative->stuGrade >= 5){
+			$button_type = "new";
+			$button_text = "Add Grade";
+			if(!empty($narrative->narrGrade)){
+				$button_type = "edit";
+				$button_text = "Edit Grade";
+			}
+			$edit_buttons[] = array("item" => "narrGrde", "type" => "span", "class" => "text","text" => "Grade: <span class='narr_grade' style='font-weight:bold' id='ngtext_$narrative->kNarrative'>$narrative->narrGrade</span>" );
+			$edit_buttons[] = array("item" =>"edit_grade","text" => $button_text, "type" => "span", "class" => "button $button_type grade_edit", "id" => "ngedit_$narrative->kNarrative");
+			$edit_buttons[] = array("item" => "message", "type" => "span", "class" => "text","text" => "(Last edited on " . format_timestamp($narrative->recModified) . ")", "id" => "time_$narrative->kNarrative");			
 		}
+		echo create_button_bar($edit_buttons);
 		echo  "<div id='text_$narrative->kNarrative'>$narrText</div>";
 		$thisTerm = $sortTerm;
 

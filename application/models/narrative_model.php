@@ -23,7 +23,7 @@ class Narrative_model extends CI_Model
 
 	function prepare_variables()
 	{
-		//@TODO clean up the kindergarten conundrum. 
+		//@TODO clean up the kindergarten conundrum.
 		$variables = array("kStudent","kTeach","stuGrade","narrText","narrTerm","narrSubject","narrGrade","narrYear");
 		for($i = 0; $i < count($variables); $i++){
 			$myVariable = $variables[$i];
@@ -31,7 +31,7 @@ class Narrative_model extends CI_Model
 				if($myVariable == "stuGrade" && $this->input->post($myVariable) == "") {
 					$this->$myVariable = 0;
 				}else{
-				$this->$myVariable = $this->input->post($myVariable);
+					$this->$myVariable = $this->input->post($myVariable);
 				}
 			}
 		}
@@ -78,7 +78,7 @@ class Narrative_model extends CI_Model
 		$this->db->select($fieldName);
 		$this->db->from('narrative');
 		$result = $this->db->get()->row();
-		
+
 		return $result->$fieldName;
 	}
 
@@ -98,7 +98,7 @@ class Narrative_model extends CI_Model
 		$query .= " WHERE ". implode(" AND ", $where);
 		$query .= " ORDER BY `narrYear` DESC,";
 		$query .= " CASE WHEN `narrTerm` = 'Year-End' THEN 1 ELSE 2 END";
-		
+
 		//this allows optional sorting of subjects (if the student does well in one subject,
 		//the teacher/editors may wish to have it appear before those the student struggles with
 		$subjects = NULL;
@@ -185,7 +185,7 @@ class Narrative_model extends CI_Model
 		}
 
 		if(array_key_exists("gradeStart", $options) && array_key_exists("gradeEnd",$options)){
-			$this->db->where("stuGrade BETWEEN ". $options["gradeStart"] . " AND " . $options["gradeEnd"]);
+			$this->db->where("narrative.stuGrade BETWEEN ". $options["gradeStart"] . " AND " . $options["gradeEnd"]);
 		}
 
 		if(array_key_exists("kStudent", $options)){
@@ -199,7 +199,7 @@ class Narrative_model extends CI_Model
 		}
 
 		if(array_key_exists("narrTerm", $options)){
-			$this->db->where("narrative.narrTerm", $options["narrYear"]);
+			$this->db->where("narrative.narrTerm", $options["narrTerm"]);
 		}else{
 			$this->db->where("narrative.narrTerm", get_current_term());
 		}
@@ -216,6 +216,7 @@ class Narrative_model extends CI_Model
 
 		$this->db->from("narrative");
 		$this->db->join("student", "narrative.kStudent = student.kStudent", "left");
+		
 		$this->db->select("narrative.*, student.stuGrade AS currentGrade, student.stuFirst, student.stuLast, student.stuNickname");
 		$result = $this->db->get()->result();
 		return $result;
@@ -258,7 +259,7 @@ class Narrative_model extends CI_Model
 		$this->db->delete('narrative', $delete_array);
 	}
 
-	
+
 
 	function text_replace($search, $replace, $kTeach, $narrYear, $narrTerm, $gradeStart, $gradeEnd)
 	{
@@ -295,8 +296,8 @@ class Narrative_model extends CI_Model
 		return array("count" => $count, "narratives" => $narratives);
 	}
 
-	
-	
+
+
 	function update_text($kNarrative, $narrText, $backup = FALSE)
 	{
 		if($backup){
@@ -308,6 +309,16 @@ class Narrative_model extends CI_Model
 	}
 
 
+	function update_value($kNarrative,$field, $value, $backup = FALSE)
+	{
+		if($backup){
+			$this->backup($kNarrative);
+		}
+		$values = array($field => $value);
+		$this->db->where("kNarrative",$kNarrative);
+		$this->db->update("narrative",$values);
+		return $this->get_value($kNarrative,"narrGrade");
+	}
 
 
 	function backup($kNarrative)
@@ -331,7 +342,7 @@ class Narrative_model extends CI_Model
 		}
 
 	}
-	
+
 
 
 }

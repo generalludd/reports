@@ -189,6 +189,15 @@ class Narrative extends MY_Controller
 		echo $output->narrText . "||" . format_timestamp($output->recModified);
 	}
 
+	function update_grade(){
+		$kNarrative = $this->input->post("kNarrative");
+		$result = "";
+		if($kNarrative){
+			$narrGrade = $this->input->post("narrGrade");
+			$result = $this->narrative_model->update_value($kNarrative,"narrGrade",$narrGrade);
+		}
+		echo $result;
+	}
 
 	function student_list(){
 		$this->load->model("student_model");
@@ -232,12 +241,40 @@ class Narrative extends MY_Controller
 	{
 		$this->load->model("teacher_model");
 		$kTeach = $this->uri->segment(3);
-		$data["narrYear"] = get_current_year();
-		$data["kTeach"] = $kTeach;
+		if(empty($kTeach)){
+			$kTeach = $this->input->get_post("kTeach");
+		}
+		$options["kTeach"] = $kTeach;
+
+		if($this->input->get_post("gradeStart") && $this->input->get_post("gradeEnd")){
+			$options["gradeStart"] = $this->input->get_post("gradeStart");
+			$this->session->set_userdata("gradeStart",$options["gradeStart"]);
+			$options["gradeEnd"] = $this->input->get_post("gradeEnd");
+			$this->session->set_userdata("gradeEnd",$options["gradeEnd"]);
+		}
+
+		if($this->input->get_post("subject")){
+			$options["narrSubject"] = $this->input->get_post("subject");
+			$this->session->set_userdata("narrative_subject", $options["narrSubject"]);
+		}
+
+		$options["narrYear"] = get_current_year();
+		if($this->input->get_post("narrYear")){
+			$options["narrYear"] = $this->input->get_post("narrYear");
+			$this->session->set_userdata("narrYear",$options["narrYear"]);
+		}
+
+		$options["narrTerm"] = get_current_term();
+		if($this->input->get_post("narrTerm")){
+			$options["narrTerm"] = $this->input->get_post("narrTerm");
+			$this->session->set_userdata("narrTerm", $options["narrTerm"]);
+		}
+		$data["narratives"] = $this->narrative_model->get_narratives($options);
+		$data["options"] = $options;
 		$teacher = $this->teacher_model->get_name($kTeach);
 		$data["teacher"] = $teacher;
+		$data["kTeach"] = $kTeach;
 		$data["title"] = "Showing current narratives for $teacher";
-		$data["narratives"] = $this->narrative_model->get_narratives($data);
 		$data["target"] = "narrative/teacher_list";
 		if($this->uri->segment(4) == "print"){
 			$this->load->view("page/print", $data);
@@ -246,6 +283,48 @@ class Narrative extends MY_Controller
 
 		}
 
+	}
+
+	function search_teacher_narratives()
+	{
+		$this->load->model('teacher_model');
+		$this->load->model('subject_model');
+		$this->load->model("menu_model");
+		$kTeach = $this->uri->segment(3);
+		if(empty($kTeach)){
+			$kTeach = $this->session->userdata("userID");
+		}
+		$data["kTeach"] = $kTeach;
+		$teachers = $this->teacher_model->get_teacher_pairs();
+		$data['teachers'] = get_keyed_pairs($teachers, array('kTeach', 'teacher'));
+		$data["subject"] = $this->session->userdata("narrative_subject");
+		$subjects = $this->subject_model->get_for_teacher($kTeach);
+		$data["subjects"] = get_keyed_pairs($subjects, array("subject", "subject"));
+		
+		if($this->session->userdata("userRole") == 1){
+			$subjects = $this->subject_model->get_all();
+		
+		}
+		$grade_list = $this->menu_model->get_pairs("grade");
+		
+		$data["grades"] = get_keyed_pairs($grade_list, array("value","label"));
+		
+		$data["gradeStart"] = $this->session->userdata("gradeStart");
+		$data["gradeEnd"] = $this->session->userdata("gradeEnd");
+		if(empty($data["gradeStart"]) || empty($data["gradeEnd"])){
+			$teacher_grades = $this->teacher_model->get($kTeach,"gradeStart,gradeEnd");
+			$data["gradeStart"] = $teacher_grades->gradeStart;
+			$data["gradeEnd"] = $teacher_grades->gradeEnd;
+		}
+		$data["narrTerm"] = $this->session->userdata("narrTerm");
+		if(empty($data["narrTerm"])){
+			$data["narrTerm"] = get_current_term();
+		}
+		$data["narrYear"] = $this->session->userdata("narrYear");
+		if(empty($data["narrYear"])){
+			$data["narrYear"] = get_current_year();
+		}
+		$this->load->view("narrative/teacher_search",$data);
 	}
 
 

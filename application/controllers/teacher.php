@@ -140,6 +140,26 @@ class Teacher extends MY_Controller
 	{
 		
 	}
+	
+	function subject_menu()
+	{
+		$kTeach = $this->input->get_post("kTeach");
+		$this->load->model("subject_model");
+		$subjects = get_keyed_pairs($this->subject_model->get_for_teacher($kTeach), array("subject", "subject"));
+		echo form_dropdown("subject",$subjects,$this->session->userdata("current_subject"),"id='subject'");
+	}
+	
+	function grade_range()
+	{
+		$this->load->model("menu_model");
+		$kTeach = $this->input->get_post("kTeach");
+		$teacher_grades = $this->teacher_model->get($kTeach,"gradeStart,gradeEnd");
+		$grades = get_keyed_pairs($this->menu_model->get_pairs("grade"), array("value","label"));
+		$output = form_dropdown("gradeStart", $grades, $teacher_grades->gradeStart, "id='gradeStart'");
+		$output .= "-" . form_dropdown("gradeEnd", $grades, $teacher_grades->gradeEnd, "id='gradeEnd'");
+		echo $output;
+	}
+	
 
 	function add_subject()
 	{

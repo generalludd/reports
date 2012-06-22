@@ -81,9 +81,9 @@ class Teacher_model extends CI_Model
 	 * this is a very expensive function to avoid password confusion. 
 	 * If at any point access were to be expanded, we'd need a separate table for "users" separate from "teachers" (in fact this has already started)
 	 * but then the question is whether this would cause an equivalent cost in joins between users and teachers elsewhere. 
-	 * @param unknown_type $kTeach
-	 * @param unknown_type $select
-	 * @return unknown|boolean
+	 * @param int $kTeach
+	 * @param string $select
+	 * @return string|boolean
 	 */
 	function get($kTeach, $select = NULL)
 	{

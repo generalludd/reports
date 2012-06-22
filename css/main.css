@@ -305,7 +305,7 @@ div.narrative {
 	font-weight: normal;
 }
 
-td .button,.row .button {
+td .button,.row .button, .button.small {
 	font-size: .9em;
 	padding: .35em .5em;
 }

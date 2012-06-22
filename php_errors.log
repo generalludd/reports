@@ -3,3 +3,5 @@
 [13-Jun-2012 11:58:32] PHP Fatal error:  Cannot use object of type stdClass as array in /Users/administrator/Dropbox/narrative/application/helpers/general_helper.php on line 497
 [21-Jun-2012 10:37:30] PHP Fatal error:  Call to a member function change_password() on a non-object in /Users/administrator/Dropbox/narrative/application/controllers/user.php on line 37
 [21-Jun-2012 10:46:22] PHP Fatal error:  Call to a member function get_usernames() on a non-object in /Users/administrator/Dropbox/narrative/application/controllers/admin.php on line 74
+[22-Jun-2012 10:05:51] PHP Fatal error:  Call to a member function get_for_teacher() on a non-object in /Users/administrator/Dropbox/narrative/application/controllers/narrative.php on line 268
+[22-Jun-2012 10:53:52] PHP Fatal error:  Can't use method return value in write context in /Users/administrator/Dropbox/narrative/application/controllers/narrative.php on line 293

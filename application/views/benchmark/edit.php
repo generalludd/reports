@@ -8,7 +8,8 @@
 <p><label for="gradeStart">Grade Range: </label><input type="text"
 	id="gradeStart" name="gradeStart" value="<?=$gradeStart; ?>" size="3"
 	maxlength="1"> -<input type="text" id="gradeEnd" name="gradeEnd"
-	value="<?=$gradeEnd;?>" size="3" maxlength="1"> <label for="term">Term:
+	value="<?=$gradeEnd;?>" size="3" maxlength="1"> 
+	<label for="term">Term:
 </label><?=get_term_menu('term', $term);?> <label for="year">Year: </label>
 <?=form_dropdown('year',get_year_list(), $year, "id='year' class='searchYear'");?>
 -<input id="yearEnd" type="text" name="yearEnd" class='yearEnd' readonly
