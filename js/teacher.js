@@ -144,6 +144,16 @@ $(document).ready(function(){
 		return false;
 	});
 	
+	$(".teacher_search").live("click",function(event){
+		$.ajax({
+			type:"GET",
+			url: base_url + "teacher/show_search",
+			success: function(data){
+				showPopup("Search for Users",data,"auto");
+			}
+		});
+	});
+	
 });// end ready
 
 

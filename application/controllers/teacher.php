@@ -24,7 +24,10 @@ class Teacher extends MY_Controller
 		if($this->input->get_post("showAdmin")){
 			$data["options"]["showAdmin"] = TRUE;
 		}
-		if($this->input->get_post("gradeStart") && $this->input->get_post("gradeEnd")){
+		if($this->input->get_post("role")){
+			$data["options"]["role"] = $this->input->get_post("role");
+		}
+		if($this->input->get_post("gradeStart") >= 0 && $this->input->get_post("gradeEnd") >= 0){
 			$data["options"]["gradeRange"]["gradeStart"] = $this->input->get_post("gradeStart");
 			$data["options"]["gradeRange"]["gradeEnd"] = $this->input->get_post("gradeEnd");
 				
@@ -138,7 +141,9 @@ class Teacher extends MY_Controller
 	
 	function show_search()
 	{
-		
+		$grade_list = $this->menu_model->get_pairs("grade");
+		$data["grades"] = get_keyed_pairs($grade_list, array("value","label"));
+		$this->load->view("teacher/search", $data);
 	}
 	
 	function subject_menu()

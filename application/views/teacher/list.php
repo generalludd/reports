@@ -12,23 +12,38 @@
 			echo "<ul>";
 
 			for($i = 0; $i < count($options); $i++){
-				if($keys[$i] == "showAdmin" || $keys[$i] == "showInactive"){
-					echo "<li>" . ucfirst($keys[$i]) .": <strong>Yes</strong></li>";
-				}elseif($keys[$i] == "gradeRange"){
-					$gradeStart = $options["gradeRange"]["gradeStart"];
-					$gradeEnd = $options["gradeRange"]["gradeEnd"];
-					if($gradeStart == $gradeEnd){
-						echo "<li>Grade: <strong>$gradeStart</strong></li>";
-					}else{
-						echo "<li>Grade Range: <strong>$gradeStart-$gradeEnd</strong></li>";
-					}
-				}else{
-					echo "<li>" . ucfirst($keys[$i]) .": <strong>";
-					echo $values[$i] . "</strong></li>";
+				$key = $keys[$i];
+				$value = $values[$i];
+				switch($key){
+					case "showInactive":
+						echo "<li>Show Inactive/Former Users: <strong>Yes</strong></li>";
+						break;
+					case "gradeRange":
+						$gradeStart = format_grade($options["gradeRange"]["gradeStart"]);
+						$gradeEnd = format_grade($options["gradeRange"]["gradeEnd"]);
+						if($gradeStart == $gradeEnd){
+							echo "<li>Grade: <strong>$gradeStart</strong></li>";
+						}else{
+							echo "<li>Grade Range: <strong>$gradeStart-$gradeEnd</strong></li>";
+						}
+						break;
+					case "role":
+						$role_labels = array(1=>"Administrators",2=>"Editors/Teachers",3=>"Aides");
+						echo "<li>Roles<ul>";
+						for($t = 0; $t < count($value); $t++){
+							echo "<li>" . $role_labels[$value[$t]] . "</li>";
+						}
+						echo "</ul></li>";
+						break;
+					default:
+						echo "<li>" . ucfirst($keys[$i]) .": <strong>";
+						echo $values[$i] . "</strong></li>";
+
 				}
+
 			}
 			echo "</ul>";
-				
+
 		}else{
 			echo "<p>Showing all Users.</p>";
 
