@@ -51,19 +51,22 @@ class Teacher_model extends CI_Model
 		$this->db->order_by("gradeStart", "ASC");
 		$this->db->order_by("gradeEnd", "ASC");
 
-		if($userRole == 1 && $userID == 1000){ //only the administrator should have any reason to see the other administrators.
+		if($userRole == 1){
+			if($userID != 1000){  //only the administrator should have any reason to see the other administrators.
+				$this->db->where("dbRole != " , 1);
+			}
 			if(array_key_exists("showInactive", $options)){
 				$this->db->where_in("status", array(0,1,2));
 			}else{
 				$this->db->where_in("status", array(1,2));
 			}
-			
+				
 			if(array_key_exists("role",$options)){
 				$this->db->where_in("dbRole",$options["role"]);
 			}else{
 				$this->db->where_in("dbRole", array(2,3));
 			}
-			
+
 			if(array_key_exists("gradeRange", $options)){
 				$this->db->where("gradeStart >= " .$options["gradeRange"]["gradeStart"]);
 				$this->db->where("gradeStart <= " . $options["gradeRange"]["gradeEnd"]);
@@ -82,11 +85,11 @@ class Teacher_model extends CI_Model
 
 	}
 
-	
-	/** 
-	 * this is a very expensive function to avoid password confusion. 
+
+	/**
+	 * this is a very expensive function to avoid password confusion.
 	 * If at any point access were to be expanded, we'd need a separate table for "users" separate from "teachers" (in fact this has already started)
-	 * but then the question is whether this would cause an equivalent cost in joins between users and teachers elsewhere. 
+	 * but then the question is whether this would cause an equivalent cost in joins between users and teachers elsewhere.
 	 * @param int $kTeach
 	 * @param string $select
 	 * @return string|boolean
@@ -104,14 +107,14 @@ class Teacher_model extends CI_Model
 		}
 		/*else{
 			$columns = $this->get_columns();
-			foreach($columns as $row){
-				//avoid returning the password field.
-				//@TODO move the passwords to a separate table maybe?
-				//maybe the fact that pwd is not actually sent to the browser in any way makes this concern irrelevant. 
-				if($row->Field != "pwd"){
-					$this->db->select($row->Field);
-				}
-			}
+		foreach($columns as $row){
+		//avoid returning the password field.
+		//@TODO move the passwords to a separate table maybe?
+		//maybe the fact that pwd is not actually sent to the browser in any way makes this concern irrelevant.
+		if($row->Field != "pwd"){
+		$this->db->select($row->Field);
+		}
+		}
 		}
 		*/
 		$this->db->where('kTeach', $kTeach);

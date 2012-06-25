@@ -28,8 +28,12 @@ class Teacher extends MY_Controller
 			$data["options"]["role"] = $this->input->get_post("role");
 		}
 		if($this->input->get_post("gradeStart") >= 0 && $this->input->get_post("gradeEnd") >= 0){
-			$data["options"]["gradeRange"]["gradeStart"] = $this->input->get_post("gradeStart");
-			$data["options"]["gradeRange"]["gradeEnd"] = $this->input->get_post("gradeEnd");
+			$gradeStart = $this->input->get_post("gradeStart");
+			$gradeEnd = $this->input->get_post("gradeEnd");
+			$data["options"]["gradeRange"]["gradeStart"] = $gradeStart;
+			$data["options"]["gradeRange"]["gradeEnd"] = $gradeEnd;
+			$this->session->set_userdata("gradeStart",$gradeStart );
+			$this->session->set_userdata("gradeEnd", $gradeEnd);
 				
 		}
 		$data["teachers"] = $this->teacher_model->get_all($data["options"]);
