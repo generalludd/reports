@@ -10,12 +10,27 @@ class Grade extends MY_Controller
 		$this->load->model("assignment_model","assignment");
 	}
 	
-	function index()
+	function edit()
 	{
-		$output = $this->assignment->get_for_student(5002,8,3,"Year-End",2011);
-		print_r($output);
+		$kStudent = $this->input->get_post("kStudent");
+		$kTeach = $this->input->get_post("kTeach");
+		$data["kStudent"] = $kStudent;
+		$data["kTeach"] = $kTeach;
+		$data["grades"] = $this->assignment->get_for_student($kStudent,$kTeach,"Year-End",2011);
+		$data["target"] = "grade/edit";
+		$data["title"] = "Edit Grades for Student";
+		$this->load->view("grade/edit",$data);
 		
 		
+	}
+	
+	function update()
+	{
+		$kStudent = $this->input->post("kStudent");
+		$kAssignment = $this->input->post("kAssignment");
+		$points = $this->input->post("points");
+		$result = $this->grade->update($kStudent,$kAssignment,$points);
+		echo $result;
 	}
 	
 }

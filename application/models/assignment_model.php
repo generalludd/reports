@@ -64,41 +64,40 @@ class Assignment_model extends CI_Model
 	}
 
 
-	function get_for_student($kStudent,$kTeach,$semester,$term,$year)
+	function get_for_student($kStudent,$kTeach,$term,$year)
 	{
-		$this->db->where("semester",$semester);
-		$this->db->where("term",$term);
-		$this->db->where("year",$year);
+		$this->db->where("assignment.term",$term);
+		$this->db->where("assignment.year",$year);
 		$this->db->where("assignment.kTeach",$kTeach);
-		$this->db->join("grade","assignment.kAssignment=grade.kAssignment");
-		$this->db->join("student","grade.kStudent=student.kStudent");
-		$this->db->join("teacher","assignment.kTeach=teacher.kTeach");
-		$this->db->where("grade.kStudent",$kStudent);
+		$this->db->join("grade","assignment.kAssignment=grade.kAssignment AND grade.kStudent = $kStudent","LEFT");
+		$this->db->select("assignment.kAssignment as kAssignment, assignment.category, assignment.assignment, assignment.points as total_points,grade.kStudent, grade.points,grade.kTeach");
 		$this->db->order_by("assignment.date");
 		$this->db->order_by("assignment.category");
 		$result = $this->db->get("assignment")->result();
 		return $result;
+
 	}
 	
-	function get_grades($kTeach,$semester,$term,$year)
+	function get_grades($kTeach,$term,$year)
 	{
-		$this->db->where("semester",$semester);
 		$this->db->where("term",$term);
 		$this->db->where("year",$year);
 		$this->db->where("assignment.kTeach",$kTeach);
 		$this->db->where("student.stuGrade",8);
-		$this->db->join("grade","grade.kStudent=student.kStudent");
-		$this->db->join("assignment","assignment.kAssignment=grade.kAssignment");
+		$this->db->join("grade","assignment.kAssignment=grade.kAssignment");
+		$this->db->join("student","grade.kStudent=student.kStudent");
+		$this->db->order_by("student.kStudent");
+		$this->db->order_by("assignment.kAssignment");
 		$this->db->order_by("assignment.date");
-		$this->db->order_by("assignment.category");
-		$result = $this->db->get("student")->result();
+		$this->db->order_by("assignment.term");
+		$this->db->order_by("assignment.year");
+		$result = $this->db->get("assignment")->result();
 		return $result;
 	}
 
-	function get_for_teacher($kTeach,$semester,$term,$year)
+	function get_for_teacher($kTeach,$term,$year)
 	{
 		$this->db->where("kTeach",$kTeach);
-		$this->db->where("semester",$semester);
 		$this->db->where("term",$term);
 		$this->db->where("year",$year);
 		$this->db->from("assignment");

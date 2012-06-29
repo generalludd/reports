@@ -24,29 +24,44 @@ class Grade_model extends CI_Model
 			}
 		}
 	}
-	
-	
-	function insert()
+
+
+	function has_grade($kStudent,$kAssignment)
 	{
-		$this->prepare_variables();
-		$kGrade = $this->db->insert("grade",$this);
-		return $kGrade;
+		$this->db->where("kAssignment",$kAssignment);
+		$this->db->where("kStudent",$kStudent);
+		$this->db->from("grade");
+		$result = $this->db->get()->num_rows();
+		return $result;
 	}
-	
-	
-	function update($kGrade)
+
+
+	function update($kStudent, $kAssignment,$points)
 	{
-		$this->prepare_variables();
-		$this->db->where("kGrade",$kGrade);
-		$this->db->update("grade",$this);
+		$output = FALSE;
+		$data = array("points" => $points);
+		if($this->has_grade($kStudent, $kAssignment) > 0){
+			$this->db->where("kAssignment",$kAssignment);
+			$this->db->where("kStudent",$kStudent);
+			$this->db->update("grade", $data);
+			$output = TRUE;
+		}else{
+			$data["kStudent"] = $kStudent;
+			$data["kAssignment"] = $kAssignment;
+			$this->db->insert("grade", $data);
+			$output = $this->db->insert_id();
+			$output = $this->db->last_query();
+		}
+		return $this->db->last_query();
+
 	}
-	
-	
+
+
 	function delete($kGrade)
 	{
 		$delete = array("kGrade" => $kGrade);
 		$this->db->delete("grade",$delete);
 	}
-	
+
 
 }

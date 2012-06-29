@@ -11,12 +11,12 @@ class Assignment extends MY_Controller
 
 	function index()
 	{
-		$data["assignments"] = $this->assignment->get_grades(8,3,"Year-End",2011);
-		
+		$data["grades"] = $this->assignment->get_grades(8,"Year-End",2011);
+		$data["assignments"] = $this->assignment->get_for_teacher(8,"Year-End",2011);
+		$data["kTeach"] = 8;
 		$data["target"] = "grade/chart";
 		$data["title"] = "Grade Chart";
 		$this->load->view("page/index",$data);
-
 	}
 
 
