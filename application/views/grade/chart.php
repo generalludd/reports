@@ -1,5 +1,5 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
-
+$table = array();
 ?>
 <table class='grade-chart'>
 	<thead>
@@ -15,24 +15,30 @@
 		</tr>
 	</thead>
 	<tbody>
-		<? $current_student = 0; ?>
+		<? $current_student = FALSE; ?>
 		<? foreach($assignments as $grade){ 
-if($current_student != $grade->kStudent){ 
-	if($current_student != 0){
-		
-		echo "</tr>";
-	}
-	$current_student = $grade->kStudent;
-		echo "<tr>";
-		echo "<td>$grade->stuNickname $grade->stuLast</td>";
-		 } ?>
-			<td><input type="text"
-				id="sag_<?=$grade->kAssignment;?>_<?=$grade->kStudent;?> name="
-				grade" value="<?=$grade->points;?>" size="3" />
-			</td>
-		
-<? } ?>
+			if($current_student != $grade->kStudent){
+				$rows[$grade->kStudent]["name"] = "<td><span class='student'>$grade->stuNickname $grade->stuLast</span></td>";
+				$current_student = $grade->kStudent;
+			}
+			$rows[$grade->kStudent]["grades"][$grade->kAssignment] = "<td><input type='text' id='sag_" . $grade->kAssignment . "_" . $grade->kStudent . " name='grade' value='$grade->points' size='3' /></td>";
 
-<tr><td><span class='button new grade_chart_add_student'>Add Student</span></td></tr>
+		}
+		
+		foreach($rows as $row){
+			print "<tr>";
+			print $row["name"];
+			print implode("",$row["grades"]);
+			print "</tr>";
+		}
+
+		?>
+
+		<tr>
+			<td><span class='button new grade_chart_add_student'>Add Student</span>
+			</td>
+		</tr>
 	</tbody>
 </table>
+
+
