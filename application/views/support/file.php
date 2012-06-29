@@ -2,7 +2,7 @@
 
 ?>
 <form method="post" enctype="multipart/form-data" name="support-file-editor" id="support-file-editor" action="<?=site_url("support/attach_file");?>">
-<input type="hidden" name="kNeed" id="kNeed" value="<?=$kNeed?>"/>
+<input type="hidden" name="kSupport" id="kSupport" value="<?=$kSupport?>"/>
 <input type="hidden" name="kStudent" id="kStudent" value="<?=$kStudent;?>"/>
 <input type="hidden" name="kFile" id="kFile" value="<?=get_value($file,'kFile');?>"/>
 <p><label for="file_display_name">Display Name</label><br />

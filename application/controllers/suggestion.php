@@ -26,7 +26,7 @@ class Suggestion extends MY_Controller
 		$data['student'] = $student;
 		$data['action'] = "insert";
 
-		$data["hasNeeds"] = $this->support_model->get_current($narrative->kStudent, "kNeed");
+		$data["hasNeeds"] = $this->support_model->get_current($narrative->kStudent, "kSupport");
 		$data['target'] = 'suggestion/edit';
 		$data['title'] = "Add Suggestions for Narrative by $teacher->teachFirst $teacher->teachLast for $narrative->narrSubject";
 		$this->load->view('page/index', $data);
@@ -108,7 +108,7 @@ class Suggestion extends MY_Controller
 			$student = $this->student_model->get($kStudent);
 			$teacher = $this->teacher_model->get($kTeach);
 			$studentName = format_name($student->stuFirst, $student->stuLast, $student->stuNickname);
-			$data["hasNeeds"] = $this->support_model->get_current($kStudent, "kNeed");
+			$data["hasNeeds"] = $this->support_model->get_current($kStudent, "kSupport");
 			$data["target"] = "suggestion/edit";
 			$data["action"] = "update";
 			$data["title"] = "Editing Suggestions for Narrative by $teacher->teachFirst $teacher->teachLast for $suggestion->narrSubject";

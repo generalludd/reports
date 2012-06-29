@@ -21,7 +21,7 @@ if( $entry->hasSPPS == 1 ){
 $files_array = array();
 if($support_files){
 	foreach($support_files as $file_item){
-		if($file_item->kNeed == $entry->kNeed){
+		if($file_item->kSupport == $entry->kSupport){
 			$files_array[] = $file_item;
 		}
 	}

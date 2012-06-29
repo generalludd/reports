@@ -42,12 +42,12 @@ class Support extends MY_Controller
 		if($this->uri->segment(4) == "sidebar"){
 			$data["sidebar"] = TRUE;
 		}
-		$kNeed = $this->uri->segment(3);
-		$support = $this->support_model->get($kNeed);
+		$kSupport = $this->uri->segment(3);
+		$support = $this->support_model->get($kSupport);
 		$data["student"] =  format_name($support->stuFirst, $support->stuLast, $support->stuNickname);
 		$data["entry"] = $support;
 		$this->load->model("file_model");
-		$data["support_files"] = $this->file_model->get_all($kNeed);
+		$data["support_files"] = $this->file_model->get_all($kSupport);
 		$data["title"] = "Viewing Support Record for " . $data["student"];
 		$data["target"] = "support/view";
 		if($data["sidebar"]){
@@ -77,10 +77,10 @@ class Support extends MY_Controller
 	function insert()
 	{
 		if($this->input->post("kStudent")){
-			$kNeed = $this->support_model->insert();
+			$kSupport = $this->support_model->insert();
 			$kStudent = $this->input->post("kStudent");
 			if($this->input->post("ajax") == 1){
-				echo $kNeed;
+				echo $kSupport;
 			}else{
 				redirect("support/list_all/$kStudent");
 			}
@@ -91,12 +91,12 @@ class Support extends MY_Controller
 	function edit()
 	{
 		if($this->uri->segment(3)){
-			$kNeed = $this->uri->segment(3);
+			$kSupport = $this->uri->segment(3);
 			$data["action"] = "update";
-			$data["support"] = $this->support_model->get($kNeed);
+			$data["support"] = $this->support_model->get($kSupport);
 			$data["title"] = "Editing Student Support";
 			$this->load->model("file_model");
-			$data["support_files"] = $this->file_model->get_all($kNeed);
+			$data["support_files"] = $this->file_model->get_all($kSupport);
 			$data["year_list"] = get_year_list();
 			$data["target"] = "support/edit";
 			$this->load->view("page/index", $data);
@@ -106,10 +106,10 @@ class Support extends MY_Controller
 
 	function update()
 	{
-		if($this->input->post("kNeed")){
-			$kNeed = $this->input->post("kNeed");
+		if($this->input->post("kSupport")){
+			$kSupport = $this->input->post("kSupport");
 			$kStudent = $this->input->post("kStudent");
-			$result = $this->support_model->update($kNeed);
+			$result = $this->support_model->update($kSupport);
 			if($this->input->post("ajax") != 1) {
 				redirect("support/list_all/$kStudent");
 			}else{
@@ -121,10 +121,10 @@ class Support extends MY_Controller
 
 	function delete()
 	{
-		if($this->input->post("kNeed")){
-			$kNeed = $this->input->post("kNeed");
+		if($this->input->post("kSupport")){
+			$kSupport = $this->input->post("kSupport");
 			$kStudent = $this->input->post("kStudent");
-			$this->support_model->delete($kNeed);
+			$this->support_model->delete($kSupport);
 			redirect("support/list_all/$kStudent");
 		}
 	}
@@ -132,8 +132,8 @@ class Support extends MY_Controller
 	/*** FILE MANAGEMENT ***/
 	function new_file()
 	{
-		if( $this->input->post('kNeed') ){
-			$data['kNeed'] = $this->input->post('kNeed');
+		if( $this->input->post('kSupport') ){
+			$data['kSupport'] = $this->input->post('kSupport');
 			$data['kStudent'] = $this->input->post('kStudent');
 			$data['error'] = '';
 			$data['file'] = null;
@@ -167,9 +167,9 @@ class Support extends MY_Controller
 			$data['file_description'] = $this->input->post('file_description');
 			$this->load->model("file_model");
 			$kStudent = $this->input->post('kStudent');
-			$kNeed = $this->input->post("kNeed");
-			$kFile = $this->file_model->insert($kNeed, $file_data);
-			redirect("support/edit/$kNeed");
+			$kSupport = $this->input->post("kSupport");
+			$kFile = $this->file_model->insert($kSupport, $file_data);
+			redirect("support/edit/$kSupport");
 		}
 	}
 
@@ -177,9 +177,9 @@ class Support extends MY_Controller
 	{
 		$kFile = $this->input->post("kFile");
 		$this->load->model("file_model");
-		$kNeed = $this->input->post("kNeed");
+		$kSupport = $this->input->post("kSupport");
 		$this->file_model->delete($kFile);
-		redirect("support/edit/$kNeed");
+		redirect("support/edit/$kSupport");
 	}
 
 }

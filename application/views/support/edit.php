@@ -54,8 +54,8 @@ $button_box = create_button_bar($buttons, array("id"=>"support-editor-buttons"))
 	<input type="hidden" name="ajax" id="ajax" value=""/>
 	<input type="hidden" name="kStudent"
 	id="kStudent" value="<?=get_value($support,"kStudent"); ?>" /> <input
-	type="hidden" name="kNeed" id="kNeed"
-	value="<?=get_value($support,"kNeed"); ?>" />
+	type="hidden" name="kSupport" id="kSupport"
+	value="<?=get_value($support,"kSupport"); ?>" />
 <h3>Special Needs Support Summary for <?=$studentName;?></h3>
 <div id='message' class='message'></div>
 <label for="year">Year for this Documentation:</label> <?=form_dropdown("year", $year_list, $year, "id='year' class='yearStart'"); ?>-

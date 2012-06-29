@@ -50,7 +50,7 @@ class Narrative extends MY_Controller
 			$data['narrText'] = parse_template($template->template, $name, $gender);
 
 		}
-		$data["hasNeeds"] = $this->support_model->get_current($kStudent, "kNeed");
+		$data["hasNeeds"] = $this->support_model->get_current($kStudent, "kSupport");
 		$data["hasSuggestions"] = NULL;
 		$data['target'] = 'narrative/edit';
 		$data['title'] = "Add a Narrative for $student->stuFirst $student->stuLast";
@@ -152,7 +152,7 @@ class Narrative extends MY_Controller
 		$data["teacherPairs"] = get_keyed_pairs($teachers, array("kTeach", "teacher"));
 		$data["narrText"] = "";
 		$studentName = format_name($student->stuFirst, $student->stuLast, $student->stuNickname);
-		$data["hasNeeds"] = $this->support_model->get_current($kStudent, "kNeed");
+		$data["hasNeeds"] = $this->support_model->get_current($kStudent, "kSupport");
 
 		//$data["needsButton"] = $this->get_need_button($kStudent);
 		// 		$data["suggestionsButton"] = $this->get_suggestion_button($kNarrative);

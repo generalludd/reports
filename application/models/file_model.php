@@ -2,7 +2,7 @@
 
 class File_model extends CI_Model
 {
-	var $kNeed;
+	var $kSupport;
 	var $kStudent;
 	var $file_display_name;
 	var $file_description;
@@ -19,7 +19,7 @@ class File_model extends CI_Model
 	function prepare_variables($file_data)
 	{
 
-		$variables = array("kNeed","kStudent","file_display_name","file_description");
+		$variables = array("kSupport","kStudent","file_display_name","file_description");
 		for($i = 0; $i < count($variables); $i++){
 			$myVariable = $variables[$i];
 			if($this->input->post($myVariable)){
@@ -49,17 +49,17 @@ class File_model extends CI_Model
 
 	}
 
-	function insert($kNeed, $file_data)
+	function insert($kSupport, $file_data)
 	{
 		$this->prepare_variables($file_data);
-		$this->db->insert('special_need_file', $this);
+		$this->db->insert('support_file', $this);
 		return $this->db->insert_id();
 	}
 
 	function get($kFile)
 	{
 		$this->db->where('kFile', $kFile);
-		$this->db->from('special_need_file');
+		$this->db->from('support_file');
 		$result = $this->db->get()->row();
 		return $result;
 	}
@@ -67,16 +67,16 @@ class File_model extends CI_Model
 	
 	function get_for_student($kStudent){
 		$this->db->where("kStudent", $kStudent);
-		$this->db->from("special_need_file");
+		$this->db->from("support_file");
 		$result = $this->db->get()->result();
 		return $result;
 	}
 	
 	
-	function get_all($kNeed)
+	function get_all($kSupport)
 	{
-		$this->db->where('kNeed', $kNeed);
-		$this->db->from('special_need_file');
+		$this->db->where('kSupport', $kSupport);
+		$this->db->from('support_file');
 		$this->db->order_by('file_display_name');
 		$result = $this->db->get()->result();
 		return $result;
@@ -87,12 +87,12 @@ class File_model extends CI_Model
 		$file = $this->get($kFile);
 		unlink($file->file_path."/".$file->file_name);
 		$id_array = array('kFile' => $kFile);
-		$this->db->delete('special_need_file', $id_array);
+		$this->db->delete('support_file', $id_array);
 	}
 
 
 	function fetch_values($fields, $file_fields = null){
-		$this->db->from('special_need_file');
+		$this->db->from('support_file');
 		$this->db->distinct();
 
 		if(is_array($fields)){

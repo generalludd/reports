@@ -26,11 +26,11 @@ $(document).ready(function() {
 	$('#delete-support').live('click', function(event) {
 						var action = confirm("Do you really want to delete this? This cannot be undone!");
 						var myStudent = $('#kStudent').val();
-						var myNeed = $('#kNeed').val();
+						var myNeed = $('#kSupport').val();
 						var myUrl = base_url + "index.php/support/delete";
 						var form_data = {
 								kStudent: myStudent,
-								kNeed: myNeed
+								kSupport: myNeed
 						};
 						if (action) {
 							var real_action = confirm("Are you absolutely sure? This really cannot be undone!");
@@ -48,7 +48,7 @@ $(document).ready(function() {
 	
 	$('#print-support').live('click',function(event){
 		var myStudent=$("#kStudent").val();
-		var myNeed=$("#kNeed").val();
+		var myNeed=$("#kSupport").val();
 		if(myNeed!="") {
 			var myUrl = base_url + "index.php/support/view/" + myNeed + "/print";
 			window.open(myUrl);
@@ -69,7 +69,7 @@ $(document).ready(function() {
 				narrTerm: myTerm,
 				narrYear: myYear,
 				narrSubject: mySubject,
-				kNeed: myNeed,
+				kSupport: myNeed,
 				ajax: 1
 		};
 		var myUrl = base_url + "index.php/support/view/" + myNeed + "/sidebar";
@@ -88,12 +88,12 @@ $(document).ready(function() {
 	
 	/*** FILE MANAGEMENT ***/
 	$('.show-support-file-uploader').live('click', function(event){
-		var myNeed = $("#kNeed").val();
+		var myNeed = $("#kSupport").val();
 		var myStudent = $("#kStudent").val();
 
 		var myUrl = base_url + "index.php/support/new_file";
 		var form_data = {
-				kNeed: myNeed,
+				kSupport: myNeed,
 				kStudent: myStudent,
 				ajax: 1
 		};
@@ -162,7 +162,7 @@ function save_continue_support(){
 		data: form_data,
 		success: function(data){
 		if(myAction == "insert") {
-			$("#kNeed").val(data);
+			$("#kSupport").val(data);
 			$("#action").val("update");
 			$("#delete-support").removeClass("hidden");
 			$("#print-support").removeClass("hidden");

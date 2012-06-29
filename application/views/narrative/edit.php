@@ -19,7 +19,7 @@ if($action == "insert"){
 $conditional_buttons = array();
 $conditional_bar = FALSE;
 if($hasNeeds){
-	$conditional_buttons[] = array("item" => "support", "text" => "Show Learning Support", "class" => "button show_support", "type" => "span", "id" => "need_$hasNeeds->kNeed");
+	$conditional_buttons[] = array("item" => "support", "text" => "Show Learning Support", "class" => "button show_support", "type" => "span", "id" => "need_$hasNeeds->kSupport");
 }
 
 if($hasSuggestions){

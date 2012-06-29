@@ -46,37 +46,37 @@ class Support_model extends CI_Model
 	function insert()
 	{
 		$this->prepare_variables();
-		$this->db->insert('need', $this);
+		$this->db->insert('support', $this);
 		return $this->db->insert_id();
 	}
 
 
-	function update($kNeed)
+	function update($kSupport)
 	{
 		$this->prepare_variables();
-		$this->db->where("kNeed", $kNeed);
-		$this->db->update("need", $this);
-		$need = $this->get($kNeed);
-		return format_timestamp($need->recModified);
+		$this->db->where("kSupport", $kSupport);
+		$this->db->update("support", $this);
+		$support = $this->get($kSupport);
+		return format_timestamp($support->recModified);
 	}
 
 
-	function delete($kNeed)
+	function delete($kSupport)
 	{
-		$this->db->where("kNeed", $kNeed);
-		$this->db->from("need");
+		$this->db->where("kSupport", $kSupport);
+		$this->db->from("support");
 		$this->db->delete();
 	}
 
 
-	function get($kNeed)
+	function get($kSupport)
 	{
-		$this->db->where("kNeed", $kNeed);
-		$this->db->where("`need`.`kStudent` = `student`.`kStudent`");
+		$this->db->where("kSupport", $kSupport);
+		$this->db->where("`support`.`kStudent` = `student`.`kStudent`");
 		$this->db->order_by("year", "DESC");
-		$this->db->select("need.*");
+		$this->db->select("support.*");
 		$this->db->select("student.stuFirst, student.stuLast, student.stuNickname");
-		$this->db->from("need");
+		$this->db->from("support");
 		$this->db->from("student");
 		$result = $this->db->get()->row();
 		return $result;
@@ -85,7 +85,7 @@ class Support_model extends CI_Model
 
 	function get_all($kStudent)
 	{
-		$this->db->from("need");
+		$this->db->from("support");
 		$this->db->where("kStudent", $kStudent);
 		$this->db->order_by("year", "DESC");
 		$result = $this->db->get()->result();
@@ -100,7 +100,7 @@ class Support_model extends CI_Model
 		$this->db->where("kStudent", $kStudent);
 		$this->db->order_by("year", "DESC");
 		$this->db->limit(1);
-		$this->db->from("need");
+		$this->db->from("support");
 		$query = $this->db->get();
 		$count = $query->num_rows();
 		$result = false;
