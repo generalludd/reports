@@ -3,7 +3,6 @@
 <input type="hidden" name="kStudent" id="kStudent" value="<?=$kStudent;?>"/>
 <?
 foreach($grades as $grade){
-	print_r($grade);
 	
 	?>
 	<table>
@@ -17,5 +16,8 @@ foreach($grades as $grade){
 </tr>
 	
 	</table>
+	
 	<?
-}
+} ?>
+
+	<div class='button-box'><span class='button close_grade_editor'>Close</span></div>

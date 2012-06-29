@@ -30,7 +30,7 @@ class Grade extends MY_Controller
 		$kAssignment = $this->input->post("kAssignment");
 		$points = $this->input->post("points");
 		$result = $this->grade->update($kStudent,$kAssignment,$points);
-		echo $result;
+		echo OK;
 	}
 	
 }

@@ -30,19 +30,21 @@
 				points: myPoints
 				
 		};
-	alert(myAssignment);
 		$.ajax({
 			type: "POST",
 			url: myUrl,
 			data: form_data,
 			success: function(data){
 				
-				$("#ssg_" + myAssignment).hide();
+				//$("#ssg_" + myAssignment).hide();
 				$("#save_" + myAssignment).html(data).show();
 			}
 		});
 	});
 	
+	$(".close_grade_editor").live("click",function(){
+		document.location = document.location;
+	});
 	
 	$(".datefield").live("focus", function(){
 		$(".datefield").datepicker();
