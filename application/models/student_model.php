@@ -199,8 +199,8 @@ class Student_model extends CI_Model
 		}
 
 		if($hasNeeds == 1){
-			$this->db->join("need", "student.kStudent = need.kStudent");
-			$this->db->group_by("need.kStudent");
+			$this->db->join("support", "student.kStudent = support.kStudent");
+			$this->db->group_by("support.kStudent");
 		}
 
 		$this->db->from("student");
