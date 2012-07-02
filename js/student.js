@@ -1,5 +1,13 @@
 $(document).ready(function() {
 
+	$("#stuFirst").live("blur", function(event){
+		name = $(this).val();
+		nickname = ("#stuNickname").val();
+		if(nickname == ""){
+			$("#stuNickname").val(name);
+		}
+	});
+	
 	$("#stuEmail").live('blur', function(event) {
 		var myEmail = this.value;
 		var myStudent = $("#kStudent").val();
