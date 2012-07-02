@@ -193,7 +193,7 @@ class Student extends MY_Controller
 			//@TODO this could be replaced with a grep that selects only letters.
 			//@TODO may want to accommodate accented characters.
 			$name = str_replace(" ","",$name);
-			$stuEmail = strtolower("$name") . "01";
+			$stuEmail = strtolower("$name") . "1@fsmn.org";
 			if($this->input->get_post("ajax") == TRUE){
 				echo $stuEmail;
 			}
