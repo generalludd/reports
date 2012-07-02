@@ -31,5 +31,7 @@ Search</a>
 </div>
 </fieldset>
 </div>
+<div class="page-list">
 	<?
-	$this->load->view("student/list");
+	$this->load->view("student/list"); ?>
+</div>

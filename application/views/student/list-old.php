@@ -3,7 +3,7 @@
 $current_grade = NULL;
 $current_teacher = NULL;
 ?>
-<table class='studentList'>
+<table class='student_list'>
 <?php
 
 foreach($students as $student):
@@ -32,11 +32,11 @@ foreach($students as $student):
 		<td colspan='3' class='studentName'><strong><?=$name?></strong></td>
 	</tr>
 	<tr>
-		<td class='studentList'><span class='view_narratives button'
+		<td class='student_list'><span class='view_narratives button'
 			id='n_<?=$student->kStudent?>'>Narratives</span></td>
-		<td class='studentList'><span class='list_attendance button'
+		<td class='student_list'><span class='list_attendance button'
 			id='a_<?=$student->kStudent?>'>Attendance</span></td>
-		<td class='studentList'><span class='view_student button'
+		<td class='student_list'><span class='view_student button'
 			id='s_<?=$student->kStudent?>'>Info</span></td>
 	</tr>
 	<? endforeach; ?>

@@ -3,7 +3,7 @@
 $current_grade = NULL;
 $current_teacher = NULL;
 ?>
-<div class='studentList info-box'>
+<div class='student_list'>
 
 
 	<?php

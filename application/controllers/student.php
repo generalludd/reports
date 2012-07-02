@@ -157,6 +157,7 @@ class Student extends MY_Controller
 			$data["target"] = "student/results";
 			$this->load->view("page/index", $data);
 		}
+		
 	}
 
 	//@TODO this needs to also check teacher email accounts to avoid duplication there.

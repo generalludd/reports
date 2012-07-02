@@ -209,7 +209,7 @@ div.login-title {
 	padding-top: 1em;
 }
 
-.studentList.info-box {
+.page-list .student_list {
 	width: 250px;
 	margin-left: 0;
 }
@@ -1007,7 +1007,7 @@ table.grade-chart tr {
 }
 
 table.grade-chart th.assignment-edit {
-	*-webkit-transform: rotate(-90deg);
-	*-moz-transform: rotate(-90deg);
-	*filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
+	
 }
+
+
