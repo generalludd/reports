@@ -355,6 +355,14 @@ function getYear(myTerm,myGrade){
 	//document.getElementById('stuGrade').value=reportGrade;
 }
 
+function get_year(){
+	var myTerm = $.ajax({
+		type: "get",
+		url: base_url + "ajax/current_year",
+		async: false
+	}).responseText;
+	return myTerm;
+}
 
 function format_grade(grade){
 	var output = grade;

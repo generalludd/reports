@@ -178,11 +178,13 @@ $(document).ready(function() {
 					var yearEnd = baseYear + 1;
 					$("#baseYearEnd").val(yearEnd);
 					getStuGrade();
+					
 				});// end keyUp
 
-				$("#baseGrade").live('blur', function(event) {
-					getStuGrade();
-				}// end function(event)
+				$("#baseGrade").live('change', function(event) {
+					grade = getStuGrade();
+					
+				   }// end function(event)
 				);// end keyup
 				
 				$("#studentEditor").validate();
@@ -193,26 +195,41 @@ $(document).ready(function() {
 );// end $(document)
 
 
-
 function getStuGrade() {
-	myGrade = $('#baseGrade').val();
-	if (myGrade == "K") {
-		myGrade = 0;
-	}
-	myGrade = parseInt(myGrade);
+	myGrade = $("#baseGrade").val();
 	myYear = $("#baseYear").val();
-	myYear = parseInt(myYear);
-	var today = new Date();
-	var currentYear = parseInt(today.getFullYear());
-	var currentMonth = parseInt(today.getMonth());
-	if (currentMonth < 8) {
-		currentYear = currentYear - 1;
-	}
-	var gradeDiff = currentYear - myYear;
-	$('#gradeText').html(myGrade + gradeDiff + ")");
-	$('#stuGrade').val(myGrade + gradeDiff);
+	form_data = {
+		baseGrade: myGrade,
+		baseYear: myYear
+	};
+	$.ajax({
+		type: "get",
+		url: base_url + "ajax/current_grade",
+		data:form_data,
+		success: function(data){
+			text_grade = format_grade(data);
+			$('#gradeText').html(text_grade);
+			$('#stuGrade').val(data);
+		}
+
+	});
+	
 }
 
+/*
+ * function format_grade(myGrade){
+	form_data = {
+		grade:myGrade
+	};
+	var output = $.ajax({
+		type:"get",
+		url: base_url + "ajax/format_grade",
+		data: form_data,
+		async: false
+	}).responseText;
+	return output;
+	}
+*/
 function saveStudent(action) {
 	// $('#action_task').val(action);
 	var myLocation = document.URL;
@@ -220,22 +237,6 @@ function saveStudent(action) {
 		document.location = myLocation;
 	});
 	// document.forms['studentEditor'].submit();
-}
-
-function deleteStudent(myStudent) {
-	action = confirm("You sure you want to delete this student? This cannot be undone!");
-	if (action) {
-		$.post('ajax.switch.php', {
-			target : 'student',
-			action_task : 'delete',
-			kStudent : myStudent
-		}, function(data) {
-			// $('#sidebar').html("the data" + data).fadeIn();
-
-				document.location = "index.php";
-			}// end function
-		);// end post
-	}
 }
 
 
