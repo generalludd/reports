@@ -50,6 +50,27 @@ $(document).ready(function() {
 		});
 	});
 	
+	$("#stu-password-label").live("click",function(event){
+		myPassword = $("#stuEmailPassword").val();
+	
+		if(myPassword == ""){
+			myFirst = $("#stuFirst").val();
+			myLast = $("#stuLast").val();
+			form_data = {
+					stuFirst: myFirst,
+					stuLast: myLast
+			};
+			$.ajax({
+				type: "get",
+				url: base_url + "student/generate_password",
+				data: form_data,
+				success: function(data){
+					$("#stuEmailPassword").val(data);
+				}
+			});
+		}
+	});
+	
 			$('#stuSearch').live('keyup', function(event) {
 				var stuSearch = this.value;
 				if (stuSearch.length > 2 && stuSearch != "find students") {

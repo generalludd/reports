@@ -203,10 +203,24 @@ class Student extends MY_Controller
 
 	function update_all_emails()
 	{
-		$students = $this->student_model->get_students_by_grade(3,8);
+		$students = $this->student_model->get_students_by_grade(3,3);
 		foreach($students as $student){
 			$this->student_model->update_value($student->kStudent, array("stuEmail"=> $this->generate_email($student->kStudent, $student->stuNickname)));
+			$this->student_model->update_value($student->kStudent, array("stuEmailPassword"=> $this->generate_password($student->stuFirst,$student->stuLast)));
 		}
+	}
+	
+	function generate_password($stuFirst=NULL,$stuLast=NULL){
+		if(!$stuFirst){
+			$stuFirst = $this->input->get("stuFirst");
+		}
+		if(!$stuLast){
+			$stuLast = $this->input->get("stuLast");
+		}
+		
+		$password = $stuFirst[0] . $stuLast[strlen($stuLast)-1] . "@1365!";
+		echo $password;
+		return $password;
 	}
 
 /******* MAINTENANCE SCRIPTS *********/
