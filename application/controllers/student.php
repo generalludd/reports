@@ -208,6 +208,18 @@ class Student extends MY_Controller
 		}
 	}
 
-
+/******* MAINTENANCE SCRIPTS *********/
+	function update_grades()
+	{
+		$this->student_model->update_grades();
+		$cookie = array(
+				'name'   => 'admin',
+				'value'  => 'Student grades were successfully updated',
+				'expire' => '1',
+		);
+		
+		$this->input->set_cookie($cookie);
+		redirect("admin");		
+	}
 
 }

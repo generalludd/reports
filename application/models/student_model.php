@@ -25,7 +25,7 @@ class Student_model extends CI_Model
 
 	function prepare_variables()
 	{
-		$variables = array('kTeach','stuFirst','stuLast','stuNickname','stuGender','stuDOB','stuGrade','baseGrade','baseYear','isEnrolled','stuEmail','stuEmailPermission','stuEmailPassword');
+		$variables = array('kTeach','stuFirst','stuLast','stuNickname','stuGender','stuDOB','baseGrade','baseYear','isEnrolled','stuEmail','stuEmailPermission','stuEmailPassword');
 		for($i = 0; $i < count($variables); $i++){
 			$myVariable = $variables[$i];
 			if($this->input->post($myVariable)){
@@ -38,6 +38,8 @@ class Student_model extends CI_Model
 				}
 			}
 		}
+		
+		$this->stuGrade = get_current_year() - $this->baseYear + $this->baseGrade;
 
 		$this->recModified = mysql_timestamp();
 		$this->recModifier = $this->session->userdata('userID');
@@ -303,6 +305,11 @@ class Student_model extends CI_Model
 		$this->db->update('student', $data);
 	}
 
-
+	function update_grades()
+	{
+		$year = get_current_year();
+		$query = ("UPDATE `student` SET `stuGrade` = ($year - `baseYear` + `baseGrade`)");
+		$this->db->query($query);
+	}
 
 }

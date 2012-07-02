@@ -2,7 +2,7 @@
 
 
 class admin extends MY_Controller{
-	
+
 	function __construct()
 	{
 		parent::__construct();
@@ -14,14 +14,16 @@ class admin extends MY_Controller{
 			redirect("/");
 		}
 	}
-	
+
 	function index()
 	{
 		$data["target"] = "admin/panel";
 		$data["title"] = "Site Administration";
 		$this->load->view("page/index", $data);
+		delete_cookie('admin');
+
 	}
-	
+
 	function masquerade()
 	{
 		if($this->session->userdata("username") == "administrator"){
@@ -37,22 +39,22 @@ class admin extends MY_Controller{
 			}
 		}
 	}
-	
+
 	function show_log()
 	{
 		$options = array();
 		if($this->input->get_post("kTeach")){
 			$options["kTeach"] = $this->input->get_post("kTeach");
 		}
-	
+
 		if($this->input->get_post("username")){
 			$options["username"] = $this->input->get_post("username");
 		}
-	
+
 		if($this->input->get_post("action")){
 			$options["action"] = $this->input->get_post("action");
 		}
-	
+
 		if($this->input->get_post("time_start") && $this->input->get_post("time_end")){
 			$time_start = format_date($this->input->get_post("time_start"),"mysql");
 			$time_end = format_date($this->input->get_post("time_end"),"mysql");
@@ -60,7 +62,7 @@ class admin extends MY_Controller{
 			$options["date_range"]["time_start"] = $time_start;
 			$options["date_range"]["time_end"] = $time_end;
 		}
-	
+
 		$data["header"] = array("username","timestamp","action");
 		$data["logs"] = $this->auth_model->get_log($options);
 		$data["options"] = $options;
@@ -68,7 +70,7 @@ class admin extends MY_Controller{
 		$data["title"] = "User Log";
 		$this->load->view("page/index",$data);
 	}
-	
+
 	function search_log()
 	{
 		$users = $this->auth_model->get_usernames();
