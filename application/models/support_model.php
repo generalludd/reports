@@ -5,9 +5,7 @@ class Support_model extends CI_Model
 	var $kStudent;
 	var $year;
 	var $specialNeed;
-	var $description;
 	var $modification;
-	var $classification;
 	var $meeting;
 	var $testDate;
 	var $outsideSupport;
@@ -22,7 +20,7 @@ class Support_model extends CI_Model
 	function prepare_variables()
 	{
 
-		$variables = array("kStudent","year","specialNeed","description","modification","classification","meeting","testDate","outsideSupport","hasIEP","hasSPPS");
+		$variables = array("kStudent","year","specialNeed","modification","meeting","testDate","outsideSupport","hasIEP","hasSPPS");
 
 		for($i = 0; $i < count($variables); $i++){
 			$myVariable = $variables[$i];
