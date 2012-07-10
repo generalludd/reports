@@ -85,10 +85,10 @@
 	});
 
 	$(".email_create").live("click",function(){
-		var form_data = {
+		 form_data = {
 				ajax: '1'
 		};
-		var myUrl = base_url + "index.php/email/create";
+		 myUrl = base_url + "index.php/email/create";
 		$.ajax({
 			type:"get",
 			url: myUrl,
@@ -102,12 +102,12 @@
 	
 	$(".email_edit").live("click",function(){
 		var myId = this.id.split("_")[1];
-		var form_data = {
+		 form_data = {
 				kEmail:myId,
 				ajax: '1'
 		};
 		
-		var myUrl = base_url + "index.php/email/edit/" + myId;
+		 myUrl = base_url + "index.php/email/edit/" + myId;
 		$.ajax({
 			type:"post",
 			url: myUrl,
@@ -151,8 +151,8 @@
 				var keys=this.id.split("_");//expect the id to be in the format "helpTopic_helpSubtopic"
 				var myTopic=keys[0];
 				var mySubtopic=keys[1];
-				var myUrl = base_url + "index.php/help/get";
-				var form_data = {
+				 myUrl = base_url + "index.php/help/get";
+				 form_data = {
 						helpTopic: myTopic,
 						helpSubtopic: mySubtopic,
 						ajax: '1'
@@ -170,13 +170,13 @@
 	
 	
 	$('.edit_preference').mouseup( function(event){
-		var myTeach=$('#kTeach').val();
+		 myTeach=$('#kTeach').val();
 		var myType=this.id;
 		var myValue=$('#'+this.id).val();
 		var myTarget="stat"+myType;
 		$('#'+myTarget).html("").show();
-		var myUrl = base_url + "index.php/preference/update/";
-		var form_data = {
+		 myUrl = base_url + "index.php/preference/update/";
+		 form_data = {
 				kTeach: myTeach,
 				type: myType,
 				value: myValue,
@@ -194,7 +194,7 @@
 	
 	$('.edit_preference_type').live("click", function(event){
 		var myType = this.id.split("!")[1];
-		var myUrl = base_url + "preference_type/edit";
+		 myUrl = base_url + "preference_type/edit";
 		form_data = {
 				type: myType,
 				ajax: '1'
@@ -212,7 +212,7 @@
 	});
 	
 	$('.create_preference_type').live("click", function(event){
-		var myUrl = base_url + "preference_type/create";
+		 myUrl = base_url + "preference_type/create";
 		form_data = {
 				ajax: '1'
 		};

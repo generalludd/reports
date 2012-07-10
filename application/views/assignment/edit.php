@@ -1,6 +1,9 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 $year = get_value($assignment,"year",get_current_year());
-
+$date = "";
+if($date = get_value($assignment,"date")){
+	$date = format_date($date,"standard");
+}
 ?>
 
 <form id="edit-assignment" name="edit-assignment" action="<?=base_url("assignment/$action");?>" method="post">
@@ -22,7 +25,7 @@ $year = get_value($assignment,"year",get_current_year());
 </p>
 <p>
 <label for="date">Date: </label>
-<input type="text" name="date" id="date" class="datefield" value="<?=format_date(get_value($assignment,"date"),"standard");?>"/>
+<input type="text" name="date" id="date" class="datefield" value="<?=$date;?>"/>
 </p>
 <p>
 <label for="semester">Semester: </label>

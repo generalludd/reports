@@ -42,8 +42,7 @@ class Assignment_model extends CI_Model
 	function insert()
 	{
 		$this->prepare_variables();
-		$this->db->insert("assignment",$this);
-		$kAssignment = $this->db->last_insert_id();
+		$kAssignment = $this->db->insert("assignment",$this);
 		return $kAssignment;
 	}
 
@@ -98,7 +97,6 @@ class Assignment_model extends CI_Model
 		$this->db->join("grade","assignment.kAssignment=grade.kAssignment");
 		$this->db->join("student","grade.kStudent=student.kStudent");
 		$this->db->order_by("student.kStudent");
-		$this->db->order_by("assignment.kAssignment");
 		$this->db->order_by("assignment.date");
 		$this->db->order_by("assignment.term");
 		$this->db->order_by("assignment.year");

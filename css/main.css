@@ -1007,26 +1007,53 @@ table.grade-chart tr {
 }
 
 table.grade-chart th.assignment-edit {
+	vertical-align: top;
+}
+
+table.grade-chart th, table.grade-chart td {
 	width: 100px;
 	border: 1px solid black;
 }
 
 table.grade-chart td.grade-points {
 	text-align: center;
-		border: 1px solid black;
-	
 }
-
 
 table.grade-chart th .chart-assignment {
 	font-weight: bold;
 }
 
-table.grade-chart th .chart-category,table.grade-chart th .chart-points
+table.grade-chart th .chart-category,table.grade-chart th .chart-points,table.grade-chart th .chart-date
 	{
 	font-weight: normal;
 }
 
 table.grade-chart th .chart-category {
 	font-style: italic;
+}
+
+table.grade-editor th.grade-total-points {
+	width: 25px;
+}
+
+table.grade-editor tbody tr td.grade-description {
+	padding: 0 5px;
+	border: 1px solid #bdbdbd;
+}
+
+table.grade-editor tbody tr td.grade-value {
+	border: 1px solid #bdbdbd;
+}
+
+table.grade-editor tbody tr td.grade-value input {
+	border: none;
+}
+
+table.grade-editor thead tr th {
+	text-align: left;
+}
+
+.grade-points.edit:hover,.assignment-edit:hover,td.student-name:hover {
+	cursor: pointer;
+	background-color: #efefef;
 }

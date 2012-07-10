@@ -18,11 +18,21 @@ $(document).ready(function(){
 			url: base_url + "assignment/edit",
 			data: form_data,
 			success: function(data){
-				showPopup("This is it",data,"auto");
+				showPopup("Edit Assigment",data,"auto");
 
 			}
 		});
 		
+	});
+	
+	$(".assignment-create").live("click",function(){
+		$.ajax({
+			type:"get",
+			url: base_url + "assignment/create",
+			success: function(data){
+				showPopup("Add Assignment",data,"auto");
+			}
+		});
 	});
 	
 	$(".grade-points.edit").live("click",function(){

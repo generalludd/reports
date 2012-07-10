@@ -49,7 +49,7 @@ class Assignment extends MY_Controller
 		$data["categories"] = get_keyed_pairs($categories, array("category","category"),NULL,TRUE);
 		$data["target"] = "assignment/edit";
 		$data["title"] = "Create an Assignment";
-		$this->load->view("page/index",$data);
+		$this->load->view($data["target"],$data);
 
 	}
 
