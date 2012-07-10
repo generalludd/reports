@@ -6,6 +6,7 @@ class Assignment_model extends CI_Model
 	var $assignment;
 	var $category;
 	var $date;
+	var $points;
 	var $semester;
 	var $term;
 	var $year;
@@ -14,7 +15,7 @@ class Assignment_model extends CI_Model
 
 	function prepare_variables()
 	{
-		$variables = array("kTeach","assignment","category","date","semester","term","year","gradeStart","gradeEnd");
+		$variables = array("kTeach","assignment","category","date","points","semester","term","year","gradeStart","gradeEnd");
 
 		for($i = 0; $i < count($variables); $i++){
 			$myVariable = $variables[$i];
@@ -29,11 +30,20 @@ class Assignment_model extends CI_Model
 		}
 	}
 
+	function get($kAssignment)
+	{
+		$this->db->where("kAssignment",$kAssignment);
+		$this->db->from("assignment");
+		$result = $this->db->get()->row();
+		return $result;
+	}
 
+	
 	function insert()
 	{
 		$this->prepare_variables();
-		$kAssignment = $this->db->insert("assignment",$this);
+		$this->db->insert("assignment",$this);
+		$kAssignment = $this->db->last_insert_id();
 		return $kAssignment;
 	}
 
@@ -78,12 +88,13 @@ class Assignment_model extends CI_Model
 
 	}
 	
-	function get_grades($kTeach,$term,$year)
+	function get_grades($kTeach,$term,$year,$gradeStart,$gradeEnd)
 	{
 		$this->db->where("term",$term);
 		$this->db->where("year",$year);
 		$this->db->where("assignment.kTeach",$kTeach);
-		$this->db->where("student.stuGrade",8);
+		$this->db->where("(assignment.gradeStart = $gradeStart OR assignment.gradeEnd = $gradeEnd)");
+		$this->db->where("student.stuGrade in ($gradeStart,$gradeEnd)");
 		$this->db->join("grade","assignment.kAssignment=grade.kAssignment");
 		$this->db->join("student","grade.kStudent=student.kStudent");
 		$this->db->order_by("student.kStudent");
@@ -108,5 +119,7 @@ class Assignment_model extends CI_Model
 		$output = $this->db->get()->result();
 		return $output;
 	}
+	
+
 
 }

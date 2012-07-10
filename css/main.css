@@ -1007,7 +1007,26 @@ table.grade-chart tr {
 }
 
 table.grade-chart th.assignment-edit {
+	width: 100px;
+	border: 1px solid black;
+}
+
+table.grade-chart td.grade-points {
+	text-align: center;
+		border: 1px solid black;
 	
 }
 
 
+table.grade-chart th .chart-assignment {
+	font-weight: bold;
+}
+
+table.grade-chart th .chart-category,table.grade-chart th .chart-points
+	{
+	font-weight: normal;
+}
+
+table.grade-chart th .chart-category {
+	font-style: italic;
+}

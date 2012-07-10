@@ -33,4 +33,6 @@ class Grade extends MY_Controller
 		echo OK;
 	}
 	
+	
+	
 }

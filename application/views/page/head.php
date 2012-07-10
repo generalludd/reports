@@ -39,5 +39,6 @@ var base_url = '<?=base_url();?>';
 <script type="text/javascript" src="<?=base_url();?>js/narrative.js"></script>
 <script type="text/javascript" src="<?=base_url();?>js/password.js"></script>
 <script type="text/javascript" src="<?=base_url();?>js/feedback.js"></script>
+<script type="text/javascript" src="<?=base_url();?>js/assignment.js"></script>
 
 <script type="text/javascript" src="<?=base_url();?>js/legend.js"></script>

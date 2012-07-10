@@ -11,3 +11,4 @@ email.php
 */.DS_Store
 .DS_Store
 uploads
+php_errors.log

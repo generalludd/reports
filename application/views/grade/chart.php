@@ -9,8 +9,8 @@ $table = array();
 			<th></th>
 			<? foreach($assignments as $assignment){ ?>
 
-			<th id="as_<?=$assignment->kAssignment;?>" class="assignment-edit"><?=$assignment->assignment;?><br />
-				<?=$assignment->category;?><br /> <?=$assignment->points;?> Points</th>
+			<th id="as_<?=$assignment->kAssignment;?>" class="assignment-edit"><span class='chart-assignment'><?=$assignment->assignment;?></span><br />
+				<span class='chart-category'><?=$assignment->category;?></span><br /><span class='chart-points'> <?=$assignment->points;?> Points</span></th>
 
 
 			<? } ?>
@@ -23,8 +23,7 @@ $table = array();
 				$rows[$grade->kStudent]["name"] = "<td><span class='student edit_student_grades' id='eg_$grade->kStudent'>$grade->stuNickname $grade->stuLast</span></td>";
 				$current_student = $grade->kStudent;
 			}
-			//$rows[$grade->kStudent]["grades"][$grade->kAssignment] = "<td><input type='text' id='sag_" . $grade->kAssignment . "_" . $grade->kStudent . " name='grade' value='$grade->points' size='3' /></td>";
-			$rows[$grade->kStudent]["grades"][$grade->kAssignment] = "<td>$grade->points</td>";
+			$rows[$grade->kStudent]["grades"][$grade->kAssignment] = "<td class='grade-points edit' id='sag_$grade->kAssignment" . "_$grade->kStudent'>$grade->points</td>";
 		}
 
 		foreach($rows as $row){

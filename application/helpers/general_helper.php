@@ -96,7 +96,7 @@ function format_timestamp($timeStamp,$include_time = TRUE){
 				$time .= " " . $items[2];
 			}
 			$time = ", " . format_time($time);
-				
+
 		}
 		$output = "$date$time";
 	}
@@ -215,17 +215,20 @@ function get_term_menu($id, $currentTerm=null, $initial_blank = FALSE){
 * @params $data array consisting of "where" string or array, and "select" comma-delimited string
 * @returns an array of key-value pairs reflecting a Database primary key and human-meaningful string
 */
-function get_keyed_pairs($list,$pairs,$initialBlank = NULL){
+function get_keyed_pairs($list,$pairs,$initialBlank = NULL,$other = NULL){
 	$output=false;
 	if($initialBlank){
 		$output[] = "";
 	}
+
 	foreach($list as $item){
 		$key_name = $pairs[0];
 		$key_value = $pairs[1];
 		$output[$item->$key_name] = $item->$key_value;
 	}
-
+	if($other){
+		$output["other"] = "Other...";
+	}
 	return $output;
 
 }
