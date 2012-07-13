@@ -81,6 +81,7 @@ class Assignment_model extends CI_Model
 		$this->db->join("grade","assignment.kAssignment=grade.kAssignment AND grade.kStudent = $kStudent","LEFT");
 		$this->db->select("assignment.kAssignment as kAssignment, assignment.category, assignment.assignment, assignment.points as total_points,grade.kStudent, grade.points,grade.kTeach");
 		$this->db->order_by("assignment.date");
+		$this->db->order_by("assignment.kAssignment");
 		$this->db->order_by("assignment.category");
 		$result = $this->db->get("assignment")->result();
 		return $result;
@@ -98,6 +99,7 @@ class Assignment_model extends CI_Model
 		$this->db->join("student","grade.kStudent=student.kStudent");
 		$this->db->order_by("student.kStudent");
 		$this->db->order_by("assignment.date");
+		$this->db->order_by("assignment.kAssignment");
 		$this->db->order_by("assignment.term");
 		$this->db->order_by("assignment.year");
 		$result = $this->db->get("assignment")->result();
@@ -111,6 +113,7 @@ class Assignment_model extends CI_Model
 		$this->db->where("year",$year);
 		$this->db->from("assignment");
 		$this->db->order_by("assignment.date");
+		$this->db->order_by("assignment.kAssignment");
 		$this->db->order_by("assignment.term");
 		$this->db->order_by("assignment.semester");
 		$this->db->order_by("assignment.year");

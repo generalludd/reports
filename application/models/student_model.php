@@ -115,7 +115,7 @@ class Student_model extends CI_Model
 
 	/**
 	 *
-	 * @param $kTeach
+	 * @param $kTeach int
 	 * This returns the students assigned to either a classroom teacher or middle school
 	 * advisor depending on the grade of the student
 	 *
@@ -135,7 +135,7 @@ class Student_model extends CI_Model
 
 	/**
 	 *
-	 * @param $kTeach
+	 * @param $kTeach int
 	 * alias for get_students_by_class. This has been deprecated for clarification purposes.
 	 */
 	function get_students_by_teacher($kTeach)
