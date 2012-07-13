@@ -35,6 +35,8 @@ class Assignment extends MY_Controller
 		$data["grades"] = $this->assignment->get_grades($kTeach,$term,$year,$gradeStart,$gradeEnd);
 		$data["assignments"] = $this->assignment->get_for_teacher($kTeach,$term,$year);
 		$data["kTeach"] = $kTeach;
+		$data["term"] = $term;
+		$data["year"] = $year;
 		$data["target"] = "grade/chart";
 		$data["title"] = "Grade Chart";
 		$this->load->view("page/index",$data);

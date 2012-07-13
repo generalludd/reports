@@ -3,10 +3,15 @@ $table = array();
 ?>
 <input
 	type="hidden" name="kTeach" id="kTeach" value="<?=$kTeach;?>" />
+	<input type="hidden" name="term" id="term" value="<?=$term;?>"/>
+	<input type="hidden" name="year" id="year" value="<?=$year;?>"/>
+	<? if(!empty($assignments)){?>
 <table class='grade-chart'>
 	<thead>
 		<tr>
-			<th>Grade Chart</th>
+			<th>Grade Chart<br/>
+			<?="$term, $year";?><br/>
+			Subject?</th>
 			<? foreach($assignments as $assignment){ ?>
 
 			<th id="as_<?=$assignment->kAssignment;?>" class="assignment-edit"><span class='chart-assignment'><?=$assignment->assignment;?></span><br />
@@ -19,6 +24,7 @@ $table = array();
 		</tr>
 	</thead>
 	<tbody>
+	<? if(!empty($grades)){ ?>
 		<? $current_student = FALSE; ?>
 		<? foreach($grades as $grade){ 
 			if($current_student != $grade->kStudent){
@@ -34,10 +40,13 @@ $table = array();
 			print implode("",$row["grades"]);
 			print "</tr>";
 		}
-
+}
 		?>
 	</tbody>
 </table>
 <div class='button-box'>
-<span class='button new grade_chart_add_student'>Add Student</span>
+<span class='button new show-student-selector'>Add Student</span>
 </div>
+<? }else{
+	print "<p>You have not entered any assignments for this term. <span class='button new assignment-create'>Add Assignment</span></p>";
+}

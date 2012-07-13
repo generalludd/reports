@@ -17,11 +17,19 @@ class Grade extends MY_Controller
 		$data["kStudent"] = $kStudent;
 		$data["kTeach"] = $kTeach;
 		$data["grades"] = $this->assignment->get_for_student($kStudent,$kTeach,"Year-End",2011);
-		$data["target"] = "grade/edit";
-		$data["title"] = "Edit Grades for Student";
 		$this->load->view("grade/edit",$data);
 		
 		
+	}
+	
+	function select_student()
+	{
+		$data["kTeach"] = $this->input->get("kTeach");
+		$data["term"] = $this->input->get("term");
+		$data["year"] = $this->input->get("year");
+		$data["js_class"] = "select-student-for-grades";
+		$data["action"] = "grade/edit";
+		$this->load->view("student/mini_selector",$data);
 	}
 	
 	function update()

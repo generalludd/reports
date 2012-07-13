@@ -37,9 +37,15 @@ class Student extends MY_Controller
 	function find_by_name()
 	{
 		$stuName = $this->input->get("stuName");
+		
+		$target = "student/list";
+		if($this->input->get("type") == "mini"){
+			$target = "student/mini_list";
+			$data["js_class"] = $this->input->get("js_class");
+		}
 		$data["students"] = $this->student_model->find_students($stuName);
 		$data["teacher"] = NULL;
-		$this->load->view("student/list", $data);
+		$this->load->view($target, $data);
 	}
 
 
