@@ -23,10 +23,15 @@
 		myStudent = $("#kStudent").val();
 		myAssignment = this.id.split("_")[1];
 		myPoints = $("#g_" + myAssignment).val();
+		myStatus = $("#status_" + myAssignment).val();
+		myFootnote = $("#footnote_" + myAssignment).val();
+
 		myUrl = base_url + "grade/update";
 		form_data = {
 				kStudent: myStudent,
 				kAssignment: myAssignment,
+				status: myStatus,
+				footnote: myFootnote,
 				points: myPoints
 				
 		};

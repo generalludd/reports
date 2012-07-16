@@ -5,7 +5,6 @@ if($date = get_value($assignment,"date")){
 	$date = format_date($date,"standard");
 }
 ?>
-
 <form id="edit-assignment" name="edit-assignment" action="<?=base_url("assignment/$action");?>" method="post">
 <input type="hidden" name="kTeach" id="kTeach" value="<?=get_value($assignment,"kTeach",$this->session->userdata("userID"));?>"/>
 <input type="hidden" name="kAssignment" id="kAssignment" value="<?=get_value($assignment,"kAssignment");?>"/>

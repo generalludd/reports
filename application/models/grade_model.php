@@ -8,6 +8,8 @@ class Grade_model extends CI_Model
 	var $kStudent;
 	var $kAssignment;
 	var $points;
+	var $status;
+	var $footnote;
 
 	function __construct()
 	{
@@ -16,7 +18,7 @@ class Grade_model extends CI_Model
 
 	function prepare_variables()
 	{
-		$variables = array("kTeach","kStudent","kAssignment","points");
+		$variables = array("kTeach","kStudent","kAssignment","points","status","footnote");
 		for($i = 0; $i < count($variables); $i++){
 			$myVariable = $variables[$i];
 			if($this->input->post($myVariable)){
@@ -36,10 +38,10 @@ class Grade_model extends CI_Model
 	}
 
 
-	function update($kStudent, $kAssignment,$points)
+	function update($kStudent, $kAssignment,$points,$status,$footnote)
 	{
 		$output = FALSE;
-		$data = array("points" => $points);
+		$data = array("points" => $points,"status"=>$status,"footnote"=>$footnote);
 		if($this->has_grade($kStudent, $kAssignment) > 0){
 			$this->db->where("kAssignment",$kAssignment);
 			$this->db->where("kStudent",$kStudent);
