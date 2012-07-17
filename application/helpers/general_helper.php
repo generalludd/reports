@@ -506,3 +506,40 @@ function format_table($data,$header = array(),$options = array()){
 
 	return implode("",$table);
 }
+
+
+function calculate_letter_grade($points)
+{
+	//$letters = array("A"=>.95,"A-"=>.92,"B+"=>.88,"B"=>.85,"B-",.82,"C+"=>"78","C"=>.75,"C-"=>.72,"D+"=>.68,"D"=>.65,"D-",.62,"F"=>.5);
+	$letters = array("9"=>"A",8=>"B",7=>"C",6=>"D");
+	$valence = "";
+	$output = "";
+	if($points == 100){
+		$output = "A+";
+	}elseif($points <= 50){
+		$output == "F";
+	}else{
+		$split = str_split($points);
+		$tens = $split[0];
+		$hundreds = $split[1];
+		switch($hundreds){
+			case $hundreds >= 8:
+				$valence = "+";
+				break;
+			case $hundreds >= 5:
+				$valence = "";
+				break;
+			case $hundreds >= 2:
+				$valence = "-";
+				break;
+			default:
+				$valence = "+";
+				$tens -= 1;
+		}
+
+		$letter = $letters[$tens];
+		$output = $letter . $valence;
+	}
+	return $output;
+
+}

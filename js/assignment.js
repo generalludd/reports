@@ -41,7 +41,20 @@ $(document).ready(function(){
 		myStudent = myId[2];
 		$(this).removeClass("edit");
 		myPoints = $(this).html();
-		$(this).html("<input type='text' class='point-editor' name='points' id='points_" + myAssignment + "_" + myStudent + "' value='" + myPoints + "' size=4/>");
+		form_data = {
+			kStudent: myStudent,
+			kAssignment: myAssignment
+		};
+		$.ajax({
+			type:"get",
+			url: base_url + "index.php/grade/edit_cell",
+			data: form_data,
+			success: function(data){
+				//showPopup("test",data,"auto");
+				$("#sag_" + myAssignment + "_" + myStudent).html(data);
+			}
+		});
+		//$(this).html("<input type='text' class='point-editor' name='points' id='points_" + myAssignment + "_" + myStudent + "' value='" + myPoints + "' size=4/>");
 		
 	});
 	
@@ -123,4 +136,97 @@ $(document).ready(function(){
 		
 		
 	});
+	
+
+	
+	$(".edit_student_grades").live("click",function(){
+		myTeach = $("#kTeach").val();
+		myStudent = this.id.split("_")[1];
+		
+		form_data = {
+			kTeach: myTeach,
+			kStudent: myStudent,
+			year: 2011,
+			term: "Year-End"
+		};
+		myUrl = base_url + "grade/edit";
+		$.ajax({
+			type:"GET",
+			url: myUrl,
+			data: form_data,
+			success: function(data){
+				showPopup("Editing Student Grades",data, "auto");
+			}
+			
+		});
+	});
+	
+	$(".save_student_grade").live("click",function(){
+		
+		myAssignment = this.id.split("_")[1];
+		save_student_points(myAssignment);
+	});
+	
+	$(".assignment-field").live("change",function(){
+		save_student_points(this.id.split("_")[1]);
+	});
+	
+	$(".save_cell_grade").live("click",function(){
+		myStudent = $("#kStudent").val();
+		myAssignment = $("#kAssignment").val();
+		myPoints = $("#points").val();
+		myStatus = $("#status").val();
+		myFootnote = $("#footnote").val();
+
+		myUrl = base_url + "grade/update";
+		form_data = {
+				kStudent: myStudent,
+				kAssignment: myAssignment,
+				status: myStatus,
+				footnote: myFootnote,
+				points: myPoints
+				
+		};
+		$.ajax({
+			type: "POST",
+			url: myUrl,
+			data: form_data,
+			success: function(data){
+				document.location = document.location;
+			}
+		});
+	});
+	
+	$(".close_grade_editor").live("click",function(){
+		document.location = document.location;
+	});
+
 });
+
+function save_student_points(myAssignment)
+{
+	myStudent = $("#kStudent").val();
+	myPoints = $("#g_" + myAssignment).val();
+	myStatus = $("#status_" + myAssignment).val();
+	myFootnote = $("#footnote_" + myAssignment).val();
+
+	myUrl = base_url + "grade/update";
+	form_data = {
+			kStudent: myStudent,
+			kAssignment: myAssignment,
+			status: myStatus,
+			footnote: myFootnote,
+			points: myPoints
+			
+	};
+	$.ajax({
+		type: "POST",
+		url: myUrl,
+		data: form_data,
+		success: function(data){
+			//$("#ssg_" + myAssignment).hide();
+			$("#save_" + myAssignment).html(data).show();
+		}
+	});
+	
+}

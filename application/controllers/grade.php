@@ -2,30 +2,46 @@
 
 class Grade extends MY_Controller
 {
-	
+
 	function __construct()
 	{
 		parent::__construct();
 		$this->load->model("grade_model","grade");
 		$this->load->model("assignment_model","assignment");
 	}
-	
+
 	function edit()
 	{
 		$this->load->model("menu_model");
 		$kStudent = $this->input->get_post("kStudent");
 		$kTeach = $this->input->get_post("kTeach");
+		$year = $this->input->get_post("year");
+		$term = $this->input->get_post("term");
 		$footnotes = $this->menu_model->get_pairs("grade_footnote");
 		$data["footnotes"] = get_keyed_pairs($footnotes, array("value","label"),TRUE);
 		$status = $this->menu_model->get_pairs("grade_status");
 		$data["status"] = get_keyed_pairs($status, array("value","label"),TRUE);
 		$data["kStudent"] = $kStudent;
 		$data["kTeach"] = $kTeach;
-		$data["grades"] = $this->assignment->get_for_student($kStudent,$kTeach,"Year-End",2011);
+		$data["grades"] = $this->assignment->get_for_student($kStudent,$kTeach,$term,$year);
 		$this->load->view("grade/edit",$data);
-		
-		
+
+
 	}
+
+	function edit_cell()
+	{
+		$kAssignment = $this->input->get("kAssignment");
+		$kStudent = $this->input->get("kStudent");
+		$this->load->model("menu_model");
+		$data["grade"] = $this->grade->get($kStudent,$kAssignment);
+		$footnotes = $this->menu_model->get_pairs("grade_footnote");
+		$data["footnotes"] = get_keyed_pairs($footnotes, array("value","label"),TRUE);
+		$status = $this->menu_model->get_pairs("grade_status");
+		$data["status"] = get_keyed_pairs($status, array("value","label"),TRUE);
+		$this->load->view("grade/edit_cell",$data);
+	}
+
 	
 	function select_student()
 	{
@@ -36,18 +52,22 @@ class Grade extends MY_Controller
 		$data["action"] = "grade/edit";
 		$this->load->view("student/mini_selector",$data);
 	}
-	
+
 	function update()
 	{
 		$kStudent = $this->input->post("kStudent");
 		$kAssignment = $this->input->post("kAssignment");
+		$assignment = $this->assignment->get($kAssignment);
+		//$total points is needed to calculate the grade average.
+		//this calculation happens in the model to make more elegant code. 
+		$total = $assignment->points;
 		$points = $this->input->post("points");
 		$status = $this->input->post("status");
 		$footnote = $this->input->post("footnote");
-		$result = $this->grade->update($kStudent,$kAssignment,$points,$status,$footnote);
+		$result = $this->grade->update($kStudent,$kAssignment,$points,$total,$status,$footnote);
 		echo OK;
 	}
-	
-	
-	
+
+
+
 }

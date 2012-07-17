@@ -24,9 +24,9 @@
 		foreach($grades as $grade){
 
 			?>
-
 		<tr>
-			<td class='grade-description'><?=$grade->assignment;?>
+			<td class='grade-description'>
+			<?=$grade->assignment;?>
 			</td>
 			<td class='grade-description'><?=$grade->category;?>
 			</td>
@@ -34,11 +34,11 @@
 			</td>
 			<td class='grade-value'><input type="text"
 				id="g_<?=$grade->kAssignment;?>" name="points" size="2"
-				class="assignment-grade assignment-string"
+				class="assignment-grade assignment-string assignment-field"
 				value="<?=get_value($grade,"points");?>" />
 			</td>
-			<td class='grade-status'><?=form_dropdown("status",$status, get_value($grade,"status"),"id='status_$grade->kAssignment'");?></td>
-			<td class='grade-footnote'><?=form_dropdown("footnote",$footnotes, get_value($grade,"footnote"),"id='footnote_$grade->kAssignment'");?></td>
+			<td class='grade-status'><?=form_dropdown("status",$status, get_value($grade,"status"),"id='status_$grade->kAssignment' class='assignment-field'");?></td>
+			<td class='grade-footnote'><?=form_dropdown("footnote",$footnotes, get_value($grade,"footnote"),"id='footnote_$grade->kAssignment'  class='assignment-field'");?></td>
 			<td class='grade-button'><span class='button save_student_grade'
 				id='ssg_<?=$grade->kAssignment;?>'>Save</span>
 				</td>		

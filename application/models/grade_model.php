@@ -8,6 +8,7 @@ class Grade_model extends CI_Model
 	var $kStudent;
 	var $kAssignment;
 	var $points;
+	var $average;
 	var $status;
 	var $footnote;
 
@@ -27,6 +28,15 @@ class Grade_model extends CI_Model
 		}
 	}
 
+	
+	function get($kStudent,$kAssignment)
+	{
+		$this->db->where("kStudent",$kStudent);
+		$this->db->where("kAssignment",$kAssignment);
+		$this->db->from("grade");
+		$output = $this->db->get()->row();
+		return $output;
+	}
 
 	function has_grade($kStudent,$kAssignment)
 	{
@@ -38,10 +48,17 @@ class Grade_model extends CI_Model
 	}
 
 
-	function update($kStudent, $kAssignment,$points,$status,$footnote)
+	function update($kStudent, $kAssignment,$points,$total, $status,$footnote)
 	{
 		$output = FALSE;
-		$data = array("points" => $points,"status"=>$status,"footnote"=>$footnote);
+	//this variable is not declared in $_POST or $_GET. It must be calculated. 
+		$this->average = $points/$total;
+		//if the status is either "Exc" or "Abs" or anything else for that matter,
+		// then the grade is counted at full value
+		if(!empty($status)){
+			$this->average = 1;
+		}
+		$data = array("points" => $points,"status"=>$status,"footnote"=>$footnote,"average"=>$this->average);
 		if($this->has_grade($kStudent, $kAssignment) > 0){
 			$this->db->where("kAssignment",$kAssignment);
 			$this->db->where("kStudent",$kStudent);
@@ -54,7 +71,7 @@ class Grade_model extends CI_Model
 			$output = $this->db->insert_id();
 			$output = $this->db->last_query();
 		}
-		return $this->db->last_query();
+		return $this->average; 
 
 	}
 

@@ -1,55 +1,6 @@
 ﻿$(document).ready(function(){
 //	$('#content').css({height:'500px'});
-	$(".edit_student_grades").live("click",function(){
-		myTeach = $("#kTeach").val();
-		myStudent = this.id.split("_")[1];
-		form_data = {
-			kTeach: myTeach,
-			kStudent: myStudent
-		};
-		myUrl = base_url + "grade/edit";
-		$.ajax({
-			type:"GET",
-			url: myUrl,
-			data: form_data,
-			success: function(data){
-				showPopup("Editing Student Grades",data, "auto");
-			}
-			
-		});
-	});
-	
-	$(".save_student_grade").live("click",function(){
-		myStudent = $("#kStudent").val();
-		myAssignment = this.id.split("_")[1];
-		myPoints = $("#g_" + myAssignment).val();
-		myStatus = $("#status_" + myAssignment).val();
-		myFootnote = $("#footnote_" + myAssignment).val();
 
-		myUrl = base_url + "grade/update";
-		form_data = {
-				kStudent: myStudent,
-				kAssignment: myAssignment,
-				status: myStatus,
-				footnote: myFootnote,
-				points: myPoints
-				
-		};
-		$.ajax({
-			type: "POST",
-			url: myUrl,
-			data: form_data,
-			success: function(data){
-				
-				//$("#ssg_" + myAssignment).hide();
-				$("#save_" + myAssignment).html(data).show();
-			}
-		});
-	});
-	
-	$(".close_grade_editor").live("click",function(){
-		document.location = document.location;
-	});
 	
 	$(".datefield").live("focus", function(){
 		$(".datefield").datepicker();
