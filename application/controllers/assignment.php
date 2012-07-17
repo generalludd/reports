@@ -22,15 +22,22 @@ class Assignment extends MY_Controller
 			$kTeach = $this->input->get("kTeach");
 		}
 		$gradeStart = $this->input->get("gradeStart");
+		$this->session->set_userdata("gradeStart",$gradeStart);
 		$gradeEnd = $this->input->get("gradeEnd");
+		$this->session->set_userdata("gradeEnd",$gradeEnd);
+
 		$term = get_current_term();
 		if($this->input->get("term")){
 			$term = $this->input->get("term");
+			$this->session->set_userdata("term",$term);
+
 		}
 
 		$year = get_current_year();
 		if($this->input->get("year")){
 			$year = $this->input->get("year");
+			$this->session->set_userdata("year",$year);
+
 		}
 		$data["grades"] = $this->assignment->get_grades($kTeach,$term,$year,$gradeStart,$gradeEnd);
 		$data["assignments"] = $this->assignment->get_for_teacher($kTeach,$term,$year);
@@ -41,7 +48,7 @@ class Assignment extends MY_Controller
 		$data["title"] = "Grade Chart";
 		$this->load->view("page/index",$data);
 	}
-	
+
 	function search()
 	{
 		$data["kTeach"] = $this->session->userdata("userID");
@@ -57,7 +64,11 @@ class Assignment extends MY_Controller
 	{
 		$data["assignment"] = NULL;
 		$data["action"] = "insert";
-		$categories = $this->assignment->get_categories(8);
+		$this->load->model("subject_model");
+		$kTeach = $this->session->userdata("userID");
+		$subjects = $this->subject_model->get_for_teacher($kTeach);
+		$data['subjects'] = get_keyed_pairs($subjects, array('subject', 'subject'));
+		$categories = $this->assignment->get_categories($this->session->userdata("userID"));
 		$data["categories"] = get_keyed_pairs($categories, array("category","category"),NULL,TRUE);
 		$data["target"] = "assignment/edit";
 		$data["title"] = "Create an Assignment";

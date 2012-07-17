@@ -1032,6 +1032,10 @@ table.grade-chart th .chart-category {
 	font-style: italic;
 }
 
+table.grade-chart th.assignment-field{
+		font-size:.85em;
+}
+
 table.grade-editor th.grade-total-points {
 	width: 25px;
 }

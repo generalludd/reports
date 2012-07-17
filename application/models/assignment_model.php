@@ -7,7 +7,7 @@ class Assignment_model extends CI_Model
 	var $category;
 	var $date;
 	var $points;
-	var $semester;
+	var $subject;
 	var $term;
 	var $year;
 	var $gradeStart;
@@ -15,7 +15,7 @@ class Assignment_model extends CI_Model
 
 	function prepare_variables()
 	{
-		$variables = array("kTeach","assignment","category","date","points","semester","term","year","gradeStart","gradeEnd");
+		$variables = array("kTeach","assignment","category","date","points","subject","term","year","gradeStart","gradeEnd");
 
 		for($i = 0; $i < count($variables); $i++){
 			$myVariable = $variables[$i];
@@ -95,10 +95,10 @@ class Assignment_model extends CI_Model
 		$this->db->where("year",$year);
 		$this->db->where("assignment.kTeach",$kTeach);
 		$this->db->where("(assignment.gradeStart = $gradeStart OR assignment.gradeEnd = $gradeEnd)");
-		$this->db->where("student.stuGrade in ($gradeStart,$gradeEnd)");
+		//$this->db->where("student.stuGrade in ($gradeStart,$gradeEnd)");
 		$this->db->join("grade","assignment.kAssignment=grade.kAssignment");
 		$this->db->join("student","grade.kStudent=student.kStudent");
-		$this->db->order_by("student.kStudent");
+		$this->db->order_by("student.stuLast");
 		$this->db->order_by("assignment.date");
 		$this->db->order_by("assignment.kAssignment");
 		$this->db->order_by("assignment.term");
@@ -116,7 +116,6 @@ class Assignment_model extends CI_Model
 		$this->db->order_by("assignment.date");
 		$this->db->order_by("assignment.kAssignment");
 		$this->db->order_by("assignment.term");
-		$this->db->order_by("assignment.semester");
 		$this->db->order_by("assignment.year");
 		$output = $this->db->get()->result();
 		return $output;

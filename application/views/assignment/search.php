@@ -6,9 +6,10 @@ if(!empty($term)){
 if(!empty($year)){
 	$year = get_current_year();
 }
+
 ?>
 
-<form id="chart-search" name="chart-search" action="assignment/chart" method="get">
+<form id="chart-search" name="chart-search" action="<?=site_url("assignment/chart");?>" method="get">
 <input type="hidden" id="kTeach" name="kTeach" value="<?=$kTeach; ?>"/>
 <p>
 <label for="gradeStart">Grade: </label>
@@ -21,4 +22,7 @@ if(!empty($year)){
 <?=form_dropdown('year',get_year_list(), $year, "id='year' class='searchYear'");?>
 -<input id="yearEnd" type="text" name="yearEnd" class='yearEnd' readonly
 	maxlength="4" size="5" value="<? $yearEnd=$year+1;print $yearEnd; ?>" /></p>
+	<p>
+	<input type="submit" class="button"/>
+	</p>
 </form>

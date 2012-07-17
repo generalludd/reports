@@ -17,7 +17,7 @@ $assignment_count = 0;
 			<th></th>
 			<? foreach($assignments as $assignment){ ?>
 
-			<th id="as_<?=$assignment->kAssignment;?>" class="assignment-edit"><span
+			<th id="as_<?=$assignment->kAssignment;?>" class="assignment-edit assignment-field"><span
 				class='chart-assignment'><?=$assignment->assignment;?> </span><br />
 				<span class='chart-category'><?=$assignment->category;?> </span><br />
 				<span class='chart-points'> <?=$assignment->points;?> Points

@@ -6,6 +6,7 @@
 ?>
 <input
 	type="hidden" name="kStudent" id="kStudent" value="<?=$kStudent;?>" />
+	<input type="hidden" name="kTeach" id="kTeach" value="<?=$kTeach;?>"/>
 <table class='grade-editor'>
 	<thead>
 		<tr>
