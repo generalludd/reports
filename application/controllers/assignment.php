@@ -41,6 +41,16 @@ class Assignment extends MY_Controller
 		$data["title"] = "Grade Chart";
 		$this->load->view("page/index",$data);
 	}
+	
+	function search()
+	{
+		$data["kTeach"] = $this->session->userdata("userID");
+		$data["term"] = $this->session->userdata("term");
+		$data["year"] = $this->session->userdata("year");
+		$data["gradeStart"] = $this->session->userdata("gradeStart");
+		$data["gradeEnd"] = $this->session->userdata("gradeEnd");
+		$this->load->view("assignment/search",$data);
+	}
 
 
 	function create()
