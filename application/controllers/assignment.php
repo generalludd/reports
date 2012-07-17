@@ -92,6 +92,10 @@ class Assignment extends MY_Controller
 	{
 		$kAssignment = $this->input->get("kAssignment");
 		$assignment = $this->assignment->get($kAssignment);
+		$this->load->model("subject_model");
+		$kTeach = $assignment->kTeach;
+		$subjects = $this->subject_model->get_for_teacher($kTeach);
+		$data['subjects'] = get_keyed_pairs($subjects, array('subject', 'subject'));
 		$data["assignment"] = $assignment;
 		$data["action"] = "update";
 		$categories = $this->assignment->get_categories($assignment->kTeach);

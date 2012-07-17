@@ -27,9 +27,8 @@ if($date = get_value($assignment,"date")){
 <input type="text" name="date" id="date" class="datefield" value="<?=$date;?>"/>
 </p>
 <p>
-<label for="semester">Subject: </label>
+<label for="subject">Subject: </label>
 <?=form_dropdown("subject",$subjects,get_value($assignment,"subject"),"id='subject'");?>
-<input type="text" name="semester" id="semester" value="<?=get_value($assignment,"semester");?>" size="2"/>
 </p>
 <p>
 <label for="gradeStart">Grade: </label>
