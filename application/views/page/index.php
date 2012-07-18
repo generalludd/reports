@@ -18,8 +18,9 @@ if($this->uri->segment(1) == ""){
 <div id="page">
 <?php if(!$print): ?>
 <div id='header'>
-
-<div id='navigation'><?  $this->load->view('page/navigation'); ?>
+<div id='utility'><? $this->load->view('page/utility');?></div>
+<div id='navigation'>
+<?  $this->load->view('page/navigation'); ?>
 </div>
 </div>
 <?php endif; ?>

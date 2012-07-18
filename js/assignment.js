@@ -63,6 +63,17 @@ $(document).ready(function(){
 		$(this).parent(".grade-points").html(myPoints).addClass("edit");
 	});
 	
+	$(".search-assignments").live("click",function(){
+		myTeach = this.id.split("_")[1];
+		$.ajax({
+			type: "get",
+			url: base_url + "assignment/search",
+			success: function(data){
+				showPopup("Search for Assigment Charts",data, "auto");
+			}
+		});
+	});
+	
 	$(".show-student-selector").live("click",function(){
 		
 		form_data = {

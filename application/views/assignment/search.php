@@ -1,9 +1,9 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
-if(!empty($term)){
+if(empty($term)){
 	$term = get_current_term();
 }
 
-if(!empty($year)){
+if(empty($year)){
 	$year = get_current_year();
 }
 

@@ -31,6 +31,8 @@ class Auth extends CI_Controller
 				$data["username"] = $username;
 				$data["dbRole"] = $result->dbRole;
 				$data["userID"] = $result->kTeach;
+				$data["gradeStart"] = $result->gradeStart;
+				$data["gradeEnd"] = $result->gradeEnd;
 				$this->session->set_userdata($data);
 				$redirect = true;
 			}

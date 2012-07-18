@@ -1,7 +1,8 @@
 <?php
 $dbRole = $this->session->userdata("dbRole");
 $userID = $this->session->userdata("userID");
-
+$gradeStart = $this->session->userdata("gradeStart");
+$gradeEnd = $this->session->userdata("gradeEnd");
 $term = get_current_term();
 $year = get_current_year();
 $buttons[] = array("item"=>"home", "text"=>"Home", "href" => base_url() );
@@ -19,19 +20,16 @@ if($dbRole == 1){
 	$buttons[] = array("item" => "benchmark", "text" => "Benchmarks", "class" => "button show_benchmark_search", "type" => "span");
 	$buttons[] = array("item" => "narrative", "text" => "Current Narratives", "href" => site_url("narrative/teacher_list/$userID"), "title" => "List all of your narratives" );
 	$buttons[] = array("item" => "narrative", "text" => "Missing Narratives", "class" => "button missing_narrative_search", "id" => "mns_$userID", "title" => "Show the students for whom you have not yet written a report this term" );
+
+	if($gradeEnd > 4){
+		$buttons[] = array("item" => "assignment", "text" => "Grades","class"=> "button search-assignments","id" =>"sa_$userID","title" => "Search for current grade charts");
+	}
+	
 	$buttons[] = array("item" => "student", "text" => "List Students", "href" => site_url("student/teacher_student_list/$userID"));
 }
 print create_button_bar($buttons, array("id" =>"navigation-buttons"));
 
-$user_buttons[] = array("item"=>"preference", "text" => "Preferences", "href" => site_url("preference/view/$userID") );
-if($this->session->userdata("userID")== 1000){
-	$user_buttons[] = array("item"=>"admin","text"=>"Site Admin","href"=>site_url("admin"));
-}else{
-	$user_buttons[] = array("item" => "feedback", "text" =>"Feedback", "type" => "span", "class" => "button create_feedback");
-}
-$user_buttons[] = array("item" => "auth", "text" => "Log Out", "href" => site_url("auth/logout"),"title" => $this->session->userdata("username"));
 
-print create_button_bar($user_buttons, array("id" =>"user_menu"));
 ?>
 
 

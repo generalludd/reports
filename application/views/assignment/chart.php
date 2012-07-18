@@ -30,7 +30,7 @@ $header = $assignments[0];
 			<? 
 			$assignment_count++;
 } ?>
-			<th><span class='button new assignment-create'>Add Assignment</span>
+			<th class='assignment-button'><span class='button new assignment-create'>Add Assignment</span>
 			</th>
 		</tr>
 	</thead>

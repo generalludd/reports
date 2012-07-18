@@ -48,7 +48,7 @@ class Grade_model extends CI_Model
 	}
 
 
-	function update($kStudent, $kAssignment,$points,$total, $status,$footnote)
+	function update($kStudent, $kAssignment,$points,$total, $status,$footnote,$category)
 	{
 		$output = FALSE;
 	//this variable is not declared in $_POST or $_GET. It must be calculated. 
@@ -56,7 +56,7 @@ class Grade_model extends CI_Model
 		//if the status is either "Exc" or "Abs" or anything else for that matter,
 		// then the grade is counted at full value
 		if(!empty($status)){
-			$this->average = 1;
+			$this->average = 0;
 		}
 		$data = array("points" => $points,"status"=>$status,"footnote"=>$footnote,"average"=>$this->average);
 		if($this->has_grade($kStudent, $kAssignment) > 0){
@@ -75,6 +75,15 @@ class Grade_model extends CI_Model
 
 	}
 
+	function calculate_weight($kTeach, $category)
+	{
+		$this->db->where("type","grade_weight");
+		$this->db->where("kTeach",$kTeach);
+		$this->db->from("preference");
+		$result = $this->db->get()->row()->value;
+		
+		
+	}
 
 	function delete($kGrade)
 	{

@@ -19,6 +19,7 @@ body {
 	font-family: tahoma, sans-serif;
 	margin: 10px;
 	padding: 10px;
+	padding-top:0px;
 }
 
 #page {
@@ -342,6 +343,10 @@ ul.button-list li .button.delete {
 	
 }
 
+#utility .button-box {
+	font-size: .8em;
+}
+}
 textarea {
 	font-size: 1em;
 }
@@ -362,7 +367,7 @@ legend {
 #header {
 	padding: 0;
 	position: relative;
-	height: 40px;
+	height: 60px;
 }
 
 #navigation,#advancedSearch {
@@ -411,14 +416,12 @@ legend {
 	position: absolute;
 }
 
-#navigation #user_menu {
-	float: right;
-	top: 5px;
-	position: absolute;
-	right: 10px;
+#utility {
+	margin-left: 78%;
+
 }
 
-.user_menu p,#user_menu p {
+#utility p {
 	margin: 0em;
 }
 
@@ -999,7 +1002,11 @@ h4.ui-accordion-header {
 }
 
 table.grade-chart {
-	margin-top: 50px;
+	margin-bottom: 1em;
+}
+
+table.report-card, table.grade-chart {
+	border-collapse:collapse;
 }
 
 table.grade-chart tr {
@@ -1038,6 +1045,15 @@ table.grade-chart th.assignment-field{
 		font-size:.85em;
 }
 
+table.grade-chart td {
+	padding: 2px 5px;
+}
+
+table.grade-chart th.assignment-button {
+	border: none;
+	padding: 0 15px;
+}
+
 table.grade-editor th.grade-total-points {
 	width: 25px;
 }
@@ -1067,10 +1083,6 @@ table.report-card th, table.report-card td {
 	padding: 5px;
 	border: 1px solid black;
 	
-}
-
-table.report-card {
-	border-collapse:collapse;
 }
 
 table.report-card .notes-column {
