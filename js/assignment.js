@@ -129,6 +129,7 @@ $(document).ready(function(){
 	});
 	
 	$(".select-student-for-grades").live("click",function(){
+		
 		form_data = {
 				kStudent: this.id.split("_")[1],
 				kTeach: $("#kTeach").val(),

@@ -47,8 +47,8 @@ class Grade extends MY_Controller
 	function select_student()
 	{
 		$data["kTeach"] = $this->input->get("kTeach");
-		$data["term"] = $this->input->get("term");
-		$data["year"] = $this->input->get("year");
+		$data["term"] = $this->session->userdata("term");
+		$data["year"] = $this->session->userdata("year");
 		$data["js_class"] = "select-student-for-grades";
 		$data["action"] = "grade/edit";
 		$this->load->view("student/mini_selector",$data);
