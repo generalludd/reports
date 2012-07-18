@@ -44,9 +44,35 @@ class Assignment extends MY_Controller
 		$data["kTeach"] = $kTeach;
 		$data["term"] = $term;
 		$data["year"] = $year;
-		$data["target"] = "grade/chart";
+		$data["target"] = "assignment/chart";
 		$data["title"] = "Grade Chart";
 		$this->load->view("page/index",$data);
+	}
+	
+	function report_card(){
+		$kStudent = $this->input->get("kStudent");
+		if($this->input->get("kTeach")){
+			$options["kTeach"] = $this->input->get("kTeach");
+				
+		}
+		if($this->input->get("subject")){
+			$options["subject"] = $this->input->get("subject");
+		}
+		
+		$term = get_current_term();
+		if($this->input->get("term")){
+			$term = $this->input->get("term");
+		
+		}
+		$year = get_current_year();
+		if($this->input->get("year")){
+			$year = $this->input->get("year");
+		}
+
+		$data["grades"] = $this->assignment->get_for_student($kStudent,$term,$year,$options);
+		$data["target"] = "grade/chart";
+		$data["title"] = "Report Card";
+		$this->load->view("page/print",$data);
 	}
 
 	function search()

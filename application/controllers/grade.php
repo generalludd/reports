@@ -23,7 +23,8 @@ class Grade extends MY_Controller
 		$data["status"] = get_keyed_pairs($status, array("value","label"),TRUE);
 		$data["kStudent"] = $kStudent;
 		$data["kTeach"] = $kTeach;
-		$data["grades"] = $this->assignment->get_for_student($kStudent,$kTeach,$term,$year);
+		$options["kTeach"] = $kTeach;
+		$data["grades"] = $this->assignment->get_for_student($kStudent,$term,$year,$options);
 		$this->load->view("grade/edit",$data);
 
 

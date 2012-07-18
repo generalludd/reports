@@ -39,7 +39,7 @@ class Assignment_model extends CI_Model
 	}
 
 
-	
+
 	function insert()
 	{
 		$this->prepare_variables();
@@ -74,13 +74,21 @@ class Assignment_model extends CI_Model
 	}
 
 
-	function get_for_student($kStudent,$kTeach,$term,$year)
+	function get_for_student($kStudent,$term,$year,$options = array())
 	{
 		$this->db->where("assignment.term",$term);
 		$this->db->where("assignment.year",$year);
-		$this->db->where("assignment.kTeach",$kTeach);
+		if(array_key_exists("kTeach",$options)){
+			$this->db->where("assignment.kTeach",$options["kTeach"]);
+		}
+		if(array_key_exists("subject",$options)){
+			$this->db->where("assignment.subject",$options["subject"]);
+		}
 		$this->db->join("grade","assignment.kAssignment=grade.kAssignment AND grade.kStudent = $kStudent","LEFT");
-		$this->db->select("assignment.kAssignment, assignment.category, assignment.assignment, assignment.points as total_points,grade.points,grade.status,grade.footnote");
+		$this->db->join("menu","grade.footnote = menu.value AND menu.category='grade_footnote'","LEFT");
+		$this->db->join("student","student.kStudent=grade.kStudent","LEFT");
+		$this->db->join("teacher","teacher.kTeach=assignment.kTeach","LEFT");
+		$this->db->select("assignment.kAssignment, assignment.term, assignment.year, assignment.subject, assignment.date, assignment.category, assignment.assignment, assignment.points as total_points,grade.points,grade.average,grade.status,grade.footnote,menu.label,student.stuFirst,student.stuNickname,student.stuLast,teacher.teachFirst,teacher.teachLast");
 		$this->db->order_by("assignment.date");
 		$this->db->order_by("assignment.kAssignment");
 		$this->db->order_by("assignment.category");
@@ -88,7 +96,7 @@ class Assignment_model extends CI_Model
 		return $result;
 
 	}
-	
+
 	function get_grades($kTeach,$term,$year,$gradeStart,$gradeEnd)
 	{
 		$this->db->where("term",$term);
@@ -120,7 +128,7 @@ class Assignment_model extends CI_Model
 		$output = $this->db->get()->result();
 		return $output;
 	}
-	
+
 
 
 }

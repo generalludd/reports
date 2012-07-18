@@ -1063,3 +1063,16 @@ table.grade-editor thead tr th {
 	cursor: pointer;
 	background-color: #efefef;
 }
+table.report-card th, table.report-card td {
+	padding: 5px;
+	border: 1px solid black;
+	
+}
+
+table.report-card {
+	border-collapse:collapse;
+}
+
+table.report-card .notes-column {
+	border: none;
+}
