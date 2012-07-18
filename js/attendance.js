@@ -22,20 +22,6 @@ $(document).ready(function(){
 		});//end ajax
 	});
 	
-//	$('.save_attendance').live('click',
-//			function(event){
-//				var kStudent=$("#kStudent").val();
-//				var attendType=$("#attendType").val();
-//				var attendDate=$("#attendDate").val();
-//				if(attendType=="" || attendDate==""){
-//					alert("The attendance type and date fields are required!");
-//				}else{
-//					$('#attendanceEditor').ajaxSubmit(function(response){
-//						document.location="index.php?target=attendance&action_task=list&kStudent="+kStudent;
-//					});
-//				}
-//			}//end function(event)	
-//	); //end click
 
 	$('.delete_attendance').live('click',
 		function(event){

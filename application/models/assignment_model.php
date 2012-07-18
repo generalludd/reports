@@ -56,13 +56,6 @@ class Assignment_model extends CI_Model
 	}
 
 
-	function delete($kAssignment)
-	{
-		$delete = array("kAssignment"=>$kAssignment);
-		$this->db->delete("assignment",$delete);
-	}
-
-
 	function get_categories($kTeach = FALSE)
 	{
 		$this->db->distinct("category");
@@ -88,7 +81,7 @@ class Assignment_model extends CI_Model
 		$this->db->join("student","student.kStudent=grade.kStudent","LEFT");
 		$this->db->join("teacher","teacher.kTeach=assignment.kTeach","LEFT");
 		$this->db->join("menu","grade.footnote = menu.value AND menu.category='grade_footnote'","LEFT");
-		
+
 		$this->db->select("assignment.kAssignment, assignment.term, assignment.year, assignment.subject, assignment.date, assignment.category, assignment.assignment, assignment.points as total_points,grade.points,grade.average,grade.status,grade.footnote,menu.label,student.stuFirst,student.stuNickname,student.stuLast,teacher.teachFirst,teacher.teachLast");
 		$this->db->order_by("assignment.date");
 		$this->db->order_by("assignment.kAssignment");
@@ -130,6 +123,10 @@ class Assignment_model extends CI_Model
 		return $output;
 	}
 
-
+	function delete($kAssignment){
+		$delete_array = array("kAssignment"=>$kAssignment);
+		$this->db->delete("assignment",$delete_array);
+		$this->db->delete("grade",$delete_array);
+	}
 
 }

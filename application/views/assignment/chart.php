@@ -11,6 +11,7 @@ $assignment_count = 0;
 	/* Get the subject of the first row of the assignments */
 $header = $assignments[0];
 ?>
+<div class="button-box"><span class="button refresh">Refresh Page</span></div>
 <table class='grade-chart'>
 	<thead>
 		<tr>

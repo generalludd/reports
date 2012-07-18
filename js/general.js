@@ -1,6 +1,9 @@
 ﻿$(document).ready(function(){
 //	$('#content').css({height:'500px'});
 
+	$(".refresh").live("click",function(){
+		window.location.reload();
+	});
 	
 	$(".datefield").live("focus", function(){
 		$(".datefield").datepicker();
@@ -20,7 +23,7 @@
 	 
 	$('.home').live('click',
 		function(event){
-			document.location="index.php";
+			document.location = base_url;
 		}//end function(event);
 	);//end home.click
 	

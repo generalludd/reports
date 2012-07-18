@@ -195,7 +195,7 @@ function listTeachers(showAdmin,showInactive) {
 	if(showInactive) {
 		url=url + "&showInactive=true";
 	}
-	document.location=url;
+	document.location = url;
 	return false;
 }
 

@@ -160,7 +160,7 @@ $(document)
 					$('.view_narrative').live('click',
 							function(event){
 								var myNarrative=this.id.split("_")[1];
-								document.location="index.php?target=narrative&action_task=view&kNarrative="+myNarrative;
+								document.location = "index.php?target=narrative&action_task=view&kNarrative="+myNarrative;
 							}	
 					);//end click
 

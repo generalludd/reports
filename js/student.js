@@ -180,7 +180,7 @@ $(document).ready(function() {
 										document.location = "index.php?target=student&action_task=view&kStudent="
 												+ kStudent;
 									} else {
-										document.location = document.location;
+										window.location.reload();
 									}
 								}// end function(event)
 						); // end click

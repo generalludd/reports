@@ -141,5 +141,19 @@ class Assignment extends MY_Controller
 		redirect("assignment/chart?kTeach=$kTeach&term=$term&year=$year&gradeStart=$gradeStart&gradeEnd=$gradeEnd");
 	}
 
+	function delete()
+	{
+		if($this->input->post("kAssignment")){
+			$kAssignment = $this->input->post("kAssignment");
+			$assignment = $this->assignment->get($kAssignment);
+			$this->assignment->delete($kAssignment);
+		}
+		$kTeach = $assignment->kTeach;
+		$term = $assignment->term;
+		$year = $assignment->year;
+		$gradeStart = $assignment->gradeStart;
+		$gradeEnd = $assignment->gradeEnd;
+		redirect("assignment/chart?kTeach=$kTeach&term=$term&year=$year&gradeStart=$gradeStart&gradeEnd=$gradeEnd");
+	}
 
 }

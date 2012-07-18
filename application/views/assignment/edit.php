@@ -44,8 +44,11 @@ if($date = get_value($assignment,"date")){
 <?=form_dropdown('year',get_year_list(), get_value($assignment,"year",$this->session->userdata('year')), "id='year' class='searchYear'");?>
 -<input id="yearEnd" type="text" name="yearEnd" class='yearEnd' readonly
 	maxlength="4" size="5" value="<? $yearEnd=$year+1;print $yearEnd; ?>" /></p>
-<p>
-<input type="submit" class="button" value="Save"/>
-</p>
+<div class="button-box">
+<input type="submit" class="button" value="Save"/> 
+<? if($action == "update"): ?>
+<div class="button delete assignment-delete">Delete</div>
+<? endif;?>
+</div>
 
 </form>

@@ -209,13 +209,34 @@ $(document).ready(function(){
 			url: myUrl,
 			data: form_data,
 			success: function(data){
-				document.location = document.location;
+				window.location.reload();
 			}
 		});
 	});
 	
 	$(".close_grade_editor").live("click",function(){
-		document.location = document.location;
+		window.location.reload();
+	});
+	
+	$(".assignment-delete").live("click",function(){
+		choice = confirm("Are you sure you want to delete this assignment? It will delete all the related student grades along with it!");
+		if(choice){
+			second_chance = confirm("Are you absolutely sure? This cannot be easily undone if at all.");
+			if(second_chance){
+				form_data = {
+						kAssignment: $("#kAssignment").val()
+				};
+				$.ajax({
+					type: "post",
+					url: base_url + "assignment/delete",
+					data: form_data,
+					success: function(data){
+						window.location.reload();
+					}
+				});
+				
+			}
+		}
 	});
 
 });
