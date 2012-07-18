@@ -1,5 +1,8 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
-$year = get_value($assignment,"year",get_current_year());
+$year = get_value($assignment,"year",$this->session->userdata('year'));
+$term = get_value($assignment,"term",$this->session->userdata('term'));
+$gradeStart = get_value($assignment,"gradeStart",$this->session->userdata('gradeStart'));
+$gradeEnd = get_value($assignment,"gradeEnd",$this->session->userdata('gradeEnd'));
 $date = "";
 if($date = get_value($assignment,"date")){
 	$date = format_date($date,"standard");
@@ -32,13 +35,13 @@ if($date = get_value($assignment,"date")){
 </p>
 <p>
 <label for="gradeStart">Grade: </label>
-<input type="text" id="gradeStart" name="gradeStart" value="<?=get_value($assignment,"gradeStart"); ?>" size="3"
+<input type="text" id="gradeStart" name="gradeStart" value="<?=$gradeStart; ?>" size="3"
 	maxlength="1"> -<input type="text" id="gradeEnd" name="gradeEnd"
-	value="<?=get_value($assignment,"gradeEnd");?>" size="3" maxlength="1"> </p>
+	value="<?=$gradeEnd;?>" size="3" maxlength="1"> </p>
 <p>	<label for="term">Term:
-</label><?=get_term_menu('term', get_value($assignment,"term",get_current_term()));?></p>
+</label><?=get_term_menu('term', $term);?></p>
 <p> <label for="year">Year: </label>
-<?=form_dropdown('year',get_year_list(), get_value($assignment,"year",get_current_year()), "id='year' class='searchYear'");?>
+<?=form_dropdown('year',get_year_list(), get_value($assignment,"year",$this->session->userdata('year')), "id='year' class='searchYear'");?>
 -<input id="yearEnd" type="text" name="yearEnd" class='yearEnd' readonly
 	maxlength="4" size="5" value="<? $yearEnd=$year+1;print $yearEnd; ?>" /></p>
 <p>

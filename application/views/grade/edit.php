@@ -40,14 +40,8 @@
 			</td>
 			<td class='grade-status'><?=form_dropdown("status",$status, get_value($grade,"status"),"id='status_$grade->kAssignment' class='assignment-field'");?></td>
 			<td class='grade-footnote'><?=form_dropdown("footnote",$footnotes, get_value($grade,"footnote"),"id='footnote_$grade->kAssignment'  class='assignment-field'");?></td>
-			<td class='grade-button'><span class='button save_student_grade'
-				id='ssg_<?=$grade->kAssignment;?>'>Save</span>
-				</td>		
-			<td class='grade-button'><span style='margin-left: 5px'
+			<td class='grade-button'><span style='margin-left: 5px;'
 				id='save_<?=$grade->kAssignment;?>'></span>
-			
-			
-			
 			</td>
 		</tr>
 

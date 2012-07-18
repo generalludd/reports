@@ -1008,12 +1008,14 @@ table.grade-chart tr {
 
 table.grade-chart th.assignment-edit {
 	vertical-align: top;
+	width: 70px;
 }
 
 table.grade-chart th, table.grade-chart td {
-	width: 100px;
+	
 	border: 1px solid black;
 }
+
 
 table.grade-chart td.grade-points {
 	text-align: center;

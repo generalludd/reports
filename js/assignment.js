@@ -162,13 +162,18 @@ $(document).ready(function(){
 	});
 	
 	$(".save_student_grade").live("click",function(){
-		
 		myAssignment = this.id.split("_")[1];
 		save_student_points(myAssignment);
 	});
 	
-	$(".assignment-field").live("change",function(){
-		save_student_points(this.id.split("_")[1]);
+	$("input.assignment-field").live("keyup",function(){
+		myAssignment = this.id.split("_")[1];
+		save_student_points(myAssignment);
+	});
+	
+	$("select.assignment-field").live("change",function(){
+		myAssignment = this.id.split("_")[1];
+		save_student_points(myAssignment);
 	});
 	
 	$(".save_cell_grade").live("click",function(){
@@ -209,7 +214,6 @@ function save_student_points(myAssignment)
 	myPoints = $("#g_" + myAssignment).val();
 	myStatus = $("#status_" + myAssignment).val();
 	myFootnote = $("#footnote_" + myAssignment).val();
-
 	myUrl = base_url + "grade/update";
 	form_data = {
 			kStudent: myStudent,
@@ -224,8 +228,8 @@ function save_student_points(myAssignment)
 		url: myUrl,
 		data: form_data,
 		success: function(data){
-			//$("#ssg_" + myAssignment).hide();
-			$("#save_" + myAssignment).html(data).show();
+			$("#save_" + myAssignment).html(data).show().fadeOut(2000);
+
 		}
 	});
 	

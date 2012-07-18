@@ -1,18 +1,20 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 $table = array();
 $assignment_count = 0;
+
 ?>
 <input
 	type="hidden" name="kTeach" id="kTeach" value="<?=$kTeach;?>" />
-<input
-	type="hidden" name="term" id="term" value="<?=$term;?>" />
-<input
-	type="hidden" name="year" id="year" value="<?=$year;?>" />
-<? if(!empty($assignments)){?>
+
+<? if(!empty($assignments)){
+
+	/* Get the subject of the first row of the assignments */
+$header = $assignments[0];
+?>
 <table class='grade-chart'>
 	<thead>
 		<tr>
-			<th>Grade Chart<br /> <?="$term, $year";?><br /> Subject?
+			<th><?=$header->subject;?><br /><?="$header->term<br/>" . format_schoolyear($header->year);?> 
 			</th>
 			<th></th>
 			<? foreach($assignments as $assignment){ ?>
