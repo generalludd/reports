@@ -4,7 +4,7 @@ $(document).ready(function(){
 			var myTeach = $("#kTeach").val();
 			var myStart = $("#gradeStart").val();
 			var myEnd = $("#gradeEnd").val();
-			var myUrl = base_url + "index.php/teacher/add_subject";
+			var myUrl = base_url + "teacher/add_subject";
 				var form_data = {
 						kTeach:myTeach,
 						gradeStart: myStart,
@@ -35,7 +35,7 @@ $(document).ready(function(){
 				gradeStart: myStart,
 				gradeEnd:myEnd
 		};
-		var myUrl = base_url + "index.php/teacher/insert_subject";
+		var myUrl = base_url + "teacher/insert_subject";
 		$.ajax({
 			type: "POST",
 			url: myUrl,
@@ -50,7 +50,7 @@ $(document).ready(function(){
 			function(event){
 				var mySubject = this.id.split("_")[1];
 				var myTeach = $('#kTeach').val();
-				var myUrl = base_url + "index.php/teacher/delete_subject";
+				var myUrl = base_url + "teacher/delete_subject";
 				var form_data = {
 						kSubject:mySubject,
 						kTeach: myTeach
@@ -129,7 +129,7 @@ $(document).ready(function(){
 	});
 	
 	$('.teacher_create').live("click", function(event){
-		var myUrl = base_url + "index.php/teacher/create";
+		var myUrl = base_url + "teacher/create";
 		var form_data = {
 				ajax: 1
 		};
@@ -162,7 +162,7 @@ function editTeacher(myTeach) {
 			kTeach: myTeach,
 			ajax: '1'
 	};
-	var myUrl = base_url + "index.php/teacher/edit";
+	var myUrl = base_url + "teacher/edit";
 	
 	$.ajax({
 		type: "get",

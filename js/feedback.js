@@ -3,7 +3,7 @@ $(document).ready(function(){
 		var mySubject = $('#subject').val();
 		var myRank = $('#rank').val();
 		var myFeedback = $('#feedback').val();
-		var myUrl = base_url + "index.php/feedback/add";
+		var myUrl = base_url + "feedback/add";
 		var form_data = {
 				subject: mySubject,
 				rank: myRank,
@@ -23,7 +23,7 @@ $(document).ready(function(){
 	});
 	
 	$(".create_feedback").live('click',function(data){
-		var myUrl = base_url + "index.php/feedback/create";
+		var myUrl = base_url + "feedback/create";
 		var myLocation = document.location;
 		var myPath = myLocation.toString().split(base_url);
 		form_data = {

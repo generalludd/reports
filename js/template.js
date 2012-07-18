@@ -17,7 +17,7 @@ $(document).ready(function(){
 	
 $(".template_search").live("click", function(event){
 	var myTeach = this.id.split("_")[1];
-	var myUrl = base_url + "index.php/template/search/" + myTeach;
+	var myUrl = base_url + "template/search/" + myTeach;
 	var form_data = {
 			ajax: '1'
 	};
@@ -37,7 +37,7 @@ $(".template_search").live("click", function(event){
 				var myAction=$('#action').val();
 			$("#ajax").val(1);
 				var form_data = $("#template_editor").serialize();
-				var myUrl = base_url + "index.php/template/update";
+				var myUrl = base_url + "template/update";
 				$.ajax({
 					type: "POST",
 					url: myUrl,
@@ -72,7 +72,7 @@ $(".template_search").live("click", function(event){
 					term: myTerm,
 					subject: mySubject
 			};
-			var myUrl = base_url + "index.php/template/show_selector";
+			var myUrl = base_url + "template/show_selector";
 			
 			$.ajax({
 				type:'post',
@@ -97,7 +97,7 @@ $(".template_search").live("click", function(event){
 			if(action) {
 				var really_act = confirm("This is your last chance to back out. Any unsaved changes you have made will be lost!");
 				if(really_act) {
-			document.location= base_url + "index.php/template/list_templates/?kTeach="+ kTeach + "&term=" + myTerm + "&year=" + myYear;
+			document.location= base_url + "template/list_templates/?kTeach="+ kTeach + "&term=" + myTerm + "&year=" + myYear;
 				}
 			}
 		}//end function(event)

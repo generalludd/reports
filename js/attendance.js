@@ -10,7 +10,7 @@ $(document).ready(function(){
 				ajax: 1,
 				kStudent: myStudent
 		};
-		var myUrl = base_url + ("index.php/attendance/show_search");
+		var myUrl = base_url + "attendance/show_search";
 		$.ajax({
 			type: "POST",
 			url: myUrl,
@@ -44,7 +44,7 @@ $(document).ready(function(){
 	
 	$('.edit_attendance').live('click',
 			function(event){
-				var myUrl = base_url + "index.php/attendance/edit";
+				var myUrl = base_url + "attendance/edit";
 				var myAttendance = this.id.split("_")[1];
 				var form_data = {
 						ajax: 1,
@@ -66,7 +66,7 @@ $(document).ready(function(){
 	$('.add_attendance').live('click',
 			function(event){
 				var myStudent = this.id.split("_")[1];
-				var myUrl = base_url + "index.php/attendance/create";
+				var myUrl = base_url + "attendance/create";
 				var form_data = {
 						ajax: 1,
 						kStudent: myStudent
@@ -115,7 +115,7 @@ function listAttendance(myID) {
 	}else{
 		var kStudent=$("#kStudent").val();
 	}
-	myUrl = base_url + "index.php/attendance/search/" + kStudent;
+	myUrl = base_url + "attendance/search/" + kStudent;
 	document.location = myUrl;
 }
 

@@ -76,7 +76,7 @@ $(document).ready(function() {
 				if (stuSearch.length > 2 && stuSearch != "find students") {
 					searchWords = stuSearch.split(' ');
 					myName = searchWords.join('%') + "%";
-					var myUrl = base_url + "index.php/student/find_by_name";
+					var myUrl = base_url + "student/find_by_name";
 					var formData = {
 						ajax: 1,
 						stuName: stuSearch
@@ -121,7 +121,7 @@ $(document).ready(function() {
 				$('.view_student').live('click',
 								function(event) {
 									var kStudent = this.id.split("_")[1];
-									document.location = base_url + "index.php/student/view/"
+									document.location = base_url + "student/view/"
 											+ kStudent;
 								}// end function
 						);// end click
@@ -130,7 +130,7 @@ $(document).ready(function() {
 					var formData = {
 							ajax: '1'
 					};
-					var myUrl = base_url + "index.php/student/create/";
+					var myUrl = base_url + "student/create/";
 					$.ajax({
 						url: myUrl,
 						type: 'POST',
@@ -153,7 +153,7 @@ $(document).ready(function() {
 							kStudent: myStudent,
 							ajax: 1
 					};
-					var myUrl = base_url + "index.php/student/edit/";
+					var myUrl = base_url + "student/edit/";
 					$.ajax({
 						url: myUrl,
 						type: 'POST',

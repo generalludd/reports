@@ -47,7 +47,7 @@
 		 form_data = {
 				ajax: '1'
 		};
-		 myUrl = base_url + "index.php/email/create";
+		 myUrl = base_url + "email/create";
 		$.ajax({
 			type:"get",
 			url: myUrl,
@@ -66,7 +66,7 @@
 				ajax: '1'
 		};
 		
-		 myUrl = base_url + "index.php/email/edit/" + myId;
+		 myUrl = base_url + "email/edit/" + myId;
 		$.ajax({
 			type:"post",
 			url: myUrl,
@@ -81,7 +81,7 @@
 	$(".log_search").live("click",function(){
 		$.ajax({
 			type: "get",
-			url: base_url +  "index.php/admin/search_log",
+			url: base_url +  "admin/search_log",
 			success: function(data){
 				showPopup("Search System Logs", data, "auto");
 			}
@@ -110,7 +110,7 @@
 				var keys=this.id.split("_");//expect the id to be in the format "helpTopic_helpSubtopic"
 				var myTopic=keys[0];
 				var mySubtopic=keys[1];
-				 myUrl = base_url + "index.php/help/get";
+				 myUrl = base_url + "help/get";
 				 form_data = {
 						helpTopic: myTopic,
 						helpSubtopic: mySubtopic,
@@ -134,7 +134,7 @@
 		var myValue=$('#'+this.id).val();
 		var myTarget="stat"+myType;
 		$('#'+myTarget).html("").show();
-		 myUrl = base_url + "index.php/preference/update/";
+		 myUrl = base_url + "preference/update/";
 		 form_data = {
 				kTeach: myTeach,
 				type: myType,

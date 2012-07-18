@@ -14,7 +14,7 @@ $(document).ready(function() {
 		var action = confirm("Are you sure you want to cancel? Any changes you made will not be saved.");
 		if(action){
 			var myStudent = $("#kStudent").val();
-			document.location = base_url + "index.php/support/list_all/" + myStudent;
+			document.location = base_url + "support/list_all/" + myStudent;
 		}
 	});
 
@@ -27,7 +27,7 @@ $(document).ready(function() {
 						var action = confirm("Do you really want to delete this? This cannot be undone!");
 						var myStudent = $('#kStudent').val();
 						var myNeed = $('#kSupport').val();
-						var myUrl = base_url + "index.php/support/delete";
+						var myUrl = base_url + "support/delete";
 						var form_data = {
 								kStudent: myStudent,
 								kSupport: myNeed
@@ -36,7 +36,7 @@ $(document).ready(function() {
 							var real_action = confirm("Are you absolutely sure? This really cannot be undone!");
 							if(real_action) {
 								$("#action").val("delete");
-								$("#support-editor").attr("action",base_url + "index.php/support/delete");
+								$("#support-editor").attr("action",base_url + "support/delete");
 								$("#support-editor").submit();
 							}
 							
@@ -50,7 +50,7 @@ $(document).ready(function() {
 		var myStudent=$("#kStudent").val();
 		var myNeed=$("#kSupport").val();
 		if(myNeed!="") {
-			var myUrl = base_url + "index.php/support/view/" + myNeed + "/print";
+			var myUrl = base_url + "support/view/" + myNeed + "/print";
 			window.open(myUrl);
 		}
 	});
@@ -72,7 +72,7 @@ $(document).ready(function() {
 				kSupport: myNeed,
 				ajax: 1
 		};
-		var myUrl = base_url + "index.php/support/view/" + myNeed + "/sidebar";
+		var myUrl = base_url + "support/view/" + myNeed + "/sidebar";
 		$.ajax({
 			type: "POST",
 			url: myUrl,
@@ -91,7 +91,7 @@ $(document).ready(function() {
 		var myNeed = $("#kSupport").val();
 		var myStudent = $("#kStudent").val();
 
-		var myUrl = base_url + "index.php/support/new_file";
+		var myUrl = base_url + "support/new_file";
 		var form_data = {
 				kSupport: myNeed,
 				kStudent: myStudent,
@@ -120,7 +120,7 @@ $(document).ready(function() {
 			var new_action = confirm("This really cannot be undone!");
 			if(new_action) {
 				var myFile = this.id.split("_")[1];
-				var myUrl = base_url + "index.php/support/delete_file";
+				var myUrl = base_url + "support/delete_file";
 				var form_data = {
 						kFile: myFile,
 				};
@@ -155,7 +155,7 @@ function save_continue_support(){
 	$("#ajax").val(1);
 	var form_data = $('#support-editor').serialize();
 	form_data["ajax"] = 1;
-	var myUrl = base_url + "index.php/support/" + myAction;
+	var myUrl = base_url + "support/" + myAction;
 	$.ajax({
 		type: "post",
 		url: myUrl,
@@ -168,7 +168,7 @@ function save_continue_support(){
 			$("#print-support").removeClass("hidden");
 			$(".insert-message").addClass("hidden");
 			$(".show-support-file-uploader").removeClass("hidden");
-			$("#support-editor").attr("action",base_url + "index.php/support/update");
+			$("#support-editor").attr("action",base_url + "support/update");
 			$("#message").html("The support record was successfully added" ).fadeIn();
 		}else {
 			$("#message").html("The support record was successfully updated " + data).fadeIn();

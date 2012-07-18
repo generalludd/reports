@@ -7,7 +7,7 @@ $('#popupContainer').ready(function(){
 		}else if($('#kTeach')) {
 			 myTeach=$('#kTeach').val();
 		}
-		var myUrl = base_url + "index.php/user/edit_password";
+		var myUrl = base_url + "user/edit_password";
 		var form_data = {
 				kTeach: myTeach,
 				ajax: 1
@@ -44,7 +44,7 @@ $('#popupContainer').ready(function(){
 				check_password: myCheckPassword,
 				ajax: 1
 		};
-		var myUrl = base_url + "index.php/user/change_password";
+		var myUrl = base_url + "user/change_password";
 		if(validPassword=="true" && myCurrentPassword!="") {
 			$.ajax({
 				type: "POST",

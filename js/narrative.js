@@ -10,7 +10,7 @@ $(document).ready(function() {
 				} else {
 					var kStudent = $("#kStudent").val();
 				}
-				document.location = base_url +  "index.php/narrative/student_list/"
+				document.location = base_url +  "narrative/student_list/"
 						+ kStudent;
 			}// end function(event);
 	);// end home.click
@@ -33,7 +33,7 @@ $(document).ready(function() {
 					kNarrative: myNarrative,
 					kTeach: myTeach,
 			};
-			var myUrl = base_url + "index.php/narrative/edit_inline";
+			var myUrl = base_url + "narrative/edit_inline";
 
 			$.ajax({
 				url: myUrl,
@@ -60,7 +60,7 @@ $(document).ready(function() {
 					narrText: myText,
 					kTeach: myTeach
 			};
-			var myUrl = base_url + "index.php/narrative/update_inline";
+			var myUrl = base_url + "narrative/update_inline";
 			$.ajax({
 				url: myUrl,
 				type: 'POST',
@@ -142,7 +142,7 @@ $(document).ready(function() {
 
 	$('.view_narrative').live('click', function(event) {
 			var myNarrative = this.id.split("_")[1];
-			document.location = base_url + 'index.php/narrative/view/' + myNarrative;
+			document.location = base_url + 'narrative/view/' + myNarrative;
 		}// end function(event)
 	);// end view_narrative.click
 
@@ -168,7 +168,7 @@ $(document).ready(function() {
 					narrTerm: defaultTerm,
 					ajax: 1
 			};
-			 myUrl = base_url + "index.php/narrative/select_type";
+			 myUrl = base_url + "narrative/select_type";
 			$.ajax({
 				url: myUrl,
 				type: 'POST',
@@ -183,7 +183,7 @@ $(document).ready(function() {
 	$('.list_student_narratives').live('click', function(event) {
 			var kStudent = $('#kStudent').val();
 			var kTeach = $('#kTeach').val();
-			document.location = base_url + 'index.php/narrative/student_list/' + kStudent;
+			document.location = base_url + 'narrative/student_list/' + kStudent;
 	});
 
 	$('.list_teacher_narratives').live('click',function(event) {
@@ -208,7 +208,7 @@ $(document).ready(function() {
 				narrYear: myYear,
 				ajax: 1
 		};
-		 myUrl = base_url + "index.php/narrative/student_print";
+		 myUrl = base_url + "narrative/student_print";
 		$.ajax({
 			url: myUrl,
 			type: 'POST',
@@ -234,7 +234,7 @@ $(document).ready(function() {
 				narrTerm: myTerm,
 				narrYear: myYear
 		};
-		 myUrl = base_url + "index.php/narrative/show_sorter/";
+		 myUrl = base_url + "narrative/show_sorter/";
 		$.ajax({
 			url: myUrl,	
 			type: 'POST',
@@ -265,7 +265,7 @@ $(document).ready(function() {
 		} else {
 			$("#ajax").val(1);
 			var formData = $("#narrativeEditor").serialize();
-			 myUrl = base_url + "index.php/narrative/" + action;
+			 myUrl = base_url + "narrative/" + action;
 			$.ajax({
 				url: myUrl,
 				type: 'POST',
@@ -275,7 +275,7 @@ $(document).ready(function() {
 					if(action == "insert"){
 						$("#kNarrative").val(strings[0]);
 						$("#action").val("update");
-						$("#narrativeEditor").attr("action",base_url + "index.php/narrative/update");
+						$("#narrativeEditor").attr("action",base_url + "narrative/update");
 						$(".delete-container").html("<span class='delete button delete_narrative' id='dn_" + strings[0] + "'>Delete</span>");
 					}
 					$("#message").html("Narrative last updated " + strings[1]).show();
@@ -337,9 +337,9 @@ $(document).ready(function() {
 		action = confirm("You sure you want to cancel? Any changes you have made will not be saved.\r(Some day I'll be able to tell if you have actually made any changes since the last save.)");
 		if (action) {
 			if (myNarrative != "") {
-				document.location = base_url + "index.php/narrative/view/" + myNarrative;
+				document.location = base_url + "narrative/view/" + myNarrative;
 			} else {
-				document.location = base_url + "index.php/narrative/student_list/"
+				document.location = base_url + "narrative/student_list/"
 						+ myStudent;
 			}
 		}
@@ -480,7 +480,7 @@ $(document).ready(function() {
 
 
 function editNarrative(myNarrative) {
-	document.location = base_url + "index.php/narrative/edit/"+ myNarrative;
+	document.location = base_url + "narrative/edit/"+ myNarrative;
 	return false;
 }
 /*
@@ -516,14 +516,14 @@ function delete_narrative(myNarrative, myStudent) {
 			kNarrative : myNarrative,
 			kStudent : myStudent
 		};
-		var myUrl = base_url + "index.php/narrative/delete";
+		myUrl = base_url + "narrative/delete";
 		$.ajax({
 			url: myUrl,
 			type: 'post',
 			data: form_data,
 			success: function(data) {
 			alert(data);
-			document.location = base_url + "index.php/narrative/student_list/" + myStudent;
+			document.location = base_url + "narrative/student_list/" + myStudent;
 		}
 		});
 	}//end if

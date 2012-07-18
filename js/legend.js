@@ -3,7 +3,7 @@ $(document)
 
 			
 			$('.legend_search').live('click', function(event){
-				var myUrl = base_url + "index.php/benchmark_legend/search";
+				var myUrl = base_url + "benchmark_legend/search";
 				var form_data = {
 						ajax: 1
 				};
@@ -24,7 +24,7 @@ $(document)
 			
 			
 			$('.new_legend').live('click', function(event) {
-				var myUrl = base_url + "index.php/benchmark_legend/create";
+				var myUrl = base_url + "benchmark_legend/create";
 				var form_data = {
 						ajax: 1
 				};
@@ -46,7 +46,7 @@ $(document)
 									klegend: mylegend,
 									ajax: 1
 							};
-							var myUrl = base_url + "index.php/benchmark_legend/edit";
+							var myUrl = base_url + "benchmark_legend/edit";
 							
 							$.ajax({
 								url: myUrl,
@@ -64,7 +64,7 @@ $(document)
 
 				$('.delete_legend').live('click',function(event) {
 					var mylegend = this.id.split("_")[1];
-					var myUrl = base_url + "index.php/benchmark_legend/delete";
+					var myUrl = base_url + "benchmark_legend/delete";
 					var form_data = {
 							klegend: mylegend,
 							ajax: 1

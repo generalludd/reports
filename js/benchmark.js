@@ -3,7 +3,7 @@ $(document)
 
 			
 			$('.show_benchmark_search').live('click', function(event){
-				var myUrl = base_url + "index.php/benchmark/show_search";
+				var myUrl = base_url + "benchmark/show_search";
 				var form_data = {
 						ajax: 1
 				};
@@ -24,7 +24,7 @@ $(document)
 			
 			
 			$('.new_benchmark').live('click', function(event) {
-				var myUrl = base_url + "index.php/benchmark/create";
+				var myUrl = base_url + "benchmark/create";
 				var form_data = {
 						ajax: 1
 				};
@@ -48,7 +48,7 @@ $(document)
 									kBenchmark: myBenchmark,
 									ajax: 1
 							};
-							var myUrl = base_url + "index.php/benchmark/edit";
+							var myUrl = base_url + "benchmark/edit";
 							
 							$.ajax({
 								url: myUrl,
@@ -70,7 +70,7 @@ $(document)
 									kBenchmark: myBenchmark,
 									ajax: 1
 							};
-							var myUrl = base_url + "index.php/benchmark/duplicate";
+							var myUrl = base_url + "benchmark/duplicate";
 							$.ajax({
 								url: myUrl,
 								type: 'POST',
@@ -85,7 +85,7 @@ $(document)
 
 				$('.delete_benchmark').live('click',function(event) {
 					var myBenchmark = this.id.split("_")[1];
-					var myUrl = base_url + "index.php/benchmark/delete";
+					var myUrl = base_url + "benchmark/delete";
 					var form_data = {
 							kBenchmark: myBenchmark,
 							ajax: 1
@@ -139,7 +139,7 @@ $(document)
 								ajax: 1
 						};
 						
-						var myUrl = base_url + "index.php/benchmark/edit_for_student";
+						var myUrl = base_url + "benchmark/edit_for_student";
 						$.ajax({
 							type: "POST",
 							url: myUrl,
@@ -181,7 +181,7 @@ $(document)
 									ajax: 1
 							};
 							
-							var myUrl = base_url + "index.php/benchmark/update_for_student";
+							var myUrl = base_url + "benchmark/update_for_student";
 						
 							$.ajax({
 								type: "post",

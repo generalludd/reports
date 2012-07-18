@@ -47,7 +47,7 @@ $(document).ready(function(){
 		};
 		$.ajax({
 			type:"get",
-			url: base_url + "index.php/grade/edit_cell",
+			url: base_url + "grade/edit_cell",
 			data: form_data,
 			success: function(data){
 				//showPopup("test",data,"auto");
@@ -84,7 +84,7 @@ $(document).ready(function(){
 		
 		$.ajax({
 			type:"get",
-			url: base_url + "index.php/grade/select_student",
+			url: base_url + "grade/select_student",
 			data:form_data,
 			success:function(data){
 				showPopup("Select Student",data,"auto");
@@ -97,7 +97,7 @@ $(document).ready(function(){
 		if (stuSearch.length > 2 && stuSearch != "find students") {
 			searchWords = stuSearch.split(' ');
 			myName = searchWords.join('%') + "%";
-			var myUrl = base_url + "index.php/student/find_by_name";
+			var myUrl = base_url + "student/find_by_name";
 			var formData = {
 				ajax: 1,
 				type: "mini",
@@ -139,7 +139,7 @@ $(document).ready(function(){
 		$.ajax({
 			type:"get",
 			data: form_data,
-			url: base_url + "index.php/grade/edit",
+			url: base_url + "grade/edit",
 			success: function(data){
 				$("#mini-selector").html(data);
 			}
