@@ -92,11 +92,15 @@ class Report extends MY_Controller
 
 	function advisor_list()
 	{
-
+		$data["title"] = "Nothing to See Here";
+		$data["target"] = "report/teacher_list";
+		$this->load->view("page/index",$data);
 	}
 
 	function teacher_list()
 	{
-
+		$data["title"] = "Nothing to See Here";
+		$data["target"] = "report/teacher_list";
+		$this->load->view("page/index",$data);
 	}
 }
