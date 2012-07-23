@@ -38,7 +38,7 @@ class Student_model extends CI_Model
 				}
 			}
 		}
-		
+
 		$this->stuGrade = get_current_year() - $this->baseYear + $this->baseGrade;
 
 		$this->recModified = mysql_timestamp();
@@ -51,12 +51,15 @@ class Student_model extends CI_Model
 	/**
 	 * Getter
 	 */
-	function get($kStudent, $fields = NULL)
+	function get($kStudent, $fields = NULL,$include_teacher = FALSE)
 	{
 		$this->db->where('kStudent', $kStudent);
 		$this->db->from('student');
 		if($fields){
 			$this->db->select($fields);
+		}
+		if($include_teacher){
+			$this->db->join("teacher","teacher.kTeach=student.kTeach");
 		}
 		$result = $this->db->get()->row();
 		if($result){

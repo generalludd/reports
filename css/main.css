@@ -628,6 +628,9 @@ li.attendance:first-child {
 	margin-left: 0
 }
 
+.field {
+	margin-bottom: .5em;
+}
 /*column boxes (see attendance_list.inc.html)
 */
 .columnbox {

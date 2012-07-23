@@ -11,7 +11,9 @@ $assignment_count = 0;
 	/* Get the subject of the first row of the assignments */
 $header = $assignments[0];
 ?>
-<div class="button-box"><span class="button refresh">Refresh Page</span></div>
+<div class="button-box">
+	<span class="button refresh">Refresh Page</span>
+</div>
 <table class='grade-chart'>
 	<thead>
 		<tr>
@@ -78,5 +80,5 @@ $header = $assignments[0];
 	<span class='button new show-student-selector'>Add Student</span>
 </div>
 <? }else{
-	print "<p>You have not entered any assignments for this term. <span class='button new assignment-create'>Add Assignment</span></p>";
+	print "<p>You have not entered any assignments or grades for this term. <span class='button new assignment-create'>Add Assignment</span></p>";
 }

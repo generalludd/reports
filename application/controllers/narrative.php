@@ -204,7 +204,7 @@ class Narrative extends MY_Controller
 		$this->load->model("teacher_model");
 		$this->load->model("subject_model");
 		$this->load->model("suggestion_model");
-		$this->load->model("report_model");
+		$this->load->model("narrative_sort_model");
 		$this->load->model("preference_model");
 		$data["accordion"] = $this->preference_model->get($this->session->userdata("userID"), "accordion");
 		$data["defaultYear"] = get_current_year();
@@ -226,7 +226,7 @@ class Narrative extends MY_Controller
 			$narrTerm = $this->uri->segment(5);
 		}
 
-		$reportSort = $this->report_model->get_sort($kStudent, $data["defaultTerm"], $data["defaultYear"]);
+		$reportSort = $this->narrative_sort_model->get_sort($kStudent, $data["defaultTerm"], $data["defaultYear"]);
 		$data["reportSort"] = $reportSort;
 		$options["reportSort"] = $data["reportSort"];
 		$narratives = $this->narrative_model->get_for_student($kStudent, $options);
@@ -373,7 +373,7 @@ class Narrative extends MY_Controller
 	function print_student_report()
 	{
 		if($this->uri->segment(5)){
-			$this->load->model("report_model");
+			$this->load->model("narrative_sort_model");
 			$this->load->model("student_model");
 			$this->load->model("attendance_model");
 			$this->load->model("benchmark_model");
@@ -427,12 +427,12 @@ class Narrative extends MY_Controller
 
 	function show_sorter()
 	{
-		$this->load->model("report_model");
+		$this->load->model("narrative_sort_model");
 		$kStudent = $this->input->post("kStudent");
 		$data["kStudent"] = $kStudent;
 		$data["narrTerm"] = $this->input->post("narrTerm");
 		$data["narrYear"] = $this->input->post("narrYear");
-		$data["reportSort"] = $this->report_model->get_sort($kStudent, $data["narrTerm"], $data["narrYear"]);
+		$data["reportSort"] = $this->narrative_sort_model->get_sort($kStudent, $data["narrTerm"], $data["narrYear"]);
 		$data["kTeach"] = 1000;
 		$data["target"] = "narrative/sorter";
 		$data["title"] = "Sorting Narratives";
@@ -443,12 +443,12 @@ class Narrative extends MY_Controller
 
 	function set_sort()
 	{
-		$this->load->model("report_model");
+		$this->load->model("narrative_sort_model");
 		$kStudent = $this->input->post("kStudent");
 		$narrYear = $this->input->post("narrYear");
 		$narrTerm = $this->input->post("narrTerm");
 		$reportSort = $this->input->post("reportSort");
-		$this->report_model->set_sort($kStudent, $narrTerm, $narrYear, $reportSort);
+		$this->narrative_sort_model->set_sort($kStudent, $narrTerm, $narrYear, $reportSort);
 		redirect("narrative/student_list/$kStudent");
 	}
 

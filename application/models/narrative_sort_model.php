@@ -1,5 +1,5 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-class Report_model extends CI_Model
+class Narrative_support_model extends CI_Model
 {
 	var $kStudent = "";
 	var $narrTerm = "";
@@ -25,13 +25,13 @@ class Report_model extends CI_Model
 		
 		if(!$this->has_sort($kStudent, $narrTerm, $narrYear)){
 
-			$this->db->insert('report_preference', $this);
+			$this->db->insert('narrative_sort', $this);
 
 		}else{
 			$this->db->where('kStudent', $kStudent);
 			$this->db->where('narrTerm', $narrTerm);
 			$this->db->where('narrYear', $narrYear);
-			$this->db->update('report_preference', $this);
+			$this->db->update('narrative_sort', $this);
 		}
 	}
 	
@@ -43,7 +43,7 @@ class Report_model extends CI_Model
 		$this->db->where('kStudent', $kStudent);
 		$this->db->where('narrTerm', $narrTerm);
 		$this->db->where('narrYear', $narrYear);
-		$this->db->from('report_preference');
+		$this->db->from('narrative_sort');
 		$result = $this->db->get()->num_rows();
 		return $result;
 	}
@@ -66,9 +66,9 @@ class Report_model extends CI_Model
 			$output = $this->narrative_model->get_current_student_subjects($kStudent, $narrTerm, $narrYear);
 		}else{
 			$this->db->where('kStudent', $kStudent);
-			$this->db->where('report_preference.narrTerm', $narrTerm);
-			$this->db->where('report_preference.narrYear', $narrYear);
-			$this->db->from('report_preference');
+			$this->db->where('narrative_sort.narrTerm', $narrTerm);
+			$this->db->where('narrative_sort.narrYear', $narrYear);
+			$this->db->from('narrative_sort');
 			$result = $this->db->get()->row();
 			$output = $result->reportSort;
 		}
