@@ -33,6 +33,7 @@ class Auth extends CI_Controller
 				$data["userID"] = $result->kTeach;
 				$data["gradeStart"] = $result->gradeStart;
 				$data["gradeEnd"] = $result->gradeEnd;
+				$data["is_advisor"] = $result->is_advisor;
 				$this->session->set_userdata($data);
 				$redirect = true;
 			}
