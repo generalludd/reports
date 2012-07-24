@@ -4,7 +4,7 @@
 <h3><?=$title;?></h3>
 <? 
 $nav_buttons[] = array("item" => "student", "text" => "Student Info", "class" => "button info", "href"=>site_url("student/view/$report->kStudent"));
-$nav_buttons[] = array("item" => "report","text"=>"List Orange Slips","class" =>"button","href" => site_url("report/student_list/$report->kStudent"));
+$nav_buttons[] = array("item" => "report","text"=> sprintf("List %s",STUDENT_REPORT),"class" =>"button","href" => site_url("report/get_list/student/$report->kStudent"));
 print create_button_bar($nav_buttons);
 
 $edit_buttons[] = array("item" => "report", "text" => "Edit Report", "class" => "button edit", "href"=>site_url("report/edit/$report->kReport"));

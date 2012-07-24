@@ -1,6 +1,6 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 $edit_buttons[] = array("item" => "student", "text" => "Student Info", "class" => "button info", "href"=>site_url("student/view/$kStudent"));
-$edit_buttons[] = array("item" => "report", "text" => "Add Orange Slip", "class" => "button new", "href" => site_url("report/create/$kStudent"));
+$edit_buttons[] = array("item" => "report", "text" => "Add $student_report", "class" => "button new", "href" => site_url("report/create/$kStudent"));
 ?>
 <h3>
 	<?=$title;?>

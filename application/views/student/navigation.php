@@ -8,7 +8,7 @@ $buttons[] = array("item" => "attendance", "href"=>  site_url("attendance/search
 
 $buttons[] = array("item" => "support", "href"=> site_url("support/list_all/$kStudent"), "text" => "Learning Support" );
 
-$buttons[] = array("item" => "report", "href" => site_url("report/student_list/$kStudent"), "text" => "Orange Slips");
+$buttons[] = array("item" => "report", "href" => site_url("report/get_list/student/$kStudent"), "text" => sprintf("%ss",STUDENT_REPORT));
 
 $options["selection"] = $this->uri->segment(1);
 $options["id"] = "student-buttons";

@@ -97,14 +97,14 @@ class Student_report_model extends CI_Model
 		$this->db->join("student","student.kStudent=student_report.kStudent");
 		$this->db->select("student_report.*,student.stuFirst,student.stuLast,student.stuNickname,teacher.teachFirst,teacher.teachLast,advisor.teachFirst as advisorFirst,advisor.advisorLast");
 		$this->db->from("student_report");
-		$result = $this->db->get()->result;
+		$result = $this->db->get()->result();
 		return $result;
 
 	}
 
 	function get_for_teacher($kTeach, $options = array())
 	{
-		$this->db->where("teacher.kTeach",$kTeach);
+		$this->db->where("student_report.kTeach",$kTeach);
 		if(array_key_exists("date_range",$options)){
 			if(array_key_exists("date_start",$options["date_range"]) && array_key_exists("date_end",$options["date_range"])){
 				$date_start = $options["date_range"]["date_start"];
@@ -115,9 +115,39 @@ class Student_report_model extends CI_Model
 		$this->db->join("teacher","teacher.kTeach=student_report.kTeach");
 		$this->db->join("teacher as advisor","student_report.kAdvisor=advisor.kTeach");
 		$this->db->join("student","student.kStudent=student_report.kStudent");
-		$this->db->select("student_report.*,student.stuFirst,student.stuLast,student.stuNickname,teacher.teachFirst,teacher.teachLast,advisor.teachFirst as advisorFirst,advisor.advisorLast");
+		$this->db->select("student_report.*,student.stuFirst,student.stuLast,student.stuNickname,teacher.teachFirst,teacher.teachLast,advisor.teachFirst as advisorFirst,advisor.teachLast as advisorLast");
 		$this->db->from("student_report");
-		$result = $this->db->get()->result;
+		$result = $this->db->get()->result();
+		return $result;
+	}
+	
+	function get_list($type, $key, $options = array())
+	{
+		switch($type){
+			case "student":
+				$this->db->where("student_report.kStudent",$key);
+				break;
+			case "teacher":
+				$this->db->where("student_report.kTeach",$key);
+				break;
+			case "advisor":
+				$this->db->where("student_report.kAdvisor",$key);
+				break;
+		}
+
+		if(array_key_exists("date_range",$options)){
+			if(array_key_exists("date_start",$options["date_range"]) && array_key_exists("date_end",$options["date_range"])){
+				$date_start = $options["date_range"]["date_start"];
+				$date_end = $options["date_range"]["date_end"];
+				$this->db->where("report_date BETWEEN $date_start AND $date_end");
+			}
+		}
+		$this->db->join("teacher","teacher.kTeach=student_report.kTeach");
+		$this->db->join("teacher as advisor","student_report.kAdvisor=advisor.kTeach");
+		$this->db->join("student","student.kStudent=student_report.kStudent");
+		$this->db->select("student_report.*,student.stuFirst,student.stuLast,student.stuNickname,teacher.teachFirst,teacher.teachLast,advisor.teachFirst as advisorFirst,advisor.teachLast as advisorLast");
+		$this->db->from("student_report");
+		$result = $this->db->get()->result();
 		return $result;
 	}
 }
