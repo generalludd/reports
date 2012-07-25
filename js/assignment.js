@@ -109,7 +109,6 @@ $(document).ready(function(){
 				type: 'GET',
 				data: formData,
 				success: function(data){
-					$("#page").append("<div id='search_list'></div>");
 					$("#search_list").css({"z-index": 2000}).html(data).position({
 						my: "left top",
 						at: "left bottom",
@@ -119,7 +118,7 @@ $(document).ready(function(){
 			}
 			});
 		}else{
-			$("#search_list").remove();
+			$("#search_list").fadeOut();
 
 
 		}
