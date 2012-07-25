@@ -124,7 +124,7 @@ $(document).ready(function(){
 		}
 	});// end stuSearch.keyup
 	$('#student-dropdown').live("blur",function(){
-		$("#search_list").remove();
+		$("#search_list").fadeOut();
 	});
 	
 	$(".select-student-for-grades").live("click",function(){
