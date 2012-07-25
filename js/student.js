@@ -86,6 +86,7 @@ $(document).ready(function() {
 						type: 'GET',
 						data: formData,
 						success: function(data){
+							//remove the search_list because we don't want to have a ton of them. 
 							if($("#page").find("#search_list")){
 								$("#search_list").remove();
 							};
