@@ -57,5 +57,8 @@ if($contact_date){
 </fieldset>
 <div class="button-box">
 <input type="submit" value="Save" class="button"/>
+<? if($action == "update"):?>
+<span class="button delete report_delete">Delete</span>
+<?endif;?>
 </div>
 </form>

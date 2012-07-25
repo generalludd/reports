@@ -15,4 +15,19 @@ $(document).ready(function(){
 			}
 		});
 	});
+	
+	$(".report_delete").live("click",function(){
+		myReport = $("#kReport").val();
+		myStudent = $("#kStudent").val();
+		action = $("#report-editor").attr("action");
+		question = confirm("Are you sure you want to delete this? This cannot be undone.");
+		if(question){
+			question = confirm("Are you really sure? This really cannot be undone!");
+			if(question){
+				$("#report-editor").attr("action",base_url + "report/delete");
+				$("#report-editor").submit();
+			}
+		}
+		
+	});
 });

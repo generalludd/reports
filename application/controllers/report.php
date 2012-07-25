@@ -78,6 +78,14 @@ class Report extends MY_Controller
 		redirect("report/view/$kReport");
 	}
 	
+	function delete()
+	{
+		$kReport = $this->input->post("kReport");
+		$kStudent = $this->input->post("kStudent");
+		$this->report->delete($kReport);
+		redirect("report/get_list/student/$kStudent");
+	}
+	
 	function search()
 	{
 		$data["key"] = $this->input->get("key");
