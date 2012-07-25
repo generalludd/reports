@@ -55,8 +55,9 @@ class Grade_model extends CI_Model
 		$this->average = $points/$total;
 		//if the status is either "Exc" or "Abs" or anything else for that matter,
 		// then the grade is counted at full value
-		if(!empty($status)){
-			$this->average = 0;
+		if($status == "Exc" || $status== "Abs"){
+			$this->average = 1;
+			
 		}
 		$data = array("points" => $points,"status"=>$status,"footnote"=>$footnote,"average"=>$this->average);
 		if($this->has_grade($kStudent, $kAssignment) > 0){
