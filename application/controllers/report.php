@@ -169,7 +169,7 @@ class Report extends MY_Controller
 		if(isset($report->comment)){
 			$body[] = "Comments: " . $report->comment;
 		}
-
+		$body[] = sprintf("Link to %s: %s",STUDENT_REPORT, site_url("report/view/$kReport"));
 		$this->email->from($report->teachEmail);
 		$this->email->to("technology@fsmn.org");
 		$cc_list[] = $report->teachEmail;
