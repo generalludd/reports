@@ -86,6 +86,9 @@ $(document).ready(function() {
 						type: 'GET',
 						data: formData,
 						success: function(data){
+							if($("#page").find("#search_list")){
+								$("#search_list").remove();
+							};
 							$("#page").append("<div id='search_list'></div>");
 							$("#search_list").css({"z-index": 1000}).html(data).position({
 								my: "left top",
