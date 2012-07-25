@@ -38,6 +38,9 @@ class Report extends MY_Controller
 	{
 		//@TODO email advisor and student(?)
 		$kReport = $this->report->insert();
+		if($this->input->post("email_advisor")){
+			$this->notify($kReport);
+		}
 		redirect("report/view/$kReport");
 	}
 
@@ -77,7 +80,7 @@ class Report extends MY_Controller
 		$this->report->update($kReport);
 		redirect("report/view/$kReport");
 	}
-	
+
 	function delete()
 	{
 		$kReport = $this->input->post("kReport");
@@ -85,7 +88,7 @@ class Report extends MY_Controller
 		$this->report->delete($kReport);
 		redirect("report/get_list/student/$kStudent");
 	}
-	
+
 	function search()
 	{
 		$data["key"] = $this->input->get("key");
@@ -139,7 +142,7 @@ class Report extends MY_Controller
 				$this->session->set_userdata("date_start",$date_start);
 				$this->session->set_userdata("date_end",$date_end);
 				$data["options"] = $options;
-				
+
 			}
 			$data["person"] = $person;
 			$data["reports"] = $this->report->get_list($type,$key,$options);
@@ -148,6 +151,42 @@ class Report extends MY_Controller
 			$data["target"] = "report/" . $type . "_list";
 			$this->load->view("page/index",$data);
 		}
+	}
+
+	function notify($kReport)
+	{
+		$report = $this->report->get($kReport);
+		//$config = $this->initialize();
+		//$this->email->initialize($config);
+		$student = format_name($report->stuFirst, $report->stuLast, $report->stuNickname);
+		$subject = sprintf("%s submission from %s %s for %s",STUDENT_REPORT,$report->teachFirst, $report->teachLast,$student);
+		$body[] = "Student: " . $student;
+		$body[] = "Category: " . $report->category;
+		$body[] = "Date: " . format_date($report->report_date, "standard");
+		if(isset($report->assignment)){
+			$body[] = "Assignment: $report->assignment";
+		}
+		if(isset($report->comment)){
+			$body[] = "Comments: " . $report->comment;
+		}
+
+		$this->email->from($report->teachEmail);
+		$this->email->to("technology@fsmn.org");
+		$cc_list[] = $report->teachEmail;
+		if($this->input->post("email_student")){
+			$cc_list[] = $this->email->cc($report->stuEmail);
+		}
+		$cc = implode(",",$cc_list);
+		$this->email->cc($cc);
+		$message = implode("\n", $body);
+
+		$this->email->subject($subject);
+		$this->email->message($message);
+		$this->email->send();
+		if($this->session->userdata("userID") == 1000){
+			$this->email->print_debugger();
+		}
+		$this->session->set_userdata("notice",sprintf("The %s has been sent to %s at %s",STUDENT_REPORT,$report->advisorFirst,$report->advisorEmail));
 	}
 
 }

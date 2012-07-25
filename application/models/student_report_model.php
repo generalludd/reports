@@ -58,7 +58,7 @@ class Student_report_model extends CI_Model
 		$this->db->join("student","student.kStudent=student_report.kStudent", "LEFT");
 		$this->db->join("teacher","teacher.kTeach=student_report.kTeach","LEFT");
 		$this->db->join("teacher as advisor","student_report.kAdvisor = advisor.kTeach","LEFT");
-		$this->db->select("student_report.*,student.stuFirst,student.stuLast,student.stuNickname,teacher.teachFirst,teacher.teachLast,advisor.teachFirst as advisorFirst,advisor.teachLast as advisorLast");
+		$this->db->select("student_report.*,student.stuFirst,student.stuLast,student.stuNickname,student.stuEmail,teacher.teachFirst,teacher.teachLast,teacher.email as teachEmail,advisor.teachFirst as advisorFirst,advisor.teachLast as advisorLast, advisor.email as advisorEmail");
 		$output = $this->db->get()->row();
 		return $output;
 	}
@@ -76,7 +76,7 @@ class Student_report_model extends CI_Model
 		$this->db->join("student","student.kStudent=student_report.kStudent");
 		$this->db->join("teacher","teacher.kTeach=student_report.kTeach");
 		$this->db->join("teacher as advisor","student_report.kAdvisor = advisor.kTeach");
-		$this->db->select("student_report.*,student.stuFirst,student.stuLast,student.stuNickname,teacher.teachFirst,teacher.teachLast,advisor.teachFirst as advisorFirst,teacher.teachLast as advisorLast");
+		$this->db->select("student_report.*,student.stuFirst,student.stuLast,student.stuNickname,student.stuEmail,teacher.teachFirst,teacher.teachLast,teacher.email as teachEmail,advisor.teachFirst as advisorFirst,advisor.teachLast as advisorLast, advisor.email as advisorEmail");
 		$this->db->from("student_report");
 		$result = $this->db->get()->result();
 		return $result;
@@ -95,7 +95,7 @@ class Student_report_model extends CI_Model
 		$this->db->join("teacher as advisor","student_report.kAdvisor=advisor.kTeach");
 		$this->db->join("teacher","teacher.kTeach=student_report.kTeach");
 		$this->db->join("student","student.kStudent=student_report.kStudent");
-		$this->db->select("student_report.*,student.stuFirst,student.stuLast,student.stuNickname,teacher.teachFirst,teacher.teachLast,advisor.teachFirst as advisorFirst,advisor.advisorLast");
+		$this->db->select("student_report.*,student.stuFirst,student.stuLast,student.stuNickname,student.stuEmail,teacher.teachFirst,teacher.teachLast,teacher.email as teachEmail,advisor.teachFirst as advisorFirst,advisor.teachLast as advisorLast, advisor.email as advisorEmail");
 		$this->db->from("student_report");
 		$result = $this->db->get()->result();
 		return $result;
@@ -115,12 +115,12 @@ class Student_report_model extends CI_Model
 		$this->db->join("teacher","teacher.kTeach=student_report.kTeach");
 		$this->db->join("teacher as advisor","student_report.kAdvisor=advisor.kTeach");
 		$this->db->join("student","student.kStudent=student_report.kStudent");
-		$this->db->select("student_report.*,student.stuFirst,student.stuLast,student.stuNickname,teacher.teachFirst,teacher.teachLast,advisor.teachFirst as advisorFirst,advisor.teachLast as advisorLast");
+		$this->db->select("student_report.*,student.stuFirst,student.stuLast,student.stuNickname,student.stuEmail,teacher.teachFirst,teacher.teachLast,teacher.email as teachEmail,advisor.teachFirst as advisorFirst,advisor.teachLast as advisorLast, advisor.email as advisorEmail");
 		$this->db->from("student_report");
 		$result = $this->db->get()->result();
 		return $result;
 	}
-	
+
 	function get_list($type, $key, $options = array())
 	{
 		switch($type){

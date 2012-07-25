@@ -24,7 +24,11 @@ if($this->uri->segment(1) == ""){
 </div>
 </div>
 <?php endif; ?>
+<div id="alert" class="message"><?=$this->session->userdata("notice");?></div>
+<?=$this->session->set_userdata("notice",NULL);?>
+
 <!-- main -->
+
 <div id="main"><!-- content -->
 <div id="content"><? 
 $this->load->view($target);
