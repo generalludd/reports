@@ -6,6 +6,41 @@ $edit_buttons[] = array("item" => "report", "text" => "Add $student_report", "cl
 	<?=$title;?>
 </h3>
 <?=create_button_bar($edit_buttons);?>
+
+<fieldset class="search_fieldset">
+		<legend>Search Parameters</legend>
+		<?
+		if(isset($options)){
+
+			$keys = array_keys($options);
+			$values = array_values($options);
+
+			echo "<ul>";
+
+			for($i = 0; $i < count($options); $i++){
+				$key = $keys[$i];
+				$value = $values[$i];
+				switch($key){
+					case "date_range":
+						$date_start = $options["date_range"]["date_start"];
+						$date_end = $options["date_range"]["date_end"];
+						echo "<li>From: <strong>$date_start</strong></li>";
+						echo "<li>To: <strong>$date_end</strong></li>";
+						break;
+				}
+			}
+			echo "</ul>";
+
+		}else{
+			echo "<p>Showing All Submissions</p>";
+		}
+		?>
+
+		<div class="button-box">
+			<a class="button report_search" id="student_<?=$kStudent?>">Refine Search</a>
+		</div>
+	</fieldset>
+<?if(!empty($reports)):?>
 <table class="report list">
 	<thead>
 		<tr>
@@ -32,3 +67,8 @@ $edit_buttons[] = array("item" => "report", "text" => "Add $student_report", "cl
 	
 	</tbody>
 </table>
+<? elseif(isset($options)): ?>
+<p>No reports have been submitted for this student within the given search range.</p>
+<? else:?>
+<p>No reports have been submitted for this student. </p>
+<? endif; ?>

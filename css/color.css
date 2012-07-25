@@ -194,7 +194,7 @@ a.button {
 	background-color: transparent;
 }
 
-#sidebar,#searchList {
+#sidebar,#search_list {
 	border-color: #087CD5;
 }
 
@@ -291,7 +291,7 @@ li.attendance {
 	border-color: #6CAADC;
 }
 
-#searchList {
+#search_list {
 	background-color: white;
 }
 

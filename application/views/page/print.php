@@ -15,7 +15,6 @@ $this->load->view($target);
 </div>
 <!-- end sidebar --> 
 </div>
-<div id="searchList"></div>
 
 <div id="footer">
 <?// $this->load->view('/template/footer');?>

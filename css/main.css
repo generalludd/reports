@@ -769,7 +769,7 @@ a.button {
 	padding-bottom: 5px;
 }
 
-#searchList {
+#search_list {
 	position: absolute;
 	display: none;
 	z-index: 1000;
@@ -907,7 +907,7 @@ fieldset.advanced div.advanced {
 }
 
 .student-row {
-	width: 250px;
+	width: 335px;
 	padding-left: 5px;
 }
 
@@ -921,7 +921,7 @@ fieldset.advanced div.advanced {
 	padding-bottom: .5em;
 }
 
-#searchList .studentName {
+#search_list .studentName {
 	padding-top: 0;
 }
 

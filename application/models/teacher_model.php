@@ -12,6 +12,7 @@ class Teacher_model extends CI_Model
 	var $gradeEnd;
 	var $is_advisor;
 	var $status;
+	var $db_role;
 	var $recModified;
 	var $recModifier;
 
@@ -27,7 +28,7 @@ class Teacher_model extends CI_Model
 	function prepare_variables()
 	{
 
-		$variables = array("teachFirst","teachLast","teachClass","username","email","gradeStart","gradeEnd","is_advisor","status");
+		$variables = array("teachFirst","teachLast","teachClass","username","email","gradeStart","gradeEnd","is_advisor","status","db_role");
 		for($i = 0; $i < count($variables); $i++){
 			$myVariable = $variables[$i];
 			if($this->input->post($myVariable)){

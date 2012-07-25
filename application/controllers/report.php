@@ -77,6 +77,25 @@ class Report extends MY_Controller
 		$this->report->update($kReport);
 		redirect("report/view/$kReport");
 	}
+	
+	function search()
+	{
+		$data["key"] = $this->input->get("key");
+		$data["action"] = $this->input->get("action");
+		if($data["action"] == "student"){
+			$this->load->model("student_model","student");
+			$person = $this->student->get($data["key"],"stuFirst,stuLast,stuNickname");
+			$name = format_name($person->stuFirst,$person->stuLast, $person->stuNickname);
+			$preposition = "for";
+		}else{
+			$this->load->model("teacher_model","teacher");
+			$person = $this->teacher->get($data["key"],"teachFirst,teachLast");
+			$name = format_name($person->teachFirst,$person->teachLast);
+			$preposition = $data["action"]=="teacher"?"by":"to";
+		}
+		$data["title"] = sprintf("Searching for %ss submitted %s %s",STUDENT_REPORT,$preposition,$name);
+		$this->load->view("report/search",$data);
+	}
 
 	function get_list()
 	{
@@ -105,8 +124,12 @@ class Report extends MY_Controller
 			}
 			$options = array();
 			if($this->input->get("date_start") && $this->input->get("date_end")){
-				$options["date_range"]["date_start"] = $this->input->get("date_start");
-				$options["date_range"]["date_end"] = $this->input->get("date_end");
+				$date_start = $this->input->get("date_start");
+				$date_end =  $this->input->get("date_end");
+				$options["date_range"]["date_start"] = $date_start;
+				$options["date_range"]["date_end"] = $date_end;
+				$this->session->set_userdata("date_start",$date_start);
+				$this->session->set_userdata("date_end",$date_end);
 				$data["options"] = $options;
 				
 			}

@@ -32,7 +32,6 @@ $this->load->view($target);
 <!-- end content -->
 <div id="sidebar"></div>
 <!-- end sidebar --></div>
-<div id="searchList"></div>
 
 <div id="footer"><?$this->load->view('page/footer');?></div>
 </div>

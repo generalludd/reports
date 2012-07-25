@@ -109,7 +109,8 @@ $(document).ready(function(){
 				type: 'GET',
 				data: formData,
 				success: function(data){
-					$("#searchList").css({"z-index": 2000}).html(data).position({
+					$("#page").append("<div id='search_list'></div>");
+					$("#search_list").css({"z-index": 2000}).html(data).position({
 						my: "left top",
 						at: "left bottom",
 						of: $("#student-dropdown"), 
@@ -118,14 +119,13 @@ $(document).ready(function(){
 			}
 			});
 		}else{
-			$("#searchList").hide();
-        	$("#searchList").css({"left": 0, "top": 0});
+			$("#search_list").remove();
 
 
 		}
 	});// end stuSearch.keyup
 	$('#student-dropdown').live("blur",function(){
-		$("#searchList").fadeOut();
+		$("#search_list").remove();
 	});
 	
 	$(".select-student-for-grades").live("click",function(){

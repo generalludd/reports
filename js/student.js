@@ -86,7 +86,8 @@ $(document).ready(function() {
 						type: 'GET',
 						data: formData,
 						success: function(data){
-							$("#searchList").css({"z-index": 1000}).html(data).position({
+							$("#page").append("<div id='search_list'></div>");
+							$("#search_list").css({"z-index": 1000}).html(data).position({
 								my: "left top",
 								at: "left bottom",
 								of: $("#stuSearch"), 
@@ -95,8 +96,8 @@ $(document).ready(function() {
 					}
 					});
 				}else{
-					$("#searchList").hide();
-		        	$("#searchList").css({"left": 0, "top": 0});
+					$("#search_list").hide();
+		        	$("#search_list").css({"left": 0, "top": 0});
 
 
 				}
@@ -112,8 +113,9 @@ $(document).ready(function() {
 			
 			$('#stuSearch').live('blur', function(event) {
 				
-				$("#searchList").fadeOut("slow");
+				$("#search_list").fadeOut();
 				$('#stuSearch').css({color:'#666'}).val('find students');
+				//$("#search_list").remove();
 				
 				
 			});
