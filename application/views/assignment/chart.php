@@ -14,7 +14,7 @@ $header = $assignments[0];
 <div class="button-box">
 <ul class="button-list">
 <li><span class="button refresh">Refresh Page</span></li>
-<li><span class="button assignment_categories_edit">Edit Categories</span></li>
+<li><span class="button edit assignment_categories_edit">Edit Categories</span></li>
 </ul>
 	
 	

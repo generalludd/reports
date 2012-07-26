@@ -153,12 +153,9 @@ $(document).ready(function(){
 	$(".edit_student_grades").live("click",function(){
 		myTeach = $("#kTeach").val();
 		myStudent = this.id.split("_")[1];
-		
 		form_data = {
 			kTeach: myTeach,
 			kStudent: myStudent,
-			year: 2011,
-			term: "Year-End"
 		};
 		myUrl = base_url + "grade/edit";
 		$.ajax({

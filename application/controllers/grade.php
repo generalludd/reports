@@ -14,12 +14,21 @@ class Grade extends MY_Controller
 	{
 		$this->load->model("menu_model");
 		$kStudent = $this->input->get_post("kStudent");
+
 		$kTeach = $this->input->get_post("kTeach");
+
 		$year = $this->input->get_post("year");
+		if(!$year){
+			$year = get_current_year();
+		}
 		$term = $this->input->get_post("term");
+		if(!$term){
+			$term = get_current_term();
+		}
 		$footnotes = $this->menu_model->get_pairs("grade_footnote");
 		$data["footnotes"] = get_keyed_pairs($footnotes, array("value","label"),TRUE);
 		$status = $this->menu_model->get_pairs("grade_status");
+
 		$data["status"] = get_keyed_pairs($status, array("value","label"),TRUE);
 		$data["kStudent"] = $kStudent;
 		$data["kTeach"] = $kTeach;
@@ -43,7 +52,7 @@ class Grade extends MY_Controller
 		$this->load->view("grade/edit_cell",$data);
 	}
 
-	
+
 	function select_student()
 	{
 		$data["kTeach"] = $this->input->get("kTeach");
@@ -60,7 +69,7 @@ class Grade extends MY_Controller
 		$kAssignment = $this->input->post("kAssignment");
 		$assignment = $this->assignment->get($kAssignment);
 		//$total points is needed to calculate the grade average.
-		//this calculation happens in the model to make more elegant code. 
+		//this calculation happens in the model to make more elegant code.
 		$total = $assignment->points;
 		$category = $assignment->category;
 		$points = $this->input->post("points");
