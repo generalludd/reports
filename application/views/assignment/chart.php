@@ -12,7 +12,12 @@ $assignment_count = 0;
 $header = $assignments[0];
 ?>
 <div class="button-box">
-	<span class="button refresh">Refresh Page</span>
+<ul class="button-list">
+<li><span class="button refresh">Refresh Page</span></li>
+<li><span class="button assignment_categories_edit">Edit Assignment Categories and Weights</span></li>
+</ul>
+	
+	
 </div>
 <table class='grade-chart'>
 	<thead>

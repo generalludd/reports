@@ -3,8 +3,8 @@
 class Assignment_model extends CI_Model
 {
 	var $kTeach;
+	var $kCategory;
 	var $assignment;
-	var $category;
 	var $date;
 	var $points;
 	var $subject;
@@ -15,7 +15,7 @@ class Assignment_model extends CI_Model
 
 	function prepare_variables()
 	{
-		$variables = array("kTeach","assignment","category","date","points","subject","term","year","gradeStart","gradeEnd");
+		$variables = array("kTeach","assignment","kCategory","date","points","subject","term","year","gradeStart","gradeEnd");
 
 		for($i = 0; $i < count($variables); $i++){
 			$myVariable = $variables[$i];
@@ -33,6 +33,8 @@ class Assignment_model extends CI_Model
 	function get($kAssignment)
 	{
 		$this->db->where("kAssignment",$kAssignment);
+		$this->db->join("assignment_category as category","assignment.kCategory = category.kCategory");
+		$this->db->select("assignment.*,category.weight,category.category");
 		$this->db->from("assignment");
 		$result = $this->db->get()->row();
 		return $result;
@@ -56,15 +58,6 @@ class Assignment_model extends CI_Model
 	}
 
 
-	function get_categories($kTeach = FALSE)
-	{
-		$this->db->distinct("category");
-		if($kTeach){
-			$this->db->where("kTeach",$kTeach);
-		}
-		$result = $this->db->get("assignment")->result();
-		return $result;
-	}
 
 
 	function get_for_student($kStudent,$term,$year,$options = array())
@@ -81,8 +74,9 @@ class Assignment_model extends CI_Model
 		$this->db->join("student","student.kStudent=grade.kStudent","LEFT");
 		$this->db->join("teacher","teacher.kTeach=assignment.kTeach","LEFT");
 		$this->db->join("menu","grade.footnote = menu.value AND menu.category='grade_footnote'","LEFT");
-
-		$this->db->select("assignment.kAssignment, assignment.term, assignment.year, assignment.subject, assignment.date, assignment.category, assignment.assignment, assignment.points as total_points,grade.points,grade.average,grade.status,grade.footnote,menu.label,student.stuFirst,student.stuNickname,student.stuLast,teacher.teachFirst,teacher.teachLast");
+		$this->db->join("assignment_category as category","assignment.kCategory = category.kCategory","LEFT");
+		
+		$this->db->select("assignment.kAssignment, assignment.term, assignment.year, assignment.subject, assignment.date, assignment.assignment, assignment.points as total_points,category.category,category.weight,grade.points,grade.average,grade.status,grade.footnote,menu.label,student.stuFirst,student.stuNickname,student.stuLast,teacher.teachFirst,teacher.teachLast");
 		$this->db->order_by("assignment.date");
 		$this->db->order_by("assignment.kAssignment");
 		$this->db->order_by("assignment.category");
@@ -100,6 +94,7 @@ class Assignment_model extends CI_Model
 		//$this->db->where("student.stuGrade in ($gradeStart,$gradeEnd)");
 		$this->db->join("grade","assignment.kAssignment=grade.kAssignment");
 		$this->db->join("student","grade.kStudent=student.kStudent");
+		$this->db->join("assignment_category as category","assignment.kCategory = category.kCategory","LEFT");
 		$this->db->order_by("student.stuLast");
 		$this->db->order_by("assignment.date");
 		$this->db->order_by("assignment.kAssignment");
@@ -111,10 +106,12 @@ class Assignment_model extends CI_Model
 
 	function get_for_teacher($kTeach,$term,$year)
 	{
-		$this->db->where("kTeach",$kTeach);
+		$this->db->where("assignment.kTeach",$kTeach);
 		$this->db->where("term",$term);
 		$this->db->where("year",$year);
 		$this->db->from("assignment");
+		$this->db->join("assignment_category as category","assignment.kCategory = category.kCategory","LEFT");
+		$this->db->select("assignment.*,category.weight,category.category");
 		$this->db->order_by("assignment.date");
 		$this->db->order_by("assignment.kAssignment");
 		$this->db->order_by("assignment.term");
@@ -127,6 +124,48 @@ class Assignment_model extends CI_Model
 		$delete_array = array("kAssignment"=>$kAssignment);
 		$this->db->delete("assignment",$delete_array);
 		$this->db->delete("grade",$delete_array);
+	}
+
+
+	/***** CATEGORY WEIGHTS ******/
+	function insert_weight($values = array())
+	{
+		$kCategory = FALSE;
+		if(array_key_exists("kTeach",$values)){
+			$this->db->insert("assignment_category",$values);
+			$kCategory = $this->db->insert_id();
+		}
+		return $kCategory;
+	}
+
+
+	function update_weight($kCategory,$values = array())
+	{
+		if(!empty($values)){
+			$thid->db->where("kCategory",$kCategory);
+			$this->db->update("assignment_category",$values);
+		}
+	}
+
+	function get_weight($kCategory)
+	{
+		$this->db->where("kCategory",$kCategory);
+		$this->db->from("assignment_category");
+		$result = $this->db->get()->row();
+		return $result;
+	}
+
+
+	function get_categories($kTeach = FALSE)
+	{
+		$this->db->distinct("category");
+		if($kTeach){
+			$this->db->where("kTeach",$kTeach);
+		}
+		$this->db->where("kTeach",$kTeach);
+		$this->db->order_by("category");
+		$result = $this->db->get("assignment_category")->result();
+		return $result;
 	}
 
 }

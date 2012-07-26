@@ -95,7 +95,7 @@ class Assignment extends MY_Controller
 		$subjects = $this->subject_model->get_for_teacher($kTeach);
 		$data['subjects'] = get_keyed_pairs($subjects, array('subject', 'subject'));
 		$categories = $this->assignment->get_categories($this->session->userdata("userID"));
-		$data["categories"] = get_keyed_pairs($categories, array("category","category"),NULL,TRUE);
+		$data["categories"] = get_keyed_pairs($categories, array("weight","category"));
 		$data["target"] = "assignment/edit";
 		$data["title"] = "Create an Assignment";
 		$this->load->view($data["target"],$data);
@@ -125,7 +125,7 @@ class Assignment extends MY_Controller
 		$data["assignment"] = $assignment;
 		$data["action"] = "update";
 		$categories = $this->assignment->get_categories($assignment->kTeach);
-		$data["categories"] = get_keyed_pairs($categories, array("category","category"),NULL,TRUE);
+		$data["categories"] = get_keyed_pairs($categories, array("weight","category"));
 		$this->load->view("assignment/edit",$data);
 	}
 
