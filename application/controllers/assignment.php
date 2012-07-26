@@ -155,5 +155,10 @@ class Assignment extends MY_Controller
 		$gradeEnd = $assignment->gradeEnd;
 		redirect("assignment/chart?kTeach=$kTeach&term=$term&year=$year&gradeStart=$gradeStart&gradeEnd=$gradeEnd");
 	}
+	
+	function edit_categories()
+	{
+		
+	}
 
 }
