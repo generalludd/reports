@@ -5,6 +5,7 @@ class Student_report_model extends CI_Model
 	var $kStudent;
 	var $kTeach;
 	var $kAdvisor;
+	var $status;
 	var $category;
 	var $assignment;
 	var $report_date;
@@ -15,7 +16,7 @@ class Student_report_model extends CI_Model
 
 	function prepare_variables()
 	{
-		$variables = array("kStudent","kTeach","kAdvisor","category","assignment","report_date","comment","parent_contact","contact_date","contact_method");
+		$variables = array("kStudent","kTeach","kAdvisor","status","category","assignment","report_date","comment","parent_contact","contact_date","contact_method");
 		for($i = 0; $i < count($variables); $i++){
 			$myVariable = $variables[$i];
 			if($this->input->post($myVariable)){
@@ -119,6 +120,11 @@ class Student_report_model extends CI_Model
 		$this->db->from("student_report");
 		$result = $this->db->get()->result();
 		return $result;
+	}
+	
+	function count_unread($kTeach)
+	{
+		
 	}
 
 	function get_list($type, $key, $options = array())

@@ -24,6 +24,7 @@ class Report extends MY_Controller
 		$data["report"] = $report;
 		$data["methods"] = array("In Person","Over the Phone","Via Email");
 		$data["kTeach"] = $this->session->userdata("userID");
+		$data["statuses"] = get_keyed_pairs($this->menu->get_pairs("report_status"),array("value","label"));
 		$data["categories"] = get_keyed_pairs($this->menu->get_pairs("report_category"),array("value","label"));
 		$data["methods"] = $this->menu->get_pairs("report_contact_method");
 		$data["action"] = "insert";
@@ -66,6 +67,7 @@ class Report extends MY_Controller
 		$data["report"] = $report;
 		$data["methods"] = array("In Person","Over the Phone","Via Email");
 		$data["kTeach"] = $report->kTeach;
+		$data["statuses"] = get_keyed_pairs($this->menu->get_pairs("report_status"),array("value","label"));
 		$data["categories"] = get_keyed_pairs($this->menu->get_pairs("report_category"),array("value","label"));
 		$data["methods"] = $this->menu->get_pairs("report_contact_method");
 		$data["action"] = "update";
@@ -120,17 +122,22 @@ class Report extends MY_Controller
 					$person = $this->student->get($key,"stuFirst,stuLast,stuNickname");
 					$title = sprintf("for %s" , format_name($person->stuFirst,$person->stuLast, $person->stuNickname));
 					$data["kStudent"] = $key;
-
+					$data["target"] = "report/" . $type . "_list";
+						
 					break;
 				case "teacher":
 					$this->load->model("teacher_model","teacher");
 					$person = $this->teacher->get($key,"teachFirst,teachLast");
 					$title = sprintf("by %s %s", $person->teachFirst,$person->teachLast);
+					$data["target"] = "report/" . $type . "_list";
+						
 					break;
 				case "advisor":
 					$this->load->model("teacher_model","teacher");
 					$person = $this->teacher->get($key,"teachFirst as advisorFirst,teachLast as advisorLast");
 					$title = sprintf("to %s %s",$person->advisorFirst,$person->advisorLast);
+					$data["target"] = "report/teacher_list";
+						
 					break;
 			}
 			$options = array();
@@ -148,7 +155,6 @@ class Report extends MY_Controller
 			$data["reports"] = $this->report->get_list($type,$key,$options);
 			$data["type"] = $type;
 			$data["title"] = sprintf("%ss Submitted %s", $data["student_report"], $title);
-			$data["target"] = "report/" . $type . "_list";
 			$this->load->view("page/index",$data);
 		}
 	}
