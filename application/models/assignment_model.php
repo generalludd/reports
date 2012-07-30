@@ -45,7 +45,8 @@ class Assignment_model extends CI_Model
 	function insert()
 	{
 		$this->prepare_variables();
-		$kAssignment = $this->db->insert("assignment",$this);
+		$this->db->insert("assignment",$this);
+		$kAssignment = $this->db->insert_id();
 		return $kAssignment;
 	}
 
@@ -75,7 +76,7 @@ class Assignment_model extends CI_Model
 		$this->db->join("teacher","teacher.kTeach=assignment.kTeach","LEFT");
 		$this->db->join("menu","grade.footnote = menu.value AND menu.category='grade_footnote'","LEFT");
 		$this->db->join("assignment_category as category","assignment.kCategory = category.kCategory","LEFT");
-		
+
 		$this->db->select("category.category,category.weight,assignment.kAssignment, assignment.term, assignment.year, assignment.subject, assignment.date, assignment.assignment, assignment.points as total_points,grade.points,grade.average,grade.status,grade.footnote,menu.label,student.stuFirst,student.stuNickname,student.stuLast,teacher.teachFirst,teacher.teachLast");
 		$this->db->order_by("assignment.date");
 		$this->db->order_by("assignment.kAssignment");
@@ -128,7 +129,7 @@ class Assignment_model extends CI_Model
 
 
 	/***** CATEGORY WEIGHTS ******/
-	function insert_weight($values = array())
+	function insert_category($values = array())
 	{
 		$kCategory = FALSE;
 		if(array_key_exists("kTeach",$values)){
@@ -139,15 +140,15 @@ class Assignment_model extends CI_Model
 	}
 
 
-	function update_weight($kCategory,$values = array())
+	function update_category($kCategory,$values = array())
 	{
 		if(!empty($values)){
-			$thid->db->where("kCategory",$kCategory);
+			$this->db->where("kCategory",$kCategory);
 			$this->db->update("assignment_category",$values);
 		}
 	}
 
-	function get_weight($kCategory)
+	function get_category($kCategory)
 	{
 		$this->db->where("kCategory",$kCategory);
 		$this->db->from("assignment_category");

@@ -234,7 +234,84 @@ $(document).ready(function(){
 			}
 		}
 	});
-
+	
+	$(".update-category, .update-weight").live("keyup",function(){
+		myId = this.id.split("_")[1];
+		$("#fun").val(myId);
+		$("#update-category_" + myId).fadeIn();
+	});
+	
+	$(".category-update").live("click",function(){
+		myId = this.id.split("_")[1];
+		myCategory = $("#category_" + myId).val();
+		myWeight = $("#weight_" + myId).val();
+		form_data = {
+				kCategory: myId,
+				category: myCategory,
+				weight: myWeight
+		};
+		
+		$.ajax({
+			type: "post",
+			url: base_url + "assignment/update_category",
+			data: form_data,
+			success: function(data){
+				$("#update-category_" + myId).fadeOut();
+			}
+			
+		});
+		
+		
+	});
+	
+	
+	$(".assignment_categories_edit").live("click",function(){
+		$.ajax({
+			url: base_url + "assignment/edit_categories/" + $("#kTeach").val(),
+			type: "get",
+			success: function(data){
+				showPopup("Editing Categories",data,"auto");
+			}
+			
+		});
+		
+	});
+	
+	$(".add-category").live("click",function(){
+		myTeach = this.id.split("_")[1];
+		
+		$.ajax({
+			type:"get",
+			url: base_url + "assignment/create_category/" + myTeach,
+			success: function(data){
+				$("#category-table tbody").append(data);
+				//$(this).fadeOut();
+			}
+			
+		});
+	});
+	
+	$(".category-insert").live("click",function(){
+		myTeach = this.id.split("_")[1];
+		myCategory = $("#tr-teach_" + myTeach + " .insert-category").val();
+		myWeight = $("#tr-teach_" + myTeach + " .insert-weight").val();
+		form_data = {
+				kTeach: myTeach,
+				category: myCategory,
+				weight: myWeight
+		};
+		$.ajax({
+			type: "post",
+			url: base_url + "assignment/insert_category",
+			data: form_data,
+			success: function(data){
+				$("#tr-teach_" + myTeach).remove();
+				$("#category-table tbody").append(data);				
+			}
+		});
+		//$(this).html(myTeach);
+	});
+	
 });
 
 function save_student_points(myAssignment)

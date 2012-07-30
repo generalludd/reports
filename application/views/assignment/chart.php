@@ -3,14 +3,6 @@ $table = array();
 $assignment_count = 0;
 
 ?>
-<input
-	type="hidden" name="kTeach" id="kTeach" value="<?=$kTeach;?>" />
-
-<? if(!empty($assignments)){
-
-	/* Get the subject of the first row of the assignments */
-$header = $assignments[0];
-?>
 <div class="button-box">
 <ul class="button-list">
 <li><span class="button refresh">Refresh Page</span></li>
@@ -19,6 +11,15 @@ $header = $assignments[0];
 	
 	
 </div>
+<input
+	type="hidden" name="kTeach" id="kTeach" value="<?=$kTeach;?>" />
+
+<? if(!empty($assignments)){
+
+	/* Get the subject of the first row of the assignments */
+$header = $assignments[0];
+?>
+
 <table class='grade-chart'>
 	<thead>
 		<tr>

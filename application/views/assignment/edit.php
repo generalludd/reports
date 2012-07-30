@@ -18,7 +18,7 @@ if($date = get_value($assignment,"date")){
 <p>
 <label for="kCategory">Category: </label>
 <span id="cat_span">
-<?=form_dropdown("kCategory",$categories,get_value($assignment,"category"),"id='kCategory'");?>
+<?=form_dropdown("kCategory",$categories,get_value($assignment,"kCategory"),"id='kCategory'");?>
 </span>
 </p>
 <p>

@@ -104,13 +104,13 @@ class Assignment extends MY_Controller
 
 	function insert()
 	{
-		$this->assignment->insert();
+		$kAssignment = $this->assignment->insert();
 		$kTeach = $this->input->post("kTeach");
 		$term = $this->input->post("term");
 		$year = $this->input->post("year");
 		$gradeStart = $this->input->post("gradeStart");
 		$gradeEnd = $this->input->post("gradeEnd");
-
+		$students = $this->grade->batch_insert($kAssignment,$kTeach,$term,$year);
 		redirect("assignment/chart?kTeach=$kTeach&term=$term&year=$year&gradeStart=$gradeStart&gradeEnd=$gradeEnd");
 	}
 
@@ -156,8 +156,50 @@ class Assignment extends MY_Controller
 		redirect("assignment/chart?kTeach=$kTeach&term=$term&year=$year&gradeStart=$gradeStart&gradeEnd=$gradeEnd");
 	}
 	
+	
+	function create_category()
+	{
+		$data["category"] = NULL;
+		$data["action"] = "insert";
+		$data["kTeach"] = $this->uri->segment(3);
+		$this->load->view("assignment/category_row", $data);
+	}
+	
+	function insert_category()
+	{
+		$kTeach = $this->input->post("kTeach");
+		$category = $this->input->post("category");
+		$weight = $this->input->post("weight");
+		if($category && $weight){
+			$data["category"] = $category;
+			$data["kTeach"] = $kTeach;
+			$data["weight"] = $weight;
+		}
+		$kCategory = $this->assignment->insert_category($data);
+		$category = $this->assignment->get_category($kCategory);
+		$data["category"] = $category;
+		$data["action"] = "update";
+		$data["kTeach"] = $kTeach;
+		$this->load->view("assignment/category_row",$data);
+		
+		
+		
+	}
+	
+	
 	function edit_categories()
 	{
+		$data["kTeach"] = $this->uri->segment(3);
+		$data["categories"] = $this->assignment->get_categories($data["kTeach"]);
+		$this->load->view("assignment/categories",$data);
+	}
+	
+	function update_category()
+	{
+		$kCategory = $this->input->post("kCategory");
+		$data["category"] = $this->input->post("category");
+		$data["weight"] = $this->input->post("weight");
+		$this->assignment->update_category($kCategory,$data);
 		
 	}
 

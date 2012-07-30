@@ -1,5 +1,10 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 ?>
+<div class="button-box">
+	<span class="button new add-category" id="teach_<?=$kTeach;?>">Add
+		Category</span>
+</div>
+
 <table id="category-table">
 	<thead>
 		<tr>
@@ -9,21 +14,13 @@
 		</tr>
 	</thead>
 	<tbody>
-		<? foreach($categories as $category):?>
-		<tr>
-			<td>
-				<input type="text" name="category" id="category_<?=$category->kCategory;?>" value="<?=$category->category;?>" />
-			</td>
-			<td>
-				<input type="text" name="weight" id="weight_<?=$category->kCategory;?>" value="<?=$category->weight;?>" width="4" />
-			</td>
-			<td>
-				<span class="button save-category" id="save-category_<?=$category->kCategory;?>">Save</span>
-			</td>
-		</tr>
-		<? endforeach;?>
+		<? foreach($categories as $category){
+			$data["category"] = $category;
+			$data["action"] = "update";
+			$this->load->view("assignment/category_row",$data);
+		}?>
 	</tbody>
 </table>
 <div class="button-box">
-<span class="button add-category" id="teach_<?=$kTeach;?>">Add Category</span>
+	<span class="button refresh">Done</span>
 </div>
