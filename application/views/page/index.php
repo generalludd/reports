@@ -24,7 +24,8 @@ if($this->uri->segment(1) == ""){
 </div>
 </div>
 <?php endif; ?>
-<div id="alert" class="message"><?=$this->session->userdata("notice");?></div>
+<div id="alert" class="message"><?=$this->session->userdata("notice");
+?></div>
 <?=$this->session->set_userdata("notice",NULL);?>
 
 <!-- main -->

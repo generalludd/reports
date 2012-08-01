@@ -34,6 +34,11 @@ class Auth extends CI_Controller
 				$data["gradeStart"] = $result->gradeStart;
 				$data["gradeEnd"] = $result->gradeEnd;
 				$data["is_advisor"] = $result->is_advisor;
+				//if the teacher is an advisor, get the number of unread reports;
+				if($teacher->is_advisor == 1){
+					$this->load->model("student_report_model","report");
+					$data["unread_reports"] = $this->report->get_count($result->kTeach);
+				}
 				$this->session->set_userdata($data);
 				$redirect = true;
 			}

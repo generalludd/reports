@@ -5,7 +5,8 @@ class Student_report_model extends CI_Model
 	var $kStudent;
 	var $kTeach;
 	var $kAdvisor;
-	var $status;
+	var $is_read;
+	var $rank;
 	var $category;
 	var $assignment;
 	var $report_date;
@@ -16,7 +17,7 @@ class Student_report_model extends CI_Model
 
 	function prepare_variables()
 	{
-		$variables = array("kStudent","kTeach","kAdvisor","status","category","assignment","report_date","comment","parent_contact","contact_date","contact_method");
+		$variables = array("kStudent","kTeach","kAdvisor","is_read","rank","category","assignment","report_date","comment","parent_contact","contact_date","contact_method");
 		for($i = 0; $i < count($variables); $i++){
 			$myVariable = $variables[$i];
 			if($this->input->post($myVariable)){
@@ -39,19 +40,27 @@ class Student_report_model extends CI_Model
 		return $kReport;
 	}
 
+	
 	function update($kReport)
 	{
 		$this->db->where("kReport",$kReport);
 		$this->prepare_variables();
 		$this->db->update("student_report",$this);
+		//set the read report count session key to update user interface indicators of unread orange slips
+		if($this->is_read == 1 && $this->session->userdata("userID") == $this->kAdvisor){
+			$data["report_count"] = $this->get_count($this->kAdvisor);
+			$this->session->set_userdata($data);
+		}
 	}
 
+	
 	function delete($kReport)
 	{
 		$array = array("kReport"=>$kReport);
 		$this->db->delete("student_report",$array);
 	}
 
+	
 	function get($kReport)
 	{
 		$this->db->where("kReport",$kReport);
@@ -64,6 +73,7 @@ class Student_report_model extends CI_Model
 		return $output;
 	}
 
+	
 	function get_for_student($kStudent, $options = array())
 	{
 		$this->db->where("student_report.kStudent", $kStudent);
@@ -83,6 +93,7 @@ class Student_report_model extends CI_Model
 		return $result;
 	}
 
+	
 	function get_for_advisor($kAdvisor, $options = array())
 	{
 		$this->db->where("advisor.kAdvisor",$kAdvisor);
@@ -103,6 +114,7 @@ class Student_report_model extends CI_Model
 
 	}
 
+	
 	function get_for_teacher($kTeach, $options = array())
 	{
 		$this->db->where("student_report.kTeach",$kTeach);
@@ -122,8 +134,15 @@ class Student_report_model extends CI_Model
 		return $result;
 	}
 	
-	function count_unread($kTeach)
+	
+	function get_count($kTeach)
 	{
+		$this->db->where("kAdvisor",$kTeach);
+		$this->db->where("is_read IS NULL");
+		$this->db->from("student_report");
+		$this->db->select("COUNT(kReport) AS unread_reports");
+		$result = $this->db->get()->row();
+		return $result->unread_reports;
 		
 	}
 

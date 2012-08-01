@@ -7,9 +7,9 @@ if($contact_date){
 	$contact_date = format_date($contact_date,"standard");
 }
 ?>
-<h3>
-	<?=$title;?>
-</h3>
+
+
+<div id="orange-slip" class="half-page">
 <form id="report-editor" name="report-editor"
 	action="<?=site_url("report/$action");?>" method="POST">
 	<input type="hidden" name="kStudent" id="kStudent"
@@ -18,29 +18,45 @@ if($contact_date){
 		name="kAdvisor" id="kAdvisor" value="<?=$report->kAdvisor;?>" /> <input
 		type="hidden" name="kReport" id="kReport"
 		value="<?=get_value($report,"kReport");?>" />
+	<p id="student-name-field">
+		<label for="student-name">Student: </label>
+		<?=$student;?>
+	</p>
 	<p id="advisor-name-field">
 		<label for="advisor-name">Advisor: </label>
 		<?=$advisor;?>
 	</p>
+	<p id="date-field">
+		<label for="report_date">Date: </label> <input id="report_date"
+			name="report_date" class="datefield"
+			value="<?=format_date(get_value($report,"report_date",date("Y-m-d")),"standard");?>" />
+	</p>
 	<? if($action == "insert"): ?>
-	<p>
 		<label for="email_advisor">Email Advisor</label> <input
 			type="checkbox" value=1 name="email_advisor" id="email_advisor"
-			checked />
-	</p>
-	<p>
+			checked />&nbsp;|&nbsp;
 		<label for="email_student">Email Student</label> <input
 			type="checkbox" value=1 name="email_student" id="email_student" />
-	</p>
-	<? endif;?>
+
+			<? endif;?>
 	<? if($this->session->userdata("userID") == get_value($report,"kAdvisor")): ?>
-	<p id="status-field">
-		<label for="status">Status:</label>
-		<?=form_dropdown("status",$statuses,get_value($report,"status","unread"),"id='status'");?>
+	<p id="is_read-field">
+	<?
+	$checked = "";
+	if(get_value($report,"is_read")){
+		$checked = "checked";
+	}?>
+	
+	<label for="is_read">Is Read:</label>
+	<input type="checkbox" name="is_read" id="is_read" <?=$checked;?> value="1"/>
+	</p>
+	<p id="rank-field">
+		<label for="Rank">Rank:</label>
+		<?=form_dropdown("rank",$ranks,get_value($report,"rank",0),"id='rank'");?>
 
 	</p>
 	<? else: ?>
-	<input type="hidden" name="status" id="status" value="unread" />
+	<input type="hidden" name="rank" id="rank" value="unread" />
 
 	<? endif;?>
 	<p id="category-field">
@@ -49,20 +65,12 @@ if($contact_date){
 	</p>
 	<p id="assignment-field">
 		<label for="assignment">Assignment:</label><br />
-		<textarea id="assignment" name="assignment" rows="3">
-			<?=get_value($report,"assignment");?>
-		</textarea>
+		<textarea id="assignment" name="assignment" rows="3"><?=get_value($report,"assignment");?></textarea>
 	</p>
-	<p id="date-field">
-		<label for="report_date">Date: </label> <input id="report_date"
-			name="report_date" class="datefield"
-			value="<?=format_date(get_value($report,"report_date",date("Y-m-d")),"standard");?>" />
-	</p>
+
 	<p id="comment-field">
 		<label for="comment">Comments: </label><br />
-		<textarea id="comment" name="comment" rows="4">
-			<?=get_value($report,"comment");?>
-		</textarea>
+		<textarea id="comment" name="comment" rows="4"><?=get_value($report,"comment");?></textarea>
 	</p>
 	<fieldset id="parent-communication">
 		<legend>Parent Communication</legend>
@@ -95,3 +103,4 @@ if($contact_date){
 		<?endif;?>
 	</div>
 </form>
+</div>

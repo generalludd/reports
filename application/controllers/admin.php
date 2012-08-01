@@ -34,6 +34,14 @@ class admin extends MY_Controller{
 				$data['username'] = $teacher->username;
 				$data['dbRole'] = $teacher->dbRole;
 				$data['userID'] = $teacher->kTeach;
+				$data['gradeStart'] =$teacher->gradeStart;
+				$data['gradeEnd'] = $teacher->gradeEnd;
+				$data['is_advisor'] = $teacher->is_advisor;
+				//set the number of unread reports for advisors as is done with standard login.
+				if($teacher->is_advisor == 1){
+					$this->load->model("student_report_model","report");
+					$data["unread_reports"] = $this->report->get_count($result->kTeach);
+				}
 				$this->session->set_userdata($data);
 				redirect("/");
 			}

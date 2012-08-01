@@ -29,9 +29,10 @@ class Auth_model extends CI_Model
 	{
 		$this->db->where("username", $username);
 		$this->db->where("pwd", $this->encrypt($password));
-		$this->db->select("kTeach, dbRole");
+		$this->db->select("teacher.kTeach as kTeach, dbRole,gradeStart,gradeEnd,is_advisor");
 		$this->db->from("teacher");
 		$query = $this->db->get();
+		print $this->db->last_query();
 		$count = $query->num_rows();
 		$output = FALSE;
 		if($count == 1){

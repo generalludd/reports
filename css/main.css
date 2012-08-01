@@ -1091,3 +1091,7 @@ table.report-card th, table.report-card td {
 table.report-card .notes-column {
 	border: none;
 }
+
+#orange-slip,#assignment-field textarea,#comment-field textarea {
+	width: 400px;
+}

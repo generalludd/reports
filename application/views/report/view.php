@@ -7,7 +7,7 @@ $nav_buttons[] = array("item" => "student", "text" => "Student Info", "class" =>
 $nav_buttons[] = array("item" => "report","text"=> sprintf("List %ss",STUDENT_REPORT),"class" =>"button","href" => site_url("report/get_list/student/$report->kStudent"));
 print create_button_bar($nav_buttons);
 
-$edit_buttons[] = array("item" => "report", "text" => "Edit Report", "class" => "button edit", "href"=>site_url("report/edit/$report->kReport"));
+$edit_buttons[] = array("item" => "report", "text" => "Edit Report", "class" => "button edit report-edit","id"=>"re_$report->kReport", "href"=>site_url("report/edit/$report->kReport"));
 print create_button_bar($edit_buttons);
 ?>
 

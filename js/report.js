@@ -30,4 +30,36 @@ $(document).ready(function(){
 		}
 		
 	});
+	
+	$(".report-edit").live("click",function(){
+		myReport = this.id.split("_")[1];
+		form_data = {
+				ajax: "1"
+		};
+		$.ajax({
+			type:"get",
+			data: form_data,
+			url: base_url + "report/edit/" + myReport,
+			success: function(data){
+				showPopup("Editing Student Report",data,"auto");
+			}
+		});
+		return false;
+	});
+	
+	$(".report-add").live("click",function(){
+		myStudent = this.id.split("_")[1];
+		form_data = {
+				ajax: "1"
+		};
+		$.ajax({
+			type: "get",
+			data: form_data,
+			url: base_url + "report/create/" + myStudent,
+			success: function(data){
+				showPopup("Adding Student Report",data,"auto");
+			}
+		});
+		return false;
+	});
 });

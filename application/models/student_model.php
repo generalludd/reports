@@ -173,6 +173,7 @@ class Student_model extends CI_Model
 			$this->db->select($constraints["select"]);
 		}
 		$this->db->order_by("stuGrade");
+		$this->db->order_by("stuFirst");
 		$this->db->from("student");
 		$result = $this->db->get()->result();
 		return $result;
@@ -210,7 +211,7 @@ class Student_model extends CI_Model
 
 		$this->db->from("student");
 
-		$this->db->order_by("stuGrade,stuLast,stuFirst", "ASC");
+		$this->db->order_by("stuGrade,stuFirst,stuLast", "ASC");
 
 		$result = $this->db->get()->result();
 

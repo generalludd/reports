@@ -51,7 +51,7 @@ $current_teacher = NULL;
 		<a href=<?=site_url("attendance/search/$student->kStudent");?> class='button'>Attendance</a>
 		<a href=<?=site_url("support/list_all/$student->kStudent");?> class='button'>Learning Support</a>
 		<? if($student->stuGrade >=5): ?>
-		<a href=<?=site_url("report/create/$student->kStudent");?> class='button new'><?=sprintf("Add %s",STUDENT_REPORT);?></a>
+		<a href=<?=site_url("report/create/$student->kStudent");?> id="add-report_<?=$student->kStudent;?>" class='button new report-add'><?=sprintf("Add %s",STUDENT_REPORT);?></a>
 		<? endif;?>
 		</div>
 	</div>

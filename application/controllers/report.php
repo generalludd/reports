@@ -30,8 +30,11 @@ class Report extends MY_Controller
 		$data["action"] = "insert";
 		$data["title"] = sprintf("Adding an %s for %s", STUDENT_REPORT, $data["student"]);
 		$data["target"] = "report/edit";
-		$this->load->view("page/index",$data);
-
+		if($this->input->get("ajax")){
+			$this->load->view($data["target"], $data);
+		}else{
+			$this->load->view("page/index",$data);
+		}
 	}
 
 
@@ -45,6 +48,7 @@ class Report extends MY_Controller
 		redirect("report/view/$kReport");
 	}
 
+
 	function view(){
 		$report = $this->report->get($this->uri->segment(3));
 		$data["report"] = $report;
@@ -54,7 +58,9 @@ class Report extends MY_Controller
 		$data["title"] = sprintf("Viewing %s for %s", STUDENT_REPORT, $data["student"]);
 		$data["target"] = "report/view";
 		$this->load->view("page/index",$data);
+print $this->session->userdata("unread_reports");
 	}
+
 
 	function edit()
 	{
@@ -67,21 +73,29 @@ class Report extends MY_Controller
 		$data["report"] = $report;
 		$data["methods"] = array("In Person","Over the Phone","Via Email");
 		$data["kTeach"] = $report->kTeach;
-		$data["statuses"] = get_keyed_pairs($this->menu->get_pairs("report_status"),array("value","label"));
+		$data["ranks"] = get_keyed_pairs($this->menu->get_pairs("report_rank"),array("value","label"));
 		$data["categories"] = get_keyed_pairs($this->menu->get_pairs("report_category"),array("value","label"));
 		$data["methods"] = $this->menu->get_pairs("report_contact_method");
 		$data["action"] = "update";
 		$data["title"] = sprintf("Editing an %s for %s", STUDENT_REPORT, $data["student"]);
 		$data["target"] = "report/edit";
-		$this->load->view("page/index",$data);
+		if($this->input->get("ajax")){
+			$this->load->view($data["target"],$data);
+		}else{
+			$this->load->view("page/index",$data);
+		}
 	}
+
 
 	function update()
 	{
+
 		$kReport = $this->input->post("kReport");
 		$this->report->update($kReport);
+		$this->session->set_userdata(array("unread_reports",5));
 		redirect("report/view/$kReport");
 	}
+
 
 	function delete()
 	{
@@ -90,6 +104,7 @@ class Report extends MY_Controller
 		$this->report->delete($kReport);
 		redirect("report/get_list/student/$kStudent");
 	}
+
 
 	function search()
 	{
@@ -110,6 +125,7 @@ class Report extends MY_Controller
 		$this->load->view("report/search",$data);
 	}
 
+
 	function get_list()
 	{
 		$type = $this->uri->segment(3);
@@ -123,21 +139,21 @@ class Report extends MY_Controller
 					$title = sprintf("for %s" , format_name($person->stuFirst,$person->stuLast, $person->stuNickname));
 					$data["kStudent"] = $key;
 					$data["target"] = "report/" . $type . "_list";
-						
+
 					break;
 				case "teacher":
 					$this->load->model("teacher_model","teacher");
 					$person = $this->teacher->get($key,"teachFirst,teachLast");
 					$title = sprintf("by %s %s", $person->teachFirst,$person->teachLast);
 					$data["target"] = "report/" . $type . "_list";
-						
+
 					break;
 				case "advisor":
 					$this->load->model("teacher_model","teacher");
 					$person = $this->teacher->get($key,"teachFirst as advisorFirst,teachLast as advisorLast");
 					$title = sprintf("to %s %s",$person->advisorFirst,$person->advisorLast);
 					$data["target"] = "report/teacher_list";
-						
+
 					break;
 			}
 			$options = array();
@@ -156,8 +172,11 @@ class Report extends MY_Controller
 			$data["type"] = $type;
 			$data["title"] = sprintf("%ss Submitted %s", $data["student_report"], $title);
 			$this->load->view("page/index",$data);
+		
+				
 		}
 	}
+
 
 	function notify($kReport)
 	{
