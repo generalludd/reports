@@ -50,9 +50,10 @@ $(document).ready(function() {
 		});
 	});
 	
+
+	
 	$("#stu-password-label").live("click",function(event){
 		myPassword = $("#stuEmailPassword").val();
-	
 		if(myPassword == ""){
 			myFirst = $("#stuFirst").val();
 			myLast = $("#stuLast").val();
