@@ -18,11 +18,12 @@ class Support extends MY_Controller
 
 
 		$this->load->model("student_model");
-		$student = $this->student_model->get_name($kStudent);
+		$student = $this->student_model->get($kStudent);
 		$data["kStudent"] = $kStudent;
 		$data["student"] = $student;
+		$data["student_name"] = format_name($student->stuFirst, $student->stuLast, $student->stuNickname);
 		$data["has_current"] = $this->support_model->get_current($kStudent);
-		$data["title"] = "Viewing Student Support for $student";
+		$data["title"] = sprintf("Viewing Student Support for %s",$data["student_name"]);
 		$data["support"] = $this->support_model->get_all($kStudent);
 		$data["target"] = "support/list";
 		$this->load->model("file_model");

@@ -1,10 +1,10 @@
 <?php #special_need_view.inc
-print "<h3>Learning Support for $student</h3>";
+print "<h3>Learning Support for $student_name</h3>";
 $this->load->view("student/navigation", $kStudent);
 if(!$support || get_value($support[0],"year",FALSE) != get_current_year()) { ?>
 <fieldset class="support-view">
 <legend>No Support Entries</legend>
-<p><?=$student?> does not have any special support entries for this year.
+<p><?=$student_name?> does not have any special support entries for this year.
 <? if($this->session->userdata("dbRole") == 1): ?>
 <a class="button new" href="<?=site_url("support/create/$kStudent");?>">Add New</a>
 <? endif;?>
