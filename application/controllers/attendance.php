@@ -132,7 +132,7 @@ class Attendance extends MY_Controller {
 		}
 
 		if($data["kStudent"]){
-			$data["student"] = $this->student_model->get_name($data["kStudent"]);
+			$data["student"] = $this->student_model->get($data["kStudent"]);
 		}
 
 		$data["startDate"] = get_current_year() . "-08-01";

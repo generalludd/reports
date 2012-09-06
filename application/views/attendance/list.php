@@ -6,7 +6,8 @@ $search_button = "<div class='button-box'><span class='button show_attendance_se
 $add_button = "";
 $search_fieldset = "";
 if($kStudent){
-	$search_title =  "<h3>$student</h3>";
+	$student_name = format_name( $student->stuNickname, $student->stuLast, $student->stuNickname);
+	$search_title =  "<h3>$student_name</h3>";
 	$button_bar = $this->load->view("student/navigation", $kStudent, TRUE);
 	$search_button =  "<div class='button-box'><span class='show_attendance_search button' id='shas_$kStudent'>Change Search Parameters</span></div>";
 	$add_button = "<p><a class='button new add_attendance' id='saa_$kStudent' title='Add attendance record'>Add Attendance</a></p>";
@@ -99,7 +100,7 @@ if(!empty($attendance)):
 		<?
 		else:
 		if($kStudent):
-		print "<p>$student does not have any attendance entries for the current year";
+		print "<p>$student_name does not have any attendance entries for the current year";
 		if($this->session->userdata("userID") == 1):
 			print "&nbsp;<span class='add_attendance button' id='saa_$kStudent'>Add Record</span></p>";
 		endif;

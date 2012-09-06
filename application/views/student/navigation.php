@@ -7,9 +7,9 @@ $buttons[] =array("item" => "narrative", "href"=>site_url("narrative/student_lis
 $buttons[] = array("item" => "attendance", "href"=>  site_url("attendance/search/$kStudent"), "text" => "Attendance" );
 
 $buttons[] = array("item" => "support", "href"=> site_url("support/list_all/$kStudent"), "text" => "Learning Support" );
-if(get_value($student,"stuGrade",0) >=5){
-	$buttons[] = array("item" => "report", "href" => site_url("report/get_list/student/$kStudent"), "text" => sprintf("%ss",STUDENT_REPORT));
-}
+//if(get_value($student,"stuGrade",0) >=5){
+//	$buttons[] = array("item" => "report", "href" => site_url("report/get_list/student/$kStudent"), "text" => sprintf("%ss",STUDENT_REPORT));
+//}
 $options["selection"] = $this->uri->segment(1);
 $options["id"] = "student-buttons";
 $button_bar = create_button_bar($buttons, $options);
