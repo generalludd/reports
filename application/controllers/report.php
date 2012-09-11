@@ -196,7 +196,7 @@ print $this->session->userdata("unread_reports");
 		}
 		$body[] = sprintf("Link to %s: %s",STUDENT_REPORT, site_url("report/view/$kReport"));
 		$this->email->from($report->teachEmail);
-		$this->email->to("technology@fsmn.org");
+		$this->email->to($report->advisorEmail);
 		$cc_list[] = $report->teachEmail;
 		if($this->input->post("email_student")){
 			$cc_list[] = $this->email->cc($report->stuEmail);
