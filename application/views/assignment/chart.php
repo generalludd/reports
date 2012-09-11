@@ -1,8 +1,16 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 $table = array();
 $assignment_count = 0;
+$gradeDisplay = sprintf("Grade %s",$gradeStart);
 
+if($gradeStart != $gradeEnd){
+	$gradeDisplay = sprintf("Grades %s/%s",$gradeStart,$gradeEnd);
+}
+if($stuGroup){
+	$gradeDisplay = sprintf("%s %s",$gradeDisplay, $stuGroup);
+}
 ?>
+<h2>Grade Chart for <?=$gradeDisplay;?></h2>
 <div class="button-box">
 <ul class="button-list">
 <li><span class="button refresh">Refresh Page</span></li>
@@ -11,8 +19,7 @@ $assignment_count = 0;
 	
 	
 </div>
-<input
-	type="hidden" name="kTeach" id="kTeach" value="<?=$kTeach;?>" />
+<input type="hidden" name="kTeach" id="kTeach" value="<?=$kTeach;?>" />
 
 <? if(!empty($assignments)){
 

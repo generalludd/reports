@@ -32,6 +32,13 @@ class Assignment extends MY_Controller
 			$this->session->set_userdata("term",$term);
 
 		}
+		$stuGroup = NULL;
+		
+		if($this->input->get("stuGroup")){
+			$stuGroup = $this->input->get("stuGroup");
+		}
+		$this->session->set_userdata("stuGroup",$stuGroup);
+		
 
 		$year = get_current_year();
 		if($this->input->get("year")){
@@ -39,11 +46,14 @@ class Assignment extends MY_Controller
 			$this->session->set_userdata("year",$year);
 
 		}
-		$data["grades"] = $this->assignment->get_grades($kTeach,$term,$year,$gradeStart,$gradeEnd);
+		$data["grades"] = $this->assignment->get_grades($kTeach,$term,$year,$gradeStart,$gradeEnd,$stuGroup);
 		$data["assignments"] = $this->assignment->get_for_teacher($kTeach,$term,$year);
 		$data["kTeach"] = $kTeach;
 		$data["term"] = $term;
 		$data["year"] = $year;
+		$data["stuGroup"] = $stuGroup;
+		$data["gradeStart"] = $gradeStart;
+		$data["gradeEnd"] = $gradeEnd;
 		$data["target"] = "assignment/chart";
 		$data["title"] = "Grade Chart";
 		$this->load->view("page/index",$data);
@@ -82,6 +92,7 @@ class Assignment extends MY_Controller
 		$data["year"] = $this->session->userdata("year");
 		$data["gradeStart"] = $this->session->userdata("gradeStart");
 		$data["gradeEnd"] = $this->session->userdata("gradeEnd");
+		$data["stuGroup"] = $this->session->userdata("stuGroup");
 		$this->load->view("assignment/search",$data);
 	}
 

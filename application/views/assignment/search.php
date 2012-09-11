@@ -16,6 +16,10 @@ if(empty($year)){
 <input type="text" id="gradeStart" name="gradeStart" value="<?=$gradeStart; ?>" size="3"
 	maxlength="1"> -<input type="text" id="gradeEnd" name="gradeEnd"
 	value="<?=$gradeEnd;?>" size="3" maxlength="1"> </p>
+	<p>
+	<label for="stuGroup">Student Group (Middle School Specialists Only): </label>
+	<?=form_dropdown("stuGroup",array(""=>"","A"=>"A","B"=>"B"),$stuGroup,"id='stuGroup'");?>
+	</p>
 <p>	<label for="term">Term:
 </label><?=get_term_menu('term', $term);?></p>
 <p> <label for="year">Year: </label>

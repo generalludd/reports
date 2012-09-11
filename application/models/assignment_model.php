@@ -76,8 +76,7 @@ class Assignment_model extends CI_Model
 		$this->db->join("teacher","teacher.kTeach=assignment.kTeach","LEFT");
 		$this->db->join("menu","grade.footnote = menu.value AND menu.category='grade_footnote'","LEFT");
 		$this->db->join("assignment_category as category","assignment.kCategory = category.kCategory","LEFT");
-
-		$this->db->select("category.category,category.weight,assignment.kAssignment, assignment.term, assignment.year, assignment.subject, assignment.date, assignment.assignment, assignment.points as total_points,grade.points,grade.average,grade.status,grade.footnote,menu.label,student.stuFirst,student.stuNickname,student.stuLast,teacher.teachFirst,teacher.teachLast");
+		$this->db->select("category.category,category.weight,assignment.kAssignment, assignment.term, assignment.year, assignment.subject, assignment.date, assignment.assignment, assignment.points as total_points,grade.points,grade.average,grade.status,grade.footnote,menu.label,student.stuFirst,student.stuNickname,student.stuLast,student.stuGroup,teacher.teachFirst,teacher.teachLast");
 		$this->db->order_by("assignment.date");
 		$this->db->order_by("assignment.kAssignment");
 		$this->db->order_by("assignment.kCategory");
@@ -86,12 +85,15 @@ class Assignment_model extends CI_Model
 
 	}
 
-	function get_grades($kTeach,$term,$year,$gradeStart,$gradeEnd)
+	function get_grades($kTeach,$term,$year,$gradeStart,$gradeEnd,$stuGroup = NULL)
 	{
 		$this->db->where("term",$term);
 		$this->db->where("year",$year);
 		$this->db->where("assignment.kTeach",$kTeach);
 		$this->db->where("(assignment.gradeStart = $gradeStart OR assignment.gradeEnd = $gradeEnd)");
+		if($stuGroup){
+			$this->db->where("student.stuGroup",$stuGroup);
+		}
 		//$this->db->where("student.stuGrade in ($gradeStart,$gradeEnd)");
 		$this->db->join("grade","assignment.kAssignment=grade.kAssignment");
 		$this->db->join("student","grade.kStudent=student.kStudent");
