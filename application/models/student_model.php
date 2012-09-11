@@ -9,6 +9,7 @@ class Student_model extends CI_Model
 	var $stuGender;
 	var $stuDOB;
 	var $stuGrade;
+	var $stuGroup;
 	var $baseGrade;
 	var $baseYear;
 	var $isEnrolled;
@@ -25,7 +26,7 @@ class Student_model extends CI_Model
 
 	function prepare_variables()
 	{
-		$variables = array('kTeach','stuFirst','stuLast','stuNickname','stuGender','stuDOB','baseGrade','baseYear','isEnrolled','stuEmail','stuEmailPermission','stuEmailPassword');
+		$variables = array('kTeach','stuFirst','stuLast','stuNickname','stuGender','stuDOB','baseGrade','baseYear','isEnrolled','stuEmail','stuEmailPermission','stuEmailPassword','stuGroup');
 		for($i = 0; $i < count($variables); $i++){
 			$myVariable = $variables[$i];
 			if($this->input->post($myVariable)){
