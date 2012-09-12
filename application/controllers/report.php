@@ -17,6 +17,8 @@ class Report extends MY_Controller
 		$this->load->model("student_model","student");
 		$this->load->model("teacher_model","teacher");
 		$this->load->model("menu_model","menu");
+		$data["ranks"] = get_keyed_pairs($this->menu->get_pairs("report_rank"),array("value","label"));
+		
 		$data["kStudent"] = $kStudent;
 		$report =  $this->student->get($kStudent,"stuFirst,stuLast,stuNickname,teachFirst as advisorFirst,teachLast as advisorLast,teacher.kTeach as kAdvisor",TRUE);
 		$data["student"] = format_name($report->stuFirst,$report->stuLast,$report->stuNickname);
