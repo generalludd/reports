@@ -37,7 +37,6 @@ if($is_advisor){
 	$buttons[] = array("item" => "student", "text" => "List Students", "href" => site_url("student/teacher_student_list/$userID"));
 }
 print create_button_bar($buttons, array("id" =>"navigation-buttons"));
-print $unread_reports;
 
 ?>
 
