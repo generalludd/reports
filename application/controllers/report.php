@@ -60,7 +60,6 @@ class Report extends MY_Controller
 		$data["title"] = sprintf("Viewing %s for %s", STUDENT_REPORT, $data["student"]);
 		$data["target"] = "report/view";
 		$this->load->view("page/index",$data);
-print $this->session->userdata("unread_reports");
 	}
 
 
