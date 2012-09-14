@@ -40,7 +40,7 @@ class Student_report_model extends CI_Model
 		return $kReport;
 	}
 
-	
+
 	function update($kReport)
 	{
 		$this->db->where("kReport",$kReport);
@@ -53,14 +53,14 @@ class Student_report_model extends CI_Model
 		}
 	}
 
-	
+
 	function delete($kReport)
 	{
 		$array = array("kReport"=>$kReport);
 		$this->db->delete("student_report",$array);
 	}
 
-	
+
 	function get($kReport)
 	{
 		$this->db->where("kReport",$kReport);
@@ -73,14 +73,14 @@ class Student_report_model extends CI_Model
 		return $output;
 	}
 
-	
+
 	function get_for_student($kStudent, $options = array())
 	{
 		$this->db->where("student_report.kStudent", $kStudent);
 		if(array_key_exists("date_range",$options)){
 			if(array_key_exists("date_start",$options["date_range"]) && array_key_exists("date_end",$options["date_range"])){
-				$date_start = $options["date_range"]["date_start"];
-				$date_end = $optins["date_range"]["date_end"];
+				$date_start = format_date($options["date_range"]["date_start"],"mysql");
+				$date_end = format_date($options["date_range"]["date_end"],"mysql");
 				$this->db->where("report_date BETWEEN $date_start AND $date_end");
 			}
 		}
@@ -93,15 +93,15 @@ class Student_report_model extends CI_Model
 		return $result;
 	}
 
-	
+
 	function get_for_advisor($kAdvisor, $options = array())
 	{
 		$this->db->where("advisor.kAdvisor",$kAdvisor);
 		if(array_key_exists("date_range",$options)){
 			if(array_key_exists("date_start",$options["date_range"]) && array_key_exists("date_end",$options["date_range"])){
-				$date_start = $options["date_range"]["date_start"];
-				$date_end = $optins["date_range"]["date_end"];
-				$this->db->where("report_date BETWEEN $date_start AND $date_end");
+				$date_start = format_date($options["date_range"]["date_start"],"mysql");
+				$date_end = format_date($options["date_range"]["date_end"],"mysql");
+				$this->db->where("report_date BETWEEN '$date_start' AND '$date_end'");
 			}
 		}
 		$this->db->join("teacher as advisor","student_report.kAdvisor=advisor.kTeach");
@@ -114,15 +114,15 @@ class Student_report_model extends CI_Model
 
 	}
 
-	
+
 	function get_for_teacher($kTeach, $options = array())
 	{
 		$this->db->where("student_report.kTeach",$kTeach);
 		if(array_key_exists("date_range",$options)){
 			if(array_key_exists("date_start",$options["date_range"]) && array_key_exists("date_end",$options["date_range"])){
-				$date_start = $options["date_range"]["date_start"];
-				$date_end = $optins["date_range"]["date_end"];
-				$this->db->where("report_date BETWEEN $date_start AND $date_end");
+				$date_start = format_date($options["date_range"]["date_start"],"mysql");
+				$date_end = format_date($options["date_range"]["date_end"],"mysql");
+				$this->db->where("report_date BETWEEN '$date_start' AND '$date_end'");
 			}
 		}
 		$this->db->join("teacher","teacher.kTeach=student_report.kTeach");
@@ -133,8 +133,8 @@ class Student_report_model extends CI_Model
 		$result = $this->db->get()->result();
 		return $result;
 	}
-	
-	
+
+
 	function get_count($kTeach)
 	{
 		$this->db->where("kAdvisor",$kTeach);
@@ -143,7 +143,7 @@ class Student_report_model extends CI_Model
 		$this->db->select("COUNT(kReport) AS unread_reports");
 		$result = $this->db->get()->row();
 		return $result->unread_reports;
-		
+
 	}
 
 	function get_list($type, $key, $options = array())
@@ -162,9 +162,9 @@ class Student_report_model extends CI_Model
 
 		if(array_key_exists("date_range",$options)){
 			if(array_key_exists("date_start",$options["date_range"]) && array_key_exists("date_end",$options["date_range"])){
-				$date_start = $options["date_range"]["date_start"];
-				$date_end = $options["date_range"]["date_end"];
-				$this->db->where("report_date BETWEEN $date_start AND $date_end");
+				$date_start = format_date($options["date_range"]["date_start"],"mysql");
+				$date_end = format_date($options["date_range"]["date_end"],"mysql");
+				$this->db->where("report_date BETWEEN '$date_start' AND '$date_end'");
 			}
 		}
 		$this->db->join("teacher","teacher.kTeach=student_report.kTeach");

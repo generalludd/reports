@@ -1,8 +1,8 @@
 $(document).ready(function(){
 	$(".report_search").live("click",function(){
 		form_data = {
-				key: this.id.split("_")[1],
-				action: this.id.split("_")[0]
+				report_key: $("#report_key").val(),
+				report_type: $("#report_type").val()
 		};
 		$.ajax({
 			type:"get",

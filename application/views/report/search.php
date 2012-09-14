@@ -3,8 +3,8 @@ $date_start = $this->session->userdata("date_start");
 $date_end = $this->session->userdata("date_end");
 ?>
 <h5><?=$title;?></h5>
-<form id="report_search" name="report_search" action="<?=site_url("report/get_list/$action/$key");?>" method="get">
-<input type="hidden" id="key" name="key" value="<?=$key;?>"/>
+<form id="report_search" name="report_search" action="<?=site_url("report/get_list/$report_type/$report_key");?>" method="get">
+<input type="hidden" id="report_key" name="report_key" value="<?=$report_key;?>"/>
 <p>
 <label for="date_start">Start Date</label>
 <input type="text" class="datefield" name="date_start" id="date_start" value="<?=$date_start;?>"/>

@@ -6,6 +6,8 @@ $edit_buttons[] = array("item" => "report", "text" => "Add $student_report", "cl
 	<?=$title;?>
 </h3>
 <?=create_button_bar($edit_buttons);?>
+<input type="hidden" id="report_type" name="report_type" value="<?=$report_type;?>"/>
+<input type="hidden" id="report_key" name="report_key" value="<?=$report_key;?>"/>
 
 <fieldset class="search_fieldset">
 		<legend>Search Parameters</legend>

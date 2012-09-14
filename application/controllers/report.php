@@ -113,18 +113,18 @@ class Report extends MY_Controller
 
 	function search()
 	{
-		$data["key"] = $this->input->get("key");
-		$data["action"] = $this->input->get("action");
-		if($data["action"] == "student"){
+		$data["report_key"] = $this->input->get("report_key");
+		$data["report_type"] = $this->input->get("report_type");
+		if($data["report_type"] == "student"){
 			$this->load->model("student_model","student");
-			$person = $this->student->get($data["key"],"stuFirst,stuLast,stuNickname");
+			$person = $this->student->get($data["report_key"],"stuFirst,stuLast,stuNickname");
 			$name = format_name($person->stuFirst,$person->stuLast, $person->stuNickname);
 			$preposition = "for";
 		}else{
 			$this->load->model("teacher_model","teacher");
-			$person = $this->teacher->get($data["key"],"teachFirst,teachLast");
+			$person = $this->teacher->get($data["report_key"],"teachFirst,teachLast");
 			$name = format_name($person->teachFirst,$person->teachLast);
-			$preposition = $data["action"]=="teacher"?"by":"to";
+			$preposition = ($data["report_type"]=="teacher"?"by":"to");
 		}
 		$data["title"] = sprintf("Searching for %ss submitted %s %s",STUDENT_REPORT,$preposition,$name);
 		$this->load->view("report/search",$data);
@@ -136,13 +136,17 @@ class Report extends MY_Controller
 		$type = $this->uri->segment(3);
 		$key = $this->uri->segment(4);
 		$data["student_report"] = STUDENT_REPORT;
+		
 		if($type && $key){
+			$data["report_key"] = $key;
+			$data["report_type"] = $type;
 			switch($type){
 				case "student":
 					$this->load->model("student_model","student");
 					$person = $this->student->get($key,"stuFirst,stuLast,stuNickname");
 					$title = sprintf("for %s" , format_name($person->stuFirst,$person->stuLast, $person->stuNickname));
 					$data["kStudent"] = $key;
+					
 					$data["target"] = "report/" . $type . "_list";
 
 					break;
@@ -174,6 +178,7 @@ class Report extends MY_Controller
 			}
 			$data["person"] = $person;
 			$data["reports"] = $this->report->get_list($type,$key,$options);
+				
 			$data["type"] = $type;
 			$data["title"] = sprintf("%ss Submitted %s", $data["student_report"], $title);
 			$this->load->view("page/index",$data);

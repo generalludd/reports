@@ -4,6 +4,8 @@
 <h3>
 	<?=$title;?>
 </h3>
+<input type="hidden" id="report_type" name="report_type" value="<?=$report_type;?>"/>
+<input type="hidden" id="report_key" name="report_key" value="<?=$report_key;?>"/>
 <fieldset class="search_fieldset">
 		<legend>Search Parameters</legend>
 		<?
