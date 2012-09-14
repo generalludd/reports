@@ -19,7 +19,7 @@ body {
 	font-family: tahoma, sans-serif;
 	margin: 10px;
 	padding: 10px;
-	padding-top:0px;
+	padding-top: 0px;
 }
 
 #page {
@@ -314,6 +314,14 @@ td .button,.row .button,.button.small {
 	
 }
 
+.unread {
+	margin-left: 5px;
+	border-radius: 5px;
+	padding: 1px 3px;
+	border: 1px solid #000;
+	font-weight: bold;
+}
+
 .image_button {
 	display: inline;
 	margin-bottom: -5px;
@@ -346,6 +354,7 @@ ul.button-list li .button.delete {
 #utility .button-box {
 	font-size: .8em;
 }
+
 }
 textarea {
 	font-size: 1em;
@@ -414,11 +423,11 @@ legend {
 	float: left;
 	top: 2px;
 	position: absolute;
+	width: 100%;
 }
 
 #utility {
 	margin-left: 78%;
-
 }
 
 #utility p {
@@ -1008,8 +1017,8 @@ table.grade-chart {
 	margin-bottom: 1em;
 }
 
-table.report-card, table.grade-chart {
-	border-collapse:collapse;
+table.report-card,table.grade-chart {
+	border-collapse: collapse;
 }
 
 table.grade-chart tr {
@@ -1021,11 +1030,9 @@ table.grade-chart th.assignment-edit {
 	width: 70px;
 }
 
-table.grade-chart th, table.grade-chart td {
-	
+table.grade-chart th,table.grade-chart td {
 	border: 1px solid black;
 }
-
 
 table.grade-chart td.grade-points {
 	text-align: center;
@@ -1044,8 +1051,8 @@ table.grade-chart th .chart-category {
 	font-style: italic;
 }
 
-table.grade-chart th.assignment-field{
-		font-size:.85em;
+table.grade-chart th.assignment-field {
+	font-size: .85em;
 }
 
 table.grade-chart td {
@@ -1082,10 +1089,10 @@ table.grade-editor thead tr th {
 	cursor: pointer;
 	background-color: #efefef;
 }
-table.report-card th, table.report-card td {
+
+table.report-card th,table.report-card td {
 	padding: 5px;
 	border: 1px solid black;
-	
 }
 
 table.report-card .notes-column {

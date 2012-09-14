@@ -40,9 +40,10 @@ class admin extends MY_Controller{
 				//set the number of unread reports for advisors as is done with standard login.
 				if($teacher->is_advisor == 1){
 					$this->load->model("student_report_model","report");
-					$data["unread_reports"] = $this->report->get_count($result->kTeach);
+					$data["unread_reports"] = $this->report->get_count($teacher->kTeach);
 				}
 				$this->session->set_userdata($data);
+				
 				redirect("/");
 			}
 		}

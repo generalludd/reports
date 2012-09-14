@@ -6,8 +6,14 @@ $gradeEnd = $this->session->userdata("gradeEnd");
 $is_advisor = $this->session->userdata("is_advisor");
 $unread_reports = $this->session->userdata("unread_reports");
 $count = "";
+$count_text = "";
 if($unread_reports > 0){
-	$count = sprintf(" (%s)",$unread_reports);
+	$count = sprintf("<span class='unread'>%s</span>",$unread_reports);
+	$plural = "";
+	if($unread_reports > 1){
+		$plural = "s";
+	}
+	$count_text = sprintf("(You have %s unread report%s)",$unread_reports,$plural);
 } 
 $term = get_current_term();
 $year = get_current_year();
@@ -27,7 +33,7 @@ if($dbRole == 1){
 	$buttons[] = array("item" => "narrative", "text" => "Current Narratives", "href" => site_url("narrative/teacher_list/$userID"), "title" => "List all of your narratives" );
 	$buttons[] = array("item" => "narrative", "text" => "Missing Narratives", "class" => "button missing_narrative_search", "id" => "mns_$userID", "title" => "Show the students for whom you have not yet written a report this term" );
 if($is_advisor){
-	$buttons[] = array("item" => "reports", "text" => sprintf("%ss%s",STUDENT_REPORT,$count), "href"=> site_url("report/get_list/advisor/$userID"), "title" => sprintf("Show your %ss", STUDENT_REPORT));
+	$buttons[] = array("item" => "reports", "text" => sprintf("%ss%s",STUDENT_REPORT,$count), "href"=> site_url("report/get_list/advisor/$userID"), "title" => sprintf("Show your %ss %s", STUDENT_REPORT,$count_text));
 			
 }
 	if($gradeEnd > 4){

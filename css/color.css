@@ -93,29 +93,28 @@ div.list {
 	border: 1px solid #327e04;
 	color: #ffffff;
 	opacity: .90;
-	filter: Alpha(Opacity =               90);
+	filter: Alpha(Opacity =                   90);
 	background: #67b021 url(images/button_20.png) 50% 50% repeat-x;
 }
 
-
-
 .button:hover {
 	opacity: .90;
-	filter: Alpha(Opacity =               90);
+	filter: Alpha(Opacity =                   90);
 	background: #91b347 url(images/button_20_over.png) 50% 50% repeat-x;
 }
 
-.button.help, .button.active {
+.button.help,.button.active {
 	border: 1px solid #DFE119;
 	background-color: #DFE119;
 	background-image: url(images/help_button.png);
 	color: black;
 }
 
-.button.help:hover, .button.active:hover {
+.button.help:hover,.button.active:hover {
 	background-color: #DFE119;
 	background-image: url(images/help_button_hover.png);
 }
+
 .button.active {
 	border: 1px solid #dadada;
 	background-color: #e6e6e6;
@@ -143,7 +142,13 @@ a.button {
 	background-color: #6caadc;
 	background-image: url(images/edit_button_hover.png);
 }
-.new, a.new {
+
+.unread {
+	background-color: white;
+	color: red;
+}
+
+.new,a.new {
 	*border: 1px solid #DFE119;
 	background-color: #DFE119;
 	background-image: url(images/new_button.png);
@@ -157,7 +162,7 @@ a.button {
 
 .delete {
 	opacity: .90;
-	filter: Alpha(Opacity =               90);
+	filter: Alpha(Opacity =                   90);
 	background: #E14F1C url(images/delete.png) 50% 50% repeat-x;
 	color: white;
 	border: 1px solid #CD0A0A;
@@ -172,7 +177,7 @@ a.button {
 /* header page layout elements */
 #navigation {
 	opacity: .90;
-	filter: Alpha(Opacity =               90);
+	filter: Alpha(Opacity =                   90);
 	background: #C7D7E9 url(images/header.png) 50% 50% repeat-x;
 	border-color: #087CD5;
 }
@@ -240,7 +245,7 @@ h3,.support-view legend {
 	border-color: #087CD5;
 }
 
-h4,h5,h6, tr.benchmark-grade {
+h4,h5,h6,tr.benchmark-grade {
 	background-color: #C7D7E9;
 	border-color: #087CD5 #6CAADC #6CAADC #087CD5;
 }
@@ -250,10 +255,10 @@ h4,h5,h6, tr.benchmark-grade {
 	color: white;
 }
 
-.warning,.notice, .error {
+.warning,.notice,.error {
 	color: black;
 	opacity: .90;
-	filter: Alpha(Opacity =90);
+	filter: Alpha(Opacity =   90);
 	background: #ff8538 url(images/warning.png) 50% 50% repeat-x;
 }
 
@@ -343,6 +348,6 @@ tr.benchmark-row td.benchmark-text:hover {
 	background-color: #fcfcaa;
 }
 
-table.list tr:hover{
+table.list tr:hover {
 	background-color: #cdcdcd;
 }

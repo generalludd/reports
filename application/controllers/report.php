@@ -93,7 +93,11 @@ class Report extends MY_Controller
 
 		$kReport = $this->input->post("kReport");
 		$this->report->update($kReport);
-		$this->session->set_userdata(array("unread_reports",5));
+		if($this->session->userdata("is_advisor") == 1){
+			$this->load->model("student_report_model","report");
+			$data["unread_reports"] = $this->report->get_count($this->session->userdata("userID"));
+			$this->session->set_userdata($data);
+		}
 		redirect("report/view/$kReport");
 	}
 
