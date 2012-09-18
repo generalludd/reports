@@ -89,7 +89,7 @@ $edit_buttons[] = array("item" => "report", "text" => "Add $student_report", "cl
 				$readonly = "";
 			}
 			?> <input type="checkbox" value="1"
-				id="is-read_<?=$report->kReport;?>" class="report-is-read" name="is_read" readonly=<?=$readonly;?> <?=$checked?> />
+				id="is-read_<?=$report->kReport;?>" class="report-is-read" name="is_read" <?=$readonly;?> <?=$checked?> />
 			</td>
 
 			<td><a href="<?=site_url("report/edit/$report->kReport");?>"
