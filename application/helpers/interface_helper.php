@@ -107,13 +107,18 @@ function create_button($data)
 function create_button_bar($buttons, $options = NULL ){
 	$id = "";
 	$selection = "";
+	$class = "mini";
 	if($options){
 		if(array_key_exists("id",$options)){
-			$id = "id='". $options["id"] . "'";
+			$id = sprintf("id='%s'", $options["id"]);
 		}
 
 		if(array_key_exists("selection", $options)){
 			$selection = $options["selection"];
+		}
+		
+		if(array_key_exists("class", $options)){
+			$class = $options["class"];
 		}
 	}
 	$button_list = array();
@@ -130,7 +135,7 @@ function create_button_bar($buttons, $options = NULL ){
 
 	$contents = implode("</li><li>", $button_list);
 	$template = "<ul class='button-list'><li>$contents</li></ul>";
-	$output = "<div class='button-box' $id>$template</div>";
+	$output = "<div class='button-box $class'  $id>$template</div>";
 	return $output;
 }
 

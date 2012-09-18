@@ -9,6 +9,7 @@ class Student_report_model extends CI_Model
 	var $rank;
 	var $category;
 	var $assignment;
+	var $assignment_status;
 	var $report_date;
 	var $comment;
 	var $parent_contact;
@@ -17,7 +18,7 @@ class Student_report_model extends CI_Model
 
 	function prepare_variables()
 	{
-		$variables = array("kStudent","kTeach","kAdvisor","is_read","rank","category","assignment","report_date","comment","parent_contact","contact_date","contact_method");
+		$variables = array("kStudent","kTeach","kAdvisor","is_read","rank","category","assignment","assignment_status","report_date","comment","parent_contact","contact_date","contact_method");
 		for($i = 0; $i < count($variables); $i++){
 			$myVariable = $variables[$i];
 			if($this->input->post($myVariable)){
@@ -53,6 +54,19 @@ class Student_report_model extends CI_Model
 		}
 	}
 
+	function update_value($kReport,$target_field, $target_value){
+		$this->db->where("kReport",$kReport);
+		$data = array($target_field => $target_value);
+		$this->db->update("student_report",$data);
+	}
+	
+	function get_value($kReport, $target_field){
+		$this->db->where("kReport",$kReport);
+		$this->db->select($target_field);
+		$this->db->from("student_report");
+		$result = $this->db->get()->row();
+		return $result->$target_field;
+	}
 
 	function delete($kReport)
 	{
@@ -73,7 +87,7 @@ class Student_report_model extends CI_Model
 		return $output;
 	}
 
-
+/*
 	function get_for_student($kStudent, $options = array())
 	{
 		$this->db->where("student_report.kStudent", $kStudent);
@@ -92,8 +106,8 @@ class Student_report_model extends CI_Model
 		$result = $this->db->get()->result();
 		return $result;
 	}
-
-
+// */
+/*
 	function get_for_advisor($kAdvisor, $options = array())
 	{
 		$this->db->where("advisor.kAdvisor",$kAdvisor);
@@ -113,8 +127,9 @@ class Student_report_model extends CI_Model
 		return $result;
 
 	}
-
-
+// */
+	
+/*
 	function get_for_teacher($kTeach, $options = array())
 	{
 		$this->db->where("student_report.kTeach",$kTeach);
@@ -133,7 +148,7 @@ class Student_report_model extends CI_Model
 		$result = $this->db->get()->result();
 		return $result;
 	}
-
+// */
 
 	function get_count($kTeach)
 	{

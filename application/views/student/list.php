@@ -19,15 +19,15 @@ $current_teacher = NULL;
 	}
 	$name = format_name($student->stuFirst,$student->stuLast,$student->stuNickname);
 	if(get_value($student,"teachFirst",FALSE)):
-		if($current_teacher != $student->kTeach):
-		?>
-		<h3 class='teacher_row'>
-			<?="Students of $student->teachFirst $student->teachLast"?>
-		</h3>
-	
-		<?
-		$current_teacher = $student->kTeach;
-		endif;
+	if($current_teacher != $student->kTeach):
+	?>
+	<h3 class='teacher_row'>
+		<?="Students of $student->teachFirst $student->teachLast"?>
+	</h3>
+
+	<?
+	$current_teacher = $student->kTeach;
+	endif;
 	endif;
 	if($current_grade != $student->stuGrade): ?>
 
@@ -40,20 +40,26 @@ $current_teacher = NULL;
 	<div class='student-row row<?=$row_style;?>'>
 		<div class='<?=$student_style;?>'>
 			<a href=<?=site_url("student/view/$student->kStudent");?>
-				class='link'><?="$name";?></a>
-				<?=$enrolled;?>
-				<? if(get_value($student,"stuEmailPermission") == 1): ?>
-				<? echo "&nbsp;" . format_email($student->stuEmail);?>
-				<? endif;?>
+				class='link'><?="$name";?> </a>
+			<?=$enrolled;?>
+			<? if(get_value($student,"stuEmailPermission") == 1): ?>
+			<? echo "&nbsp;" . format_email($student->stuEmail);?>
+			<? endif;?>
 		</div>
-		<div class='button-box'>
-		 <a href=<?=site_url("narrative/student_list/$student->kStudent");?> class='button'>Narratives</a>
-		<a href=<?=site_url("attendance/search/$student->kStudent");?> class='button'>Attendance</a>
-		<a href=<?=site_url("support/list_all/$student->kStudent");?> class='button'>Learning Support</a>
-		<? if($student->stuGrade >=5): ?>
-		<a href=<?=site_url("report/create/$student->kStudent");?> id="add-report_<?=$student->kStudent;?>" class='button new report-add'><?=sprintf("Add %s",STUDENT_REPORT);?></a>
-		<? endif;?>
-		</div>
+		<?
+		$buttons = array();
+		$buttons[] = array("item"=>"student", "href" => site_url("narrative/student_list/$student->kStudent"), "class" => "button", "text" =>"Narratives");
+		$buttons[] = array("item" => "attendance", "href" => site_url("attendance/search/$student->kStudent"), "class" => "button", "text" => "Attendance" );
+		$buttons[] = array("item" => "support","href" => site_url("support/list_all/$student->kStudent"), "class" => "button", "text" => "Learning Support");
+		if($student->stuGrade >=5) {
+			$buttons[] = array("item" => "report", "href" => site_url("report/get_list/student/$student->kStudent"), "class" => "button","text" => sprintf("%ss",STUDENT_REPORT));
+			$buttons[] = array("item" => "report","href" => site_url("report/create/$student->kStudent"), "text" => sprintf("Add %s",STUDENT_REPORT), "class" => "button new report-add",
+					"id" => sprintf("add-report_%s", $student->kStudent));
+		}
+		$options["class"] = "mini-buttons";
+		$button_bar = create_button_bar($buttons,$options);
+		echo $button_bar;
+		?>
 	</div>
 	<? endforeach; ?>
 </div>

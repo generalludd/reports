@@ -62,4 +62,40 @@ $(document).ready(function(){
 		});
 		return false;
 	});
+	
+	$("#orange-slip #category").live("change",function(){
+		value = $("#orange-slip #category").val();
+		if(value == "Missing Homework"){
+			$("#orange-slip #assignment-status-field").fadeIn();
+		}else{
+			$("#orange-slip #assignment-status-field").fadeOut();
+			$("#orange-slip #assignment_status").attr("checked",false);
+		}
+
+	});
+	
+	$(".report-is-read").live("change",function(){
+		myID = this.id.split("_")[1];
+		myStatus = $(this).attr("checked");
+		isRead = 0;
+		if(myStatus == "checked"){
+			isRead = 1;
+		}
+		
+		form_data = {
+				kReport: myID,
+				target_value: isRead,
+				target_field: "is_read"
+		};
+		
+		$.ajax({
+			type: "post",
+			data: form_data,
+			url: base_url + "/report/update_value/",
+			success: function(data){
+				$(this).attr("checked",data);
+			}
+		});
+	});
+	
 });

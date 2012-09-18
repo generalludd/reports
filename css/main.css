@@ -347,6 +347,10 @@ ul.button-list li .button.delete {
 	margin-top: -5px;
 }
 
+.mini-buttons ul.button-list li .button {
+	margin: 0 1px;
+}
+
 .help {
 	
 }
@@ -916,7 +920,7 @@ fieldset.advanced div.advanced {
 }
 
 .student-row {
-	width: 335px;
+	width: 500px;
 	padding-left: 5px;
 }
 
@@ -1101,4 +1105,11 @@ table.report-card .notes-column {
 
 #orange-slip,#assignment-field textarea,#comment-field textarea {
 	width: 400px;
+}
+
+#parent-communication {
+	border: 1px solid #c6c6c6;
+	width: 400px;
+	padding: 10px;
+	margin-top: 10px;
 }

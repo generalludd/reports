@@ -10,8 +10,11 @@ print create_button_bar($nav_buttons);
 $edit_buttons[] = array("item" => "report", "text" => "Edit Report", "class" => "button edit report-edit","id"=>"re_$report->kReport", "href"=>site_url("report/edit/$report->kReport"));
 print create_button_bar($edit_buttons);
 ?>
-
-<div class='field' id="advisor-name-field">
+	<div  class='field' id="date-field">
+		<label>Date: </label>
+		<?=format_date($report->report_date,"standard");?>
+	</div>
+	<div class='field' id="advisor-name-field">
 		<label for="advisor-name">Advisor: </label>
 		<?=$advisor;?>
 	</div>
@@ -21,14 +24,19 @@ print create_button_bar($edit_buttons);
 	<label>Category: </label>
 		<?=$report->category;?>
 	</div>
+	<? if($report->category == "Missing Homework"):?>
+	<div class="field" id="assignment-status-field">
+	<? if($report->assignment_status == 1): ?>
+	<span style="margin-left:1em"><strong>Turned In Late</strong></span>
+	<? endif;?>
+	</div>
+	<? endif;?>
 	<div class='field' id="assignment-field">
 	<label>Assignment:</label>
 		<?=$report->assignment;?>
 	</div>
-	<div  class='field' id="date-field">
-	<label>Date: </label>
-	<?=format_date($report->report_date,"standard");?>
-	</div>
+
+
 	<div class='field' id="comment-field">
 	<label>Comments: </label>
 	<?=$report->comment;?>

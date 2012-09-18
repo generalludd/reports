@@ -63,6 +63,21 @@ if($contact_date){
 		<label for="category">Category: </label>
 		<?=form_dropdown("category",$categories,get_value($report,"category"),"id='category'");?>
 	</p>
+	<?
+	$checked = "";
+	if(get_value($report,"assignment_status")){
+		$checked = "checked";
+		
+	}
+	$display = "none";
+	if(get_value($report,"category") == "Missing Homework"){
+		$display = "block";
+	}
+	?>
+	<p id="assignment-status-field" style="margin-left:1em; display: <?=$display;?>;">
+	    <label for="assignment_status">Turned in Late:</label>
+	   <input type="checkbox" name="assignment_status" id="assignment_status" <?=$checked;?> value="1"/>
+	</p>
 	<p id="assignment-field">
 		<label for="assignment">Assignment:</label><br />
 		<textarea id="assignment" name="assignment" rows="3"><?=get_value($report,"assignment");?></textarea>
