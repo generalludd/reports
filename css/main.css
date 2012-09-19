@@ -1113,3 +1113,26 @@ table.report-card .notes-column {
 	padding: 10px;
 	margin-top: 10px;
 }
+
+table.report td.field {
+	vertical-align: top;
+	border-bottom: 1px solid #c3c3c3;
+	min-width: 45px;
+	border-left: 1px solid #c3c3c3;
+}
+
+td.field.report-comment, td.field.report-assignment {
+	width: 150px;
+}
+
+td.field.report-parent-contact {
+}
+
+td.field.report-contact-date, td.field.report-student {
+	border-right: 1px solid #c3c3c3;
+}
+
+table.report td.field.buttons, table.report th.field.buttons {
+	border: none;
+}
+

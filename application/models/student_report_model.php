@@ -182,11 +182,22 @@ class Student_report_model extends CI_Model
 				$this->db->where("report_date BETWEEN '$date_start' AND '$date_end'");
 			}
 		}
+		if(array_key_exists("category",$options)){
+			
+			$this->db->where("student_report.category" ,$options["category"]);
+		}
+		
 		$this->db->join("teacher","teacher.kTeach=student_report.kTeach");
 		$this->db->join("teacher as advisor","student_report.kAdvisor=advisor.kTeach");
 		$this->db->join("student","student.kStudent=student_report.kStudent");
-		$this->db->select("student_report.*,student.stuFirst,student.stuLast,student.stuNickname,teacher.teachFirst,teacher.teachLast,advisor.teachFirst as advisorFirst,advisor.teachLast as advisorLast");
+		$this->db->select("student_report.*,student.stuFirst,student.stuLast,student.stuNickname,teacher.teachFirst,teacher.teachLast,advisor.teachFirst as advisorFirst,advisor.teachLast as advisorLast,advisor.dbRole,menu.label");
+		$this->db->join("menu","student_report.rank=menu.value AND menu.category='report_rank'","LEFT");
 		$this->db->from("student_report");
+		$this->db->order_by("student.stuLast","ASC");
+		$this->db->order_by("student.stuFirst","ASC");
+		$this->db->order_by("report_date","DESC");
+		$this->db->order_by("teacher.teachLast","ASC");
+		$this->db->order_by("teacher.teachFirst","ASC");
 		$result = $this->db->get()->result();
 		return $result;
 	}

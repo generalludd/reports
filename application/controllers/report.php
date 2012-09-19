@@ -18,7 +18,7 @@ class Report extends MY_Controller
 		$this->load->model("teacher_model","teacher");
 		$this->load->model("menu_model","menu");
 		$data["ranks"] = get_keyed_pairs($this->menu->get_pairs("report_rank"),array("value","label"));
-		
+
 		$data["kStudent"] = $kStudent;
 		$report =  $this->student->get($kStudent,"stuFirst,stuLast,stuNickname,teachFirst as advisorFirst,teachLast as advisorLast,teacher.kTeach as kAdvisor",TRUE);
 		$data["student"] = format_name($report->stuFirst,$report->stuLast,$report->stuNickname);
@@ -109,7 +109,7 @@ class Report extends MY_Controller
 		$this->report->update_value($kReport,$target_field,$target_value);
 		echo $this->report->get_value($kReport,$target_field);
 	}
-	
+
 
 
 	function delete()
@@ -136,6 +136,10 @@ class Report extends MY_Controller
 			$name = format_name($person->teachFirst,$person->teachLast);
 			$preposition = ($data["report_type"]=="teacher"?"by":"to");
 		}
+		$this->load->model("menu_model","menu");
+
+		$data["categories"] = get_keyed_pairs($this->menu->get_pairs("report_category"),array("value","label"),TRUE);
+
 		$data["title"] = sprintf("Searching for %ss submitted %s %s",STUDENT_REPORT,$preposition,$name);
 		$this->load->view("report/search",$data);
 	}
@@ -146,33 +150,30 @@ class Report extends MY_Controller
 		$type = $this->uri->segment(3);
 		$key = $this->uri->segment(4);
 		$data["student_report"] = STUDENT_REPORT;
-		
+
 		if($type && $key){
 			$data["report_key"] = $key;
 			$data["report_type"] = $type;
 			switch($type){
 				case "student":
 					$this->load->model("student_model","student");
-					$person = $this->student->get($key,"stuFirst,stuLast,stuNickname");
+					$person = $this->student->get($key,"stuFirst,stuLast,stuNickname,stuGrade");
 					$title = sprintf("for %s" , format_name($person->stuFirst,$person->stuLast, $person->stuNickname));
 					$data["kStudent"] = $key;
-					
-					$data["target"] = "report/" . $type . "_list";
+						
+					//$data["target"] = "report/" . $type . "_list";
 
 					break;
 				case "teacher":
 					$this->load->model("teacher_model","teacher");
-					$person = $this->teacher->get($key,"teachFirst,teachLast");
+					$person = $this->teacher->get($key,"teachFirst,teachLast,dbRole,is_advisor");
 					$title = sprintf("by %s %s", $person->teachFirst,$person->teachLast);
-					$data["target"] = "report/" . $type . "_list";
 
 					break;
 				case "advisor":
 					$this->load->model("teacher_model","teacher");
-					$person = $this->teacher->get($key,"teachFirst as advisorFirst,teachLast as advisorLast");
+					$person = $this->teacher->get($key,"teachFirst as advisorFirst,teachLast as advisorLast,dbRole,is_advisor");
 					$title = sprintf("to %s %s",$person->advisorFirst,$person->advisorLast);
-					$data["target"] = "report/teacher_list";
-
 					break;
 			}
 			$options = array();
@@ -183,17 +184,22 @@ class Report extends MY_Controller
 				$options["date_range"]["date_end"] = $date_end;
 				$this->session->set_userdata("date_start",$date_start);
 				$this->session->set_userdata("date_end",$date_end);
-				$data["options"] = $options;
 
 			}
+				
+			if($this->input->get("category")){
+				$options["category"] = $this->input->get("category");
+			}
+				
+			$data["options"] = $options;
+			$data["target"] = "report/list";
 			$data["person"] = $person;
 			$data["reports"] = $this->report->get_list($type,$key,$options);
-				
 			$data["type"] = $type;
 			$data["title"] = sprintf("%ss Submitted %s", $data["student_report"], $title);
 			$this->load->view("page/index",$data);
-		
-				
+
+
 		}
 	}
 

@@ -13,6 +13,10 @@ $date_end = $this->session->userdata("date_end");
 <label for="date_end">End Date</label>
 <input type="text" class="datefield" name="date_end" id="date_end" value="<?=$date_end;?>"/>
 </p>
+<p>
+<label for="category">Category</label>
+<?=form_dropdown("category",$categories,"","id='category'");?>
+
 <div class='button-box'>
 <input type="submit" class="button" value="Search"/>
 </div>
