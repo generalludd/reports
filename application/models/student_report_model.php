@@ -47,9 +47,12 @@ class Student_report_model extends CI_Model
 		$this->db->where("kReport",$kReport);
 		$this->prepare_variables();
 		$this->db->update("student_report",$this);
+		
 		//set the read report count session key to update user interface indicators of unread orange slips
-		if($this->is_read == 1 && $this->session->userdata("userID") == $this->kAdvisor){
+		if($this->session->userdata("userID") == $this->kAdvisor){
 			$data["report_count"] = $this->get_count($this->kAdvisor);
+			print $this->db->last_query();
+				
 			$this->session->set_userdata($data);
 		}
 	}
@@ -84,79 +87,18 @@ class Student_report_model extends CI_Model
 		$this->db->join("teacher as advisor","student_report.kAdvisor = advisor.kTeach","LEFT");
 		$this->db->select("student_report.*,student.stuFirst,student.stuLast,student.stuNickname,student.stuEmail,teacher.teachFirst,teacher.teachLast,teacher.email as teachEmail,advisor.teachFirst as advisorFirst,advisor.teachLast as advisorLast, advisor.email as advisorEmail");
 		$output = $this->db->get()->row();
+		
 		return $output;
 	}
-
-/*
-	function get_for_student($kStudent, $options = array())
-	{
-		$this->db->where("student_report.kStudent", $kStudent);
-		if(array_key_exists("date_range",$options)){
-			if(array_key_exists("date_start",$options["date_range"]) && array_key_exists("date_end",$options["date_range"])){
-				$date_start = format_date($options["date_range"]["date_start"],"mysql");
-				$date_end = format_date($options["date_range"]["date_end"],"mysql");
-				$this->db->where("report_date BETWEEN $date_start AND $date_end");
-			}
-		}
-		$this->db->join("student","student.kStudent=student_report.kStudent");
-		$this->db->join("teacher","teacher.kTeach=student_report.kTeach");
-		$this->db->join("teacher as advisor","student_report.kAdvisor = advisor.kTeach");
-		$this->db->select("student_report.*,student.stuFirst,student.stuLast,student.stuNickname,student.stuEmail,teacher.teachFirst,teacher.teachLast,teacher.email as teachEmail,advisor.teachFirst as advisorFirst,advisor.teachLast as advisorLast, advisor.email as advisorEmail");
-		$this->db->from("student_report");
-		$result = $this->db->get()->result();
-		return $result;
-	}
-// */
-/*
-	function get_for_advisor($kAdvisor, $options = array())
-	{
-		$this->db->where("advisor.kAdvisor",$kAdvisor);
-		if(array_key_exists("date_range",$options)){
-			if(array_key_exists("date_start",$options["date_range"]) && array_key_exists("date_end",$options["date_range"])){
-				$date_start = format_date($options["date_range"]["date_start"],"mysql");
-				$date_end = format_date($options["date_range"]["date_end"],"mysql");
-				$this->db->where("report_date BETWEEN '$date_start' AND '$date_end'");
-			}
-		}
-		$this->db->join("teacher as advisor","student_report.kAdvisor=advisor.kTeach");
-		$this->db->join("teacher","teacher.kTeach=student_report.kTeach");
-		$this->db->join("student","student.kStudent=student_report.kStudent");
-		$this->db->select("student_report.*,student.stuFirst,student.stuLast,student.stuNickname,student.stuEmail,teacher.teachFirst,teacher.teachLast,teacher.email as teachEmail,advisor.teachFirst as advisorFirst,advisor.teachLast as advisorLast, advisor.email as advisorEmail");
-		$this->db->from("student_report");
-		$result = $this->db->get()->result();
-		return $result;
-
-	}
-// */
-	
-/*
-	function get_for_teacher($kTeach, $options = array())
-	{
-		$this->db->where("student_report.kTeach",$kTeach);
-		if(array_key_exists("date_range",$options)){
-			if(array_key_exists("date_start",$options["date_range"]) && array_key_exists("date_end",$options["date_range"])){
-				$date_start = format_date($options["date_range"]["date_start"],"mysql");
-				$date_end = format_date($options["date_range"]["date_end"],"mysql");
-				$this->db->where("report_date BETWEEN '$date_start' AND '$date_end'");
-			}
-		}
-		$this->db->join("teacher","teacher.kTeach=student_report.kTeach");
-		$this->db->join("teacher as advisor","student_report.kAdvisor=advisor.kTeach");
-		$this->db->join("student","student.kStudent=student_report.kStudent");
-		$this->db->select("student_report.*,student.stuFirst,student.stuLast,student.stuNickname,student.stuEmail,teacher.teachFirst,teacher.teachLast,teacher.email as teachEmail,advisor.teachFirst as advisorFirst,advisor.teachLast as advisorLast, advisor.email as advisorEmail");
-		$this->db->from("student_report");
-		$result = $this->db->get()->result();
-		return $result;
-	}
-// */
 
 	function get_count($kTeach)
 	{
 		$this->db->where("kAdvisor",$kTeach);
-		$this->db->where("is_read IS NULL");
+		$this->db->where("(is_read = 0 OR is_read IS NULL)");//why is_read != 1 doesn't work I don't know.
 		$this->db->from("student_report");
 		$this->db->select("COUNT(kReport) AS unread_reports");
 		$result = $this->db->get()->row();
+		
 		return $result->unread_reports;
 
 	}

@@ -59,6 +59,7 @@ class Report extends MY_Controller
 		$data["teacher"] = format_name($report->teachFirst, $report->teachLast);
 		$data["title"] = sprintf("Viewing %s for %s", STUDENT_REPORT, $data["student"]);
 		$data["target"] = "report/view";
+		
 		$this->load->view("page/index",$data);
 	}
 
@@ -98,6 +99,7 @@ class Report extends MY_Controller
 			$data["unread_reports"] = $this->report->get_count($this->session->userdata("userID"));
 			$this->session->set_userdata($data);
 		}
+		
 		redirect("report/view/$kReport");
 	}
 
