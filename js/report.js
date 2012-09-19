@@ -74,7 +74,7 @@ $(document).ready(function(){
 
 	});
 	
-	$(".report-is-read").live("change",function(){
+	$(".report-is-read").live("click",function(){
 		myID = this.id.split("_")[1];
 		myStatus = $(this).attr("checked");
 		isRead = 0;
@@ -93,7 +93,7 @@ $(document).ready(function(){
 			data: form_data,
 			url: base_url + "/report/update_value/",
 			success: function(data){
-				$(this).attr("checked",data);
+				//$(this).attr("checked",data);
 			}
 		});
 	});

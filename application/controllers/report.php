@@ -105,14 +105,12 @@ class Report extends MY_Controller
 
 	function update_value()
 	{
-		$kReport = $this->input->post("kReport");
-		$target_field = $this->input->post("target_field");
-		$target_value = $this->input->post("target_value");
+		$kReport = $this->input->get_post("kReport");
+		$target_field = $this->input->get_post("target_field");
+		$target_value = $this->input->get_post("target_value");
 		$this->report->update_value($kReport,$target_field,$target_value);
 		echo $this->report->get_value($kReport,$target_field);
 	}
-
-
 
 	function delete()
 	{

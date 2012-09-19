@@ -51,16 +51,21 @@ class Student_report_model extends CI_Model
 		//set the read report count session key to update user interface indicators of unread orange slips
 		if($this->session->userdata("userID") == $this->kAdvisor){
 			$data["report_count"] = $this->get_count($this->kAdvisor);
-			print $this->db->last_query();
-				
 			$this->session->set_userdata($data);
 		}
 	}
 
 	function update_value($kReport,$target_field, $target_value){
+		
 		$this->db->where("kReport",$kReport);
 		$data = array($target_field => $target_value);
 		$this->db->update("student_report",$data);
+		//@TODO fix the display of unread count based on this information. 
+		/*$kAdvisor = $this->get_value($kReport,"kAdvisor");
+		if($this->session->userdata("userID") == $kAdvisor){
+			$count["report_count"] = $this->get_count($kAdvisor);
+			$this->session->set_userdata($count);
+		}*/
 	}
 	
 	function get_value($kReport, $target_field){
@@ -98,7 +103,6 @@ class Student_report_model extends CI_Model
 		$this->db->from("student_report");
 		$this->db->select("COUNT(kReport) AS unread_reports");
 		$result = $this->db->get()->row();
-		
 		return $result->unread_reports;
 
 	}
