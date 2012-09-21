@@ -15,6 +15,8 @@ class Student_report_model extends CI_Model
 	var $parent_contact;
 	var $contact_date;
 	var $contact_method;
+	var $recModifier;
+	var $recModified;
 
 	function prepare_variables()
 	{
@@ -30,6 +32,9 @@ class Student_report_model extends CI_Model
 				}
 			}
 		}
+		
+		$this->recModified = mysql_timestamp();
+		$this->recModifier = $this->session->userdata('userID');
 	}
 
 
@@ -58,7 +63,9 @@ class Student_report_model extends CI_Model
 	function update_value($kReport,$target_field, $target_value){
 		
 		$this->db->where("kReport",$kReport);
-		$data = array($target_field => $target_value);
+		$data['recModified'] = mysql_timestamp();
+		$data['recModifier'] = $this->session->userdata('userID');
+		$data[$target_field] = $target_value;
 		$this->db->update("student_report",$data);
 		//@TODO fix the display of unread count based on this information. 
 		/*$kAdvisor = $this->get_value($kReport,"kAdvisor");
@@ -90,7 +97,8 @@ class Student_report_model extends CI_Model
 		$this->db->join("student","student.kStudent=student_report.kStudent", "LEFT");
 		$this->db->join("teacher","teacher.kTeach=student_report.kTeach","LEFT");
 		$this->db->join("teacher as advisor","student_report.kAdvisor = advisor.kTeach","LEFT");
-		$this->db->select("student_report.*,student.stuFirst,student.stuLast,student.stuNickname,student.stuEmail,teacher.teachFirst,teacher.teachLast,teacher.email as teachEmail,advisor.teachFirst as advisorFirst,advisor.teachLast as advisorLast, advisor.email as advisorEmail");
+		$this->db->join("teacher as author","student_report.recModifier = author.kTeach","LEFT");
+		$this->db->select("student_report.*,student.stuFirst,student.stuLast,student.stuNickname,student.stuEmail,teacher.teachFirst,teacher.teachLast,teacher.email as teachEmail,advisor.teachFirst as advisorFirst,advisor.teachLast as advisorLast, advisor.email as advisorEmail,author.teachFirst as authorFirst,author.teachLast as authorLast,author.email as authorEmail");
 		$output = $this->db->get()->row();
 		
 		return $output;

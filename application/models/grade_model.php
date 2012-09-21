@@ -49,7 +49,7 @@ class Grade_model extends CI_Model
 
 	function batch_insert($kAssignment,$kTeach,$term,$year)
 	{
-		$this->db->select("kStudent");
+		$this->db->select("distinct(`kStudent`)");
 		$this->db->from("assignment");
 		$this->db->join("grade","grade.kAssignment = assignment.kAssignment","LEFT");
 		$this->db->where("kTeach",$kTeach);
@@ -59,13 +59,14 @@ class Grade_model extends CI_Model
 		$students = $this->db->get()->result();
 		print $this->db->last_query();
 		foreach($students as $student){
-			$data = array("kAssignment"=>$kAssignment, "kStudent"=>$student->kStudent,"points"=>"0");
-			$this->db->insert("grade",$data);
+				$data = array("kAssignment"=>$kAssignment, "kStudent"=>$student->kStudent,"points"=>"0");
+				$this->db->insert("grade",$data);
+				$current_student = $student->kStudent;
 		}
-		return $result;
+		return $students;
 	}
-	
-	
+
+
 	function update($kStudent, $kAssignment,$points,$total, $status,$footnote,$category)
 	{
 		$output = FALSE;

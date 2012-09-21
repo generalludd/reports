@@ -1,6 +1,4 @@
 <?php defined("BASEPATH") OR exit("No direct script access allowed");
-/****TEMPORARY VALUES *****/
-$kTeach = get_value($report,"kTeach",$this->session->userdata("userID"));
 $contact_method = get_value($report,"contact_method");
 $contact_date = get_value($report, "contact_date");
 if($contact_date){
@@ -13,11 +11,19 @@ if($contact_date){
 <form id="report-editor" name="report-editor"
 	action="<?=site_url("report/$action");?>" method="POST">
 	<input type="hidden" name="kStudent" id="kStudent"
-		value="<?=$kStudent;?>" /> <input type="hidden" name="kTeach"
-		id="kTeach" value="<?=$kTeach;?>" /> <input type="hidden"
+		value="<?=$kStudent;?>" /> 
+		
+		<input type="hidden"
 		name="kAdvisor" id="kAdvisor" value="<?=$report->kAdvisor;?>" /> <input
 		type="hidden" name="kReport" id="kReport"
 		value="<?=get_value($report,"kReport");?>" />
+		<? if($is_teacher): ?>
+		<input type="hidden" name="kTeach"
+		id="kTeach" value="<?=$kTeach;?>" /> 
+		<? else: ?>
+		<label for="kTeach"><?=sprintf("Submitting %s on Behalf of:",STUDENT_REPORT);?></label>
+		<?=form_dropdown("kTeach",$teachers,get_value($report,"kTeach",$kTeach),"id='kTeach'");?>
+		<? endif;?>
 	<p id="student-name-field">
 		<label for="student-name">Student: </label>
 		<?=$student;?>

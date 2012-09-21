@@ -215,10 +215,13 @@ function get_term_menu($id, $currentTerm=null, $initial_blank = FALSE){
 * @params $data array consisting of "where" string or array, and "select" comma-delimited string
 * @returns an array of key-value pairs reflecting a Database primary key and human-meaningful string
 */
-function get_keyed_pairs($list,$pairs,$initialBlank = NULL,$other = NULL){
+function get_keyed_pairs($list,$pairs,$initialBlank = NULL,$other = NULL,$alternate = array()){
 	$output=false;
 	if($initialBlank){
 		$output[] = "";
+	}
+	if(!empty($alternate)){
+		$output[$alternate['name']] = $alternate['value'];
 	}
 
 	foreach($list as $item){

@@ -18,14 +18,23 @@ class Report extends MY_Controller
 		$this->load->model("teacher_model","teacher");
 		$this->load->model("menu_model","menu");
 		$data["ranks"] = get_keyed_pairs($this->menu->get_pairs("report_rank"),array("value","label"));
-
+		$data["kTeach"] = $this->session->userdata("userID");
+		//if the individual is not a teacher, show a dropdown list of teachers on whose behalf. 
+		//Include the author as an option 
+		$data["is_teacher"] = TRUE;
+		if($this->session->userdata('dbRole') != 2){
+			$this->load->model("teacher_model");
+			$teachers = $this->teacher_model->get_teacher_pairs();
+			$data['teachers'] = get_keyed_pairs($teachers, array('kTeach', 'teacher'),NULL,NULL,array('value'=>"Myself",'name'=>$data["kTeach"]));
+			$data["is_teacher"] = FALSE;
+		}
 		$data["kStudent"] = $kStudent;
 		$report =  $this->student->get($kStudent,"stuFirst,stuLast,stuNickname,teachFirst as advisorFirst,teachLast as advisorLast,teacher.kTeach as kAdvisor",TRUE);
 		$data["student"] = format_name($report->stuFirst,$report->stuLast,$report->stuNickname);
 		$data["advisor"] = format_name($report->advisorFirst,$report->advisorLast);
 		$data["report"] = $report;
 		$data["methods"] = array("In Person","Over the Phone","Via Email");
-		$data["kTeach"] = $this->session->userdata("userID");
+
 		$data["statuses"] = get_keyed_pairs($this->menu->get_pairs("report_status"),array("value","label"));
 		$data["categories"] = get_keyed_pairs($this->menu->get_pairs("report_category"),array("value","label"));
 		$data["methods"] = $this->menu->get_pairs("report_contact_method");
@@ -59,7 +68,7 @@ class Report extends MY_Controller
 		$data["teacher"] = format_name($report->teachFirst, $report->teachLast);
 		$data["title"] = sprintf("Viewing %s for %s", STUDENT_REPORT, $data["student"]);
 		$data["target"] = "report/view";
-		
+
 		$this->load->view("page/index",$data);
 	}
 
@@ -75,6 +84,13 @@ class Report extends MY_Controller
 		$data["report"] = $report;
 		$data["methods"] = array("In Person","Over the Phone","Via Email");
 		$data["kTeach"] = $report->kTeach;
+		$data["is_teacher"] = TRUE;
+		if($this->session->userdata('dbRole') != 2){
+			$this->load->model("teacher_model");
+			$teachers = $this->teacher_model->get_teacher_pairs();
+			$data['teachers'] = get_keyed_pairs($teachers, array('kTeach', 'teacher'),NULL,NULL,array('value'=>"Myself",'name'=>$data["kTeach"]));
+			$data["is_teacher"] = FALSE;
+		}
 		$data["ranks"] = get_keyed_pairs($this->menu->get_pairs("report_rank"),array("value","label"));
 		$data["categories"] = get_keyed_pairs($this->menu->get_pairs("report_category"),array("value","label"));
 		$data["methods"] = $this->menu->get_pairs("report_contact_method");
@@ -99,7 +115,7 @@ class Report extends MY_Controller
 			$data["unread_reports"] = $this->report->get_count($this->session->userdata("userID"));
 			$this->session->set_userdata($data);
 		}
-		
+
 		redirect("report/view/$kReport");
 	}
 
@@ -160,7 +176,7 @@ class Report extends MY_Controller
 					$person = $this->student->get($key,"stuFirst,stuLast,stuNickname,stuGrade");
 					$title = sprintf("for %s" , format_name($person->stuFirst,$person->stuLast, $person->stuNickname));
 					$data["kStudent"] = $key;
-						
+
 					//$data["target"] = "report/" . $type . "_list";
 
 					break;
@@ -186,11 +202,11 @@ class Report extends MY_Controller
 				$this->session->set_userdata("date_end",$date_end);
 
 			}
-				
+
 			if($this->input->get("category")){
 				$options["category"] = $this->input->get("category");
 			}
-				
+
 			$data["options"] = $options;
 			$data["target"] = "report/list";
 			$data["person"] = $person;
@@ -224,6 +240,10 @@ class Report extends MY_Controller
 		$this->email->from($report->teachEmail);
 		$this->email->to($report->advisorEmail);
 		$cc_list[] = $report->teachEmail;
+		//the author was reporting on behalf of a teacher, send the author a copy too.
+		if($report->recModifier != $report->kTeach){
+			$cc_list[] = $report->authorEmail;
+		}
 		if($this->input->post("email_student")){
 			$cc_list[] = $this->email->cc($report->stuEmail);
 		}

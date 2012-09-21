@@ -47,6 +47,7 @@ if($teacher->status==1){
 	print "Disabled";
 }
 ?></p>
+<? //@TODO change the text version of dbRole to pull the menu variable value from the DB instead of hard coding these values ?>
 <p><label>Database Role: </label> <?php 
 switch($teacher->dbRole){
 	case 1:
@@ -56,7 +57,7 @@ switch($teacher->dbRole){
 		print "Narrative Author";
 		break;
 	case 3:
-		print "Aid/Support Staff";
+		print "Aide/Support Staff";
 		break;
 }
 
