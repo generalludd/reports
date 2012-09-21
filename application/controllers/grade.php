@@ -71,11 +71,12 @@ class Grade extends MY_Controller
 		//$total points is needed to calculate the grade average.
 		//this calculation happens in the model to make more elegant code.
 		$total = $assignment->points;
+		$kTeach = $assignment->kTeach;
 		$category = $assignment->category;
 		$points = $this->input->post("points");
 		$status = $this->input->post("status");
 		$footnote = $this->input->post("footnote");
-		$result = $this->grade->update($kStudent,$kAssignment,$points,$total,$status,$footnote,$category);
+		$result = $this->grade->update($kStudent,$kAssignment,$kTeach, $points,$total,$status,$footnote,$category);
 		echo OK;
 	}
 

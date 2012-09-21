@@ -37,7 +37,14 @@ class Grade_model extends CI_Model
 		$output = $this->db->get()->row();
 		return $output;
 	}
-
+	
+	
+/**
+ * has_grade
+ * @param int $kStudent
+ * @param int $kAssignment
+ * determines if a student has a grade for a given assignment. 
+ */
 	function has_grade($kStudent,$kAssignment)
 	{
 		$this->db->where("kAssignment",$kAssignment);
@@ -47,29 +54,39 @@ class Grade_model extends CI_Model
 		return $result;
 	}
 
-	function batch_insert($kAssignment,$kTeach,$term,$year)
+	/**
+	 * batch_insert
+	 * @param int $kAssignment
+	 * @param int $kTeach
+	 * @param varchar $term
+	 * @param in $year
+	 * Finds all the students with a given assignment of the same term, teacher and year and creates new records for the student. 
+	 */
+	function batch_insert($kAssignment,$kTeach,$term,$year,$grade_start, $grade_end)
 	{
-		$this->db->select("distinct(`kStudent`)");
+		$this->db->select("distinct(`grade`.`kStudent`)");
 		$this->db->from("assignment");
 		$this->db->join("grade","grade.kAssignment = assignment.kAssignment","LEFT");
-		$this->db->where("kTeach",$kTeach);
+		$this->db->join("student", "grade.kStudent = student.kStudent");
+		$this->db->where("(student.stuGrade BETWEEN $grade_start AND $grade_end)");
+		$this->db->where("assignment.kTeach",$kTeach);
 		$this->db->where("term",$term);
 		$this->db->where("year",$year);
-		$this->db->where("kStudent IS NOT NULL");
+		$this->db->where("grade.kStudent IS NOT NULL");
 		$students = $this->db->get()->result();
 		foreach($students as $student){
 				$data = array("kAssignment"=>$kAssignment, "kStudent"=>$student->kStudent,"points"=>"0");
 				$this->db->insert("grade",$data);
-				$current_student = $student->kStudent;
 		}
 		return $students;
 	}
 
 
-	function update($kStudent, $kAssignment,$points,$total, $status,$footnote,$category)
+	function update($kStudent, $kAssignment,$kTeach, $points,$total, $status,$footnote,$category)
 	{
 		$output = FALSE;
 		//this variable is not declared in $_POST or $_GET. It must be calculated.
+		$weight = $this->calculate_weight($kTeach,$category);
 		$this->average = $points/$total;
 		//if the status is either "Exc" or "Abs" or anything else for that matter,
 		// then the grade is counted at full value
@@ -96,11 +113,12 @@ class Grade_model extends CI_Model
 
 	function calculate_weight($kTeach, $category)
 	{
-		$this->db->where("type","grade_weight");
+		$this->db->select("weight");
+		$this->db->where("category",$category);
 		$this->db->where("kTeach",$kTeach);
-		$this->db->from("preference");
-		$result = $this->db->get()->row()->value;
-
+		$this->db->from("assignment_category");
+		$result = $this->db->get()->row()->weight;
+		return $result; 
 
 	}
 

@@ -10,7 +10,7 @@ if($stuGroup){
 	$gradeDisplay = sprintf("%s %s",$gradeDisplay, $stuGroup);
 }
 ?>
-<h2>Grade Chart for <?=$gradeDisplay;?></h2>
+<h2>Grade Chart for <?=$gradeDisplay;?> [BETA]</h2>
 <div class="button-box">
 <ul class="button-list">
 <li><span class="button refresh">Refresh Page</span></li>
@@ -80,7 +80,7 @@ $header = $assignments[0];
 			print "<tr>";
 			print $row["name"];
 			//get the grade as a human-readable percentage
-			$final_grade = round(($row["totals"]/$assignment_count),2) * 100;
+			$final_grade = round(($row["totals"])/$assignment_count,2)*100;
 			print "<td>" . calculate_letter_grade($final_grade) . " ($final_grade%)</td>";
 			print implode("",$row["grades"]);
 			print "</tr>";
@@ -95,3 +95,6 @@ $header = $assignments[0];
 <? }else{
 	print "<p>You have not entered any assignments or grades for this term. <span class='button new assignment-create'>Add Assignment</span></p>";
 }
+
+?>
+<p class="notice">Please Note: Grade totals do not yet reflect the grade weights.</p>

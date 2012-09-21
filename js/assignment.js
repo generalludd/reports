@@ -205,6 +205,7 @@ $(document).ready(function(){
 			url: myUrl,
 			data: form_data,
 			success: function(data){
+				//$(".save_cell_grade").parent().html(data);
 				window.location.reload();
 			}
 		});

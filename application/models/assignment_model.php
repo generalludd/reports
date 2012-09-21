@@ -166,7 +166,7 @@ class Assignment_model extends CI_Model
 			$this->db->where("kTeach",$kTeach);
 		}
 		$this->db->where("kTeach",$kTeach);
-		$this->db->order_by("category");
+		$this->db->order_by("weight","DESC");
 		$result = $this->db->get("assignment_category")->result();
 		return $result;
 	}
