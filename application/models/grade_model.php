@@ -37,14 +37,14 @@ class Grade_model extends CI_Model
 		$output = $this->db->get()->row();
 		return $output;
 	}
-	
-	
-/**
- * has_grade
- * @param int $kStudent
- * @param int $kAssignment
- * determines if a student has a grade for a given assignment. 
- */
+
+
+	/**
+	 * has_grade
+	 * @param int $kStudent
+	 * @param int $kAssignment
+	 * determines if a student has a grade for a given assignment.
+	 */
 	function has_grade($kStudent,$kAssignment)
 	{
 		$this->db->where("kAssignment",$kAssignment);
@@ -60,7 +60,7 @@ class Grade_model extends CI_Model
 	 * @param int $kTeach
 	 * @param varchar $term
 	 * @param in $year
-	 * Finds all the students with a given assignment of the same term, teacher and year and creates new records for the student. 
+	 * Finds all the students with a given assignment of the same term, teacher and year and creates new records for the student.
 	 */
 	function batch_insert($kAssignment,$kTeach,$term,$year,$grade_start, $grade_end)
 	{
@@ -75,8 +75,8 @@ class Grade_model extends CI_Model
 		$this->db->where("grade.kStudent IS NOT NULL");
 		$students = $this->db->get()->result();
 		foreach($students as $student){
-				$data = array("kAssignment"=>$kAssignment, "kStudent"=>$student->kStudent,"points"=>"0");
-				$this->db->insert("grade",$data);
+			$data = array("kAssignment"=>$kAssignment, "kStudent"=>$student->kStudent,"points"=>"0");
+			$this->db->insert("grade",$data);
 		}
 		return $students;
 	}
@@ -87,7 +87,7 @@ class Grade_model extends CI_Model
 		$output = FALSE;
 		//this variable is not declared in $_POST or $_GET. It must be calculated.
 		$weight = $this->calculate_weight($kTeach,$category);
-		$this->average = $points/$total;
+		$this->average = $points/$total*$weight/100;
 		//if the status is either "Exc" or "Abs" or anything else for that matter,
 		// then the grade is counted at full value
 		if($status == "Exc" || $status== "Abs"){
@@ -118,8 +118,24 @@ class Grade_model extends CI_Model
 		$this->db->where("kTeach",$kTeach);
 		$this->db->from("assignment_category");
 		$result = $this->db->get()->row()->weight;
-		return $result; 
+		return $result;
 
+	}
+
+	function get_totals($kStudent, $term,$year, $kTeach = NULL){
+		$this->db->where("grade.kStudent",$kStudent);
+		if($kTeach){
+			$this->db->where("assignment.kTeach",$kTeach);
+		}
+		$this->db->where("assignment.term", $term);
+		$this->db->where("assignment.year",$year);
+		$this->db->select("grade.kStudent,assignment.kTeach,assignment.kAssignment,assignment.kCategory,category.category, sum(grade.points)/sum(assignment.points) as category_average");
+		$this->db->join("assignment","grade.kAssignment=assignment.kAssignment");
+		$this->db->join("assignment_category as category","assignment.kCategory=category.kCategory");
+		$this->db->group_by("assignment.kCategory");
+		$this->db->from("grade");
+		$result = $this->db->get()->result();
+		return $result;
 	}
 
 	function delete($kGrade)

@@ -61,8 +61,11 @@ class Assignment extends MY_Controller
 	
 	function report_card(){
 		$kStudent = $this->input->get("kStudent");
+		$kTeach = NULL;
+		$options = array();
 		if($this->input->get("kTeach")){
 			$options["kTeach"] = $this->input->get("kTeach");
+			$kTeach = $options["kTeach"];
 				
 		}
 		if($this->input->get("subject")){
@@ -80,6 +83,7 @@ class Assignment extends MY_Controller
 		}
 
 		$data["grades"] = $this->assignment->get_for_student($kStudent,$term,$year,$options);
+		$data["totals"] = $this->grade->get_totals($kStudent,$term,$year);
 		$data["target"] = "grade/chart";
 		$data["title"] = "Report Card";
 		$this->load->view("page/print",$data);

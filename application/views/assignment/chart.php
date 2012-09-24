@@ -80,7 +80,8 @@ $header = $assignments[0];
 			print "<tr>";
 			print $row["name"];
 			//get the grade as a human-readable percentage
-			$final_grade = round(($row["totals"])/$assignment_count,2)*100;
+			//$final_grade = round(($row["totals"])/$assignment_count,2)*100;
+			$final_grade = $row["totals"] * 100;
 			print "<td>" . calculate_letter_grade($final_grade) . " ($final_grade%)</td>";
 			print implode("",$row["grades"]);
 			print "</tr>";

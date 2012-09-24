@@ -48,15 +48,19 @@ foreach($grades as $grade){?>
 
 	</tbody>
 	<tfoot>
-	<tr>
-		<td></td>
-		<td></td>
-		<td></td>
-		<td> <?
-		$final_grade = round(($student_total/$assignment_count),2) * 100;
-		echo calculate_letter_grade($final_grade) . " ($final_grade%)";?></td>
-		<td></td>
-		<td class='notes-column'></td>
-	</tr>
+	<?
+	$grade_total = 0;
+	$category_count = 0;
+	foreach($totals as $total){
+		$grade_total += $total->category_average;
+		$category_count++;
+		$final_grade = $total->category_average *100;
+		echo sprintf("<tr><td colspan=3>%s</td><td colspan=2>%s&#37; (%s)</td></tr>",$total->category, $final_grade, calculate_letter_grade($final_grade));
+	}
+	$total_grade = $grade_total/$category_count*100;
+	echo sprintf("<tr><td colspan=3>Total Grade</td><td colspan=2>%s&#37; (%s)</td><tr>",$total_grade,calculate_letter_grade($total_grade));
+	
+	?>
+	
 	</tfoot>
 </table>

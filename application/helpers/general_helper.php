@@ -516,29 +516,24 @@ function calculate_letter_grade($points)
 	$letters = array("9"=>"A",8=>"B",7=>"C",6=>"D");
 	$valence = "";
 	$output = "";
-	if($points >= 98){
+	$plus = 7;
+	$minus = 3;
+	if(strval($points) >= 98){
 		$output = "A+";
-	}elseif($points <= 50){
+	}elseif(strval($points) <= 50){
 		$output == "F";
 	}else{
 		$split = str_split($points);
 		$tens = $split[0];
 		$hundreds = $split[1];
-		switch($hundreds){
-			case $hundreds >= 7:
-				$valence = "+";
-				break;
-			case $hundreds >= 3:
-				$valence = "";
-				break;
-			case $hundreds >= 0:
-				$valence = "-";
-				break;
-			default:
-				$valence = "+";
-				$tens -= 1;
+		if($hundreds < $minus){
+			$valence = "-";
+		}elseif($hundreds > $plus){
+			$valence = "+";
+		}else{
+			$valuence = "";
+	
 		}
-
 		$letter = $letters[$tens];
 		$output = $letter . $valence;
 	}
