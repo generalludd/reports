@@ -513,7 +513,7 @@ function format_table($data,$header = array(),$options = array()){
 
 function calculate_letter_grade($points)
 {
-	$letters = array("9"=>"A",8=>"B",7=>"C",6=>"D");
+	$letters = array("9"=>"A",8=>"B",7=>"C",6=>"D",5=>"D");
 	$valence = "";
 	$output = "";
 	$plus = 7;
