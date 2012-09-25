@@ -93,6 +93,7 @@ class Assignment_model extends CI_Model
 		if(array_key_exists("subject",$options)){
 			$this->db->where("assignment.subject",$options["subject"]);
 		}
+		$this->db->where("(student.stuGrade BETWEEN assignment.gradeStart AND assignment.gradeEnd)");
 		$this->db->join("grade","assignment.kAssignment=grade.kAssignment AND grade.kStudent = $kStudent","LEFT");
 		$this->db->join("student","student.kStudent=grade.kStudent","LEFT");
 		$this->db->join("teacher","teacher.kTeach=assignment.kTeach","LEFT");
