@@ -68,6 +68,7 @@ class Assignment_model extends CI_Model
 		if($stuGroup){
 			$this->db->where("student.stuGroup",$stuGroup);
 		}
+		$this->db->where("(student.stuGrade BETWEEN $gradeStart AND $gradeEnd)");
 		//$this->db->where("student.stuGrade in ($gradeStart,$gradeEnd)");
 		$this->db->join("grade","assignment.kAssignment=grade.kAssignment");
 		$this->db->join("student","grade.kStudent=student.kStudent");
@@ -107,11 +108,12 @@ class Assignment_model extends CI_Model
 	}
 
 
-	function get_for_teacher($kTeach,$term,$year)
+	function get_for_teacher($kTeach,$term,$year,$gradeStart,$gradeEnd)
 	{
 		$this->db->where("assignment.kTeach",$kTeach);
 		$this->db->where("term",$term);
 		$this->db->where("year",$year);
+		$this->db->where("(assignment.gradeStart = $gradeStart OR assignment.gradeEnd = $gradeEnd)");
 		$this->db->from("assignment");
 		$this->db->join("assignment_category as category","assignment.kCategory = category.kCategory","LEFT");
 		$this->db->select("assignment.*,category.weight,category.category");
