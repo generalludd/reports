@@ -10,11 +10,6 @@ class Grade extends MY_Controller
 		$this->load->model("assignment_model","assignment");
 	}
 	
-	function temp()
-	{
-		$this->grade->batch_insert(24,1015,"Mid-Year",2012,7,8);
-	}
-
 	function edit()
 	{
 		$this->load->model("menu_model");
