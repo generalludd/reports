@@ -96,7 +96,6 @@ $header = $assignments[0];
 <? }else{
 	print "<p>You have not entered any assignments or grades for this term. <span class='button new assignment-create'>Add Assignment</span></p>";
 }
-
 ?>
 <p class="notice">Please Note: Grade totals do not yet reflect the grade weights.
 In fact, they are a complete mess, as you can see! 

@@ -73,6 +73,7 @@ class Grade_model extends CI_Model
 		$this->db->where("term",$term);
 		$this->db->where("year",$year);
 		$this->db->where("grade.kStudent IS NOT NULL");
+		$this->db->where_not("grade.kAssignment",$kAssignment);
 		$students = $this->db->get()->result();
 		foreach($students as $student){
 			$data = array("kAssignment"=>$kAssignment, "kStudent"=>$student->kStudent,"points"=>"0");
