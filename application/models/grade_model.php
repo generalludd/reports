@@ -73,11 +73,13 @@ class Grade_model extends CI_Model
 		$this->db->where("term",$term);
 		$this->db->where("year",$year);
 		$this->db->where("grade.kStudent IS NOT NULL");
-		$this->db->where_not("grade.kAssignment",$kAssignment);
+		$this->db->where("grade.kAssignment !=$kAssignment");
 		$students = $this->db->get()->result();
+		print $this->db->last_query();
 		foreach($students as $student){
-			$data = array("kAssignment"=>$kAssignment, "kStudent"=>$student->kStudent,"points"=>"0");
-			$this->db->insert("grade",$data);
+			//$data = array("kAssignment"=>$kAssignment, "kStudent"=>$student->kStudent,"points"=>"0");
+			//$this->db->insert("grade",$data);
+			$this->update($student->kStudent, $kAssignment, $kTeach, 0, NULL, NULL, NULL, NULL);
 		}
 		return $students;
 	}
@@ -87,7 +89,13 @@ class Grade_model extends CI_Model
 	{
 		$output = FALSE;
 		//this variable is not declared in $_POST or $_GET. It must be calculated.
+		$weight = 1;
+		if(!$total){
+			$total = 100;
+		}
+		if($category){
 		$weight = $this->calculate_weight($kTeach,$category);
+		}
 		$this->average = $points/$total*$weight/100;
 		//if the status is either "Exc" or "Abs" or anything else for that matter,
 		// then the grade is counted at full value
