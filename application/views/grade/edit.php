@@ -2,7 +2,7 @@
 //@TODO ADD Footnote (late, redo, incomplete)
 //@TODO checkbox for excused.
 
-
+//print $this->db->last_query();
 ?>
 <input
 	type="hidden" name="kStudent" id="kStudent" value="<?=$kStudent;?>" />

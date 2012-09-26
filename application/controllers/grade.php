@@ -25,6 +25,14 @@ class Grade extends MY_Controller
 		if(!$term){
 			$term = get_current_term();
 		}
+		$options["grade_range"]["gradeStart"] = $this->input->get_post("gradeStart");
+		if(!$options["grade_range"]["gradeStart"]){
+			$options["grade_range"]["gradeStart"] = $this->session->userdata("gradeStart");
+		}
+		$options["grade_range"]["gradeEnd"] = $this->input->get_post("gradeEnd");
+		if(!$options["grade_range"]["gradeEnd"]){
+			$options["grade_range"]["gradeEnd"] = $this->session->userdata("gradeEnd");
+		}
 		$footnotes = $this->menu_model->get_pairs("grade_footnote");
 		$data["footnotes"] = get_keyed_pairs($footnotes, array("value","label"),TRUE);
 		$status = $this->menu_model->get_pairs("grade_status");
@@ -34,6 +42,7 @@ class Grade extends MY_Controller
 		$data["kTeach"] = $kTeach;
 		$options["kTeach"] = $kTeach;
 		$data["grades"] = $this->assignment->get_for_student($kStudent,$term,$year,$options);
+		
 		$this->load->view("grade/edit",$data);
 
 

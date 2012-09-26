@@ -93,7 +93,14 @@ class Assignment_model extends CI_Model
 		if(array_key_exists("subject",$options)){
 			$this->db->where("assignment.subject",$options["subject"]);
 		}
-		$this->db->where("(student.stuGrade BETWEEN assignment.gradeStart AND assignment.gradeEnd)");
+		
+		if(array_key_exists("grade_range",$options)){
+			$gradeStart = $options["grade_range"]["gradeStart"];
+			$gradeEnd = $options["grade_range"]["gradeEnd"];
+			$this->db->where("assignment.gradeStart",$gradeStart);
+			$this->db->where("assignment.gradeEnd",$gradeEnd);	
+		}
+		$this->db->from("assignment");
 		$this->db->join("grade","assignment.kAssignment=grade.kAssignment AND grade.kStudent = $kStudent","LEFT");
 		$this->db->join("student","student.kStudent=grade.kStudent","LEFT");
 		$this->db->join("teacher","teacher.kTeach=assignment.kTeach","LEFT");
@@ -103,7 +110,7 @@ class Assignment_model extends CI_Model
 		$this->db->order_by("assignment.date");
 		$this->db->order_by("assignment.kAssignment");
 		$this->db->order_by("assignment.kCategory");
-		$result = $this->db->get("assignment")->result();
+		$result = $this->db->get()->result();
 		return $result;
 
 	}
