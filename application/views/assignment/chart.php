@@ -63,7 +63,7 @@ $header = $assignments[0];
 			}
 			$points = $grade->points;
 
-			$student_points += $grade->average;
+			$student_points += $grade->points;
 			//if the student status for this grade is Abs or Exc display the status instead of the grade
 			if(!empty($grade->status)){
 				$points = $grade->status;

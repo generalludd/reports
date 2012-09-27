@@ -33,6 +33,7 @@ class Assignment_model extends CI_Model
 	function get($kAssignment)
 	{
 		$this->db->where("kAssignment",$kAssignment);
+		
 		$this->db->join("assignment_category as category","assignment.kCategory = category.kCategory");
 		$this->db->select("assignment.*,category.weight,category.category");
 		$this->db->from("assignment");
@@ -98,8 +99,11 @@ class Assignment_model extends CI_Model
 			$gradeStart = $options["grade_range"]["gradeStart"];
 			$gradeEnd = $options["grade_range"]["gradeEnd"];
 			$this->db->where("assignment.gradeStart",$gradeStart);
-			$this->db->where("assignment.gradeEnd",$gradeEnd);	
+			$this->db->where("assignment.gradeEnd",$gradeEnd);
 		}
+		//$this->db->where("assignment.gradeStart = category.gradeStart");
+		//$this->db->where("assignment.gradeEnd = category.gradeEnd");
+		
 		$this->db->from("assignment");
 		$this->db->join("grade","assignment.kAssignment=grade.kAssignment AND grade.kStudent = $kStudent","LEFT");
 		$this->db->join("student","student.kStudent=grade.kStudent","LEFT");
@@ -122,6 +126,8 @@ class Assignment_model extends CI_Model
 		$this->db->where("term",$term);
 		$this->db->where("year",$year);
 		$this->db->where("(assignment.gradeStart = $gradeStart OR assignment.gradeEnd = $gradeEnd)");
+		//$this->db->where("assignment.gradeStart = category.gradeStart");
+		//$this->db->where("assignment.gradeEnd = category.gradeEnd");
 		$this->db->from("assignment");
 		$this->db->join("assignment_category as category","assignment.kCategory = category.kCategory","LEFT");
 		$this->db->select("assignment.*,category.weight,category.category");
@@ -169,13 +175,15 @@ class Assignment_model extends CI_Model
 	}
 
 
-	function get_categories($kTeach = FALSE)
+	function get_categories($kTeach, $gradeStart, $gradeEnd)
 	{
 		$this->db->distinct("category");
 		if($kTeach){
 			$this->db->where("kTeach",$kTeach);
 		}
 		$this->db->where("kTeach",$kTeach);
+		$this->db->where("gradeStart",$gradeStart);
+		$this->db->where("gradeEnd",$gradeEnd);
 		$this->db->order_by("weight","DESC");
 		$result = $this->db->get("assignment_category")->result();
 		return $result;

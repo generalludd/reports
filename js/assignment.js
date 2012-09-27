@@ -236,7 +236,7 @@ $(document).ready(function(){
 		}
 	});
 	
-	$(".update-category, .update-weight").live("keyup",function(){
+	$(".update-category, .update-weight, .update-gradeStart, .update-gradeEnd").live("keyup",function(){
 		myId = this.id.split("_")[1];
 		$("#fun").val(myId);
 		$("#update-category_" + myId).fadeIn();
@@ -246,12 +246,16 @@ $(document).ready(function(){
 		myId = this.id.split("_")[1];
 		myCategory = $("#category_" + myId).val();
 		myWeight = $("#weight_" + myId).val();
+		myStart = $("#gradeStart_" + myId).val();
+		myEnd = $("#gradeEnd_" + myId).val();
 		form_data = {
 				kCategory: myId,
 				category: myCategory,
-				weight: myWeight
+				weight: myWeight,
+				gradeStart: myStart,
+				gradeEnd: myEnd
 		};
-		
+		alert(form_data);
 		$.ajax({
 			type: "post",
 			url: base_url + "assignment/update_category",

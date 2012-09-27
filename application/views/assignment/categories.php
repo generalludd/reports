@@ -10,6 +10,8 @@
 		<tr>
 			<th>Category</th>
 			<th>Weight</th>
+			<th>Grade Start</th>
+			<th>Grade End</th>
 			<th></th>
 		</tr>
 	</thead>
