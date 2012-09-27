@@ -54,9 +54,15 @@ class Assignment_model extends CI_Model
 
 	function update($kAssignment)
 	{
+		$old_assignment = $this->get($kAssignment);
 		$this->prepare_variables();
 		$this->db->where("kAssignment",$kAssignment);
 		$this->db->update("assignment", $this);
+		$this->load->model("grade_model","grade");
+		$percentage = $this->points/$old_assignment->points;
+		$this->grade->batch_adjust_points($kAssignment,$percentage);
+		
+		
 	}
 
 	

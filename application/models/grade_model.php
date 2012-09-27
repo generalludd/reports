@@ -83,6 +83,11 @@ class Grade_model extends CI_Model
 		}
 		return $students;
 	}
+	
+	function batch_adjust_points($kAssignment,$percentage)
+	{
+		$this->db->query("UPDATE `grade` SET `points` = `points` * $percentage WHERE `kAssignment` = $kAssignment");
+	}
 
 
 	function update($kStudent, $kAssignment,$kTeach, $points,$total, $status,$footnote,$category)
