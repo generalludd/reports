@@ -4,3 +4,24 @@ assignment (kAssignment, assignment, date, category*, points) are grade categori
 
 grade (kStudent, kTeach, kAssignment, points), neeed to have a verification process to make sure that the points given do not exceed the points of kAssignment
 Points can include an excused option that disregards the assignment from the student final grade. 
+
+
+AN INTERESTING PROOF OF CONCEPT FOR 1:N JOINS ON A SINGLE ROW. 
+	/* ADDING PREFERENCE SELECTION. THIS HAS BEEN DISABLED UNTIL MORE RIGOROUS TESTING CAN BE PERFORMED
+		 */
+		/* DELETE THIS LINE TO ALLOW THIS FEATURE 
+		 //load the preferences
+		$this->load->model("preference_model");
+		$preferences = $this->preference_model->get_distinct($kTeach);
+
+		//create joins naming each join table according to the preference->type
+		//so they are unique keys in the result;
+		foreach($preferences as $preference){
+		$this->db->join(sprintf("preference as %s",$preference->type),sprintf("%s.kTeach=teacher.kTeach AND %s.type='%s'",$preference->type,$preference->type,$preference->type));
+		if(!is_array($select)){
+		$select[] = $select;
+		}
+		$select[] = sprintf("%s.type as %s_type", $preference->type, $preference->type);
+		$select[] = sprintf("%s.value as %s_value",$preference->type, $preference->type);
+		}
+		// END ADDING PREFERENCES */
