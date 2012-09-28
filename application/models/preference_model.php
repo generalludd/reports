@@ -26,6 +26,15 @@ class Preference_model extends CI_Model
 		return $value;
 	}
 
+	
+	function get_distinct($kTeach){
+		$this->db->distinct("preference.type");
+		$this->db->where("kTeach",$kTeach);
+		$this->db->from("preference");
+		$result = $this->db->get()->result();
+		return $result;
+	}
+	
 	function get_all($kTeach)
 	{
 		$this->db->select("preference_type.*, preference.value,preference.kTeach");
@@ -37,6 +46,7 @@ class Preference_model extends CI_Model
 		$result = $this->db->get()->result();
 		return $result;
 	}
+	
 
 	function update($kTeach, $type, $value)
 	{
