@@ -255,7 +255,6 @@ $(document).ready(function(){
 				gradeStart: myStart,
 				gradeEnd: myEnd
 		};
-		alert(form_data);
 		$.ajax({
 			type: "post",
 			url: base_url + "assignment/update_category",
