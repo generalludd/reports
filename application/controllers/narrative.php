@@ -37,6 +37,7 @@ class Narrative extends MY_Controller
 		$teachers = $this->teacher_model->get_teacher_pairs();
 		$data['teacherPairs'] = get_keyed_pairs($teachers, array('kTeach', 'teacher'));
 		$data['studentName'] = format_name($student->stuFirst, $student->stuLast, $student->stuNickname);
+		$data['default_grade'] = $this->preference_model->get($kTeach,"default_grade");
 		$data['narrative'] = NULL;
 		$data['narrText'] = "";
 		$data['action'] = "insert";
@@ -153,7 +154,9 @@ class Narrative extends MY_Controller
 		$data["narrText"] = "";
 		$studentName = format_name($student->stuFirst, $student->stuLast, $student->stuNickname);
 		$data["hasNeeds"] = $this->support_model->get_current($kStudent, "kSupport");
-
+		
+		// Get the value of the default_grade preference. 
+		$data['default_grade'] = $this->preference_model->get($kTeach,"default_grade");
 		//$data["needsButton"] = $this->get_need_button($kStudent);
 		// 		$data["suggestionsButton"] = $this->get_suggestion_button($kNarrative);
 		$data["hasSuggestions"] = TRUE;// $this->suggestion_model->exists($kNarrative);

@@ -92,39 +92,25 @@ class Teacher_model extends CI_Model
 	 * this is a very expensive function to avoid password confusion.
 	 * If at any point access were to be expanded, we'd need a separate table for "users" separate from "teachers" (in fact this has already started)
 	 * but then the question is whether this would cause an equivalent cost in joins between users and teachers elsewhere.
-	 * This also adds preferences associated with this account. This is a test to see whether this is more efficient than calling the preference separately. 
-	 * I think it is probably less efficient. Maybe it is just a proof of concept. 
+	 * This also adds preferences associated with this account. This is a test to see whether this is more efficient than calling the preference separately.
+	 * I think it is probably less efficient. Maybe it is just a proof of concept.
 	 * @param int $kTeach
 	 * @param string $select
 	 * @return string|boolean
 	 */
-	function get($kTeach, $select = NULL)
+	function get($kTeach, $select = "teacher.*")
 	{
-		
-		if(!$select){
-			$select[] = "teacher.*";
-		}
-		$this->load->model("preference_model","preference");
-		$preferences = $this->preference->get_distinct($kTeach);
-		foreach($preferences as $preference){
-			$this->db->join(sprintf("preference as %s",$preference->type),sprintf("%s.kTeach=teacher.kTeach AND %s.type='%s'",$preference->type,$preference->type,$preference->type));
-			if(!is_array($select)){
-				$select[] = $select;
-			}
-			$select[] = sprintf("%s.type as %s_type", $preference->type, $preference->type);
-			$select[] = sprintf("%s.value as %s_value",$preference->type, $preference->type);
-		}
-		
+	
 		$this->db->where('teacher.kTeach', $kTeach);
 		$this->db->from('teacher');
-		if($select){
-			if(is_array($select)){
-				foreach($select as $item){
-					$this->db->select($item);
-				}
-			}else{
-				$this->db->select($select);
+
+		//create the selection based on both the query submission
+		if(is_array($select)){
+			foreach($select as $item){
+				$this->db->select($item);
 			}
+		}else{
+			$this->db->select($select);
 		}
 		$result = $this->db->get()->row();
 

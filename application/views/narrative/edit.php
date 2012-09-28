@@ -1,7 +1,6 @@
 <?php
 $teacherName = format_name($teacher->teachFirst, $teacher->teachLast);
 $stuGrade = get_value($narrative, 'stuGrade', FALSE);
-
 if(!$stuGrade){
 	$stuGrade = get_current_grade($student->baseGrade, $student->baseYear);
 }
@@ -77,11 +76,11 @@ if(!empty($conditional_buttons)){
 		<?=form_dropdown('narrYear', get_year_list(), $narrYear, "id='narrYear'");?>
 		- <input id="yearEnd" type="text" name="yearEnd" readonly
 			maxlength="4" size="5" value="<?=$yearEnd; ?>" />
-		<?php if($stuGrade >= 5){?>
+		<?php if($stuGrade >= 5):?>
 		<br />Course Grade (middle school only): <input type="text"
 			name="narrGrade" id="narrGrade"
-			value='<?=get_value($narrative,'narrGrade');?>' size="27">
-		<?php }?>
+			value='<?=get_value($narrative,'narrGrade', $default_grade);?>' size="27">
+		<?php endif;?>
 	</p>
 	<?php
 	if($conditional_bar){
