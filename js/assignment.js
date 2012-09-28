@@ -300,10 +300,15 @@ $(document).ready(function(){
 		myTeach = this.id.split("_")[1];
 		myCategory = $("#tr-teach_" + myTeach + " .insert-category").val();
 		myWeight = $("#tr-teach_" + myTeach + " .insert-weight").val();
+		myStart = $("#tr-teach_" + myTeach + " .insert-gradeStart").val();
+		myEnd = $("#tr-teach_" + myTeach + " .insert-gradeEnd").val();
+
 		form_data = {
 				kTeach: myTeach,
 				category: myCategory,
-				weight: myWeight
+				weight: myWeight,
+				gradeStart: myStart,
+				gradeEnd: myEnd
 		};
 		$.ajax({
 			type: "post",

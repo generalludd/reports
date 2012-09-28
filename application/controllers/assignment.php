@@ -33,12 +33,12 @@ class Assignment extends MY_Controller
 
 		}
 		$stuGroup = NULL;
-		
+
 		if($this->input->get("stuGroup")){
 			$stuGroup = $this->input->get("stuGroup");
 		}
 		$this->session->set_userdata("stuGroup",$stuGroup);
-		
+
 
 		$year = get_current_year();
 		if($this->input->get("year")){
@@ -58,7 +58,7 @@ class Assignment extends MY_Controller
 		$data["title"] = "Grade Chart";
 		$this->load->view("page/index",$data);
 	}
-	
+
 	function report_card(){
 		$kStudent = $this->input->get("kStudent");
 		$kTeach = NULL;
@@ -66,16 +66,16 @@ class Assignment extends MY_Controller
 		if($this->input->get("kTeach")){
 			$options["kTeach"] = $this->input->get("kTeach");
 			$kTeach = $options["kTeach"];
-				
+
 		}
 		if($this->input->get("subject")){
 			$options["subject"] = $this->input->get("subject");
 		}
-		
+
 		$term = get_current_term();
 		if($this->input->get("term")){
 			$term = $this->input->get("term");
-		
+
 		}
 		$year = get_current_year();
 		if($this->input->get("year")){
@@ -113,10 +113,18 @@ class Assignment extends MY_Controller
 		$gradeStart = $this->session->userdata("gradeStart");
 		$gradeEnd = $this->session->userdata("gradeEnd");
 		$categories = $this->assignment->get_categories($userID, $gradeStart, $gradeEnd);
-		$data["categories"] = get_keyed_pairs($categories, array("kCategory","category"));
-		$data["target"] = "assignment/edit";
-		$data["title"] = "Create an Assignment";
-		$this->load->view($data["target"],$data);
+		if(empty($categories)){
+			$gradeRange = sprintf("grades %s to %s", $gradeStart, $gradeEnd);
+			if($gradeStart == $gradeEnd){
+				$gradeRange = sprintf("grade %s", $gradeStart);
+			}
+			printf('<p>You must create categories for %s first.<p/>',$gradeRange);
+		}else{
+			$data["categories"] = get_keyed_pairs($categories, array("kCategory","category"));
+			$data["target"] = "assignment/edit";
+			$data["title"] = "Create an Assignment";
+			$this->load->view($data["target"],$data);
+		}
 
 	}
 
@@ -173,8 +181,8 @@ class Assignment extends MY_Controller
 		$gradeEnd = $assignment->gradeEnd;
 		redirect("assignment/chart?kTeach=$kTeach&term=$term&year=$year&gradeStart=$gradeStart&gradeEnd=$gradeEnd");
 	}
-	
-	
+
+
 	function create_category()
 	{
 		$data["category"] = NULL;
@@ -182,7 +190,7 @@ class Assignment extends MY_Controller
 		$data["kTeach"] = $this->uri->segment(3);
 		$this->load->view("assignment/category_row", $data);
 	}
-	
+
 	function insert_category()
 	{
 		$kTeach = $this->input->post("kTeach");
@@ -190,25 +198,28 @@ class Assignment extends MY_Controller
 		$weight = $this->input->post("weight");
 		$gradeStart = $this->input->post("gradeStart");
 		$gradeEnd = $this->input->post("gradeEnd");
+		$data = array();
 		if($category && $weight && $gradeStart && $gradeEnd){
 			$data["category"] = $category;
 			$data["kTeach"] = $kTeach;
 			$data["weight"] = $weight;
 			$data["gradeStart"] = $gradeStart;
 			$data["gradeEnd"] = $gradeEnd;
-		}
+		
 		$kCategory = $this->assignment->insert_category($data);
 		$category = $this->assignment->get_category($kCategory);
 		$data["category"] = $category;
 		$data["action"] = "update";
 		$data["kTeach"] = $kTeach;
 		$this->load->view("assignment/category_row",$data);
-		
-		
-		
+		}else{
+			echo "Something didn't work right. We are working on the problem.";
+		}
+
+
 	}
-	
-	
+
+
 	function edit_categories()
 	{
 		$data["kTeach"] = $this->uri->segment(3);
@@ -217,7 +228,7 @@ class Assignment extends MY_Controller
 		$data["categories"] = $this->assignment->get_categories($data["kTeach"], $data["gradeStart"] , $data["gradeEnd"]);
 		$this->load->view("assignment/categories",$data);
 	}
-	
+
 	function update_category()
 	{
 		$kCategory = $this->input->get_post("kCategory");
@@ -227,7 +238,7 @@ class Assignment extends MY_Controller
 		$data["gradeEnd"] = $this->input->get_post("gradeEnd");
 		$this->assignment->update_category($kCategory,$data);
 		print $this->db->last_query();
-		
+
 	}
 
 }
