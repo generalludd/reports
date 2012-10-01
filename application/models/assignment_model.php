@@ -85,6 +85,7 @@ class Assignment_model extends CI_Model
 		$this->db->order_by("assignment.kAssignment");
 		$this->db->order_by("assignment.term");
 		$this->db->order_by("assignment.year");
+		$this->db->select("student.*,grade.*,assignment.assignment,assignment.points as assignment_total,assignment.subject, assignment.term,assignment.year,category.weight,category.category");
 		$result = $this->db->get("assignment")->result();
 		return $result;
 	}
