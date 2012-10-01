@@ -152,6 +152,33 @@ class Grade_model extends CI_Model
 		return $result;
 	}
 
+	function get_summary($kTeach, $gradeStart, $gradeEnd, $term, $year, $kCategory = NULL)
+	{
+		
+		/*select `grade`.`kStudent` AS `kStudent`,`grade`.`kGrade` AS `kGrade`,
+		 * (sum(`grade`.`points`) / sum(`assignment`.`points`)) AS `average`,`assignment`.`kCategory` AS `kCategory`,`assignment`.`kTeach` AS `kTeach`,`assignment`.`term` AS `term`,
+		 * `assignment`.`year` AS `year` from (`grade` join `assignment` on((`grade`.`kAssignment` = `assignment`.`kAssignment`))) 
+		 * group by `grade`.`kGrade`
+	
+		 */	
+		$this->db->from("grade_total");
+		$this->db->where("grade_total.kTeach",$kTeach);
+		$this->db->where("assignment.gradeStart",$gradeStart);
+		$this->db->where("assignment.gradeEnd",$gradeEnd);
+		$this->db->where("grade_total.term",$term);
+		$this->db->where("grade_total.year",$year);
+		if($kCategory){
+			$this->db->where("grade_total.kCategory",$kCategory);
+		}
+		$this->db->join("assignment","assignment.kCategory=grade_total.kCategory");
+		$this->db->order_by("grade_total.kCategory");
+		$this->db->group_by("kStudent");
+		$this->db->select("grade_total.kStudent,grade_total.kCategory,AVG('average') as average");
+		$result = $this->db->get()->result();
+		return $result;
+	}
+	
+	
 	function delete($kGrade)
 	{
 		$delete = array("kGrade" => $kGrade);

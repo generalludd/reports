@@ -48,6 +48,7 @@ class Assignment extends MY_Controller
 		}
 		$data["grades"] = $this->assignment->get_grades($kTeach,$term,$year,$gradeStart,$gradeEnd,$stuGroup);
 		$data["assignments"] = $this->assignment->get_for_teacher($kTeach,$term,$year,$gradeStart,$gradeEnd);
+		//$data["totals"] = $this->grade->get_summary($kTeach, $gradeStart, $gradeEnd, $term, $year);
 		$data["kTeach"] = $kTeach;
 		$data["term"] = $term;
 		$data["year"] = $year;

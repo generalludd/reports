@@ -59,8 +59,8 @@ if($stuGroup){
 		</tr>
 	</thead>
 	<tbody>
-		<? if(!empty($grades)){ 
-			?>
+		<? if(!empty($grades)){ ?>
+		
 		<? $current_student = FALSE; ?>
 		<? foreach($grades as $grade){ 
 			if($current_student != $grade->kStudent){
@@ -68,6 +68,8 @@ if($stuGroup){
 				$rows[$grade->kStudent]["kStudent"] = $grade->kStudent;
 				$current_student = $grade->kStudent;
 				$student_points = 0;
+				//$rows[$grade->kStudent]["test"] = $this->grade->get_totals($grade->kStudent,$this->session->userdata("term"),$this->session->userdata("year"),$this->session->userdata("userID") );
+				
 
 			}
 			$points = round($grade->points,1);
@@ -79,21 +81,32 @@ if($stuGroup){
 			if($grade->footnote){
 				$points .= "[$grade->footnote]";
 			}
-
 			$rows[$grade->kStudent]["totals"] = $student_points;
+				
+
 			$rows[$grade->kStudent]["grades"][$grade->kAssignment] = sprintf("<td class='grade-points edit' id='sag_%s" . "_%s'>$points</td>",$grade->kAssignment,$grade->kStudent);
 		}
-
+		
 		foreach($rows as $row){
 			print sprintf("<tr id='sgtr_%s'>",$row['kStudent']);
 			print $row["name"];
+			/*$i=0;
+			$sum = 0;
+			foreach($row["test"] as $test){
+				$sum += $test->category_average;
+				$i++;
+			}
+			$final_grade = round($sum/$i,2) * 100;
+			*/
 			//get the grade as a human-readable percentage
 			$final_grade = round(($row["totals"])/$assignment_count,2)*100;
 			//$final_grade = $row["totals"];
 			print sprintf("<td>%s (%s%s)</td>",calculate_letter_grade($final_grade),$final_grade,"%");
+			
 			print implode("",$row["grades"]);
 			print "</tr>";
 		}
+		
 		}
 		?>
 	</tbody>
