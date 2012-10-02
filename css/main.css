@@ -356,7 +356,7 @@ ul.button-list li .button.delete {
 }
 
 #utility .button-box {
-	font-size: .8em;
+	*font-size: .8em;
 }
 
 }
