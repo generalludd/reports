@@ -101,7 +101,7 @@ class Grade_model extends CI_Model
 		if($category){
 		$weight = $this->calculate_weight($kTeach,$category);
 		}
-		$this->average = $points/$total*$weight/100;
+		$this->average = $points*$weight/100;
 		//if the status is either "Exc" or "Abs" or anything else for that matter,
 		// then the grade is counted at full value
 		if($status == "Exc" || $status== "Abs"){
