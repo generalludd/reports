@@ -72,7 +72,7 @@ if($stuGroup){
 				
 
 			}
-			$points = round($grade->points,1);
+			$points = round($grade->points,2);
 			$student_points += $grade->points/$grade->assignment_total; //*$grade->weight/100;
 			//if the student status for this grade is Abs or Exc display the status instead of the grade
 			if(!empty($grade->status)){
