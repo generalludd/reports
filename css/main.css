@@ -19,14 +19,14 @@ body {
 	font-family: tahoma, sans-serif;
 	margin: 10px;
 	padding: 10px;
+	padding-right: 15px;
 	padding-top: 0px;
 }
 
 #page {
-	width: 90%;
 	margin-left: auto;
 	margin-right: auto;
-	min-width: 1028px;
+	min-width: 940px;
 }
 
 .highlight {
@@ -391,8 +391,8 @@ legend {
 #navigation {
 	position: relative;
 	float: left;
-	width: 95%;
-	padding: .75em 1em 0 1em;
+	width: 100%;
+	padding: .75em 0 0 1em;
 	height: 2.5em;
 	min-width: 700px;
 	margin-bottom: .5em;
@@ -431,7 +431,8 @@ legend {
 }
 
 #utility {
-	margin-left: 78%;
+	float:right;
+	clear:both;
 }
 
 #utility p {
@@ -442,7 +443,7 @@ legend {
 #main {
 	position: relative;
 	padding: 0 5em 2em 2em;
-	margin-top: 1.5em;
+	margin-top: 2.5em;
 }
 
 #content {
@@ -1121,18 +1122,18 @@ table.report td.field {
 	border-left: 1px solid #c3c3c3;
 }
 
-td.field.report-comment, td.field.report-assignment {
+td.field.report-comment,td.field.report-assignment {
 	width: 150px;
 }
 
 td.field.report-parent-contact {
+	
 }
 
-td.field.report-contact-date, td.field.report-student {
+td.field.report-contact-date,td.field.report-student {
 	border-right: 1px solid #c3c3c3;
 }
 
-table.report td.field.buttons, table.report th.field.buttons {
+table.report td.field.buttons,table.report th.field.buttons {
 	border: none;
 }
-
