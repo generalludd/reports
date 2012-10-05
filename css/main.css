@@ -190,6 +190,9 @@ div.login-title {
 	cursor: pointer;
 	padding: 3px;
 }
+th.notice {
+	font-weight: normal;
+}
 
 #new_popup {
 	display: none;
