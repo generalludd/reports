@@ -190,8 +190,10 @@ div.login-title {
 	cursor: pointer;
 	padding: 3px;
 }
-th.notice {
-	font-weight: normal;
+
+.alert {
+	padding: 3px;
+	font-weight: bold;
 }
 
 #new_popup {
@@ -434,8 +436,8 @@ legend {
 }
 
 #utility {
-	float:right;
-	clear:both;
+	float: right;
+	clear: both;
 }
 
 #utility p {

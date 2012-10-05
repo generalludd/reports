@@ -262,7 +262,7 @@ h4,h5,h6,tr.benchmark-grade {
 	background: #ff8538 url(images/warning.png) 50% 50% repeat-x;
 }
 
-th.notice {
+.alert {
 	background-image: url(images/ui-bg_diagonals-thick_18_b81900_40x40.png);
 	background-repeat:repeat;
 	color: #fff;
