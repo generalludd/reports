@@ -10,10 +10,6 @@ if($stuGroup){
 	$gradeDisplay = sprintf("%s %s",$gradeDisplay, $stuGroup);
 }
 ?>
-<p class="notice">Please Note: Grade totals do not yet reflect the grade
-	weights. In fact, they are a complete mess, as you can see! Don't
-	worry, this is just a calculation error and does not reflect problems
-	with the data.</p>
 
 <h2>
 	Grade Chart for
@@ -45,7 +41,7 @@ if($stuGroup){
 		<tr>
 			<th><?=$header->subject;?><br /> <?="$header->term<br/>" . format_schoolyear($header->year);?>
 			</th>
-			<th class="alert">Estimated<br />Final Grade<br />(no weights<br />applied)
+			<th>
 			</th>
 			<? 
 			$total_points = 0;
