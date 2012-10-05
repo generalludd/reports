@@ -21,7 +21,6 @@ if($stuGroup){
 		<li><span class="button refresh">Refresh Page</span></li>
 		<li><span class="button edit assignment_categories_edit">Edit
 				Categories</span></li>
-		<li><span class='button new assignment-create'>Add Assignment</span>
 		</li>
 	</ul>
 
@@ -60,7 +59,9 @@ if($stuGroup){
 			//calculated the weighted total points
 			$total_points += $assignment->points * $assignment->weight/100;
 } ?>
-
+<th class='assignment-button'><span
+				class='button new assignment-create'>Add Assignment</span>
+			</th>
 		</tr>
 	</thead>
 	<tbody>
