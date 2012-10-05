@@ -126,7 +126,6 @@ class Assignment_model extends CI_Model
 		$this->db->order_by("assignment.kAssignment");
 		$this->db->order_by("assignment.kCategory");
 		$result = $this->db->get()->result();
-		print $this->db->last_query();
 		return $result;
 
 	}
