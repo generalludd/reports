@@ -81,6 +81,7 @@ class Assignment_model extends CI_Model
 		$this->db->join("student","grade.kStudent=student.kStudent");
 		$this->db->join("assignment_category as category","assignment.kCategory = category.kCategory","LEFT");
 		$this->db->order_by("student.stuLast");
+		$this->db->order_by("student.kStudent");
 		$this->db->order_by("assignment.date");
 		$this->db->order_by("assignment.kAssignment");
 		$this->db->order_by("assignment.term");
@@ -96,7 +97,7 @@ class Assignment_model extends CI_Model
 		$this->db->where("assignment.term",$term);
 		$this->db->where("assignment.year",$year);
 		
-		$this->db->where("grade.kStudent",$kStudent);
+		// $this->db->where("grade.kStudent",$kStudent);
 		if(array_key_exists("kTeach",$options)){
 			$this->db->where("assignment.kTeach",$options["kTeach"]);
 		}
@@ -125,6 +126,7 @@ class Assignment_model extends CI_Model
 		$this->db->order_by("assignment.kAssignment");
 		$this->db->order_by("assignment.kCategory");
 		$result = $this->db->get()->result();
+		print $this->db->last_query();
 		return $result;
 
 	}
