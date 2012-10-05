@@ -25,6 +25,8 @@ if($stuGroup){
 		<li><span class="button refresh">Refresh Page</span></li>
 		<li><span class="button edit assignment_categories_edit">Edit
 				Categories</span></li>
+		<li><span class='button new assignment-create'>Add Assignment</span>
+		</li>
 	</ul>
 
 
@@ -43,7 +45,8 @@ if($stuGroup){
 		<tr>
 			<th><?=$header->subject;?><br /> <?="$header->term<br/>" . format_schoolyear($header->year);?>
 			</th>
-			<th class="notice">Estimated<br/>Final Grade<br/>(no weights<br/>applied)</th>
+			<th class="notice">Estimated<br />Final Grade<br />(no weights<br />applied)
+			</th>
 			<? foreach($assignments as $assignment){ ?>
 
 			<th id="as_<?=$assignment->kAssignment;?>"
@@ -58,14 +61,12 @@ if($stuGroup){
 			<? 
 			$assignment_count++;
 } ?>
-			<th class='assignment-button'><span
-				class='button new assignment-create'>Add Assignment</span>
-			</th>
+
 		</tr>
 	</thead>
 	<tbody>
 		<? if(!empty($grades)){ ?>
-		
+
 		<? $current_student = FALSE; ?>
 		<? foreach($grades as $grade){ 
 			if($current_student != $grade->kStudent){
@@ -74,7 +75,7 @@ if($stuGroup){
 				$current_student = $grade->kStudent;
 				$student_points = 0;
 				//$rows[$grade->kStudent]["test"] = $this->grade->get_totals($grade->kStudent,$this->session->userdata("term"),$this->session->userdata("year"),$this->session->userdata("userID") );
-				
+
 
 			}
 			$points = round($grade->points,2);
@@ -87,19 +88,19 @@ if($stuGroup){
 				$points .= "[$grade->footnote]";
 			}
 			$rows[$grade->kStudent]["totals"] = $student_points;
-				
+
 
 			$rows[$grade->kStudent]["grades"][$grade->kAssignment] = sprintf("<td class='grade-points edit' id='sag_%s" . "_%s'>$points</td>",$grade->kAssignment,$grade->kStudent);
 		}
-		
+
 		foreach($rows as $row){
 			print sprintf("<tr id='sgtr_%s'>",$row['kStudent']);
 			print $row["name"];
 			/*$i=0;
-			$sum = 0;
+			 $sum = 0;
 			foreach($row["test"] as $test){
-				$sum += $test->category_average;
-				$i++;
+			$sum += $test->category_average;
+			$i++;
 			}
 			$final_grade = round($sum/$i,2) * 100;
 			*/
@@ -107,13 +108,13 @@ if($stuGroup){
 			$final_grade = round(($row["totals"])/$assignment_count,2)*100;
 			//$final_grade = $row["totals"];
 			print sprintf("<td>%s (%s%s)</td>",calculate_letter_grade($final_grade),$final_grade,"%");
-			
+
 			print implode("",$row["grades"]);
 			print "</tr>";
 		}
-		
-		}
-		?>
+
+}
+?>
 	</tbody>
 </table>
 <div class='button-box'>
