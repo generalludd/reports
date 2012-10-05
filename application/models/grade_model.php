@@ -61,8 +61,9 @@ class Grade_model extends CI_Model
 	 * @param varchar $term
 	 * @param in $year
 	 * Finds all the students with a given assignment of the same term, teacher and year and creates new records for the student.
+	 * @TODO Maybe adding the points could be a preference for each teacher. 
 	 */
-	function batch_insert($kAssignment,$kTeach,$term,$year,$grade_start, $grade_end)
+	function batch_insert($kAssignment,$kTeach,$term,$year,$grade_start, $grade_end,$points)
 	{
 		$this->db->select("distinct(`grade`.`kStudent`)");
 		$this->db->from("assignment");
@@ -79,7 +80,7 @@ class Grade_model extends CI_Model
 		foreach($students as $student){
 			//$data = array("kAssignment"=>$kAssignment, "kStudent"=>$student->kStudent,"points"=>"0");
 			//$this->db->insert("grade",$data);
-			$this->update($student->kStudent, $kAssignment, $kTeach, 0, NULL, NULL, NULL, NULL);
+			$this->update($student->kStudent, $kAssignment, $kTeach, $points, NULL, NULL, NULL, NULL);
 		}
 		return $students;
 	}
