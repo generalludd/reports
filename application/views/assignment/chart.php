@@ -45,7 +45,7 @@ if($stuGroup){
 		<tr>
 			<th><?=$header->subject;?><br /> <?="$header->term<br/>" . format_schoolyear($header->year);?>
 			</th>
-			<th class="notice">Estimated<br />Final Grade<br />(no weights<br />applied)
+			<th class="alert">Estimated<br />Final Grade<br />(no weights<br />applied)
 			</th>
 			<? foreach($assignments as $assignment){ ?>
 
