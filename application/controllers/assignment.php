@@ -61,7 +61,7 @@ class Assignment extends MY_Controller
 	}
 
 	function report_card(){
-		$kStudent = $this->input->get("kStudent");
+		$kStudent = $this->uri->segment(3);
 		$kTeach = NULL;
 		$options = array();
 		if($this->input->get("kTeach")){
