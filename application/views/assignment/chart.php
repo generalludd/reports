@@ -47,7 +47,9 @@ if($stuGroup){
 			</th>
 			<th class="alert">Estimated<br />Final Grade<br />(no weights<br />applied)
 			</th>
-			<? foreach($assignments as $assignment){ ?>
+			<? 
+			$total_points = 0;
+			foreach($assignments as $assignment){ ?>
 
 			<th id="as_<?=$assignment->kAssignment;?>"
 				class="assignment-edit assignment-field"><span
@@ -59,7 +61,8 @@ if($stuGroup){
 
 
 			<? 
-			$assignment_count++;
+			//calculated the weighted total points
+			$total_points += $assignment->points * $assignment->weight/100;
 } ?>
 
 		</tr>
@@ -74,23 +77,27 @@ if($stuGroup){
 				$rows[$grade->kStudent]["kStudent"] = $grade->kStudent;
 				$current_student = $grade->kStudent;
 				$student_points = 0;
-				//$rows[$grade->kStudent]["test"] = $this->grade->get_totals($grade->kStudent,$this->session->userdata("term"),$this->session->userdata("year"),$this->session->userdata("userID") );
-
-
 			}
 			$points = round($grade->points,2);
-			$student_points += $grade->points/$grade->assignment_total; //*$grade->weight/100;
+			
+			//calculate the weighted grade for this assignment
+			$student_points += $grade->points*$grade->weight/100;
 			//if the student status for this grade is Abs or Exc display the status instead of the grade
 			if(!empty($grade->status)){
 				$points = $grade->status;
+				if($grade->status == "Exc"){
+					$student_points += 1;
+				}
 			}
+
+
 			if($grade->footnote){
 				$points .= "[$grade->footnote]";
 			}
 			$rows[$grade->kStudent]["totals"] = $student_points;
 
 
-			$rows[$grade->kStudent]["grades"][$grade->kAssignment] = sprintf("<td class='grade-points edit' id='sag_%s" . "_%s'>$points</td>",$grade->kAssignment,$grade->kStudent);
+			$rows[$grade->kStudent]["grades"][$grade->kAssignment] = sprintf("<td class='grade-points edit' id='sag_%s_%s'>%s</td>",$grade->kAssignment,$grade->kStudent,$points);
 		}
 
 		foreach($rows as $row){
@@ -105,7 +112,7 @@ if($stuGroup){
 			$final_grade = round($sum/$i,2) * 100;
 			*/
 			//get the grade as a human-readable percentage
-			$final_grade = round(($row["totals"])/$assignment_count,2)*100;
+			$final_grade = round(($row["totals"])/$total_points,2)*100;
 			//$final_grade = $row["totals"];
 			print sprintf("<td>%s (%s%s)</td>",calculate_letter_grade($final_grade),$final_grade,"%");
 
