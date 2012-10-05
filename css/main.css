@@ -1097,7 +1097,6 @@ table.grade-editor thead tr th {
 
 .grade-points.edit:hover,.assignment-edit:hover,td.student-name:hover {
 	cursor: pointer;
-	background-color: #efefef;
 }
 
 table.report-card th,table.report-card td {

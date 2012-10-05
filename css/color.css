@@ -357,3 +357,12 @@ tr.benchmark-row td.benchmark-text:hover {
 table.list tr:hover {
 	background-color: #cdcdcd;
 }
+
+table.grade-chart tr:hover {
+	background-color: #efefef;
+}
+
+.grade-points.edit:hover,.assignment-edit:hover,td.student-name:hover {
+	cursor: pointer;
+	background-color: #dfdfdf;
+}
