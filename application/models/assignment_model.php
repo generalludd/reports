@@ -94,6 +94,15 @@ class Assignment_model extends CI_Model
 
 	function get_for_student($kStudent,$term,$year,$options = array())
 	{
+		
+		$from = "assignment";
+		$join = "grade";
+		
+		if(array_key_exists("from",$options) && array_key_exists("join",$options)){
+			$from = $options["from"];
+			$join = $options["join"];
+		}
+		
 		$this->db->where("assignment.term",$term);
 		$this->db->where("assignment.year",$year);
 		
@@ -114,8 +123,8 @@ class Assignment_model extends CI_Model
 		//$this->db->where("assignment.gradeStart = category.gradeStart");
 		//$this->db->where("assignment.gradeEnd = category.gradeEnd");
 		
-		$this->db->from("assignment");
-		$this->db->join("grade","assignment.kAssignment=grade.kAssignment AND grade.kStudent = $kStudent","LEFT");
+		$this->db->from($from);
+		$this->db->join($join,"assignment.kAssignment=grade.kAssignment AND grade.kStudent = $kStudent","LEFT");
 		$this->db->join("student","student.kStudent=grade.kStudent","LEFT");
 		$this->db->join("teacher","teacher.kTeach=assignment.kTeach","LEFT");
 		$this->db->join("menu","grade.footnote = menu.value AND menu.category='grade_footnote'","LEFT");

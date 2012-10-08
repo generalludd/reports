@@ -321,6 +321,22 @@ $(document).ready(function(){
 		//$(this).html(myTeach);
 	});
 	
+	$(".get-student-grades").live("click",function(){
+		myStudent = this.id.split("_")[1];
+		form_data = {
+				kStudent: myStudent
+		};
+		$.ajax({
+			type:"get",
+			data: form_data,
+			url: base_url + "grade/select_report_card",
+			success: function(data){
+				showPopup("Selecting Grade Report", data,"auto");
+			}
+		});
+		
+	});
+	
 });
 
 function save_student_points(myAssignment)

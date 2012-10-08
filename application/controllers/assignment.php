@@ -32,12 +32,12 @@ class Assignment extends MY_Controller
 			$this->session->set_userdata("term",$term);
 
 		}
-		
+
 		$stuGroup = NULL;
 		if($this->input->get("stuGroup")){
 			$stuGroup = $this->input->get("stuGroup");
 		}
-		
+
 		$this->session->set_userdata("stuGroup",$stuGroup);
 
 
@@ -47,7 +47,7 @@ class Assignment extends MY_Controller
 			$this->session->set_userdata("year",$year);
 
 		}
-		
+
 		$data["grades"] = $this->assignment->get_grades($kTeach,$term,$year,$gradeStart,$gradeEnd,$stuGroup);
 		$data["assignments"] = $this->assignment->get_for_teacher($kTeach,$term,$year,$gradeStart,$gradeEnd);
 		//$data["totals"] = $this->grade->get_summary($kTeach, $gradeStart, $gradeEnd, $term, $year);
@@ -62,35 +62,6 @@ class Assignment extends MY_Controller
 		$this->load->view("page/index",$data);
 	}
 
-	function report_card(){
-		$kStudent = $this->uri->segment(3);
-		$kTeach = NULL;
-		$options = array();
-		if($this->input->get("kTeach")){
-			$options["kTeach"] = $this->input->get("kTeach");
-			$kTeach = $options["kTeach"];
-
-		}
-		if($this->input->get("subject")){
-			$options["subject"] = $this->input->get("subject");
-		}
-
-		$term = get_current_term();
-		if($this->input->get("term")){
-			$term = $this->input->get("term");
-
-		}
-		$year = get_current_year();
-		if($this->input->get("year")){
-			$year = $this->input->get("year");
-		}
-
-		$data["grades"] = $this->assignment->get_for_student($kStudent,$term,$year,$options);
-		$data["totals"] = $this->grade->get_totals($kStudent,$term,$year);
-		$data["target"] = "grade/chart";
-		$data["title"] = "Report Card";
-		$this->load->view("page/print",$data);
-	}
 
 	function search()
 	{
@@ -209,13 +180,13 @@ class Assignment extends MY_Controller
 			$data["weight"] = $weight;
 			$data["gradeStart"] = $gradeStart;
 			$data["gradeEnd"] = $gradeEnd;
-		
-		$kCategory = $this->assignment->insert_category($data);
-		$category = $this->assignment->get_category($kCategory);
-		$data["category"] = $category;
-		$data["action"] = "update";
-		$data["kTeach"] = $kTeach;
-		$this->load->view("assignment/category_row",$data);
+
+			$kCategory = $this->assignment->insert_category($data);
+			$category = $this->assignment->get_category($kCategory);
+			$data["category"] = $category;
+			$data["action"] = "update";
+			$data["kTeach"] = $kTeach;
+			$this->load->view("assignment/category_row",$data);
 		}else{
 			echo "Something didn't work right. We are working on the problem.";
 		}

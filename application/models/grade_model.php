@@ -178,7 +178,63 @@ class Grade_model extends CI_Model
 		$result = $this->db->get()->result();
 		return $result;
 	}
+	/**
+	 * @param int $kStudent
+	 * @param varchar $term
+	 * @param int $year
+	 * @param date $cutoff_date optional mysql  date format (yyyy-mm-dd) 
+	 * @return object
+	 * get a distinct list of categories for subjects with totals for the given term & year to produce a report card. 
+	 */
+	function get_categories($kStudent, $term, $year, $options = array()){
+		if(array_key_exists("cutoff_date",$options)){
+			$this->db->where(sprintf("`assignment`.`date` <= '%s'", $options["cutoff_date"]));
+		}
+		
+		if(array_key_exists("subject",$options)){
+			$this->db->where("assignment.subject",$options["subject"]);
+		}
+		$this->db->from("grade");
+		$this->db->where("kStudent",$kStudent);
+		$this->db->join("assignment","grade.kAssignment=assignment.kAssignment","LEFT");
+		$this->db->join("assignment_category as category","assignment.kCategory = category.kCategory","LEFT");
+		$this->db->select("category.category");
+		$this->db->select("subject");
+		$this->db->select("SUM(grade.points) as grade_points");
+		$this->db->select("SUM(assignment.points) as total_points");
+		$this->db->select("category.weight");
+		$this->db->order_by("subject");
+		$this->db->group_by("assignment.kCategory");
+		$result = $this->db->get()->result();
+		return $result;
+	}
+	/**
+	 * 
+	 * @param int $kStudent
+	 * @param varchar $term
+	 * @param int $year
+	 * @param date $cutoff_date optional standard US date (mm-dd-yyyy) format converted in script to mysql
+	 * @return object
+	 * get a distinct list of subjects for a student for the term, year and optional cutoff date. 
+	 */
 	
+	function get_subjects($kStudent, $term, $year, $cutoff_date = NULL){
+		if($cutoff_date){
+			$this->db->where(sprintf("`assignment`.`date` <= '%s'", format_date($cutoff_date,"mysql")));
+		}
+		$this->db->from("grade");
+		$this->db->where("kStudent",$kStudent);
+		$this->db->join("assignment","grade.kAssignment=assignment.kAssignment","LEFT");
+		$this->db->select("subject");
+		$this->db->select("SUM(grade.points) as grade_points");
+		$this->db->select("SUM(assignment.points) as total_points");
+		$this->db->order_by("subject");
+		$this->db->group_by("subject");
+		$result = $this->db->get()->result();
+		return $result;
+		
+		
+	}
 	
 	function delete($kGrade)
 	{

@@ -9,7 +9,7 @@ class Grade extends MY_Controller
 		$this->load->model("grade_model","grade");
 		$this->load->model("assignment_model","assignment");
 	}
-	
+
 	function edit()
 	{
 		$this->load->model("menu_model");
@@ -42,7 +42,7 @@ class Grade extends MY_Controller
 		$data["kTeach"] = $kTeach;
 		$options["kTeach"] = $kTeach;
 		$data["grades"] = $this->assignment->get_for_student($kStudent,$term,$year,$options);
-		
+
 		$this->load->view("grade/edit",$data);
 
 
@@ -89,6 +89,84 @@ class Grade extends MY_Controller
 		echo OK;
 	}
 
+	function select_report_card()
+	{
+		if($kStudent = $this->input->get("kStudent")){
+			$data["kStudent"] = $kStudent;
+			$term = get_current_term();
+			$data["terms"] = get_term_menu("term",$term);
+			$year = get_current_year();
+			$data["years"] = get_year_list();
+			$subjects = $this->grade->get_subjects($kStudent,$term,$year);
+			$data["subjects"] = get_keyed_pairs($subjects, array("subject","subject"), TRUE);
+			$this->load->view("grade/selector",$data);
+		}
+	}
 
+	function report_card(){
+		$kStudent = $this->input->get("kStudent");
+		$this->load->model("student_model","student");
+		$kTeach = NULL;
+		$options = array();
+		$options["from"] = "grade";
+		$options["join"] = "assignment";
+		if($kTeach = $this->input->get("kTeach")){
+			$options["kTeach"] = $kTeach;
+		}
+		$output["cutoff_date"] = FALSE;
+		if($cutoff_date = $this->input->get("cutoff_date")){
+			$options["cutoff_date"] = format_date($cutoff_date,"mysql");
+			$output["cutoff_date"] = $cutoff_date;
+		}
+
+		$term = get_current_term();
+		if($this->input->get("term")){
+			$term = $this->input->get("term");
+		}
+		$output["term"] = $term;
+		
+		
+		$year = get_current_year();
+		if($this->input->get("year")){
+			$year = $this->input->get("year");
+		}
+		$output["year"] = $year;
+
+		if($subject = $this->input->get("subject")){
+			$subjects = array($subject);
+		}else{
+			$subjects = $this->grade->get_subjects($kStudent,$term,$year);
+		}
+		$data["target"] = "grade/report_card";
+		$data["title"] = "Report Card";
+
+		$student = $this->student->get($kStudent);
+		$output["student"] =  format_name($student->stuFirst, $student->stuLast, $student->stuNickname);
+		$output["charts"] = array();
+
+		if(count($subjects) == 1){
+			$options["subject"] = $subject;
+			$data["subject"] = $subject;
+			$data["grades"] = $this->assignment->get_for_student($kStudent,$term,$year,$options);
+			$data["categories"] = $this->grade->get_categories($kStudent, $term, $year,$options);
+			$output["charts"][] = $this->load->view("grade/chart",$data,TRUE);
+
+		}else{
+			foreach($subjects as $subject){
+				$options["subject"] = $subject->subject;
+				$data["subject"] = $subject->subject;
+				$data["grades"] = $this->assignment->get_for_student($kStudent,$term,$year,$options);
+				$data["categories"] = $this->grade->get_categories($kStudent, $term, $year,$options);
+				$output["charts"][] = $this->load->view("grade/chart",$data,TRUE);
+			}
+		}
+
+		if($output){
+			$this->load->view("page/index",$output);
+		}
+
+
+
+	}
 
 }
