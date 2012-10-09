@@ -14,6 +14,10 @@ if($teacher->dbRole == 2){
 
 }
 $buttons[] = array("item" =>"report","href"=>site_url("report/get_list/teacher/$kTeach"),"text"=> sprintf("Submitted %ss", STUDENT_REPORT));
+if($teacher->gradeEnd > 4){
+	$buttons[] = array("item" => "assignment", "text" => "Grades","class"=> "button search-assignments","id" =>"sa_$kTeach","title" => "Search for current grade charts");
+}
+
 $options["selection"] = $this->uri->segment(1);
 $options["id"] = "teacher-buttons";
 $button_bar = create_button_bar($buttons, $options);
