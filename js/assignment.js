@@ -65,8 +65,12 @@ $(document).ready(function(){
 	
 	$(".search-assignments").live("click",function(){
 		myTeach = this.id.split("_")[1];
+		form_data = {
+				kTeach: myTeach
+		};
 		$.ajax({
 			type: "get",
+			data: form_data,
 			url: base_url + "assignment/search",
 			success: function(data){
 				showPopup("Search for Assigment Charts",data, "auto");
