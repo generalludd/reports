@@ -1141,3 +1141,32 @@ td.field.report-contact-date,td.field.report-student {
 table.report td.field.buttons,table.report th.field.buttons {
 	border: none;
 }
+
+#report-card {
+	
+}
+
+.report-header {
+	font-weight: bold;
+	margin: 1em 0;
+}
+
+.report-cutoff {
+	
+}
+
+.report-term {
+	font-size: 1.5em;
+}
+
+.report-teacher {
+	font-size: 1.2em;
+}
+
+.report-teacher.report-0 {
+	
+}
+
+.report-summary {
+	
+}

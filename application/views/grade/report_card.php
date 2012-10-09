@@ -1,10 +1,16 @@
-<?php ?>
+<?php 
+$this->load->view("student/navigation", array("kStudent",$kStudent));
 
-<h2>Report Card for <?=$student;?></h2>
+?>
+
+<h2>Report Card for <?=$student_name;?></h2>
+<div id='report-card'>
 <? if($cutoff_date):?>
-	 <h3>For grades given through <?=$cutoff_date;?></h3>
+	 <div class='report-header report-cutoff'>For grades given through <?=$cutoff_date;?></div>
 <? endif;?>
-<h3><?="$term, $year";?></h3>
+<div class='report-header report-term'><?="$term, $year";?></div>
 <? foreach($charts as $chart){
 	echo $chart;
-}
+} ?>
+
+</div>

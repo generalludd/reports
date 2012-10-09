@@ -162,34 +162,28 @@ class Grade extends MY_Controller
 			$output["year"] = $year;
 
 			if($subject = $this->input->get("subject")){
-				$subjects = array($subject);
+				$array = array("subject" => $subject);
+				$subjects[] = (object) $array;
 			}else{
 				$subjects = $this->grade->get_subjects($kStudent,$term,$year);
 			}
 			$data["target"] = "grade/report_card";
 			$data["title"] = "Report Card";
-
+			
 			$student = $this->student->get($kStudent);
-			$output["student"] =  format_name($student->stuFirst, $student->stuLast, $student->stuNickname);
+			$data["kStudent"] = $kStudent;
+			$data["student"] = $student;
+			$output["student_name"] =  format_name($student->stuFirst, $student->stuLast, $student->stuNickname);
 			$output["charts"] = array();
-			//if a subject has been submitted we change the query to one item.
-			//This could be cleaned up by instantiating an temporary "subject" object
-			//with one attribute (subject = submitted subject);
-			if(count($subjects) == 1){
-				$options["subject"] = $subject;
-				$data["subject"] = $subject;
+			$i = 0;
+			foreach($subjects as $subject){
+				$data["count"] = $i;// count is used to identify the chart number in the output for css purposes.
+				$options["subject"] = $subject->subject;
+				$data["subject"] = $subject->subject;
 				$data["grades"] = $this->assignment->get_for_student($kStudent,$term,$year,$options);
 				$data["categories"] = $this->grade->get_categories($kStudent, $term, $year,$options);
 				$output["charts"][] = $this->load->view("grade/chart",$data,TRUE);
-
-			}else{
-				foreach($subjects as $subject){
-					$options["subject"] = $subject->subject;
-					$data["subject"] = $subject->subject;
-					$data["grades"] = $this->assignment->get_for_student($kStudent,$term,$year,$options);
-					$data["categories"] = $this->grade->get_categories($kStudent, $term, $year,$options);
-					$output["charts"][] = $this->load->view("grade/chart",$data,TRUE);
-				}
+				$i ++;
 			}
 
 			if($output){
