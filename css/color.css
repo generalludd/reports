@@ -89,7 +89,7 @@ div.list {
 }
 
 /*form elements*/
-.button {
+.button , input[type="submit"] {
 	border: 1px solid #327e04;
 	color: #ffffff;
 	opacity: .90;
@@ -97,7 +97,7 @@ div.list {
 	background: #67b021 url(images/button_20.png) 50% 50% repeat-x;
 }
 
-.button:hover {
+.button:hover, submit:hover {
 	opacity: .90;
 	filter: Alpha(Opacity =                   90);
 	background: #91b347 url(images/button_20_over.png) 50% 50% repeat-x;

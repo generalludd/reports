@@ -292,7 +292,7 @@ div.narrative {
 	visibility: hidden;
 }
 
-.button,#navigation,#advancedSearch,#browser_warning,.notice,.warning,#searchForm fieldset,h2,h3,h4,h5,.support-view legend
+.button,#navigation,#advancedSearch,#browser_warning,.notice,.warning,#searchForm fieldset,h2,h3,h4,h5,.support-view legend, input[type="submit"]
 	{
 	-moz-border-radius: 3px;
 	-webkit-border-radius: 3px;
