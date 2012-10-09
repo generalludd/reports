@@ -516,12 +516,14 @@ function calculate_letter_grade($points)
 	$letters = array("9"=>"A",8=>"B",7=>"C",6=>"D",5=>"F");
 	$valence = "";
 	$output = "";
-	$plus = 7;
+	$plus = 6;
 	$minus = 3;
-	if(strval($points) >= 98){
+	if(strval($points) >= 99){
 		$output = "A+";
+	}elseif(strval($points) > 93){
+		$output = "A";
 	}elseif(strval($points) < 60){
-		$output == "F";
+		$output = "F";
 	}else{
 		$split = str_split($points);
 		$tens = $split[0];
