@@ -513,14 +513,14 @@ function format_table($data,$header = array(),$options = array()){
 
 function calculate_letter_grade($points)
 {
-	$letters = array("9"=>"A",8=>"B",7=>"C",6=>"D",5=>"D");
+	$letters = array("9"=>"A",8=>"B",7=>"C",6=>"D",5=>"F");
 	$valence = "";
 	$output = "";
 	$plus = 7;
 	$minus = 3;
 	if(strval($points) >= 98){
 		$output = "A+";
-	}elseif(strval($points) <= 50){
+	}elseif(strval($points) < 60){
 		$output == "F";
 	}else{
 		$split = str_split($points);
