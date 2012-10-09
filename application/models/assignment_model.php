@@ -150,7 +150,8 @@ class Assignment_model extends CI_Model
 		//$this->db->where("assignment.gradeEnd = category.gradeEnd");
 		$this->db->from("assignment");
 		$this->db->join("assignment_category as category","assignment.kCategory = category.kCategory","LEFT");
-		$this->db->select("assignment.*,category.weight,category.category");
+		$this->db->join("teacher","assignment.kTeach=teacher.kTeach", "LEFT");
+		$this->db->select("assignment.*,category.weight,category.category,teacher.teachFirst,teacher.teachLast");
 		$this->db->order_by("assignment.date");
 		$this->db->order_by("assignment.kAssignment");
 		$this->db->order_by("assignment.term");

@@ -9,19 +9,29 @@ if($gradeStart != $gradeEnd){
 if($stuGroup){
 	$gradeDisplay = sprintf("%s %s",$gradeDisplay, $stuGroup);
 }
-?>
+
+ if(!empty($assignments)){
+
+	/* Get the subject and relevant data from the first row of the assignments */
+	$header = $assignments[0];
+	$header_string = sprintf("%s<br/>%s<br/>%s",$header->subject,$header->term, format_schoolyear($header->year))
+	?>
 
 <h2>
 	Grade Chart for
-	<?=$gradeDisplay;?>
+	<?=sprintf("%s by %s %s", $gradeDisplay, $header->teachFirst, $header->teachLast) ;?>
 </h2>
 <div class="button-box">
 	<ul class="button-list">
 		<li><span class="button refresh">Refresh Page</span></li>
+		<? if($kTeach == $this->session->userdata("userID")): ?>
 		<li><span class="button edit assignment_categories_edit">Edit
 				Categories</span></li>
 		</li>
-		<li><span class="button search-assignments" id="sa_<?=$kTeach;?>" title="Search for Current Grade Charts">New Grade Search</span>
+		<? endif;?>
+
+		<li><span class="button search-assignments" id="sa_<?=$kTeach;?>"
+			title="Search for Current Grade Charts">New Grade Search</span>
 		</li>
 	</ul>
 
@@ -30,19 +40,14 @@ if($stuGroup){
 <input
 	type="hidden" name="kTeach" id="kTeach" value="<?=$kTeach;?>" />
 
-<? if(!empty($assignments)){
 
-	/* Get the subject of the first row of the assignments */
-	$header = $assignments[0];
-	?>
 
 <table class='grade-chart'>
 	<thead>
 		<tr>
-			<th><?=$header->subject;?><br /> <?="$header->term<br/>" . format_schoolyear($header->year);?>
+			<th><?=$header_string;?>
 			</th>
-			<th>
-			</th>
+			<th></th>
 			<? 
 			$total_points = 0;
 			foreach($assignments as $assignment){ ?>
@@ -60,8 +65,8 @@ if($stuGroup){
 			//calculated the weighted total points
 			$total_points += $assignment->points * $assignment->weight/100;
 } ?>
-<th class='assignment-button'><span
-				class='button new assignment-create'>Add Assignment</span>
+			<th class='assignment-button'><? if($kTeach == $this->session->userdata("userID")):?><span
+				class='button new assignment-create'>Add Assignment</span> <? endif; ?>
 			</th>
 		</tr>
 	</thead>
@@ -77,7 +82,7 @@ if($stuGroup){
 				$student_points = 0;
 			}
 			$points = round($grade->points,2);
-			
+
 			//calculate the weighted grade for this assignment
 			$student_points += $grade->points*$grade->weight/100;
 			//if the student status for this grade is Abs or Exc display the status instead of the grade
