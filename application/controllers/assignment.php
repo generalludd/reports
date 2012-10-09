@@ -66,6 +66,9 @@ class Assignment extends MY_Controller
 	function search()
 	{
 		$data["kTeach"] = $this->session->userdata("userID");
+		if($this->input->get("kTeach")){
+			$data["kTeach"] = $this->input->get("kTeach");
+		}
 		$data["term"] = $this->session->userdata("term");
 		$data["year"] = $this->session->userdata("year");
 		$data["gradeStart"] = $this->session->userdata("gradeStart");
