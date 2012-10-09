@@ -292,7 +292,7 @@ div.narrative {
 	visibility: hidden;
 }
 
-.button,#navigation,#advancedSearch,#browser_warning,.notice,.warning,#searchForm fieldset,h2,h3,h4,h5,.support-view legend, input[type="submit"]
+.button,#navigation,#advancedSearch,#browser_warning,.notice,.warning,#searchForm fieldset,h2,h3,h4,h5,.support-view legend,input[type="submit"]
 	{
 	-moz-border-radius: 3px;
 	-webkit-border-radius: 3px;
@@ -1069,9 +1069,9 @@ table.grade-chart td {
 	padding: 2px 5px;
 }
 
-table.grade-chart th.assignment-button {
-	border: none;
-	padding: 0 15px;
+div.assignment-button .button {
+	float: right;
+	margin-left: 10px;
 }
 
 table.grade-editor th.grade-total-points {

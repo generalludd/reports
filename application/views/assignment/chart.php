@@ -41,9 +41,14 @@ if($stuGroup){
 	type="hidden" name="kTeach" id="kTeach" value="<?=$kTeach;?>" />
 
 
+	<div  colspan=50 class='assignment-button'><? if($kTeach == $this->session->userdata("userID")):?><span
+				class='button new assignment-create'>Add Assignment</span> <? endif; ?>
+			<div>
+
 
 <table class='grade-chart'>
 	<thead>
+
 		<tr>
 			<th><?=$header_string;?>
 			</th>
@@ -65,9 +70,7 @@ if($stuGroup){
 			//calculated the weighted total points
 			$total_points += $assignment->points * $assignment->weight/100;
 } ?>
-			<th class='assignment-button'><? if($kTeach == $this->session->userdata("userID")):?><span
-				class='button new assignment-create'>Add Assignment</span> <? endif; ?>
-			</th>
+			
 		</tr>
 	</thead>
 	<tbody>
