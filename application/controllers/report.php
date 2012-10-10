@@ -182,13 +182,13 @@ class Report extends MY_Controller
 					break;
 				case "teacher":
 					$this->load->model("teacher_model","teacher");
-					$person = $this->teacher->get($key,"teachFirst,teachLast,dbRole,is_advisor");
+					$person = $this->teacher->get($key,"teachFirst,teachLast,dbRole,is_advisor,gradeStart,gradeEnd");
 					$title = sprintf("by %s %s", $person->teachFirst,$person->teachLast);
 
 					break;
 				case "advisor":
 					$this->load->model("teacher_model","teacher");
-					$person = $this->teacher->get($key,"teachFirst as advisorFirst,teachLast as advisorLast,dbRole,is_advisor");
+					$person = $this->teacher->get($key,"teachFirst as advisorFirst,teachLast as advisorLast,dbRole,is_advisor,gradeStart,gradeEnd");
 					$title = sprintf("to %s %s",$person->advisorFirst,$person->advisorLast);
 					break;
 			}
@@ -210,6 +210,7 @@ class Report extends MY_Controller
 			$data["options"] = $options;
 			$data["target"] = "report/list";
 			$data["person"] = $person;
+			
 			$data["reports"] = $this->report->get_list($type,$key,$options);
 			$data["type"] = $type;
 			$data["title"] = sprintf("%ss Submitted %s", $data["student_report"], $title);
