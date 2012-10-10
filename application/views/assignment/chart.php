@@ -43,7 +43,7 @@ if($stuGroup){
 
 	<div  colspan=50 class='assignment-button'><? if($kTeach == $this->session->userdata("userID")):?><span
 				class='button new assignment-create'>Add Assignment</span> <? endif; ?>
-			<div>
+			</div>
 
 
 <table class='grade-chart'>
