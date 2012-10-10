@@ -35,11 +35,11 @@ if($action == "update"){
 	$show_item = "hidden";
 }
 
-$buttons[] = array("item" => "save-continue", "text" => "Save &amp; Continue","class" => "save-continue-support button", "type" => "span");
-$buttons[] = array("item" => "save-close", "text" => "Save &amp; Close", "class" => "save-close-support button","type" => "span");
-$buttons[] = array("item" => "cancel", "text" =>"Cancel","class" => "button cancel-support-edit", "type" => "span" );
-$buttons[] = array("item" => "print", "text" => "Print", "class" => "button $hide_item", "id"=>"print-support", "type" => "span");
-$buttons[] = array("item" => "delete", "text" => "Delete", "class" => "delete button $hide_item", "id"=>"delete-support", "type" => "span");
+$buttons[] = array("selection" => "save-continue", "text" => "Save &amp; Continue","class" => "save-continue-support button", "type" => "span");
+$buttons[] = array("selection" => "save-close", "text" => "Save &amp; Close", "class" => "save-close-support button","type" => "span");
+$buttons[] = array("selection" => "cancel", "text" =>"Cancel","class" => "button cancel-support-edit", "type" => "span" );
+$buttons[] = array("selection" => "print", "text" => "Print", "class" => "button $hide_item", "id"=>"print-support", "type" => "span");
+$buttons[] = array("selection" => "delete", "text" => "Delete", "class" => "delete button $hide_item", "id"=>"delete-support", "type" => "span");
 
 $button_box = create_button_bar($buttons, array("id"=>"support-editor-buttons"));
 ?>

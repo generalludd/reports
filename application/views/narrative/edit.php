@@ -18,11 +18,11 @@ if($action == "insert"){
 $conditional_buttons = array();
 $conditional_bar = FALSE;
 if($hasNeeds){
-	$conditional_buttons[] = array("item" => "support", "text" => "Show Learning Support", "class" => "button show_support", "type" => "span", "id" => "need_$hasNeeds->kSupport");
+	$conditional_buttons[] = array("selection" => "support", "text" => "Show Learning Support", "class" => "button show_support", "type" => "span", "id" => "need_$hasNeeds->kSupport");
 }
 
 if($hasSuggestions){
-	$conditional_buttons[] = array("item" => "suggestions", "text"=>"View Suggested Edits", "class" => "button view_edits", "type" => "span", "id" => "edit_$narrative->kNarrative");
+	$conditional_buttons[] = array("selection" => "suggestions", "text"=>"View Suggested Edits", "class" => "button view_edits", "type" => "span", "id" => "edit_$narrative->kNarrative");
 }
 
 if(!empty($conditional_buttons)){
@@ -39,11 +39,11 @@ if(!empty($conditional_buttons)){
 	method="post" name="narrativeEditor">
 
 	<?
-	$edit_buttons[] = array("item" => "save_continue", "text" => "Save &amp; Continue", "class" => "button save_continue_narrative", "type" => "span");
-	$edit_buttons[] = array("item" => "save_close", "text" => "Save &amp; Close", "class" => "button save_close_narrative", "type" => "span");
-	$edit_buttons[] = array("item" => "cancel_narrative", "text" => "Cancel", "class" => "button cancel_narrative", "type" => "span");
+	$edit_buttons[] = array("selection" => "save_continue", "text" => "Save &amp; Continue", "class" => "button save_continue_narrative", "type" => "span");
+	$edit_buttons[] = array("selection" => "save_close", "text" => "Save &amp; Close", "class" => "button save_close_narrative", "type" => "span");
+	$edit_buttons[] = array("selection" => "cancel_narrative", "text" => "Cancel", "class" => "button cancel_narrative", "type" => "span");
 	if($action == "update" ){
-		$edit_buttons[] = array("item" => "delete_narrative", "text" => "Delete", "class" => "button delete delete_narrative", "type" => "span",
+		$edit_buttons[] = array("selection" => "delete_narrative", "text" => "Delete", "class" => "button delete delete_narrative", "type" => "span",
 				"enclosure" => array("type" => "span","class"=>"delete-container"));
 	}
 	

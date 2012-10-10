@@ -41,7 +41,7 @@ if($print){
 	echo "<h2>Learning Support for $student</h2>";
 }
 
-$buttons[] = array("item" => "close", "type" => "span", "text"=>"Close", "class" => "button close-sidebar", "id" => "close-sidebar");
+$buttons[] = array("selection" => "close", "type" => "span", "text"=>"Close", "class" => "button close-sidebar", "id" => "close-sidebar");
 print create_button_bar($buttons);
 ?>
 <h3><?=$year . "-" . $year_end?></h3>

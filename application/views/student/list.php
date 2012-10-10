@@ -48,13 +48,15 @@ $current_teacher = NULL;
 		</div>
 		<?
 		$buttons = array();
-		$buttons[] = array("item"=>"student", "href" => site_url("narrative/student_list/$student->kStudent"), "class" => "button", "text" =>"Narratives");
-		$buttons[] = array("item" => "attendance", "href" => site_url("attendance/search/$student->kStudent"), "class" => "button", "text" => "Attendance" );
-		$buttons[] = array("item" => "support","href" => site_url("support/list_all/$student->kStudent"), "class" => "button", "text" => "Learning Support");
+		$buttons[] = array("selection"=>"student", "href" => site_url("narrative/student_list/$student->kStudent"), "class" => "button", "text" =>"Narratives");
+		$buttons[] = array("selection" => "attendance", "href" => site_url("attendance/search/$student->kStudent"), "class" => "button", "text" => "Attendance" );
+		$buttons[] = array("selection" => "support","href" => site_url("support/list_all/$student->kStudent"), "class" => "button", "text" => "Learning Support");
 		if($student->stuGrade >=5) {
-			$buttons[] = array("item" => "report", "href" => site_url("report/get_list/student/$student->kStudent"), "class" => "button","text" => sprintf("%ss",STUDENT_REPORT));
-			$buttons[] = array("item" => "report","href" => site_url("report/create/$student->kStudent"), "text" => sprintf("Add %s",STUDENT_REPORT), "class" => "button new report-add",
+			$buttons[] = array("selection" => "report", "href" => site_url("report/get_list/student/$student->kStudent"), "class" => "button","text" => sprintf("%ss",STUDENT_REPORT));
+			$buttons[] = array("selection" => "report","href" => site_url("report/create/$student->kStudent"), "text" => sprintf("Add %s",STUDENT_REPORT), "class" => "button new report-add",
 					"id" => sprintf("add-report_%s", $student->kStudent));
+			$buttons[] = array("selection" => "grade", "class"=> "button get-student-grades", "id"=> sprintf("gss_%s",$student->kStudent), "text" => "Grades", "type" => "span");
+				
 		}
 		$options["class"] = "mini-buttons";
 		$button_bar = create_button_bar($buttons,$options);

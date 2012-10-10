@@ -80,8 +80,8 @@ if(!empty($narratives)){
 		$narrSummary = $narrSplit[0];
 		$narrText = stripslashes($narrative->narrText);
 		echo "<p><b>$narrative->narrSubject</b></p>";
-		$edit_buttons[] = array("item"=>"view","text"=>"View","href"=> site_url("narrative/view/$narrative->kNarrative"), "title"=>"$narrSummary");
-		$edit_buttons[] = array("item" =>"edit_inline","text"=>"Edit Inline","class" =>"button edit edit_narrative_inline", "id" => "enil_$narrative->kNarrative", "title" => "Edit this narrative here" );
+		$edit_buttons[] = array("selection"=>"view","text"=>"View","href"=> site_url("narrative/view/$narrative->kNarrative"), "title"=>"$narrSummary");
+		$edit_buttons[] = array("selection" =>"edit_inline","text"=>"Edit Inline","class" =>"button edit edit_narrative_inline", "id" => "enil_$narrative->kNarrative", "title" => "Edit this narrative here" );
 		
 		if($narrative->stuGrade >= 5){
 			$button_type = "new";
@@ -90,10 +90,10 @@ if(!empty($narratives)){
 				$button_type = "edit";
 				$button_text = "Edit Grade";
 			}
-			$edit_buttons[] = array("item" => "narrGrde", "type" => "span", "class" => "text","text" => "Grade: <span class='narr_grade' style='font-weight:bold' id='ngtext_$narrative->kNarrative'>$narrative->narrGrade</span>" );
-			$edit_buttons[] = array("item" =>"edit_grade","text" => $button_text, "type" => "span", "class" => "button $button_type grade_edit", "id" => "ngedit_$narrative->kNarrative");
+			$edit_buttons[] = array("selection" => "narrGrde", "type" => "span", "class" => "text","text" => "Grade: <span class='narr_grade' style='font-weight:bold' id='ngtext_$narrative->kNarrative'>$narrative->narrGrade</span>" );
+			$edit_buttons[] = array("selection" =>"edit_grade","text" => $button_text, "type" => "span", "class" => "button $button_type grade_edit", "id" => "ngedit_$narrative->kNarrative");
 		}
-		$edit_buttons[] = array("item" => "message", "type" => "span", "class" => "text","text" => "(Last edited on " . format_timestamp($narrative->recModified) . ")", "id" => "time_$narrative->kNarrative");
+		$edit_buttons[] = array("selection" => "message", "type" => "span", "class" => "text","text" => "(Last edited on " . format_timestamp($narrative->recModified) . ")", "id" => "time_$narrative->kNarrative");
 		
 		echo create_button_bar($edit_buttons);
 		echo  "<div id='text_$narrative->kNarrative'>$narrText</div>";

@@ -29,9 +29,9 @@ if($gradeStart == $gradeEnd){
 <?
 if($kTeach == $this->session->userdata("userID") || $this->session->userdata("dbRole") == 1){
 
-	$edit_buttons[] = array("item"=>"edit", "class"=>"teacher_edit button edit", "id"=>"et_$kTeach", "text"=>"Edit Info");
+	$edit_buttons[] = array("selection"=>"edit", "class"=>"teacher_edit button edit", "id"=>"et_$kTeach", "text"=>"Edit Info");
 	if($this->session->userdata("username") == "administrator"){
-		$edit_buttons[] = array("item" => "edit", "class" => "masquerade button","href" => site_url("/admin/masquerade/$kTeach"), "text" => "Masquerade" );
+		$edit_buttons[] = array("selection" => "edit", "class" => "masquerade button","href" => site_url("/admin/masquerade/$kTeach"), "text" => "Masquerade" );
 	}
 	
 	print create_button_bar($edit_buttons);

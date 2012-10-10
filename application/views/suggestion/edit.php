@@ -11,7 +11,7 @@ $yearEnd = $narrative->narrYear + 1;
 $conditional_buttons = array();
 $conditional_bar = FALSE;
 if($hasNeeds){
-	$conditional_buttons[] = array("item" => "support", "text" => "Show Learning Support", "class" => "button show_support", "type" => "span", "id" => "need_$hasNeeds->kSupport");
+	$conditional_buttons[] = array("selection" => "support", "text" => "Show Learning Support", "class" => "button show_support", "type" => "span", "id" => "need_$hasNeeds->kSupport");
 }
 
 if(!empty($conditional_buttons)){
@@ -28,11 +28,11 @@ if(!empty($conditional_buttons)){
 	method="post" name="narrativeEditor">
 
 	<?
-	$edit_buttons[] = array("item" => "save_continue", "text" => "Save &amp; Continue Suggestions", "class" => "button save_continue_suggestion", "type" => "span");
-	$edit_buttons[] = array("item" => "save_close", "text" => "Save &amp; Close Suggestions", "class" => "button save_close_suggestion", "type" => "span");
-	$edit_buttons[] = array("item" => "cancel_narrative", "text" => "Cancel Suggestions", "class" => "button cancel_suggestion", "type" => "span");
+	$edit_buttons[] = array("selection" => "save_continue", "text" => "Save &amp; Continue Suggestions", "class" => "button save_continue_suggestion", "type" => "span");
+	$edit_buttons[] = array("selection" => "save_close", "text" => "Save &amp; Close Suggestions", "class" => "button save_close_suggestion", "type" => "span");
+	$edit_buttons[] = array("selection" => "cancel_narrative", "text" => "Cancel Suggestions", "class" => "button cancel_suggestion", "type" => "span");
 	if($action == "update" ){
-		$edit_buttons[] = array("item" => "delete_narrative", "text" => "Delete Suggestions", "class" => "button delete delete_narrative", "type" => "span",
+		$edit_buttons[] = array("selection" => "delete_narrative", "text" => "Delete Suggestions", "class" => "button delete delete_narrative", "type" => "span",
 				"enclosure" => array("type" => "span","class"=>"delete-container"));
 	}
 	

@@ -48,9 +48,9 @@ if($print){
 <legend><?=$year . "-" . $year_end?></legend>
 <? if(!$print){
 	
-	$buttons[] = array("item" => "support", "href" => site_url("support/edit/$entry->kSupport"), "text" => "Edit", "class" => "button edit");
+	$buttons[] = array("selection" => "support", "href" => site_url("support/edit/$entry->kSupport"), "text" => "Edit", "class" => "button edit");
 	
-	$buttons[] = array("item" => "print", "href" => site_url("support/view/$entry->kSupport/print"),"target" => "_blank", "text" => "Print");
+	$buttons[] = array("selection" => "print", "href" => site_url("support/view/$entry->kSupport/print"),"target" => "_blank", "text" => "Print");
 	print create_button_bar($buttons);
 	
 }?>

@@ -3,7 +3,7 @@
 ?>
 
 <h3>Administer Preference Types</h3>
-<? $buttons[] = array("item"=>"preference_type", "text"=>"New", "class"=>"button new create_preference_type");
+<? $buttons[] = array("selection"=>"preference_type", "text"=>"New", "class"=>"button new create_preference_type");
 echo create_button_bar($buttons);
 
 		?>
@@ -12,8 +12,8 @@ $buttons = array();?>
 <div id="ptdisplay-<?=$preference->type;?>"><h4 id="<?=$preference->type;?>">
 	<?=$preference->name;?>
 </h4>
-<? $buttons[] = array("item"=>"preference_type", "text"=>"Edit","class"=>"button edit edit_preference_type","id"=>"pt!$preference->type");
-$buttons[] = array("item" => "preference_type","text"=>"Delete","class"=>"button delete delete_preference_type","id"=>"dt!$preference->type");
+<? $buttons[] = array("selection"=>"preference_type", "text"=>"Edit","class"=>"button edit edit_preference_type","id"=>"pt!$preference->type");
+$buttons[] = array("selection" => "preference_type","text"=>"Delete","class"=>"button delete delete_preference_type","id"=>"dt!$preference->type");
 
 echo create_button_bar($buttons);?>
 

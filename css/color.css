@@ -103,33 +103,35 @@ div.list {
 	background: #91b347 url(images/button_20_over.png) 50% 50% repeat-x;
 }
 
-.button.help,.button.active {
+.button.help {
 	border: 1px solid #DFE119;
 	background-color: #DFE119;
 	background-image: url(images/help_button.png);
 	color: black;
 }
 
-.button.help:hover,.button.active:hover {
+.button.help:hover {
 	background-color: #DFE119;
 	background-image: url(images/help_button_hover.png);
 }
 
 .button.active {
-	border: 1px solid #dadada;
-	background-color: #e6e6e6;
-	background-image: url(images/active_button.png);
+	border: 1px solid #dee000;
+	background-color: #ffe45c;
+	background-image: url(images/ui-bg_highlight-soft_75_ffe45c_1x100.png);
 	color: black;
 }
+.button.active:hover {
+	background-color: #ffe45c;
+	background-image: url(images/ui-bg_highlight-soft_75_ffe45c_1x100.png);
+}
+
 
 a.button {
 	color: #fff;
 }
 
-.button.active:hover {
-	background-color: #e6e6e6;
-	background-image: url(images/active_button_hover.png);
-}
+
 
 .button.edit {
 	border: 1px solid #0077bd;
