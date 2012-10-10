@@ -59,11 +59,21 @@ function create_button($data)
 			$title = "title ='" . $data["title"] . "'";
 		}
 		if($type != "pass-through"){
-
-			$class = "class='button'";
+			
+				
 			if(array_key_exists("class", $data)){
-				$class = "class='" . $data["class"] . "'";
+				if(!is_array($data["class"])){
+					$data["class"] = array($data["class"]); 
+					
+				}
+			}else{
+				$data["class"] = array("button");
 			}
+			if( preg_match("/" . str_replace("/", "\/", $data["selection"]) . "/" ,$_SERVER['REQUEST_URI'])){
+				$data["class"][] = "active";
+			}
+			$class = sprintf("class='%s'", implode(" ",$data["class"]));
+			
 
 			$id = "";
 			if(array_key_exists("id", $data)){
@@ -122,14 +132,16 @@ function create_button_bar($buttons, $options = NULL ){
 		}
 	}
 	$button_list = array();
+	
+	//the "selection" option indicates the page in the interface. Currently as indicated by the uri->segment(1)
 	foreach($buttons as $button){
-		if($button["item"] == $selection){
+		/*if($button["selection"] == $selection){
 			if(array_key_exists("class",$button)){
 				$button["class"] .= " active";
 			}else{
 				$button["class"] = "button active";
 			}
-		}
+		}*/
 		$button_list[] = create_button($button);
 	}
 
