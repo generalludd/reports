@@ -1,7 +1,7 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 if($type == "student"){
 	$this->load->view("student/navigation",array("student"=>$person,"kStudent" => $report_key));
-	$edit_buttons[] = array("item" => "report", "text" => "Add $student_report", "class" => "button new", "href" => site_url("report/create/$kStudent"));
+	$edit_buttons[] = array("selection" => "report", "text" => "Add $student_report", "class" => "button new", "href" => site_url("report/create/$kStudent"));
 	echo create_button_bar($edit_buttons);
 }else{
 	$this->load->view("teacher/navigation",array("teacher"=>$person, "kTeach" => $report_key,"term"=>get_current_term(),"year"=>get_current_year()));
@@ -143,4 +143,4 @@ if($type == "student"){
 </table>
 <? else: ?>
 <p>There are no <?=STUDENT_REPORT;?>s for the given search criteria</p>
-<?endif;?>
+<?endif;
