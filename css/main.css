@@ -1151,6 +1151,11 @@ table.report td.field.buttons,table.report th.field.buttons {
 #report-card {
 	
 }
+.report-title {
+	font-size: 1.6em;
+	font-weight: bold;
+	padding-top: 1em;
+}
 
 .report-header {
 	font-weight: bold;
@@ -1175,4 +1180,15 @@ table.report td.field.buttons,table.report th.field.buttons {
 
 .report-summary {
 	
+}
+.footnotes {
+	padding: 10px 0;
+}
+.footnotes .caption {
+	font-weight: bold;
+}
+.footnotes ul {
+	list-style: none;
+	margin: 0;
+	padding: 0;
 }

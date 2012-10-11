@@ -9,6 +9,9 @@
 		$(".datefield").datepicker();
 	});
 	
+	$('.print').live('click', function(event){
+        window.print();
+    });
 		
 	 $("#sortable").sortable({
 	      handle : '.handle',

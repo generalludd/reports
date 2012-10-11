@@ -89,18 +89,18 @@ div.list {
 }
 
 /*form elements*/
-.button , input[type="submit"] , .button.active:hover{
+.button,input[type="submit"],.button.active:hover {
 	border: 1px solid #327e04;
 	color: #ffffff;
 	opacity: .90;
-	filter: Alpha(Opacity =                   90);
+	filter: Alpha(Opacity =                     90);
 	background: #67b021 url(images/button_20.png) 50% 50% repeat-x;
 }
 
-.button:hover, submit:hover, .button.active {
+.button:hover,submit:hover,.button.active {
 	opacity: .90;
 	color: #000;
-	filter: Alpha(Opacity =                   90);
+	filter: Alpha(Opacity =                     90);
 	background: #91b347 url(images/button_20_over.png) 50% 50% repeat-x;
 }
 
@@ -127,12 +127,9 @@ div.list {
 	background-image: url(images/ui-bg_highlight-soft_75_ffe45c_1x100.png);
 }
 */
-
 a.button {
 	color: #fff;
 }
-
-
 
 .button.edit {
 	border: 1px solid #0077bd;
@@ -165,7 +162,7 @@ a.button {
 
 .button.delete {
 	opacity: .90;
-	filter: Alpha(Opacity =                   90);
+	filter: Alpha(Opacity =                     90);
 	background: #E14F1C url(images/delete.png) 50% 50% repeat-x;
 	color: white;
 	border: 1px solid #CD0A0A;
@@ -177,10 +174,14 @@ a.button {
 	border: 1px solid #cdcdcd;
 }
 
+.button.print {
+	
+}
+
 /* header page layout elements */
 #navigation {
 	opacity: .90;
-	filter: Alpha(Opacity =                   90);
+	filter: Alpha(Opacity =                     90);
 	background: #C7D7E9 url(images/header.png) 50% 50% repeat-x;
 	border-color: #087CD5;
 }
@@ -261,13 +262,13 @@ h4,h5,h6,tr.benchmark-grade {
 .warning,.notice,.error {
 	color: black;
 	opacity: .90;
-	filter: Alpha(Opacity =   90);
+	filter: Alpha(Opacity =     90);
 	background: #ff8538 url(images/warning.png) 50% 50% repeat-x;
 }
 
 .alert {
 	background-image: url(images/ui-bg_diagonals-thick_18_b81900_40x40.png);
-	background-repeat:repeat;
+	background-repeat: repeat;
 	color: #fff;
 }
 
