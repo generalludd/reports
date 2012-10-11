@@ -1,6 +1,6 @@
 <?php
 $buttons = array();
-if($this->session->userdata("dbRole") == 1){
+if($this->session->userdata("dbRole") == 1 && $kTeach != $this->session->userdata("userID")){
 	$buttons[] = array("selection" => "narrative", "type" => "span", "text" => "List Narratives", "class"=>array("button","teacher_narrative_search"),"id"=>"tns_$kTeach");
 	$buttons[] = array("selection" => "template/list_templates", "href"=>  site_url("template/list_templates/?kTeach=$kTeach&term=$term&year=$year") , "text" => "Subject Templates" );
 	if($teacher->gradeEnd > 4){

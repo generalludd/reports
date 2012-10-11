@@ -27,13 +27,15 @@ if($gradeStart == $gradeEnd){
 <?=$button_bar;?>
 <div class='content'>
 <?
-if($kTeach == $this->session->userdata("userID") || $this->session->userdata("userID") == 1000){
+
+$userID = $this->session->userdata("userID");
+if($kTeach == $userID || $userID == 1000){
 
 	$edit_buttons[] = array("selection"=>"edit", "class"=>"teacher_edit button edit", "id"=>"et_$kTeach", "text"=>"Edit Info");
 	
 	$edit_buttons[] = array("selection"=>"auth","type"=>"span","class"=>array("button","password_edit","edit"), "text"=>"Change Password");
 	$edit_buttons[] = array("selection"=>"preference", "text" => "Preferences", "href" => site_url("preference/view/$kTeach") );
-	if($this->session->userdata("userID") == 1000){
+	if($userID == 1000 && $kTeach != $userID){
 		$edit_buttons[] = array("selection" => "edit", "class" => "masquerade button","href" => site_url("/admin/masquerade/$kTeach"), "text" => "Masquerade" );
 	}
 	

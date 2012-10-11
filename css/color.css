@@ -89,7 +89,7 @@ div.list {
 }
 
 /*form elements*/
-.button , input[type="submit"] {
+.button , input[type="submit"] , .button.active:hover{
 	border: 1px solid #327e04;
 	color: #ffffff;
 	opacity: .90;
@@ -97,8 +97,9 @@ div.list {
 	background: #67b021 url(images/button_20.png) 50% 50% repeat-x;
 }
 
-.button:hover, submit:hover {
+.button:hover, submit:hover, .button.active {
 	opacity: .90;
+	color: #000;
 	filter: Alpha(Opacity =                   90);
 	background: #91b347 url(images/button_20_over.png) 50% 50% repeat-x;
 }
@@ -114,7 +115,7 @@ div.list {
 	background-color: #DFE119;
 	background-image: url(images/help_button_hover.png);
 }
-
+/*
 .button.active {
 	border: 1px solid #dee000;
 	background-color: #ffe45c;
@@ -125,7 +126,7 @@ div.list {
 	background-color: #ffe45c;
 	background-image: url(images/ui-bg_highlight-soft_75_ffe45c_1x100.png);
 }
-
+*/
 
 a.button {
 	color: #fff;
