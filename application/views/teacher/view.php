@@ -34,6 +34,7 @@ if($kTeach == $this->session->userdata("userID") || $this->session->userdata("db
 		$edit_buttons[] = array("selection" => "edit", "class" => "masquerade button","href" => site_url("/admin/masquerade/$kTeach"), "text" => "Masquerade" );
 	}
 	$edit_buttons[] = array("selection"=>"auth","type"=>"span","class"=>array("button","password_edit","edit"), "text"=>"Change Password");
+	$edit_buttons[] = array("selection"=>"preference", "text" => "Preferences", "href" => site_url("preference/view/$kTeach") );
 	
 	
 	print create_button_bar($edit_buttons);
