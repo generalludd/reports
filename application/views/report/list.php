@@ -1,18 +1,24 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
+
+$userID = $this->session->userdata("userID");
+$dbRole = $this->session->userdata("dbRole");
+$edit_buttons = array();
 if($type == "student"){
 	$this->load->view("student/navigation",array("student"=>$person,"kStudent" => $report_key));
 	$edit_buttons[] = array("selection" => "report", "text" => "Add $student_report", "class" => "button new", "href" => site_url("report/create/$kStudent"));
-	echo create_button_bar($edit_buttons);
 }else{
-	$this->load->view("teacher/navigation",array("teacher"=>$person, "kTeach" => $report_key,"term"=>get_current_term(),"year"=>get_current_year()));
+	if($dbRole == 2 && $person->is_advisor == 1){
+		$edit_buttons[] = array("selection"=>"report/get_list/advisor", "href" =>site_url("report/get_list/advisor/$userID"),"text" => sprintf("%ss",STUDENT_REPORT));
+	}
+	$edit_buttons[] = array("selection" =>"report/get_list/teacher","href"=>site_url("report/get_list/teacher/$userID"),"text"=> sprintf("Submitted %ss", STUDENT_REPORT));
 }
+echo create_button_bar($edit_buttons);
+
 ?>
-<input
-	type="hidden" id="report_type" name="report_type"
-	value="<?=$report_type;?>" />
-<input
-	type="hidden" id="report_key" name="report_key"
-	value="<?=$report_key;?>" />
+<input type="hidden"
+	id="report_type" name="report_type" value="<?=$report_type;?>" />
+<input type="hidden"
+	id="report_key" name="report_key" value="<?=$report_key;?>" />
 
 <fieldset class="search_fieldset">
 	<legend>Search Parameters</legend>
@@ -137,10 +143,16 @@ if($type == "student"){
 
 
 
+
+
 			?>
 		</tr>
 	</tbody>
 </table>
 <? else: ?>
-<p>There are no <?=STUDENT_REPORT;?>s for the given search criteria</p>
+<p>
+	There are no
+	<?=STUDENT_REPORT;?>
+	s for the given search criteria
+</p>
 <?endif;
