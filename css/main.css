@@ -388,6 +388,12 @@ legend {
 	height: 60px;
 }
 
+#page-title {
+	float:left;
+	font-size: 1.3em;
+	font-weight: bold;
+}
+
 #navigation,#advancedSearch {
 	border-width: 1px;
 	border-style: solid;
@@ -437,7 +443,7 @@ legend {
 
 #utility {
 	float: right;
-	clear: both;
+	clear: right;
 }
 
 #utility p {

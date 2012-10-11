@@ -18,6 +18,7 @@ if($this->uri->segment(1) == ""){
 <div id="page">
 <?php if(!$print): ?>
 <div id='header'>
+<div id='page-title'>Friends School Student Information System</div>
 <div id='utility'><? $this->load->view('page/utility');?></div>
 <div id='navigation'>
 <?  $this->load->view('page/navigation'); ?>
