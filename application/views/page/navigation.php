@@ -23,7 +23,7 @@ $buttons[] = array("selection" =>"search", "text" => '<input type="text" id="stu
 if($dbRole == 1){
 	$buttons[] = array("selection" => "student", "text" => "New Student", "class" => array("button","new","add_student"), "type"=>"span", "title" => "Add a new student to the database");
 	$buttons[] = array("selection" => "attendance" , "text" => "Search Attendance", "class" => array("button","show_attendance_search"), "type" => "span", "title" => "Search attendance records");
-	$buttons[] = array("selection" => "teacher", "text" => "List Teachers", "href" => site_url("teacher?gradeStart=0&gradeEnd=8"), "title" => "List all the teachers &amp; other users in the database");
+	$buttons[] = array("selection" => "teacher\?", "text" => "List Teachers", "href" => site_url("teacher?gradeStart=0&gradeEnd=8"), "title" => "List all the teachers &amp; other users in the database");
 	$buttons[] = array("selection" => "narrative", "text" => "Narrative Search &amp; Replace", "href" => site_url("narrative/search"), "title" => "Search &amp; Replace Narrative Text");
 }elseif($dbRole == 3){ //aides
 	$buttons[] = array("selection" => "support", "text" => "Learning Support", "href" => site_url("student/advanced_search?hasNeeds=1&year=2011") );
