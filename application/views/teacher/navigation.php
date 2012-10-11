@@ -3,8 +3,7 @@ $buttons = array();
 if($teacher->dbRole == 2){
 
 	$buttons[] = array("selection" => "student/teacher_student_list", "href"=>site_url("student/teacher_student_list/$kTeach"), "text"=>"List Students");
-	//$buttons[] = array("selection" => "narrative", "href"=> site_url("narrative/teacher_list/$kTeach"), "text" => "List Narratives" );
-	$buttons[] = array("selection" => "narrative", "type" => "span", "text" => "List Narratives", "class"=>"button teacher_narrative_search","id"=>"tns_$kTeach");
+	$buttons[] = array("selection" => "narrative", "type" => "span", "text" => "List Narratives", "class"=>array("button","teacher_narrative_search"),"id"=>"tns_$kTeach");
 
 	$buttons[] = array("selection" => "narrative/teacher_list", "href"=> site_url("narrative/teacher_list/$kTeach/print"), "text" => "Print Narratives" );
 	$buttons[] = array("selection" => "template/list_templates", "href"=>  site_url("template/list_templates/?kTeach=$kTeach&term=$term&year=$year") , "text" => "Subject Templates" );
@@ -15,8 +14,10 @@ if($teacher->dbRole == 2){
 }
 $buttons[] = array("selection" =>"report/get_list/teacher","href"=>site_url("report/get_list/teacher/$kTeach"),"text"=> sprintf("Submitted %ss", STUDENT_REPORT));
 if($teacher->gradeEnd > 4){
-	$buttons[] = array("selection" => "assignment", "text" => "Grades","class"=> "button search-assignments","id" =>"sa_$kTeach","title" => "Search for current grade charts");
+	$buttons[] = array("selection" => "assignment", "text" => "Grades","class"=> array("button","search-assignments"),"id" =>"sa_$kTeach","title" => "Search for current grade charts");
 }
+
+$buttons[] = array("selection"=>"teacher/view","text"=>"My Account","href"=>site_url("teacher/view/$kTeach"));
 
 $options["selection"] = $this->uri->segment(1);
 $options["id"] = "teacher-buttons";
