@@ -1,14 +1,13 @@
-<?php ?>
+<?php 
+$this->load->view("teacher/navigation",array("teacher"=>$teacher, "kTeach" => $kTeach,"term"=>get_current_term(),"year"=>get_current_year()));
+
+?>
 <h2>Set Preferences for your Account</h2>
 <input
 	type='hidden' id='kTeach' name='kTeach' value='<?=$kTeach;?>' />
 <p class='notice'>Note that this is a beta testing area. Do not make
 changes unless you understand how each of these work.</p>
-<? 
-$buttons[] = array("selection"=>"teacher","text"=>"Edit Account Info","href"=>site_url("teacher/view/$kTeach"));
-$buttons[] = array("selection"=>"teacher","type"=>"span","class"=>array("button","password_edit"), "text"=>"Change Password");
-print create_button_bar($buttons);
-?>
+
 <?php
 foreach($preferences as $preference){
 	if($preference->format=='menu'){
