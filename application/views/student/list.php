@@ -55,7 +55,7 @@ $current_teacher = NULL;
 			$buttons[] = array("selection" => "report", "href" => site_url("report/get_list/student/$student->kStudent"), "class" => "button","text" => sprintf("%ss",STUDENT_REPORT));
 			$buttons[] = array("selection" => "report","href" => site_url("report/create/$student->kStudent"), "text" => sprintf("Add %s",STUDENT_REPORT), "class" => "button new report-add",
 					"id" => sprintf("add-report_%s", $student->kStudent));
-			$buttons[] = array("selection" => "grade", "class"=> "button get-student-grades", "id"=> sprintf("gss_%s",$student->kStudent), "text" => "Grades", "type" => "span");
+			$buttons[] = array("selection" => "grade/report_card", "class"=> "button get-student-grades", "id"=> sprintf("gss_%s",$student->kStudent), "text" => "Grades", "type" => "span");
 				
 		}
 		$options["class"] = "mini-buttons";
