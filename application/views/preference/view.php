@@ -4,10 +4,11 @@
 	type='hidden' id='kTeach' name='kTeach' value='<?=$kTeach;?>' />
 <p class='notice'>Note that this is a beta testing area. Do not make
 changes unless you understand how each of these work.</p>
-<p><a class='button teacher_view' href="<?=site_url("teacher/view/$kTeach");?>"
-	title='Edit your name, subjects, classroom and grade range'>Edit
-Account Info</a> <span class='button password_edit'
-	title='Change your password'>Change Password</span></p>
+<? 
+$buttons[] = array("selection"=>"teacher","text"=>"Edit Account Info","href"=>site_url("teacher/view/$kTeach"));
+$buttons[] = array("selection"=>"teacher","type"=>"span","class"=>array("button","password_edit"), "text"=>"Change Password");
+print create_button_bar($buttons);
+?>
 <?php
 foreach($preferences as $preference){
 	if($preference->format=='menu'){
