@@ -5,6 +5,7 @@ $userID = $this->session->userdata("userID");
 
 $term = get_current_term();
 $year = get_current_year();
+$user_buttons[] = array("selection"=>"teacher", "text"=>"My Account","href"=>site_url("teacher/view/$userID"));
 $user_buttons[] = array("selection"=>"preference", "text" => "Preferences", "href" => site_url("preference/view/$userID") );
 if($this->session->userdata("userID")== 1000){
 	$user_buttons[] = array("selection"=>"admin","text"=>"Site Admin","href"=>site_url("admin"));
