@@ -1,6 +1,6 @@
 <?php
 
-$buttons[] = array("selection" => "student", "href" => site_url("student/view/$kStudent"), "text"=>"Student Info");
+$buttons[] = array("selection" => "student/[A-z]", "href" => site_url("student/view/$kStudent"), "text"=>"Student Info");
 
 $buttons[] =array("selection" => "narrative", "href"=>site_url("narrative/student_list/$kStudent"), "text"=>"Narratives");
 
