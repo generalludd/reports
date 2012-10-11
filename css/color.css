@@ -150,19 +150,19 @@ a.button {
 	color: red;
 }
 
-.new,a.new {
+.button.new,a.button.new {
 	*border: 1px solid #DFE119;
 	background-color: #DFE119;
 	background-image: url(images/new_button.png);
 	color: black;
 }
 
-.new:hover {
+.button.new:hover {
 	background-color: #DFE119;
 	background-image: url(images/new_button_hover.png);
 }
 
-.delete {
+.button.delete {
 	opacity: .90;
 	filter: Alpha(Opacity =                   90);
 	background: #E14F1C url(images/delete.png) 50% 50% repeat-x;
@@ -170,7 +170,7 @@ a.button {
 	border: 1px solid #CD0A0A;
 }
 
-.delete:hover {
+.button.delete:hover {
 	color: black;
 	background: white url(images/delete_hover.png) 50% 50% repeat-x;
 	border: 1px solid #cdcdcd;
