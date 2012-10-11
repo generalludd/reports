@@ -48,7 +48,7 @@ $current_teacher = NULL;
 		</div>
 		<?
 		$buttons = array();
-		$buttons[] = array("selection"=>"student", "href" => site_url("narrative/student_list/$student->kStudent"), "class" => "button", "text" =>"Narratives");
+		$buttons[] = array("selection"=>"narrative", "href" => site_url("narrative/student_list/$student->kStudent"), "class" => "button", "text" =>"Narratives");
 		$buttons[] = array("selection" => "attendance", "href" => site_url("attendance/search/$student->kStudent"), "class" => "button", "text" => "Attendance" );
 		$buttons[] = array("selection" => "support","href" => site_url("support/list_all/$student->kStudent"), "class" => "button", "text" => "Learning Support");
 		if($student->stuGrade >=5) {
