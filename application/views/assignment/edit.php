@@ -25,6 +25,12 @@ if($date = get_value($assignment,"date")){
 <label for="points">Points: </label>
 <input type="text" name="points" id="points" value="<?=get_value($assignment,"points");?>"/>
 </p>
+<? if($action == "insert"): ?>
+<p>
+	<label for="prepopulate">Start every student with total points for this assignment:</label>
+	<input type="checkbox" name="prepopulate" id="prepopulate" value="1"/>
+	</p>
+<? endif; ?>
 <p>
 <label for="date">Date: </label>
 <input type="text" name="date" id="date" class="datefield" value="<?=$date;?>"/>

@@ -113,7 +113,10 @@ class Assignment extends MY_Controller
 		$year = $this->input->post("year");
 		$gradeStart = $this->input->post("gradeStart");
 		$gradeEnd = $this->input->post("gradeEnd");
-		$points = $this->input->post("points");
+		$points = 0;
+		if($this->input->post("prepopulate") == 1){
+			$points = $this->input->post("points");
+		}
 		$students = $this->grade->batch_insert($kAssignment,$kTeach,$term,$year,$gradeStart,$gradeEnd,$points);
 		redirect("assignment/chart?kTeach=$kTeach&term=$term&year=$year&gradeStart=$gradeStart&gradeEnd=$gradeEnd");
 	}
