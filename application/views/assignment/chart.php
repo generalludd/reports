@@ -61,7 +61,8 @@ if($stuGroup){
 				class="assignment-edit assignment-field"><span
 				class='chart-assignment'><?=$assignment->assignment;?> </span><br />
 				<span class='chart-category'><?=$assignment->category;?> </span><br />
-				<span class='chart-points'> <?=$assignment->points;?> Points
+				<!-- an assignment with 0 points is calculated as a make-up points for assignments -->
+				<span class='chart-points'> <?=$assignment->points>0?$assignment->points. " Points" :"Make-Up Points";?> 
 			</span><br /> <span class='chart-date'><?=format_date($assignment->date,'standard');?>
 			</span></th>
 

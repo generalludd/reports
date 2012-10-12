@@ -26,7 +26,8 @@ $footnotes = array();
 		</thead>
 		<tbody>
 			<?	foreach($grades as $grade){
-				?>
+				if(($grade->points > 0 && $grade->total_points == 0) || ($grade->total_points > 0)){
+					?>
 			<tr>
 				<td><?=format_date($grade->date,"standard");?></td>
 				<td><?=$grade->assignment; ?>
@@ -37,7 +38,7 @@ $footnotes = array();
 					echo "<sup>$grade->footnote</sup>";
 					$footnotes[$grade->footnote] = $grade->label;
 				}?></td>
-				<td><?=$grade->total_points;?>
+				<td><?=$grade->total_points > 0?$grade->total_points:"Make-Up Points";?>
 				</td>
 				<!-- <td class='notes-column'><?=$grade->footnote != 0 ? $grade->label:"";?>  -->
 				</td>
@@ -46,9 +47,9 @@ $footnotes = array();
 			$student_total += $grade->points*$grade->weight;
 
 			$assignment_total += $grade->total_points * $grade->weight;
-
-			}//end foreach grade
-			?>
+				} //end if
+				}//end foreach grade
+				?>
 		</tbody>
 
 	</table>
@@ -57,7 +58,7 @@ $footnotes = array();
 	$keys = array_keys($footnotes);
 	$values = array_values($footnotes); ?>
 	<div class='footnotes'>
-	<div class='caption'>Notes</div>
+		<div class='caption'>Notes</div>
 		<ul>
 			<? 
 

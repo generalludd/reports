@@ -33,7 +33,7 @@ class Assignment_model extends CI_Model
 	function get($kAssignment)
 	{
 		$this->db->where("kAssignment",$kAssignment);
-		
+
 		$this->db->join("assignment_category as category","assignment.kCategory = category.kCategory");
 		$this->db->select("assignment.*,category.weight,category.category");
 		$this->db->from("assignment");
@@ -58,14 +58,17 @@ class Assignment_model extends CI_Model
 		$this->prepare_variables();
 		$this->db->where("kAssignment",$kAssignment);
 		$this->db->update("assignment", $this);
-		$this->load->model("grade_model","grade");
-		$percentage = $this->points/$old_assignment->points;
-		$this->grade->batch_adjust_points($kAssignment,$percentage);
-		
-		
+		//if the grade is not 0 then adjust the student points accordingly. 
+		//0 points for a grade will be calculated as make-up points for quizzes or other assignments. 
+		if($this->points != 0){
+			$this->load->model("grade_model","grade");
+			$percentage = $this->points/$old_assignment->points;
+			$this->grade->batch_adjust_points($kAssignment,$percentage);
+		}
+
 	}
 
-	
+
 	function get_grades($kTeach,$term,$year,$gradeStart,$gradeEnd,$stuGroup = NULL)
 	{
 		$this->db->where("term",$term);
@@ -94,18 +97,18 @@ class Assignment_model extends CI_Model
 
 	function get_for_student($kStudent,$term,$year,$options = array())
 	{
-		
+
 		$from = "assignment";
 		$join = "grade";
-		
+
 		if(array_key_exists("from",$options) && array_key_exists("join",$options)){
 			$from = $options["from"];
 			$join = $options["join"];
 		}
-		
+
 		$this->db->where("assignment.term",$term);
 		$this->db->where("assignment.year",$year);
-		
+
 		// $this->db->where("grade.kStudent",$kStudent);
 		if(array_key_exists("kTeach",$options)){
 			$this->db->where("assignment.kTeach",$options["kTeach"]);
@@ -113,7 +116,7 @@ class Assignment_model extends CI_Model
 		if(array_key_exists("subject",$options)){
 			$this->db->where("assignment.subject",$options["subject"]);
 		}
-		
+
 		if(array_key_exists("grade_range",$options)){
 			$gradeStart = $options["grade_range"]["gradeStart"];
 			$gradeEnd = $options["grade_range"]["gradeEnd"];
@@ -122,7 +125,7 @@ class Assignment_model extends CI_Model
 		}
 		//$this->db->where("assignment.gradeStart = category.gradeStart");
 		//$this->db->where("assignment.gradeEnd = category.gradeEnd");
-		
+
 		$this->db->from($from);
 		$this->db->join($join,"assignment.kAssignment=grade.kAssignment AND grade.kStudent = $kStudent","LEFT");
 		$this->db->join("student","student.kStudent=grade.kStudent","LEFT");

@@ -22,8 +22,11 @@ if($date = get_value($assignment,"date")){
 </span>
 </p>
 <p>
+<div >Enter zero points for make-up points
+<span class='button help' id="Assignment_Zero Points">Help</span></div>
 <label for="points">Points: </label>
-<input type="text" name="points" id="points" value="<?=get_value($assignment,"points");?>"/>
+
+<input type="text" name="points" id="points" style="width:25px" value="<?=get_value($assignment,"points");?>"/>
 </p>
 <? if($action == "insert"): ?>
 <p>
