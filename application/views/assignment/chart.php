@@ -134,7 +134,8 @@ if($stuGroup){
 <div class='button-box'>
 	<span class='button new show-student-selector'>Add Student</span>
 </div>
-<? }else{
-	print "<p>You have not entered any assignments or grades for this term. <span class='button new assignment-create'>Add Assignment</span></p>";
-}
-?>
+<? }else{ ?>
+<p>You may need to create categories before creating assignments. <span class="button edit assignment_categories_edit">Edit Categories</span></p>
+	<p>You have not entered any assignments or grades for this term. <span class='button new assignment-create'>Add Assignment</span></p>
+<? }
+
