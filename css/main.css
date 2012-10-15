@@ -299,7 +299,7 @@ div.narrative {
 	border-radius: 3px;
 }
 
-.button,.help {
+.button {
 	text-align: center;
 	position: static;
 	padding: .35em;

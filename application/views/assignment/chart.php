@@ -36,6 +36,8 @@ if($stuGroup){
 		<li><span class="button search-assignments" id="sa_<?=$kTeach;?>"
 			title="Search for Current Grade Charts">New Grade Search</span>
 		</li>
+		<li><span
+				class='button new assignment-create'>Add Assignment</span></li>
 	</ul>
 
 

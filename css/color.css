@@ -93,27 +93,35 @@ div.list {
 	border: 1px solid #327e04;
 	color: #ffffff;
 	opacity: .90;
-	filter: Alpha(Opacity =                     90);
+	filter: Alpha(Opacity =                         90);
 	background: #67b021 url(images/button_20.png) 50% 50% repeat-x;
 }
 
 .button:hover,submit:hover,.button.active {
 	opacity: .90;
 	color: #000;
-	filter: Alpha(Opacity =                     90);
+	filter: Alpha(Opacity =                         90);
 	background: #91b347 url(images/button_20_over.png) 50% 50% repeat-x;
 }
 
 .button.help {
-	border: 1px solid #DFE119;
-	background-color: #DFE119;
-	background-image: url(images/help_button.png);
-	color: black;
+	*border: 1px solid #DFE119;
+	*background-color: #DFE119;
+	*color: black;
+	border: none;
+	background-color: transparent;
+	color: transparent;
+	background-image: url(images/help.png);
+	background-repeat: no-repeat;
 }
 
 .button.help:hover {
-	background-color: #DFE119;
-	background-image: url(images/help_button_hover.png);
+	*background-color: #DFE119;
+	*background-image: url(images/help_button_hover.png);
+}
+
+.notice .link, .notice a {
+	color: #fff;
 }
 /*
 .button.active {
@@ -162,7 +170,7 @@ a.button {
 
 .button.delete {
 	opacity: .90;
-	filter: Alpha(Opacity =                     90);
+	filter: Alpha(Opacity =                         90);
 	background: #E14F1C url(images/delete.png) 50% 50% repeat-x;
 	color: white;
 	border: 1px solid #CD0A0A;
@@ -181,7 +189,7 @@ a.button {
 /* header page layout elements */
 #navigation {
 	opacity: .90;
-	filter: Alpha(Opacity =                     90);
+	filter: Alpha(Opacity =                         90);
 	background: #C7D7E9 url(images/header.png) 50% 50% repeat-x;
 	border-color: #087CD5;
 }
@@ -262,7 +270,7 @@ h4,h5,h6,tr.benchmark-grade {
 .warning,.notice,.error {
 	color: black;
 	opacity: .90;
-	filter: Alpha(Opacity =     90);
+	filter: Alpha(Opacity =         90);
 	background: #ff8538 url(images/warning.png) 50% 50% repeat-x;
 }
 

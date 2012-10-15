@@ -23,7 +23,7 @@ if($date = get_value($assignment,"date")){
 </p>
 <p>
 <div >Enter zero points for make-up points
-<span class='button help' id="Assignment_Zero Points">Help</span></div>
+<span class='button help' id="Assignment_Zero Points" title="Why would I want to have zero points?">Help</span></div>
 <label for="points">Points: </label>
 
 <input type="text" name="points" id="points" style="width:25px" value="<?=get_value($assignment,"points");?>"/>
