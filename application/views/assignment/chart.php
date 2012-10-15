@@ -138,6 +138,8 @@ if($stuGroup){
 </div>
 <? }else{ ?>
 <p>You may need to create categories before creating assignments. <span class="button edit assignment_categories_edit">Edit Categories</span></p>
+	<? if($category_count > 0){ ?>
 	<p>You have not entered any assignments or grades for this term. <span class='button new assignment-create'>Add Assignment</span></p>
 <? }
+ }
 

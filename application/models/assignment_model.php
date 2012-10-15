@@ -212,5 +212,14 @@ class Assignment_model extends CI_Model
 		$result = $this->db->get("assignment_category")->result();
 		return $result;
 	}
+	
+	function count_categories($kTeach, $gradeStart, $gradeEnd){
+		$this->db->select("COUNT(kCategory) as count");
+		$this->db->where("kTeach",$kTeach);
+		$this->db->where("gradeStart",$gradeStart);
+		$this->db->where("gradeEnd",$gradeEnd);
+		$result = $this->db->get("assignment_category")->row();
+		return $result->count;
+	}
 
 }
