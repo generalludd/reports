@@ -1074,12 +1074,12 @@ table.grade-chart th.assignment-field {
 table.grade-chart td {
 	padding: 2px 5px;
 }
-
+/*
 div.assignment-button .button {
 	float: right;
 	margin-left: 10px;
 }
-
+*/
 table.grade-editor th.grade-total-points {
 	width: 25px;
 }

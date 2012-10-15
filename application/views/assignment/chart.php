@@ -36,8 +36,8 @@ if($stuGroup){
 		<li><span class="button search-assignments" id="sa_<?=$kTeach;?>"
 			title="Search for Current Grade Charts">New Grade Search</span>
 		</li>
-		<li><span
-				class='button new assignment-create'>Add Assignment</span></li>
+		<!-- <li><span
+				class='button new assignment-create'>Add Assignment</span></li> -->
 	</ul>
 
 
@@ -45,9 +45,9 @@ if($stuGroup){
 
 
 
-	<div  colspan=50 class='assignment-button'><? if($kTeach == $this->session->userdata("userID")):?><span
+<!-- <div  colspan=50 class='assignment-button'><? if($kTeach == $this->session->userdata("userID")):?><span
 				class='button new assignment-create'>Add Assignment</span> <? endif; ?>
-			</div>
+			</div> -->	
 
 
 <table class='grade-chart'>
@@ -75,7 +75,8 @@ if($stuGroup){
 			//calculated the weighted total points
 			$total_points += $assignment->points * $assignment->weight/100;
 } ?>
-			
+			<th class='assignment-button'><span
+				class='button new assignment-create'>Add Assignment</span></th>
 		</tr>
 	</thead>
 	<tbody>
