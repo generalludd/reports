@@ -9,7 +9,10 @@ if($gradeStart != $gradeEnd){
 if($stuGroup){
 	$gradeDisplay = sprintf("%s %s",$gradeDisplay, $stuGroup);
 }
-
+?>
+<input
+	type="hidden" name="kTeach" id="kTeach" value="<?=$kTeach;?>" />
+	<?
  if(!empty($assignments)){
 
 	/* Get the subject and relevant data from the first row of the assignments */
@@ -37,8 +40,7 @@ if($stuGroup){
 
 
 </div>
-<input
-	type="hidden" name="kTeach" id="kTeach" value="<?=$kTeach;?>" />
+
 
 
 	<div  colspan=50 class='assignment-button'><? if($kTeach == $this->session->userdata("userID")):?><span
