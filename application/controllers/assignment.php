@@ -54,7 +54,6 @@ class Assignment extends MY_Controller
 		if(empty($data["assignments"])){
 			$data["category_count"] = $this->assignment->count_categories($kTeach, $gradeStart, $gradeEnd);
 		}
-		//$data["totals"] = $this->grade->get_summary($kTeach, $gradeStart, $gradeEnd, $term, $year);
 		$data["kTeach"] = $kTeach;
 		$data["term"] = $term;
 		$data["year"] = $year;

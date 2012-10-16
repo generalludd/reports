@@ -30,7 +30,6 @@ if($stuGroup){
 		<? if($kTeach == $this->session->userdata("userID")): ?>
 		<li><span class="button edit assignment_categories_edit">Edit
 				Categories</span></li>
-		</li>
 		<? endif;?>
 
 		<li><span class="button search-assignments" id="sa_<?=$kTeach;?>"
@@ -97,9 +96,9 @@ if($stuGroup){
 			//if the student status for this grade is Abs or Exc display the status instead of the grade
 			if(!empty($grade->status)){
 				$points = $grade->status;
-				if($grade->status == "Exc"){
+				//if($grade->status == "Exc"){
 					$student_points += 1;
-				}
+				//}
 			}
 
 
