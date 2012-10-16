@@ -8,7 +8,6 @@ class Grade_model extends CI_Model
 	var $kStudent;
 	var $kAssignment;
 	var $points;
-	var $average;
 	var $status;
 	var $footnote;
 
@@ -61,7 +60,7 @@ class Grade_model extends CI_Model
 	 * @param varchar $term
 	 * @param in $year
 	 * Finds all the students with a given assignment of the same term, teacher and year and creates new records for the student.
-	 * @TODO Maybe adding the points could be a preference for each teacher. 
+	 * @TODO Maybe adding the points could be a preference for each teacher.
 	 */
 	function batch_insert($kAssignment,$kTeach,$term,$year,$grade_start, $grade_end,$points)
 	{
@@ -84,32 +83,17 @@ class Grade_model extends CI_Model
 		}
 		return $students;
 	}
-	
+
 	function batch_adjust_points($kAssignment,$percentage)
 	{
 		$this->db->query("UPDATE `grade` SET `points` = `points` * $percentage WHERE `kAssignment` = $kAssignment");
 	}
 
 
-	function update($kStudent, $kAssignment,$kTeach, $points,$total, $status,$footnote,$category)
+	function update($kStudent, $kAssignment, $points, $status,$footnote)
 	{
 		$output = FALSE;
-		//this variable is not declared in $_POST or $_GET. It must be calculated.
-		$weight = 1;
-		if(!$total){
-			$total = 100;
-		}
-		if($category){
-		$weight = $this->calculate_weight($kTeach,$category);
-		}
-		$this->average = $points*$weight/100;
-		//if the status is either "Exc" or "Abs" or anything else for that matter,
-		// then the grade is counted at full value
-		if($status == "Exc" || $status== "Abs"){
-			$this->average = 1;
-
-		}
-		$data = array("points" => $points,"status"=>$status,"footnote"=>$footnote,"average"=>$this->average);
+		$data = array("points" => $points,"status"=>$status,"footnote"=>$footnote);
 		if($this->has_grade($kStudent, $kAssignment) > 0){
 			$this->db->where("kAssignment",$kAssignment);
 			$this->db->where("kStudent",$kStudent);
@@ -120,10 +104,21 @@ class Grade_model extends CI_Model
 			$data["kAssignment"] = $kAssignment;
 			$this->db->insert("grade", $data);
 			$output = $this->db->insert_id();
-			$output = $this->db->last_query();
 		}
-		return $this->average;
+		return $output;
+	}
 
+	function update_value($kStudent, $kAssignment, $key, $value)
+	{
+		$this->db->where("kStudent",$kStudent);
+		$this->db->where("kAssignment", $kAssignment);
+		$data = array($key => $value);
+		if($this->db->update("grade",$data)){
+			$output = TRUE;
+		}else{
+			$output = FALSE;
+		}
+		return $output;
 	}
 
 	function calculate_weight($kTeach, $category)
@@ -155,13 +150,13 @@ class Grade_model extends CI_Model
 
 	function get_summary($kTeach, $gradeStart, $gradeEnd, $term, $year, $kCategory = NULL)
 	{
-		
+
 		/*select `grade`.`kStudent` AS `kStudent`,`grade`.`kGrade` AS `kGrade`,
 		 * (sum(`grade`.`points`) / sum(`assignment`.`points`)) AS `average`,`assignment`.`kCategory` AS `kCategory`,`assignment`.`kTeach` AS `kTeach`,`assignment`.`term` AS `term`,
-		 * `assignment`.`year` AS `year` from (`grade` join `assignment` on((`grade`.`kAssignment` = `assignment`.`kAssignment`))) 
-		 * group by `grade`.`kGrade`
-	
-		 */	
+		* `assignment`.`year` AS `year` from (`grade` join `assignment` on((`grade`.`kAssignment` = `assignment`.`kAssignment`)))
+		* group by `grade`.`kGrade`
+
+		*/
 		$this->db->from("grade_total");
 		$this->db->where("grade_total.kTeach",$kTeach);
 		$this->db->where("assignment.gradeStart",$gradeStart);
@@ -174,7 +169,7 @@ class Grade_model extends CI_Model
 		$this->db->join("assignment","assignment.kCategory=grade_total.kCategory");
 		$this->db->order_by("grade_total.kCategory");
 		$this->db->group_by("kStudent");
-		$this->db->select("grade_total.kStudent,grade_total.kCategory,AVG('average') as average");
+		$this->db->select("grade_total.kStudent,grade_total.kCategory");
 		$result = $this->db->get()->result();
 		return $result;
 	}
@@ -182,15 +177,15 @@ class Grade_model extends CI_Model
 	 * @param int $kStudent
 	 * @param varchar $term
 	 * @param int $year
-	 * @param date $cutoff_date optional mysql  date format (yyyy-mm-dd) 
+	 * @param date $cutoff_date optional mysql  date format (yyyy-mm-dd)
 	 * @return object
-	 * get a distinct list of categories for subjects with totals for the given term & year to produce a report card. 
+	 * get a distinct list of categories for subjects with totals for the given term & year to produce a report card.
 	 */
 	function get_categories($kStudent, $term, $year, $options = array()){
 		if(array_key_exists("cutoff_date",$options)){
 			$this->db->where(sprintf("`assignment`.`date` <= '%s'", $options["cutoff_date"]));
 		}
-		
+
 		if(array_key_exists("subject",$options)){
 			$this->db->where("assignment.subject",$options["subject"]);
 		}
@@ -209,15 +204,15 @@ class Grade_model extends CI_Model
 		return $result;
 	}
 	/**
-	 * 
+	 *
 	 * @param int $kStudent
 	 * @param varchar $term
 	 * @param int $year
 	 * @param date $cutoff_date optional standard US date (mm-dd-yyyy) format converted in script to mysql
 	 * @return object
-	 * get a distinct list of subjects for a student for the term, year and optional cutoff date. 
+	 * get a distinct list of subjects for a student for the term, year and optional cutoff date.
 	 */
-	
+
 	function get_subjects($kStudent, $term, $year, $cutoff_date = NULL){
 		if($cutoff_date){
 			$this->db->where(sprintf("`assignment`.`date` <= '%s'", format_date($cutoff_date,"mysql")));
@@ -232,10 +227,10 @@ class Grade_model extends CI_Model
 		$this->db->group_by("subject");
 		$result = $this->db->get()->result();
 		return $result;
-		
-		
+
+
 	}
-	
+
 	function delete($kGrade)
 	{
 		$delete = array("kGrade" => $kGrade);

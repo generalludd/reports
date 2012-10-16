@@ -3,9 +3,11 @@ $kAssign = $grade->kAssignment;
 ?>
 <input type="hidden" id="kStudent" name="kStudent" value="<?=$grade->kStudent;?>"/>
 <input type="hidden" id="kAssignment" name="kAssignment" value="<?=$grade->kAssignment;?>"/>
-<input type="text" id="points" name="points" size="2" class="assignment-grade" value="<?=$grade->points;?>" /><br/>
+<input type="text" name="points" id="points_<?=$grade->kAssignment;?>_<?=$grade->kStudent;?>" size="2" class="assignment-grade" value="<?=$grade->points;?>" /><br/>
 &nbsp;
-<?=form_dropdown("status",$status, $grade->status,"id='status'");?><br/>
+<? $status_key = sprintf("'status_%s_%s'", $grade->kAssignment, $grade->kStudent);?>
+<?=form_dropdown("status",$status, $grade->status,"id=$status_key");?><br/>
 &nbsp;
-<?=form_dropdown("footnote",$footnotes, $grade->footnote,"id='footnote'");?>
+<? $footnote_key = sprintf("'footnote_%s_%s'", $grade->kAssignment, $grade->kStudent);?>
+<?=form_dropdown("footnote",$footnotes, $grade->footnote,"id=$footnote_key");?>
 <div class="button-box"><span class='button save_cell_grade'>Save</span></div>

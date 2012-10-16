@@ -98,17 +98,23 @@ class Grade extends MY_Controller
 		$kStudent = $this->input->post("kStudent");
 		$kAssignment = $this->input->post("kAssignment");
 		if($kStudent && $kAssignment){
-			$assignment = $this->assignment->get($kAssignment);
-			//$total points is needed to calculate the grade average.
-			//this calculation happens in the model to make more elegant code.
-			$total = $assignment->points;
-			$kTeach = $assignment->kTeach;
-			$category = $assignment->category;
 			$points = $this->input->post("points");
 			$status = $this->input->post("status");
 			$footnote = $this->input->post("footnote");
-			$result = $this->grade->update($kStudent,$kAssignment,$kTeach, $points,$total,$status,$footnote,$category);
-			echo OK;
+			$result = $this->grade->update($kStudent,$kAssignment, $points,$status,$footnote);
+			echo $result;
+		}
+	}
+	
+	function update_value()
+	{
+		$kStudent = $this->input->post("kStudent");
+		$kAssignment = $this->input->post("kAssignment");
+		if($kStudent && $kAssignment){
+			$key = $this->input->post("key");
+			$value = $this->input->post("value");
+			$result = $this->grade->update_value($kStudent,$kAssignment, $key, $value);
+			echo $value;
 		}
 	}
 

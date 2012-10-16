@@ -97,7 +97,7 @@ if(!empty($assignments)){
 			if(!empty($grade->status)){
 				$points = $grade->status;
 				//if($grade->status == "Exc"){
-				$student_points += 1;
+				$student_points += $grade->assignment_total*$grade->weight/100;
 				//}
 			}
 
@@ -106,7 +106,7 @@ if(!empty($assignments)){
 			}
 
 
-if($grade->footnote){
+			if($grade->footnote){
 				$points .= "[$grade->footnote]";
 			}
 			$rows[$grade->kStudent]["totals"] = $student_points;
