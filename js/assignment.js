@@ -214,7 +214,7 @@ $(document).ready(function(){
 			}
 		});
 	});
-	/*
+	
 	$(".grade-points input").live("keyup",function(){
 		myId = this.id.split("_");
 		myKey = myId[0];
@@ -223,7 +223,8 @@ $(document).ready(function(){
 		myValue = $(this).val();
 		save_points_inline(myAssignment,myStudent,myKey, myValue);	
 	});
-	
+	// */
+	/*
 	$(".grade-points select").live("mouseup",function(){
 		myId = this.id.split("_");
 		myKey = myId[0];
@@ -231,7 +232,8 @@ $(document).ready(function(){
 		myStudent = myId[2];
 		myValue = $(this).val();
 		save_points_inline(myAssignment,myStudent,myKey, myValue);	
-	});*/
+	});
+	// */
 	
 	
 	$(".close_grade_editor").live("click",function(){
