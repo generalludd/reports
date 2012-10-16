@@ -12,8 +12,8 @@ if($stuGroup){
 ?>
 <input
 	type="hidden" name="kTeach" id="kTeach" value="<?=$kTeach;?>" />
-	<?
- if(!empty($assignments)){
+<?
+if(!empty($assignments)){
 
 	/* Get the subject and relevant data from the first row of the assignments */
 	$header = $assignments[0];
@@ -36,7 +36,7 @@ if($stuGroup){
 			title="Search for Current Grade Charts">New Grade Search</span>
 		</li>
 		<!-- <li><span
-				class='button new assignment-create'>Add Assignment</span></li> -->
+				class='button new assignment-create'>Add&nbsp;Assignment</span></li> -->
 	</ul>
 
 
@@ -46,7 +46,7 @@ if($stuGroup){
 
 <!-- <div  colspan=50 class='assignment-button'><? if($kTeach == $this->session->userdata("userID")):?><span
 				class='button new assignment-create'>Add Assignment</span> <? endif; ?>
-			</div> -->	
+			</div> -->
 
 
 <table class='grade-chart'>
@@ -65,7 +65,7 @@ if($stuGroup){
 				class='chart-assignment'><?=$assignment->assignment;?> </span><br />
 				<span class='chart-category'><?=$assignment->category;?> </span><br />
 				<!-- an assignment with 0 points is calculated as a make-up points for assignments -->
-				<span class='chart-points'> <?=$assignment->points>0?$assignment->points. " Points" :"Make-Up Points";?> 
+				<span class='chart-points'> <?=$assignment->points>0?$assignment->points. " Points" :"Make-Up Points";?>
 			</span><br /> <span class='chart-date'><?=format_date($assignment->date,'standard');?>
 			</span></th>
 
@@ -75,7 +75,7 @@ if($stuGroup){
 			$total_points += $assignment->points * $assignment->weight/100;
 } ?>
 			<th class='assignment-button'><span
-				class='button new assignment-create'>Add Assignment</span></th>
+				class='button new assignment-create'>Add&nbsp;Assignment</span></th>
 		</tr>
 	</thead>
 	<tbody>
@@ -97,12 +97,16 @@ if($stuGroup){
 			if(!empty($grade->status)){
 				$points = $grade->status;
 				//if($grade->status == "Exc"){
-					$student_points += 1;
+				$student_points += 1;
 				//}
 			}
 
+			if($grade->points == 0 && $grade->assignment_total == 0){
+				$points = "";
+			}
 
-			if($grade->footnote){
+
+if($grade->footnote){
 				$points .= "[$grade->footnote]";
 			}
 			$rows[$grade->kStudent]["totals"] = $student_points;
@@ -139,9 +143,15 @@ if($stuGroup){
 	<span class='button new show-student-selector'>Add Student</span>
 </div>
 <? }else{ ?>
-<p>You may need to create categories before creating assignments. <span class="button edit assignment_categories_edit">Edit Categories</span></p>
-	<? if($category_count > 0){ ?>
-	<p>You have not entered any assignments or grades for this term. <span class='button new assignment-create'>Add Assignment</span></p>
+<p>
+	You may need to create categories before creating assignments. <span
+		class="button edit assignment_categories_edit">Edit Categories</span>
+</p>
+<? if($category_count > 0){ ?>
+<p>
+	You have not entered any assignments or grades for this term. <span
+		class='button new assignment-create'>Add Assignment</span>
+</p>
 <? }
- }
+}
 
