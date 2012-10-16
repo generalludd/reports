@@ -52,6 +52,7 @@ $(document).ready(function(){
 			success: function(data){
 				//showPopup("test",data,"auto");
 				$("#sag_" + myAssignment + "_" + myStudent).html(data);
+				$("#points_" + myAssignment + "_" + myStudent).focus();
 			}
 		});
 		//$(this).html("<input type='text' class='point-editor' name='points' id='points_" + myAssignment + "_" + myStudent + "' value='" + myPoints + "' size=4/>");
@@ -191,10 +192,9 @@ $(document).ready(function(){
 	$(".save_cell_grade").live("click",function(){
 		myStudent = $("#kStudent").val();
 		myAssignment = $("#kAssignment").val();
-		myPoints = $("#points").val();
-		myStatus = $("#status").val();
-		myFootnote = $("#footnote").val();
-
+		myPoints = $("#points_" + myAssignment + "_" + myStudent).val();
+		myStatus = $("#status_" + myAssignment + "_" + myStudent).val();
+		myFootnote = $("#footnote_" + myAssignment + "_" + myStudent).val();
 		myUrl = base_url + "grade/update";
 		form_data = {
 				kStudent: myStudent,
@@ -214,6 +214,25 @@ $(document).ready(function(){
 			}
 		});
 	});
+	/*
+	$(".grade-points input").live("keyup",function(){
+		myId = this.id.split("_");
+		myKey = myId[0];
+		myAssignment = myId[1];
+		myStudent = myId[2];
+		myValue = $(this).val();
+		save_points_inline(myAssignment,myStudent,myKey, myValue);	
+	});
+	
+	$(".grade-points select").live("mouseup",function(){
+		myId = this.id.split("_");
+		myKey = myId[0];
+		myAssignment = myId[1];
+		myStudent = myId[2];
+		myValue = $(this).val();
+		save_points_inline(myAssignment,myStudent,myKey, myValue);	
+	});*/
+	
 	
 	$(".close_grade_editor").live("click",function(){
 		window.location.reload();
@@ -368,4 +387,22 @@ function save_student_points(myAssignment)
 		}
 	});
 	
+}
+
+function save_points_inline(myAssignment,myStudent,myKey,myValue){
+	form_data = {
+			kStudent:myStudent,
+			kAssignment:myAssignment,
+			key:myKey,
+			value: myValue
+	};
+	myUrl = base_url + "grade/update_value";
+	$.ajax({
+		type:"POST",
+		url: myUrl,
+		data: form_data,
+		success: function(data){
+			$("#sag_" + myAssignment + "_" + myStudent).html(data);
+		}
+	});
 }
