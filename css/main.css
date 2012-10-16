@@ -389,7 +389,7 @@ legend {
 }
 
 #page-title {
-	float:left;
+	float: left;
 	font-size: 1.3em;
 	font-weight: bold;
 }
@@ -1148,9 +1148,11 @@ table.report td.field.buttons,table.report th.field.buttons {
 	border: none;
 }
 
+
 #report-card {
 	
 }
+
 .report-title {
 	font-size: 1.6em;
 	font-weight: bold;
@@ -1181,12 +1183,15 @@ table.report td.field.buttons,table.report th.field.buttons {
 .report-summary {
 	
 }
+
 .footnotes {
 	padding: 10px 0;
 }
+
 .footnotes .caption {
 	font-weight: bold;
 }
+
 .footnotes ul {
 	list-style: none;
 	margin: 0;
