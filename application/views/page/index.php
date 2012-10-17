@@ -18,7 +18,12 @@ if($this->uri->segment(1) == ""){
 <div id="page">
 <?php if(!$print): ?>
 <div id='header'>
+
+<? if($_SERVER['HTTP_HOST'] == "test.server.fsmn"): ?>
+<div id="page-title" class="alert">WARNING: THIS IS THE STAGING SERVER. CHANGES MADE HERE ARE IMAGINARY!</div>
+<? else: ?>
 <div id='page-title'>Friends School Student Information System</div>
+<? endif;?>
 <div id='utility'><? $this->load->view('page/utility');?></div>
 <div id='navigation'>
 <?  $this->load->view('page/navigation'); ?>
