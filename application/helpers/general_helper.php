@@ -534,11 +534,19 @@ function calculate_letter_grade($points)
 			$valence = "+";
 		}else{
 			$valuence = "";
-	
+
 		}
 		$letter = $letters[$tens];
 		$output = $letter . $valence;
 	}
 	return $output;
 
+}
+
+function bake_cookie($name,$value){
+	set_cookie(array("name"=>$name,"value"=>$value,"expire"=>0));
+}
+
+function burn_cookie($name){
+	set_cookie(array("name"=>$name,"value"=>"","expire"=>NULL));
 }

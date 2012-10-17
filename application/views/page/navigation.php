@@ -1,10 +1,13 @@
 <?php
 $dbRole = $this->session->userdata("dbRole");
 $userID = $this->session->userdata("userID");
-$gradeStart = $this->session->userdata("gradeStart");
-$gradeEnd = $this->session->userdata("gradeEnd");
-$is_advisor = $this->session->userdata("is_advisor");
-$unread_reports = $this->session->userdata("unread_reports");
+//$gradeStart = $this->session->userdata("gradeStart");
+$gradeStart = $this->input->cookie("gradeStart");
+//$gradeEnd = $this->session->userdata("gradeEnd");
+$gradeEnd = $this->input->cookie("gradeEnd");
+//$is_advisor = $this->session->userdata("is_advisor");
+$is_advisor = $this->input->cookie("is_advisor");
+$unread_reports = $this->input->cookie("unread_reports");//$this->session->userdata("unread_reports");
 $count = "";
 $count_text = "";
 if($unread_reports > 0){

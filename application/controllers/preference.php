@@ -30,6 +30,7 @@ class Preference extends MY_Controller {
 				$type = $this->input->post("type");
 				$value = $this->input->post("value");
 				$output = $this->preference->update($kTeach, $type, $value);
+				bake_cookie($type, $value);
 				if($output){
 					echo OK;
 				}else{

@@ -22,15 +22,15 @@ class Assignment extends MY_Controller
 			$kTeach = $this->input->get("kTeach");
 		}
 		$gradeStart = $this->input->get("gradeStart");
-		$this->session->set_userdata("gradeStart",$gradeStart);
+		bake_cookie("gradeStart",$gradeStart);
 		$gradeEnd = $this->input->get("gradeEnd");
-		$this->session->set_userdata("gradeEnd",$gradeEnd);
+		bake_cookie("gradeEnd",$gradeEnd);
+
 
 		$term = get_current_term();
 		if($this->input->get("term")){
 			$term = $this->input->get("term");
-			$this->session->set_userdata("term",$term);
-
+			bake_cookie("term", $term);
 		}
 
 		$stuGroup = NULL;
@@ -38,14 +38,12 @@ class Assignment extends MY_Controller
 			$stuGroup = $this->input->get("stuGroup");
 		}
 
-		$this->session->set_userdata("stuGroup",$stuGroup);
-
+		bake_cookie("stuGroup",$stuGroup);
 
 		$year = get_current_year();
 		if($this->input->get("year")){
 			$year = $this->input->get("year");
-			$this->session->set_userdata("year",$year);
-
+			bake_cookie("year",$year);
 		}
 
 		$data["grades"] = $this->assignment->get_grades($kTeach,$term,$year,$gradeStart,$gradeEnd,$stuGroup);
@@ -72,11 +70,11 @@ class Assignment extends MY_Controller
 		if($this->input->get("kTeach")){
 			$data["kTeach"] = $this->input->get("kTeach");
 		}
-		$data["term"] = $this->session->userdata("term");
-		$data["year"] = $this->session->userdata("year");
-		$data["gradeStart"] = $this->session->userdata("gradeStart");
-		$data["gradeEnd"] = $this->session->userdata("gradeEnd");
-		$data["stuGroup"] = $this->session->userdata("stuGroup");
+		$data["term"] = $this->input->cookie("term");//$this->session->userdata("term");
+		$data["year"] = $this->input->cookie("year"); //$this->session->userdata("year");
+		$data["gradeStart"] = $this->input->cookie("gradeStart");//$this->session->userdata("gradeStart");
+		$data["gradeEnd"] = $this->input->cookie("gradeEnd");//$this->session->userdata("gradeEnd");
+		$data["stuGroup"] = $this->input->cookie("stuGroup");//$this->session->userdata("stuGroup");
 		$this->load->view("assignment/search",$data);
 	}
 
@@ -90,8 +88,10 @@ class Assignment extends MY_Controller
 		$subjects = $this->subject_model->get_for_teacher($kTeach);
 		$data['subjects'] = get_keyed_pairs($subjects, array('subject', 'subject'));
 		$userID = $this->session->userdata("userID");
-		$gradeStart = $this->session->userdata("gradeStart");
-		$gradeEnd = $this->session->userdata("gradeEnd");
+		//$gradeStart = $this->session->userdata("gradeStart");
+		//$gradeEnd = $this->session->userdata("gradeEnd");
+		$gradeStart = $this->input->cookie("gradeStart");
+		$gradeEnd = $this->input->cookie("gradeEnd");
 		$categories = $this->assignment->get_categories($userID, $gradeStart, $gradeEnd);
 		if(empty($categories)){
 			$gradeRange = sprintf("grades %s to %s", $gradeStart, $gradeEnd);
@@ -207,8 +207,10 @@ class Assignment extends MY_Controller
 	function edit_categories()
 	{
 		$data["kTeach"] = $this->uri->segment(3);
-		$data["gradeStart"] = $this->session->userdata("gradeStart");
-		$data["gradeEnd"] = $this->session->userdata("gradeEnd");
+		//$data["gradeStart"] = $this->session->userdata("gradeStart");
+		//$data["gradeEnd"] = $this->session->userdata("gradeEnd");
+		$data["gradeStart"] = $this->input->cookie("gradeStart");
+		$data["gradeEnd"] = $this->input->cookie("gradeEnd");
 		$data["categories"] = $this->assignment->get_categories($data["kTeach"], $data["gradeStart"] , $data["gradeEnd"]);
 		$this->load->view("assignment/categories",$data);
 	}

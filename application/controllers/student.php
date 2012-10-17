@@ -37,7 +37,7 @@ class Student extends MY_Controller
 	function find_by_name()
 	{
 		$stuName = $this->input->get("stuName");
-		
+
 		$target = "student/list";
 		if($this->input->get("type") == "mini"){
 			$target = "student/mini_list";
@@ -128,31 +128,32 @@ class Student extends MY_Controller
 
 	function advanced_search(){
 		$year = get_current_year();
-		$session["year"] = $year;
-		$session["grades"] = "";
-		$session["hasNeeds"] = "";
-		$session["includeFormerStudents"] = "";
+		burn_cookie("year");
 		if($this->input->get($year)){
 			$year = $this->input->get("year");
-			$session["year"] = $year;
+			bake_cookie("year", $year);
 		}
 
 		$grades = array();
+		burn_cookie("grades");
 		if($this->input->get("grades")){
 			$grades = $this->input->get("grades");
-			$session["grades"] = $grades;
+			bake_cookie("grades", implode(",",$grades));
 		}
 		$hasNeeds = 0;
+		burn_cookie("hasNeeds");
 		if($this->input->get("hasNeeds")){
 			$hasNeeds = $this->input->get("hasNeeds");
-			$session["hasNeeds"] = $hasNeeds;
+			bake_cookie("hasNeeds", $hasNeeds);
 		}
+
 		$includeFormerStudents = 0;
+		burn_cookie("includeFormerStudents");
 		if($this->input->get("includeFormerStudents")){
 			$includeFormerStudents = $this->input->get("includeFormerStudents");
-			$session["includeFormerStudents"] =  $includeFormerStudents;
+			bake_cookie("includeFormerStudents", $includeFormerStudents);
 		}
-		$this->session->set_userdata($session);
+		//$this->session->set_userdata($session);
 		$data["criteria"] = $this->input->get();
 		$data["students"] = $this->student_model->advanced_find($year,$grades, $hasNeeds, $includeFormerStudents);
 		$data["title"] = "Student List";
@@ -163,7 +164,7 @@ class Student extends MY_Controller
 			$data["target"] = "student/results";
 			$this->load->view("page/index", $data);
 		}
-		
+
 	}
 
 	//@TODO this needs to also check teacher email accounts to avoid duplication there.
@@ -215,7 +216,7 @@ class Student extends MY_Controller
 			$this->student_model->update_value($student->kStudent, array("stuEmailPassword"=> $this->generate_password($student->stuFirst,$student->stuLast)));
 		}
 	}
-	
+
 	function generate_password($stuFirst=NULL,$stuLast=NULL){
 		if(!$stuFirst){
 			$stuFirst = $this->input->get("stuFirst");
@@ -223,24 +224,22 @@ class Student extends MY_Controller
 		if(!$stuLast){
 			$stuLast = $this->input->get("stuLast");
 		}
-		
+
 		$password = $stuFirst[0] . $stuLast[strlen($stuLast)-1] . "@1365!";
 		echo $password;
 		return $password;
 	}
 
-/******* MAINTENANCE SCRIPTS *********/
+	/******* MAINTENANCE SCRIPTS *********/
 	function update_grades()
 	{
 		$this->student_model->update_grades();
-		$cookie = array(
+		$this->input->set_cookie(array(
 				'name'   => 'admin',
 				'value'  => 'Student grades were successfully updated',
-				'expire' => '1',
-		);
-		
-		$this->input->set_cookie($cookie);
-		redirect("admin");		
+				'expire' => '60',
+		));
+		redirect("admin");
 	}
 
 }

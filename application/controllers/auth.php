@@ -31,13 +31,22 @@ class Auth extends CI_Controller
 				$data["username"] = $username;
 				$data["dbRole"] = $result->dbRole;
 				$data["userID"] = $result->kTeach;
-				$data["gradeStart"] = $result->gradeStart;
-				$data["gradeEnd"] = $result->gradeEnd;
-				$data["is_advisor"] = $result->is_advisor;
+				//$data["gradeStart"] = $result->gradeStart;
+				//$data["gradeEnd"] = $result->gradeEnd;
+				//$data["is_advisor"] = $result->is_advisor;
+				bake_cookie(gradeStart, $result->gradeStart);
+				bake_cookie("gradeEnd", $result->gradeEnd);
+				bake_cookie("isAdvisor",$result->is_advisor);
+				$this->load->model("preference_model","preference");
+				$preferences = $this->preference->get_distinct($result->kTeach);
+				set_user_cookies($preferences);
+				
 				//if the teacher is an advisor, get the number of unread reports;
 				if($teacher->is_advisor == 1){
 					$this->load->model("student_report_model","report");
-					$data["unread_reports"] = $this->report->get_count($result->kTeach);
+					$unread_reports =  $this->report->get_count($result->kTeach);
+					$data["unread_reports"] = $unread_reports;
+					bake_cookie("unread_reports", $unread_reports);
 				}
 				$this->session->set_userdata($data);
 				$redirect = true;
@@ -164,6 +173,5 @@ class Auth extends CI_Controller
 			$this->start_reset("An error occurred. Please try again or ask for technical support");
 		}
 	}
-
 
 }

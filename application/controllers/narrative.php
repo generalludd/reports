@@ -17,7 +17,6 @@ class Narrative extends MY_Controller
 		$this->load->model('support_model');
 		$this->load->model('student_model');
 		$this->load->model('teacher_model');
-		$this->load->model('preference_model');
 		$this->load->model('template_model');
 		$this->load->model('subject_model');
 		$this->load->model("suggestion_model");
@@ -37,7 +36,7 @@ class Narrative extends MY_Controller
 		$teachers = $this->teacher_model->get_teacher_pairs();
 		$data['teacherPairs'] = get_keyed_pairs($teachers, array('kTeach', 'teacher'));
 		$data['studentName'] = format_name($student->stuFirst, $student->stuLast, $student->stuNickname);
-		$data['default_grade'] = $this->preference_model->get($kTeach,"default_grade");
+		$data['default_grade'] = $this->input->cookie("default_grade");
 		$data['narrative'] = NULL;
 		$data['narrText'] = "";
 		$data['action'] = "insert";
@@ -130,7 +129,6 @@ class Narrative extends MY_Controller
 	{
 		$this->load->model('student_model');
 		$this->load->model("teacher_model");
-		$this->load->model("preference_model");
 		$this->load->model("template_model");
 		$this->load->model("subject_model");
 		$this->load->model("support_model");
@@ -154,9 +152,9 @@ class Narrative extends MY_Controller
 		$data["narrText"] = "";
 		$studentName = format_name($student->stuFirst, $student->stuLast, $student->stuNickname);
 		$data["hasNeeds"] = $this->support_model->get_current($kStudent, "kSupport");
-		
-		// Get the value of the default_grade preference. 
-		$data['default_grade'] = $this->preference_model->get($kTeach,"default_grade");
+
+		// Get the value of the default_grade preference.
+		$data['default_grade'] = $this->input->cookie("default_grade");
 		//$data["needsButton"] = $this->get_need_button($kStudent);
 		// 		$data["suggestionsButton"] = $this->get_suggestion_button($kNarrative);
 		$data["hasSuggestions"] = TRUE;// $this->suggestion_model->exists($kNarrative);
@@ -251,26 +249,29 @@ class Narrative extends MY_Controller
 
 		if($this->input->get_post("gradeStart") && $this->input->get_post("gradeEnd")){
 			$options["gradeStart"] = $this->input->get_post("gradeStart");
-			$this->session->set_userdata("gradeStart",$options["gradeStart"]);
+			bake_cookie("gradeStart", $options["gradeStart"]);
 			$options["gradeEnd"] = $this->input->get_post("gradeEnd");
-			$this->session->set_userdata("gradeEnd",$options["gradeEnd"]);
+			bake_cookie("gradeEnd", $options["gradeEnd"]);
 		}
 
 		if($this->input->get_post("subject")){
 			$options["narrSubject"] = $this->input->get_post("subject");
-			$this->session->set_userdata("narrative_subject", $options["narrSubject"]);
+			bake_cookie("narrative_subject", $options["narrSubject"]);
+
 		}
 
 		$options["narrYear"] = get_current_year();
 		if($this->input->get_post("narrYear")){
 			$options["narrYear"] = $this->input->get_post("narrYear");
-			$this->session->set_userdata("narrYear",$options["narrYear"]);
+			bake_cookie("narrYear", $options["narrYear"]);
+
 		}
 
 		$options["narrTerm"] = get_current_term();
 		if($this->input->get_post("narrTerm")){
 			$options["narrTerm"] = $this->input->get_post("narrTerm");
-			$this->session->set_userdata("narrTerm", $options["narrTerm"]);
+			bake_cookie("narrTerm", $options["narrTerm"]);
+
 		}
 		$data["narratives"] = $this->narrative_model->get_narratives($options);
 		$data["options"] = $options;
@@ -300,30 +301,32 @@ class Narrative extends MY_Controller
 		$data["kTeach"] = $kTeach;
 		$teachers = $this->teacher_model->get_teacher_pairs();
 		$data['teachers'] = get_keyed_pairs($teachers, array('kTeach', 'teacher'));
-		$data["subject"] = $this->session->userdata("narrative_subject");
+		$data["subject"] = $this->input->cookie("narrative_subject");//$this->session->userdata("narrative_subject");
 		$subjects = $this->subject_model->get_for_teacher($kTeach);
 		$data["subjects"] = get_keyed_pairs($subjects, array("subject", "subject"));
-		
+
 		if($this->session->userdata("userRole") == 1){
 			$subjects = $this->subject_model->get_all();
-		
+
 		}
 		$grade_list = $this->menu_model->get_pairs("grade");
-		
+
 		$data["grades"] = get_keyed_pairs($grade_list, array("value","label"));
-		
-		$data["gradeStart"] = $this->session->userdata("gradeStart");
-		$data["gradeEnd"] = $this->session->userdata("gradeEnd");
+
+		//$data["gradeStart"] = $this->session->userdata("gradeStart");
+		//$data["gradeEnd"] = $this->session->userdata("gradeEnd");
+		$data["gradeStart"] = $this->input->cookie("gradeStart");
+		$data["gradeEnd"] = $this->input->cookie("gradeEnd");
 		if(empty($data["gradeStart"]) || empty($data["gradeEnd"])){
 			$teacher_grades = $this->teacher_model->get($kTeach,"gradeStart,gradeEnd");
 			$data["gradeStart"] = $teacher_grades->gradeStart;
 			$data["gradeEnd"] = $teacher_grades->gradeEnd;
 		}
-		$data["narrTerm"] = $this->session->userdata("narrTerm");
+		$data["narrTerm"] = $this->input->cookie("narrTerm");//$this->session->userdata("narrTerm");
 		if(empty($data["narrTerm"])){
 			$data["narrTerm"] = get_current_term();
 		}
-		$data["narrYear"] = $this->session->userdata("narrYear");
+		$data["narrYear"] = $this->input->cookie("narrYear");//$this->session->userdata("narrYear");
 		if(empty($data["narrYear"])){
 			$data["narrYear"] = get_current_year();
 		}
@@ -340,7 +343,7 @@ class Narrative extends MY_Controller
 		$data["gradeStart"] = $teacher->gradeStart;
 		$data["gradeEnd"] = $teacher->gradeEnd;
 		$subject_list = $this->subject_model->get_for_teacher($data["kTeach"]);
-		$data["subject"] = $this->session->userdata("narrative_subject");
+		$data["subject"] = $this->input->cookie("narrative_subject");//$this->session->userdata("narrative_subject");
 		$data["subjects"] = get_keyed_pairs($subject_list, array("subject", "subject"));
 		$grade_list = $this->menu_model->get_pairs("grade");
 		$data["grades"] = get_keyed_pairs($grade_list, array("value","label"));
@@ -359,7 +362,7 @@ class Narrative extends MY_Controller
 		$data["subject"] = $this->input->get_post("subject");
 		$data["narrYear"] = get_current_year();
 		$data["narrTerm"] = get_current_term();
-		$this->session->set_userdata("narrative_subject",$data["subject"]);
+		bake_cookie("narrative_subject", $data["subject"]);
 		$constraints = array();
 		if($data["subject"] == "Humanities"){
 			$constraints["humanitiesTeacher"] = $data["kTeach"];
@@ -380,7 +383,7 @@ class Narrative extends MY_Controller
 			$this->load->model("student_model");
 			$this->load->model("attendance_model");
 			$this->load->model("benchmark_model");
-			$this->load->model("preference_model");
+			//$this->load->model("preference_model");
 			$this->load->model("benchmark_legend_model", "legend");
 			$kStudent = $this->uri->segment(3);
 			$narrTerm = $this->uri->segment(4);

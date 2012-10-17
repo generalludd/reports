@@ -33,7 +33,7 @@ class Template extends MY_Controller
 		if($this->input->get_post("subject")){
 			$options["where"]["subject"] = $this->input->get_post("subject");
 		}else{
-			$options["where"]["subject"] = $this->session->userdata("narrative_subject");
+			$options["where"]["subject"] = $this->input->cookie("narrative_subject");//$this->session->userdata("narrative_subject");
 		}
 		$options["stuGrade"] = $this->student_model->get_grade($kStudent);
 
@@ -73,7 +73,8 @@ class Template extends MY_Controller
 
 		if($this->input->get_post("subject") != "0"){
 			$options["where"]["subject"] = $this->input->get_post("subject");
-			$this->session->set_userdata("template_subject",$options["where"]["subject"]);
+			//$this->session->set_userdata("template_subject",$options["where"]["subject"]);
+			bake_cookie("template_subject",$options["where"]["subject"]);
 				
 		}
 
@@ -116,7 +117,7 @@ class Template extends MY_Controller
 		$data["grade_list"] = get_keyed_pairs($grades,array("value","label"));
 		$data["years"] = get_year_list(TRUE);
 		$subjects = $this->subject_model->get_for_teacher($kTeach);
-		$data["subject"] = $this->session->userdata("template_subject");
+		$data["subject"] = $this->input->cookie("template_subject");//$this->session->userdata("template_subject");
 		$data["subjects"] = get_keyed_pairs($subjects, array("subject","subject"),TRUE);
 		$data["grades"] = $this->teacher_model->get($kTeach,array("gradeStart","gradeEnd"));
 		$this->load->view("template/search", $data);

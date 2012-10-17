@@ -1,15 +1,15 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 $roles = array(1=>"Administrators",2=>"Editors/Teachers",3=>"Aides");
 $gradeStart = 0;
-if($this->session->userdata("gradeStart")){
-	$gradeStart = $this->session->userdata("gradeStart");
-}
 
+if($this->input->cookie("gradeStart")){
+	$gradeStart = $this->input->cookie("gradeStart");
+}
 $gradeEnd = 8;
-if($this->session->userdata("gradeEnd")){
-	$gradeEnd = $this->session->userdata("gradeEnd");
-}
 
+if($this->input->cookie("gradeEnd")){
+	$gradeEnd = $this->input->cookie("gradeEnd");
+}
 ?>
 <form name="teacher_search" id="teacher_search" method="get" action="teacher">
 <p>

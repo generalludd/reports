@@ -58,8 +58,9 @@ class benchmark_legend extends MY_Controller
 
 	function create()
 	{
-		$data["legend"] = (object) array("kTeach"=>$this->session->userdata("userID"));
-		$subjects = $this->subject_model->get_for_teacher($this->session->userdata("userID"));
+		$kTeach = $this->session->userdata("userID");
+		$data["legend"] = (object) array("kTeach"=>$kTeach);
+		$subjects = $this->subject_model->get_for_teacher($kTeach);
 		$data["subjects"] = get_keyed_pairs($subjects, array("subject","subject"),FALSE);
 		$data["action"] = "insert";
 		$data["target"] = "benchmark_legend/edit";

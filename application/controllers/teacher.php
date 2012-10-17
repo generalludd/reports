@@ -32,9 +32,8 @@ class Teacher extends MY_Controller
 			$gradeEnd = $this->input->get_post("gradeEnd");
 			$data["options"]["gradeRange"]["gradeStart"] = $gradeStart;
 			$data["options"]["gradeRange"]["gradeEnd"] = $gradeEnd;
-			$this->session->set_userdata("gradeStart",$gradeStart );
-			$this->session->set_userdata("gradeEnd", $gradeEnd);
-				
+			bake_cookie("gradeStart", $gradeStart);
+			bake_cookie("gradeEnd",$gradeEnd);
 		}
 		$data["teachers"] = $this->teacher_model->get_all($data["options"]);
 		
@@ -155,7 +154,7 @@ class Teacher extends MY_Controller
 		$kTeach = $this->input->get_post("kTeach");
 		$this->load->model("subject_model");
 		$subjects = get_keyed_pairs($this->subject_model->get_for_teacher($kTeach), array("subject", "subject"));
-		echo form_dropdown("subject",$subjects,$this->session->userdata("current_subject"),"id='subject'");
+		echo form_dropdown("subject",$subjects,$this->input->cookie("current_subject"),"id='subject'");
 	}
 	
 	function grade_range()

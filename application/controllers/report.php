@@ -19,8 +19,8 @@ class Report extends MY_Controller
 		$this->load->model("menu_model","menu");
 		$data["ranks"] = get_keyed_pairs($this->menu->get_pairs("report_rank"),array("value","label"));
 		$data["kTeach"] = $this->session->userdata("userID");
-		//if the individual is not a teacher, show a dropdown list of teachers on whose behalf. 
-		//Include the author as an option 
+		//if the individual is not a teacher, show a dropdown list of teachers on whose behalf.
+		//Include the author as an option
 		$data["is_teacher"] = TRUE;
 		if($this->session->userdata('dbRole') != 2){
 			$this->load->model("teacher_model");
@@ -110,10 +110,11 @@ class Report extends MY_Controller
 
 		$kReport = $this->input->post("kReport");
 		$this->report->update($kReport);
-		if($this->session->userdata("is_advisor") == 1){
+		if($this->input->cookie("is_advisor") == 1){
 			$this->load->model("student_report_model","report");
-			$data["unread_reports"] = $this->report->get_count($this->session->userdata("userID"));
-			$this->session->set_userdata($data);
+			$userID = $this->session->userdata("userID");
+			$unread_reports = $this->report->get_count($userID);
+			bake_cookie("unread_reports", $unread_reports);
 		}
 
 		redirect("report/view/$kReport");
@@ -198,9 +199,11 @@ class Report extends MY_Controller
 				$date_end =  $this->input->get("date_end");
 				$options["date_range"]["date_start"] = $date_start;
 				$options["date_range"]["date_end"] = $date_end;
-				$this->session->set_userdata("date_start",$date_start);
-				$this->session->set_userdata("date_end",$date_end);
 
+				//$this->session->set_userdata("date_start",$date_start);
+				//$this->session->set_userdata("date_end",$date_end);
+				bake_cookie("date_start", $date_start);
+				bake_cookie("date_end", $date_end);
 			}
 
 			if($this->input->get("category")){
@@ -210,7 +213,7 @@ class Report extends MY_Controller
 			$data["options"] = $options;
 			$data["target"] = "report/list";
 			$data["person"] = $person;
-			
+				
 			$data["reports"] = $this->report->get_list($type,$key,$options);
 			$data["type"] = $type;
 			$data["title"] = sprintf("%ss Submitted %s", $data["student_report"], $title);
