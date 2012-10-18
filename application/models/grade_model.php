@@ -231,6 +231,44 @@ class Grade_model extends CI_Model
 
 	}
 
+
+	/**
+	 * Collect the list of current students for a teacher in preparation for creating all grade reports.
+	 * @param int $kTeach
+	 * @param string $term
+	 * @param int $year
+	 * @param int $gradeStart
+	 * @param int $gradeEnd
+	 * @param string $cutoff_date
+	 */
+
+	function get_reports($kTeach, $term, $year, $gradeStart, $gradeEnd, $cutoff_date = NULL){
+		$this->db->select("DISTINCT(student.kStudent) as kStudent, student.stuLast,student.stuFirst,student.stuNickname");
+		//$this->db->select("student.kStudent, student.stuFirst, student.stuLast");
+		//$this->db->select("grade.points,grade.status,grade.footnote");
+		//$this->db->select("assignment.assignment,assignment.date,assignment.points as total_points,assignment.subject");
+		//$this->db->select("category.category,category.weight");
+		//$this->db->select("teacher.teachFirst,teacher.teachLast");
+		$this->db->from("grade");
+		$this->db->join("student","grade.kStudent = student.kStudent");
+		$this->db->join("assignment","grade.kAssignment = assignment.kAssignment");
+		//$this->db->join("teacher","assignment.kTeach= teacher.kTeach");
+		//$this->db->join("assignment_category as category","category.kCategory = assignment.kCategory");
+		$this->db->where("assignment.kTeach",$kTeach);
+		$this->db->where("assignment.term",$term);
+		$this->db->where("assignment.gradeStart",$gradeStart);
+		$this->db->where("assignment.gradeEnd",$gradeEnd);
+		if($cutoff_date){
+			$this->db->where("assignment.date <= '$cutoff_date'");
+		}
+		$this->db->order_by("student.stuLast");
+		$this->db->order_by("student.stuFirst");
+		//$this->db->order_by("assignment.date");
+		$result = $this->db->get()->result();
+		return $result;
+	}
+
+
 	function delete($kGrade)
 	{
 		$delete = array("kGrade" => $kGrade);

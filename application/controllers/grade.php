@@ -34,7 +34,7 @@ class Grade extends MY_Controller
 			}
 			$options["grade_range"]["gradeStart"] = $this->input->get_post("gradeStart");
 			if(!$options["grade_range"]["gradeStart"]){
-				$options["grade_range"]["gradeStart"] = $this->input->cookie("gradeStart"); 
+				$options["grade_range"]["gradeStart"] = $this->input->cookie("gradeStart");
 			}
 			$options["grade_range"]["gradeEnd"] = $this->input->get_post("gradeEnd");
 			if(!$options["grade_range"]["gradeEnd"]){
@@ -104,7 +104,7 @@ class Grade extends MY_Controller
 			echo $result;
 		}
 	}
-	
+
 	function update_value()
 	{
 		$kStudent = $this->input->post("kStudent");
@@ -174,7 +174,7 @@ class Grade extends MY_Controller
 			}
 			$data["target"] = "grade/report_card";
 			$data["title"] = "Report Card";
-			
+
 			$student = $this->student->get($kStudent);
 			$data["kStudent"] = $kStudent;
 			$data["student"] = $student;
@@ -195,8 +195,47 @@ class Grade extends MY_Controller
 				$this->load->view("page/index",$output);
 			}
 
-
-
 		}
 	}
+
+	function get_reports(){
+		$data = array();
+		$options = array();
+		$output = array();
+		$term = "Mid-Year";
+		$year = 2012;
+		$gradeStart = 7;
+		$gradeEnd = 8;
+		$cutoff_date = NULL;
+		$output["cutoff_date"] = $cutoff_date;
+		$kTeach = 7;
+		$data["subject"] = "Math";
+		$data["target"] = "grade/report_card";
+		$data["title"] = "Grade Summary";
+		$students = $this->grade->get_reports($kTeach,$term, $year, $gradeStart, $gradeEnd);
+		$output["students"] = array();
+		$output["charts"] = array();
+		$i=0;
+		foreach($students as $student){
+			$data["count"] = $i;
+			$data["kStudent"] = $student->kStudent;
+			$data["student"] = $student;
+			$options["subject"] = $data["subject"];
+			$output["students"][] = format_name($student->stuNickname, $student->stuLast);
+			$data["grades"] = $this->assignment->get_for_student($student->kStudent,$term,$year,$options);
+			$data["categories"] = $this->grade->get_categories($student->kStudent, $term, $year,$options);
+			$output["charts"][] = $this->load->view("grade/chart",$data, TRUE);
+			$i++;
+		}
+		
+		if($output){
+			$output["term"] = $term;
+			$output["year"] = $year;
+			$output["subject"] = $data["subject"];
+			
+			$output["target"] = "grade/teacher_report";
+			$this->load->view("page/index",$output);
+		}
+	}
+
 }

@@ -70,11 +70,11 @@ class Assignment extends MY_Controller
 		if($this->input->get("kTeach")){
 			$data["kTeach"] = $this->input->get("kTeach");
 		}
-		$data["term"] = $this->input->cookie("term");//$this->session->userdata("term");
-		$data["year"] = $this->input->cookie("year"); //$this->session->userdata("year");
-		$data["gradeStart"] = $this->input->cookie("gradeStart");//$this->session->userdata("gradeStart");
-		$data["gradeEnd"] = $this->input->cookie("gradeEnd");//$this->session->userdata("gradeEnd");
-		$data["stuGroup"] = $this->input->cookie("stuGroup");//$this->session->userdata("stuGroup");
+		$data["term"] = $this->input->cookie("term");
+		$data["year"] = $this->input->cookie("year"); 
+		$data["gradeStart"] = $this->input->cookie("gradeStart");
+		$data["gradeEnd"] = $this->input->cookie("gradeEnd");
+		$data["stuGroup"] = $this->input->cookie("stuGroup");
 		$this->load->view("assignment/search",$data);
 	}
 
