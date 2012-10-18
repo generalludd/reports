@@ -34,11 +34,11 @@ class Grade extends MY_Controller
 			}
 			$options["grade_range"]["gradeStart"] = $this->input->get_post("gradeStart");
 			if(!$options["grade_range"]["gradeStart"]){
-				$options["grade_range"]["gradeStart"] = $this->input->cookie("gradeStart"); //$this->session->userdata("gradeStart");
+				$options["grade_range"]["gradeStart"] = $this->input->cookie("gradeStart"); 
 			}
 			$options["grade_range"]["gradeEnd"] = $this->input->get_post("gradeEnd");
 			if(!$options["grade_range"]["gradeEnd"]){
-				$options["grade_range"]["gradeEnd"] = $this->input->cookie("gradeEnd"); //$this->session->userdata("gradeEnd");
+				$options["grade_range"]["gradeEnd"] = $this->input->cookie("gradeEnd");
 			}
 			$footnotes = $this->menu_model->get_pairs("grade_footnote");
 			$data["footnotes"] = get_keyed_pairs($footnotes, array("value","label"),TRUE);
@@ -49,7 +49,6 @@ class Grade extends MY_Controller
 			$data["kTeach"] = $kTeach;
 			$options["kTeach"] = $kTeach;
 			$data["grades"] = $this->assignment->get_for_student($kStudent,$term,$year,$options);
-
 			$this->load->view("grade/edit",$data);
 		}
 
@@ -82,8 +81,6 @@ class Grade extends MY_Controller
 	function select_student()
 	{
 		$data["kTeach"] = $this->input->get("kTeach");
-		//$data["term"] = $this->session->userdata("term");
-		//$data["year"] = $this->session->userdata("year");
 		$data["term"] = $this->input->cookie("term");
 		$data["year"] = $this->input->cookie("year");
 		$data["js_class"] = "select-student-for-grades";
