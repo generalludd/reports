@@ -214,7 +214,7 @@ $(document).ready(function(){
 			}
 		});
 	});
-
+/*
 	$(".grade-points input").live("blur",function(){
 		myId = this.id.split("_");
 		myKey = myId[0];
