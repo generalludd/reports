@@ -21,11 +21,11 @@ if($date = get_value($assignment,"date")){
 <?=form_dropdown("kCategory",$categories,get_value($assignment,"kCategory"),"id='kCategory'");?>
 </span>
 </p>
-<p>
+
 <div >Enter zero points for make-up points
 <span class='button help' id="Assignment_Zero Points" title="Why would I want to have zero points?">Help</span></div>
+<p>
 <label for="points">Points: </label>
-
 <input type="text" name="points" id="points" style="width:25px" value="<?=get_value($assignment,"points");?>"/>
 </p>
 <? if($action == "insert"): ?>
