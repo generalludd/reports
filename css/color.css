@@ -106,11 +106,11 @@ div.list {
 	background: linear-gradient(top, #67b021 0, #327e04 100%);
 }
 
-.button:hover,submit:hover,.button.active {
+.button:hover,submit:hover {
 	opacity: .90;
 	color: #000;
 	border: none;
-	filter: Alpha(Opacity =                                           90);
+	filter: Alpha(Opacity =                                             90);
 	/* 	background: #91b347 url(images/button_20_over.png) 50% 50% repeat-x; */
 	background: #67b021;
 	background: -moz-linear-gradient(top, #327e04 0, #67b021 100%);
@@ -144,6 +144,8 @@ div.list {
 
 .button.active {
 	color: #fff;
+	background: #67b021;
+	box-shadow: -1px -1px 1px #327e04 inset;
 }
 
 /* .button.active:hover { */
@@ -326,7 +328,7 @@ h2,h3,.support-view legend,h4,h5,h6,tr.benchmark-grade {
 .warning,.notice,.error {
 	color: black;
 	opacity: .90;
-	filter: Alpha(Opacity =                           90);
+	filter: Alpha(Opacity =                             90);
 	background: #ff8538 url(images/warning.png) 50% 50% repeat-x;
 }
 
