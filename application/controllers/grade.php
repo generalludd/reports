@@ -197,18 +197,21 @@ class Grade extends MY_Controller
 
 		}
 	}
-
+/**
+ * Non-functional script. 
+ */
+	/*
 	function get_reports(){
 		$data = array();
 		$options = array();
 		$output = array();
 		$term = "Mid-Year";
 		$year = 2012;
-		$gradeStart = 7;
+		$gradeStart = 8;
 		$gradeEnd = 8;
 		$cutoff_date = NULL;
 		$output["cutoff_date"] = $cutoff_date;
-		$kTeach = 7;
+		$kTeach = 8;
 		$data["subject"] = "Math";
 		$data["target"] = "grade/report_card";
 		$data["title"] = "Grade Summary";
@@ -227,15 +230,15 @@ class Grade extends MY_Controller
 			$output["charts"][] = $this->load->view("grade/chart",$data, TRUE);
 			$i++;
 		}
-		
+
 		if($output){
 			$output["term"] = $term;
 			$output["year"] = $year;
 			$output["subject"] = $data["subject"];
-			
+			$output["title"] = "Comprehensive Grade Report";
 			$output["target"] = "grade/teacher_report";
 			$this->load->view("page/index",$output);
 		}
 	}
-
+*/
 }
