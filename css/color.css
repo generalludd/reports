@@ -10,10 +10,6 @@ warning borders (dark) #FF8538
 notices: #e69528
 backgrounds: #C7D7E9
 */
-#navigation input[type="text"] {
-	border-color: #aaa;
-}
-
 .narrText {
 	border-color: silver gray gray silver;
 }
@@ -110,7 +106,7 @@ div.list {
 	opacity: .90;
 	color: #000;
 	border: none;
-	filter: Alpha(Opacity =                                             90);
+	filter: Alpha(Opacity =                                               90);
 	/* 	background: #91b347 url(images/button_20_over.png) 50% 50% repeat-x; */
 	background: #67b021;
 	background: -moz-linear-gradient(top, #327e04 0, #67b021 100%);
@@ -261,6 +257,11 @@ a.button {
 	background: -ms-linear-gradient(top, #c7d7e9 0, #c3d0e2 100%);
 	background: linear-gradient(top, #c7d7e9 0, #c3d0e2 100%);
 	border: none;
+	box-shadow: 2px 2px 4px #aaa;
+}
+
+#navigation input[type="text"] {
+	border-color: #aaa;
 }
 
 #stuSearch {
@@ -296,8 +297,10 @@ a.button {
 
 /* end div layout elements */
 #advancedSearch {
-	border-color: #087CD5;
+	border:none;
 	background-color: #C7D7E9;
+	box-shadow: 2px 2px 4px #aaa;
+	
 }
 
 #advancedSearch h5 {
@@ -328,7 +331,7 @@ h2,h3,.support-view legend,h4,h5,h6,tr.benchmark-grade {
 .warning,.notice,.error {
 	color: black;
 	opacity: .90;
-	filter: Alpha(Opacity =                             90);
+	filter: Alpha(Opacity =                               90);
 	background: #ff8538 url(images/warning.png) 50% 50% repeat-x;
 }
 
