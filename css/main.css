@@ -2,7 +2,7 @@
 
 @import "ui.datepicker.css";
 
-@import "color.css";
+
 
 .narrText {
 	padding: 3px;
@@ -292,7 +292,7 @@ div.narrative {
 	visibility: hidden;
 }
 
-.button,#navigation,#advancedSearch,#browser_warning,.notice,.warning,#searchForm fieldset,h2,h3,h4,h5,.support-view legend,input[type="submit"]
+.button,#navigation,#advancedSearch,#browser_warning,.notice,.warning,#searchForm fieldset,h2,h3,h4,h5,.support-view legend,input[type="submit"],#navigation input[type="text"]
 	{
 	-moz-border-radius: 3px;
 	-webkit-border-radius: 3px;
@@ -303,8 +303,7 @@ div.narrative {
 	text-align: center;
 	position: static;
 	padding: .35em;
-	border-style: solid;
-	border-width: 1px;
+	border: 1px solid black;
 	cursor: pointer;
 	font-size: 1em;
 	font-weight: normal;
@@ -317,6 +316,11 @@ td .button,.row .button,.button.small {
 
 .button:hover {
 	
+}
+
+#navigation input[type="text"] {
+	height: 18px;
+	border: 1px solid transparent;
 }
 
 .unread {
@@ -1147,7 +1151,6 @@ td.field.report-contact-date,td.field.report-student {
 table.report td.field.buttons,table.report th.field.buttons {
 	border: none;
 }
-
 
 #report-card {
 	

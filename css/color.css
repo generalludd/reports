@@ -10,6 +10,10 @@ warning borders (dark) #FF8538
 notices: #e69528
 backgrounds: #C7D7E9
 */
+#navigation input[type="text"] {
+	border-color: #aaa;
+}
+
 .narrText {
 	border-color: silver gray gray silver;
 }
@@ -90,23 +94,37 @@ div.list {
 
 /*form elements*/
 .button,input[type="submit"],.button.active:hover {
-	border: 1px solid #327e04;
+	border: none;
 	color: #ffffff;
-	opacity: .90;
-	filter: Alpha(Opacity =                         90);
-	background: #67b021 url(images/button_20.png) 50% 50% repeat-x;
+	background: #327e04;
+	background: -moz-linear-gradient(top, #67b021 0, #327e04 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #67b021),
+		color-stop(100%, #327e04) );
+	background: -webkit-linear-gradient(top, #67b021 0, #327e04 100%);
+	background: -o-linear-gradient(top, #67b021 0, #327e04 100%);
+	background: -ms-linear-gradient(top, #67b021 0, #327e04 100%);
+	background: linear-gradient(top, #67b021 0, #327e04 100%);
 }
 
 .button:hover,submit:hover,.button.active {
 	opacity: .90;
 	color: #000;
-	filter: Alpha(Opacity =                         90);
-	background: #91b347 url(images/button_20_over.png) 50% 50% repeat-x;
+	border: none;
+	filter: Alpha(Opacity =                                           90);
+	/* 	background: #91b347 url(images/button_20_over.png) 50% 50% repeat-x; */
+	background: #67b021;
+	background: -moz-linear-gradient(top, #327e04 0, #67b021 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #327e04),
+		color-stop(100%, #67b021) );
+	background: -webkit-linear-gradient(top, #327e04 0, #67b021 100%);
+	background: -o-linear-gradient(top, #327e04 0, #67b021 100%);
+	background: -ms-linear-gradient(top, #327e04 0, #67b021 100%);
+	background: linear-gradient(top, #327e04 0, #67b021 100%);
 }
 
 .button.help {
-	*border: 1px solid #DFE119;
-	*background-color: #DFE119;
+	*border: 1px solid #dff110;
+	*background-color: #dff110;
 	*color: black;
 	border: none;
 	background-color: transparent;
@@ -116,39 +134,50 @@ div.list {
 }
 
 .button.help:hover {
-	*background-color: #DFE119;
+	*background-color: #dff110;
 	*background-image: url(images/help_button_hover.png);
 }
 
-.notice .link, .notice a {
+.notice .link,.notice a {
 	color: #fff;
 }
-/*
+
 .button.active {
-	border: 1px solid #dee000;
-	background-color: #ffe45c;
-	background-image: url(images/ui-bg_highlight-soft_75_ffe45c_1x100.png);
-	color: black;
+	color: #fff;
 }
-.button.active:hover {
-	background-color: #ffe45c;
-	background-image: url(images/ui-bg_highlight-soft_75_ffe45c_1x100.png);
-}
-*/
+
+/* .button.active:hover { */
+/* 	background-color: #ffe45c; */
+/* 	background-image: url(images/ui-bg_highlight-soft_75_ffe45c_1x100.png); */
+/* } */
 a.button {
 	color: #fff;
 }
 
 .button.edit {
-	border: 1px solid #0077bd;
+	border: none;
 	background-color: #0077bd;
-	background-image: url(images/edit_button.png);
+	background: -moz-linear-gradient(top, #63ACE4 0, #0077bd 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #63ACE4),
+		color-stop(100%, #0077bd) );
+	background: -webkit-linear-gradient(top, #63ACE4 0, #0077bd 100%);
+	background: -o-linear-gradient(top, #63ACE4 0, #0077bd 100%);
+	background: -ms-linear-gradient(top, #63ACE4 0, #0077bd 100%);
+	background: linear-gradient(top, #63ACE4 0, #0077bd 100%);
+	*background-image: url(images/edit_button.png);
 	color: #fff;
 }
 
 .button.edit:hover {
-	background-color: #6caadc;
-	background-image: url(images/edit_button_hover.png);
+	background-color: #63ACE4;
+	background: -moz-linear-gradient(top, #0077bd 0, #63ACE4 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #0077bd),
+		color-stop(100%, #63ACE4) );
+	background: -webkit-linear-gradient(top, #0077bd 0, #63ACE4 100%);
+	background: -o-linear-gradient(top, #0077bd 0, #63ACE4 100%);
+	background: -ms-linear-gradient(top, #0077bd 0, #63ACE4 100%);
+	background: linear-gradient(top, #0077bd 0, #63ACE4 100%);
+	/* 	background-image: url(images/edit_button_hover.png); */
 }
 
 .unread {
@@ -157,41 +186,79 @@ a.button {
 }
 
 .button.new,a.button.new {
-	*border: 1px solid #DFE119;
-	background-color: #DFE119;
-	background-image: url(images/new_button.png);
-	color: black;
+	border: 1px solid #ddd000;
+	background-color: #eff11;
+	color: #000;
+	background: -moz-linear-gradient(top, #eeff11 0, #dff110 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #eeff11),
+		color-stop(100%, #dff110) );
+	background: -webkit-linear-gradient(top, #eeff11 0, #dff110 100%);
+	background: -o-linear-gradient(top, #eeff11 0, #dff110 100%);
+	background: -ms-linear-gradient(top, #eeff11 0, #dff110 100%);
+	background: linear-gradient(top, #eeff11 0, #dff110 100%);
+	/* 		background-image: url(images/new_button.png); */
 }
 
 .button.new:hover {
-	background-color: #DFE119;
-	background-image: url(images/new_button_hover.png);
+	border: 1px solid #ddd000;
+	background-color: #dff110;
+	background: -moz-linear-gradient(top, #dff110 0, #eeff11 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #dff110),
+		color-stop(100%, #eeff11) );
+	background: -webkit-linear-gradient(top, #dff110 0, #eeff11 100%);
+	background: -o-linear-gradient(top, #dff110 0, #eeff11 100%);
+	background: -ms-linear-gradient(top, #dff110 0, #eeff11 100%);
+	background: linear-gradient(top, #dff110 0, #eeff11 100%);
+	color: #000;
+	background: -moz-linear-gradient(top, #dff110 0, #eeff11 100%);
 }
-
+/* #DB5F3A */
+/* #C9192D */
 .button.delete {
-	opacity: .90;
-	filter: Alpha(Opacity =                         90);
-	background: #E14F1C url(images/delete.png) 50% 50% repeat-x;
+	background-color: #c9192d;
+	background: -moz-linear-gradient(top, #DB5F3A 0, #c9192d 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #DB5F3A),
+		color-stop(100%, #c9192d) );
+	background: -webkit-linear-gradient(top, #DB5F3A 0, #c9192d 100%);
+	background: -o-linear-gradient(top, #DB5F3A 0, #c9192d 100%);
+	background: -ms-linear-gradient(top, #DB5F3A 0, #c9192d 100%);
+	background: linear-gradient(top, #DB5F3A 0, #c9192d 100%);
 	color: white;
-	border: 1px solid #CD0A0A;
+
+	/* 	opacity: .90; */
+	/* 	filter: Alpha(Opacity =                                   90); */
+	/* 	background: #E14F1C url(images/delete.png) 50% 50% repeat-x; */
+	/* 	border: 1px solid #CD0A0A; */
 }
 
 .button.delete:hover {
-	color: black;
-	background: white url(images/delete_hover.png) 50% 50% repeat-x;
-	border: 1px solid #cdcdcd;
+	background-color: #db5f3a;
+	background: -moz-linear-gradient(top, #c9192d 0, #DB5F3A 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #c9192d),
+		color-stop(100%, #DB5F3A) );
+	background: -webkit-linear-gradient(top, #c9192d 0, #DB5F3A 100%);
+	background: -o-linear-gradient(top, #c9192d 0, #DB5F3A 100%);
+	background: -ms-linear-gradient(top, #c9192d 0, #DB5F3A 100%);
+	background: linear-gradient(top, #c9192d 0, #DB5F3A 100%);
+	color: white;
 }
 
 .button.print {
 	
 }
-
+/* #CAD6E9 */
+/* #C3D0E2 */
 /* header page layout elements */
 #navigation {
-	opacity: .90;
-	filter: Alpha(Opacity =                         90);
-	background: #C7D7E9 url(images/header.png) 50% 50% repeat-x;
-	border-color: #087CD5;
+	background-color: #C7D7E9;
+	background: -moz-linear-gradient(top, #c7d7e9 0, #c3d0e2 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #c7d7e9),
+		color-stop(100%, #c3d0e2) );
+	background: -webkit-linear-gradient(top, #c7d7e9 0, #c3d0e2 100%);
+	background: -o-linear-gradient(top, #c7d7e9 0, #c3d0e2 100%);
+	background: -ms-linear-gradient(top, #c7d7e9 0, #c3d0e2 100%);
+	background: linear-gradient(top, #c7d7e9 0, #c3d0e2 100%);
+	border: none;
 }
 
 #stuSearch {
@@ -246,20 +313,9 @@ a.button {
 	border-color: black;
 }
 
-h2 {
+h2,h3,.support-view legend,h4,h5,h6,tr.benchmark-grade {
 	background-color: #C7D7E9;
-	border-color: #087CD5 #6CAADC #6CAADC #087CD5;
-}
-
-h3,.support-view legend {
-	color: black;
-	background-color: #C7D7E9;
-	border-color: #087CD5;
-}
-
-h4,h5,h6,tr.benchmark-grade {
-	background-color: #C7D7E9;
-	border-color: #087CD5 #6CAADC #6CAADC #087CD5;
+	border: none;
 }
 
 .invert {
@@ -270,7 +326,7 @@ h4,h5,h6,tr.benchmark-grade {
 .warning,.notice,.error {
 	color: black;
 	opacity: .90;
-	filter: Alpha(Opacity =         90);
+	filter: Alpha(Opacity =                           90);
 	background: #ff8538 url(images/warning.png) 50% 50% repeat-x;
 }
 
