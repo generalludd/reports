@@ -186,7 +186,8 @@ class Grade extends MY_Controller
 				$options["subject"] = $subject->subject;
 				$data["subject"] = $subject->subject;
 				$data["grades"] = $this->assignment->get_for_student($kStudent,$term,$year,$options);
-				$data["categories"] = $this->grade->get_categories($kStudent, $term, $year,$options);
+				//categories are now calculated on the fly in the view instead of via the database. 
+				//$data["categories"] = $this->grade->get_categories($kStudent, $term, $year,$options);
 				$output["charts"][] = $this->load->view("grade/chart",$data,TRUE);
 				$i ++;
 			}
