@@ -56,6 +56,7 @@ if(!empty($assignments)){
 			<th><?=$header_string;?>
 			</th>
 			<th></th>
+			<th class='chart-final-grade'>Estimated Final Grade</th>
 			<? 
 			$total_points = 0;
 			foreach($assignments as $assignment){ ?>
@@ -88,6 +89,7 @@ if(!empty($assignments)){
 				$rows[$grade->kStudent]["kStudent"] = $grade->kStudent;
 				$current_student = $grade->kStudent;
 				$student_points = 0;
+				$rows[$grade->kStudent]["button"] = "<td class='student-button'><span class='button get-student-grades' id='gss_$grade->kStudent'>Print</span></td>";
 			}
 			$points = round($grade->points,2);
 
@@ -116,16 +118,9 @@ if(!empty($assignments)){
 		}
 
 		foreach($rows as $row){
-			print sprintf("<tr id='sgtr_%s'>",$row['kStudent']);
+			print sprintf("<tr id='sgtr_%s' class='grade-chart-row'>",$row['kStudent']);
 			print $row["name"];
-			/*$i=0;
-			 $sum = 0;
-			foreach($row["test"] as $test){
-			$sum += $test->category_average;
-			$i++;
-			}
-			$final_grade = round($sum/$i,2) * 100;
-			*/
+			print $row["button"];
 			//get the grade as a human-readable percentage
 			$final_grade = round(($row["totals"])/$total_points,2)*100;
 			//$final_grade = $row["totals"];

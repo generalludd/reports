@@ -1075,7 +1075,12 @@ table.grade-chart th.assignment-field {
 }
 
 table.grade-chart td {
-	padding: 2px 5px;
+	padding: 4px 5px;
+}
+
+
+table.grade-chart th.chart-final-grade {
+	min-width: 65px;
 }
 /*
 div.assignment-button .button {
@@ -1102,6 +1107,10 @@ table.grade-editor tbody tr td.grade-value input {
 
 table.grade-editor thead tr th {
 	text-align: left;
+}
+
+table.grade-chart td.student-name {
+	min-width: 150px;
 }
 
 .grade-points.edit:hover,.assignment-edit:hover,td.student-name:hover {
