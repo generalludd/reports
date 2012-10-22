@@ -174,6 +174,8 @@ class Grade_model extends CI_Model
 		return $result;
 	}
 	/**
+	 * DEPRECATED This does not produce an accurate result because it does not account for Abs and Exc. Category totals are not evaluated 
+	 * in the business logic as appropriate instead of in the model. 
 	 * @param int $kStudent
 	 * @param varchar $term
 	 * @param int $year
