@@ -40,16 +40,20 @@ $footnotes = array();
 				}?></td>
 				<td><?=$grade->total_points > 0?$grade->total_points:"Make-Up Points";?>
 				</td>
-				<!-- <td class='notes-column'><?=$grade->footnote != 0 ? $grade->label:"";?>  -->
-				</td>
+				<!-- <td class='notes-column'><?=$grade->footnote != 0 ? $grade->label:"";?></td>  -->
+
 			</tr>
 			<?
-			$student_total += $grade->points*$grade->weight;
+			if($grade->status == "Abs" && $grade->status == "Exc"){
+				$student_total += $grade->total_points * $grade->weight;
+			}else{
+				$student_total += $grade->points*$grade->weight;
+			}
 
 			$assignment_total += $grade->total_points * $grade->weight;
 				} //end if
-				}//end foreach grade
-				?>
+			}//end foreach grade
+			?>
 		</tbody>
 
 	</table>
@@ -66,10 +70,9 @@ $footnotes = array();
 
 			<li><?=sprintf("%s: %s", $keys[$i],$values[$i]);?></li>
 			<? endfor;?>
-	
+		</ul>
 	</div>
 	<? endif; ?>
-	</ul>
 </div>
 <div class='report-header report-summary'>
 	<?=$header->subject; ?>
