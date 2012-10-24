@@ -1,5 +1,7 @@
 <?php 
-$this->load->view("student/navigation", array("kStudent",$kStudent));
+if(!$print){
+	$this->load->view("student/navigation", array("kStudent",$kStudent));
+}
 $i = 0; //iteration of row numbers for css styling and printing
 ?>
 
@@ -14,7 +16,7 @@ $i = 0; //iteration of row numbers for css styling and printing
 			Friends School of Minnesota <br />Report Card for
 			<?=$student_name;?>
 		</div>
-				<? if($i == 0 ) : 
+		<? if($i == 0 ) : 
 		$buttons[] = array("selection"=>"none","type"=>"span","class"=>array("button","print"),"text"=>"Print");
 		echo create_button_bar($buttons);
 		endif; ?>

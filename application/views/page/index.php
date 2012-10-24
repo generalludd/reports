@@ -1,4 +1,4 @@
-<?php if(isset($print)){
+<?php if(isset($print) && $print == TRUE){
 	$print = TRUE;
 }else{
 	$print = FALSE;

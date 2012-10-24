@@ -1,7 +1,7 @@
 <?php ?>
 
 <form id="report_card_selector" name="report_card_selector"
-	action="<?=base_url("grade/report_card");?>" target="_blank"
+	action="<?=base_url("grade/report_card");?>" 
 	method="get">
 	<input type="hidden" id="kStudent" name="kStudent"
 		value="<?=$kStudent;?>" />

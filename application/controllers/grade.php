@@ -144,6 +144,14 @@ class Grade extends MY_Controller
 			$options = array();
 			$options["from"] = "grade";
 			$options["join"] = "assignment";
+			
+			$print = FALSE;
+			if($this->input->get("print")){
+				$print = TRUE;
+			}
+			
+			$output["print"] = $print;
+			
 			if($kTeach = $this->input->get("kTeach")){
 				$options["kTeach"] = $kTeach;
 			}
@@ -180,66 +188,28 @@ class Grade extends MY_Controller
 			$data["student"] = $student;
 			$output["student_name"] =  format_name($student->stuFirst, $student->stuLast, $student->stuNickname);
 			$output["charts"] = array();
+		
 			$i = 0;
 			foreach($subjects as $subject){
 				$data["count"] = $i;// count is used to identify the chart number in the output for css purposes.
 				$options["subject"] = $subject->subject;
 				$data["subject"] = $subject->subject;
 				$data["grades"] = $this->assignment->get_for_student($kStudent,$term,$year,$options);
-				//categories are now calculated on the fly in the view instead of via the database. 
+				//categories are now calculated on the fly in the view instead of via the database.
 				//$data["categories"] = $this->grade->get_categories($kStudent, $term, $year,$options);
 				$output["charts"][] = $this->load->view("grade/chart",$data,TRUE);
 				$i ++;
 			}
 
 			if($output){
-				$this->load->view("page/index",$output);
+				if($print){
+					$this->load->view("page/print",$output);
+				}else{
+					$this->load->view("page/index",$output);
+				}
 			}
 
 		}
 	}
-/**
- * Non-functional script. 
- */
-	/*
-	function get_reports(){
-		$data = array();
-		$options = array();
-		$output = array();
-		$term = "Mid-Year";
-		$year = 2012;
-		$gradeStart = 8;
-		$gradeEnd = 8;
-		$cutoff_date = NULL;
-		$output["cutoff_date"] = $cutoff_date;
-		$kTeach = 8;
-		$data["subject"] = "Math";
-		$data["target"] = "grade/report_card";
-		$data["title"] = "Grade Summary";
-		$students = $this->grade->get_reports($kTeach,$term, $year, $gradeStart, $gradeEnd);
-		$output["students"] = array();
-		$output["charts"] = array();
-		$i=0;
-		foreach($students as $student){
-			$data["count"] = $i;
-			$data["kStudent"] = $student->kStudent;
-			$data["student"] = $student;
-			$options["subject"] = $data["subject"];
-			$output["students"][] = format_name($student->stuNickname, $student->stuLast);
-			$data["grades"] = $this->assignment->get_for_student($student->kStudent,$term,$year,$options);
-			$data["categories"] = $this->grade->get_categories($student->kStudent, $term, $year,$options);
-			$output["charts"][] = $this->load->view("grade/chart",$data, TRUE);
-			$i++;
-		}
-
-		if($output){
-			$output["term"] = $term;
-			$output["year"] = $year;
-			$output["subject"] = $data["subject"];
-			$output["title"] = "Comprehensive Grade Report";
-			$output["target"] = "grade/teacher_report";
-			$this->load->view("page/index",$output);
-		}
-	}
-*/
+	
 }
