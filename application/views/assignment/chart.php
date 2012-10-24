@@ -89,7 +89,8 @@ if(!empty($assignments)){
 				$rows[$grade->kStudent]["kStudent"] = $grade->kStudent;
 				$current_student = $grade->kStudent;
 				$student_points = 0;
-				$rows[$grade->kStudent]["button"] = "<td class='student-button'><span class='button get-student-grades' id='gss_$grade->kStudent'>Print</span></td>";
+				$href = site_url(sprintf("grade/report_card?kStudent=%s&year=%s&term=%s&subject=%s",$grade->kStudent,$this->input->cookie("year"),$this->input->cookie("term"), $header->subject));
+				$rows[$grade->kStudent]["button"] = "<td class='student-button'><a class='button' target='_blank' href='$href'>Print</a></td>";
 			}
 			$points = round($grade->points,2);
 
