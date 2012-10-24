@@ -144,7 +144,10 @@ class Grade extends MY_Controller
 			$options = array();
 			$options["from"] = "grade";
 			$options["join"] = "assignment";
-			
+			/*
+			 * This print option is here mostly to avoid user confusion since 
+			 * the grade reports will print well whether or not the navigation or button bars are visible or not.
+			 */
 			$print = FALSE;
 			if($this->input->get("print")){
 				$print = TRUE;
