@@ -9,16 +9,25 @@ class Auth extends CI_Controller
 		$this->load->model("auth_model");
 	}
 
+	/**
+	 * Redirect requests to this page to the login script.
+	 * @param string $username
+	 * @param string $errors
+	 */
 	function index($username = NULL, $errors = NULL)
 	{
 		$data["errors"] = $errors;
 		$data["username"] = $username;
-		
 		$data["target"] = "auth/login";
 		$this->load->view("auth/index", $data);
 
 	}
 
+	/**
+	 * login script both logs in and sets the required session data to keep the user logged in.
+	 * Also adds useful non-critical cookies to enhance the user experience.
+	 * (No secure data is publised to these cookies)
+	 */
 	function login()
 	{
 		$redirect = false;
@@ -29,15 +38,17 @@ class Auth extends CI_Controller
 			$result = $this->auth_model->validate($username, $password);
 			if($result){
 				$this->auth_model->log($result->kTeach, "login");
+				//required session items for authenticated session
 				$data["username"] = $username;
 				$data["dbRole"] = $result->dbRole;
 				$data["userID"] = $result->kTeach;
-				//$data["gradeStart"] = $result->gradeStart;
-				//$data["gradeEnd"] = $result->gradeEnd;
-				//$data["is_advisor"] = $result->is_advisor;
-				bake_cookie(gradeStart, $result->gradeStart);
+				//useful cookies for enhanced user experience
+				bake_cookie("gradeStart", $result->gradeStart);
 				bake_cookie("gradeEnd", $result->gradeEnd);
 				bake_cookie("isAdvisor",$result->is_advisor);
+
+				//load preferences for UI adjustments. No secure data is stored in these cookies.
+				//These cookies are not necessary for the system to function
 				$this->load->model("preference_model","preference");
 				$preferences = $this->preference->get_distinct($result->kTeach);
 				set_user_cookies($preferences);
@@ -54,6 +65,8 @@ class Auth extends CI_Controller
 			}
 		}
 		if($redirect){
+			//The uri cookie is baked in the MY_Controller.php when the users is not logged in.
+			//Thus it is baked in all controller classes that extend this master controller which is all controllers except auth.php
 			if($uri = $this->input->cookie("uri")){
 				redirect($uri);
 			}else{
@@ -64,7 +77,9 @@ class Auth extends CI_Controller
 		}
 	}
 
-
+	/**
+	 * destroy the session data and return the user to the login screen.
+	 */
 	function logout()
 	{
 
@@ -77,14 +92,19 @@ class Auth extends CI_Controller
 		redirect("/");
 	}
 
-
+	/**
+	 * Function to change passwords for users
+	 * This is entirely dependent on ajax and does not function properly without that aspect of the UI. 
+	 */
 	function change_password()
 	{
+		//declare the default response. 
 		$output = "You are not authorized to do this!";
+		
 		$kTeach = $this->input->post("kTeach");
-
 		$userID = $this->session->userdata("userID");
 
+		//Unauthorized users are those who are not the master user (1000) and are trying to change someone else's password
 		if($kTeach == $userID || $userID == 1000){
 			$output = "The passwords did not match";
 			$current_password = $this->input->post("current_password");
