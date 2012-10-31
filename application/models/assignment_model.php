@@ -94,6 +94,8 @@ class Assignment_model extends CI_Model
 		$result = $this->db->get("assignment")->result();
 		return $result;
 	}
+
+
 /**
  * This collects the grades for a given student for the current term and year with options including the current teacher. 
  * @param unknown $kStudent
@@ -103,7 +105,6 @@ class Assignment_model extends CI_Model
  * @return unknown
  * perhaps this should be with the grade model. But here it is! 
  */
-
 	function get_for_student($kStudent,$term,$year,$options = array())
 	{
 
