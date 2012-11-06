@@ -1208,3 +1208,7 @@ table.report td.field.buttons,table.report th.field.buttons {
 	margin: 0;
 	padding: 0;
 }
+
+.password-field {
+	display: none;
+}

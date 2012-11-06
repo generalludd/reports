@@ -394,7 +394,7 @@ a.link:visited {
 	*color: purple;
 }
 
-span.link {
+span.link, label.link {
 	color: blue;
 	text-decoration: underline;
 	cursor: pointer;
