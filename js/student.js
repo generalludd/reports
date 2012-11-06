@@ -216,6 +216,15 @@ $(document).ready(function() {
 		$("#advanced_search").live('click', function(){
 			studentSearch();
 		});
+		
+		$(".password-box label").live("click",function(){
+			$(".password-box .password-field").toggle('slow');
+			if($(".password-box label").html() == "Show Password"){
+				$(".password-box label").html("Hide Password");
+			}else{
+				$(".password-box label").html("Show Password");
+			}
+		});
 }// end ready
 );// end $(document)
 
