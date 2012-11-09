@@ -16,7 +16,7 @@
 	</p>
 	<p>
 		<label for="cutoff_date">Cutoff-Date: </label><input type="text"
-			id="cutoff_date" name="cutoff_date" class="datefield" />
+			id="cutoff_date" name="cutoff_date" class="datefield" value="<?=$this->input->cookie("cutoff_date");?>"/>
 	</p>
 	<p>
 		<label for="subject">Subject: </label>
