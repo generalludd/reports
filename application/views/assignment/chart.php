@@ -123,7 +123,7 @@ if(!empty($assignments)){
 			$rows[$grade->kStudent]["totals"] = $student_points;
 
 
-			$rows[$grade->kStudent]["grades"][$grade->kAssignment] = sprintf("<td class='grade-points edit' id='sag_%s_%s'>%s</td>",$grade->kAssignment,$grade->kStudent,$points);
+			$rows[$grade->kStudent]["grades"][$grade->kAssignment] = sprintf("<td class='grade-points edit' id='sag_%s_%s'  title='%s'>%s</td>",$grade->kAssignment,$grade->kStudent,format_name($grade->stuNickname,$grade->stuLast),$points);
 		}
 
 		foreach($rows as $row){
