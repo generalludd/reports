@@ -184,12 +184,14 @@ class Grade extends MY_Controller
 				$subjects = $this->grade->get_subjects($kStudent,$term,$year);
 			}
 			$data["target"] = "grade/report_card";
-			$data["title"] = "Report Card";
 
 			$student = $this->student->get($kStudent);
+			
+				
 			$data["kStudent"] = $kStudent;
 			$data["student"] = $student;
 			$output["student_name"] =  format_name($student->stuFirst, $student->stuLast, $student->stuNickname);
+			$data["title"] = $data["student_name"];
 			$output["charts"] = array();
 		
 			$i = 0;
