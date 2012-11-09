@@ -191,7 +191,7 @@ class Grade extends MY_Controller
 			$data["kStudent"] = $kStudent;
 			$data["student"] = $student;
 			$output["student_name"] =  format_name($student->stuFirst, $student->stuLast, $student->stuNickname);
-			$data["title"] = $data["student_name"];
+			$data["title"] = $output["student_name"];
 			$output["charts"] = array();
 		
 			$i = 0;
