@@ -2,7 +2,7 @@
 
 <form id="report_card_selector" name="report_card_selector"
 	action="<?=base_url("grade/report_card");?>" 
-	method="get">
+	method="get" target="blank">
 	<input type="hidden" id="kStudent" name="kStudent"
 		value="<?=$kStudent;?>" />
 
