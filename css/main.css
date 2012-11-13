@@ -1212,3 +1212,7 @@ table.report td.field.buttons,table.report th.field.buttons {
 .password-field {
 	display: none;
 }
+
+th.grade-confirmation {
+	width: 25px;
+}

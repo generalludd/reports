@@ -18,7 +18,7 @@ $student_name = format_name($header_record->stuNickname, $header_record->stuLast
 			<th class='grade-points'>Points</th>
 			<th class='grade-status'>Status</th>
 			<th class='grade-footnote'>Footnote</th>
-			<th></th>
+			<th class='grade-confirmation'></th>
 		</tr>
 	</thead>
 	<tbody>
