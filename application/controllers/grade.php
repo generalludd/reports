@@ -101,7 +101,7 @@ class Grade extends MY_Controller
 			$status = $this->input->post("status");
 			$footnote = $this->input->post("footnote");
 			$result = $this->grade->update($kStudent,$kAssignment, $points,$status,$footnote);
-			echo $result;
+			echo OK;
 		}
 	}
 
