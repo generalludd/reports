@@ -131,7 +131,7 @@ if(!empty($assignments)){
 			print $row["name"];
 			print $row["button"];
 			//get the grade as a human-readable percentage
-			$final_grade = round(($row["totals"])/$total_points,2);
+			$final_grade = round(($row["totals"])/$total_points,1);
 			//$final_grade = $row["totals"];
 			print sprintf("<td>%s (%s%s)</td>",calculate_letter_grade($final_grade),$final_grade,"%");
 			

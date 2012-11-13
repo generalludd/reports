@@ -120,7 +120,7 @@ $categories = array();
 			<?
 			$grade_total = 0;
 			$category_count = 0;
-			$total_grade = round($student_total/$assignment_total*100,2);
+			$total_grade = round($student_total/$assignment_total*100,1);
 			echo sprintf("<tr class='final-grade'><td class='label' colspan=4>Grade</td><td colspan=2>%s&#37; (%s)</td><tr>",$total_grade,calculate_letter_grade($total_grade));
 
 			?>
