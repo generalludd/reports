@@ -46,14 +46,17 @@ $categories = array();
 
 			</tr>
 			<?
-					if($grade->status){
-						$points = $grade->total_points;
-						$student_total += $grade->total_points * $grade->weight;
+			
+			//if the student does not have an assignment listed as absent,excused, incomplete, redo, then calculate the grade otherwise ignore
+					if(!$grade->status){
+						//$points = $grade->total_points;
+						//$student_total += $grade->total_points * $grade->weight;
 		
-					}else{
+					//}else{
 						$points = $grade->points;
 						$student_total += $grade->points * $grade->weight;
-					}
+					
+					
 					if(!array_key_exists($grade->category,$categories)){
 						$categories[$grade->category]["category"] = $grade->category;
 						$categories[$grade->category]["weight"] = $grade->weight;
@@ -64,6 +67,8 @@ $categories = array();
 						$categories[$grade->category]["points"] += $points;
 					}
 					$assignment_total += $grade->total_points * $grade->weight;
+					}
+					
 				} //end if
 			}//end foreach grade
 			?>
