@@ -37,6 +37,16 @@ class Narrative extends MY_Controller
 		$data['teacherPairs'] = get_keyed_pairs($teachers, array('kTeach', 'teacher'));
 		$data['studentName'] = format_name($student->stuFirst, $student->stuLast, $student->stuNickname);
 		$data['default_grade'] = $this->input->cookie("default_grade");
+		$submits_report_card = $this->input->cookie("submits_report_card");
+		if($submits_report_card == "yes"){
+			$this->load->model("assignment_model","assignment");
+			$this->load->helper("grade");
+			$grade_options["from"] = "grade";
+			$grade_options["join"] = "assignment";
+			$grade_options['subject'] = $data['narrSubject'];
+			$default_grade = calculate_final_grade($this->assignment->get_for_student($kStudent, $data['narrTerm'], $data['narrYear'],$grade_options));
+			$data['default_grade'] = calculate_letter_grade($default_grade);
+		}
 		$data['narrative'] = NULL;
 		$data['narrText'] = "";
 		$data['action'] = "insert";
@@ -111,6 +121,24 @@ class Narrative extends MY_Controller
 			$data['legend'] = $this->legend->get_one(array("kTeach"=>$kTeach, "subject"=>$narrative->narrSubject, "term"=> $narrative->narrTerm, "year"=>$narrative->narrYear ));
 			$data["benchmarks"] = $this->benchmark_model->get_for_student($kStudent, $narrative->narrSubject, $narrative->stuGrade, $narrative->narrTerm, $narrative->narrYear);
 		}
+		//determine if grades are manually entered or calculated from grade report cards.
+		$letter_grade = false;
+		//submits_report_card is a preference set at login and when preferences are changed
+		$submits_report_card = $this->input->cookie("submits_report_card");
+		if($submits_report_card == "yes"){
+			$this->load->model("assignment_model","assignment");
+			$this->load->helper("grade");
+			$grade_options["from"] = "grade";
+			$grade_options["join"] = "assignment";
+			$grade_options['subject'] = $narrative->narrSubject;
+			$grades = $this->assignment->get_for_student($kStudent, $narrative->narrTerm, $narrative->narrYear,$grade_options);
+			$letter_grade = calculate_final_grade($grades);
+			$data['letter_grade'] = calculate_letter_grade($letter_grade);
+
+			if($letter_grade == FALSE){
+				$data['letter_grade'] = $narrative->narrGrade;
+			}
+		}
 		$student = $this->student_model->get($kStudent);
 		$teacher = $this->teacher_model->get($kTeach);
 		$studentName = format_name($student->stuFirst, $student->stuLast, $student->stuNickname);
@@ -155,6 +183,23 @@ class Narrative extends MY_Controller
 
 		// Get the value of the default_grade preference.
 		$data['default_grade'] = $this->input->cookie("default_grade");
+		//submits_report_card is also a user preference
+		//determine if grades are manually entered or calculated from grade report cards.
+		$submits_report_card = $this->input->cookie("submits_report_card");
+		if($submits_report_card == "yes"){
+			$this->load->model("assignment_model","assignment");
+			$this->load->helper("grade");
+			$grade_options["from"] = "grade";
+			$grade_options["join"] = "assignment";
+			$grade_options['subject'] = $narrative->narrSubject;
+			$grades = $this->assignment->get_for_student($kStudent, $narrative->narrTerm, $narrative->narrYear ,$grade_options);
+			$letter_grade = calculate_final_grade($grades);
+			$data['default_grade'] = calculate_letter_grade($letter_grade);
+
+			if($letter_grade == false){
+				$data['default_grade'] = $narrative->narrGrade;
+			}
+		}
 		//$data["needsButton"] = $this->get_need_button($kStudent);
 		// 		$data["suggestionsButton"] = $this->get_suggestion_button($kNarrative);
 		$data["hasSuggestions"] = TRUE;// $this->suggestion_model->exists($kNarrative);
