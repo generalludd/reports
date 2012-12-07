@@ -46,6 +46,7 @@ class Auth extends CI_Controller
 				bake_cookie("gradeStart", $result->gradeStart);
 				bake_cookie("gradeEnd", $result->gradeEnd);
 				bake_cookie("isAdvisor",$result->is_advisor);
+				bake_cookie("submits_report_card", $result->submits_report_card);
 
 				//load preferences for UI adjustments. No secure data is stored in these cookies.
 				//These cookies are not necessary for the system to function

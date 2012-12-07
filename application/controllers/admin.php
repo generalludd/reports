@@ -43,6 +43,8 @@ class admin extends MY_Controller{
 				bake_cookie("gradeStart",$teacher->gradeStart);
 				bake_cookie("gradeEnd",$teacher->gradeEnd);
 				bake_cookie("is_advisor",$teacher->is_advisor);
+				bake_cookie("submits_report_card", $result->submits_report_card);
+				
 				$this->load->model("preference_model");
 				$preferences = $this->preference_model->get_distinct($teacher->kTeach);
 				set_user_cookies($preferences);
