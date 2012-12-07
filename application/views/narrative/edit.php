@@ -29,6 +29,8 @@ if(!empty($conditional_buttons)){
 	$conditional_bar = create_button_bar($conditional_buttons);
 }
 
+
+
 ?>
 <h3>
 	Narrative for
@@ -77,9 +79,12 @@ if(!empty($conditional_buttons)){
 		- <input id="yearEnd" type="text" name="yearEnd" readonly
 			maxlength="4" size="5" value="<?=$yearEnd; ?>" />
 		<?php if($stuGrade >= 5):?>
-		<br />Course Grade (middle school only): <input type="text"
-			name="narrGrade" id="narrGrade"
-			value='<?=get_value($narrative,'narrGrade', $default_grade);?>' size="27">
+		<br />Course Grade (middle school only): 
+			<? if($this->input->cookie("submits_report_card") == "yes"): ?>
+				<?=$default_grade;?>
+			<? else: ?>
+				<input type="text" name="narrGrade" id="narrGrade" value='<?=get_value($narrative,'narrGrade', $default_grade);?>' size="27">
+			<?php endif;?>
 		<?php endif;?>
 	</p>
 	<?php
