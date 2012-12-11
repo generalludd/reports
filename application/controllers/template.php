@@ -12,6 +12,10 @@ class Template extends MY_Controller
 		$this->load->helper("template");
 	}
 
+	/**
+	 * initiates the creation of a new narrative by allowing the teacher/editor
+	 * to select a subject and thus list templates available to apply to a new narrative
+	 */
 	function show_selector()
 	{
 		$this->load->model("student_model");
@@ -57,7 +61,11 @@ class Template extends MY_Controller
 		}
 	}
 
-
+/**
+ * list templates for a given teacher based on input data queries
+ * kTeach, term, year, subject, gradeStart, gradeEnd, include_inactive, and type. 
+ * Only kTeach is mandatory. 
+ */
 	function list_templates()
 	{
 		$this->load->model("teacher_model");
@@ -105,7 +113,10 @@ class Template extends MY_Controller
 
 	}
 
-
+	/**
+	 * search dialog for finding templates. 
+	 * This redirects on submit to the above list_templates() function
+	 */
 	function search()
 	{
 		$this->load->model("subject_model");
@@ -123,7 +134,9 @@ class Template extends MY_Controller
 		$this->load->view("template/search", $data);
 	}
 
-
+/**
+ * Edit templates based on a uri segment template id (kTemplate)
+ */
 	function edit()
 	{
 		$this->load->model("teacher_model");
@@ -148,6 +161,11 @@ class Template extends MY_Controller
 
 	}
 
+	/**
+	 * create a new template based on the uri $kTeach value
+	 * shows a new form prepopulated with basic information including the teacher's
+	 * grade range taught, available subjects, and kTeach
+	 */
 	function create()
 	{
 		$kTeach = $this->uri->segment(3);
@@ -172,6 +190,14 @@ class Template extends MY_Controller
 
 	}
 
+	/**
+	 * insert a new template
+	 * This offers both an ajax interface and standard form submission option. 
+	 * The AJAX option is for the auto-save feature and publishes information
+	 * about the latest auto-save (or failure)
+	 * After insertion using the standard form submit, it redirects to the list of templates
+	 * based on the criteria of the saved template (current year, kTeach, term, etc)
+	 */
 	function insert()
 	{
 		$kTemplate = $this->template_model->insert();
@@ -192,6 +218,11 @@ class Template extends MY_Controller
 		}
 	}
 
+	/**
+	 * updates the template with either an AJAX option for auto-saving or with 
+	 * a standard form-submission that redirects to the list of available templates
+	 * based on key criteria from the template being updated. 
+	 */
 	function update()
 	{
 		$kTemplate = $this->input->post("kTemplate");
