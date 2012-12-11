@@ -10,6 +10,31 @@ class Narrative extends MY_Controller
 		$this->load->helper('template');
 	}
 
+	
+	/**
+	 * select a narrative type AJAX interface for selecting a narrative category.
+	 * the result of this action is to display available templates or the option
+	 * to create a narrative without template in template.php show_selector
+	 */
+	function select_type()
+	{
+		$this->load->model("subject_model");
+		$data["kStudent"] = $this->input->post("kStudent");
+		$data["kTeach"] = $this->session->userdata("userID");
+		$currentTerm = get_current_term();
+		$data["term_menu"] = get_term_menu("term", $currentTerm);
+		$data["currentYear"] = get_current_year();
+		$data["year_list"] = get_year_list();
+		$data["title"] = "Select Narrative Type";
+		$data["target"] = "narrative/select_type";
+		$subject_list = $this->subject_model->get_for_teacher($data["kTeach"]);
+		$data["subjects"] = get_keyed_pairs($subject_list, array("subject", "subject"));
+	
+		if($this->input->post("ajax")){
+			$this->load->view($data["target"], $data);
+		}
+	}
+	
 	//@TODO merge narrative report search for student with joins with teacher and student tables
 	/**
 	* create a new narrative. This can be called directly but is usually called indirectly from a
@@ -94,6 +119,82 @@ class Narrative extends MY_Controller
 	}
 
 	/**
+	 * edit a narrative based on a uri segment 3 of the kNarrative. Edting also includes the calcluation of
+	 * the student's term grade based either on report cards or provides an empty field
+	 * for the author to enter a pass/pass with honors note based on their default_grade preference
+	 */
+	function edit()
+	{
+		$this->load->model('student_model');
+		$this->load->model("teacher_model");
+		$this->load->model("template_model");
+		$this->load->model("subject_model");
+		$this->load->model("support_model");
+		$this->load->model("suggestion_model");
+	
+		$kNarrative = $this->uri->segment(3);
+	
+		$narrative = $this->narrative_model->get($kNarrative, TRUE);
+		$kStudent = $narrative->kStudent;
+		$kTeach = $narrative->kTeach;
+	
+		$data["narrative"] = $narrative;
+		$student = $this->student_model->get($kStudent);
+		$data["student"] = $student;
+		$subjects = $this->subject_model->get_for_teacher($kTeach);
+		$data["subjects"] = get_keyed_pairs($subjects, array("subject", "subject"));
+		$teacher = $this->teacher_model->get($kTeach);
+		$data["teacher"] = $teacher;
+		$teachers = $this->teacher_model->get_teacher_pairs();
+		$data["teacherPairs"] = get_keyed_pairs($teachers, array("kTeach", "teacher"));
+		$data["narrText"] = "";
+		$studentName = format_name($student->stuFirst, $student->stuLast, $student->stuNickname);
+		$data["hasNeeds"] = $this->support_model->get_current($kStudent, "kSupport");
+	
+		// Get the value of the default_grade preference.
+		$data['default_grade'] = $this->input->cookie("default_grade");
+		//submits_report_card is also a user preference
+		//determine if grades are manually entered or calculated from grade report cards.
+		//@TODO this could be done with a simple search for grades to determine if any exists.
+		// Having a static declaration untied to the existence of entered grades is risky.
+		$submits_report_card = $this->input->cookie("submits_report_card");
+		if($submits_report_card == "yes"){
+			$this->load->model("assignment_model","assignment");
+			$this->load->helper("grade");
+			$grade_options["from"] = "grade";
+			$grade_options["join"] = "assignment";
+			$grade_options['subject'] = $narrative->narrSubject;
+			$grades = $this->assignment->get_for_student($kStudent, $narrative->narrTerm, $narrative->narrYear ,$grade_options);
+			$letter_grade = calculate_final_grade($grades);
+			$data['default_grade'] = calculate_letter_grade($letter_grade);
+	
+			if($letter_grade == false){
+				$data['default_grade'] = $narrative->narrGrade;
+			}
+		}
+		//$data["needsButton"] = $this->get_need_button($kStudent);
+		// 		$data["suggestionsButton"] = $this->get_suggestion_button($kNarrative);
+		$data["hasSuggestions"] = TRUE;// $this->suggestion_model->exists($kNarrative);
+		$data["target"] = "narrative/edit";
+		$data["action"] = "update";
+		$data["title"] = "Editing Narrative Report for $studentName for $narrative->narrSubject";
+		$data["student"] = $student;
+		$data["studentName"] = $studentName;
+		$this->load->view("page/index", $data);
+	}
+	
+	/**
+	 * allows simple editing inline for quickly fixing a long list of narratives.
+	 */
+	function edit_inline()
+	{
+		//@TODO check  with kTeach against user ID or allow only editor/admin user role
+		$kNarrative = $this->input->get_post("kNarrative");
+		$data["narrative"] = $this->narrative_model->get($kNarrative,FALSE, "kNarrative,narrText,kTeach");
+		$this->load->view("narrative/edit_inline", $data);
+	}
+	
+	/**
 	 * offer either AJAX for auto-save or standard form submission with
 	 * a return to a view page for the narrative.
 	 * Note that like the insert() function, the result is split into two elements (kNarrative and time_stamp) that can be
@@ -111,20 +212,39 @@ class Narrative extends MY_Controller
 		}
 	}
 
+
+
 	/**
-	 * backup and delete a narrative report via the delete function in the narrative_model
-	 * echo a response for AJAX to display.
+	 * updates the narrative inline with only changes to the body text
 	 */
-	function delete()
+	function update_inline()
 	{
-		if($this->input->post('kNarrative') && $this->input->post('kStudent')){
-			$kNarrative = $this->input->post('kNarrative');
-			$kStudent = $this->input->post('kStudent');
-			$this->narrative_model->delete($kNarrative);
-			echo "The narrative $kNarrative has been successfully backed up and ";
-			echo "removed from the list of active narratives";
+		$kTeach = $this->input->post("kTeach");
+		$narrText = $this->input->post("narrText");
+		$kNarrative = $this->input->post("kNarrative");
+		$dbRole = $this->session->userdata("dbRole");
+		$userID = $this->session->userdata("userID");
+		if($kTeach == $userID || $dbRole == 1){
+			$this->narrative_model->update_text($kNarrative,$narrText);
 		}
+		$output =  $this->narrative_model->get($kNarrative, FALSE, "narrText, recModified");
+		echo $output->narrText . "||" . format_timestamp($output->recModified);
 	}
+	
+	/**
+	 * updates a term grade inline during editing of large numbers of narratives.
+	 */
+	function update_grade(){
+		$kNarrative = $this->input->post("kNarrative");
+		$result = "";
+		if($kNarrative){
+			$narrGrade = $this->input->post("narrGrade");
+			$result = $this->narrative_model->update_value($kNarrative,"narrGrade",$narrGrade);
+		}
+		echo $result;
+	}
+	
+	
 
 	/**
 	 * show a narrative for kNarrative including any benchmarks and the final grade for the current term
@@ -162,7 +282,7 @@ class Narrative extends MY_Controller
 			$grades = $this->assignment->get_for_student($kStudent, $narrative->narrTerm, $narrative->narrYear,$grade_options);
 			$letter_grade = calculate_final_grade($grades);
 			$data['letter_grade'] = calculate_letter_grade($letter_grade);
-
+	
 			if($letter_grade == FALSE){
 				$data['letter_grade'] = $narrative->narrGrade;
 			}
@@ -179,114 +299,24 @@ class Narrative extends MY_Controller
 		$data['teacher'] = format_name($teacher->teachFirst, $teacher->teachLast);
 		$this->load->view("page/index", $data);
 	}
+	
 
 	/**
-	 * edit a narrative based on a uri segment 3 of the kNarrative. Edting also includes the calcluation of
-	 * the student's term grade based either on report cards or provides an empty field
-	 * for the author to enter a pass/pass with honors note based on their default_grade preference
+	 * backup and delete a narrative report via the delete function in the narrative_model
+	 * echo a response for AJAX to display.
 	 */
-	function edit()
+	function delete()
 	{
-		$this->load->model('student_model');
-		$this->load->model("teacher_model");
-		$this->load->model("template_model");
-		$this->load->model("subject_model");
-		$this->load->model("support_model");
-		$this->load->model("suggestion_model");
-
-		$kNarrative = $this->uri->segment(3);
-
-		$narrative = $this->narrative_model->get($kNarrative, TRUE);
-		$kStudent = $narrative->kStudent;
-		$kTeach = $narrative->kTeach;
-
-		$data["narrative"] = $narrative;
-		$student = $this->student_model->get($kStudent);
-		$data["student"] = $student;
-		$subjects = $this->subject_model->get_for_teacher($kTeach);
-		$data["subjects"] = get_keyed_pairs($subjects, array("subject", "subject"));
-		$teacher = $this->teacher_model->get($kTeach);
-		$data["teacher"] = $teacher;
-		$teachers = $this->teacher_model->get_teacher_pairs();
-		$data["teacherPairs"] = get_keyed_pairs($teachers, array("kTeach", "teacher"));
-		$data["narrText"] = "";
-		$studentName = format_name($student->stuFirst, $student->stuLast, $student->stuNickname);
-		$data["hasNeeds"] = $this->support_model->get_current($kStudent, "kSupport");
-
-		// Get the value of the default_grade preference.
-		$data['default_grade'] = $this->input->cookie("default_grade");
-		//submits_report_card is also a user preference
-		//determine if grades are manually entered or calculated from grade report cards.
-		//@TODO this could be done with a simple search for grades to determine if any exists.
-		// Having a static declaration untied to the existence of entered grades is risky.
-		$submits_report_card = $this->input->cookie("submits_report_card");
-		if($submits_report_card == "yes"){
-			$this->load->model("assignment_model","assignment");
-			$this->load->helper("grade");
-			$grade_options["from"] = "grade";
-			$grade_options["join"] = "assignment";
-			$grade_options['subject'] = $narrative->narrSubject;
-			$grades = $this->assignment->get_for_student($kStudent, $narrative->narrTerm, $narrative->narrYear ,$grade_options);
-			$letter_grade = calculate_final_grade($grades);
-			$data['default_grade'] = calculate_letter_grade($letter_grade);
-
-			if($letter_grade == false){
-				$data['default_grade'] = $narrative->narrGrade;
-			}
+		if($this->input->post('kNarrative') && $this->input->post('kStudent')){
+			$kNarrative = $this->input->post('kNarrative');
+			$kStudent = $this->input->post('kStudent');
+			$this->narrative_model->delete($kNarrative);
+			echo "The narrative $kNarrative has been successfully backed up and ";
+			echo "removed from the list of active narratives";
 		}
-		//$data["needsButton"] = $this->get_need_button($kStudent);
-		// 		$data["suggestionsButton"] = $this->get_suggestion_button($kNarrative);
-		$data["hasSuggestions"] = TRUE;// $this->suggestion_model->exists($kNarrative);
-		$data["target"] = "narrative/edit";
-		$data["action"] = "update";
-		$data["title"] = "Editing Narrative Report for $studentName for $narrative->narrSubject";
-		$data["student"] = $student;
-		$data["studentName"] = $studentName;
-		$this->load->view("page/index", $data);
-	}
-
-	/**
-	 * allows simple editing inline for quickly fixing a long list of narratives.
-	 */
-	function edit_inline()
-	{
-		//@TODO check  with kTeach against user ID or allow only editor/admin user role
-		$kNarrative = $this->input->get_post("kNarrative");
-		$data["narrative"] = $this->narrative_model->get($kNarrative,FALSE, "kNarrative,narrText,kTeach");
-		$this->load->view("narrative/edit_inline", $data);
-	}
-
-
-	/**
-	 * updates the narrative inline with only changes to the body text
-	 */
-	function update_inline()
-	{
-		$kTeach = $this->input->post("kTeach");
-		$narrText = $this->input->post("narrText");
-		$kNarrative = $this->input->post("kNarrative");
-		$dbRole = $this->session->userdata("dbRole");
-		$userID = $this->session->userdata("userID");
-		if($kTeach == $userID || $dbRole == 1){
-			$this->narrative_model->update_text($kNarrative,$narrText);
 		}
-		$output =  $this->narrative_model->get($kNarrative, FALSE, "narrText, recModified");
-		echo $output->narrText . "||" . format_timestamp($output->recModified);
-	}
-
-	/**
-	 * updates a term grade inline during editing of large numbers of narratives.
-	 */
-	function update_grade(){
-		$kNarrative = $this->input->post("kNarrative");
-		$result = "";
-		if($kNarrative){
-			$narrGrade = $this->input->post("narrGrade");
-			$result = $this->narrative_model->update_value($kNarrative,"narrGrade",$narrGrade);
-		}
-		echo $result;
-	}
-
+	
+	
 	/**
 	 * generate a list of narratives for a given student kStudent as provided in the $_GET array
 	 */
@@ -519,29 +549,7 @@ class Narrative extends MY_Controller
 		}
 	}
 
-	/**
-	 * select a narrative type AJAX interface for selecting a narrative category.
-	 * the result of this action is to display available templates or the option
-	 * to create a narrative without template in template.php show_selector
-	 */
-	function select_type()
-	{
-		$this->load->model("subject_model");
-		$data["kStudent"] = $this->input->post("kStudent");
-		$data["kTeach"] = $this->session->userdata("userID");
-		$currentTerm = get_current_term();
-		$data["term_menu"] = get_term_menu("term", $currentTerm);
-		$data["currentYear"] = get_current_year();
-		$data["year_list"] = get_year_list();
-		$data["title"] = "Select Narrative Type";
-		$data["target"] = "narrative/select_type";
-		$subject_list = $this->subject_model->get_for_teacher($data["kTeach"]);
-		$data["subjects"] = get_keyed_pairs($subject_list, array("subject", "subject"));
 
-		if($this->input->post("ajax")){
-			$this->load->view($data["target"], $data);
-		}
-	}
 
 	/**
 	 * DEPRECATED
