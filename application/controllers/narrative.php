@@ -10,8 +10,12 @@ class Narrative extends MY_Controller
 		$this->load->helper('template');
 	}
 
-
-
+	//@TODO merge narrative report search for student with joins with teacher and student tables
+	/**
+	* create a new narrative. This can be called directly but is usually called indirectly from a
+	* template creation dialog that narrows down the subject. If a kTemplate was submitted in the $_POST
+	* query it will apply the template to the new narrative.
+	*/
 	function create()
 	{
 		$this->load->model('support_model');
@@ -51,6 +55,8 @@ class Narrative extends MY_Controller
 		$data['narrText'] = "";
 		$data['action'] = "insert";
 
+		//if there is a kTemplate value with the $_POST, then
+		//apply the associated template to the new narrative
 		if($this->input->post('kTemplate') != 0){
 
 			$kTemplate = $this->input->post('kTemplate');
@@ -60,14 +66,23 @@ class Narrative extends MY_Controller
 			$data['narrText'] = parse_template($template->template, $name, $gender);
 
 		}
+
+		//check to see if the student has special needs
 		$data["hasNeeds"] = $this->support_model->get_current($kStudent, "kSupport");
+		//there are no suggestions for this report. The suggestions system has been deprecated due to lack of usefulness.
 		$data["hasSuggestions"] = NULL;
 		$data['target'] = 'narrative/edit';
 		$data['title'] = "Add a Narrative for $student->stuFirst $student->stuLast";
 		$this->load->view('page/index', $data);
 	}
 
-
+	/**
+	 * offer either an AJAX insertion for auto-save feature or
+	 * standard form submission and return to the view of the new narrative
+	 * the AJAX result is split into two elements (kNarrative, time_stamp) that can be
+	 * parsed by the javascript. the kNarrative value is used to alter the form so that
+	 * future submissions will be updates instead of insertions
+	 */
 	function insert()
 	{
 		$result = $this->narrative_model->insert();
@@ -78,7 +93,12 @@ class Narrative extends MY_Controller
 		}
 	}
 
-
+	/**
+	 * offer either AJAX for auto-save or standard form submission with
+	 * a return to a view page for the narrative.
+	 * Note that like the insert() function, the result is split into two elements (kNarrative and time_stamp) that can be
+	 * parsed by the javascript for the user display and to compare the output to the form's data if desired.
+	 */
 	function update()
 	{
 
@@ -91,6 +111,10 @@ class Narrative extends MY_Controller
 		}
 	}
 
+	/**
+	 * backup and delete a narrative report via the delete function in the narrative_model
+	 * echo a response for AJAX to display.
+	 */
 	function delete()
 	{
 		if($this->input->post('kNarrative') && $this->input->post('kStudent')){
@@ -102,6 +126,10 @@ class Narrative extends MY_Controller
 		}
 	}
 
+	/**
+	 * show a narrative for kNarrative including any benchmarks and the final grade for the current term
+	 * or year.
+	 */
 	function view()
 	{
 		$this->load->model('student_model');
@@ -152,7 +180,11 @@ class Narrative extends MY_Controller
 		$this->load->view("page/index", $data);
 	}
 
-
+	/**
+	 * edit a narrative based on a uri segment 3 of the kNarrative. Edting also includes the calcluation of
+	 * the student's term grade based either on report cards or provides an empty field
+	 * for the author to enter a pass/pass with honors note based on their default_grade preference
+	 */
 	function edit()
 	{
 		$this->load->model('student_model');
@@ -185,6 +217,8 @@ class Narrative extends MY_Controller
 		$data['default_grade'] = $this->input->cookie("default_grade");
 		//submits_report_card is also a user preference
 		//determine if grades are manually entered or calculated from grade report cards.
+		//@TODO this could be done with a simple search for grades to determine if any exists.
+		// Having a static declaration untied to the existence of entered grades is risky.
 		$submits_report_card = $this->input->cookie("submits_report_card");
 		if($submits_report_card == "yes"){
 			$this->load->model("assignment_model","assignment");
@@ -211,16 +245,21 @@ class Narrative extends MY_Controller
 		$this->load->view("page/index", $data);
 	}
 
+	/**
+	 * allows simple editing inline for quickly fixing a long list of narratives.
+	 */
 	function edit_inline()
 	{
 		//@TODO check  with kTeach against user ID or allow only editor/admin user role
 		$kNarrative = $this->input->get_post("kNarrative");
 		$data["narrative"] = $this->narrative_model->get($kNarrative,FALSE, "kNarrative,narrText,kTeach");
 		$this->load->view("narrative/edit_inline", $data);
-
-
 	}
 
+
+	/**
+	 * updates the narrative inline with only changes to the body text
+	 */
 	function update_inline()
 	{
 		$kTeach = $this->input->post("kTeach");
@@ -235,6 +274,9 @@ class Narrative extends MY_Controller
 		echo $output->narrText . "||" . format_timestamp($output->recModified);
 	}
 
+	/**
+	 * updates a term grade inline during editing of large numbers of narratives.
+	 */
 	function update_grade(){
 		$kNarrative = $this->input->post("kNarrative");
 		$result = "";
@@ -245,6 +287,9 @@ class Narrative extends MY_Controller
 		echo $result;
 	}
 
+	/**
+	 * generate a list of narratives for a given student kStudent as provided in the $_GET array
+	 */
 	function student_list(){
 		$this->load->model("student_model");
 		$this->load->model("teacher_model");
@@ -282,7 +327,11 @@ class Narrative extends MY_Controller
 		$this->load->view("page/index", $data);
 	}
 
-
+	/**
+	 * creates a list of narratives written by a given kTeach based on the uri segment or a $_GET or $_POST
+	 * depending on what was submitted for the list.
+	 * This accepts a number of other options to limit or expand the search results.
+	 */
 	function teacher_list()
 	{
 		$this->load->model("teacher_model");
@@ -334,6 +383,10 @@ class Narrative extends MY_Controller
 
 	}
 
+	/**
+	 * display a se4arch dialog for listing narratives for a given teacher
+	 * either based on the uri segment 3 or defaulting to the $_SESSION userID value of the current user
+	 */
 	function search_teacher_narratives()
 	{
 		$this->load->model('teacher_model');
@@ -378,7 +431,9 @@ class Narrative extends MY_Controller
 		$this->load->view("narrative/teacher_search",$data);
 	}
 
-
+	/**
+	 * display a search interface to find all missing narratives based on various listed criteria
+	 */
 	function search_missing(){
 		$data["kTeach"] = $this->input->get_post("kTeach");
 		$this->load->model("teacher_model");
@@ -395,7 +450,11 @@ class Narrative extends MY_Controller
 		$this->load->view("narrative/search_missing", $data);
 	}
 
-
+	/**
+	 * result of the search_missing function shows a list of all narratives the teacher has yet to write for the term.
+	 * @TODO this should be updated to reflect that the report card system has a built-in list of students the teacher
+	 * has entered that could be used to evaluate missing reports.
+	 */
 	function show_missing()
 	{
 		$this->load->model("subject_model");
@@ -421,6 +480,11 @@ class Narrative extends MY_Controller
 		$this->load->view("page/index", $data);
 	}
 
+
+	/**
+	 * print the narratives for a given student for a given term
+	 * @TODO need to add the report cards as appropriate.
+	 */
 	function print_student_report()
 	{
 		if($this->uri->segment(5)){
@@ -455,7 +519,11 @@ class Narrative extends MY_Controller
 		}
 	}
 
-
+	/**
+	 * select a narrative type AJAX interface for selecting a narrative category.
+	 * the result of this action is to display available templates or the option
+	 * to create a narrative without template in template.php show_selector
+	 */
 	function select_type()
 	{
 		$this->load->model("subject_model");
@@ -475,7 +543,12 @@ class Narrative extends MY_Controller
 		}
 	}
 
-
+	/**
+	 * DEPRECATED
+	 * this function was designed to allow the sorting of the student's various narratives within their final report presumably to place
+	 * them in an order that reflects best on the student's performance.
+	 * This feature has not been needed and may be removed from the system.
+	 */
 	function show_sorter()
 	{
 		$this->load->model("narrative_sort_model");
@@ -491,7 +564,11 @@ class Narrative extends MY_Controller
 		$this->load->view($data["target"], $data);
 	}
 
-
+	/**
+	 * DEPRECATED
+	 * This functions with the show_sorter interface to create a sorting order for a student's individual narratives within their
+	 * full report. As mentioned above, this has been deprecated because the feature has not been need thusfar.
+	 */
 	function set_sort()
 	{
 		$this->load->model("narrative_sort_model");
@@ -504,7 +581,10 @@ class Narrative extends MY_Controller
 	}
 
 
-
+	/**
+	 * Shows a form that allows editors to search and replace phrases in a batch of narratives based on selected
+	 * criteria in the form.
+	 */
 	function search()
 	{
 		$data["currentTerm"] = get_current_term();
@@ -523,7 +603,9 @@ class Narrative extends MY_Controller
 		$this->load->view("page/index",$data);
 	}
 
-
+	/**
+	 * processes the search() function's criteria and replaces text in narratives accordingly
+	 */
 	function replace(){
 		$search = $this->input->post("search");
 		$replace = $this->input->post("replace");
@@ -546,7 +628,11 @@ class Narrative extends MY_Controller
 		$this->load->view("page/index", $data);
 	}
 
-
+	/**
+	 * show a list of previous saves that can be viewed and whose data can be copied into the current
+	 * document as desired. This does not show backups for narratives that have been deleted. 
+	 * @TODO create an interface for showing deleted narratives for a given teacher, term, year or other criteria. 
+	 */
 	function list_backups()
 	{
 		$kNarrative = $this->uri->segment(3);
