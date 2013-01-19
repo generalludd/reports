@@ -10,7 +10,7 @@ class Narrative extends MY_Controller
 		$this->load->helper('template');
 	}
 
-	
+
 	/**
 	 * select a narrative type AJAX interface for selecting a narrative category.
 	 * the result of this action is to display available templates or the option
@@ -29,12 +29,12 @@ class Narrative extends MY_Controller
 		$data["target"] = "narrative/select_type";
 		$subject_list = $this->subject_model->get_for_teacher($data["kTeach"]);
 		$data["subjects"] = get_keyed_pairs($subject_list, array("subject", "subject"));
-	
+
 		if($this->input->post("ajax")){
 			$this->load->view($data["target"], $data);
 		}
 	}
-	
+
 	//@TODO merge narrative report search for student with joins with teacher and student tables
 	/**
 	* create a new narrative. This can be called directly but is usually called indirectly from a
@@ -131,13 +131,13 @@ class Narrative extends MY_Controller
 		$this->load->model("subject_model");
 		$this->load->model("support_model");
 		$this->load->model("suggestion_model");
-	
+
 		$kNarrative = $this->uri->segment(3);
-	
+
 		$narrative = $this->narrative_model->get($kNarrative, TRUE);
 		$kStudent = $narrative->kStudent;
 		$kTeach = $narrative->kTeach;
-	
+
 		$data["narrative"] = $narrative;
 		$student = $this->student_model->get($kStudent);
 		$data["student"] = $student;
@@ -150,7 +150,7 @@ class Narrative extends MY_Controller
 		$data["narrText"] = "";
 		$studentName = format_name($student->stuFirst, $student->stuLast, $student->stuNickname);
 		$data["hasNeeds"] = $this->support_model->get_current($kStudent, "kSupport");
-	
+
 		// Get the value of the default_grade preference.
 		$data['default_grade'] = $this->input->cookie("default_grade");
 		//submits_report_card is also a user preference
@@ -167,7 +167,7 @@ class Narrative extends MY_Controller
 			$grades = $this->assignment->get_for_student($kStudent, $narrative->narrTerm, $narrative->narrYear ,$grade_options);
 			$letter_grade = calculate_final_grade($grades);
 			$data['default_grade'] = calculate_letter_grade($letter_grade);
-	
+			//handle legacy grade information (pre report-card system)
 			if($letter_grade == false){
 				$data['default_grade'] = $narrative->narrGrade;
 			}
@@ -182,7 +182,7 @@ class Narrative extends MY_Controller
 		$data["studentName"] = $studentName;
 		$this->load->view("page/index", $data);
 	}
-	
+
 	/**
 	 * allows simple editing inline for quickly fixing a long list of narratives.
 	 */
@@ -193,7 +193,7 @@ class Narrative extends MY_Controller
 		$data["narrative"] = $this->narrative_model->get($kNarrative,FALSE, "kNarrative,narrText,kTeach");
 		$this->load->view("narrative/edit_inline", $data);
 	}
-	
+
 	/**
 	 * offer either AJAX for auto-save or standard form submission with
 	 * a return to a view page for the narrative.
@@ -230,7 +230,7 @@ class Narrative extends MY_Controller
 		$output =  $this->narrative_model->get($kNarrative, FALSE, "narrText, recModified");
 		echo $output->narrText . "||" . format_timestamp($output->recModified);
 	}
-	
+
 	/**
 	 * updates a term grade inline during editing of large numbers of narratives.
 	 */
@@ -243,8 +243,8 @@ class Narrative extends MY_Controller
 		}
 		echo $result;
 	}
-	
-	
+
+
 
 	/**
 	 * show a narrative for kNarrative including any benchmarks and the final grade for the current term
@@ -271,6 +271,7 @@ class Narrative extends MY_Controller
 		}
 		//determine if grades are manually entered or calculated from grade report cards.
 		$letter_grade = false;
+		$data["letter_grade"] = false;
 		//submits_report_card is a preference set at login and when preferences are changed
 		$submits_report_card = $this->input->cookie("submits_report_card");
 		if($submits_report_card == "yes"){
@@ -282,7 +283,7 @@ class Narrative extends MY_Controller
 			$grades = $this->assignment->get_for_student($kStudent, $narrative->narrTerm, $narrative->narrYear,$grade_options);
 			$letter_grade = calculate_final_grade($grades);
 			$data['letter_grade'] = calculate_letter_grade($letter_grade);
-	
+
 			if($letter_grade == FALSE){
 				$data['letter_grade'] = $narrative->narrGrade;
 			}
@@ -299,7 +300,7 @@ class Narrative extends MY_Controller
 		$data['teacher'] = format_name($teacher->teachFirst, $teacher->teachLast);
 		$this->load->view("page/index", $data);
 	}
-	
+
 
 	/**
 	 * backup and delete a narrative report via the delete function in the narrative_model
@@ -314,9 +315,9 @@ class Narrative extends MY_Controller
 			echo "The narrative $kNarrative has been successfully backed up and ";
 			echo "removed from the list of active narratives";
 		}
-		}
-	
-	
+	}
+
+
 	/**
 	 * generate a list of narratives for a given student kStudent as provided in the $_GET array
 	 */
@@ -638,8 +639,8 @@ class Narrative extends MY_Controller
 
 	/**
 	 * show a list of previous saves that can be viewed and whose data can be copied into the current
-	 * document as desired. This does not show backups for narratives that have been deleted. 
-	 * @TODO create an interface for showing deleted narratives for a given teacher, term, year or other criteria. 
+	 * document as desired. This does not show backups for narratives that have been deleted.
+	 * @TODO create an interface for showing deleted narratives for a given teacher, term, year or other criteria.
 	 */
 	function list_backups()
 	{
