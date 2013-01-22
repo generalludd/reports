@@ -99,7 +99,6 @@ class Student extends MY_Controller
 
 
 
-
 	function update()
 	{
 		if($this->input->post("kStudent")){
@@ -114,6 +113,22 @@ class Student extends MY_Controller
 	{
 		$kStudent = $this->student_model->insert();
 		redirect("/student/view/$kStudent");
+	}
+
+	function delete()
+	{
+		//set the default response.
+		//the jquery javascript expects a comma-separated string with a boolean followed by an alert string
+		$result = "0,This script failed because no student id was submitted";
+		
+		//only allow the administrator to delete a student record.
+		if($this->session->userdata('userID') == 1000 ){
+			if($this->input->post("kStudent")){
+				$kStudent = $this->input->post("kStudent");
+				$result = $this->student_model->delete($kStudent);
+			}
+		}
+		echo $result; 
 	}
 
 	function teacher_student_list()
