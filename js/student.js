@@ -273,7 +273,29 @@ function saveStudent(action) {
 	// document.forms['studentEditor'].submit();
 }
 
-
+function deleteStudent(myStudent) {
+	action = confirm("You sure you want to delete this student? This cannot be undone!");
+	if (action) {
+		form_data = {
+				kStudent: myStudent
+		};
+		
+		var myUrl = base_url + "student/delete";
+		$.ajax({
+			url: myUrl,
+			type: 'POST',
+			data: form_data,
+			success: function(data){
+				values = data.split(",");
+				alert(values[1]);
+				if(values[0] == 1){
+					document.location = base_url;
+				}
+		}
+		});
+	};
+		
+}
 
 /*
  * @function studentSearchdescription:  only works with STUDENT_SEARCH_INC I don't
