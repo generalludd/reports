@@ -281,6 +281,24 @@ class Student_model extends CI_Model
 
 	}
 
+	/**
+	 * Does the student have records in the system in the narratives, grades, etc?
+	 * This is used to determine if a student record can be deleted or not.
+	 * Student records cannot be deleted if there are dependent records elsewhere
+	 * @param int $kStudent
+	 */
+	function has_records($kStudent)
+	{
+		$output = 0;
+		$tables = array("narrative","grade","support");
+		foreach($tables as $table){
+			$this->db->from($table);
+			$this->db->where("kStudent",$kStudent);
+			$output += $this->db->count_all_results();
+		}
+		return $output;
+	}
+
 
 	/**
 	 * Setter
@@ -315,6 +333,28 @@ class Student_model extends CI_Model
 		$year = get_current_year();
 		$query = ("UPDATE `student` SET `stuGrade` = ($year - `baseYear` + `baseGrade`)");
 		$this->db->query($query);
+	}
+
+
+	/**
+	 * Delete student record only if the student has no entries in other tables.
+	 * @param number $kStudent
+	 * @return comma-separated string with initial boolean and message--used by javascript to determine the alert and response. 
+	 * @TODO maybe develop a set of generic database key->string pairs for messages?
+	 */
+	function delete($kStudent)
+	{
+		$output = "0,You do not have permission to delete student records. Please contact the system administrator for assistance";
+		if($this->session->userdata("userID") == 1000 ){
+			if($this->has_records($kStudent) == 0 ){
+				$this->db->delete('student', array('kStudent' => $kStudent));
+				$output = "1,The student record was successfully deleted";
+			}else{
+				$output = "0,The student record has multiple dependent entries in other tables and cannot be deleted";
+			}
+		}
+		return $output;
+
 	}
 
 }
