@@ -10,7 +10,7 @@ class Student_model extends CI_Model
 	var $stuDOB;
 	var $stuGrade;
 	var $stuGroup;
-	var $baseGrade;
+	var $baseGrade = 0;
 	var $baseYear;
 	var $isEnrolled;
 	var $stuEmail;
