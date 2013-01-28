@@ -1,6 +1,6 @@
 <?php #narrative_type_selector.inc ?>
 <div id="narrative_process">
-<form id="type_selector" action="<?=site_url("template/select_templates");?>" method="POST"
+<form id="type_selector" action="<?=site_url("template/show_selector");?>" method="POST"
 	name="type_selector"><input type="hidden" name="target"
 	value="template"> <input type="hidden" name="action" id="action"
 	value="select_template" /> <input type="hidden" id="kStudent"

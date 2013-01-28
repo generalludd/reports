@@ -1,5 +1,5 @@
-<?php
-?>
+<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed'); ?>
+
 <form name='template_selector' method='post'
 	action='<?=site_url("narrative/create");?>' id='template_selector'><?
 	$count=count($templates);
@@ -22,7 +22,8 @@
 			if(!empty($template->type)){
 				$typeString = "Type: $template->type";
 			}
-			print "<p><span class='button add_narrative' id='t_$template->kTemplate'>$template->subject for $template->term $template->year, grade: $template->grade $typeString</span></p>";
+			$grades = format_grade_range($template->gradeStart, $template->gradeEnd);
+			print "<p><span class='button add_narrative' id='t_$template->kTemplate'>$template->subject for $template->term $template->year, grade: $grades $typeString</span></p>";
 		}
 		print "<hr/>";
 	}//end if-else

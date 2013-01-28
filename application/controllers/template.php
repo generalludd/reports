@@ -40,8 +40,7 @@ class Template extends MY_Controller
 			$options["where"]["subject"] = $this->input->cookie("narrative_subject");//$this->session->userdata("narrative_subject");
 		}
 		$options["stuGrade"] = $this->student_model->get_grade($kStudent);
-
-
+		$studentName = $this->student_model->get_name($kStudent);
 		$data["templates"] = $this->template_model->get_all($kTeach, $options);
 		$data["stuGrade"] = $options["stuGrade"];
 		$data["kTeach"] = $kTeach;
@@ -49,8 +48,6 @@ class Template extends MY_Controller
 		$data["narrTerm"] = $options["where"]["term"];
 		$data["narrYear"] = $options["where"]["year"];
 		$data["narrSubject"] = $options["where"]["subject"];
-		$data["stuGrade"] = $this->student_model->get_grade($kStudent);
-		$studentName = $this->student_model->get_name($kStudent);
 		$data["studentName"] = $studentName;
 		$data["title"] = "Creating a Narrative for $studentName";
 		$data["target"] = "template/select";
