@@ -258,6 +258,7 @@ class Narrative extends MY_Controller
 		$this->load->model('benchmark_model');
 		$this->load->model('benchmark_legend_model','legend');
 		$this->load->model('backup_model');
+		$this->load->model('preference_model','preference');
 		$kNarrative = $this->uri->segment(3);
 		$narrative = $this->narrative_model->get($kNarrative, TRUE);
 		$kStudent = $narrative->kStudent;
@@ -273,7 +274,7 @@ class Narrative extends MY_Controller
 		$letter_grade = false;
 		$data["letter_grade"] = false;
 		//submits_report_card is a preference set at login and when preferences are changed
-		$submits_report_card = $this->input->cookie("submits_report_card");
+		$submits_report_card = $this->preference->get($kTeach, "submits_report_card");
 		if($submits_report_card == "yes"){
 			$this->load->model("assignment_model","assignment");
 			$this->load->helper("grade");
@@ -543,7 +544,27 @@ class Narrative extends MY_Controller
 			$data["benchmarks"][$narrative->narrSubject] = $this->benchmark_model->get_for_student($kStudent,$narrative->narrSubject,$stuGrade, $narrTerm, $narrYear);
 			}
 			*/
+			
+			$this->load->model("preference_model","preference");
 			$data["narratives"] = $narratives;
+			//get letter grades for the reports
+			$data['grades'] = array();
+			foreach($narratives as $narrative){
+				$kTeach = $narrative->kTeach;
+				$submits_report_card = $this->preference->get($kTeach, "submits_report_card");
+				$data['grades'][$narrative->narrSubject] = $narrative->narrGrade;
+				
+				if($submits_report_card == "yes"){
+					$this->load->model("assignment_model","assignment");
+					$this->load->helper("grade");
+					$grade_options["from"] = "grade";
+					$grade_options["join"] = "assignment";
+					$grade_options['subject'] = $narrative->narrSubject;
+					$grades = $this->assignment->get_for_student($kStudent, $narrative->narrTerm, $narrative->narrYear,$grade_options);
+					$letter_grade = calculate_final_grade($grades);
+					$data['grades'][$narrative->narrSubject] = calculate_letter_grade($letter_grade);
+				}
+			}
 			$data["student"] = $student;
 			$data["title"] = "Narrative Report for $student";
 			$this->load->view("narrative/print", $data);

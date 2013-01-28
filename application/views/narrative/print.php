@@ -98,7 +98,6 @@ body {
 
 	<?php
 	foreach($narratives as $narrative){
-		$gradeString="$narrTerm Grade: $narrative->narrGrade";
 		$narrText=stripslashes($narrative->narrText);
 		$teacher = "$narrative->teachFirst $narrative->teachLast";
 		print "<div class='subject-row'>";
@@ -106,7 +105,7 @@ body {
 		print "<div class='teacher'>Teacher: $teacher</div>";
 		print "</div>";
 		if($stuGrade>4){
-			print "<div class='grade'>$gradeString</div>";
+ 			printf("<div class='grade'>%s Grade: %s</div>",$narrTerm, $grades[$narrative->narrSubject]);
 		}
 		//@TODO modify insert chart issues here.
 		$data['legend'] = $this->legend->get_one(array("kTeach"=>$narrative->kTeach, "subject"=>$narrative->narrSubject, "term"=> $narrative->narrTerm, "year"=>$narrative->narrYear ));
@@ -115,7 +114,7 @@ body {
 		if($has_benchmarks){
 			$data["benchmarks"] = $this->benchmark_model->get_for_student($narrative->kStudent,$narrative->narrSubject,$stuGrade, $narrTerm, $narrYear);
 		}
-		
+
 		$narrText = strip_slashes($narrative->narrText);
 		print "<p>$narrText</p>";
 		if($has_benchmarks){
