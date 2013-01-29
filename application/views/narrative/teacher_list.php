@@ -90,8 +90,8 @@ if(!empty($narratives)){
 				$button_type = "edit";
 				$button_text = "Edit Grade";
 			}
-			$edit_buttons[] = array("selection" => "narrGrde", "type" => "span", "class" => "text","text" => "Grade: <span class='narr_grade' style='font-weight:bold' id='ngtext_$narrative->kNarrative'>$narrative->narrGrade</span>" );
-			$edit_buttons[] = array("selection" =>"edit_grade","text" => $button_text, "type" => "span", "class" => "button $button_type grade_edit", "id" => "ngedit_$narrative->kNarrative");
+			//$edit_buttons[] = array("selection" => "narrGrde", "type" => "span", "class" => "text","text" => "Grade: <span class='narr_grade' style='font-weight:bold' id='ngtext_$narrative->kNarrative'>$narrative->narrGrade</span>" );
+			//$edit_buttons[] = array("selection" =>"edit_grade","text" => $button_text, "type" => "span", "class" => "button $button_type grade_edit", "id" => "ngedit_$narrative->kNarrative");
 		}
 		$edit_buttons[] = array("selection" => "message", "type" => "span", "class" => "text","text" => "(Last edited on " . format_timestamp($narrative->recModified) . ")", "id" => "time_$narrative->kNarrative");
 		
