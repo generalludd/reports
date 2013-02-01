@@ -52,6 +52,7 @@ class Grade_model extends CI_Model
 		$result = $this->db->get()->num_rows();
 		return $result;
 	}
+	
 
 	/**
 	 * batch_insert
@@ -109,13 +110,16 @@ class Grade_model extends CI_Model
 
 	function update_value($kStudent, $kAssignment, $key, $value)
 	{
-		$this->db->where("kStudent",$kStudent);
-		$this->db->where("kAssignment", $kAssignment);
-		$data = array($key => $value);
-		if($this->db->update("grade",$data)){
-			$output = TRUE;
-		}else{
-			$output = FALSE;
+		$output = FALSE;
+		if($this->has_grade($kStudent, $kAssignment) == 1){
+			$this->db->where("kStudent",$kStudent);
+			$this->db->where("kAssignment", $kAssignment);
+			$data = array($key => $value);
+			if($this->db->update("grade",$data)){
+				$output = $this->get($kStudent,$kAssignment)->$key;
+			}else{
+				$output = FALSE;
+			}
 		}
 		return $output;
 	}
@@ -173,8 +177,8 @@ class Grade_model extends CI_Model
 		return $result;
 	}
 	/**
-	 * DEPRECATED This does not produce an accurate result because it does not account for Abs and Exc. Category totals are not evaluated 
-	 * in the business logic as appropriate instead of in the model. 
+	 * DEPRECATED This does not produce an accurate result because it does not account for Abs and Exc. Category totals are not evaluated
+	 * in the business logic as appropriate instead of in the model.
 	 * @param int $kStudent
 	 * @param varchar $term
 	 * @param int $year
