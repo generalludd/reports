@@ -179,6 +179,10 @@ $(document).ready(function(){
 		save_student_points(myAssignment);
 	});
 	
+	$("input.assignment-field").live("click",function(){
+		$(this).select();
+	});
+	
 	$("input.assignment-field").live("blur",function(){
 		myAssignment = this.id.split("_")[1];
 		myStudent = $("#kStudent").val();
