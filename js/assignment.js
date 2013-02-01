@@ -179,14 +179,21 @@ $(document).ready(function(){
 		save_student_points(myAssignment);
 	});
 	
-	$("input.assignment-field").live("keyup",function(){
+	$("input.assignment-field").live("blur",function(){
 		myAssignment = this.id.split("_")[1];
-		save_student_points(myAssignment);
+		myStudent = $("#kStudent").val();
+		myValue = $(this).val();
+		myKey = this.name;
+		save_points_inline(myAssignment, myStudent, myKey, myValue);
 	});
 	
 	$("select.assignment-field").live("change",function(){
 		myAssignment = this.id.split("_")[1];
-		save_student_points(myAssignment);
+		myStudent = $("#kStudent").val();
+		myValue = $(this).val();
+		myKey = this.name;
+		save_points_inline(myAssignment, myStudent, myKey, myValue);
+		//save_student_points(myAssignment);
 	});
 	
 	$(".save_cell_grade").live("click",function(){
@@ -404,7 +411,7 @@ function save_points_inline(myAssignment,myStudent,myKey,myValue){
 		url: myUrl,
 		data: form_data,
 		success: function(data){
-			$("#sag_" + myAssignment + "_" + myStudent).html(data);
+			$("#save_" + myAssignment).html(data).show().fadeOut(2000);
 		}
 	});
 }
