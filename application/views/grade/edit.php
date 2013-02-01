@@ -7,7 +7,9 @@ $student_name = format_name($header_record->stuNickname, $header_record->stuLast
 	type="hidden" name="kStudent" id="kStudent" value="<?=$kStudent;?>" />
 <input
 	type="hidden" name="kTeach" id="kTeach" value="<?=$kTeach;?>" />
-	<h5><?=$student_name;?></h5>
+<h5>
+	<?=$student_name;?>
+</h5>
 <table class='grade-editor'>
 	<thead>
 		<tr>
@@ -23,7 +25,8 @@ $student_name = format_name($header_record->stuNickname, $header_record->stuLast
 	</thead>
 	<tbody>
 		<?
-
+		//tabindex is set to allow editors to tab down to the grade point value fields (see below)
+		$tabindex = 1;
 		foreach($grades as $grade){
 
 			?>
@@ -40,7 +43,7 @@ $student_name = format_name($header_record->stuNickname, $header_record->stuLast
 			<td class='grade-value'><input type="text"
 				id="g_<?=$grade->kAssignment;?>" name="points" size="2"
 				class="assignment-grade assignment-string assignment-field"
-				value="<?=get_value($grade,"points");?>" />
+				value="<?=get_value($grade,"points");?>" tabindex="<?=$tabindex;?>" />
 			</td>
 			<td class='grade-status'><?=form_dropdown("status",$status, get_value($grade,"status"),"id='status_$grade->kAssignment' class='assignment-field'");?>
 			</td>
@@ -51,8 +54,8 @@ $student_name = format_name($header_record->stuNickname, $header_record->stuLast
 			</td>
 		</tr>
 
-
 		<?
+		$tabindex++;
 } ?>
 	</tbody>
 </table>
