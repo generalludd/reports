@@ -35,7 +35,8 @@ $categories = array();
 				</td>
 				<td><?=$grade->category;?>
 				</td>
-				<td><?=$grade->status?$grade->status:$grade->points;?> <? if($grade->footnote){
+				<td><?=$grade->status?$grade->status:$grade->points;?> 
+				<? if($grade->footnote){
 					echo "<sup>$grade->footnote</sup>";
 					$footnotes[$grade->footnote] = $grade->label;
 				}?></td>
