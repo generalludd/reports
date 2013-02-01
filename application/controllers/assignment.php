@@ -14,7 +14,9 @@ class Assignment extends MY_Controller
 		$this->chart();
 	}
 
-
+	/**
+	 * produce a chart of assignments and student grades based on the submitted criteria
+	 */
 	function chart()
 	{
 		$kTeach = $this->session->userdata("userID");
@@ -63,7 +65,9 @@ class Assignment extends MY_Controller
 		$this->load->view("page/index",$data);
 	}
 
-
+	/**
+	 * display a search dialog for showing a grade chart.
+	 */
 	function search()
 	{
 		$data["kTeach"] = $this->session->userdata("userID");
@@ -71,14 +75,16 @@ class Assignment extends MY_Controller
 			$data["kTeach"] = $this->input->get("kTeach");
 		}
 		$data["term"] = $this->input->cookie("term");
-		$data["year"] = $this->input->cookie("year"); 
+		$data["year"] = $this->input->cookie("year");
 		$data["gradeStart"] = $this->input->cookie("gradeStart");
 		$data["gradeEnd"] = $this->input->cookie("gradeEnd");
 		$data["stuGroup"] = $this->input->cookie("stuGroup");
 		$this->load->view("assignment/search",$data);
 	}
 
-
+	/**
+	 * display a dialog for creating a new assignment
+	 */
 	function create()
 	{
 		$data["assignment"] = NULL;
@@ -108,6 +114,9 @@ class Assignment extends MY_Controller
 
 	}
 
+	/**
+	 * insert an assignment into the database
+	 */
 	function insert()
 	{
 		$kAssignment = $this->assignment->insert();
@@ -124,6 +133,9 @@ class Assignment extends MY_Controller
 		redirect("assignment/chart?kTeach=$kTeach&term=$term&year=$year&gradeStart=$gradeStart&gradeEnd=$gradeEnd");
 	}
 
+	/**
+	 * display a dialog for editing an assignment
+	 */
 	function edit()
 	{
 		$kAssignment = $this->input->get("kAssignment");
@@ -139,6 +151,9 @@ class Assignment extends MY_Controller
 		$this->load->view("assignment/edit",$data);
 	}
 
+	/**
+	 * update an assignment and redirect to the established grade/date range for the assignment.
+	 */
 	function update()
 	{
 		$kAssignment = $this->input->post("kAssignment");
@@ -151,6 +166,9 @@ class Assignment extends MY_Controller
 		redirect("assignment/chart?kTeach=$kTeach&term=$term&year=$year&gradeStart=$gradeStart&gradeEnd=$gradeEnd");
 	}
 
+	/**
+	 * delete an assignment and return to the assignment's term and grade range
+	 */
 	function delete()
 	{
 		if($this->input->post("kAssignment")){
@@ -166,7 +184,9 @@ class Assignment extends MY_Controller
 		redirect("assignment/chart?kTeach=$kTeach&term=$term&year=$year&gradeStart=$gradeStart&gradeEnd=$gradeEnd");
 	}
 
-
+	/**
+	 * return a table row for creating assignment weight categories (AJAX-based).
+	 */
 	function create_category()
 	{
 		$data["category"] = NULL;
@@ -175,6 +195,9 @@ class Assignment extends MY_Controller
 		$this->load->view("assignment/category_row", $data);
 	}
 
+	/**
+	 * add a created category into the database
+	 */
 	function insert_category()
 	{
 		$kTeach = $this->input->post("kTeach");
@@ -203,7 +226,9 @@ class Assignment extends MY_Controller
 
 	}
 
-
+	/**
+	 * display a dialog for editing assignment weight categories.
+	 */
 	function edit_categories()
 	{
 		$data["kTeach"] = $this->uri->segment(3);
@@ -215,6 +240,9 @@ class Assignment extends MY_Controller
 		$this->load->view("assignment/categories",$data);
 	}
 
+	/**
+	 * update an assignment weight category
+	 */
 	function update_category()
 	{
 		$kCategory = $this->input->get_post("kCategory");
