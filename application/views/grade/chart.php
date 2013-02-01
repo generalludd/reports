@@ -35,8 +35,7 @@ $categories = array();
 				</td>
 				<td><?=$grade->category;?>
 				</td>
-				<td><?=$grade->status?$grade->status:$grade->points;?> 
-				<? if($grade->footnote){
+				<td><?=$grade->status?$grade->status:$grade->points;?> <? if($grade->footnote){
 					echo "<sup>$grade->footnote</sup>";
 					$footnotes[$grade->footnote] = $grade->label;
 				}?></td>
@@ -46,18 +45,12 @@ $categories = array();
 
 			</tr>
 			<?
-			
+
 			//if the student does not have an assignment listed as absent,excused, incomplete, redo, then calculate the grade otherwise ignore
-					if(!$grade->status){
-						//$points = $grade->total_points;
-						//$student_total += $grade->total_points * $grade->weight;
-		
-					//}else{
-						$points = $grade->points;
-						$student_total += $grade->points * $grade->weight;
-					
-					
-					if(!array_key_exists($grade->category,$categories)){
+			if(empty($grade->status)){
+				$points = $grade->points;
+				$student_total += $grade->points * $grade->weight;
+				if(!array_key_exists($grade->category,$categories)){
 						$categories[$grade->category]["category"] = $grade->category;
 						$categories[$grade->category]["weight"] = $grade->weight;
 						$categories[$grade->category]["total_points"] = $grade->total_points;
@@ -68,7 +61,6 @@ $categories = array();
 					}
 					$assignment_total += $grade->total_points * $grade->weight;
 					}
-					
 				} //end if
 			}//end foreach grade
 			?>
@@ -112,12 +104,13 @@ $categories = array();
 			<? foreach($categories as $category): ?>
 			<? $category_grade = round($category["points"]/$category["total_points"]*100,2);?>
 			<tr>
-			<td><?=$category["category"];?></td>
-			<td><?=$category["points"];?></td>
-			<td><?=$category["total_points"]; ?></td>
-			<td><?=$category["weight"];?>%</td>
-			<td><?=$category_grade;?>%</td>
-			<td><?=calculate_letter_grade($category_grade);?>
+				<td><?=$category["category"];?></td>
+				<td><?=$category["points"];?></td>
+				<td><?=$category["total_points"]; ?></td>
+				<td><?=$category["weight"];?>%</td>
+				<td><?=$category_grade;?>%</td>
+				<td><?=calculate_letter_grade($category_grade);?>
+			
 			</tr>
 			<? endforeach; ?>
 		</tbody>
