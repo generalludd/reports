@@ -62,7 +62,7 @@ if(!empty($assignments)){
 			foreach($assignments as $assignment){ ?>
 
 			<th id="as_<?=$assignment->kAssignment;?>"	
-				class=" assignment-field">
+				class="assignment-field">
 				<div class='assignment-edit button' id='ase_<?=$assignment->kAssignment;?>'>Edit Assignment</div>
 				<div>
 				<span
