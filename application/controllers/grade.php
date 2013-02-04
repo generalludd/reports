@@ -40,6 +40,7 @@ class Grade extends MY_Controller
 			if(!$options["grade_range"]["gradeEnd"]){
 				$options["grade_range"]["gradeEnd"] = $this->input->cookie("gradeEnd");
 			}
+				
 			$footnotes = $this->menu_model->get_pairs("grade_footnote");
 			$data["footnotes"] = get_keyed_pairs($footnotes, array("value","label"),TRUE);
 			$status = $this->menu_model->get_pairs("grade_status");
@@ -53,6 +54,7 @@ class Grade extends MY_Controller
 		}
 
 	}
+
 
 	/**
 	 * edit_cell allows editing of a single grade in a chart for a given student.
@@ -72,6 +74,29 @@ class Grade extends MY_Controller
 		}
 	}
 
+
+	/**
+	 * Edit a column of grades by assignment
+	 */
+	function edit_column()
+	{
+		
+		$kAssignment = $this->input->get_post("kAssignment");
+		$stuGroup = NULL;
+		if($this->input->cookie("stuGroup")){
+			$stuGroup = $this->input->cookie("stuGroup");
+		}
+		$this->load->model("menu_model");
+		$data["assignment"] = $this->assignment->get($kAssignment);
+		$data["grades"] = $this->assignment->get_assignment_grades($kAssignment, $stuGroup);
+		$footnotes = $this->menu_model->get_pairs("grade_footnote");
+		$data["footnotes"] = get_keyed_pairs($footnotes, array("value","label"),TRUE);
+		$status = $this->menu_model->get_pairs("grade_status");
+		$data["status"] = get_keyed_pairs($status, array("value","label"),TRUE);
+		$data["target"] = "grade/edit_column";
+		$data["title"] = "Editing Grades for a Given Assignment";
+		$this->load->view($data["target"],$data);
+	}
 
 
 	/**
@@ -145,16 +170,16 @@ class Grade extends MY_Controller
 			$options["from"] = "grade";
 			$options["join"] = "assignment";
 			/*
-			 * This print option is here mostly to avoid user confusion since 
-			 * the grade reports will print well whether or not the navigation or button bars are visible or not.
-			 */
+			 * This print option is here mostly to avoid user confusion since
+			* the grade reports will print well whether or not the navigation or button bars are visible or not.
+			*/
 			$print = FALSE;
 			if($this->input->get("print")){
 				$print = TRUE;
 			}
-			
+				
 			$output["print"] = $print;
-			
+				
 			if($kTeach = $this->input->get("kTeach")){
 				$options["kTeach"] = $kTeach;
 			}
@@ -187,14 +212,14 @@ class Grade extends MY_Controller
 			$data["target"] = "grade/report_card";
 
 			$student = $this->student->get($kStudent);
-			
 				
+
 			$data["kStudent"] = $kStudent;
 			$data["student"] = $student;
 			$output["student_name"] =  format_name($student->stuNickname, $student->stuLast );
 			$data["title"] = $output["student_name"];
 			$output["charts"] = array();
-		
+
 			$i = 0;
 			foreach($subjects as $subject){
 				$data["count"] = $i;// count is used to identify the chart number in the output for css purposes.
@@ -216,5 +241,5 @@ class Grade extends MY_Controller
 
 		}
 	}
-	
+
 }

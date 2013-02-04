@@ -94,6 +94,35 @@ class Assignment_model extends CI_Model
 		$result = $this->db->get("assignment")->result();
 		return $result;
 	}
+	
+	/**
+	 * 
+	 * @param integer $kAssignment
+	 * @param string $stuGroup
+	 * @return object array of grades for a given assignment
+	 * This returns an array of all the grades (as objects) for a given assignment so they can be edited quickly in a column
+	 */
+	function get_assignment_grades($kAssignment,$stuGroup = NULL)
+	{
+		$this->db->where("assignment.kAssignment",$kAssignment);
+		if($stuGroup){
+			$this->db->where("student.stuGroup",$stuGroup);
+		}
+		//$this->db->where("student.stuGrade in ($gradeStart,$gradeEnd)");
+		$this->db->join("grade","assignment.kAssignment=grade.kAssignment");
+		$this->db->join("student","grade.kStudent=student.kStudent");
+		$this->db->join("assignment_category as category","assignment.kCategory = category.kCategory","LEFT");
+		$this->db->order_by("student.stuLast");
+		$this->db->order_by("student.kStudent");
+		$this->db->order_by("assignment.date");
+		$this->db->order_by("assignment.kAssignment");
+		$this->db->order_by("assignment.term");
+		$this->db->order_by("assignment.year");
+		$this->db->select("student.kStudent,student.stuFirst,student.stuLast,student.stuNickname,student.stuGrade,student.stuGroup");
+		$this->db->select("grade.*,assignment.kTeach, assignment.assignment,assignment.points as assignment_total,assignment.subject, assignment.term,assignment.year,category.weight,category.category");
+		$result = $this->db->get("assignment")->result();
+		return $result;
+	}
 
 
 /**
@@ -133,6 +162,8 @@ class Assignment_model extends CI_Model
 			$this->db->where("assignment.gradeStart",$gradeStart);
 			$this->db->where("assignment.gradeEnd",$gradeEnd);
 		}
+		
+
 		//$this->db->where("assignment.gradeStart = category.gradeStart");
 		//$this->db->where("assignment.gradeEnd = category.gradeEnd");
 

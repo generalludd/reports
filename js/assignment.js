@@ -153,6 +153,24 @@ $(document).ready(function(){
 		
 	});
 	
+	$(".assignment-column-edit").live("click",function(){
+		myAssignment = this.id.split("_")[1];
+		form_data = {
+				kAssignment: myAssignment,
+				ajax: 1
+		};
+		myUrl = base_url + "grade/edit_column";
+		
+		$.ajax({
+			type: "POST",
+			url: myUrl,
+			data: form_data,
+			success: function(data){
+				showPopup("Editing All Grades for an Assignment", data, "auto");
+			}
+		});
+		
+	});
 
 	
 	$(".edit_student_grades").live("click",function(){
@@ -175,8 +193,10 @@ $(document).ready(function(){
 	});
 	
 	$(".save_student_grade").live("click",function(){
-		myAssignment = this.id.split("_")[1];
-		save_student_points(myAssignment);
+		myID = this.id.split("_");
+		myAssignment = myID[1];
+		myStudent = myID[2];		
+		save_student_points(myAssignment,myStudent);
 	});
 	
 	$("input.assignment-field").live("click",function(){
@@ -184,20 +204,22 @@ $(document).ready(function(){
 	});
 	
 	$("input.assignment-field").live("blur",function(){
-		myAssignment = this.id.split("_")[1];
-		myStudent = $("#kStudent").val();
+		myID = this.id.split("_");
+		myAssignment = myID[1];
+		myStudent = myID[2];
+		//the parent tr of the entry has the grade id
 		myGrade = $(this).closest("tr").attr("id");
-
 		myValue = $(this).val();
 		myKey = this.name;
 		save_points_inline(myAssignment, myStudent, myKey, myValue, myGrade);
 	});
 	
 	$("select.assignment-field").live("change",function(){
-		myAssignment = this.id.split("_")[1];
-		myStudent = $("#kStudent").val();
+		myID = this.id.split("_");
+		myAssignment = myID[1];
+		myStudent = myID[2];
+		//the parent tr of the entry has the grade id
 		myGrade = $(this).closest("tr").attr("id");
-
 		myValue = $(this).val();
 		myKey = this.name;
 		save_points_inline(myAssignment, myStudent, myKey, myValue, myGrade);
@@ -229,27 +251,7 @@ $(document).ready(function(){
 			}
 		});
 	});
-/*
-	$(".grade-points input").live("blur",function(){
-		myId = this.id.split("_");
-		myKey = myId[0];
-		myAssignment = myId[1];
-		myStudent = myId[2];
-		myValue = $(this).val();
-		save_points_inline(myAssignment,myStudent,myKey, myValue);	
-	});
-	// */
-	/*
-	$(".grade-points select").live("mouseup",function(){
-		myId = this.id.split("_");
-		myKey = myId[0];
-		myAssignment = myId[1];
-		myStudent = myId[2];
-		myValue = $(this).val();
-		save_points_inline(myAssignment,myStudent,myKey, myValue);	
-	});
-	// */
-	
+
 	
 	$(".close_grade_editor").live("click",function(){
 		window.location.reload();
@@ -379,9 +381,8 @@ $(document).ready(function(){
 	
 });
 
-function save_student_points(myAssignment)
+function save_student_points(myAssignment,myStudent)
 {
-	myStudent = $("#kStudent").val();
 	myPoints = $("#g_" + myAssignment).val();
 	myStatus = $("#status_" + myAssignment).val();
 	myFootnote = $("#footnote_" + myAssignment).val();
@@ -399,7 +400,7 @@ function save_student_points(myAssignment)
 		url: myUrl,
 		data: form_data,
 		success: function(data){
-			$("#save_" + myAssignment).html(data).show().fadeOut(2000);
+			$("#save_" + myAssignment  + "_" + myStudent).html(data).show().fadeOut(2000);
 
 		}
 	});
@@ -409,22 +410,22 @@ function save_student_points(myAssignment)
 function save_points_inline(myAssignment,myStudent,myKey,myValue, myGrade){
 	//if the kGrade value is 0 then this is a new entry for the student for the term. 
 	if(myGrade != 0 ){
-	form_data = {
-			kStudent:myStudent,
-			kAssignment:myAssignment,
-			key:myKey,
-			value: myValue
-	};
-	myUrl = base_url + "grade/update_value";
-	$.ajax({
-		type:"POST",
-		url: myUrl,
-		data: form_data,
-		success: function(data){
-			$("#save_" + myAssignment).html(data).show().fadeOut(2000);
-		}
-	});
+		form_data = {
+				kStudent:myStudent,
+				kAssignment:myAssignment,
+				key:myKey,
+				value: myValue
+		};
+		myUrl = base_url + "grade/update_value";
+		$.ajax({
+			type:"POST",
+			url: myUrl,
+			data: form_data,
+			success: function(data){
+				$("#save_" + myAssignment + "_" + myStudent).html(data).show().fadeOut(2000);
+			}
+		});
 	}else{
-		save_student_points(myAssignment);
+		save_student_points(myAssignment,myStudent);
 	}
 }

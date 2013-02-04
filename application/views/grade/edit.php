@@ -40,13 +40,13 @@ $student_name = format_name($header_record->stuNickname, $header_record->stuLast
 			<td class='grade-description'><?=$grade->total_points;?>
 			</td>
 			<td class='grade-value'><input type="text"
-				id="g_<?=$grade->kAssignment;?>" name="points" size="2"
+				id="g_<?=$grade->kAssignment;?>_<?=$kStudent;?>" name="points" size="2"
 				class="assignment-grade assignment-string assignment-field"
 				value="<?=get_value($grade,"points");?>" tabindex="<?=$tabindex;?>" />
 			</td>
-			<td class='grade-status'><?=form_dropdown("status",$status, get_value($grade,"status"),"id='status_$grade->kAssignment' class='assignment-field'");?>
+			<td class='grade-status'><?=form_dropdown("status",$status, get_value($grade,"status"),"id='status_$grade->kAssignment_$kStudent' class='assignment-field'");?>
 			</td>
-			<td class='grade-footnote'><?=form_dropdown("footnote",$footnotes, get_value($grade,"footnote"),"id='footnote_$grade->kAssignment'  class='assignment-field'");?>
+			<td class='grade-footnote'><?=form_dropdown("footnote",$footnotes, get_value($grade,"footnote"),"id='footnote_$grade->kAssignment_$kStudent'  class='assignment-field'");?>
 			</td>
 			<td class='grade-button'><span style='margin-left: 5px;'
 				id='save_<?=$grade->kAssignment;?>'></span>
@@ -54,6 +54,7 @@ $student_name = format_name($header_record->stuNickname, $header_record->stuLast
 		</tr>
 
 		<?
+		//increment the tabindex for the next row item. 
 		$tabindex++;
 } ?>
 	</tbody>

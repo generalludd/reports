@@ -61,14 +61,21 @@ if(!empty($assignments)){
 			$total_points = 0;
 			foreach($assignments as $assignment){ ?>
 
-			<th id="as_<?=$assignment->kAssignment;?>"
-				class="assignment-edit assignment-field"><span
+			<th id="as_<?=$assignment->kAssignment;?>"	
+				class=" assignment-field">
+				<div class='assignment-edit button' id='ase_<?=$assignment->kAssignment;?>'>Edit Assignment</div>
+				<div>
+				<span
 				class='chart-assignment'><?=$assignment->assignment;?> </span><br />
 				<span class='chart-category'><?=$assignment->category;?> </span><br />
 				<!-- an assignment with 0 points is calculated as a make-up points for assignments -->
 				<span class='chart-points'> <?=$assignment->points>0?$assignment->points. " Points" :"Make-Up Points";?>
 			</span><br /> <span class='chart-date'><?=format_date($assignment->date,'standard');?>
-			</span></th>
+			</span>
+			</div>
+			<div class='assignment-column-edit button' id='ace_<?=$assignment->kAssignment;?>'>Edit Column</div>
+			
+			</th>
 
 
 			<? 
