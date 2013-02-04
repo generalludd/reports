@@ -1063,8 +1063,8 @@ th.assignment-field {
 }
 
 th.assignment-field .assignment-column-edit {
-	position: absolute;
-	bottom: 0;
+	*position: absolute;
+	*bottom: 0;
 }
 
 table.grade-chart th .chart-assignment {
