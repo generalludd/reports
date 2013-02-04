@@ -1059,6 +1059,12 @@ table.grade-chart td.grade-points {
 
 th.assignment-field {
 	vertical-align: top;
+	position:relative;
+}
+
+th.assignment-field .assignment-column-edit {
+	position: absolute;
+	bottom: 0;
 }
 
 table.grade-chart th .chart-assignment {
