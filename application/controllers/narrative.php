@@ -298,6 +298,7 @@ class Narrative extends MY_Controller
 		$data["hasSuggestions"] = $this->suggestion_model->exists($kNarrative);
 		$data["backups"] = $this->backup_model->get_all($kNarrative);
 		$data['studentName'] = $studentName;
+		$data['recModifier'] = $this->teacher_model->get($narrative->recModifier,'teachFirst,teachLast');
 		$data['teacher'] = format_name($teacher->teachFirst, $teacher->teachLast);
 		$this->load->view("page/index", $data);
 	}
