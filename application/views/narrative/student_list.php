@@ -31,6 +31,7 @@
 		if(count($narratives)>0){
 			$thisTerm = "";
 			foreach($narratives as $narrative){
+				$print_buttons = array();
 				$sortTerm = "$narrative->narrTerm $narrative->narrYear";
 				if($sortTerm != $thisTerm){
 					$schoolYear=$narrative->narrTerm." ". format_schoolyear($narrative->narrYear, $narrative->narrTerm);
