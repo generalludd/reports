@@ -52,7 +52,7 @@ class Narrative_model extends CI_Model
 		}
 		if($include_student){
 			$this->db->where('`narrative`.`kStudent`','`student`.`kStudent`',FALSE);
-			$this->db->select("narrative.*,student.stuFirst, student.stuLast, student.stuNickname,student.stuGrade, student.baseGrade, student.baseYear");
+			$this->db->select("student.stuFirst, student.stuLast, student.stuNickname,student.stuGrade, student.baseGrade, student.baseYear,narrative.*");
 			$this->db->from('narrative,student');
 		}else{
 			$this->db->from("narrative");
@@ -214,9 +214,10 @@ class Narrative_model extends CI_Model
 			$this->db->order_by("student.stuGrade,student.stuLast,student.stuFirst ASC");
 		}
 
-		$this->db->from("narrative");
+		$this->db->from("narrative,teacher as modifier");
 		$this->db->join("student", "narrative.kStudent = student.kStudent", "left");
-		
+		$this->db->where("narrative.recModifier = modifier.kTeach");
+		$this->db->select("modifier.teachFirst,modifier.teachLast");
 		$this->db->select("narrative.*, student.stuGrade AS currentGrade, student.stuFirst, student.stuLast, student.stuNickname");
 		$result = $this->db->get()->result();
 		return $result;
@@ -254,7 +255,8 @@ class Narrative_model extends CI_Model
 
 	function delete($kNarrative)
 	{
-		$this->backup($kNarrative);
+		$this->load->model("backup_model");
+		$this->backup_model->backup($kNarrative);
 		$delete_array['kNarrative'] = $kNarrative;
 		$this->db->delete('narrative', $delete_array);
 	}
@@ -337,8 +339,7 @@ class Narrative_model extends CI_Model
 
 		//back up the changes as matches the condition
 		if($difference < $baseDifference && $interval > $baseInterval){
-			$values = $this->get($kNarrative);
-			$this->backup_model->insert($values);
+			$this->backup_model->insert($kNarrative);
 		}
 
 	}
