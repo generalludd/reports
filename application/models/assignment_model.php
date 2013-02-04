@@ -142,7 +142,7 @@ class Assignment_model extends CI_Model
 		$this->db->join("teacher","teacher.kTeach=assignment.kTeach","LEFT");
 		$this->db->join("menu","grade.footnote = menu.value AND menu.category='grade_footnote'","LEFT");
 		$this->db->join("assignment_category as category","assignment.kCategory = category.kCategory","LEFT");
-		$this->db->select("category.category,category.weight,assignment.kAssignment, assignment.term, assignment.year, assignment.subject, assignment.date, assignment.assignment, assignment.points as total_points,grade.points,grade.status,grade.footnote,menu.label,student.stuFirst,student.stuNickname,student.stuLast,student.stuGroup,teacher.teachFirst,teacher.teachLast");
+		$this->db->select("category.category,category.weight,assignment.kAssignment, assignment.term, assignment.year, assignment.subject, assignment.date, assignment.assignment, assignment.points as total_points,grade.kGrade,grade.points,grade.status,grade.footnote,menu.label,student.stuFirst,student.stuNickname,student.stuLast,student.stuGroup,teacher.teachFirst,teacher.teachLast");
 		$this->db->order_by("assignment.subject");
 		$this->db->order_by("assignment.date");
 		$this->db->order_by("assignment.kAssignment");

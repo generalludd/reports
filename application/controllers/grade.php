@@ -26,11 +26,11 @@ class Grade extends MY_Controller
 		if($kStudent && $kTeach){
 			$year = $this->input->get_post("year");
 			if(!$year){
-				$year = get_current_year();
+				$year = $this->input->cookie("year");//get_current_year();
 			}
 			$term = $this->input->get_post("term");
 			if(!$term){
-				$term = get_current_term();
+				$term = $this->input->cookie("term");//get_current_term();
 			}
 			$options["grade_range"]["gradeStart"] = $this->input->get_post("gradeStart");
 			if(!$options["grade_range"]["gradeStart"]){

@@ -111,6 +111,7 @@ class Grade_model extends CI_Model
 	function update_value($kStudent, $kAssignment, $key, $value)
 	{
 		$output = FALSE;
+		$output = $this->has_grade($kStudent,$kAssignment);
 		if($this->has_grade($kStudent, $kAssignment) == 1){
 			$this->db->where("kStudent",$kStudent);
 			$this->db->where("kAssignment", $kAssignment);

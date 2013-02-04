@@ -28,9 +28,8 @@ $student_name = format_name($header_record->stuNickname, $header_record->stuLast
 		//tabindex is set to allow editors to tab down to the grade point value fields (see below)
 		$tabindex = 1;
 		foreach($grades as $grade){
-
 			?>
-		<tr>
+		<tr id="<?=get_value($grade, "kGrade",0);?>">
 			<td class='grade-description'><?=format_date($grade->date,"standard");?>
 			</td>
 			<td class='grade-description'><?=$grade->assignment;?>

@@ -186,17 +186,21 @@ $(document).ready(function(){
 	$("input.assignment-field").live("blur",function(){
 		myAssignment = this.id.split("_")[1];
 		myStudent = $("#kStudent").val();
+		myGrade = $(this).closest("tr").attr("id");
+
 		myValue = $(this).val();
 		myKey = this.name;
-		save_points_inline(myAssignment, myStudent, myKey, myValue);
+		save_points_inline(myAssignment, myStudent, myKey, myValue, myGrade);
 	});
 	
 	$("select.assignment-field").live("change",function(){
 		myAssignment = this.id.split("_")[1];
 		myStudent = $("#kStudent").val();
+		myGrade = $(this).closest("tr").attr("id");
+
 		myValue = $(this).val();
 		myKey = this.name;
-		save_points_inline(myAssignment, myStudent, myKey, myValue);
+		save_points_inline(myAssignment, myStudent, myKey, myValue, myGrade);
 		//save_student_points(myAssignment);
 	});
 	
@@ -402,7 +406,9 @@ function save_student_points(myAssignment)
 	
 }
 
-function save_points_inline(myAssignment,myStudent,myKey,myValue){
+function save_points_inline(myAssignment,myStudent,myKey,myValue, myGrade){
+	//if the kGrade value is 0 then this is a new entry for the student for the term. 
+	if(myGrade != 0 ){
 	form_data = {
 			kStudent:myStudent,
 			kAssignment:myAssignment,
@@ -418,4 +424,7 @@ function save_points_inline(myAssignment,myStudent,myKey,myValue){
 			$("#save_" + myAssignment).html(data).show().fadeOut(2000);
 		}
 	});
+	}else{
+		save_student_points(myAssignment);
+	}
 }

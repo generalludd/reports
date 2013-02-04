@@ -46,7 +46,9 @@ class Auth extends CI_Controller
 				bake_cookie("gradeStart", $result->gradeStart);
 				bake_cookie("gradeEnd", $result->gradeEnd);
 				bake_cookie("isAdvisor",$result->is_advisor);
-				bake_cookie("submits_report_card", $result->submits_report_card);
+				if(get_value($result, "submits_report_card",FALSE)){
+					bake_cookie("submits_report_card", $result->submits_report_card);
+				}
 
 				//load preferences for UI adjustments. No secure data is stored in these cookies.
 				//These cookies are not necessary for the system to function
@@ -55,7 +57,7 @@ class Auth extends CI_Controller
 				set_user_cookies($preferences);
 
 				//if the teacher is an advisor, get the number of unread reports;
-				if($teacher->is_advisor == 1){
+				if($result->is_advisor == 1){
 					$this->load->model("student_report_model","report");
 					$unread_reports =  $this->report->get_count($result->kTeach);
 					$data["unread_reports"] = $unread_reports;
@@ -95,13 +97,13 @@ class Auth extends CI_Controller
 
 	/**
 	 * Function to change passwords for users
-	 * This is entirely dependent on ajax and does not function properly without that aspect of the UI. 
+	 * This is entirely dependent on ajax and does not function properly without that aspect of the UI.
 	 */
 	function change_password()
 	{
-		//declare the default response. 
+		//declare the default response.
 		$output = "You are not authorized to do this!";
-		
+
 		$kTeach = $this->input->post("kTeach");
 		$userID = $this->session->userdata("userID");
 
