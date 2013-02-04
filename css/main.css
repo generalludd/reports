@@ -1057,6 +1057,10 @@ table.grade-chart td.grade-points {
 	text-align: center;
 }
 
+table.grade-chart th.assignment-field {
+	vertical-align: top;
+}
+
 table.grade-chart th .chart-assignment {
 	font-weight: bold;
 }
