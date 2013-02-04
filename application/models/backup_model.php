@@ -88,14 +88,24 @@ class Backup_model extends CI_Model
 	}
 
 	/**
-	 * Setter
+	 * alias for backup
 	 */
-	function insert($values)
+	function insert($kNarrative)
 	{
-		$this->db->insert('backup', $values);
+		$this->backup($kNarrative);
+	}
+	
+	/**
+	 * 
+	 * @param int $kNarrative
+	 * backup a given narrative to the backups table
+	 */
+	function backup($kNarrative)
+	{
+		$query = "INSERT INTO `backup` SELECT NULL as kBackup, kNarrative,kStudent,kTeach, stuGrade,narrText,narrSubject,narrTerm,recModified,recModifier,narrGrade,narrYear FROM `narrative` WHERE`kNarrative` = '$kNarrative'";
+		$this->db->query($query);
 		return $this->db->insert_id();
 	}
-
 
 
 }
