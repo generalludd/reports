@@ -168,9 +168,14 @@ class Student extends MY_Controller
 			$includeFormerStudents = $this->input->get("includeFormerStudents");
 			bake_cookie("includeFormerStudents", $includeFormerStudents);
 		}
+		$sorting = NULL;
+		if($this->input->get("sorting")){
+			$sorting = $this->input->get("sorting");
+			bake_cookie("sorting",$sorting);
+		}
 		//$this->session->set_userdata($session);
 		$data["criteria"] = $this->input->get();
-		$data["students"] = $this->student_model->advanced_find($year,$grades, $hasNeeds, $includeFormerStudents);
+		$data["students"] = $this->student_model->advanced_find($year,$grades, $hasNeeds, $includeFormerStudents, $sorting);
 		$data["title"] = "Student List";
 		if($this->input->get("export")){
 			$this->load->helper("download");

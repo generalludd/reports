@@ -91,8 +91,9 @@ class Student_model extends CI_Model
 	{
 		$this->db->where("isEnrolled", 1);
 		$this->db->where("(CONCAT(`stuFirst`,' ', `stuLast`) LIKE '%$stuName%' OR CONCAT(`stuNickname`,' ', `stuLast`) LIKE '%$stuName%')");
-		$this->db->order_by('stuFirst','ASC');
-		$result = $this->db->get('student')->result();
+		$this->db->order_by("stuFirst","ASC");
+		$this->db->order_by("stuLast","ASC");
+		$result = $this->db->get("student")->result();
 		return $result;
 	}
 
@@ -131,6 +132,7 @@ class Student_model extends CI_Model
 		$this->db->where("`student`.`kTeach`=`teacher`.`kTeach`");
 		$this->db->order_by("stuGrade", "ASC");
 		$this->db->order_by('stuLast', 'ASC');
+		$this->db->order_by('stuFirst','ASC');
 		$this->db->from('student');
 		$this->db->from("teacher");
 		$result = $this->db->get()->result();
@@ -174,7 +176,9 @@ class Student_model extends CI_Model
 			$this->db->select($constraints["select"]);
 		}
 		$this->db->order_by("stuGrade");
+		$this->db->order_by("stuLast");
 		$this->db->order_by("stuFirst");
+
 		$this->db->from("student");
 		$result = $this->db->get()->result();
 		return $result;
@@ -189,7 +193,7 @@ class Student_model extends CI_Model
 	 * @param boolean $hasNeeds
 	 * @param boolean $includeFormerStudents
 	 */
-	function advanced_find($year, $grades = array(),  $hasNeeds = 0, $includeFormerStudents = 0)
+	function advanced_find($year, $grades = array(),  $hasNeeds = 0, $includeFormerStudents = 0, $sorting = NULL)
 	{
 		$this->db->select("student.*,(baseGrade+$year-baseYear) AS listGrade");
 		if(!empty($grades)){
@@ -211,8 +215,14 @@ class Student_model extends CI_Model
 		}
 
 		$this->db->from("student");
+		$this->db->order_by("stuGrade", "ASC");
+		
+		if($sorting == "first_last"){
+			$this->db->order_by("stuFirst,stuLast", "ASC");
 
-		$this->db->order_by("stuGrade,stuFirst,stuLast", "ASC");
+		}else{
+			$this->db->order_by("stuLast,stuFirst","ASC");
+		}
 
 		$result = $this->db->get()->result();
 
@@ -339,7 +349,7 @@ class Student_model extends CI_Model
 	/**
 	 * Delete student record only if the student has no entries in other tables.
 	 * @param number $kStudent
-	 * @return comma-separated string with initial boolean and message--used by javascript to determine the alert and response. 
+	 * @return comma-separated string with initial boolean and message--used by javascript to determine the alert and response.
 	 * @TODO maybe develop a set of generic database key->string pairs for messages?
 	 */
 	function delete($kStudent)

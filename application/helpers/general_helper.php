@@ -297,7 +297,7 @@ function create_grade_checklist($start = 0, $limit = 8, $name = "grades", $grade
 	for($i = $start; $i <= $limit; $i++){
 		$text = format_grade_text($i);
 		$checked = "";
-		if($grade_cookie){
+		if(is_array($grade_cookie) && !empty($grade_cookie)){
 			if(in_array($i, $grade_cookie)){
 				$checked = "checked";
 			}
