@@ -281,7 +281,7 @@ $(document).ready(function(){
 					url: myUrl,
 					data: form_data,
 					success: function(data){
-						showPopup("result",data,"auto");
+						window.location.reload();
 					}
 				});
 			}
