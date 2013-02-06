@@ -52,7 +52,7 @@ class Grade_model extends CI_Model
 		$result = $this->db->get()->num_rows();
 		return $result;
 	}
-	
+
 
 	/**
 	 * batch_insert
@@ -275,10 +275,19 @@ class Grade_model extends CI_Model
 	}
 
 
-	function delete($kGrade)
+	function delete_grade($kGrade)
 	{
 		$delete = array("kGrade" => $kGrade);
 		$this->db->delete("grade",$delete);
+	}
+
+	function delete_row($kStudent,$kTeach, $term, $year)
+	{
+		if($kTeach && $kStudent && $term && $year){
+			$query = sprintf("DELETE grade FROM grade, assignment WHERE `grade`.`kAssignment` = `assignment`.`kAssignment` AND `assignment`.`kTeach` = '%s'
+					AND `grade`.`kStudent` = '%s' AND `assignment`.`term` = '%s' AND `assignment`.`year` = '%s'", $kTeach, $kStudent, $term, $year);
+			$this->db->query($query);
+		}
 	}
 
 
