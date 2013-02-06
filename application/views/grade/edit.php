@@ -44,9 +44,9 @@ $student_name = format_name($header_record->stuNickname, $header_record->stuLast
 				class="assignment-grade assignment-string assignment-field"
 				value="<?=get_value($grade,"points");?>" tabindex="<?=$tabindex;?>" />
 			</td>
-			<td class='grade-status'><?=form_dropdown("status",$status, get_value($grade,"status"),"id='status_$grade->kAssignment_$kStudent' class='assignment-field'");?>
+			<td class='grade-status'><?=form_dropdown("status",$status, get_value($grade,"status"),sprintf("id='status_%s_%s' class='assignment-field'",$grade->kAssignment,$kStudent));?>
 			</td>
-			<td class='grade-footnote'><?=form_dropdown("footnote",$footnotes, get_value($grade,"footnote"),"id='footnote_$grade->kAssignment_$kStudent'  class='assignment-field'");?>
+			<td class='grade-footnote'><?=form_dropdown("footnote",$footnotes, get_value($grade,"footnote"),sprintf("id='footnote_%s_%s'  class='assignment-field'",$grade->kAssignment,$kStudent));?>
 			</td>
 			<td class='grade-button'><span style='margin-left: 5px;'
 				id='save_<?=$grade->kAssignment;?>'></span>

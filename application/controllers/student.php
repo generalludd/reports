@@ -120,7 +120,7 @@ class Student extends MY_Controller
 		//set the default response.
 		//the jquery javascript expects a comma-separated string with a boolean followed by an alert string
 		$result = "0,This script failed because no student id was submitted";
-		
+
 		//only allow the administrator to delete a student record.
 		if($this->session->userdata('userID') == 1000 ){
 			if($this->input->post("kStudent")){
@@ -128,7 +128,7 @@ class Student extends MY_Controller
 				$result = $this->student_model->delete($kStudent);
 			}
 		}
-		echo $result; 
+		echo $result;
 	}
 
 	function teacher_student_list()
@@ -153,7 +153,9 @@ class Student extends MY_Controller
 		burn_cookie("grades");
 		if($this->input->get("grades")){
 			$grades = $this->input->get("grades");
-			bake_cookie("grades", implode(",",$grades));
+			if(!empty($grades)){
+				bake_cookie("grades", implode(",",$grades));
+			}
 		}
 		$hasNeeds = 0;
 		burn_cookie("hasNeeds");
