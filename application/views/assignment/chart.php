@@ -53,7 +53,7 @@ if(!empty($assignments)){
 	<thead>
 
 		<tr>
-			<th><?=$header_string;?>
+			<th colspan='2'><?=$header_string;?>
 			</th>
 			<th></th>
 			<th class='chart-final-grade'>Estimated Final Grade</th>
@@ -91,6 +91,7 @@ if(!empty($assignments)){
 		 foreach($grades as $grade){ 
 			if($current_student != $grade->kStudent){
 				$rows[$grade->kStudent]["name"] = "<td class='student-name'><span class='student edit_student_grades' id='eg_$grade->kStudent'>$grade->stuNickname $grade->stuLast</span></td>";
+				$rows[$grade->kStudent]["delete"] = sprintf("<td class='grade-delete-row'><span class='student delete button' id='dgr_%s_%s_%s' title='Delete the entire row'>Delete</span></td>",$grade->kStudent, $header->term, $header->year);
 				$rows[$grade->kStudent]["kStudent"] = $grade->kStudent;
 				$current_student = $grade->kStudent;
 				$student_points = 0;
@@ -133,6 +134,7 @@ if(!empty($assignments)){
 
 		foreach($rows as $row){
 			print sprintf("<tr id='sgtr_%s' class='grade-chart-row'>",$row['kStudent']);
+			print $row["delete"];
 			print $row["name"];
 			print $row["button"];
 			//get the grade as a human-readable percentage
