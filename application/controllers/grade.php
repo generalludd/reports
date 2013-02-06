@@ -141,6 +141,16 @@ class Grade extends MY_Controller
 			echo $value;
 		}
 	}
+	
+	function delete_row()
+	{
+			$kTeach = $this->input->post("kTeach");
+			$kStudent = $this->input->post("kStudent");
+			$year = $this->input->post("year");
+			$term = $this->input->post("term");
+			$this->grade->delete_row($kStudent, $kTeach, $term, $year);
+			echo $this->db->last_query();
+	}
 
 	/**
 	 * select_report_card provides a dialog for selecting the report card for a given student based on year, term, cutoff-date, and subject
