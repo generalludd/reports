@@ -257,6 +257,37 @@ $(document).ready(function(){
 		window.location.reload();
 	});
 	
+	$(".grade-delete-row .button").live("click",function(){
+		choice = confirm("Are you sure you want to delete this student's grade entries for the entire term? This cannot be undone!");
+		if(choice){
+			second_chance = confirm("This will delete all the grades entered for this student for the current term. Click OK only if you are absolute sure you want to do this!");
+			if(second_chance){
+				myTeach = $("#kTeach").val();
+				myID = this.id.split("_");
+				myStudent = myID[1];
+
+				myTerm = myID[2];
+				myYear = myID[3];
+				form_data = {
+						kTeach: myTeach,
+						kStudent: myStudent,
+						term: myTerm,
+						year: myYear
+				};
+				myUrl = base_url + "grade/delete_row";
+				
+				$.ajax({
+					type: "post",
+					url: myUrl,
+					data: form_data,
+					success: function(data){
+						showPopup("result",data,"auto");
+					}
+				});
+			}
+		}
+	});
+	
 	$(".assignment-delete").live("click",function(){
 		choice = confirm("Are you sure you want to delete this assignment? It will delete all the related student grades along with it!");
 		if(choice){
