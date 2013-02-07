@@ -273,8 +273,8 @@ class Narrative extends MY_Controller
 			$data["benchmarks"] = $this->benchmark_model->get_for_student($kStudent, $narrative->narrSubject, $narrative->stuGrade, $narrative->narrTerm, $narrative->narrYear);
 		}
 		//determine if grades are manually entered or calculated from grade report cards.
-		$letter_grade = false;
-		$data["letter_grade"] = false;
+		$data['letter_grade'] = $narrative->narrGrade;
+		
 		//submits_report_card is a preference set at login and when preferences are changed
 		$submits_report_card = $this->preference->get($kTeach, "submits_report_card");
 		if($submits_report_card == "yes"){
@@ -284,16 +284,13 @@ class Narrative extends MY_Controller
 			$grade_options["join"] = "assignment";
 			$grade_options['subject'] = $narrative->narrSubject;
 			$grades = $this->assignment->get_for_student($kStudent, $narrative->narrTerm, $narrative->narrYear,$grade_options);
-			$letter_grade = calculate_final_grade($grades);
-			$data['letter_grade'] = calculate_letter_grade($letter_grade);
-
-			if($letter_grade == FALSE){
-				$data['letter_grade'] = $narrative->narrGrade;
+			if(!empty($grades)){
+				$letter_grade = calculate_final_grade($grades);
+				$data['letter_grade'] = calculate_letter_grade($letter_grade);
 			}
 		}
-		$student = $this->student_model->get($kStudent);
 		$teacher = $this->teacher_model->get($kTeach);
-		$studentName = format_name($student->stuFirst, $student->stuLast, $student->stuNickname);
+		$studentName = format_name($narrative->stuFirst, $narrative->stuLast, $narrative->stuNickname);
 		$data['target'] = "narrative/view";
 		$data['title'] = "Viewing Narrative Report for $studentName for $narrative->narrSubject";
 		//@TODO edits/suggestions checking.
@@ -547,7 +544,7 @@ class Narrative extends MY_Controller
 			$data["benchmarks"][$narrative->narrSubject] = $this->benchmark_model->get_for_student($kStudent,$narrative->narrSubject,$stuGrade, $narrTerm, $narrYear);
 			}
 			*/
-				
+
 			$this->load->model("preference_model","preference");
 			$data["narratives"] = $narratives;
 			//get letter grades for the reports
