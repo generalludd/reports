@@ -68,7 +68,7 @@ if(!empty($conditional_buttons)){
 
 	<p>
 		Teacher/Author: <b><?="$teacherName"; ?> </b> <span id="tracker"></span>
-		<br /> <b>Grade In School:</b>
+		</p><p> <b>Grade In School:</b>
 		<?=format_grade($stuGrade);?>
 		<input type="hidden" id="stuGrade" name="stuGrade"
 			value="<?=$stuGrade;?>" size="5"> &nbsp;<b>Subject:</b><span
@@ -79,11 +79,12 @@ if(!empty($conditional_buttons)){
 		- <input id="yearEnd" type="text" name="yearEnd" readonly
 			maxlength="4" size="5" value="<?=$yearEnd; ?>" />
 		<?php if($stuGrade >= 5):?>
-		<br />Course Grade (middle school only): 
+		</p>
+		<p>Course Grade (middle school only): 
 			<? if($this->input->cookie("submits_report_card") == "yes"): ?>
-				<?=$default_grade;?>
+			<span id="course_grade"><?=$default_grade;?></span><span class='button override-narrative-grade'>Override</span>
 			<? else: ?>
-				<input type="text" name="narrGrade" id="narrGrade" value='<?=get_value($narrative,'narrGrade', $default_grade);?>' size="27">
+				<span id="course_grade"><input type="text" name="narrGrade" id="narrGrade" value='<?=get_value($narrative,'narrGrade', $default_grade);?>' size="27"></span>
 			<?php endif;?>
 		<?php endif;?>
 	</p>

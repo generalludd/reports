@@ -103,6 +103,10 @@ $(document).ready(function() {
 		
 	});
 	
+	$('.override-narrative-grade').live("click",function(event){
+		$("#course_grade").html("<input type='text' name='narrGrade' id='narrGrade' value=''/>");
+	});
+	
 	$('.teacher_narrative_search').live("click", function(event){
 		myTeach =  this.id.split("_")[1];
 
