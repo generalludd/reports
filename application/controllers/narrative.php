@@ -165,10 +165,12 @@ class Narrative extends MY_Controller
 			$grade_options["join"] = "assignment";
 			$grade_options['subject'] = $narrative->narrSubject;
 			$grades = $this->assignment->get_for_student($kStudent, $narrative->narrTerm, $narrative->narrYear ,$grade_options);
-			$letter_grade = calculate_final_grade($grades);
-			$data['default_grade'] = calculate_letter_grade($letter_grade);
-			//handle legacy grade information (pre report-card system)
-			if($letter_grade == false){
+			//if grades have been entered then include that grade, otherwise use the overridden grade for the term
+			//this helpls for students taking a class pass-fail and for printing out reports from years prior to the creation of the gradebook option
+			if($grades){
+				$letter_grade = calculate_final_grade($grades);
+				$data['default_grade'] = calculate_letter_grade($letter_grade);
+			}else{
 				$data['default_grade'] = $narrative->narrGrade;
 			}
 		}
@@ -545,7 +547,7 @@ class Narrative extends MY_Controller
 			$data["benchmarks"][$narrative->narrSubject] = $this->benchmark_model->get_for_student($kStudent,$narrative->narrSubject,$stuGrade, $narrTerm, $narrYear);
 			}
 			*/
-			
+				
 			$this->load->model("preference_model","preference");
 			$data["narratives"] = $narratives;
 			//get letter grades for the reports
@@ -554,7 +556,7 @@ class Narrative extends MY_Controller
 				$kTeach = $narrative->kTeach;
 				$submits_report_card = $this->preference->get($kTeach, "submits_report_card");
 				$data['grades'][$narrative->narrSubject] = $narrative->narrGrade;
-				
+
 				if($submits_report_card == "yes"){
 					$this->load->model("assignment_model","assignment");
 					$this->load->helper("grade");

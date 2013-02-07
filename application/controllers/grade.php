@@ -234,7 +234,7 @@ class Grade extends MY_Controller
 			foreach($subjects as $subject){
 				$options["subject"] = $subject->subject;
 				$data["grades"] = $this->assignment->get_for_student($kStudent,$term,$year,$options);
-				//if the student has any grades entered, include them here. 
+				//if the student has any grades entered, process them here, otherwise ignore. 
 				if(count($data["grades"])){
 					$data["subject"] = $subject->subject;
 					$data["count"] = $i;// count is used to identify the chart number in the output for css purposes.
