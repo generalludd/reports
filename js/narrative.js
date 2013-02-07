@@ -104,7 +104,9 @@ $(document).ready(function() {
 	});
 	
 	$('.override-narrative-grade').live("click",function(event){
-		$("#course_grade").html("<input type='text' name='narrGrade' id='narrGrade' value=''/>");
+		val = $("#course_grade").html();
+		$('.override-narrative-grade').hide();
+		$("#course_grade").html("<input type='text' name='narrGrade' id='narrGrade' value='" + val + "'/>");
 	});
 	
 	$('.teacher_narrative_search').live("click", function(event){
