@@ -40,7 +40,7 @@ class Grade extends MY_Controller
 			if(!$options["grade_range"]["gradeEnd"]){
 				$options["grade_range"]["gradeEnd"] = $this->input->cookie("gradeEnd");
 			}
-				
+
 			$footnotes = $this->menu_model->get_pairs("grade_footnote");
 			$data["footnotes"] = get_keyed_pairs($footnotes, array("value","label"),TRUE);
 			$status = $this->menu_model->get_pairs("grade_status");
@@ -80,7 +80,7 @@ class Grade extends MY_Controller
 	 */
 	function edit_column()
 	{
-		
+
 		$kAssignment = $this->input->get_post("kAssignment");
 		$stuGroup = NULL;
 		if($this->input->cookie("stuGroup")){
@@ -141,15 +141,15 @@ class Grade extends MY_Controller
 			echo $value;
 		}
 	}
-	
+
 	function delete_row()
 	{
-			$kTeach = $this->input->post("kTeach");
-			$kStudent = $this->input->post("kStudent");
-			$year = $this->input->post("year");
-			$term = $this->input->post("term");
-			$this->grade->delete_row($kStudent, $kTeach, $term, $year);
-			echo $this->db->last_query();
+		$kTeach = $this->input->post("kTeach");
+		$kStudent = $this->input->post("kStudent");
+		$year = $this->input->post("year");
+		$term = $this->input->post("term");
+		$this->grade->delete_row($kStudent, $kTeach, $term, $year);
+		echo $this->db->last_query();
 	}
 
 	/**
@@ -187,9 +187,9 @@ class Grade extends MY_Controller
 			if($this->input->get("print")){
 				$print = TRUE;
 			}
-				
+
 			$output["print"] = $print;
-				
+
 			if($kTeach = $this->input->get("kTeach")){
 				$options["kTeach"] = $kTeach;
 			}
@@ -222,7 +222,7 @@ class Grade extends MY_Controller
 			$data["target"] = "grade/report_card";
 
 			$student = $this->student->get($kStudent);
-				
+
 
 			$data["kStudent"] = $kStudent;
 			$data["student"] = $student;
@@ -232,13 +232,19 @@ class Grade extends MY_Controller
 
 			$i = 0;
 			foreach($subjects as $subject){
-				$data["count"] = $i;// count is used to identify the chart number in the output for css purposes.
 				$options["subject"] = $subject->subject;
-				$data["subject"] = $subject->subject;
 				$data["grades"] = $this->assignment->get_for_student($kStudent,$term,$year,$options);
-				//$data["categories"] = $this->grade->get_categories($kStudent, $term, $year,$options);
-				$output["charts"][] = $this->load->view("grade/chart",$data,TRUE);
-				$i ++;
+				//if the student has any grades entered, include them here. 
+				if(count($data["grades"])){
+					$data["subject"] = $subject->subject;
+					$data["count"] = $i;// count is used to identify the chart number in the output for css purposes.
+
+					//$data["categories"] = $this->grade->get_categories($kStudent, $term, $year,$options);
+						
+					$output["charts"][] = $this->load->view("grade/chart",$data,TRUE);
+
+					$i ++;
+				}
 			}
 
 			if($output){
