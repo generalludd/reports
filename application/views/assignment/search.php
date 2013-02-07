@@ -26,6 +26,9 @@ if(empty($year)){
 <?=form_dropdown('year',get_year_list(), $year, "id='year' class='searchYear'");?>
 -<input id="yearEnd" type="text" name="yearEnd" class='yearEnd' readonly
 	maxlength="4" size="5" value="<? $yearEnd=$year+1;print $yearEnd; ?>" /></p>
+	<p><label for="date_range">Date Range</label><input type="text" id="date_start" name="date_start" class="datefield" value=""/>-
+	<input type="text" name="date_end" id="date_end" class="datefield" value=""/>
+	</p>
 	<p>
 	<input type="submit" class="button"/>
 	</p>

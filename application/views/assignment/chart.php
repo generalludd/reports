@@ -64,7 +64,7 @@ if(!empty($assignments)){
 			<th id="as_<?=$assignment->kAssignment;?>"	
 				class="assignment-field">
 				<div>
-				<div class="chart-assignment assignment-edit button" id="ase_<?=$assignment->kAssignment;?>" title="Edit this assignment">Edit</div>
+				<div class="assignment-edit edit button" id="ase_<?=$assignment->kAssignment;?>" title="Edit this assignment">Edit</div>
 				<span class="chart-assignment"><?=$assignment->assignment;?></span><br/>
 				<span class='chart-category'><?=$assignment->category;?> </span><br />
 				<!-- an assignment with 0 points is calculated as a make-up points for assignments -->

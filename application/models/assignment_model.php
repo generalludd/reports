@@ -68,8 +68,18 @@ class Assignment_model extends CI_Model
 
 	}
 
-
-	function get_grades($kTeach,$term,$year,$gradeStart,$gradeEnd,$stuGroup = NULL)
+    /**
+     * 
+     * @param int $kTeach
+     * @param varchar $term
+     * @param int $year
+     * @param int $gradeStart
+     * @param int $gradeEnd
+     * @param string $stuGroup
+     * @param array $date_range
+     * @return query result rows
+     */
+	function get_grades($kTeach,$term,$year,$gradeStart,$gradeEnd,$stuGroup = NULL, $date_range = array() )
 	{
 		$this->db->where("term",$term);
 		$this->db->where("year",$year);
@@ -77,6 +87,9 @@ class Assignment_model extends CI_Model
 		$this->db->where("(assignment.gradeStart = $gradeStart OR assignment.gradeEnd = $gradeEnd)");
 		if($stuGroup){
 			$this->db->where("student.stuGroup",$stuGroup);
+		}
+		if($date_range){
+			$this->db->where(sprintf("(`assignment`.`date` BETWEEN '%s' AND '%s')", $date_range["date_start"], $date_range["date_end"]));
 		}
 		$this->db->where("(student.stuGrade BETWEEN $gradeStart AND $gradeEnd)");
 		//$this->db->where("student.stuGrade in ($gradeStart,$gradeEnd)");
@@ -183,15 +196,25 @@ class Assignment_model extends CI_Model
 
 	}
 
-
-	function get_for_teacher($kTeach,$term,$year,$gradeStart,$gradeEnd)
+/**
+ * 
+ * @param int $kTeach
+ * @param varchar $term
+ * @param int $year
+ * @param int $gradeStart
+ * @param int $gradeEnd
+ * @param array $date_range
+ * @return query result object array
+ */
+	function get_for_teacher($kTeach,$term,$year,$gradeStart,$gradeEnd, $date_range = array() )
 	{
 		$this->db->where("assignment.kTeach",$kTeach);
 		$this->db->where("term",$term);
 		$this->db->where("year",$year);
 		$this->db->where("(assignment.gradeStart = $gradeStart OR assignment.gradeEnd = $gradeEnd)");
-		//$this->db->where("assignment.gradeStart = category.gradeStart");
-		//$this->db->where("assignment.gradeEnd = category.gradeEnd");
+		if($date_range){
+			$this->db->where(sprintf("(`assignment`.`date` BETWEEN '%s' AND '%s')", $date_range["date_start"], $date_range["date_end"]));
+		}
 		$this->db->from("assignment");
 		$this->db->join("assignment_category as category","assignment.kCategory = category.kCategory","LEFT");
 		$this->db->join("teacher","assignment.kTeach=teacher.kTeach", "LEFT");

@@ -47,9 +47,18 @@ class Assignment extends MY_Controller
 			$year = $this->input->get("year");
 			bake_cookie("year",$year);
 		}
+		
+		$date_range = array();
+		if($this->input->get("date_start") && $this->input->get("date_end")){
+			$date_start = format_date($this->input->get("date_start"),"mysql");
+			$date_end = format_date($this->input->get("date_end"),"mysql");
+			$date_range["date_start"] = $date_start;
+			$date_range["date_end"] = $date_end;
+				
+		}
 
-		$data["grades"] = $this->assignment->get_grades($kTeach,$term,$year,$gradeStart,$gradeEnd,$stuGroup);
-		$data["assignments"] = $this->assignment->get_for_teacher($kTeach,$term,$year,$gradeStart,$gradeEnd);
+		$data["grades"] = $this->assignment->get_grades($kTeach,$term,$year,$gradeStart,$gradeEnd,$stuGroup, $date_range);
+		$data["assignments"] = $this->assignment->get_for_teacher($kTeach,$term,$year,$gradeStart,$gradeEnd, $date_range);
 		$data["category_count"] = 0;
 		if(empty($data["assignments"])){
 			$data["category_count"] = $this->assignment->count_categories($kTeach, $gradeStart, $gradeEnd);
