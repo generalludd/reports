@@ -274,7 +274,7 @@ class Narrative extends MY_Controller
 		}
 		//determine if grades are manually entered or calculated from grade report cards.
 		$data['letter_grade'] = $narrative->narrGrade;
-		
+
 		//submits_report_card is a preference set at login and when preferences are changed
 		$submits_report_card = $this->preference->get($kTeach, "submits_report_card");
 		if($submits_report_card == "yes"){
@@ -561,8 +561,11 @@ class Narrative extends MY_Controller
 					$grade_options["join"] = "assignment";
 					$grade_options['subject'] = $narrative->narrSubject;
 					$grades = $this->assignment->get_for_student($kStudent, $narrative->narrTerm, $narrative->narrYear,$grade_options);
-					$letter_grade = calculate_final_grade($grades);
-					$data['grades'][$narrative->narrSubject] = calculate_letter_grade($letter_grade);
+					//change the narrGrade value if no grades have been entered for this student. 
+					if(!empty($grades)){
+						$letter_grade = calculate_final_grade($grades);
+						$data['grades'][$narrative->narrSubject] = calculate_letter_grade($letter_grade);
+					}
 				}
 			}
 			$data["student"] = $student;
