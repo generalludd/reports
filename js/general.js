@@ -91,6 +91,23 @@
 		});
 	});
 	
+	$(".edit-menu-item").live("click",function(event){
+		myID = this.id.split("_")[1];
+		form_data = {
+				kMenu: myID,
+				ajax: 1
+		};
+		$.ajax({
+			type:"get",
+			url: base_url + "menu/edit",
+			data: form_data,
+			success: function(data){
+				showPopup("Edit Menu Item",data,"auto");
+			}
+		});
+		return false;
+	});
+	
 	
 /*** MISCELLANEOUS SCRIPTS ****/	
 	
