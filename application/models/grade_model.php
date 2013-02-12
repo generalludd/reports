@@ -16,6 +16,10 @@ class Grade_model extends CI_Model
 		parent::__construct();
 	}
 
+	/**
+	 * prepare_variables is a standard script in all models to gether the $_POST
+	 * values and assign them to the class variables.
+	 */
 	function prepare_variables()
 	{
 		$variables = array("kTeach","kStudent","kAssignment","points","status","footnote");
@@ -27,7 +31,13 @@ class Grade_model extends CI_Model
 		}
 	}
 
-
+	/**
+	 *
+	 * @param int $kStudent
+	 * @param int $kAssignment
+	 * @return object array
+	 * Gets a single row record of a given kStudent kAssignment pair
+	 */
 	function get($kStudent,$kAssignment)
 	{
 		$this->db->where("kStudent",$kStudent);
@@ -60,8 +70,10 @@ class Grade_model extends CI_Model
 	 * @param int $kTeach
 	 * @param varchar $term
 	 * @param in $year
-	 * Finds all the students with a given assignment of the same term, teacher and year and creates new records for the student.
-	 * @TODO Maybe adding the points could be a preference for each teacher.
+	 * Finds all the students with a given assignment of the same term, teacher
+	 * and year and creates new records for the student.
+	 * the points value is provided by the controller. The UI offers a choice
+	 * to either give the students a starting value of "0" or of the total points available.
 	 */
 	function batch_insert($kAssignment,$kTeach,$term,$year,$grade_start,$grade_end,$points)
 	{
@@ -77,8 +89,6 @@ class Grade_model extends CI_Model
 		$this->db->where("grade.kAssignment !=$kAssignment");
 		$students = $this->db->get()->result();
 		foreach($students as $student){
-			//$data = array("kAssignment"=>$kAssignment, "kStudent"=>$student->kStudent,"points"=>"0");
-			//$this->db->insert("grade",$data);
 			$this->update($student->kStudent, $kAssignment, $points, NULL, NULL);
 		}
 		return $students;
@@ -89,7 +99,18 @@ class Grade_model extends CI_Model
 		$this->db->query("UPDATE `grade` SET `points` = `points` * $percentage WHERE `kAssignment` = $kAssignment");
 	}
 
-
+	/**
+	 *
+	 * @param int $kStudent
+	 * @param int $kAssignment
+	 * @param double $points
+	 * @param varchar $status
+	 * @param int $footnote
+	 * @return boolean or insert id
+	 * updates and also inserts (if the kStudent-kAssignment pair is not present in the table).
+	 * I suppose I could have used a REPLACE INTO function and made the kStudent kAssignment pair
+	 * a table key, but I did not.
+	 */
 	function update($kStudent, $kAssignment, $points, $status,$footnote)
 	{
 		$output = FALSE;
@@ -108,6 +129,15 @@ class Grade_model extends CI_Model
 		return $output;
 	}
 
+	/**
+	 *
+	 * @param int $kStudent
+	 * @param int $kAssignment
+	 * @param varchar $key
+	 * @param varchar $value
+	 * @return FALSE or key name
+	 * update a grade value based on kStudent and kAssignment
+	 */
 	function update_value($kStudent, $kAssignment, $key, $value)
 	{
 		$output = FALSE;
@@ -125,6 +155,13 @@ class Grade_model extends CI_Model
 		return $output;
 	}
 
+	/**
+	 * DEPRECATED
+	 * @param int $kTeach
+	 * @param varchar $category
+	 * @return weight value for a teacher and category
+	 * This cannot work because it doesn't require the grade range for the subject.
+	 */
 	function calculate_weight($kTeach, $category)
 	{
 		$this->db->select("weight");
@@ -133,9 +170,19 @@ class Grade_model extends CI_Model
 		$this->db->from("assignment_category");
 		$result = $this->db->get()->row()->weight;
 		return $result;
-
 	}
 
+
+	/**
+	 * UNUSED/DEPRECATED
+	 * @param int $kStudent
+	 * @param varchar $term
+	 * @param int $year
+	 * @param string $kTeach
+	 * @return array of objects
+	 * Get the grades for a given student (optionally for a specific teacher) grouped by category.
+	 * This function is not used. 
+	 */
 	function get_totals($kStudent, $term,$year, $kTeach = NULL){
 		$this->db->where("grade.kStudent",$kStudent);
 		if($kTeach){
@@ -152,15 +199,20 @@ class Grade_model extends CI_Model
 		return $result;
 	}
 
+	/**
+	 * DEPRECATED
+	 * @param int $kTeach
+	 * @param int $gradeStart
+	 * @param int $gradeEnd
+	 * @param varchar $term
+	 * @param int $year
+	 * @param string $kCategory
+	 * @return array of db objects
+	 * This script is not used. It was designed to get all the grades from a 
+	 * view called grade_total.  
+	 */
 	function get_summary($kTeach, $gradeStart, $gradeEnd, $term, $year, $kCategory = NULL)
 	{
-
-		/*select `grade`.`kStudent` AS `kStudent`,`grade`.`kGrade` AS `kGrade`,
-		 * (sum(`grade`.`points`) / sum(`assignment`.`points`)) AS `average`,`assignment`.`kCategory` AS `kCategory`,`assignment`.`kTeach` AS `kTeach`,`assignment`.`term` AS `term`,
-		* `assignment`.`year` AS `year` from (`grade` join `assignment` on((`grade`.`kAssignment` = `assignment`.`kAssignment`)))
-		* group by `grade`.`kGrade`
-
-		*/
 		$this->db->from("grade_total");
 		$this->db->where("grade_total.kTeach",$kTeach);
 		$this->db->where("assignment.gradeStart",$gradeStart);
@@ -177,6 +229,7 @@ class Grade_model extends CI_Model
 		$result = $this->db->get()->result();
 		return $result;
 	}
+
 	/**
 	 * DEPRECATED This does not produce an accurate result because it does not account for Abs and Exc. Category totals are not evaluated
 	 * in the business logic as appropriate instead of in the model.
@@ -209,6 +262,7 @@ class Grade_model extends CI_Model
 		$result = $this->db->get()->result();
 		return $result;
 	}
+
 	/**
 	 *
 	 * @param int $kStudent
@@ -218,7 +272,6 @@ class Grade_model extends CI_Model
 	 * @return object
 	 * get a distinct list of subjects for a student for the term, year and optional cutoff date.
 	 */
-
 	function get_subjects($kStudent, $term, $year, $cutoff_date = NULL){
 		if($cutoff_date){
 			$this->db->where(sprintf("`assignment`.`date` <= '%s'", format_date($cutoff_date,"mysql")));
@@ -247,7 +300,6 @@ class Grade_model extends CI_Model
 	 * @param int $gradeEnd
 	 * @param string $cutoff_date
 	 */
-
 	function get_reports($kTeach, $term, $year, $gradeStart, $gradeEnd, $cutoff_date = NULL){
 		$this->db->select("DISTINCT(student.kStudent) as kStudent, student.stuLast,student.stuFirst,student.stuNickname");
 		$this->db->from("grade");
@@ -266,13 +318,24 @@ class Grade_model extends CI_Model
 		return $result;
 	}
 
-
+	/**
+	 * DEPRECATED
+	 * This script is not used. The deletion of a single grade would be problematic. Ï
+	 * @param unknown $kGrade
+	 */
 	function delete_grade($kGrade)
 	{
-		$delete = array("kGrade" => $kGrade);
-		$this->db->delete("grade",$delete);
+		//$delete = array("kGrade" => $kGrade);
+		//$this->db->delete("grade",$delete);
 	}
 
+	/**
+	 *
+	 * @param unknown $kStudent
+	 * @param unknown $kTeach
+	 * @param unknown $term
+	 * @param unknown $year
+	 */
 	function delete_row($kStudent,$kTeach, $term, $year)
 	{
 		if($kTeach && $kStudent && $term && $year){

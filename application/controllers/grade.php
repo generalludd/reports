@@ -14,6 +14,7 @@ class Grade extends MY_Controller
 	{
 		redirect();
 	}
+	
 	/**
 	 * editing the grades for a given student, term, subject, teacher
 	 * the query script get_for_student in this context returns all the assignments possible for easy editing as a chart.
