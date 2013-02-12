@@ -94,6 +94,14 @@ class Grade_model extends CI_Model
 		return $students;
 	}
 
+	/**
+	 * 
+	 * @param int $kAssignment
+	 * @param double $percentage
+	 * update all student grades for a given assignment based on the percentage change. 
+	 * In the UI if a teacher changes the number of points for a given assignment
+	 * this script is called to automatically update all the points proportionally
+	 */
 	function batch_adjust_points($kAssignment,$percentage)
 	{
 		$this->db->query("UPDATE `grade` SET `points` = `points` * $percentage WHERE `kAssignment` = $kAssignment");
@@ -154,115 +162,7 @@ class Grade_model extends CI_Model
 		}
 		return $output;
 	}
-
-	/**
-	 * DEPRECATED
-	 * @param int $kTeach
-	 * @param varchar $category
-	 * @return weight value for a teacher and category
-	 * This cannot work because it doesn't require the grade range for the subject.
-	 */
-	function calculate_weight($kTeach, $category)
-	{
-		$this->db->select("weight");
-		$this->db->where("category",$category);
-		$this->db->where("kTeach",$kTeach);
-		$this->db->from("assignment_category");
-		$result = $this->db->get()->row()->weight;
-		return $result;
-	}
-
-
-	/**
-	 * UNUSED/DEPRECATED
-	 * @param int $kStudent
-	 * @param varchar $term
-	 * @param int $year
-	 * @param string $kTeach
-	 * @return array of objects
-	 * Get the grades for a given student (optionally for a specific teacher) grouped by category.
-	 * This function is not used. 
-	 */
-	function get_totals($kStudent, $term,$year, $kTeach = NULL){
-		$this->db->where("grade.kStudent",$kStudent);
-		if($kTeach){
-			$this->db->where("assignment.kTeach",$kTeach);
-		}
-		$this->db->where("assignment.term", $term);
-		$this->db->where("assignment.year",$year);
-		$this->db->select("grade.kStudent,assignment.kTeach,assignment.kAssignment,assignment.kCategory,category.category, sum(grade.points)/sum(assignment.points) as category_average");
-		$this->db->join("assignment","grade.kAssignment=assignment.kAssignment");
-		$this->db->join("assignment_category as category","assignment.kCategory=category.kCategory");
-		$this->db->group_by("assignment.kCategory");
-		$this->db->from("grade");
-		$result = $this->db->get()->result();
-		return $result;
-	}
-
-	/**
-	 * DEPRECATED
-	 * @param int $kTeach
-	 * @param int $gradeStart
-	 * @param int $gradeEnd
-	 * @param varchar $term
-	 * @param int $year
-	 * @param string $kCategory
-	 * @return array of db objects
-	 * This script is not used. It was designed to get all the grades from a 
-	 * view called grade_total.  
-	 */
-	function get_summary($kTeach, $gradeStart, $gradeEnd, $term, $year, $kCategory = NULL)
-	{
-		$this->db->from("grade_total");
-		$this->db->where("grade_total.kTeach",$kTeach);
-		$this->db->where("assignment.gradeStart",$gradeStart);
-		$this->db->where("assignment.gradeEnd",$gradeEnd);
-		$this->db->where("grade_total.term",$term);
-		$this->db->where("grade_total.year",$year);
-		if($kCategory){
-			$this->db->where("grade_total.kCategory",$kCategory);
-		}
-		$this->db->join("assignment","assignment.kCategory=grade_total.kCategory");
-		$this->db->order_by("grade_total.kCategory");
-		$this->db->group_by("kStudent");
-		$this->db->select("grade_total.kStudent,grade_total.kCategory");
-		$result = $this->db->get()->result();
-		return $result;
-	}
-
-	/**
-	 * DEPRECATED This does not produce an accurate result because it does not account for Abs and Exc. Category totals are not evaluated
-	 * in the business logic as appropriate instead of in the model.
-	 * @param int $kStudent
-	 * @param varchar $term
-	 * @param int $year
-	 * @param date $cutoff_date optional mysql  date format (yyyy-mm-dd)
-	 * @return object
-	 * get a distinct list of categories for subjects with totals for the given term & year to produce a report card.
-	 */
-	function get_categories($kStudent, $term, $year, $options = array()){
-		if(array_key_exists("cutoff_date",$options)){
-			$this->db->where(sprintf("`assignment`.`date` <= '%s'", $options["cutoff_date"]));
-		}
-
-		if(array_key_exists("subject",$options)){
-			$this->db->where("assignment.subject",$options["subject"]);
-		}
-		$this->db->from("grade");
-		$this->db->where("kStudent",$kStudent);
-		$this->db->join("assignment","grade.kAssignment=assignment.kAssignment","LEFT");
-		$this->db->join("assignment_category as category","assignment.kCategory = category.kCategory","LEFT");
-		$this->db->select("category.category");
-		$this->db->select("subject");
-		$this->db->select("SUM(grade.points) as grade_points");
-		$this->db->select("SUM(assignment.points) as total_points");
-		$this->db->select("category.weight");
-		$this->db->order_by("subject");
-		$this->db->group_by("assignment.kCategory");
-		$result = $this->db->get()->result();
-		return $result;
-	}
-
+	
 	/**
 	 *
 	 * @param int $kStudent
@@ -318,16 +218,6 @@ class Grade_model extends CI_Model
 		return $result;
 	}
 
-	/**
-	 * DEPRECATED
-	 * This script is not used. The deletion of a single grade would be problematic. Ï
-	 * @param unknown $kGrade
-	 */
-	function delete_grade($kGrade)
-	{
-		//$delete = array("kGrade" => $kGrade);
-		//$this->db->delete("grade",$delete);
-	}
 
 	/**
 	 *

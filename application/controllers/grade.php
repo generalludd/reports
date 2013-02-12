@@ -239,11 +239,7 @@ class Grade extends MY_Controller
 				if(count($data["grades"])){
 					$data["subject"] = $subject->subject;
 					$data["count"] = $i;// count is used to identify the chart number in the output for css purposes.
-
-					//$data["categories"] = $this->grade->get_categories($kStudent, $term, $year,$options);
-						
 					$output["charts"][] = $this->load->view("grade/chart",$data,TRUE);
-
 					$i ++;
 				}
 			}
