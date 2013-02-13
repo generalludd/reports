@@ -17,6 +17,9 @@ class Menu extends MY_Controller {
 		$this->show();
 	}
 
+	/**
+	 * Show all the menu items
+	 */
 	function show()
 	{
 		$data["categories"] = $this->menu->get_all();
@@ -26,6 +29,10 @@ class Menu extends MY_Controller {
 
 	}
 
+	/**
+	 * Edit a single menu item
+	 * Restricted to the administrator account
+	 */
 	function edit()
 	{
 		$kMenu = $this->input->get("kMenu");
@@ -42,11 +49,37 @@ class Menu extends MY_Controller {
 		}
 	}
 
+	/**
+	 * update a menu item
+	 */
 	function update()
 	{
 		$kMenu = $this->input->post("kMenu");
 		$this->menu->update($kMenu);
 		redirect("menu");
+	}
+
+	/**
+	 * show blank form to create a menu item
+	 */
+	function create()
+	{
+		$data["action"] = "insert";
+		$data["target"] = "menu/edit";
+		$data["title"] = "Insert Menu Item";
+		$data["menu_item"] = NULL;
+		$categories = $this->menu->get_categories();
+		$data["categories"] = get_keyed_pairs($categories, array("key","value"),NULL,TRUE);
+		$this->load->view("menu/edit",$data);
+
+	}
+
+	function insert()
+	{
+		if($this->session->userdata("userID") == 1000){
+			$this->menu->insert();
+		}
+		$this->index();
 	}
 
 }
