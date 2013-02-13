@@ -47,14 +47,9 @@ if($contact_date){
 			<? endif;?>
 	<? if($this->session->userdata("userID") == get_value($report,"kAdvisor")): ?>
 	<p id="is_read-field">
-	<?
-	$checked = "";
-	if(get_value($report,"is_read")){
-		$checked = "checked";
-	}?>
-	
+	<!-- automatically check as read when the teacher opens the editor -->
 	<label for="is_read">Is Read:</label>
-	<input type="checkbox" name="is_read" id="is_read" <?=$checked;?> value="1"/>
+	<input type="checkbox" name="is_read" id="is_read" checked value="1"/>
 	</p>
 	<p id="rank-field">
 		<label for="Rank">Rank:</label>
