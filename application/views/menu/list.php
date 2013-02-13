@@ -8,7 +8,11 @@ foreach($categories as $category){
 	$output[] = sprintf("<tr><td>%s</td><td>%s<td><td><a class='button edit edit-menu-item' href='%s' id='emi_%s'>Edit</span></td></tr>",$category->label,$category->value,base_url("menu/edit?kMenu=$category->kMenu"),$category->kMenu);
 
 }
+$buttons[] = array("selection" => "menu", "text" => "New Menu Item", "class" => array("button","new"), "type"=>"span", "id"=>"add-menu-item","title" => "Add a new menu item for a given category");
+echo create_button_bar($buttons);
+
 ?>
+
 <table>
 	<thead>
 		<tr>
