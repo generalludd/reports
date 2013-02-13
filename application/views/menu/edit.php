@@ -7,7 +7,11 @@
 <input type="hidden" name="kMenu" id="kMenu" value="<?=get_value($menu_item,"kMenu");?>"/>
 <p>
 <label for="category">Category</label>
+<? if($action == "update"): ?>
 <input type="text" name="category" id="category" readonly value="<?=get_value($menu_item,"category");?>"/>
+<? else: ?>
+<? echo form_dropdown("category",$categories,"id='category'"); ?>
+<? endif; ?>
 </p>
 <p>
 <label for="label">Human-Readable Label</label>&nbsp;
