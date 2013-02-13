@@ -108,6 +108,20 @@
 		return false;
 	});
 	
+	$("#add-menu-item").live("click",function(event){
+		form_data = {
+				ajax: 1
+		};
+		$.ajax({
+			type:"get",
+			url: base_url + "menu/create",
+			data: form_data,
+			success: function(data){
+				showPopup("Add Menu Item",data,"auto");
+			}
+		});
+	});
+	
 	
 /*** MISCELLANEOUS SCRIPTS ****/	
 	
