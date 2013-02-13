@@ -68,6 +68,33 @@ class Menu_model extends CI_Model
 		return $result;
 
 	}
+	
+	function get_categories()
+	{
+		$this->db->from("menu");
+		$this->db->select("`category` as 'key',`category` as 'value'");
+		$this->db->distinct("category");
+		$this->db->order_by("category","ASC");
+		$result = $this->db->get()->result();
+		return $result;
+	}
+	
+	function item_exists($label, $value)
+	{
+		$this->db->where("label",$label);
+		$this->db->where("value",$value);
+		$this->db->from("menu");
+		$result = $this->db->get()->num_rows();
+		return $result;
+	}
+	
+	function insert()
+	{
+		$this->prepare_variables();
+		if(!$this->item_exists($this->label,$this->value)){
+			$this->db->insert("menu", $this);
+		}
+	}
 
 	function update($kMenu)
 	{
