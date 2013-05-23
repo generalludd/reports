@@ -12,4 +12,4 @@ This application has not yet been set up for easy installation by other schools.
 @fsmn is the author of this project. It was designed specifically for the Friends School of Minnesota, in Saint Paul, Minnesota. 
 
 ### Support or Contact
-For assistance setting this up for your school, please contact me via https://github.com/fsmn
+For assistance setting this up for your school, please contact us via https://fsmn.org
