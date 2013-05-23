@@ -1,5 +1,8 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
-
+/***
+ * Class allows for administration of global properties for the application. 
+ * Only the administrative user can access this feature.
+ */
 
 class admin extends MY_Controller{
 
@@ -8,7 +11,6 @@ class admin extends MY_Controller{
 		parent::__construct();
 		if($this->session->userdata("userID") == 1000){
 			$this->load->model("preference_type_model","preference");
-			$this->load->model("email_model");
 			$this->load->model("auth_model");
 		}else{
 			redirect("/");
@@ -24,9 +26,13 @@ class admin extends MY_Controller{
 
 	}
 
+	/**
+	 * while logged in as administrator, masquerade as another user for testing purposes. 
+	 * expects the third segment of the uri to be the teacher to be masqueraded as
+	 */
 	function masquerade()
 	{
-		if($this->session->userdata("username") == "administrator"){
+		if($this->session->userdata("userID") == "1000"){ //administrator account
 			$userID = $this->uri->segment(3);
 			$this->load->model("teacher_model");
 			$teacher = $this->teacher_model->get($userID);
@@ -56,6 +62,9 @@ class admin extends MY_Controller{
 		}
 	}
 
+	/**
+	 * show the user access log. Most folks don't deliberately log out so the database mostly shows login times
+	 */
 	function show_log()
 	{
 		$options = array();
@@ -87,6 +96,9 @@ class admin extends MY_Controller{
 		$this->load->view("page/index",$data);
 	}
 
+	/**
+	 * Show a dialog to search the log for specific users, range of dates, and events (log in or log off). 
+	 */
 	function search_log()
 	{
 		$users = $this->auth_model->get_usernames();

@@ -1,5 +1,10 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
-
+/**
+ * @author administrator
+ * The preference_type table contains the available preferences users can set for their accounts. 
+ * Preference types can be created by the administrator or through the database directly, and then set by users.
+ * Of course, they don't do anything unless they are recognized programmatically in the application scripts. 
+ */
 class preference_type_model extends CI_Model
 {
 	

@@ -1,5 +1,9 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-
+/**
+ * @author administrator
+ * This class works with the "teacher" table.
+ * This class offers tools to manage login, access and permissions
+*/
 
 class Auth_model extends CI_Model
 {
@@ -9,6 +13,11 @@ class Auth_model extends CI_Model
 		parent::__construct();
 	}
 
+	/**
+	 * @param varchar $username
+	 * @return boolean
+	 * does the username exist in the database?
+	 */
 	function is_user($username)
 	{
 
@@ -25,6 +34,13 @@ class Auth_model extends CI_Model
 
 	}
 
+	/**
+	 *
+	 * @param varchar $username
+	 * @param varchar $password
+	 * @return boolean
+	 * match a username to a password and return basic user information for starting a login session
+	 */
 	function validate($username, $password)
 	{
 		$this->db->where("username", $username);
@@ -41,7 +57,11 @@ class Auth_model extends CI_Model
 
 	}
 
-
+	/**
+	 *
+	 * @param int $kTeach
+	 * get the permissions of the specific user
+	 */
 	function get_role($kTeach)
 	{
 		$this->db->where("kTeach", $kTeach);
@@ -51,7 +71,11 @@ class Auth_model extends CI_Model
 		return $result->dbRole;
 	}
 
-
+	/**
+	 * @param int $kTeach
+	 * @param varchar $role
+	 * set the database role of a given user (admin, teacher, editor, aide)
+	 */
 	function set_role($kTeach,$role)
 	{
 		$this->db->where("kTeach", $kTeach);
@@ -59,6 +83,10 @@ class Auth_model extends CI_Model
 		$this->db->update("teacher", $data);
 	}
 
+	/**
+	 * @param int $kTeach
+	 * get the short name for a given user id
+	 */
 	function get_username($kTeach)
 	{
 		$this->load->model("teacher_model");
@@ -66,7 +94,13 @@ class Auth_model extends CI_Model
 		return $teacher->username;
 	}
 
-
+	/**
+	 * @param int $kTeach
+	 * @param varchar $old
+	 * @param varchar $new
+	 * @return boolean
+	 * if the process works, return true, if it doesn't (ie. old password is not found), returns false.
+	 */
 	function change_password($kTeach, $old, $new)
 	{
 		$result = FALSE;
@@ -86,6 +120,11 @@ class Auth_model extends CI_Model
 	}
 
 
+	/**
+	 * @param varchar $text
+	 * @return string
+	 * convert any varchar into a 32bit md5 encrypted string
+	 */
 	function encrypt($text)
 	{
 		return md5(md5($text));
@@ -103,6 +142,12 @@ class Auth_model extends CI_Model
 		return $output;
 	}
 
+	/**
+	 * @param int $kTeach
+	 * @return string
+	 * create a 32bit md5 hash of the current date/time that can be used in a reset
+	 * uri string to verify the user has has requested a change for a lost password.
+	 */
 	function set_reset_hash($kTeach)
 	{
 		$hash = $this->encrypt(now());
@@ -112,7 +157,13 @@ class Auth_model extends CI_Model
 		return $hash;
 	}
 
-
+	/**
+	 * @param int $kTeach
+	 * @param 32bit varchar $reset_hash
+	 * @param string $password
+	 * @return boolean
+	 * using the hash from a uri as validation, this allows a user to reset a lost password
+	 */
 	function reset_password($kTeach, $reset_hash, $password)
 	{
 		$this->db->where("kTeach", $kTeach);
@@ -125,6 +176,11 @@ class Auth_model extends CI_Model
 		return $this->validate($username, $password);
 	}
 
+	/**
+	 * @param int $kTeach
+	 * @param varchar $action
+	 * usually logs logins and log-outs. This could be used for other purposes, but is not
+	 */
 	function log($kTeach, $action)
 	{
 		$data["kTeach"] = $kTeach;
@@ -134,6 +190,10 @@ class Auth_model extends CI_Model
 		$this->db->insert("user_log",$data);
 	}
 
+	/**
+	 * @return object array
+	 * returns a list of all the users (First and Last names) and usernames (active users only)
+	 */
 	function get_usernames()
 	{
 		$this->db->select("username");
@@ -145,6 +205,12 @@ class Auth_model extends CI_Model
 		return $result;
 	}
 
+	/**
+	 * @param array $options
+	 * @return array of objects
+	 * returns an array of results from a db query of the user_log based on an optional array of limiting
+	 * values (username, time_start, time_end as date_range array, and log action)
+	 */
 	function get_log($options = array())
 	{
 		if(!empty($options)){
@@ -156,7 +222,7 @@ class Auth_model extends CI_Model
 				if($myKey != "date_range"){
 					$this->db->where($myKey, $myValue);
 				}else{
-					$this->db->where("(time >= '" . $myValue["time_start"] . "' AND time <= '" . $myValue["time_end"] . "')");	
+					$this->db->where("(time >= '" . $myValue["time_start"] . "' AND time <= '" . $myValue["time_end"] . "')");
 				}
 			}
 		}
