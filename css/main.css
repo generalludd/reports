@@ -1186,11 +1186,13 @@ table.report td.field.buttons,table.report th.field.buttons {
 }
 
 .report-cutoff {
-	
+	font-size: 1.2em;
+	margin-top: 0;
 }
 
 .report-term {
 	font-size: 1.5em;
+	margin-bottom: 0;
 }
 
 .report-teacher {
