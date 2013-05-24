@@ -21,7 +21,7 @@ $i = 0; //iteration of row numbers for css styling and printing
 		echo create_button_bar($buttons);
 		endif; ?>
 		<div class='report-header report-term'>
-			<?="$term, $year";?>
+			<?="$term, " . format_schoolyear($year, $term);?>
 		</div>
 
 		<? if($cutoff_date):?>
