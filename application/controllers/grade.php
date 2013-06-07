@@ -14,7 +14,7 @@ class Grade extends MY_Controller
 	{
 		redirect();
 	}
-	
+
 	/**
 	 * editing the grades for a given student, term, subject, teacher
 	 * the query script get_for_student in this context returns all the assignments possible for easy editing as a chart.
@@ -103,7 +103,6 @@ class Grade extends MY_Controller
 	/**
 	 * select_student offers a selection option to find a student to add to a grade chart.
 	 */
-
 	function select_student()
 	{
 		$data["kTeach"] = $this->input->get("kTeach");
@@ -131,6 +130,11 @@ class Grade extends MY_Controller
 		}
 	}
 
+
+	/**
+	 * update_value updates a grade value based on a grade. There can be only one
+	 * kStudent-kAssignment pair in the db
+	 */
 	function update_value()
 	{
 		$kStudent = $this->input->post("kStudent");
@@ -143,6 +147,11 @@ class Grade extends MY_Controller
 		}
 	}
 
+	
+	/**
+	 * delete_row this deletes all of a students records for an entire term. 
+	 * warnings are provided through jQuery/javascript assignment.js file
+	 */
 	function delete_row()
 	{
 		$kTeach = $this->input->post("kTeach");
@@ -235,7 +244,7 @@ class Grade extends MY_Controller
 			foreach($subjects as $subject){
 				$options["subject"] = $subject->subject;
 				$data["grades"] = $this->assignment->get_for_student($kStudent,$term,$year,$options);
-				//if the student has any grades entered, process them here, otherwise ignore. 
+				//if the student has any grades entered, process them here, otherwise ignore.
 				if(count($data["grades"])){
 					$data["subject"] = $subject->subject;
 					$data["count"] = $i;// count is used to identify the chart number in the output for css purposes.
