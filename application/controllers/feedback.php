@@ -10,6 +10,9 @@ class Feedback extends My_Controller {
 
 	}
 
+	/**
+	 * show and populate a dialog for providing feedback about the system
+	 */
 	function create()
 	{
 		$path = $this->input->get_post("path");
@@ -29,6 +32,9 @@ class Feedback extends My_Controller {
 	}
 
 
+	/**
+	 * insert a record of the feedback and email it to the administrator. 
+	 */
 	function add()
 	{
 		$this->load->model("teacher_model","teacher");
@@ -61,11 +67,12 @@ class Feedback extends My_Controller {
 		echo "<p>Your feedback has been sent.<br/>A copy of your message will appear in your inbox at $teacher->email</p>";
 
 	}
+	
+	
 	/** 
 	 * This function is unused due to complications with authenticated SMTP sending in CI
 	 * @return boolean
 	 */
-
 	function initialize()
 	{
 		$this->load->model("email_model");
