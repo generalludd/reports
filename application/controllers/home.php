@@ -1,5 +1,5 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-
+//application "index.php" file. This is home.
 class Home extends MY_Controller
 {
 
