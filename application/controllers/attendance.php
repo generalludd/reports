@@ -4,13 +4,18 @@ class Attendance extends MY_Controller {
 
 	function __construct()
 	{
-		
+
 		parent::__construct();
 		$this->load->model("attendance_model");
-		
+
 	}
 
-	
+	/**
+	 * create a dialog for inserting a new attendance entry for a student
+	 * @TODO the error with this script could be converted easily into a CONSTANT
+	 * used throughout the system. A function that produces the error could accept
+	 * the missing field as the parameter.
+	 */
 	function create()
 	{
 		if($this->input->post("kStudent")){
@@ -34,6 +39,12 @@ class Attendance extends MY_Controller {
 			
 	}
 
+
+	/**
+	 * display a dialog for edigint a given student's attendance record.
+	 * @TODO should this be locked down after a term ends or after a grace period
+	 * after end of term?
+	 */
 	function edit()
 	{
 		if($this->input->post("kAttendance")){
@@ -50,11 +61,14 @@ class Attendance extends MY_Controller {
 			$data["action"] = "update";
 			$this->load->view("attendance/edit",$data);
 		}else{
-			print "<p>A student identification key was not provided but is required";
+			print "<p>An attendence identification key was not provided but is required";
 			print " for this script to function. Please see the developer for assistance.</p>";
 		}
 	}
 
+	/**
+	 * insert a newly created attendance record. Show list based on the student's ID
+	 */
 	function insert()
 	{
 		if($this->input->post("kStudent")){
@@ -68,6 +82,10 @@ class Attendance extends MY_Controller {
 		}
 	}
 
+
+	/**
+	 * update an edited attendance record. Show a list based on the student's ID
+	 */
 	function update()
 	{
 		if($this->input->post("action") == "delete"){
@@ -81,6 +99,10 @@ class Attendance extends MY_Controller {
 		redirect("attendance/get_list/$kStudent");
 	}
 
+	/**
+	 * delete an attendance record. Warnings about deletion are given using
+	 * jQuery javascript.
+	 */
 	function delete()
 	{
 		if($this->input->post("kAttendance")){
@@ -89,12 +111,10 @@ class Attendance extends MY_Controller {
 		}
 	}
 
-	function purge()
-	{
-			
-	}
-
-	
+	/**
+	 * show the search dialog for finding attendance records based on student (if provided)
+	 * or merely over a term for all students based on the available criteria.
+	 */
 	function show_search()
 	{
 		$this->load->model("menu_model");
@@ -112,11 +132,16 @@ class Attendance extends MY_Controller {
 		$this->load->view("attendance/search", $data);
 	}
 
-	
+
+	/**
+	 * produce search results for a given search.
+	 * @param string $error
+	 * The error is optional and is not currently used in the scripts.
+	 */
 	function search($error = NULL)
 	{
 		$data["errors"] = $error;
-		
+
 		$data["kStudent"] = NULL;
 		$data["student"] = NULL;
 
@@ -163,18 +188,21 @@ class Attendance extends MY_Controller {
 		$this->load->view("page/index", $data);
 	}
 
-
+	/**
+	 * deprecated for search();
+	 * @return boolean
+	 */
 	function get_list()
 	{
 		$this->search($this->uri->segment(4));
 		return false;
 		/*$data["kStudent"] = NULL;
-		$data["student"] = NULL;
+		 $data["student"] = NULL;
 		$this->load->model("student_model");
 		if($this->uri->segment(3)){
-			$kStudent = $this->uri->segment(3);
-			$data["kStudent"] = $kStudent;
-			$data["student"] = $this->student_model->get_name($kStudent);
+		$kStudent = $this->uri->segment(3);
+		$data["kStudent"] = $kStudent;
+		$data["student"] = $this->student_model->get_name($kStudent);
 		}
 		$data["action"] = "list";
 		$data["attendance"] = $this->attendance_model->get_list($kStudent);
@@ -185,7 +213,9 @@ class Attendance extends MY_Controller {
 
 	}
 
-	
+	/**
+	 * summarize the student's attendance for final printed reports.
+	 */
 	function summarize()
 	{
 		$kStudent = $this->uri->segment(3);
