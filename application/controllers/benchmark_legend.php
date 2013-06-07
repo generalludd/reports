@@ -10,7 +10,12 @@ class benchmark_legend extends MY_Controller
 
 	}
 
-
+	/**
+	 *
+	 * @return object array
+	 * returns an ojbect array from the benchmark_legend model with foot notes for a given
+	 * benchmark chart.
+	 */
 	function get()
 	{
 		$variables = array("kTeach","title","term","year","gradeStart","gradeEnd","subject","legend");
@@ -24,7 +29,11 @@ class benchmark_legend extends MY_Controller
 		$legend = $this->legend->get_one($params);
 		return $legend;
 	}
-	
+
+
+	/**
+	 * produce a page displaying the legend info for teachers to evaluate and edit.
+	 */
 	function view()
 	{
 		$kLegend = $this->uri->segment(3);
@@ -36,10 +45,12 @@ class benchmark_legend extends MY_Controller
 		$data["title"] = "Benchmark Legend";
 		$data["target"] = "benchmark_legend/view";
 		$this->load->view("page/index", $data);
-		
+
 	}
 
-
+	/**
+	 * edit a given benchmark legend.
+	 */
 	function edit()
 	{
 		$kLegend = $this->uri->segment(3);
@@ -55,7 +66,9 @@ class benchmark_legend extends MY_Controller
 		$this->load->view("page/index", $data);
 	}
 
-
+	/**
+	 * create a dialog for inserting a new benchmark legend
+	 */
 	function create()
 	{
 		$kTeach = $this->session->userdata("userID");
@@ -68,7 +81,9 @@ class benchmark_legend extends MY_Controller
 		$this->load->view("page/index", $data);
 	}
 
-
+	/**
+	 * update the benchmark legend in the database
+	 */
 	function update()
 	{
 		$kLegend = $this->input->post("kLegend");
@@ -78,7 +93,9 @@ class benchmark_legend extends MY_Controller
 		redirect("benchmark_legend/view/$kLegend");
 	}
 
-
+	/**
+	 * insert the a new legend into the database
+	 */
 	function insert()
 	{
 		$kLegend = 	$this->legend->insert();
@@ -86,7 +103,9 @@ class benchmark_legend extends MY_Controller
 	}
 
 
-
+	/**
+	 * list all the benchmark legends based on any search criteria submitted in the post data
+	 */
 	function list_all()
 	{
 		$this->load->model("benchmark_legend_model");
@@ -105,9 +124,11 @@ class benchmark_legend extends MY_Controller
 		$data["kTeach"] = $this->session->userdata("userID");
 		$this->load->view("page/index", $data);
 	}
-	
-	
 
+
+	/**
+	 * display a search dialog for finding benchmarks for a given teacher.
+	 */
 	function search()
 	{
 		$this->load->model("subject_model");
