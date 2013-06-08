@@ -1,5 +1,11 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-
+/**
+ * @author chrisdart
+ * control generation of student behavioral reports
+ * reports are known at FSM as Orange Slips, but, in preparation for generic use,
+ * ths title could be anything.
+ * The term "Orange Slip" is defined in config/constants.php
+*/
 class Report extends MY_Controller
 {
 
@@ -9,7 +15,9 @@ class Report extends MY_Controller
 		$this->load->model("student_report_model","report");
 	}
 
-
+	/*
+	 * create an interface for adding a new student report
+	*/
 	function create()
 	{
 
@@ -48,7 +56,9 @@ class Report extends MY_Controller
 		}
 	}
 
-
+	/**
+	 * insert a new student report
+	 */
 	function insert()
 	{
 		//@TODO email advisor and student(?)
@@ -59,7 +69,9 @@ class Report extends MY_Controller
 		redirect("report/view/$kReport");
 	}
 
-
+	/**
+	 * show a report
+	 */
 	function view(){
 		$report = $this->report->get($this->uri->segment(3));
 		$data["report"] = $report;
@@ -72,7 +84,9 @@ class Report extends MY_Controller
 		$this->load->view("page/index",$data);
 	}
 
-
+	/**
+	 * show an edit screen for a given report
+	 */
 	function edit()
 	{
 		$kReport = $this->uri->segment(3);
@@ -104,7 +118,9 @@ class Report extends MY_Controller
 		}
 	}
 
-
+	/**
+	 * update a student report
+	 */
 	function update()
 	{
 
@@ -120,6 +136,9 @@ class Report extends MY_Controller
 		redirect("report/view/$kReport");
 	}
 
+	/**
+	 * update a single value for a give kReport
+	 */
 	function update_value()
 	{
 		$kReport = $this->input->get_post("kReport");
@@ -129,6 +148,9 @@ class Report extends MY_Controller
 		echo $this->report->get_value($kReport,$target_field);
 	}
 
+	/**
+	 * delete a student report
+	 */
 	function delete()
 	{
 		$kReport = $this->input->post("kReport");
@@ -137,7 +159,9 @@ class Report extends MY_Controller
 		redirect("report/get_list/student/$kStudent");
 	}
 
-
+	/**
+	 * generate a search result
+	 */
 	function search()
 	{
 		$data["report_key"] = $this->input->get("report_key");
@@ -161,7 +185,9 @@ class Report extends MY_Controller
 		$this->load->view("report/search",$data);
 	}
 
-
+	/**
+	 * get a list of reports based on certain submitted criteria
+	 */
 	function get_list()
 	{
 		$type = $this->uri->segment(3);
@@ -213,7 +239,7 @@ class Report extends MY_Controller
 			$data["options"] = $options;
 			$data["target"] = "report/list";
 			$data["person"] = $person;
-				
+
 			$data["reports"] = $this->report->get_list($type,$key,$options);
 			$data["type"] = $type;
 			$data["title"] = sprintf("%ss Submitted %s", $data["student_report"], $title);
@@ -223,7 +249,10 @@ class Report extends MY_Controller
 		}
 	}
 
-
+	/**
+	 * @param unknown $kReport
+	 * send an email notification about a student report to the student advisor
+	 */
 	function notify($kReport)
 	{
 		$report = $this->report->get($kReport);
