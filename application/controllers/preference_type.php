@@ -1,6 +1,11 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
-
-
+/* preference_type provides an administrative interface for
+ * managing the preference options for the users
+* preferences created do not have any effect unless they are coded into the system.
+* This is just a tool for making the creation of preferences easier without
+* having to go into the database. But it does allow modifying preference texts and
+* other features.
+*/
 class preference_type extends MY_Controller
 {
 
@@ -15,6 +20,9 @@ class preference_type extends MY_Controller
 		}
 	}
 
+	/**
+	 * create a populated dialog for creating a new preference
+	 */
 	function create()
 	{
 		if($this->session->userdata("userID") == 1000){
@@ -28,6 +36,10 @@ class preference_type extends MY_Controller
 		}
 	}
 
+	/**
+	 * list all the types of preferences available for the system.
+	 * if the type is included in the uri, the type will be highlighted in the list
+	 */
 	function type_list()
 	{
 		$data["type"] = NULL;
@@ -40,13 +52,18 @@ class preference_type extends MY_Controller
 		$this->load->view("page/index", $data);
 	}
 
+	/**
+	 * insert a new preference type
+	 */
 	function insert()
 	{
 		$type = $this->preference->insert();
 		redirect("preference_type/type_list/$type/#type");
 	}
 
-
+	/**
+	 * displays a dialog for editing a particular preference_type
+	 */
 	function edit()
 	{
 		if($this->session->userdata("userID") == 1000){
@@ -64,7 +81,9 @@ class preference_type extends MY_Controller
 
 	}
 
-
+	/**
+	 * update preference type
+	 */
 	function update()
 	{
 		$type = $this->input->post("type");
@@ -73,7 +92,9 @@ class preference_type extends MY_Controller
 
 	}
 
-
+	/**
+	 * delete a preference_type.
+	 */
 	function delete()
 	{
 		if($this->session->userdata("userID") == 1000)
