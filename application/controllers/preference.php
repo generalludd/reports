@@ -1,5 +1,8 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-
+/**
+ * @author chrisdart
+ * allow users to manage preferences
+ */
 
 class Preference extends MY_Controller {
 
@@ -9,6 +12,9 @@ class Preference extends MY_Controller {
 
 	}
 
+	/**
+	 * view preference based on the teacher id from the uri
+	 */
 	function view()
 	{
 		$kTeach = $this->uri->segment(3);
@@ -22,6 +28,9 @@ class Preference extends MY_Controller {
 
 	}
 
+	/**
+	 * update a preference
+	 */
 	function update()
 	{
 		if($this->input->post("kTeach")){
