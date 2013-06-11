@@ -1,5 +1,5 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-
+/** student management interface **/
 class Student extends MY_Controller
 {
 	function __construct()
@@ -13,7 +13,9 @@ class Student extends MY_Controller
 	}
 
 
-
+	/**
+	 * show a sutdent's information based on the student's id
+	 */
 	function view()
 	{
 		$kStudent = $this->uri->segment(3);
@@ -33,7 +35,11 @@ class Student extends MY_Controller
 		}
 	}
 
-
+	/**
+	 * find a student by name based on the get input
+	 * the "mini" option produces a miniaturized list with less information displayed
+	 * to the user
+	 */
 	function find_by_name()
 	{
 		$stuName = $this->input->get("stuName");
@@ -49,7 +55,9 @@ class Student extends MY_Controller
 	}
 
 
-
+	/**
+	 * display an interface for creating a new student record
+	 */
 	function create()
 	{
 		$data["student"] = NULL;
@@ -70,7 +78,9 @@ class Student extends MY_Controller
 
 	}
 
-
+	/**
+	 * display an edit interface for
+	 */
 	function edit()
 	{
 		if($this->input->post("kStudent")){
