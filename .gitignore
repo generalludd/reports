@@ -13,3 +13,8 @@ email.php
 uploads
 php_errors.log
 *.old
+/uploads/*
+/system/*
+/system
+/user_guide
+user_guide/*
