@@ -6,12 +6,11 @@ class MY_Controller extends CI_Controller
 	{
 		parent::__construct();
 		if(!is_logged_in($this->session->all_userdata())){
-			//determine the query to redirect after login. 
+			//determine the query to redirect after login.
 			$uri = $_SERVER["REQUEST_URI"];
 			if($uri != "/auth"){
 				bake_cookie("uri", $uri);
 			}
-			print $uri;
 			redirect("auth");
 			die();
 		}
