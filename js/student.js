@@ -225,8 +225,29 @@ $(document).ready(function() {
 				$(".password-box label").html("Show Password");
 			}
 		});
+		
+		
+		$(".edit-grade-preference").live("click", function(){
+			my_id = this.id.split("_")[1];
+			form_data = {
+					id: my_id,
+					ajax: 1
+			};
+			$.ajax({
+				type: "get",
+				url: base_url + "grade_preference/edit",
+				data: form_data,
+				success: function(data){
+					showPopup("Edit Grade Preference", data, "auto");
+				}
+			});
+			
+		});
+
 }// end ready
 );// end $(document)
+
+
 
 
 function getStuGrade() {
