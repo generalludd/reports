@@ -511,13 +511,14 @@ function format_table($data,$header = array(),$options = array()){
 }
 
 
-function calculate_letter_grade($points)
+function calculate_letter_grade($points,$pass_fail = FALSE)
 {
 	$letters = array("9"=>"A",8=>"B",7=>"C",6=>"D",5=>"F");
 	$valence = "";
 	$output = "";
 	$plus = 6;
 	$minus = 3;
+	
 	if(strval($points) >= 99){
 		$output = "A+";
 	}elseif(strval($points) > 93){
@@ -538,6 +539,16 @@ function calculate_letter_grade($points)
 		}
 		$letter = $letters[$tens];
 		$output = $letter . $valence;
+	}
+	if($pass_fail){
+		switch($letter){
+			case "F":
+				$output = "Fail";
+				break;
+			default:
+				$output = "Pass";
+				break; 
+		}
 	}
 	return $output;
 
