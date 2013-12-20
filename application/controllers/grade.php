@@ -245,6 +245,8 @@ class Grade extends MY_Controller
 				$options["subject"] = $subject->subject;
 				$data["grades"] = $this->assignment->get_for_student($kStudent,$term,$year,$options);
 				//if the student has any grades entered, process them here, otherwise ignore.
+				$this->load->model("grade_preference_model","grade_preferences");
+				$data["pass_fail"] = $this->grade_preferences->get_all($kStudent,array("school_year"=>$year,"subject"=>$subject->subject));
 				if(count($data["grades"])){
 					$data["subject"] = $subject->subject;
 					$data["count"] = $i;// count is used to identify the chart number in the output for css purposes.
@@ -252,6 +254,7 @@ class Grade extends MY_Controller
 					$i ++;
 				}
 			}
+	
 
 			if($output){
 				if($print){
