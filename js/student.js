@@ -243,6 +243,22 @@ $(document).ready(function() {
 			});
 			
 		});
+		
+		$(".add-grade-preference").live("click",function(){
+			my_id = this.id.split("_")[1];
+			form_data = {
+					kStudent: my_id,
+					ajax: 1
+			};
+			$.ajax({
+				type: "get",
+				url: base_url + "grade_preference/create",
+				data: form_data,
+				success: function(data){
+					showPopup("Add Grade Preference", data, "auto");
+				}
+			});
+		});
 
 }// end ready
 );// end $(document)
