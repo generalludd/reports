@@ -11,11 +11,33 @@ class Grade_preference extends MY_Controller
 	function edit()
 	{
 		$id = $this->input->get("id");
+		$data["action"] = "update";
 		$data["preference"] = $this->preference->get($id);
+		$data["kStudent"] = $data["preference"]->kStudent;
+		$this->load->model("student_model","student");
+		$grade = $this->student->get_grade($data["kStudent"]);
+		$this->load->model("subject_model","subject");
+		$subject_list = $this->subject->get_by_grade($grade);
+		$data["subjects"] = get_keyed_pairs($subject_list, array("subject", "subject"));
 		$this->load->view("grade_preference/edit",  $data);
 	}
-	
-	function show()
+
+	function create()
+	{
+		$kStudent  = $this->input->get("kStudent");
+		$data["preference"] = "";
+		$data["kStudent"] = $kStudent;
+
+		$this->load->model("student_model","student");
+		$grade = $this->student->get_grade($kStudent);
+		$this->load->model("subject_model","subject");
+		$subject_list = $this->subject->get_by_grade($grade);
+		$data["subjects"] = get_keyed_pairs($subject_list, array("subject", "subject"));
+		$data["action"] = "insert";
+		$this->load->view("grade_preference/edit",$data);
+	}
+
+	function view()
 	{
 		$kStudent = $this->input->get("kStudent");
 		$data["kStudent"] = $kStudent;
@@ -42,10 +64,13 @@ class Grade_preference extends MY_Controller
 
 	function update()
 	{
-		$data["kStudent"] = $this->input->get("kStudent");
-		$data["subject"] = $this->input->get("subject");
-		$data["school_year"] = $this->input->get("school_year");
-		$data["pass_fail"] = $this->input->get("pass_fail");
+		$kStudent = $this->input->post("kStudent");
+		$data["kStudent"] = $kStudent;
+		$data["subject"] = $this->input->post("subject");
+		$data["school_year"] = $this->input->post("school_year");
+		$data["pass_fail"] = $this->input->post("pass_fail");
 		$this->preference->update($data);
+		redirect("student/view/$kStudent");
+
 	}
 }
