@@ -1228,3 +1228,9 @@ table.report td.field.buttons,table.report th.field.buttons {
 th.grade-confirmation {
 	width: 25px;
 }
+
+/** STUDENT VIEW LAYOUT **/
+#student-info {
+	float: left;
+	width: 40ex;
+}
