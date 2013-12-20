@@ -25,6 +25,10 @@ class Student extends MY_Controller
 		if(!empty($student->kTeach)){
 			$data["teacherName"] = $this->teacher_model->get_name($student->kTeach);
 		}
+		$options = array("school_year"=>get_current_year());
+		$this->load->model("grade_preference_model", "preference");
+		$data["grade_preferences"] = $this->preference->get_all($kStudent, $options);
+
 		$data["target"] = "student/view";
 		$data["title"] = "Viewing $student->stuFirst $student->stuLast";
 		if($this->input->post("ajax")){
