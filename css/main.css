@@ -1234,3 +1234,17 @@ th.grade-confirmation {
 	float: left;
 	width: 40ex;
 }
+
+.fieldset {
+	border-radius: 3px 3px 3px 3px;
+	border-color: #eee;
+	background-color: #fff;
+	box-shadow: 1px 1px 1px #ccc;
+	position: relative;
+}
+
+
+
+.fieldset h4 {
+	
+}

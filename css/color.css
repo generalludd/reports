@@ -446,3 +446,8 @@ table.grade-chart tr:hover {
 	cursor: pointer;
 	background-color: #dfdfdf;
 }
+
+fieldset {
+	border-top-color: #C7D7E9;
+	border-left-color: #C7D7E9;
+}
