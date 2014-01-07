@@ -58,8 +58,8 @@ class Assignment_model extends CI_Model
 		$this->prepare_variables();
 		$this->db->where("kAssignment",$kAssignment);
 		$this->db->update("assignment", $this);
-		//if the grade is not 0 then adjust the student points accordingly. 
-		//0 points for a grade will be calculated as make-up points for quizzes or other assignments. 
+		//if the grade is not 0 then adjust the student points accordingly.
+		//0 points for a grade will be calculated as make-up points for quizzes or other assignments.
 		if($this->points != 0){
 			$this->load->model("grade_model","grade");
 			$percentage = $this->points/$old_assignment->points;
@@ -69,7 +69,7 @@ class Assignment_model extends CI_Model
 	}
 
     /**
-     * 
+     *
      * @param int $kTeach
      * @param varchar $term
      * @param int $year
@@ -81,6 +81,7 @@ class Assignment_model extends CI_Model
      */
 	function get_grades($kTeach,$term,$year,$gradeStart,$gradeEnd,$stuGroup = NULL, $date_range = array() )
 	{
+	    $this->db->from("assignment");
 		$this->db->where("term",$term);
 		$this->db->where("year",$year);
 		$this->db->where("assignment.kTeach",$kTeach);
@@ -104,12 +105,12 @@ class Assignment_model extends CI_Model
 		$this->db->order_by("assignment.year");
 		$this->db->select("student.kStudent,student.stuFirst,student.stuLast,student.stuNickname,student.stuGrade,student.stuGroup");
 		$this->db->select("grade.*,assignment.kTeach, assignment.assignment,assignment.points as assignment_total,assignment.subject, assignment.term,assignment.year,category.weight,category.category");
-		$result = $this->db->get("assignment")->result();
+		$result = $this->db->get()->result();
 		return $result;
 	}
-	
+
 	/**
-	 * 
+	 *
 	 * @param integer $kAssignment
 	 * @param string $stuGroup
 	 * @return object array of grades for a given assignment
@@ -139,13 +140,13 @@ class Assignment_model extends CI_Model
 
 
 /**
- * This collects the grades for a given student for the current term and year with options including the current teacher. 
+ * This collects the grades for a given student for the current term and year with options including the current teacher.
  * @param unknown $kStudent
  * @param unknown $term
  * @param unknown $year
  * @param unknown $options
  * @return unknown
- * perhaps this should be with the grade model. But here it is! 
+ * perhaps this should be with the grade model. But here it is!
  */
 	function get_for_student($kStudent,$term,$year,$options = array())
 	{
@@ -175,7 +176,7 @@ class Assignment_model extends CI_Model
 			$this->db->where("assignment.gradeStart",$gradeStart);
 			$this->db->where("assignment.gradeEnd",$gradeEnd);
 		}
-		
+
 
 		//$this->db->where("assignment.gradeStart = category.gradeStart");
 		//$this->db->where("assignment.gradeEnd = category.gradeEnd");
@@ -197,7 +198,7 @@ class Assignment_model extends CI_Model
 	}
 
 /**
- * 
+ *
  * @param int $kTeach
  * @param varchar $term
  * @param int $year
@@ -276,7 +277,7 @@ class Assignment_model extends CI_Model
 		$result = $this->db->get("assignment_category")->result();
 		return $result;
 	}
-	
+
 	function count_categories($kTeach, $gradeStart, $gradeEnd){
 		$this->db->select("COUNT(kCategory) as count");
 		$this->db->where("kTeach",$kTeach);
