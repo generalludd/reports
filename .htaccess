@@ -1,5 +1,4 @@
 #
-# Apache/PHP/Drupal settings:
 #
 
 # Protect files and directories from prying eyes.
@@ -96,4 +95,3 @@ DirectoryIndex index.php index.html index.htm
     ErrorDocument 404 /index.php
 </IfModule> 
 
-# $Id: .htaccess,v 1.111 2010/11/23 02:59:05 dries Exp $
