@@ -20,7 +20,7 @@ class Teacher extends MY_Controller
 		if($this->input->get_post("showInactive")){
 			$data["options"]["showInactive"] = TRUE;
 		}
-		
+
 		if($this->input->get_post("showAdmin")){
 			$data["options"]["showAdmin"] = TRUE;
 		}
@@ -36,13 +36,13 @@ class Teacher extends MY_Controller
 			bake_cookie("gradeEnd",$gradeEnd);
 		}
 		$data["teachers"] = $this->teacher_model->get_all($data["options"]);
-		
+
 		$data["title"] = "List of Teachers";
 		$this->load->view("page/index", $data);
 	}
-	
-	
-	
+
+
+
 	function create()
 	{
 		if($this->session->userdata("dbRole") == 1){
@@ -74,7 +74,7 @@ class Teacher extends MY_Controller
 	function view()
 	{
 		$kTeach = $this->uri->segment(3);
-		
+
 		$teacher = $this->teacher_model->get($kTeach);
 		$data["year"] = get_current_year();
 		$data["term"] = get_current_term();
@@ -83,16 +83,15 @@ class Teacher extends MY_Controller
 		$data["subjects"] = $this->subject_model->get_for_teacher($kTeach);
 		$data["target"] = "teacher/view";
 		$data["title"] = "Viewing Information for $teacher->teachFirst $teacher->teachLast";
-		
+
 		$this->load->view("page/index", $data);
-		
+
 	}
 
 
 	function edit()
 	{
 		$kTeach = $this->input->get_post("kTeach");
-
 		if($this->session->userdata("userID") == $kTeach || $this->session->userdata("dbRole") == 1){
 			$teacher = $this->teacher_model->get($kTeach);
 			$data["dbRole"] = $this->session->userdata("dbRole");
@@ -139,16 +138,16 @@ class Teacher extends MY_Controller
 			$kTeach = $this->teacher_model->insert();
 			redirect("teacher/view/$kTeach");
 		}
-		
+
 	}
-	
+
 	function show_search()
 	{
 		$grade_list = $this->menu_model->get_pairs("grade");
 		$data["grades"] = get_keyed_pairs($grade_list, array("value","label"));
 		$this->load->view("teacher/search", $data);
 	}
-	
+
 	function subject_menu()
 	{
 		$kTeach = $this->input->get_post("kTeach");
@@ -156,7 +155,7 @@ class Teacher extends MY_Controller
 		$subjects = get_keyed_pairs($this->subject_model->get_for_teacher($kTeach), array("subject", "subject"));
 		echo form_dropdown("subject",$subjects,$this->input->cookie("current_subject"),"id='subject'");
 	}
-	
+
 	function grade_range()
 	{
 		$this->load->model("menu_model");
@@ -167,7 +166,7 @@ class Teacher extends MY_Controller
 		$output .= "-" . form_dropdown("gradeEnd", $grades, $teacher_grades->gradeEnd, "id='gradeEnd'");
 		echo $output;
 	}
-	
+
 
 	function add_subject()
 	{
