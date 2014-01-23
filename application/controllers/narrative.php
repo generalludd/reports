@@ -73,8 +73,10 @@ class Narrative extends MY_Controller
 			$grade_options["from"] = "grade";
 			$grade_options["join"] = "assignment";
 			$grade_options['subject'] = $data['narrSubject'];
+			$this->load->model("grade_preference_model","grade_preferences");
+			$pass_fail = $this->grade_preferences->get_all($kStudent,array("school_year"=>$data['narrYear'],"subject"=>$data['narrSubject']));
 			$default_grade = calculate_final_grade($this->assignment->get_for_student($kStudent, $data['narrTerm'], $data['narrYear'],$grade_options));
-			$data['default_grade'] = calculate_letter_grade($default_grade);
+ 			$data['default_grade'] = calculate_letter_grade($default_grade, $pass_fail);
 		}
 		$data['narrative'] = NULL;
 		$data['narrText'] = "";
@@ -561,10 +563,12 @@ class Narrative extends MY_Controller
 					$grade_options["join"] = "assignment";
 					$grade_options['subject'] = $narrative->narrSubject;
 					$grades = $this->assignment->get_for_student($kStudent, $narrative->narrTerm, $narrative->narrYear,$grade_options);
-					//change the narrGrade value if no grades have been entered for this student. 
+					//change the narrGrade value if no grades have been entered for this student.
 					if(!empty($grades)){
+					    $this->load->model("grade_preference_model","grade_preferences");
+					    $pass_fail = $this->grade_preferences->get_all($kStudent,array("school_year"=>$data['narrYear'],"subject"=>$narrative->narrSubject));
 						$letter_grade = calculate_final_grade($grades);
-						$data['grades'][$narrative->narrSubject] = calculate_letter_grade($letter_grade);
+						$data['grades'][$narrative->narrSubject] = calculate_letter_grade($letter_grade,$pass_fail);
 					}
 				}
 			}
