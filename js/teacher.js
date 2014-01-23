@@ -162,11 +162,9 @@ function editTeacher(myTeach) {
 			kTeach: myTeach,
 			ajax: '1'
 	};
-	var myUrl = base_url + "teacher/edit";
-	
 	$.ajax({
 		type: "get",
-		url: myUrl,
+		url: base_url + "teacher/edit",
 		data: form_data,
 		success: function(data){
 		showPopup("Editing User", data, "auto");
@@ -174,12 +172,7 @@ function editTeacher(myTeach) {
 		
 	});
 	return false;
-//	var myTeach=this.id.split("_")[1];
-//	alert(myTeach);
-//	$.get('ajax.switch.php',{target:'teacher',action_task:'view',kTeach:myTeach},
-//		function(data){
-//			showPopup('Edit Teacher',data,10,10,'auto');
-//	})
+
 }
 
 function viewTeacher(myTeach) {
