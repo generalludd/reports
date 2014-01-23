@@ -1,6 +1,6 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 /***
- * Class allows for administration of global properties for the application. 
+ * Class allows for administration of global properties for the application.
  * Only the administrative user can access this feature.
  */
 
@@ -17,6 +17,11 @@ class admin extends MY_Controller{
 		}
 	}
 
+	/**
+	 * (non-PHPdoc)
+	 * @see MY_Controller::index()
+	 * go to the main admin control panel page
+	 */
 	function index()
 	{
 		$data["target"] = "admin/panel";
@@ -27,7 +32,7 @@ class admin extends MY_Controller{
 	}
 
 	/**
-	 * while logged in as administrator, masquerade as another user for testing purposes. 
+	 * while logged in as administrator, masquerade as another user for testing purposes.
 	 * expects the third segment of the uri to be the teacher to be masqueraded as
 	 */
 	function masquerade()
@@ -97,7 +102,7 @@ class admin extends MY_Controller{
 	}
 
 	/**
-	 * Show a dialog to search the log for specific users, range of dates, and events (log in or log off). 
+	 * Show a dialog to search the log for specific users, range of dates, and events (log in or log off).
 	 */
 	function search_log()
 	{
