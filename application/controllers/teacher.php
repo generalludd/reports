@@ -85,7 +85,6 @@ class Teacher extends MY_Controller
 	function view()
 	{
 		$kTeach = $this->uri->segment(3);
-
 		$teacher = $this->teacher_model->get($kTeach);
 		$data["year"] = get_current_year();
 		$data["term"] = get_current_term();
@@ -94,9 +93,6 @@ class Teacher extends MY_Controller
 		$data["subjects"] = $this->subject_model->get_for_teacher($kTeach);
 		$data["target"] = "teacher/view";
 		$data["title"] = "Viewing Information for $teacher->teachFirst $teacher->teachLast";
-
-$this->load->view("page/index", $data);
-
 		$this->load->view("page/index", $data);
 	}
 
