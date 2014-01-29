@@ -1,6 +1,10 @@
+<<<<<<< HEAD
 <?php
 
 if (! defined('BASEPATH')) exit('No direct script access allowed');
+=======
+<?php if (! defined('BASEPATH')) exit('No direct script access allowed');
+>>>>>>> Commenting and minor cleanup.
 
 class MY_Controller extends CI_Controller
 {
