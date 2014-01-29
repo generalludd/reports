@@ -89,7 +89,11 @@ class Student_model extends CI_Model
 
 	function find_students($stuName)
 	{
+		$this->load->model("preference_model","preference");
+		$include_former_students = $this->preference->get($this->session->userdata("userID"),"show_former_students" );
+		if($include_former_students != "yes"){
 		$this->db->where("isEnrolled", 1);
+		}
 		$this->db->where("(CONCAT(`stuFirst`,' ', `stuLast`) LIKE '%$stuName%' OR CONCAT(`stuNickname`,' ', `stuLast`) LIKE '%$stuName%')");
 		$this->db->order_by("stuFirst","ASC");
 		$this->db->order_by("stuLast","ASC");
@@ -171,7 +175,11 @@ class Student_model extends CI_Model
 			$this->db->where("humanitiesTeacher", $constraints['humanitiesTeacher']);
 		}
 		//@TODO It seems unlikely that one would need to generate a list with former students
-		$this->db->where("isEnrolled", 1);
+		$this->load->model("preference_model","preference");
+		$include_former_students = $this->preference->get($this->session->userdata("userID"),"show_former_students" );
+		if($include_former_students != "yes"){
+			$this->db->where("isEnrolled", 1);
+		}
 		if(array_key_exists("select",$constraints)){
 			$this->db->select($constraints["select"]);
 		}
