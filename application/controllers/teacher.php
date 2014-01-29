@@ -1,5 +1,5 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-
+//@TODO: refine all get_post to the appropriate method.
 class Teacher extends MY_Controller
 {
 
@@ -13,6 +13,11 @@ class Teacher extends MY_Controller
 
 	}
 
+	/**
+	 * (non-PHPdoc)
+	 * @see MY_Controller::index()
+	 * listing all teachers.
+	 */
 	function index()
 	{
 		$data["target"] = "teacher/list";
@@ -42,7 +47,16 @@ class Teacher extends MY_Controller
 	}
 
 
+<<<<<<< HEAD
 
+=======
+	/**
+	 * create a new editor/aide/administrator.
+	 * At some point I want to separate teachers from these other roles.
+	 * Teacher should be a characteristic of a user, This is a legacy of the way the system
+	 * was originally developed.
+	 */
+>>>>>>> Adding documentation for teacher.php controller. 
 	function create()
 	{
 		if($this->session->userdata("dbRole") == 1){
@@ -70,11 +84,16 @@ class Teacher extends MY_Controller
 		}
 	}
 
-
+	/**
+	 * Show a given teacher based on the uri_segment.
+	 */
 	function view()
 	{
 		$kTeach = $this->uri->segment(3);
+<<<<<<< HEAD
 
+=======
+>>>>>>> Adding documentation for teacher.php controller. 
 		$teacher = $this->teacher_model->get($kTeach);
 		$data["year"] = get_current_year();
 		$data["term"] = get_current_term();
@@ -83,12 +102,18 @@ class Teacher extends MY_Controller
 		$data["subjects"] = $this->subject_model->get_for_teacher($kTeach);
 		$data["target"] = "teacher/view";
 		$data["title"] = "Viewing Information for $teacher->teachFirst $teacher->teachLast";
+<<<<<<< HEAD
 
 		$this->load->view("page/index", $data);
 
+=======
+		$this->load->view("page/index", $data);
+>>>>>>> Adding documentation for teacher.php controller. 
 	}
 
-
+	/**
+	 * edit the teacher's record.
+	 */
 	function edit()
 	{
 		$kTeach = $this->input->get_post("kTeach");
@@ -141,6 +166,12 @@ class Teacher extends MY_Controller
 
 	}
 
+<<<<<<< HEAD
+=======
+	/**
+	 * display a filtering dialog for showing various users of the system.
+	 */
+>>>>>>> Adding documentation for teacher.php controller. 
 	function show_search()
 	{
 		$grade_list = $this->menu_model->get_pairs("grade");
@@ -148,6 +179,13 @@ class Teacher extends MY_Controller
 		$this->load->view("teacher/search", $data);
 	}
 
+<<<<<<< HEAD
+=======
+	/**
+	 * This is an ajax-supporting script designed to provide calling
+	 * scripts a quick way to display a teacher's subject menu drop-down on the fly.
+	 */
+>>>>>>> Adding documentation for teacher.php controller. 
 	function subject_menu()
 	{
 		$kTeach = $this->input->get_post("kTeach");
@@ -156,6 +194,12 @@ class Teacher extends MY_Controller
 		echo form_dropdown("subject",$subjects,$this->input->cookie("current_subject"),"id='subject'");
 	}
 
+<<<<<<< HEAD
+=======
+	/**
+	 * This is another ajax-supporting script that provides a list of grade options on the fly based on a teacher's profile.
+	 */
+>>>>>>> Adding documentation for teacher.php controller. 
 	function grade_range()
 	{
 		$this->load->model("menu_model");
@@ -166,12 +210,16 @@ class Teacher extends MY_Controller
 		$output .= "-" . form_dropdown("gradeEnd", $grades, $teacher_grades->gradeEnd, "id='gradeEnd'");
 		echo $output;
 	}
+<<<<<<< HEAD
 
+=======
+>>>>>>> Adding documentation for teacher.php controller. 
 
+	/**
+	 * display a list of availabe subjects a teacher doesn't already have associated with their profile
+	 */
 	function add_subject()
 	{
-
-		//@TODO NEED missing subjects option
 		$data["kTeach"] = $this->input->get_post("kTeach");
 		$data["gradeStart"] = $this->input->get_post("gradeStart");
 		$data["gradeEnd"] = $this->input->get_post("gradeEnd");
@@ -183,7 +231,9 @@ class Teacher extends MY_Controller
 		$this->load->view("teacher/edit_subject", $data);
 	}
 
-
+	/**
+	 * used with ajax, this adds a subject to the teacher's profile after the add_subject method has been called.
+	 */
 	function insert_subject()
 	{
 		$kTeach = $this->input->get_post("kTeach");
@@ -197,7 +247,9 @@ class Teacher extends MY_Controller
 
 	}
 
-
+	/**
+	 * used by ajax scripts, this deletes a subject on the fly.
+	 */
 	function delete_subject()
 	{
 		$kTeach = $this->input->post("kTeach");
