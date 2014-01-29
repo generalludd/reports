@@ -46,17 +46,12 @@ class Teacher extends MY_Controller
 		$this->load->view("page/index", $data);
 	}
 
-
-<<<<<<< HEAD
-
-=======
 	/**
 	 * create a new editor/aide/administrator.
 	 * At some point I want to separate teachers from these other roles.
 	 * Teacher should be a characteristic of a user, This is a legacy of the way the system
 	 * was originally developed.
 	 */
->>>>>>> Adding documentation for teacher.php controller. 
 	function create()
 	{
 		if($this->session->userdata("dbRole") == 1){
@@ -90,10 +85,7 @@ class Teacher extends MY_Controller
 	function view()
 	{
 		$kTeach = $this->uri->segment(3);
-<<<<<<< HEAD
 
-=======
->>>>>>> Adding documentation for teacher.php controller. 
 		$teacher = $this->teacher_model->get($kTeach);
 		$data["year"] = get_current_year();
 		$data["term"] = get_current_term();
@@ -102,13 +94,10 @@ class Teacher extends MY_Controller
 		$data["subjects"] = $this->subject_model->get_for_teacher($kTeach);
 		$data["target"] = "teacher/view";
 		$data["title"] = "Viewing Information for $teacher->teachFirst $teacher->teachLast";
-<<<<<<< HEAD
+
+$this->load->view("page/index", $data);
 
 		$this->load->view("page/index", $data);
-
-=======
-		$this->load->view("page/index", $data);
->>>>>>> Adding documentation for teacher.php controller. 
 	}
 
 	/**
@@ -166,12 +155,9 @@ class Teacher extends MY_Controller
 
 	}
 
-<<<<<<< HEAD
-=======
 	/**
 	 * display a filtering dialog for showing various users of the system.
 	 */
->>>>>>> Adding documentation for teacher.php controller. 
 	function show_search()
 	{
 		$grade_list = $this->menu_model->get_pairs("grade");
@@ -179,13 +165,10 @@ class Teacher extends MY_Controller
 		$this->load->view("teacher/search", $data);
 	}
 
-<<<<<<< HEAD
-=======
 	/**
 	 * This is an ajax-supporting script designed to provide calling
 	 * scripts a quick way to display a teacher's subject menu drop-down on the fly.
 	 */
->>>>>>> Adding documentation for teacher.php controller. 
 	function subject_menu()
 	{
 		$kTeach = $this->input->get_post("kTeach");
@@ -194,12 +177,9 @@ class Teacher extends MY_Controller
 		echo form_dropdown("subject",$subjects,$this->input->cookie("current_subject"),"id='subject'");
 	}
 
-<<<<<<< HEAD
-=======
 	/**
 	 * This is another ajax-supporting script that provides a list of grade options on the fly based on a teacher's profile.
 	 */
->>>>>>> Adding documentation for teacher.php controller. 
 	function grade_range()
 	{
 		$this->load->model("menu_model");
@@ -210,10 +190,7 @@ class Teacher extends MY_Controller
 		$output .= "-" . form_dropdown("gradeEnd", $grades, $teacher_grades->gradeEnd, "id='gradeEnd'");
 		echo $output;
 	}
-<<<<<<< HEAD
 
-=======
->>>>>>> Adding documentation for teacher.php controller. 
 
 	/**
 	 * display a list of availabe subjects a teacher doesn't already have associated with their profile
