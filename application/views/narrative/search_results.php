@@ -24,13 +24,13 @@ Teacher: <strong><?="$teacher->teachFirst $teacher->teachLast";?></strong>
 <?
 if($count > 0):
 	foreach($narratives as $narrative):
-		$edit_buttons = array();
 		$student = format_name($narrative->stuFirst, $narrative->stuLast, $narrative->stuNickname);
 		$text = str_replace($replace, "<span class='highlight'>$replace</span>", $narrative->narrText);
+		$edit_buttons = array();
 		$edit_buttons[] = array("selection"=>"view","text"=>"View","href"=> site_url("narrative/view/$narrative->kNarrative"));
 		$edit_buttons[] = array("selection" => "message", "type" => "span", "class" => "text","text" => sprintf("(Last edited on %s " , format_timestamp($narrative->recModified) ), "id" => "time_$narrative->kNarrative");
 		?>
-		<h3>Narrative for <?=$student;?></h3>
+		<h3><?=$narrative->narrSubject;?> Narrative for <?=$student;?></h3>
 		<?=create_button_bar($edit_buttons);?>
 		<div><?=$text; ?></div>
 	<? endforeach; ?>
