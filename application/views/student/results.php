@@ -23,6 +23,7 @@ if(array_key_exists("grades", $criteria)){
 		echo "<li><strong>Including former students</strong></li>";
 	}
 	?>
+	<li>Found Count: <?=count($students);?></li>
 </ul>
 <div class='button-box'>
 <a href="<?=site_url("/");?>" class="button" title="Modify Search">Modify
