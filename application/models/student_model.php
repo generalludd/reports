@@ -89,7 +89,11 @@ class Student_model extends CI_Model
 
 	function find_students($stuName)
 	{
+		$this->load->model("preference_model","preference");
+		$include_former_students = $this->preference->get($this->session->userdata("userID"),"show_former_students" );
+		if($include_former_students != "yes"){
 		$this->db->where("isEnrolled", 1);
+		}
 		$this->db->where("(CONCAT(`stuFirst`,' ', `stuLast`) LIKE '%$stuName%' OR CONCAT(`stuNickname`,' ', `stuLast`) LIKE '%$stuName%')");
 		$this->db->order_by("stuFirst","ASC");
 		$this->db->order_by("stuLast","ASC");
@@ -170,7 +174,8 @@ class Student_model extends CI_Model
 		}elseif(get_array_value( $constraints, 'humanitiesTeacher')){
 			$this->db->where("humanitiesTeacher", $constraints['humanitiesTeacher']);
 		}
-		//@TODO It seems unlikely that one would need to generate a list with former students
+		//@TODO need to have an override here to allow this to fork depending on the calling method
+		//some situations may require showing students by grade to include enrolled students.
 		$this->db->where("isEnrolled", 1);
 		if(array_key_exists("select",$constraints)){
 			$this->db->select($constraints["select"]);
