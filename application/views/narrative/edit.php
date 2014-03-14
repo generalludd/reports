@@ -48,7 +48,7 @@ if(!empty($conditional_buttons)){
 		$edit_buttons[] = array("selection" => "delete_narrative", "text" => "Delete", "class" => "button delete delete_narrative", "type" => "span",
 				"enclosure" => array("type" => "span","class"=>"delete-container"));
 	}
-	
+
 	print create_button_bar($edit_buttons);
 	?>
 
@@ -80,7 +80,7 @@ if(!empty($conditional_buttons)){
 			maxlength="4" size="5" value="<?=$yearEnd; ?>" />
 		<?php if($stuGrade >= 5):?>
 		</p>
-		<p>Course Grade (middle school only): 
+		<p>Course Grade (middle school only):
 			<? if($this->input->cookie("submits_report_card") == "yes"): ?>
 			<!-- override-narrative-grade allows a teacher who usually provides student grades to override the grade under special circumstances -->
 			<span id="course_grade"><?=$default_grade;?></span>&nbsp;<span class='button small override-narrative-grade'>Override</span>
@@ -109,7 +109,7 @@ window.setInterval(function(){
 
 		$("#ajax").val(1);
 		var formData = $("#narrativeEditor").serialize();
-		var myUrl = base_url + "index.php/narrative/" + action;
+		var myUrl = base_url + "narrative/" + action;
 		$.ajax({
 			url: myUrl,
 			type: 'POST',
@@ -119,11 +119,11 @@ window.setInterval(function(){
 				if(action == "insert"){
 					$("#kNarrative").val(strings[0]);
 					$("#action").val("update");
-					$("#narrativeEditor").attr("action",base_url + "index.php/narrative/update");
+					$("#narrativeEditor").attr("action",base_url + "narrative/update");
 					$(".delete-container").html("<span class='delete button delete_narrative' id='dn_" + strings[0] + "'>Delete</span>");
 				}
 				$("#message").html("Narrative auto-saved: " + strings[1]).show();
-				
+
 			},
 			error: function(data){
 				$("#message").html("An error occurred. Press 'Save and Continue' to save your work.").show();
@@ -131,7 +131,7 @@ window.setInterval(function(){
 		});
 		$("#ajax").val(0);
 		//saveNarrative();
-	
+
 }, 60000);
 
 </script>

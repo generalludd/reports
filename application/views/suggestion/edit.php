@@ -35,7 +35,7 @@ if(!empty($conditional_buttons)){
 		$edit_buttons[] = array("selection" => "delete_narrative", "text" => "Delete Suggestions", "class" => "button delete delete_narrative", "type" => "span",
 				"enclosure" => array("type" => "span","class"=>"delete-container"));
 	}
-	
+
 	print create_button_bar($edit_buttons);
 	?>
 
@@ -45,7 +45,7 @@ if(!empty($conditional_buttons)){
 		type="hidden" name="kTeach" id="kTeach" value='<?=$kTeach;?>' /> <input
 		type="hidden" name="kNarrative" id="kNarrative"
 		value='<?=get_value($narrative, 'kNarrative'); ?>' /> <input
-		type="hidden" name="action" id="action" value="<?=$action;?>"> 
+		type="hidden" name="action" id="action" value="<?=$action;?>">
 	<div id="message" class="message"
 		style="font-weight: bold; text-align: center; width: 40%; margin: 8px;">
 		<?=get_value($narrative, 'timestamp');?>
@@ -65,7 +65,7 @@ if(!empty($conditional_buttons)){
 			maxlength="4" size="5" value="<?=$narrative->narrYear?>"/>
 		- <input id="yearEnd" type="text" name="yearEnd" readonly
 			maxlength="4" size="5" value="<?=$yearEnd; ?>" />
-		
+
 	</p>
 	<?php
 	if($conditional_bar){
@@ -87,7 +87,7 @@ if(!empty($conditional_buttons)){
 
 		$("#ajax").val(1);
 		var formData = $("#narrativeEditor").serialize();
-		var myUrl = base_url + "index.php/narrative/" + action;
+		var myUrl = base_url + "narrative/" + action;
 		$.ajax({
 			url: myUrl,
 			type: 'POST',
@@ -97,11 +97,11 @@ if(!empty($conditional_buttons)){
 				if(action == "insert"){
 					$("#kNarrative").val(strings[0]);
 					$("#action").val("update");
-					$("#narrativeEditor").attr("action",base_url + "index.php/narrative/update");
+					$("#narrativeEditor").attr("action",base_url + "narrative/update");
 					$(".delete-container").html("<span class='delete button delete_narrative' id='dn_" + strings[0] + "'>Delete</span>");
 				}
 				$("#message").html("Narrative auto-saved: " + strings[1]).show();
-				
+
 			},
 			error: function(data){
 				$("#message").html("An error occurred. Press 'Save and Continue' to save your work.").show();
@@ -109,7 +109,7 @@ if(!empty($conditional_buttons)){
 		});
 		$("#ajax").val(0);
 		//saveNarrative();
-	
+
 }, 60000);
 */
 </script>
