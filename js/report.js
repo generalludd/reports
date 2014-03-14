@@ -91,7 +91,7 @@ $(document).ready(function(){
 		$.ajax({
 			type: "post",
 			data: form_data,
-			url: base_url + "/report/update_value/",
+			url: base_url + "report/update_value/",
 			success: function(data){
 				//$(this).attr("checked",data);
 			}
