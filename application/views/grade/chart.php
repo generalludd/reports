@@ -8,6 +8,7 @@ $assignment_count = 0;
 $assignment_total = 0;
 $footnotes = array();
 $categories = array();
+$weight_sums = 0;
 ?>
 
 <div class='report-header report-teacher report-<?=$count;?>'>
@@ -63,7 +64,6 @@ $categories = array();
 						$categories[$grade->category]["total_points"] += $grade->total_points;
 						$categories[$grade->category]["points"] += $points;
 					}
-					$assignment_total += $grade->total_points * $grade->weight;
 					}
 				} //end if
 			}//end foreach grade
@@ -102,8 +102,8 @@ $categories = array();
 				<th class="category-column">Category</th>
 				<th class="points-column">Points</th>
 				<th class="totals-column">Possible</th>
-				<th class="weight-column">Weight</th>
 				<th class="percent-column">Percent</th>
+				<th class="weight-column">Weight</th>
 				<th class="grade-column">Grade</th>
 		
 		</thead>
@@ -114,18 +114,19 @@ $categories = array();
 				<td><?=$category["category"];?></td>
 				<td><?=$category["points"];?></td>
 				<td><?=$category["total_points"]; ?></td>
-				<td><?=$category["weight"];?>%</td>
 				<td><?=$category_grade;?>%</td>
+				<td><?=$category["weight"];?>%</td>
 				<td><?=calculate_letter_grade($category_grade, $pass_fail);?>
-			
 			</tr>
+			<? $assignment_total += $category_grade * $category["weight"]; ?>
+			<? $weight_sums += $category["weight"];?>
 			<? endforeach; ?>
 		</tbody>
 		<tfoot>
 			<?
 			$grade_total = 0;
 			$category_count = 0;
-			$total_grade = round($student_total/$assignment_total*100,1);
+			$total_grade = round($assignment_total/$weight_sums,1);
 			echo sprintf("<tr class='final-grade'><td class='label' colspan=4>Grade</td><td colspan=2>%s&#37; (%s)</td><tr>",$total_grade,calculate_letter_grade($total_grade,$pass_fail));
 
 			?>
