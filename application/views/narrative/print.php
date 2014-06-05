@@ -79,8 +79,9 @@ body {
 		Paul, MN 55104
 	</p>
 	<p class="title">
-		<b><? 
-		echo $narrTerm; ?> NARRATIVE REPORT </b>
+		<b><?
+		echo $narrTerm;
+		?> NARRATIVE REPORT </b>
 	</p>
 	<p class='term'>
 		<? echo format_schoolyear($narrYear) . " Academic Year"; ?>
@@ -97,34 +98,45 @@ body {
 
 
 	<?php
-	foreach($narratives as $narrative){
-		$narrText=stripslashes($narrative->narrText);
+	foreach ( $narratives as $narrative ) {
+		$narrText = stripslashes ( $narrative->narrText );
 		$teacher = "$narrative->teachFirst $narrative->teachLast";
 		print "<div class='subject-row'>";
 		print "<div class='subject'>$narrative->narrSubject</div>";
 		print "<div class='teacher'>Teacher: $teacher</div>";
 		print "</div>";
-		$data['benchmarks'] = FALSE;
+		$data ['benchmarks'] = FALSE;
 		$has_benchmarks = FALSE;
-		//benchmarks are only used in grades 5 and up.
-		if($stuGrade > 4){
- 			printf("<div class='grade'>%s Grade: %s</div>",$narrTerm, $grades[$narrative->narrSubject]);
- 			//@TODO modify insert chart issues here.
- 			$data['legend'] = $this->legend->get_one(array("kTeach"=>$narrative->kTeach, "subject"=>$narrative->narrSubject, "term"=> $narrative->narrTerm, "year"=>$narrative->narrYear ));
- 			$has_benchmarks = $this->benchmark_model->student_has_benchmarks($narrative->kStudent, $narrative->narrSubject, $narrative->stuGrade, $narrative->narrTerm, $narrative->narrYear);
+		// benchmarks are only used in grades 5 and up.
+		if ($stuGrade > 4) {
+			printf ( "<div class='grade'>%s Grade: %s</div>", $narrTerm, $grades [$narrative->narrSubject] );
+			if ($narrTerm == "Year-End") {
+				printf ( "<div class='grade'>Mid-Year Grade: %s</div>", $mid_year_grades [$narrative->narrSubject] );
+				printf ( "<div class='grade'>%s Final Year Grade: %s (%s&#037;)</div>", $narrative->narrSubject,$year_grade [$narrative->narrSubject]['grade'] , $year_grade [$narrative->narrSubject]['percent'] );
+				
 
- 			if($has_benchmarks){
-				$data["benchmarks"] = $this->benchmark_model->get_for_student($narrative->kStudent,$narrative->narrSubject,$stuGrade, $narrTerm, $narrYear);
+			}
+			// @TODO modify insert chart issues here.
+			$data ['legend'] = $this->legend->get_one ( array (
+					"kTeach" => $narrative->kTeach,
+					"subject" => $narrative->narrSubject,
+					"term" => $narrative->narrTerm,
+					"year" => $narrative->narrYear 
+			) );
+			$has_benchmarks = $this->benchmark_model->student_has_benchmarks ( $narrative->kStudent, $narrative->narrSubject, $narrative->stuGrade, $narrative->narrTerm, $narrative->narrYear );
+			
+			if ($has_benchmarks) {
+				$data ["benchmarks"] = $this->benchmark_model->get_for_student ( $narrative->kStudent, $narrative->narrSubject, $stuGrade, $narrTerm, $narrYear );
 			}
 		}
-
-		$narrText = strip_slashes($narrative->narrText);
+		
+		$narrText = strip_slashes ( $narrative->narrText );
 		print "<p>$narrText</p>";
-		if($has_benchmarks){
-				$this->load->view("benchmark/chart", $data);
+		if ($has_benchmarks) {
+			$this->load->view ( "benchmark/chart", $data );
 		}
 	}
-	//end area for clean up
+	// end area for clean up
 	?>
 </body>
 </html>
