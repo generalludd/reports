@@ -18,7 +18,7 @@ if($this->uri->segment(1) == ""){
 <?php if(!$print): ?>
 <div id='header'>
 
-<? if($_SERVER['HTTP_HOST'] == "test.server.fsmn"): ?>
+<? if($_SERVER['HTTP_HOST'] == "test-reports.server.fsmn"): ?>
 <div id="page-title" class="alert">WARNING: THIS IS THE STAGING SERVER. CHANGES MADE HERE ARE IMAGINARY!</div>
 <? else: ?>
 <div id='page-title'>Friends School Student Information System</div>
