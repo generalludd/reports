@@ -109,12 +109,10 @@ body {
 		$has_benchmarks = FALSE;
 		// benchmarks are only used in grades 5 and up.
 		if ($stuGrade > 4) {
-			printf ( "<div class='grade'>%s Grade: %s</div>", $narrTerm, $grades [$narrative->narrSubject] );
+			printf ( "<div class='grade'>%s Term Grade: %s</div>", $narrTerm, $grades [$narrative->narrSubject] );
 			if ($narrTerm == "Year-End") {
-				printf ( "<div class='grade'>Mid-Year Grade: %s</div>", $mid_year_grades [$narrative->narrSubject] );
-				printf ( "<div class='grade'>%s Final Year Grade: %s (%s&#037;)</div>", $narrative->narrSubject,$year_grade [$narrative->narrSubject]['grade'] , $year_grade [$narrative->narrSubject]['percent'] );
-				
-
+				printf ( "<div class='grade'>Mid-Year Term Grade: %s</div>", $mid_year_grades [$narrative->narrSubject] );
+				printf ( "<div class='grade'>%s Final Grade: %s (%s&#037;)</div>", $narrative->narrSubject,$year_grade [$narrative->narrSubject]['grade'] , $year_grade [$narrative->narrSubject]['percent'] );
 			}
 			// @TODO modify insert chart issues here.
 			$data ['legend'] = $this->legend->get_one ( array (
