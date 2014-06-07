@@ -2,8 +2,6 @@
 
 @import "ui.datepicker.css";
 
-
-
 .narrText {
 	padding: 3px;
 	border-style: solid;
@@ -71,9 +69,9 @@ loggedout indicates the opposite.
 }
 
 .not-logged-in #main {
-	width: 960px;
 	position: relative;
 	display: block;
+	width: 100%;
 }
 
 .loggedin {
@@ -94,15 +92,16 @@ loggedout indicates the opposite.
 /*Login Form elements*/
 div.login {
 	position: relative;
-	top: 3em;
 	padding: 2em 5em;
 	text-align: left;
-	width: 30em;
-	margin: auto;
+	margin: 0 auto;
+	margin-top: 3em;
 	display: block;
 	border-radius: 5px;
 	box-shadow: 4px 4px 11px #000;
-	height: 250px;
+	/*height: 250px;
+	*/
+	width: 30em;
 }
 
 div.login.errors {
@@ -399,7 +398,7 @@ legend {
 }
 
 #navigation,#advancedSearch {
-	padding:1px;
+	padding: 1px;
 }
 
 #navigation {
@@ -1059,7 +1058,7 @@ table.grade-chart td.grade-points {
 
 th.assignment-field {
 	vertical-align: top;
-	position:relative;
+	position: relative;
 }
 
 th.assignment-field .assignment-column-edit {
@@ -1087,7 +1086,6 @@ table.grade-chart th.assignment-field {
 table.grade-chart td {
 	padding: 4px 5px;
 }
-
 
 table.grade-chart th.chart-final-grade {
 	min-width: 90px;
@@ -1242,8 +1240,6 @@ th.grade-confirmation {
 	box-shadow: 1px 1px 1px #ccc;
 	position: relative;
 }
-
-
 
 .fieldset h4 {
 	
