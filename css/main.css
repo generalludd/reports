@@ -25,6 +25,8 @@ body {
 	margin-left: auto;
 	margin-right: auto;
 	min-width: 940px;
+	position: relative;
+	padding-bottom: 10px;
 }
 
 .highlight {
@@ -1019,7 +1021,9 @@ tr.benchmark-row td.benchmark-info {
 #footer {
 	font-size: .8em;
 	width: 150px;
-	float: right;
+	position: absolute;
+	bottom: 0;
+	right: 0;
 }
 
 h4.ui-accordion-header {
