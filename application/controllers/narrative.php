@@ -312,10 +312,15 @@ class Narrative extends MY_Controller {
 			$grade_options ["from"] = "grade";
 			$grade_options ["join"] = "assignment";
 			$grade_options ['subject'] = $narrative->narrSubject;
+			$this->load->model ( "grade_preference_model", "grade_preferences" );
+			$pass_fail = $this->grade_preferences->get_all ( $kStudent, array (
+					"school_year" => $narrative->narrYear,
+					"subject" => $narrative->narrSubject
+			) );
 			$grades = $this->assignment->get_for_student ( $kStudent, $narrative->narrTerm, $narrative->narrYear, $grade_options );
 			if (! empty ( $grades )) {
 				$letter_grade = calculate_final_grade ( $grades );
-				$data ['letter_grade'] = calculate_letter_grade ( $letter_grade );
+				$data ['letter_grade'] = calculate_letter_grade ( $letter_grade, $pass_fail );
 			}
 		}
 		$teacher = $this->teacher_model->get ( $kTeach );
