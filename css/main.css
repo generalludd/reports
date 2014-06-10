@@ -462,7 +462,7 @@ legend {
 }
 
 #content {
-	
+	overflow:hidden;
 }
 
 #sidebar {
