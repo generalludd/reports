@@ -7,6 +7,7 @@ class Assignment extends MY_Controller
 		parent::__construct();
 		$this->load->model("grade_model","grade");
 		$this->load->model("assignment_model","assignment");
+		$this->load->helper("grade_helper");
 	}
 
 	function index()
@@ -56,8 +57,14 @@ class Assignment extends MY_Controller
 			$date_range["date_end"] = $date_end;
 				
 		}
-
+		$grade_options ["from"] = "grade";
+		$grade_options ["join"] = "assignment";
+		
 		$data["grades"] = $this->assignment->get_grades($kTeach,$term,$year,$gradeStart,$gradeEnd,$stuGroup, $date_range);
+		foreach($data['grades'] as $grade){
+			$grade_options ['subject'] = $grade->subject;
+			$grade->final_grade = $this->assignment->get_for_student ( $grade->kStudent, $grade->term, $grade->year, $grade_options );
+		}
 		$data["assignments"] = $this->assignment->get_for_teacher($kTeach,$term,$year,$gradeStart,$gradeEnd, $date_range);
 		$data["category_count"] = 0;
 		if(empty($data["assignments"])){

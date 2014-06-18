@@ -17,7 +17,7 @@ if(!empty($assignments)){
 
 	/* Get the subject and relevant data from the first row of the assignments */
 	$header = $assignments[0];
-	$header_string = sprintf("%s<br/>%s<br/>%s",$header->subject,$header->term, format_schoolyear($header->year))
+	$header_string = sprintf("%s<br/>%s<br/>%s",$header->subject,$header->term, format_schoolyear($header->year));
 	?>
 
 <h2>
@@ -35,18 +35,11 @@ if(!empty($assignments)){
 		<li><span class="button search-assignments" id="sa_<?=$kTeach;?>"
 			title="Search for Current Grade Charts">New Grade Search</span>
 		</li>
-		<!-- <li><span
-				class='button new assignment-create'>Add&nbsp;Assignment</span></li> -->
+		
 	</ul>
 
 
 </div>
-
-
-
-<!-- <div  colspan=50 class='assignment-button'><? if($kTeach == $this->session->userdata("userID")):?><span
-				class='button new assignment-create'>Add Assignment</span> <? endif; ?>
-			</div> -->
 
 
 <table class='grade-chart'>
@@ -56,7 +49,7 @@ if(!empty($assignments)){
 			<th colspan='2'><?=$header_string;?>
 			</th>
 			<th></th>
-			<th class='chart-final-grade'>Estimated Final Grade</th>
+			<th class='chart-final-grade'>Final Grade</th>
 			<? 
 			$total_points = 0;
 			foreach($assignments as $assignment){ ?>
@@ -100,25 +93,12 @@ if(!empty($assignments)){
 				$href = site_url(sprintf("grade/report_card?kStudent=%s&year=%s&term=%s&subject=%s&print=true",$grade->kStudent,$this->input->cookie("year"),$this->input->cookie("term"), $header->subject));
 				$rows[$grade->kStudent]["button"] = "<td class='student-button'><a class='button' target='_blank' href='$href'>Print</a></td>";
 			}
+			
 			$points = $grade->points;
-			if($grade->kStudent == 8283){
-				$rows[$grade->kStudent]["grade"][] = $grade;
-			}
-			else{
-				$rows[$grade->kStudent]["grade"] = array();
-			}
+			$rows[$grade->kStudent]["grade"] = array();
 
 			//if the student status for this grade is Abs or Exc display the status instead of the grade
-			if($grade->status){
-				$points = $grade->status;
-				//if($grade->status == "Exc"){
-				$student_points += $grade->assignment_total *$grade->weight;
-				//}
-			}else{
-				//calculate the weighted grade for this assignment
-				$student_points += $grade->points * $grade->weight;
-			}
-
+			
 			if($grade->points == 0 && $grade->assignment_total == 0){
 				$points = "";
 			}
@@ -127,8 +107,9 @@ if(!empty($assignments)){
 			if($grade->footnote){
 				$points .= "[$grade->footnote]";
 			}
-			$rows[$grade->kStudent]["totals"] = $student_points;
-
+			//$rows[$grade->kStudent]["totals"] = $student_points;
+			
+			$rows[$grade->kStudent]["totals"] = calculate_final_grade($grade->final_grade);
 
 			$rows[$grade->kStudent]["grades"][$grade->kAssignment] = sprintf("<td class='grade-points edit' id='sag_%s_%s'  title='%s'>%s</td>",$grade->kAssignment,$grade->kStudent,format_name($grade->stuNickname,$grade->stuLast),$points);
 		}
@@ -139,9 +120,9 @@ if(!empty($assignments)){
 			print $row["name"];
 			print $row["button"];
 			//get the grade as a human-readable percentage
-			$final_grade = round(($row["totals"])/$total_points,1);
+			//$final_grade = round(($row["totals"])/$total_points,1);
 			//$final_grade = $row["totals"];
-			print sprintf("<td>%s (%s%s)</td>",calculate_letter_grade($final_grade),$final_grade,"%");
+			print sprintf("<td>%s (%s%s)</td>",calculate_letter_grade($row['totals']),$row['totals'],"%");
 			
 			print implode("",$row["grades"]);
 			print "</tr>";

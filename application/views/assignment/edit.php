@@ -1,8 +1,8 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
-$year = get_value($assignment,"year",$this->input->cookie("year")); //$this->session->userdata('year'));
-$term = get_value($assignment,"term",$this->input->cookie("term")); //$this->session->userdata('term'));
-$gradeStart = get_value($assignment,"gradeStart",$this->input->cookie("gradeStart")); //$this->session->userdata('gradeStart'));
-$gradeEnd = get_value($assignment,"gradeEnd",$this->input->cookie("gradeEnd")); //$this->session->userdata('gradeEnd'));
+$year = get_value($assignment,"year",$this->input->cookie("year")); 
+$term = get_value($assignment,"term",$this->input->cookie("term")); 
+$gradeStart = get_value($assignment,"gradeStart",$this->input->cookie("gradeStart")); 
+$gradeEnd = get_value($assignment,"gradeEnd",$this->input->cookie("gradeEnd")); 
 $date = "";
 if($date = get_value($assignment,"date")){
 	$date = format_date($date,"standard");
