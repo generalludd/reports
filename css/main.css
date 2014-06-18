@@ -308,6 +308,8 @@ div.narrative {
 	cursor: pointer;
 	font-size: 1em;
 	font-weight: normal;
+	transition: all .25s ease;
+	
 }
 
 td .button,.row .button,.button.small {
@@ -315,8 +317,8 @@ td .button,.row .button,.button.small {
 	padding: .35em .5em;
 }
 
-.button:hover {
-	
+a:hover, body {
+	transition: all .25s ease;
 }
 
 #navigation input[type="text"] {

@@ -238,6 +238,10 @@ a.button {
 	background: -moz-linear-gradient(top, #dff110 0, #eeff11 100%);
 }
 
+.button.new:hover {
+	padding: .5em;
+}
+
 .button.new.active {
 	box-shadow: -1px -1px 1px #eeff11 inset;
 }
