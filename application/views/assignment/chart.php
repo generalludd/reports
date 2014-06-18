@@ -51,8 +51,7 @@ if(!empty($assignments)){
 			<th></th>
 			<th class='chart-final-grade'>Final Grade</th>
 			<? 
-			$total_points = 0;
-			foreach($assignments as $assignment){ ?>
+			foreach($assignments as $assignment): ?>
 
 			<th id="as_<?=$assignment->kAssignment;?>"	
 				class="assignment-field">
@@ -70,10 +69,7 @@ if(!empty($assignments)){
 			</th>
 
 
-			<? 
-			//calculated the weighted total points
-			$total_points += $assignment->points * $assignment->weight/100;
-} ?>
+			<? endforeach; ?>
 			<th class='assignment-button'><span
 				class='button new assignment-create'>Add&nbsp;Assignment</span></th>
 		</tr>
@@ -92,7 +88,7 @@ if(!empty($assignments)){
 					
 				$href = site_url(sprintf("grade/report_card?kStudent=%s&year=%s&term=%s&subject=%s&print=true",$grade->kStudent,$this->input->cookie("year"),$this->input->cookie("term"), $header->subject));
 				$rows[$grade->kStudent]["button"] = "<td class='student-button'><a class='button' target='_blank' href='$href'>Print</a></td>";
-			}
+			}//end if current_student
 			
 			$points = $grade->points;
 			$rows[$grade->kStudent]["grade"] = array();
@@ -101,34 +97,29 @@ if(!empty($assignments)){
 			
 			if($grade->points == 0 && $grade->assignment_total == 0){
 				$points = "";
-			}
+			}//end if points
 
 
 			if($grade->footnote){
 				$points .= "[$grade->footnote]";
-			}
-			//$rows[$grade->kStudent]["totals"] = $student_points;
+			}//end if footnote
 			
 			$rows[$grade->kStudent]["totals"] = calculate_final_grade($grade->final_grade);
 
 			$rows[$grade->kStudent]["grades"][$grade->kAssignment] = sprintf("<td class='grade-points edit' id='sag_%s_%s'  title='%s'>%s</td>",$grade->kAssignment,$grade->kStudent,format_name($grade->stuNickname,$grade->stuLast),$points);
-		}
+		}//end foreach grades
 
 		foreach($rows as $row){
 			print sprintf("<tr id='sgtr_%s' class='grade-chart-row'>",$row['kStudent']);
 			print $row["delete"];
 			print $row["name"];
 			print $row["button"];
-			//get the grade as a human-readable percentage
-			//$final_grade = round(($row["totals"])/$total_points,1);
-			//$final_grade = $row["totals"];
 			print sprintf("<td>%s (%s%s)</td>",calculate_letter_grade($row['totals']),$row['totals'],"%");
-			
 			print implode("",$row["grades"]);
 			print "</tr>";
-		}
+		} //end foreach rows
 
-}
+} //end if $grades
 ?>
 	</tbody>
 </table>
@@ -145,6 +136,6 @@ if(!empty($assignments)){
 	You have not entered any assignments or grades for this term. <span
 		class='button new assignment-create'>Add Assignment</span>
 </p>
-<? }
-}
+<? }// end if category_count
+} //end if assignments
 
