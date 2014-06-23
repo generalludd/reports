@@ -603,7 +603,6 @@ class Narrative extends MY_Controller {
 				$kTeach = $narrative->kTeach;
 				$submits_report_card = $this->preference->get ( $kTeach, "submits_report_card" );
 				$data ['grades'] [$narrative->narrSubject] = $narrative->narrGrade;
-
 				if ($submits_report_card == "yes") {
 					$this->load->model ( "assignment_model", "assignment" );
 					$this->load->helper ( "grade" );

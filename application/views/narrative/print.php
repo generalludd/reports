@@ -26,7 +26,7 @@ body {
 </style>
 
 <script type="text/javascript">
-    
+
     $(document).ready(function(){
         var baseP = 16;
         var baseTd = 14;
@@ -37,7 +37,7 @@ body {
             tdSize += 2;
             changeFont(pSize, tdSize);
             });
-            
+
             $('.resetFont').live('click',function(event){
                 changeFont(baseP, baseTd);
             });
@@ -56,9 +56,9 @@ body {
                 window.print();
             });
     })
-    
+
         function changeFont(pSize,tdSize){
-            $('p').css('font-size',pSize + 'px'); 
+            $('p').css('font-size',pSize + 'px');
             $('td').css('font-size',tdSize + 'px');
             var footerSize = parseInt(pSize) - 4;
             $('.footnote').css('font-size', footerSize + 'px');
@@ -110,7 +110,9 @@ body {
 		// benchmarks are only used in grades 5 and up.
 		if ($stuGrade > 4) {
 			printf ( "<div class='grade'>%s Term Grade: %s</div>", $narrTerm, $grades [$narrative->narrSubject] );
-			if ($narrTerm == "Year-End") {
+			$submits_report_card = $this->preference->get ( $narrative->kTeach, "submits_report_card" );
+			if ($narrTerm == "Year-End"  && $submits_report_card == "yes") {
+
 				printf ( "<div class='grade'>Mid-Year Term Grade: %s</div>", $mid_year_grades [$narrative->narrSubject] );
 				printf ( "<div class='grade'>%s Final Grade: %s (%s&#037;)</div>", $narrative->narrSubject,$year_grade [$narrative->narrSubject]['grade'] , $year_grade [$narrative->narrSubject]['percent'] );
 			}
@@ -119,15 +121,15 @@ body {
 					"kTeach" => $narrative->kTeach,
 					"subject" => $narrative->narrSubject,
 					"term" => $narrative->narrTerm,
-					"year" => $narrative->narrYear 
+					"year" => $narrative->narrYear
 			) );
 			$has_benchmarks = $this->benchmark_model->student_has_benchmarks ( $narrative->kStudent, $narrative->narrSubject, $narrative->stuGrade, $narrative->narrTerm, $narrative->narrYear );
-			
+
 			if ($has_benchmarks) {
 				$data ["benchmarks"] = $this->benchmark_model->get_for_student ( $narrative->kStudent, $narrative->narrSubject, $stuGrade, $narrTerm, $narrYear );
 			}
 		}
-		
+
 		$narrText = strip_slashes ( $narrative->narrText );
 		print "<p>$narrText</p>";
 		if ($has_benchmarks) {
