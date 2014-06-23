@@ -111,6 +111,7 @@ body {
 		if ($stuGrade > 4) {
 			printf ( "<div class='grade'>%s Term Grade: %s</div>", $narrTerm, $grades [$narrative->narrSubject] );
 			$submits_report_card = $this->preference->get ( $narrative->kTeach, "submits_report_card" );
+			//@TODO this submits_report_card function needs to be cleaned up and moved to the controller.
 			if ($narrTerm == "Year-End"  && $submits_report_card == "yes") {
 
 				printf ( "<div class='grade'>Mid-Year Term Grade: %s</div>", $mid_year_grades [$narrative->narrSubject] );
