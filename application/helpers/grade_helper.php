@@ -51,7 +51,9 @@ function calculate_final_grade($grades) {
 		
 		$grade_total = 0;
 		$category_count = 0;
+		if($weight_sums > 0){
 		$output = round ( $assignment_total / $weight_sums, 1 );
+		}
 	}
 	return $output;
 

@@ -624,9 +624,16 @@ class Narrative extends MY_Controller {
 						$data ['grades'] [$narrative->narrSubject] = calculate_letter_grade ( $letter_grade, $pass_fail );
 						if ($narrative->narrTerm == "Year-End") {
 							$mid_year_grade = calculate_final_grade ( $mid_year_grades );
+							//a false value means no grades were entered for the term--assumes student was not enrolled.
+							if($mid_year_grade){
 							$data ['mid_year_grades'] [$narrative->narrSubject] = calculate_letter_grade ( $mid_year_grade, $pass_fail );
 							$data ['year_grade'] [$narrative->narrSubject] ['percent'] = ($letter_grade + $mid_year_grade) / 2;
 							$data ['year_grade'] [$narrative->narrSubject] ['grade'] = calculate_letter_grade ( ($letter_grade + $mid_year_grade) / 2 );
+							}else{
+								$data ['mid_year_grades'] [$narrative->narrSubject] = "Not Enrolled";
+								$data ['year_grade'] [$narrative->narrSubject] ['percent'] = $letter_grade;
+								$data ['year_grade'] [$narrative->narrSubject] ['grade'] = calculate_letter_grade ( $letter_grade, $pass_fail );
+							}
 						}
 					}
 				}
