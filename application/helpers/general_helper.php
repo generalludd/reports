@@ -392,7 +392,7 @@ function get_grade_order(){
 function get_subject_order($subjects = NULL)
 {
 	if(!$subjects){
-		$subjects = "Introduction,Academic Progress,Humanities,Reading,Writing,Math,Science,Social Studies,Social Studies/Science,Social/Emotional,Music,Physical Education,Spanish,Art";
+		$subjects = "Introduction,Academic Progress,Humanities,Reading,Writing,Science,Social Studies,Social Studies/Science,Social/Emotional,Music,Physical Education,Spanish,Art,Math";
 	}
 	$subjectOrder = "CASE ";
 	$list = explode(",", $subjects);
