@@ -42,7 +42,6 @@ body {
 	font-size: .9em;
 	padding: 2px;
 	border: 1px solid black;
-	display: none;
 	margin: 3px;
 }
 
@@ -174,11 +173,9 @@ div.login-title {
 
 /* general notices */
 #notice {
-	position: absolute;
 	top: 25%;
 	left: 15%;
 	overflow: auto;
-	visibility: hidden;
 	float: none;
 	padding: 12px;
 	border-style: solid;

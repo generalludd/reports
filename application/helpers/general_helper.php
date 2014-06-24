@@ -391,15 +391,16 @@ function get_grade_order(){
 
 function get_subject_order($subjects = NULL)
 {
+	//@TODO there should be a UI-available tool for global sorting.
 	if(!$subjects){
-		$subjects = "Introduction,Academic Progress,Humanities,Reading,Writing,Science,Social Studies,Social Studies/Science,Social/Emotional,Music,Physical Education,Spanish,Art,Math";
+		$subjects = "Introduction,Academic Progress,Humanities,Reading,Writing,Science,Math,Social Studies,Social Studies/Science,Social/Emotional,Music,Physical Education,Spanish,Art";
 	}
 	$subjectOrder = "CASE ";
 	$list = explode(",", $subjects);
 	for($i=0;$i<count($list);$i++){
 		$mySubject = $list[$i];
 		$x=$i+1;
-		$subjectOrder .= "WHEN narrSubject='$mySubject' THEN $x ";
+		$subjectOrder .= "WHEN subject='$mySubject' THEN $x ";
 	}
 	$subjectOrder .= "END";
 	return $subjectOrder;
@@ -518,7 +519,7 @@ function calculate_letter_grade($points,$pass_fail = FALSE)
 	$output = "";
 	$plus = 6;
 	$minus = 3;
-	
+	$letter = "";
 	if(strval($points) >= 99){
 		$output = "A+";
 	}elseif(strval($points) > 93){

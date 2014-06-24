@@ -29,10 +29,10 @@ if($this->uri->segment(1) == ""){
 </div>
 </div>
 <?php endif; ?>
-<div id="alert" class="message"><?=$this->session->userdata("notice");
+<?php if($this->session->flashdata("notice")):?>
+<div id="notice" class="message"><?=$this->session->flashdata("notice");
 ?></div>
-<?=$this->session->set_userdata("notice",NULL);?>
-
+<?php endif?>
 <!-- main -->
 
 <div id="main"><!-- content -->

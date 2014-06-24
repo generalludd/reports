@@ -227,7 +227,7 @@ class Grade extends MY_Controller
 				$array = array("subject" => $subject);
 				$subjects[] = (object) $array;
 			}else{
-				$subjects = $this->grade->get_subjects($kStudent,$term,$year);
+				$subjects = $this->grade->get_subjects($kStudent,$term,$year,array("custom_sort"=>TRUE));
 			}
 			$data["target"] = "grade/report_card";
 

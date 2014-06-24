@@ -1,4 +1,4 @@
-<?php #narrative_sorter.inc ?>
+<?php #subject_sorter.inc ?>
 <p>Sort Narratives for <?=$narrTerm." ".$school_year; ?></p>
 <form id="sort_report" action="<?=site_url("narrative/set_sort");?>" method="post" name="sort_report">
     <input type="hidden" name="kStudent" value="<?=$kStudent; ?>" />

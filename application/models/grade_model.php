@@ -172,19 +172,28 @@ class Grade_model extends CI_Model
 	 * @return object
 	 * get a distinct list of subjects for a student for the term, year and optional cutoff date.
 	 */
-	function get_subjects($kStudent, $term, $year, $cutoff_date = NULL){
-		if($cutoff_date){
-			$this->db->where(sprintf("`assignment`.`date` <= '%s'", format_date($cutoff_date,"mysql")));
+	function get_subjects($kStudent, $term, $year, $options = array()){
+// 		if(array_key_exists('cutoff_date',$options)){
+// 			$this->db->where(sprintf("`assignment`.`date` <= '%s'", format_date($options['cutoff_date'],"mysql")));
+// 		}
+		$subject_sort = 'subject';
+		if(array_key_exists('custom_sort',$options)){
+			$this->load->model("subject_sort_model","subject_sort");
+			$subject_sort = get_subject_order($this->subject_sort->get_sort($kStudent,$term,$year,"grades"));
+			$this->session->set_flashdata("notice",$subject_sort);
+			
 		}
-		$this->db->from("grade");
-		$this->db->where("kStudent",$kStudent);
-		$this->db->join("assignment","grade.kAssignment=assignment.kAssignment","LEFT");
-		$this->db->select("subject");
-		$this->db->select("SUM(grade.points) as grade_points");
-		$this->db->select("SUM(assignment.points) as total_points");
-		$this->db->order_by("subject");
-		$this->db->group_by("subject");
-		$result = $this->db->get()->result();
+// 		$this->db->from("grade");
+// 		$this->db->where("kStudent",$kStudent);
+// 		$this->db->join("assignment","grade.kAssignment=assignment.kAssignment","LEFT");
+// 		$this->db->select("subject");
+		$query = sprintf("SELECT `subject` FROM (`grade`) LEFT JOIN `assignment` ON `grade`.`kAssignment`=`assignment`.`kAssignment` WHERE `grade`.`kStudent` = '%s' GROUP BY `subject` ORDER BY %s",$kStudent,$subject_sort);
+		//$this->db->select("SUM(grade.points) as grade_points");
+		//$this->db->select("SUM(assignment.points) as total_points");
+		//$this->db->order_by("subject");
+		//$this->db->order_by($subject_sort,'ASC',FALSE);
+				//$this->db->group_by("subject");
+		$result = $this->db->query($query)->result();
 		return $result;
 
 
