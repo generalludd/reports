@@ -806,6 +806,8 @@ a.button {
 	-moz-box-shadow: 3px 3px 4px #666;
 	-webkit-box-shadow: 3px 3px 4px #666;
 	box-shadow: 3px 3px 4px #666;
+	max-height: 500px;
+	overflow: scroll;
 }
 
 table.list td {
