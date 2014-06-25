@@ -117,11 +117,12 @@ class Narrative_model extends CI_Model
 		// this allows optional sorting of subjects (if the student does well in one subject,
 		// the teacher/editors may wish to have it appear before those the student struggles with
 		$subjects = NULL;
-// 		if (array_key_exists ( 'reportSort', $options )) {
-// 			$subjects = $options ['reportSort'];
-// 		}
-// 		$subjectOrder = get_subject_order ( $subjects );
-// 		$query .= ", $subjectOrder";
+		if (array_key_exists ( 'reportSort', $options )) {
+			$subjects = $options ['reportSort'];
+		}
+		$subjectOrder = str_replace("subject","narrSubject", get_subject_order ( $subjects ));
+		
+		$query .= ", $subjectOrder";
 		$result = $this->db->query ( $query )->result ();
 		return $result;
 	

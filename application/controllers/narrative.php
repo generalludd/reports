@@ -384,9 +384,9 @@ class Narrative extends MY_Controller {
 			$narrTerm = $this->uri->segment ( 5 );
 		}
 
-// 		$reportSort = $this->subject_sort_model->get_sort ( $kStudent, $data ["defaultTerm"], $data ["defaultYear"],"narrative" );
-// 		$data ["reportSort"] = $reportSort;
-// 		$options ["reportSort"] = $data ["reportSort"];
+		$reportSort = $this->subject_sort_model->get_sort ( $kStudent, $data ["defaultTerm"], $data ["defaultYear"],"narrative" );
+		$data ["reportSort"] = $reportSort;
+		$options ["reportSort"] = $data ["reportSort"];
 		$narratives = $this->narrative_model->get_for_student ( $kStudent );
 		$data ["userRole"] = $this->session->userdata ( "dbRole" );
 		$data ["userID"] = $this->session->userdata ( "userID" );
