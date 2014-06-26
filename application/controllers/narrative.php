@@ -654,16 +654,16 @@ class Narrative extends MY_Controller {
 	function show_sorter() {
 
 		$this->load->model ( "subject_sort_model" );
-		$kStudent = $this->input->post ( "kStudent" );
+		$kStudent = $this->input->get ( "kStudent" );
 		$data ["kStudent"] = $kStudent;
-		$data ["narrTerm"] = $this->input->post ( "narrTerm" );
-		$data ["narrYear"] = $this->input->post ( "narrYear" );
-		$data ["reportSort"] = $this->subject_sort_model->get_sort ( $kStudent, $data ["narrTerm"], $data ["narrYear"] );
+		$data ["narrTerm"] = $this->input->get ( "narrTerm" );
+		$data ["narrYear"] = $this->input->get ( "narrYear" );
+		$data ["reportSort"] = $this->subject_sort_model->get_sort ( $kStudent, $data ["narrTerm"], $data ["narrYear"],"grades" );
 		$data ["kTeach"] = 1000;
-		$data ["target"] = "narrative/sorter";
+		$data ["target"] = "narrative/sort";
 		$data ["title"] = "Sorting Narratives";
 		$data ["school_year"] = format_schoolyear ( $data ["narrYear"], $data ["narrTerm"] );
-		$this->load->view ( $data ["target"], $data );
+		$this->load->view ( "page/index", $data );
 
 	}
 

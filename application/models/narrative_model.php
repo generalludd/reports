@@ -116,7 +116,11 @@ class Narrative_model extends CI_Model
 		
 		// this allows optional sorting of subjects (if the student does well in one subject,
 		// the teacher/editors may wish to have it appear before those the student struggles with
-		$subjects = NULL;
+		$this->load->model("student_model");
+		$student = $this->student_model->get($kStudent);
+		
+		$this->load->model("global_subject_model","global_subject");
+		$subjects = $this->global_subject->get_by_grade(get_current_grade($student->baseGrade, $student->baseYear),"narratives");
 		if (array_key_exists ( 'reportSort', $options )) {
 			$subjects = $options ['reportSort'];
 		}
