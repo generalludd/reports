@@ -813,6 +813,7 @@ a.button {
 table.list td {
 	padding: 5px;
 	border-width: 0px;
+	vertical-align: top;
 }
 
 table.list {

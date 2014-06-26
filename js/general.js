@@ -272,7 +272,26 @@
 		}
 	);
 	
-	}//end document function
+	$(".edit-subject-sort").live("click",function(){
+		my_id = this.id.split("_");
+		form_data = {
+				grade_start: my_id[0],
+				grade_end: my_id[1],
+				context: my_id[2],
+				ajax: 1
+		};
+		$.ajax({
+			type:"get",
+			data: form_data,
+			url: base_url + "config/edit_sort",
+			success :function(data){
+				showPopup("Edit Global Sort",data,"auto");
+			}
+		});
+		
+	});
+	
+		}//end document function
 );//end ready
 
 

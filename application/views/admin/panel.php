@@ -8,4 +8,5 @@
 <p><a href="<?=site_url("preference_type/type_list");?>" class="button">Preference Types</a>&nbsp;Edit the preference types used throughout the system for various functions</p>
 <p><a href="#" class="button log_search">Search Logs</a>&nbsp;Search the site logs for login and logout history. </p>
 <p><a href="student/update_grades" class="button">Update Student Grades</a>&nbsp;Update all student grades to the current year.</p>
-<p><a href="<?=site_url("menu/show");?>" class="button">System Menus</a>&nbsp;Edit the dropdown menu values that are used in attendance, grades, narratives and elsewhere in the system</p> 
+<p><a href="<?=site_url("menu/show");?>" class="button">System Menus</a>&nbsp;Edit the dropdown menu values that are used in attendance, grades, narratives and elsewhere in the system</p>
+<p><a href="<?=site_url("config/show_subject_sort");?>" class="button">Set Global Subject Order</a>&nbsp;Change the order of subjects that report cards and narratives are arranged</p>
