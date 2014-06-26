@@ -62,6 +62,23 @@ class Grade_model extends CI_Model
 		$result = $this->db->get()->num_rows();
 		return $result;
 	}
+	
+	/**
+	 * 
+	 * @param int $kStudent
+	 * @param varchar $term
+	 * @param int $year
+	 * Does the student have grades for the given term?
+	 */
+	function has_grades($kStudent, $term, $year){
+		$this->db->from("grade");
+		$this->db->join("assignment","grade.kAssignment = assignment.kAssignment");
+		$this->db->where("kStudent",$kStudent);
+		$this->db->where("assignment.term",$term);
+		$this->db->where("assignment.year",$year);
+		$result = $this->db->get()->num_rows();
+		$this->session->set_flashdata("notice",$result);
+	}
 
 
 	/**
@@ -168,9 +185,7 @@ class Grade_model extends CI_Model
 	 * @param int $kStudent
 	 * @param varchar $term
 	 * @param int $year
-	 * @param options array optional expects custom_sort and/or cutoff_date
-	 * cutoff_date optional standard US date (mm-dd-yyyy) format converted in script to mysql
-	 * custom_sort optional trigger for selecting a custom sort for the order of reports by subject
+	 * @param options array optional expects cutoff_date: standard US date (mm-dd-yyyy) format converted in script to mysql
 	 * @return object
 	 * get a distinct list of subjects for a student for the term, year and optional cutoff date.
 	 */
@@ -179,9 +194,16 @@ class Grade_model extends CI_Model
 			$this->db->where(sprintf("`assignment`.`date` <= '%s'", format_date($options['cutoff_date'],"mysql")));
 		}
 		$subject_sort = 'subject';
-		if(array_key_exists('custom_sort',$options)){
-			$this->load->model("subject_sort_model","subject_sort");
+		$this->load->model("subject_sort_model","subject_sort");
+		
+		if($this->subject_sort->has_sort($kStudent, $term, $year, "grades")){
 			$subject_sort = get_subject_order($this->subject_sort->get_sort($kStudent,$term,$year,"grades"));
+		}else{
+			$this->load->model("global_subject_model","global_subject");
+			$this->load->model("student_model");
+			$student = $this->student_model->get($kStudent,"baseGrade,baseYear");
+			$stuGrade = get_current_grade($student->baseGrade, $student->baseYear, $year);
+			$subject_sort = get_subject_order($this->global_subject->get_by_grade($stuGrade,"grades"));
 		}
 		$query = sprintf("SELECT `subject` FROM (`grade`) LEFT JOIN `assignment` ON `grade`.`kAssignment`=`assignment`.`kAssignment` WHERE `grade`.`kStudent` = '%s' GROUP BY `subject` ORDER BY %s",$kStudent,$subject_sort);
 		$result = $this->db->query($query)->result();

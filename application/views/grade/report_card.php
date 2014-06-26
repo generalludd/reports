@@ -1,7 +1,5 @@
 <?php 
-if(!$print){
-	$this->load->view("student/navigation", array("kStudent",$kStudent));
-}
+
 $i = 0; //iteration of row numbers for css styling and printing
 ?>
 
