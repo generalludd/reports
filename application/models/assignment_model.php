@@ -103,7 +103,7 @@ class Assignment_model extends CI_Model
         if ($date_range) {
             $this->db->where(sprintf("(`assignment`.`date` BETWEEN '%s' AND '%s')", $date_range["date_start"], $date_range["date_end"]));
         }
-        $this->db->where("(student.stuGrade BETWEEN $gradeStart AND $gradeEnd)");
+        $this->db->where("(stuGrade BETWEEN $gradeStart AND $gradeEnd)");
         $this->db->join("grade", "assignment.kAssignment=grade.kAssignment");
         $this->db->join("student", "grade.kStudent=student.kStudent");
         $this->db->join("assignment_category as category", "assignment.kCategory = category.kCategory", "LEFT");
