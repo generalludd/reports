@@ -120,7 +120,11 @@ class Narrative_model extends CI_Model
 		$student = $this->student_model->get($kStudent);
 		
 		$this->load->model("global_subject_model","global_subject");
-		$subjects = $this->global_subject->get_by_grade(get_current_grade($student->baseGrade, $student->baseYear,$options['narrYear']),"narratives");
+		$year = get_current_year();
+		if(array_key_exists("narrYear",$options)){
+			$year = $options['narrYear'];
+		}
+		$subjects = $this->global_subject->get_by_grade(get_current_grade($student->baseGrade, $student->baseYear,$year),"narratives");
 		if (array_key_exists ( 'reportSort', $options )) {
 			$subjects = $options ['reportSort'];
 		}
