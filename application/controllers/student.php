@@ -158,7 +158,7 @@ class Student extends MY_Controller
 	function advanced_search(){
 		$year = get_current_year();
 		burn_cookie("year");
-		if($this->input->get($year)){
+		if($this->input->get("year")){
 			$year = $this->input->get("year");
 			bake_cookie("year", $year);
 		}

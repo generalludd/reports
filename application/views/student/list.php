@@ -29,13 +29,13 @@ $current_teacher = NULL;
 	$current_teacher = $student->kTeach;
 	endif;
 	endif;
-	if($current_grade != $student->stuGrade): ?>
+	if($current_grade != $student->listGrade): ?>
 
 	<h4 class='grade_row'>
 		Grade
-		<?= format_grade($student->stuGrade)?>
+		<?= format_grade($student->listGrade)?>
 	</h4>
-	<?  $current_grade = $student->stuGrade;
+	<?  $current_grade = $student->listGrade;
 	endif; ?>
 	<div class='student-row row<?=$row_style;?>'>
 		<div class='<?=$student_style;?>'>
