@@ -15,6 +15,7 @@ class Student_model extends CI_Model
 	var $baseGrade = 0;
 	var $baseYear;
 	var $isEnrolled;
+	var $isGraduate;
 	var $stuEmail;
 	var $stuEmailPermission;
 	var $stuEmailPassword;
@@ -41,6 +42,7 @@ class Student_model extends CI_Model
 				'baseGrade',
 				'baseYear',
 				'isEnrolled',
+				'isGraduate',
 				'stuEmail',
 				'stuEmailPermission',
 				'stuEmailPassword',
@@ -245,7 +247,7 @@ class Student_model extends CI_Model
 					1 
 			) );
 		} else {
-			$this->db->where ( "isEnrolled", 1 );
+			$this->db->where ( "(`isEnrolled` = 1 OR `isGraduate` = 1)",NULL,FALSE );
 		}
 		
 		if ($hasNeeds == 1) {

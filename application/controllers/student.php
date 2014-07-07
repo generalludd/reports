@@ -192,6 +192,7 @@ class Student extends MY_Controller
 		//$this->session->set_userdata($session);
 		$data["criteria"] = $this->input->get();
 		$data["students"] = $this->student_model->advanced_find($year,$grades, $hasNeeds, $includeFormerStudents, $sorting);
+		$this->session->set_flashdata("notice",$this->db->last_query());
 		$data["title"] = "Student List";
 		if($this->input->get("export")){
 			$this->load->helper("download");
