@@ -117,6 +117,9 @@ class Student_model extends CI_Model
 		$this->db->where ( "(CONCAT(`stuFirst`,' ', `stuLast`) LIKE '%$stuName%' OR CONCAT(`stuNickname`,' ', `stuLast`) LIKE '%$stuName%')" );
 		$this->db->order_by ( "stuFirst", "ASC" );
 		$this->db->order_by ( "stuLast", "ASC" );
+		$year = get_current_year();
+		$this->db->select ( "student.*,(baseGrade+$year-baseYear) AS listGrade" );
+		
 		$result = $this->db->get ( "student" )->result ();
 		return $result;
 	
