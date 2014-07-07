@@ -581,11 +581,10 @@ class Narrative extends MY_Controller {
 			$narrYear = $this->uri->segment ( 5 );
 			$student_obj = $this->student_model->get ( $kStudent, "stuFirst,stuLast,stuNickname,baseGrade,baseYear" );
 			$student = format_name ( $student_obj->stuFirst, $student_obj->stuLast, $student_obj->stuNickname );
-			$stuGrade = get_current_grade ( $student_obj->baseGrade, $student_obj->baseYear, $narrYear );
+			$data ["stuGrade"] = get_current_grade ( $student_obj->baseGrade, $student_obj->baseYear, $narrYear );
 			$attendance = $this->attendance_model->summarize ( $kStudent, $narrTerm, $narrYear );
 			$data ["tardy"] = $attendance ["tardy"];
 			$data ["absent"] = $attendance ["absent"];
-			$data ["stuGrade"] = $this->student_model->get_grade ( $kStudent, $narrYear );
 			$data ["narrYear"] = $narrYear;
 			$data ["narrTerm"] = $narrTerm;
 			$narratives = $this->narrative_model->get_for_student ( $kStudent, array (

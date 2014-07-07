@@ -104,7 +104,6 @@ class Assignment_model extends CI_Model
             $this->db->where(sprintf("(`assignment`.`date` BETWEEN '%s' AND '%s')", $date_range["date_start"], $date_range["date_end"]));
         }
         $this->db->where("(student.stuGrade BETWEEN $gradeStart AND $gradeEnd)");
-        // $this->db->where("student.stuGrade in ($gradeStart,$gradeEnd)");
         $this->db->join("grade", "assignment.kAssignment=grade.kAssignment");
         $this->db->join("student", "grade.kStudent=student.kStudent");
         $this->db->join("assignment_category as category", "assignment.kCategory = category.kCategory", "LEFT");
@@ -114,11 +113,12 @@ class Assignment_model extends CI_Model
         $this->db->order_by("assignment.kAssignment");
         $this->db->order_by("assignment.term");
         $this->db->order_by("assignment.year");
-        $this->db->select("student.kStudent,student.stuFirst,student.stuLast,student.stuNickname,student.stuGrade,student.stuGroup");
+        $this->db->select("student.kStudent,student.stuFirst,student.stuLast,student.stuNickname, (`student`.`baseGrade` + $year -`student`.`baseYear`) as `stuGrade`,student.stuGroup");
         $this->db->select("grade.*");
         $this->db->select("assignment.kTeach, assignment.assignment,assignment.points as assignment_total,assignment.subject, assignment.term,assignment.year");
         $this->db->select("category.weight,category.category");
         $result = $this->db->get()->result();
+        $this->session->set_flashdata("notice",$this->db->last_query());
         return $result;
     }
 
@@ -138,7 +138,6 @@ class Assignment_model extends CI_Model
         if ($stuGroup) {
             $this->db->where("student.stuGroup", $stuGroup);
         }
-        // $this->db->where("student.stuGrade in ($gradeStart,$gradeEnd)");
         $this->db->join("grade", "assignment.kAssignment=grade.kAssignment");
         $this->db->join("student", "grade.kStudent=student.kStudent");
         $this->db->join("assignment_category as category", "assignment.kCategory = category.kCategory", "LEFT");
@@ -148,7 +147,7 @@ class Assignment_model extends CI_Model
         $this->db->order_by("assignment.kAssignment");
         $this->db->order_by("assignment.term");
         $this->db->order_by("assignment.year");
-        $this->db->select("student.kStudent,student.stuFirst,student.stuLast,student.stuNickname,student.stuGrade,student.stuGroup");
+        $this->db->select("student.kStudent,student.stuFirst,student.stuLast,student.stuNickname, (`baseGrade` + $year -`baseYear`) as`stuGrade`,student.stuGroup");
         $this->db->select("grade.*");
         $this->db->select("assignment.kTeach, assignment.assignment,assignment.points as assignment_total,assignment.subject, assignment.term,assignment.year");
         $this->db->select("category.weight,category.category");

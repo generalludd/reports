@@ -63,8 +63,9 @@ class Narrative_model extends CI_Model
 			$this->db->select ( $fields );
 		}
 		if ($include_student) {
+			$year = get_current_year();
 			$this->db->where ( '`narrative`.`kStudent`', '`student`.`kStudent`', FALSE );
-			$this->db->select ( "student.stuFirst, student.stuLast, student.stuNickname,student.stuGrade, student.baseGrade, student.baseYear,narrative.*" );
+			$this->db->select ( "student.stuFirst, student.stuLast, student.stuNickname,(`student`.`baseGrade` + $year - `student`.`baseYear`) as `stuGrade`, student.baseGrade, student.baseYear,narrative.*" );
 			$this->db->from ( 'narrative,student' );
 		} else {
 			$this->db->from ( "narrative" );
@@ -223,9 +224,10 @@ class Narrative_model extends CI_Model
 		if (array_key_exists ( "kStudent", $options )) {
 			$this->db->where ( "narrative.kStudent", $options ['kStudent'] );
 		}
-		
+		$narrYear = get_current_year();
 		if (array_key_exists ( "narrYear", $options )) {
 			$this->db->where ( "narrative.narrYear", $options ["narrYear"] );
+			$narrYear = $options['narrYear'];
 		} else {
 			$this->db->where ( "narrative.narrYear", get_current_year () );
 		}
@@ -243,14 +245,14 @@ class Narrative_model extends CI_Model
 		if (array_key_exists ( "order", $options )) {
 			$this->db->order_by ( "order", $options ['order'] );
 		} else {
-			$this->db->order_by ( "student.stuGrade,student.stuLast,student.stuFirst ASC" );
+			//$this->db->order_by ( "narrative.stuGrade,student.stuLast,student.stuFirst ASC" );
 		}
 		
 		$this->db->from ( "narrative,teacher as modifier" );
 		$this->db->join ( "student", "narrative.kStudent = student.kStudent", "left" );
 		$this->db->where ( "narrative.recModifier = modifier.kTeach" );
 		$this->db->select ( "modifier.teachFirst,modifier.teachLast" );
-		$this->db->select ( "narrative.*, student.stuGrade AS currentGrade, student.stuFirst, student.stuLast, student.stuNickname" );
+		$this->db->select ( "narrative.*,(`student`.`baseGrade` + $narrYear - `student`.`baseYear`) as `currentGrade`, student.stuFirst, student.stuLast, student.stuNickname" );
 		$result = $this->db->get ()->result ();
 		return $result;
 	

@@ -157,6 +157,7 @@ class Benchmark extends MY_Controller
 	{
 		$this->load->model("narrative_model");
 		$kNarrative = $this->input->get_post("kNarrative");
+		//@TODO get studentGrade as calculation
 		$narrative = $this->narrative_model->get($kNarrative,FALSE,"narrative.kStudent, narrative.narrSubject,narrative.stuGrade,narrative.narrTerm,narrative.narrYear");
 		$data["benchmarks"] = $this->benchmark_model->get_for_student($narrative->kStudent, $narrative->narrSubject, $narrative->stuGrade, $narrative->narrTerm, $narrative->narrYear);
 		$this->load->view("benchmark/edit_for_student",$data);

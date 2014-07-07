@@ -90,7 +90,7 @@ class Student extends MY_Controller
 		if($this->input->post("kStudent")){
 			$kStudent = $this->input->post("kStudent");
 			$student = $this->student_model->get($kStudent);
-			if(empty($student->stuEmail) && $student->stuGrade > 2){
+			if(empty($student->stuEmail) && get_current_grade($student->baseGrade, $student->baseYear,get_current_year()) > 2){
 				$student->stuEmail = $this->generate_email($kStudent, $student->stuNickname, $student->stuLast);
 			}
 			$data["student"] = $student;

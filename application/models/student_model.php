@@ -78,6 +78,8 @@ class Student_model extends CI_Model
 		$this->db->from ( 'student' );
 		if ($fields) {
 			$this->db->select ( $fields );
+		}else{
+			$this->db->select("*,(`baseGrade`+". get_current_year() . "-`baseYear`) as stuGrade");
 		}
 		if ($include_teacher) {
 			$this->db->join ( "teacher", "teacher.kTeach=student.kTeach" );
