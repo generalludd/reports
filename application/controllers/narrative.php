@@ -592,9 +592,6 @@ class Narrative extends MY_Controller {
 					"narrTerm" => $narrTerm,
 					"narrYear" => $narrYear
 			) );
-			/*
-			 * foreach($narratives as $narrative){ $data["benchmarks"][$narrative->narrSubject] = $this->benchmark_model->get_for_student($kStudent,$narrative->narrSubject,$stuGrade, $narrTerm, $narrYear); }
-			 */
 
 			$this->load->model ( "preference_model", "preference" );
 			$data ["narratives"] = $narratives;
