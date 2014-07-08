@@ -137,7 +137,10 @@ class Assignment_model extends CI_Model
         if ($stuGroup) {
             $this->db->where("student.stuGroup", $stuGroup);
         }
-        $year = $this->input->cookie("year");
+        $year = get_current_year();
+         if( $this->input->cookie("year")){
+        	$year = $this->input->cookie("year");
+        }
         $this->db->join("grade", "assignment.kAssignment=grade.kAssignment");
         $this->db->join("student", "grade.kStudent=student.kStudent");
         $this->db->join("assignment_category as category", "assignment.kCategory = category.kCategory", "LEFT");
