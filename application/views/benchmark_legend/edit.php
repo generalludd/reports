@@ -14,7 +14,7 @@ value="<?=get_value($legend, "gradeStart"); ?>" size="3" maxlength="1">
 <label for="term">Term:
 </label><?=get_term_menu('term', get_value($legend, "term", $term));?> 
 <label for="year">Year: </label>
-<?=form_dropdown('year',get_year_list(), get_value($legend, "year", $year), "id='year' class='searchYear'");?>
+<?=form_dropdown('year',get_year_list(), get_value($legend, "year", $year), "id='year' class='year'");?>
 -<input id="yearEnd" type="text" name="yearEnd" class='yearEnd' readonly
 	maxlength="4" size="5" value="<? $yearEnd=$year+1;print $yearEnd; ?>" /></p>
 

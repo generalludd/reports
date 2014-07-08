@@ -191,9 +191,15 @@ function get_current_term($targetDate = NULL)
 	return "$term";
 }
 
-function get_term_menu($id, $currentTerm=null, $initial_blank = FALSE){
+function get_term_menu($id, $currentTerm=null, $initial_blank = FALSE,$options = array()){
 	$terms = array("Mid-Year", "Year-End");
 	$select[]="<select id='$id' name='$id'>";
+	$classes = FALSE;
+	if(!empty($options)){
+		if(array_key_exists("classes", $options)){
+			$classes = sprintf("class='%s'",$options["classes"]);
+		}
+	}
 	if($initial_blank){
 		$select[] = "<option value=''></option>";
 	}
@@ -202,7 +208,7 @@ function get_term_menu($id, $currentTerm=null, $initial_blank = FALSE){
 		if($term == $currentTerm){
 			$selection = "selected";
 		}
-		$select[]="<option value='$term' $selection>$term</option>";
+		$select[]="<option value='$term' $classes $selection>$term</option>";
 
 	}
 	$select[]="</select>";

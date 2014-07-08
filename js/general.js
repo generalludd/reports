@@ -36,13 +36,13 @@
 		});
 	});
 	
-	$('.searchYear').live('change',function(){
+	$('.year').live('change',function(){
 		var myYear=$(this).val();
 		if(myYear != 0){
 			var endYear=parseInt(myYear) + 1;
-			$('.yearEnd').val(endYear);
+			$(this).siblings('#yearEnd').val(endYear);
 		}else{
-			$('.yearEnd').val("");
+			$(this).siblings('#yearEnd').val("");
 		}
 	});
 
