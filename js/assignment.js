@@ -6,7 +6,7 @@ $(document).ready(function(){
 		}
 	});
 	
-	$(".assignment-edit").live("click",function(){
+	$(".editable .assignment-edit").live("click",function(){
 		myAssignment = this.id.split("_")[1];
 		form_data = {
 				kAssignment: myAssignment,
@@ -35,7 +35,7 @@ $(document).ready(function(){
 		});
 	});
 	
-	$(".grade-points.edit").live("click",function(){
+	$(".editable .grade-points.edit").live("click",function(){
 		myId = this.id.split("_");
 		myAssignment = myId[1];
 		myStudent = myId[2];
@@ -59,7 +59,7 @@ $(document).ready(function(){
 		
 	});
 	
-	$(".point-editor").live("blur",function(){
+	$("editable .point-editor").live("blur",function(){
 		myPoints = $(this).val();
 		$(this).parent(".grade-points").html(myPoints).addClass("edit");
 	});
@@ -153,7 +153,7 @@ $(document).ready(function(){
 		
 	});
 	
-	$(".assignment-column-edit").live("click",function(){
+	$(".editable .assignment-column-edit").live("click",function(){
 		myAssignment = this.id.split("_")[1];
 		form_data = {
 				kAssignment: myAssignment,
@@ -173,7 +173,7 @@ $(document).ready(function(){
 	});
 
 	
-	$(".edit_student_grades").live("click",function(){
+	$(".editable .edit_student_grades").live("click",function(){
 		myTeach = $("#kTeach").val();
 		myStudent = this.id.split("_")[1];
 		form_data = {
@@ -192,7 +192,7 @@ $(document).ready(function(){
 		});
 	});
 	
-	$(".save_student_grade").live("click",function(){
+	$(".editable .save_student_grade").live("click",function(){
 		myID = this.id.split("_");
 		myAssignment = myID[1];
 		myStudent = myID[2];		
@@ -226,7 +226,7 @@ $(document).ready(function(){
 		//save_student_points(myAssignment);
 	});
 	
-	$(".save_cell_grade").live("click",function(){
+	$(".editable .save_cell_grade").live("click",function(){
 		myStudent = $("#kStudent").val();
 		myAssignment = $("#kAssignment").val();
 		myPoints = $("#points_" + myAssignment + "_" + myStudent).val();
@@ -257,7 +257,7 @@ $(document).ready(function(){
 		window.location.reload();
 	});
 	
-	$(".grade-delete-row .button").live("click",function(){
+	$(".editable .grade-delete-row .button").live("click",function(){
 		choice = confirm("Are you sure you want to delete this student's grade entries for the entire term? This cannot be undone!");
 		if(choice){
 			second_chance = confirm("This will delete all the grades entered for this student for the current term. Click OK only if you are absolute sure you want to do this!");
