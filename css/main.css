@@ -522,6 +522,9 @@ legend {
 #yearSearch {
 	text-align: center;
 }
+input[type="text"].year,#yearEnd {
+	width: 3em;
+}
 
 #advancedSearch {
 	border-width: 1px;
@@ -814,22 +817,36 @@ table.list td {
 	padding: 5px;
 	border-width: 0px;
 	vertical-align: top;
+
 }
 
 table.list {
-	border-spacing: 0px;
 	padding-bottom: 5px;
 	padding-top: 5px;
+		border-collapse: collapse;
 }
 
-table.list th {
+table.list thead tr {
 	border-bottom-style: solid;
 	border-bottom-width: 1px;
 	border-bottom-color: #000;
 }
 
-table.list tbody tr {
-	
+
+table.grid th, table.grid td {
+	border-left: solid 1px #999;
+	border-right: solid 1px #999;
+	border-top: solid 1px #999;
+	vertical-align: middle;
+}
+
+
+table.grid thead tr.first th {
+	border-bottom: none;
+}
+
+table.grid tbody tr:last-child {
+	border-bottom: solid 1px #999;
 }
 
 table.files {
@@ -1068,8 +1085,8 @@ th.assignment-field {
 }
 
 th.assignment-field .assignment-column-edit {
-	*position: absolute;
-	*bottom: 0;
+	/*position: absolute;
+	bottom: 0;*/
 }
 
 table.grade-chart th .chart-assignment {

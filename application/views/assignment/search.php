@@ -23,7 +23,7 @@ if(empty($year)){
 <p>	<label for="term">Term:
 </label><?=get_term_menu('term', $term);?></p>
 <p> <label for="year">Year: </label>
-<?=form_dropdown('year',get_year_list(), $year, "id='year' class='searchYear'");?>
+<?=form_dropdown('year',get_year_list(), $year, "id='year' class='year'");?>
 -<input id="yearEnd" type="text" name="yearEnd" class='yearEnd' readonly
 	maxlength="4" size="5" value="<? $yearEnd=$year+1;print $yearEnd; ?>" /></p>
 	<p><label for="date_range">Date Range</label><input type="text" id="date_start" name="date_start" class="datefield" value=""/>-

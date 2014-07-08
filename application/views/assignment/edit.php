@@ -50,7 +50,7 @@ if($date = get_value($assignment,"date")){
 <p>	<label for="term">Term:
 </label><?=get_term_menu('term', $term);?></p>
 <p> <label for="year">Year: </label>
-<?=form_dropdown('year',get_year_list(), get_value($assignment,"year",$this->input->cookie("year")), "id='year' class='searchYear'");?>
+<?=form_dropdown('year',get_year_list(), get_value($assignment,"year",$this->input->cookie("year")), "id='year' class='year'");?>
 -<input id="yearEnd" type="text" name="yearEnd" class='yearEnd' readonly
 	maxlength="4" size="5" value="<? $yearEnd=$year+1;print $yearEnd; ?>" /></p>
 <div class="button-box">

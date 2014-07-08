@@ -28,7 +28,7 @@ if(!empty($assignments)){
 	<ul class="button-list">
 		<li><span class="button refresh">Refresh Page</span></li>
 		<? if($kTeach == $this->session->userdata("userID")): ?>
-		<li><span class="button edit assignment_categories_edit">Edit
+		<li><span class="button edit assignment-categories-edit">Edit
 				Categories</span></li>
 		<? endif;?>
 
@@ -129,7 +129,7 @@ if(!empty($assignments)){
 <? }else{ ?>
 <p>
 	You may need to create categories before creating assignments. <span
-		class="button edit assignment_categories_edit">Edit Categories</span>
+		class="button edit assignment-categories-edit">Edit Categories</span>
 </p>
 <? if($category_count > 0){ ?>
 <p>

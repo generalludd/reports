@@ -44,7 +44,7 @@ class Assignment_model extends CI_Model
     function get ($kAssignment)
     {
         $this->db->where("kAssignment", $kAssignment);
-        $this->db->join("assignment_category as category", "assignment.kCategory = category.kCategory");
+        $this->db->join("assignment_category as category", "assignment.kCategory = category.kCategory","LEFT");
         $this->db->select("assignment.*,category.weight,category.category");
         $this->db->from("assignment");
         $result = $this->db->get()->row();
@@ -93,8 +93,8 @@ class Assignment_model extends CI_Model
     function get_grades ($kTeach, $term, $year, $gradeStart, $gradeEnd, $stuGroup = NULL, $date_range = array())
     {
         $this->db->from("assignment");
-        $this->db->where("term", $term);
-        $this->db->where("year", $year);
+        $this->db->where("assignment.term", $term);
+        $this->db->where("assignment.year", $year);
         $this->db->where("assignment.kTeach", $kTeach);
         $this->db->where("(assignment.gradeStart = $gradeStart OR assignment.gradeEnd = $gradeEnd)");
         if ($stuGroup) {
@@ -103,7 +103,7 @@ class Assignment_model extends CI_Model
         if ($date_range) {
             $this->db->where(sprintf("(`assignment`.`date` BETWEEN '%s' AND '%s')", $date_range["date_start"], $date_range["date_end"]));
         }
-        $this->db->where("(stuGrade BETWEEN $gradeStart AND $gradeEnd)");
+        $this->db->where("((`student`.`baseGrade` + $year -`student`.`baseYear`) BETWEEN $gradeStart AND $gradeEnd)");
         $this->db->join("grade", "assignment.kAssignment=grade.kAssignment");
         $this->db->join("student", "grade.kStudent=student.kStudent");
         $this->db->join("assignment_category as category", "assignment.kCategory = category.kCategory", "LEFT");
@@ -233,8 +233,8 @@ class Assignment_model extends CI_Model
     function get_for_teacher ($kTeach, $term, $year, $gradeStart, $gradeEnd, $date_range = array())
     {
         $this->db->where("assignment.kTeach", $kTeach);
-        $this->db->where("term", $term);
-        $this->db->where("year", $year);
+        $this->db->where("assignment.term", $term);
+        $this->db->where("assignment.year", $year);
         $this->db->where("(assignment.gradeStart = $gradeStart OR assignment.gradeEnd = $gradeEnd)");
         if ($date_range) {
             $this->db->where(sprintf("(`assignment`.`date` BETWEEN '%s' AND '%s')", $date_range["date_start"], $date_range["date_end"]));
@@ -270,6 +270,7 @@ class Assignment_model extends CI_Model
             $this->db->insert("assignment_category", $values);
             $kCategory = $this->db->insert_id();
         }
+        $this->session->set_flashdata("notice",$this->db->last_query());
         return $kCategory;
     }
 
@@ -289,7 +290,7 @@ class Assignment_model extends CI_Model
         return $result;
     }
 
-    function get_categories ($kTeach, $gradeStart, $gradeEnd)
+    function get_categories ($kTeach, $gradeStart, $gradeEnd,$year, $term)
     {
         $this->db->distinct("category");
         if ($kTeach) {
@@ -298,6 +299,8 @@ class Assignment_model extends CI_Model
         $this->db->where("kTeach", $kTeach);
         $this->db->where("gradeStart", $gradeStart);
         $this->db->where("gradeEnd", $gradeEnd);
+        $this->db->where("year",$year);
+        $this->db->where("term",$term);
         $this->db->order_by("weight", "DESC");
         $result = $this->db->get("assignment_category")->result();
         return $result;

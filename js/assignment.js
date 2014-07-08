@@ -342,7 +342,7 @@ $(document).ready(function(){
 	});
 	
 	
-	$(".assignment_categories_edit").live("click",function(){
+	$(".assignment-categories-edit").live("click",function(){
 		$.ajax({
 			url: base_url + "assignment/edit_categories/" + $("#kTeach").val(),
 			type: "get",
@@ -374,13 +374,17 @@ $(document).ready(function(){
 		myWeight = $("#tr-teach_" + myTeach + " .insert-weight").val();
 		myStart = $("#tr-teach_" + myTeach + " .insert-gradeStart").val();
 		myEnd = $("#tr-teach_" + myTeach + " .insert-gradeEnd").val();
+		myYear = $("#tr-teach_" + myTeach + " .insert-year").val();
+		myTerm = $("#tr-teach_" + myTeach + " .insert-term").val();
 
 		form_data = {
 				kTeach: myTeach,
 				category: myCategory,
 				weight: myWeight,
 				gradeStart: myStart,
-				gradeEnd: myEnd
+				gradeEnd: myEnd,
+				year: myYear,
+				term: myTerm
 		};
 		$.ajax({
 			type: "post",

@@ -4,14 +4,20 @@
 	<span class="button new add-category" id="teach_<?=$kTeach;?>">Add
 		Category</span>
 </div>
-
-<table id="category-table">
+<table id="category-table" class="list grid">
 	<thead>
+	<tr class="first">
+	<th colspan=2></th>
+	<th colspan=2>Grade</th>
+	<th colspan=3></th>
+	</tr>
 		<tr>
 			<th>Category</th>
 			<th>Weight</th>
-			<th>Grade Start</th>
-			<th>Grade End</th>
+			<th>Start</th>
+			<th>End</th>
+			<th>Term</th>
+			<th>Year</th>
 			<th></th>
 		</tr>
 	</thead>
@@ -23,6 +29,7 @@
 		}?>
 	</tbody>
 </table>
+
 <div class="button-box">
 	<span class="button refresh">Done</span>
 </div>
