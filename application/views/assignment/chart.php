@@ -22,8 +22,16 @@ if(!empty($assignments)){
 
 <h2>
 	Grade Chart for
-	<?=sprintf("%s by %s %s", $gradeDisplay, $header->teachFirst, $header->teachLast) ;?>
+	<?=sprintf("%s, %s, %s by %s %s", $gradeDisplay, $header->term, format_schoolyear($header->year), $header->teachFirst, $header->teachLast) ;?>
 </h2>
+<? if($this->input->get("date_start")):?>
+<h3>
+<label>Date Range: </label>
+<?=sprintf("%s-%s",$this->input->get("date_start"), $this->input->get("date_end"));?>
+</h3>
+<? elseif(count($assignments > 10)): ?>
+<div class="alert">You can reduce the number of assignments displayed by entering a date range when you run your grade search</div>
+<? endif;?>
 <div class="button-box">
 	<ul class="button-list">
 		<li><span class="button refresh">Refresh Page</span></li>
@@ -45,12 +53,12 @@ if(!empty($assignments)){
 <table class='grade-chart'>
 	<thead>
 
-		<tr>
+		<tr class="first">
 			<th colspan='2'><?=$header_string;?>
 			</th>
 			<th></th>
 			<th class='chart-final-grade'>Final Grade</th>
-			<? 
+			<? $assignment_keys = array();
 			foreach($assignments as $assignment): ?>
 
 			<th id="as_<?=$assignment->kAssignment;?>"	
@@ -64,14 +72,21 @@ if(!empty($assignments)){
 			</span><br /> <span class='chart-date'><?=format_date($assignment->date,'standard');?>
 			</span>
 			</div>
-			<div class='assignment-column-edit button' id='ace_<?=$assignment->kAssignment;?>'>Edit Grades</div>
-			
+			<? $assignment_keys[] = $assignment->kAssignment;?>
 			</th>
 
 
 			<? endforeach; ?>
 			<th class='assignment-button'><span
 				class='button new assignment-create'>Add&nbsp;Assignment</span></th>
+		</tr>
+		<tr class="second">
+		<th colspan=4 ></th>
+		<? foreach($assignment_keys as $key):?>
+		<th >
+					<div class='assignment-column-edit button' id='ace_<?=$key;?>'>Edit Grades</div>
+		</th>
+		<? endforeach;?>
 		</tr>
 	</thead>
 	<tbody>
@@ -81,6 +96,7 @@ if(!empty($assignments)){
 		 foreach($grades as $grade){ 
 			if($current_student != $grade->kStudent){
 				$rows[$grade->kStudent]["name"] = "<td class='student-name'><span class='student edit_student_grades' id='eg_$grade->kStudent'>$grade->stuNickname $grade->stuLast</span></td>";
+				$rows[$grade->kStudent]["name_string"] = format_name($grade->stuNickname ,$grade->stuLast);
 				$rows[$grade->kStudent]["delete"] = sprintf("<td class='grade-delete-row'><span class='student delete button' id='dgr_%s_%s_%s' title='Delete the entire row'>Delete</span></td>",$grade->kStudent, $header->term, $header->year);
 				$rows[$grade->kStudent]["kStudent"] = $grade->kStudent;
 				$current_student = $grade->kStudent;
@@ -110,7 +126,7 @@ if(!empty($assignments)){
 		}//end foreach grades
 
 		foreach($rows as $row){
-			print sprintf("<tr id='sgtr_%s' class='grade-chart-row'>",$row['kStudent']);
+			print sprintf("<tr id='sgtr_%s' title='%s' class='grade-chart-row'>",$row['kStudent'],$row['name_string']);
 			print $row["delete"];
 			print $row["name"];
 			print $row["button"];

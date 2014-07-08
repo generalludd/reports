@@ -19,6 +19,7 @@ body {
 	padding: 10px;
 	padding-right: 15px;
 	padding-top: 0px;
+	transition: auto .25s ease;
 }
 
 #page {
@@ -190,8 +191,14 @@ div.login-title {
 }
 
 .alert {
-	padding: 3px;
+	padding: 5px;
 	font-weight: bold;
+	text-align: center;
+	cursor: pointer;
+}
+
+#content .alert {
+	padding: 1em;
 }
 
 #new_popup {
@@ -1084,9 +1091,13 @@ th.assignment-field {
 	position: relative;
 }
 
-th.assignment-field .assignment-column-edit {
-	/*position: absolute;
-	bottom: 0;*/
+table.grade-chart thead tr:last-child th {
+	font-size: .85em;
+}
+
+th .assignment-column-edit {
+	width: 45px;
+	margin: 0 auto;
 }
 
 table.grade-chart th .chart-assignment {

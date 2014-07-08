@@ -158,7 +158,6 @@ class Assignment extends MY_Controller
 	{
 		$kAssignment = $this->input->get("kAssignment");
 		$assignment = $this->assignment->get($kAssignment);
-		$this->session->set_flashdata("notice",$this->db->last_query());
 		$this->load->model("subject_model");
 		$kTeach = $assignment->kTeach;
 		$subjects = $this->subject_model->get_for_teacher($kTeach);
@@ -276,7 +275,6 @@ class Assignment extends MY_Controller
 		$data["term"] = $this->input->post("term");
 		$data["year"] = $this->input->post("year");
 		$this->assignment->update_category($kCategory,$data);
-		$this->session->set_flashdata("notice", $this->db->last_query());
 
 	}
 

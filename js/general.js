@@ -12,6 +12,10 @@
 	$('.button.print').live('click', function(event){
         window.print();
     });
+	
+	$(".alert").live("click",function(){
+		$(this).fadeOut("slow");
+	});
 		
 	 $("#sortable").sortable({
 	      handle : '.handle',

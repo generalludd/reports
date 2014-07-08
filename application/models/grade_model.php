@@ -77,7 +77,6 @@ class Grade_model extends CI_Model
 		$this->db->where("assignment.term",$term);
 		$this->db->where("assignment.year",$year);
 		$result = $this->db->get()->num_rows();
-		$this->session->set_flashdata("notice",$result);
 	}
 
 

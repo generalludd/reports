@@ -85,7 +85,6 @@ class Global_Subject_Model extends CI_Model
 		$this->db->where ( "grade_end", $this->grade_end );
 		$this->db->where ( "context", $this->context );
 		$this->db->update ( "global_subject", $this );
-		$this->session->set_flashdata ( "notice", $this->db->last_query () );
 		
 		return $this->get ( $this->grade_start, $this->grade_end, $this->context );
 	

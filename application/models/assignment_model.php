@@ -118,7 +118,6 @@ class Assignment_model extends CI_Model
         $this->db->select("assignment.kTeach, assignment.assignment,assignment.points as assignment_total,assignment.subject, assignment.term,assignment.year");
         $this->db->select("category.weight,category.category");
         $result = $this->db->get()->result();
-        $this->session->set_flashdata("notice",$this->db->last_query());
         return $result;
     }
 
@@ -270,7 +269,6 @@ class Assignment_model extends CI_Model
             $this->db->insert("assignment_category", $values);
             $kCategory = $this->db->insert_id();
         }
-        $this->session->set_flashdata("notice",$this->db->last_query());
         return $kCategory;
     }
 
