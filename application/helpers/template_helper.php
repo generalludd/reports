@@ -7,7 +7,6 @@
     @params $name string Student first name or nickname
     @params $gender string(1)
     @depends parsePronouns in template_control.php, parseName() in template_control.php
-    @dependencies parseConcepts() in concepts.inc.php
     @abstract accepts three strings, the template text, a student name, and the gender of the student (F/M) and converts the generic template into an acceptable format.
 */
 function parse_template($template,$name,$gender){

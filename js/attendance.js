@@ -26,7 +26,7 @@ $(document).ready(function(){
 	$('.delete_attendance').live('click',
 		function(event){
 				$("#action").val("delete");
-				choice=confirm("Are you absolutely sure you want to delete this concept entry? This cannot be undone!");
+				choice=confirm("Are you absolutely sure you want to delete this attendance entry? This cannot be undone!");
 				if(choice) {
 					document.forms["attendanceEditor"].submit();
 				}else{
