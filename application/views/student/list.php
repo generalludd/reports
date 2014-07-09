@@ -10,7 +10,7 @@ $current_teacher = NULL;
 
 	foreach($students as $student):
 	$student_style = "studentName";
-	$stuGrade = get_current_grade($student->baseGrade, $student->baseYear, get_current_year());
+	$stuGrade = get_value($student,"stuGrade",get_current_grade($student->baseGrade, $student->baseYear, get_current_year()));
 	$enrolled = "";
 	$row_style = "";
 	if($student->isEnrolled == 0){

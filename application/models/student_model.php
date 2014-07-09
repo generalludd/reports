@@ -241,6 +241,8 @@ class Student_model extends CI_Model
 		$this->db->select ( "student.*,(baseGrade+$year-baseYear) AS stuGrade" );
 		if (! empty ( $grades )) {
 			$this->db->where_in ( "`baseGrade`+$year-`baseYear`", $grades );
+		}else{
+			$this->db->where("`baseGrade` + $year - `baseYear` BETWEEN 0 AND 8");
 		}
 		//if (! $includeFormerStudents) {
 			//$this->db->where ( "`baseGrade`+$year-`baseYear` < 9" );
@@ -269,7 +271,7 @@ class Student_model extends CI_Model
 		}
 		
 		$result = $this->db->get ()->result ();
-		
+		$this->session->set_flashdata('notice', $this->db->last_query());
 		return $result;
 	
 	}
