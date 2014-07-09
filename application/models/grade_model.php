@@ -97,7 +97,7 @@ class Grade_model extends CI_Model
 		$this->db->from("assignment");
 		$this->db->join("grade","grade.kAssignment = assignment.kAssignment","LEFT");
 		$this->db->join("student", "grade.kStudent = student.kStudent");
-		$this->db->where("(student.stuGrade BETWEEN $grade_start AND $grade_end)");
+		$this->db->where("((student.baseGrade + $year - student.baseYear) BETWEEN $grade_start AND $grade_end)");
 		$this->db->where("assignment.kTeach",$kTeach);
 		$this->db->where("term",$term);
 		$this->db->where("year",$year);

@@ -11,10 +11,10 @@
 	print "<input type='hidden' id='kTemplate' name='kTemplate' value=0/>";
 	if($count==0){
 		$yearEnd = strval($narrYear)-1;
-		print "You have no <b>$narrSubject</b> templates created for grade $stuGrade during $narrTerm $narrYear-$yearEnd<br/>";
-		print "<a href='" . site_url("template/list_templates/?kTeach=$kTeach&term=$narrTerm&year=$narrYear") . "'>Click Here to create a new template</a><br/>";
+		print "You have no <b>$narrSubject</b> templates created for grade $stuGrade during $narrTerm $narrYear-$yearEnd</p>";
+		print "<p><a href='" . site_url("template/list_templates/?kTeach=$kTeach&term=$narrTerm&year=$narrYear") . "' class='link' title='Clicking the above link will interrupt creating a narrative for $studentName'>Click Here to create a new template</a></p>";
 
-		print "<span class='highlight'>Clicking the above link will interrupt creating a narrative for $studentName</span><hr/>";
+		print "<p><span class='highlight'>Clicking the above link will interrupt creating a narrative for $studentName</span><hr/>";
 	}else{
 		print "Please choose the template you want to use for $studentName";
 		foreach($templates as $template){

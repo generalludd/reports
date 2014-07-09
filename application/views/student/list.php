@@ -10,13 +10,14 @@ $current_teacher = NULL;
 
 	foreach($students as $student):
 	$student_style = "studentName";
+	$stuGrade = get_current_grade($student->baseGrade, $student->baseYear, get_current_year());
 	$enrolled = "";
 	$row_style = "";
 	if($student->isEnrolled == 0){
 		$student_style = "$student_style highlight-text";
 		$row_style = " highlight";
 		$enrolled = "(Not Enrolled)";
-	}
+	} 
 	$name = format_name($student->stuFirst,$student->stuLast,$student->stuNickname);
 	if(get_value($student,"teachFirst",FALSE)):
 	if($current_teacher != $student->kTeach):
@@ -29,13 +30,13 @@ $current_teacher = NULL;
 	$current_teacher = $student->kTeach;
 	endif;
 	endif;
-	if($current_grade != $student->listGrade): ?>
+	if($current_grade != $stuGrade): ?>
 
 	<h4 class='grade_row'>
 		Grade
-		<?= format_grade($student->listGrade)?>
+		<?= format_grade($stuGrade)?>
 	</h4>
-	<?  $current_grade = $student->listGrade;
+	<?  $current_grade = $stuGrade;
 	endif; ?>
 	<div class='student-row row<?=$row_style;?>'>
 		<div class='<?=$student_style;?>'>
@@ -51,7 +52,7 @@ $current_teacher = NULL;
 		$buttons[] = array("selection"=>"narrative", "href" => site_url("narrative/student_list/$student->kStudent"), "class" => "button", "text" =>"Narratives");
 		$buttons[] = array("selection" => "attendance", "href" => site_url("attendance/search/$student->kStudent"), "class" => "button", "text" => "Attendance" );
 		$buttons[] = array("selection" => "support","href" => site_url("support/list_all/$student->kStudent"), "class" => "button", "text" => "Learning Support");
-		if($student->stuGrade >=5) {
+		if($stuGrade >=5) {
 			$buttons[] = array("selection" => "report", "href" => site_url("report/get_list/student/$student->kStudent"), "class" => "button","text" => sprintf("%ss",STUDENT_REPORT));
 			$buttons[] = array("selection" => "report","href" => site_url("report/create/$student->kStudent"), "text" => sprintf("Add %s",STUDENT_REPORT), "class" => "button new report-add",
 					"id" => sprintf("add-report_%s", $student->kStudent));

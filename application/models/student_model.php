@@ -10,7 +10,6 @@ class Student_model extends CI_Model
 	var $stuNickname;
 	var $stuGender;
 	var $stuDOB;
-	var $stuGrade;
 	var $stuGroup;
 	var $baseGrade = 0;
 	var $baseYear;
@@ -51,18 +50,14 @@ class Student_model extends CI_Model
 		for($i = 0; $i < count ( $variables ); $i ++) {
 			$myVariable = $variables [$i];
 			if ($this->input->post ( $myVariable )) {
-				if ($myVariable == "stuGrade" && $this->input->post ( $myVariable ) == "") {
-					$this->$myVariable = 0;
-				} elseif ($myVariable == "stuDOB") {
+				 if ($myVariable == "stuDOB") {
 					$this->stuDOB = format_date ( $this->input->post ( 'stuDOB' ), 'mysql' );
 				} else {
 					$this->$myVariable = $this->input->post ( $myVariable );
 				}
 			}
 		}
-		
-		$this->stuGrade = get_current_year () - $this->baseYear + $this->baseGrade;
-		
+				
 		$this->recModified = mysql_timestamp ();
 		$this->recModifier = $this->session->userdata ( 'userID' );
 	
@@ -200,9 +195,9 @@ class Student_model extends CI_Model
 	{
 
 		if ($gradeStart == $gradeEnd) {
-			$this->db->where ( "stuGrade", $gradeStart );
+			$this->db->where ( "(`baseGrade`+2014-`baseYear`)", $gradeStart );
 		} else {
-			$this->db->where ( "stuGrade BETWEEN $gradeStart AND $gradeEnd" );
+			$this->db->where ( "`baseGrade`+2014-`baseYear`  BETWEEN $gradeStart AND $gradeEnd" );
 		}
 		
 		if (get_array_value ( $constraints, "kTeach" )) {
@@ -215,6 +210,9 @@ class Student_model extends CI_Model
 		$this->db->where ( "isEnrolled", 1 );
 		if (array_key_exists ( "select", $constraints )) {
 			$this->db->select ( $constraints ["select"] );
+		}else{
+			$year = get_current_year();
+			$this->db->select("student.*,(`baseGrade`+$year-`baseYear`) as `stuGrade`");
 		}
 		$this->db->order_by ( "stuGrade" );
 		$this->db->order_by ( "stuLast" );
@@ -222,6 +220,7 @@ class Student_model extends CI_Model
 		
 		$this->db->from ( "student" );
 		$result = $this->db->get ()->result ();
+		$this->session->set_flashdata("notice",$this->db->last_query());
 		return $result;
 	
 	}
@@ -239,7 +238,7 @@ class Student_model extends CI_Model
 	function advanced_find($year, $grades = array(), $hasNeeds = 0, $includeFormerStudents = 0, $sorting = NULL)
 	{
 
-		$this->db->select ( "student.*,(baseGrade+$year-baseYear) AS listGrade" );
+		$this->db->select ( "student.*,(baseGrade+$year-baseYear) AS stuGrade" );
 		if (! empty ( $grades )) {
 			$this->db->where_in ( "`baseGrade`+$year-`baseYear`", $grades );
 		}
@@ -399,9 +398,6 @@ class Student_model extends CI_Model
 	function update_grades()
 	{
 
-		$year = get_current_year ();
-		$query = ("UPDATE `student` SET `stuGrade` = ($year - `baseYear` + `baseGrade`)");
-		$this->db->query ( $query );
 	
 	}
 

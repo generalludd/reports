@@ -37,7 +37,7 @@ Subject: <strong><?=$subject;?></strong>
 		?>
 		<tr>
 		<td><a href="<?=site_url("student/view/$student->kStudent");?>" title="view student info"><?=$student_name;?></a></td>
-		<td><?=format_grade($student->stuGrade);?></td>
+		<td><?=format_grade($student->baseGrade + get_current_year() - $student->baseYear);?></td>
 		<td>
 		<span class="button new select_narrative_type" id="an_<?=$student->kStudent;?>">Add Narrative</span>
 		</td>
