@@ -62,9 +62,9 @@ class Grade_model extends CI_Model
 		$result = $this->db->get()->num_rows();
 		return $result;
 	}
-	
+
 	/**
-	 * 
+	 *
 	 * @param int $kStudent
 	 * @param varchar $term
 	 * @param int $year
@@ -111,10 +111,10 @@ class Grade_model extends CI_Model
 	}
 
 	/**
-	 * 
+	 *
 	 * @param int $kAssignment
 	 * @param double $percentage
-	 * update all student grades for a given assignment based on the percentage change. 
+	 * update all student grades for a given assignment based on the percentage change.
 	 * In the UI if a teacher changes the number of points for a given assignment
 	 * this script is called to automatically update all the points proportionally
 	 */
@@ -178,7 +178,7 @@ class Grade_model extends CI_Model
 		}
 		return $output;
 	}
-	
+
 	/**
 	 *
 	 * @param int $kStudent
@@ -194,7 +194,7 @@ class Grade_model extends CI_Model
 		}
 		$subject_sort = 'subject';
 		$this->load->model("subject_sort_model","subject_sort");
-		
+
 		if($this->subject_sort->has_sort($kStudent, $term, $year, "grades")){
 			$subject_sort = get_subject_order($this->subject_sort->get_sort($kStudent,$term,$year,"grades"));
 		}else{

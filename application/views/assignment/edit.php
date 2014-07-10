@@ -1,12 +1,13 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
-$year = get_value($assignment,"year",$this->input->cookie("year")); 
-$term = get_value($assignment,"term",$this->input->cookie("term")); 
-$gradeStart = get_value($assignment,"gradeStart",$this->input->cookie("gradeStart")); 
-$gradeEnd = get_value($assignment,"gradeEnd",$this->input->cookie("gradeEnd")); 
+$year = get_value($assignment,"year",$this->input->cookie("year"));
+$term = get_value($assignment,"term",$this->input->cookie("term"));
+$gradeStart = get_value($assignment,"gradeStart",$this->input->cookie("gradeStart"));
+$gradeEnd = get_value($assignment,"gradeEnd",$this->input->cookie("gradeEnd"));
 $date = "";
 if($date = get_value($assignment,"date")){
 	$date = format_date($date,"standard");
 }
+
 ?>
 <form id="edit-assignment" name="edit-assignment" action="<?=base_url("assignment/$action");?>" method="post">
 <input type="hidden" name="kTeach" id="kTeach" value="<?=get_value($assignment,"kTeach",$this->session->userdata("userID"));?>"/>
@@ -54,7 +55,7 @@ if($date = get_value($assignment,"date")){
 -<input id="yearEnd" type="text" name="yearEnd" class='yearEnd' readonly
 	maxlength="4" size="5" value="<? $yearEnd=$year+1;print $yearEnd; ?>" /></p>
 <div class="button-box">
-<input type="submit" class="button" value="Save"/> 
+<input type="submit" class="button" value="Save"/>
 <? if($action == "update"): ?>
 <div class="button delete assignment-delete">Delete</div>
 <? endif;?>
