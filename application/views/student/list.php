@@ -15,9 +15,9 @@ $default_row_style = array("student-row","row");
 	$enrolled = "";
 	$row_style = $default_row_style;
 	if($student->isEnrolled == 0){
-		$student_style[] = "disabled";
-		$row_style["tag"] = "highlight";
-		$enrolled = "<span class=''>(Not Enrolled)</span>";
+		//$student_style[] = "disabled";
+		$row_style["tag"] = "disabled";
+		$enrolled = "<span>(Not Enrolled)</span>";
 
 		if($student->isGraduate == 1){
 		    $row_style["tag"] = "highlight";

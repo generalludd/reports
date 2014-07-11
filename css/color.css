@@ -15,10 +15,12 @@ backgrounds: #C7D7E9
 }
 
 .highlight {
-	background-color: #FCFBBD;
+	background-color: #FFFCAB;
 }
 
-
+.disabled{
+    background-color: #FFE4AB;
+}
 
 .message {
 	background-color: #F8DA4E;
@@ -55,7 +57,7 @@ div.error {
 }
 
 div.error a {
-	color: #FCFBBD;
+	color: #FFFCAB;
 }
 
 div.error-text {
@@ -459,6 +461,4 @@ fieldset {
 }
 
 
-.disabled{
- 
-}
+

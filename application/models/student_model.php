@@ -25,7 +25,7 @@ class Student_model extends CI_Model
 	{
 
 		parent::__construct ();
-	
+
 	}
 
 	function prepare_variables()
@@ -45,7 +45,7 @@ class Student_model extends CI_Model
 				'stuEmail',
 				'stuEmailPermission',
 				'stuEmailPassword',
-				'stuGroup' 
+				'stuGroup'
 		);
 		for($i = 0; $i < count ( $variables ); $i ++) {
 			$myVariable = $variables [$i];
@@ -57,10 +57,10 @@ class Student_model extends CI_Model
 				}
 			}
 		}
-				
+
 		$this->recModified = mysql_timestamp ();
 		$this->recModifier = $this->session->userdata ( 'userID' );
-	
+
 	}
 
 	/**
@@ -85,7 +85,7 @@ class Student_model extends CI_Model
 		} else {
 			return false;
 		}
-	
+
 	}
 
 	function get_value($kStudent, $fieldName)
@@ -100,7 +100,7 @@ class Student_model extends CI_Model
 		$this->db->from ( 'student' );
 		$result = $this->db->get ()->row ();
 		return $result->$fieldName;
-	
+
 	}
 
 	function find_students($stuName)
@@ -116,10 +116,10 @@ class Student_model extends CI_Model
 		$this->db->order_by ( "stuLast", "ASC" );
 		$year = get_current_year();
 		$this->db->select ( "student.*,(baseGrade+$year-baseYear) AS listGrade" );
-		
+
 		$result = $this->db->get ( "student" )->result ();
 		return $result;
-	
+
 	}
 
 	function count($field_name, $field_value, $where = FALSE)
@@ -138,11 +138,11 @@ class Student_model extends CI_Model
 				}
 			}
 		}
-		
+
 		$this->db->from ( "student" );
 		$output = $this->db->get ()->row ();
 		return $output->$field_name;
-	
+
 	}
 
 	/**
@@ -150,7 +150,7 @@ class Student_model extends CI_Model
 	 * @param $kTeach int
 	 *        	This returns the students assigned to either a classroom teacher or middle school
 	 *        	advisor depending on the grade of the student
-	 *        	
+	 *
 	 */
 	function get_students_by_class($kTeach)
 	{
@@ -165,7 +165,7 @@ class Student_model extends CI_Model
 		$this->db->from ( "teacher" );
 		$result = $this->db->get ()->result ();
 		return $result;
-	
+
 	}
 
 	/**
@@ -177,7 +177,7 @@ class Student_model extends CI_Model
 	{
 
 		return $this->get_students_by_class ( $kTeach );
-	
+
 	}
 
 	/**
@@ -186,10 +186,10 @@ class Student_model extends CI_Model
 	 * Lists enrolled students by grade with added constraints.
 	 * The constraints array can contain kTeach, and a select variable with
 	 * a list of fields to include in the result
-	 * 
-	 * @param int $gradeStart        	
-	 * @param int $gradeEnd        	
-	 * @param array $constraints        	
+	 *
+	 * @param int $gradeStart
+	 * @param int $gradeEnd
+	 * @param array $constraints
 	 */
 	function get_students_by_grade($gradeStart, $gradeEnd, $constraints = array())
 	{
@@ -199,7 +199,7 @@ class Student_model extends CI_Model
 		} else {
 			$this->db->where ( "`baseGrade`+2014-`baseYear`  BETWEEN $gradeStart AND $gradeEnd" );
 		}
-		
+
 		if (get_array_value ( $constraints, "kTeach" )) {
 			$this->db->where ( "kTeach", $constraints ["kTeach"] );
 		} elseif (get_array_value ( $constraints, 'humanitiesTeacher' )) {
@@ -217,23 +217,23 @@ class Student_model extends CI_Model
 		$this->db->order_by ( "stuGrade" );
 		$this->db->order_by ( "stuLast" );
 		$this->db->order_by ( "stuFirst" );
-		
+
 		$this->db->from ( "student" );
 		$result = $this->db->get ()->result ();
 		$this->session->set_flashdata("notice",$this->db->last_query());
 		return $result;
-	
+
 	}
 
 	/**
 	 *
 	 *
 	 * Find students based on a range of parameters
-	 * 
-	 * @param int $year        	
-	 * @param array $grades        	
-	 * @param boolean $hasNeeds        	
-	 * @param boolean $includeFormerStudents        	
+	 *
+	 * @param int $year
+	 * @param array $grades
+	 * @param boolean $hasNeeds
+	 * @param boolean $includeFormerStudents
 	 */
 	function advanced_find($year, $grades = array(), $hasNeeds = 0, $includeFormerStudents = 0, $sorting = NULL)
 	{
@@ -250,36 +250,35 @@ class Student_model extends CI_Model
 		if ($includeFormerStudents == 1) {
 			$this->db->where_in ( "isEnrolled", array (
 					0,
-					1 
+					1
 			) );
 		} else {
 			$this->db->where ( "(`isEnrolled` = 1 OR `isGraduate` = 1)",NULL,FALSE );
 		}
-		
+
 		if ($hasNeeds == 1) {
 			$this->db->join ( "support", "student.kStudent = support.kStudent" );
 			$this->db->group_by ( "support.kStudent" );
 		}
-		
+
 		$this->db->from ( "student" );
 		$this->db->order_by ( "stuGrade", "ASC" );
-		
+
 		if ($sorting == "first_last") {
 			$this->db->order_by ( "stuFirst,stuLast", "ASC" );
 		} else {
 			$this->db->order_by ( "stuLast,stuFirst", "ASC" );
 		}
-		
+
 		$result = $this->db->get ()->result ();
-		$this->session->set_flashdata('notice', $this->db->last_query());
 		return $result;
-	
+
 	}
 
 	/**
 	 * DEPRECATED/UNUSED
 	 * I don't think this is used anywhere else.
-	 * 
+	 *
 	 * @param string $fields
 	 *        	fields to select
 	 * @param string $order_fields
@@ -292,7 +291,7 @@ class Student_model extends CI_Model
 
 		$this->db->from ( 'student' );
 		$this->db->distinct ();
-		
+
 		if (is_array ( $fields )) {
 			foreach ( $fields as $field ) {
 				$this->db->select ( $field );
@@ -300,7 +299,7 @@ class Student_model extends CI_Model
 		} else {
 			$this->db->select ( $fields );
 		}
-		
+
 		if ($order_fields) {
 			if (is_array ( $order_fields )) {
 				foreach ( $order_fields as $order ) {
@@ -310,7 +309,7 @@ class Student_model extends CI_Model
 				$this->db->order_by ( $order_fields );
 			}
 		}
-		
+
 		if (is_array ( $where_pairs )) {
 			$keys = array_keys ( $where_pairs );
 			$values = array_values ( $where_pairs );
@@ -318,10 +317,10 @@ class Student_model extends CI_Model
 				$this->db->where ( $keys [$i], $values [$i] );
 			}
 		}
-		
+
 		$result = $this->db->get ()->result ();
 		return $result;
-	
+
 	}
 
 	function get_grade($kStudent, $narrYear = NULL)
@@ -330,7 +329,7 @@ class Student_model extends CI_Model
 		$baseGrade = $this->get_value ( $kStudent, 'baseGrade' );
 		$baseYear = $this->get_value ( $kStudent, 'baseYear' );
 		return get_current_grade ( $baseGrade, $baseYear, $narrYear );
-	
+
 	}
 
 	function get_name($kStudent)
@@ -339,15 +338,15 @@ class Student_model extends CI_Model
 		$student = $this->get ( $kStudent, 'stuFirst,stuLast,stuNickname' );
 		$output = format_name ( $student->stuFirst, $student->stuLast, $student->stuNickname );
 		return $output;
-	
+
 	}
 
 	/**
 	 * Does the student have records in the system in the narratives, grades, etc?
 	 * This is used to determine if a student record can be deleted or not.
 	 * Student records cannot be deleted if there are dependent records elsewhere
-	 * 
-	 * @param int $kStudent        	
+	 *
+	 * @param int $kStudent
 	 */
 	function has_records($kStudent)
 	{
@@ -356,7 +355,7 @@ class Student_model extends CI_Model
 		$tables = array (
 				"narrative",
 				"grade",
-				"support" 
+				"support"
 		);
 		foreach ( $tables as $table ) {
 			$this->db->from ( $table );
@@ -364,7 +363,7 @@ class Student_model extends CI_Model
 			$output += $this->db->count_all_results ();
 		}
 		return $output;
-	
+
 	}
 
 	/**
@@ -376,7 +375,7 @@ class Student_model extends CI_Model
 		$this->prepare_variables ();
 		$this->db->insert ( 'student', $this );
 		return $this->db->insert_id ();
-	
+
 	}
 
 	function update($kStudent)
@@ -386,7 +385,7 @@ class Student_model extends CI_Model
 		$this->kStudent = $kStudent;
 		$this->db->where ( 'kStudent', $kStudent );
 		$this->db->update ( 'student', $this );
-	
+
 	}
 
 	function update_value($kStudent, $data)
@@ -394,19 +393,19 @@ class Student_model extends CI_Model
 
 		$this->db->where ( 'kStudent', $kStudent );
 		$this->db->update ( 'student', $data );
-	
+
 	}
 
 	function update_grades()
 	{
 
-	
+
 	}
 
 	/**
 	 * Delete student record only if the student has no entries in other tables.
-	 * 
-	 * @param number $kStudent        	
+	 *
+	 * @param number $kStudent
 	 * @return comma-separated string with initial boolean and message--used by javascript to determine the alert and response.
 	 *         @TODO maybe develop a set of generic database key->string pairs for messages?
 	 */
@@ -417,7 +416,7 @@ class Student_model extends CI_Model
 		if ($this->session->userdata ( "userID" ) == 1000) {
 			if ($this->has_records ( $kStudent ) == 0) {
 				$this->db->delete ( 'student', array (
-						'kStudent' => $kStudent 
+						'kStudent' => $kStudent
 				) );
 				$output = "1,The student record was successfully deleted";
 			} else {
@@ -425,7 +424,7 @@ class Student_model extends CI_Model
 			}
 		}
 		return $output;
-	
+
 	}
 
 }
