@@ -966,7 +966,7 @@ fieldset.advanced div.advanced {
 	padding-left: 5px;
 }
 
-.studentName {
+.student-name {
 	font-weight: bold;
 	padding-top: .5em;
 	padding-bottom: .5em;
@@ -976,7 +976,7 @@ fieldset.advanced div.advanced {
 	padding-bottom: .5em;
 }
 
-#search_list .studentName {
+#search_list .student-name {
 	padding-top: 0;
 }
 

@@ -15,8 +15,10 @@ backgrounds: #C7D7E9
 }
 
 .highlight {
-	background-color: yellow;
+	background-color: #FCFBBD;
 }
+
+
 
 .message {
 	background-color: #F8DA4E;
@@ -53,7 +55,7 @@ div.error {
 }
 
 div.error a {
-	color: yellow;
+	color: #FCFBBD;
 }
 
 div.error-text {
@@ -130,10 +132,9 @@ input.link {
 }
 
 .button:hover,submit:hover {
-	opacity: .90;
+	opacity: .90 !important;
 	color: #000;
 	border: none;
-	filter: Alpha(Opacity =                                               90);
 	/* 	background: #91b347 url(images/button_20_over.png) 50% 50% repeat-x; */
 	background: #67b021;
 	background: -moz-linear-gradient(top, #489310 0, #67b021 100%);
@@ -455,4 +456,9 @@ table.grade-chart tr:hover {
 fieldset {
 	border-top-color: #C7D7E9;
 	border-left-color: #C7D7E9;
+}
+
+
+.disabled{
+ 
 }
