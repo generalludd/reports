@@ -208,9 +208,9 @@ div.login-title {
 
 /*general display elements */
 .info-box {
-	margin-left: auto;
+	/*margin-left: auto;
 	margin-right: auto;
-	width: 950px;
+	width: 950px;*/
 }
 
 .info-box .content {
@@ -965,13 +965,14 @@ fieldset.advanced div.advanced {
 }
 
 .search_fieldset {
-	width: 250px;
+	width: 350px;
 	padding-bottom: 20px;
 	padding-left: 10px;
 	padding-right: 10px;
 	display: block;
 	position: relative;
 	margin-bottom: 20px;
+
 }
 
 .search_fieldset legend {
