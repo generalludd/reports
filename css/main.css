@@ -307,7 +307,7 @@ div.narrative {
 .button {
 	text-align: center;
 	position: static;
-	padding: .35em;
+	padding: .75em;
 	border: 1px solid black;
 	cursor: pointer;
 	font-size: 1em;
@@ -318,7 +318,7 @@ div.narrative {
 
 td .button,.row .button,.button.small {
 	font-size: .9em;
-	padding: .35em .5em;
+	
 }
 
 a:hover, body {
@@ -345,6 +345,23 @@ a:hover, body {
 	cursor: pointer;
 }
 
+
+a.button {
+    text-decoration: none;
+}
+
+.button-box {
+    height: 25px;
+}
+
+
+.button-bar {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
 ul.button-list {
 	list-style: none;
 	padding-left: 0px;
@@ -353,6 +370,10 @@ ul.button-list {
 ul.button-list li {
 	display: inline;
 	padding: .35em 0 .35em .25em
+}
+
+ul.button-list li.first {
+	padding-left: 0;
 }
 
 ul.button-list li .button {
@@ -366,6 +387,25 @@ ul.button-list li .button.delete {
 .mini-buttons ul.button-list li .button {
 	margin: 0 1px;
 }
+
+.button-bar {
+	margin-top: 0;
+	padding-top: 0;
+}
+
+.button-bar ul.button-list li {
+	padding: 0;
+}
+.button-bar ul.button-list li .button {
+	margin:0;
+	border-radius: 0;
+	padding: .75em;
+	border-left: 1px solid #666;
+}
+.button-bar ul.button-list li.first .button {
+	border-left: none;
+}
+
 
 .help {
 	
@@ -788,24 +828,6 @@ label {
 	border-color: #087CD5;
 }
 
-a.button {
-	text-decoration: none;
-}
-
-.button-box {
-	height: 25px;
-}
-
-.button-box .delete {
-	*margin-top: -5px;
-}
-
-.button-bar {
-	margin-top: 5px;
-	margin-bottom: 5px;
-	padding-top: 5px;
-	padding-bottom: 5px;
-}
 
 #search_list {
 	position: absolute;
