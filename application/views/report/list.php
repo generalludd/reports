@@ -1,11 +1,13 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
-
+?>
+<h2><?=STUDENT_REPORT?>s</h2>
+<?
 $userID = $this->session->userdata("userID");
 $dbRole = $this->session->userdata("dbRole");
 $edit_buttons = array();
 if($type == "student"){
 	$this->load->view("student/navigation",array("student"=>$person,"kStudent" => $report_key));
-	$edit_buttons[] = array("selection" => "report", "text" => "Add $student_report", "class" => "button new", "href" => site_url("report/create/$kStudent"));
+	$edit_buttons[] = array("selection" => "report", "text" => "Add $student_report", "class" => "button new small", "href" => site_url("report/create/$kStudent"));
 }else{
 	if($dbRole == 2 && $person->is_advisor == 1){
 		$edit_buttons[] = array("selection"=>"report/get_list/advisor", "href" =>site_url("report/get_list/advisor/$userID"),"text" => sprintf("%ss",STUDENT_REPORT));

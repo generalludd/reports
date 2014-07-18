@@ -19,7 +19,7 @@
 	<? $data["kStudent"] = $student->kStudent;
 	$this->load->view("student/navigation", $data);
 
-	$add_narrative_buttons[] = array("selection" => "narrative", "text" => "Add Narrative for $student->stuNickname", "class" => "button new select_narrative_type", "id" => "nn_$student->kStudent");
+	$add_narrative_buttons[] = array("selection" => "narrative", "text" => "Add Narrative for $student->stuNickname", "class" => "button new select_narrative_type small", "id" => "nn_$student->kStudent");
 	echo create_button_bar($add_narrative_buttons);
 	$acc_class = "";
 	if($accordion == "enable"){
