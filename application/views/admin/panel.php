@@ -5,8 +5,8 @@
 <? if($this->input->cookie("admin")): ?>
 <div class='notice'><?=$this->input->cookie("admin");?></div>
 <? endif; ?>
-<p><a href="<?=site_url("preference_type/type_list");?>" class="button">Preference Types</a>&nbsp;Edit the preference types used throughout the system for various functions</p>
-<p><a href="#" class="button log_search">Search Logs</a>&nbsp;Search the site logs for login and logout history. </p>
-<p><a href="student/update_grades" class="button">Update Student Grades</a>&nbsp;Update all student grades to the current year.</p>
-<p><a href="<?=site_url("menu/show");?>" class="button">System Menus</a>&nbsp;Edit the dropdown menu values that are used in attendance, grades, narratives and elsewhere in the system</p>
-<p><a href="<?=site_url("config/show_subject_sort");?>" class="button">Set Global Subject Order</a>&nbsp;Change the order of subjects that report cards and narratives are arranged</p>
+<div class="button-box button-bar"><a href="<?=site_url("preference_type/type_list");?>" class="button small">Preference Types</a>&nbsp;Edit the preference types used throughout the system for various functions</div>
+<div class="button-box button-bar"><a href="#" class="button small log_search">Search Logs</a>&nbsp;Search the site logs for login and logout history. </div>
+<div class="button-box button-bar"><a href="student/update_grades" class="button small">Update Student Grades</a>&nbsp;Update all student grades to the current year.</div>
+<div class="button-box button-bar"><a href="<?=site_url("menu/show");?>" class="button small">System Menus</a>&nbsp;Edit the dropdown menu values that are used in attendance, grades, narratives and elsewhere in the system</div>
+<div class="button-box button-bar"><a href="<?=site_url("config/show_subject_sort");?>" class="button small">Set Global Subject Order</a>&nbsp;Change the order of subjects that report cards and narratives are arranged</div>
