@@ -221,7 +221,6 @@ div.login-title {
 }
 
 .page-list .student_list {
-	width: 250px;
 	margin-left: 0;
 }
 
@@ -984,7 +983,7 @@ fieldset.advanced div.advanced {
 }
 
 .student-row {
-	width: 500px;
+	/*width: 500px;*/
 	padding-left: 5px;
 }
 
