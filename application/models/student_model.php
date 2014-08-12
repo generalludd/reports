@@ -413,7 +413,7 @@ class Student_model extends CI_Model
 	{
 
 		$output = "0,You do not have permission to delete student records. Please contact the system administrator for assistance";
-		if ($this->session->userdata ( "userID" ) == 1000) {
+		if ($this->session->userdata ( "dbRole" ) == 1) {
 			if ($this->has_records ( $kStudent ) == 0) {
 				$this->db->delete ( 'student', array (
 						'kStudent' => $kStudent

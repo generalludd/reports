@@ -136,7 +136,7 @@ class Student extends MY_Controller
 		$result = "0,This script failed because no student id was submitted";
 
 		//only allow the administrator to delete a student record.
-		if($this->session->userdata('userID') == 1000 ){
+		if($this->session->userdata('dbRole') == '1' ){
 			if($this->input->post("kStudent")){
 				$kStudent = $this->input->post("kStudent");
 				$result = $this->student_model->delete($kStudent);

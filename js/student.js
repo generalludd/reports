@@ -191,7 +191,8 @@ $(document).ready(function() {
 						); // end click
 
 				$('.delete_student').live('click', function(event) {
-					kStudent = $('#kStudent').val();
+					kStudent = this.id.split("_")[1];
+					console.log(kStudent);
 					deleteStudent(kStudent);
 				}// end function(event);
 				);// end home.click
