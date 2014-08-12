@@ -312,6 +312,7 @@ div.narrative {
 	font-size: 1em;
 	font-weight: normal;
 	transition: all .25s ease;
+	white-space: nowrap;
 	
 }
 
@@ -507,7 +508,7 @@ legend {
 #main {
 	position: relative;
 	padding: 0 5em 2em 2em;
-	margin-top: 2.5em;
+	margin-top: 4.5em;
 }
 
 #content {
@@ -843,6 +844,7 @@ label {
 	box-shadow: 3px 3px 4px #666;
 	max-height: 500px;
 	overflow: scroll;
+	
 }
 
 table.list td {
@@ -1000,6 +1002,7 @@ fieldset.advanced div.advanced {
 
 .student-row .button-box {
 	padding-bottom: .5em;
+	white-space: nowrap;
 }
 
 #search_list .student-name {
@@ -1009,6 +1012,10 @@ fieldset.advanced div.advanced {
 .button-box {
 	margin-top: .5em;
 	*padding-bottom: .5em;
+}
+
+.button-list .link {
+	padding: 0 .5em;
 }
 
 ul.buttons {
