@@ -559,9 +559,8 @@ legend {
 }
 
 /* end div layout elements */
-.search ol {
+ul.search  {
 	padding: 0;
-	margin: 0;
 }
 
 .search li {
@@ -1002,7 +1001,6 @@ fieldset.advanced div.advanced {
 
 .student-row .button-box {
 	padding-bottom: .5em;
-	white-space: nowrap;
 }
 
 #search_list .student-name {
