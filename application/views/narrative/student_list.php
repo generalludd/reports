@@ -19,7 +19,7 @@
 	<? $data["kStudent"] = $student->kStudent;
 	$this->load->view("student/navigation", $data);
 
-	$add_narrative_buttons[] = array("selection" => "narrative", "text" => "Add Narrative for $student->stuNickname", "class" => "button new select_narrative_type", "id" => "nn_$student->kStudent");
+	$add_narrative_buttons[] = array("selection" => "narrative", "text" => "Add Narrative for $student->stuNickname", "class" => "button new select_narrative_type small", "id" => "nn_$student->kStudent");
 	echo create_button_bar($add_narrative_buttons);
 	$acc_class = "";
 	if($accordion == "enable"){
@@ -40,7 +40,7 @@
 					}
 					echo "<h4>$schoolYear</h4><div>";
 					$print_buttons[] = array("selection"=>"print","text"=>"Preview &amp; Print Report", "href"=> site_url("narrative/print_student_report/$student->kStudent/$narrative->narrTerm/$narrative->narrYear"), "target" =>"_blank");
-					if($student->stuGrade > 4){
+					if($narrative->stuGrade > 4){
 						$print_buttons[] = array("selection" => "print",
 								"text" => "Print Grades",
 								"href" => site_url(

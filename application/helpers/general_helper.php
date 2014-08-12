@@ -191,9 +191,15 @@ function get_current_term($targetDate = NULL)
 	return "$term";
 }
 
-function get_term_menu($id, $currentTerm=null, $initial_blank = FALSE){
+function get_term_menu($id, $currentTerm=null, $initial_blank = FALSE,$options = array()){
 	$terms = array("Mid-Year", "Year-End");
 	$select[]="<select id='$id' name='$id'>";
+	$classes = FALSE;
+	if(!empty($options)){
+		if(array_key_exists("classes", $options)){
+			$classes = sprintf("class='%s'",$options["classes"]);
+		}
+	}
 	if($initial_blank){
 		$select[] = "<option value=''></option>";
 	}
@@ -202,7 +208,7 @@ function get_term_menu($id, $currentTerm=null, $initial_blank = FALSE){
 		if($term == $currentTerm){
 			$selection = "selected";
 		}
-		$select[]="<option value='$term' $selection>$term</option>";
+		$select[]="<option value='$term' $classes $selection>$term</option>";
 
 	}
 	$select[]="</select>";
@@ -391,15 +397,16 @@ function get_grade_order(){
 
 function get_subject_order($subjects = NULL)
 {
+	//@TODO there should be a UI-available tool for global sorting.
 	if(!$subjects){
-		$subjects = "Introduction,Academic Progress,Humanities,Reading,Writing,Math,Science,Social Studies,Social Studies/Science,Social/Emotional,Music,Physical Education,Spanish,Art";
+		$subjects = "Introduction,Academic Progress,Humanities,Reading,Writing,Science,Math,Social Studies,Social Studies/Science,Social/Emotional,Music,Physical Education,Spanish,Art";
 	}
 	$subjectOrder = "CASE ";
 	$list = explode(",", $subjects);
 	for($i=0;$i<count($list);$i++){
 		$mySubject = $list[$i];
 		$x=$i+1;
-		$subjectOrder .= "WHEN narrSubject='$mySubject' THEN $x ";
+		$subjectOrder .= "WHEN subject='$mySubject' THEN $x ";
 	}
 	$subjectOrder .= "END";
 	return $subjectOrder;
@@ -518,7 +525,7 @@ function calculate_letter_grade($points,$pass_fail = FALSE)
 	$output = "";
 	$plus = 6;
 	$minus = 3;
-	
+	$letter = "";
 	if(strval($points) >= 99){
 		$output = "A+";
 	}elseif(strval($points) > 93){

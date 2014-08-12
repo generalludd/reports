@@ -6,7 +6,7 @@ defined ( 'BASEPATH' ) or exit ( 'No direct script access allowed' );
  * ($grade->points, $grade->total_points, $grade->weight, $grade->status)
  * produces the final weighted grade from the result.
  *
- * @param array $grades        	
+ * @param array $grades
  * @return number
  *
  */
@@ -19,13 +19,13 @@ function calculate_final_grade($grades) {
 		$assignment_total = 0;
 		$weight_sums = 0;
 		$categories = array();
-		
+
 		foreach ( $grades as $grade ) {
 			if (($grade->points > 0 && $grade->total_points == 0) || ($grade->total_points > 0)) {
 				if ($grade->footnote) {
 					$footnotes [$grade->footnote] = $grade->label;
 				}
-				
+
 				// if the student does not have an assignment listed as absent,excused, incomplete, redo, then calculate the grade otherwise ignore
 				if (empty ( $grade->status )) {
 					$points = $grade->points;
@@ -42,17 +42,21 @@ function calculate_final_grade($grades) {
 				}
 			} // end if
 		} // end foreach grade
-		
+
 		foreach ( $categories as $category ) {
 			$category_grade = round($category["points"]/$category["total_points"]*100,2);
 			$assignment_total += $category_grade * $category ["weight"];
 			$weight_sums += $category ["weight"];
 		}
-		
+
 		$grade_total = 0;
 		$category_count = 0;
+		if($weight_sums > 0){
 		$output = round ( $assignment_total / $weight_sums, 1 );
+		}
 	}
 	return $output;
 
 }
+
+

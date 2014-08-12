@@ -8,21 +8,25 @@ $(document).ready(function(){
 	
 	$(".assignment-edit").live("click",function(){
 		myAssignment = this.id.split("_")[1];
-		form_data = {
-				kAssignment: myAssignment,
-				ajax: 1
-		};
+		if($(this).parents("table.grade-chart").hasClass("locked")){
+			question = confirm("This assignment is entered for a previous term. Are you sure you want to edit it?");
+			if(question){
+				form_data = {
+						kAssignment: myAssignment,
+						ajax: 1
+				};
+				
+				$.ajax({
+					type:"get",
+					url: base_url + "assignment/edit",
+					data: form_data,
+					success: function(data){
+						showPopup("Edit Assigment",data,"auto");
 		
-		$.ajax({
-			type:"get",
-			url: base_url + "assignment/edit",
-			data: form_data,
-			success: function(data){
-				showPopup("Edit Assigment",data,"auto");
-
+					}
+				});
 			}
-		});
-		
+		}
 	});
 	
 	$(".assignment-create").live("click",function(){
@@ -35,7 +39,7 @@ $(document).ready(function(){
 		});
 	});
 	
-	$(".grade-points.edit").live("click",function(){
+	$(".editable .grade-points.edit").live("click",function(){
 		myId = this.id.split("_");
 		myAssignment = myId[1];
 		myStudent = myId[2];
@@ -59,7 +63,7 @@ $(document).ready(function(){
 		
 	});
 	
-	$(".point-editor").live("blur",function(){
+	$("editable .point-editor").live("blur",function(){
 		myPoints = $(this).val();
 		$(this).parent(".grade-points").html(myPoints).addClass("edit");
 	});
@@ -153,7 +157,7 @@ $(document).ready(function(){
 		
 	});
 	
-	$(".assignment-column-edit").live("click",function(){
+	$(".editable .assignment-column-edit").live("click",function(){
 		myAssignment = this.id.split("_")[1];
 		form_data = {
 				kAssignment: myAssignment,
@@ -173,7 +177,7 @@ $(document).ready(function(){
 	});
 
 	
-	$(".edit_student_grades").live("click",function(){
+	$(".editable .edit_student_grades").live("click",function(){
 		myTeach = $("#kTeach").val();
 		myStudent = this.id.split("_")[1];
 		form_data = {
@@ -192,7 +196,7 @@ $(document).ready(function(){
 		});
 	});
 	
-	$(".save_student_grade").live("click",function(){
+	$(".editable .save_student_grade").live("click",function(){
 		myID = this.id.split("_");
 		myAssignment = myID[1];
 		myStudent = myID[2];		
@@ -232,7 +236,6 @@ $(document).ready(function(){
 		myPoints = $("#points_" + myAssignment + "_" + myStudent).val();
 		myStatus = $("#status_" + myAssignment + "_" + myStudent).val();
 		myFootnote = $("#footnote_" + myAssignment + "_" + myStudent).val();
-		myUrl = base_url + "grade/update";
 		form_data = {
 				kStudent: myStudent,
 				kAssignment: myAssignment,
@@ -243,11 +246,12 @@ $(document).ready(function(){
 		};
 		$.ajax({
 			type: "POST",
-			url: myUrl,
+			url: base_url + "grade/update",
 			data: form_data,
 			success: function(data){
-				//$(".save_cell_grade").parent().html(data);
-				window.location.reload();
+				$(".save_cell_grade").parents("td.grade-points").html(data).addClass('edit');
+				console.log(data);
+				//window.location.reload();
 			}
 		});
 	});
@@ -257,7 +261,7 @@ $(document).ready(function(){
 		window.location.reload();
 	});
 	
-	$(".grade-delete-row .button").live("click",function(){
+	$(".editable .grade-delete-row .button").live("click",function(){
 		choice = confirm("Are you sure you want to delete this student's grade entries for the entire term? This cannot be undone!");
 		if(choice){
 			second_chance = confirm("This will delete all the grades entered for this student for the current term. Click OK only if you are absolute sure you want to do this!");
@@ -342,7 +346,7 @@ $(document).ready(function(){
 	});
 	
 	
-	$(".assignment_categories_edit").live("click",function(){
+	$(".assignment-categories-edit").live("click",function(){
 		$.ajax({
 			url: base_url + "assignment/edit_categories/" + $("#kTeach").val(),
 			type: "get",
@@ -374,13 +378,17 @@ $(document).ready(function(){
 		myWeight = $("#tr-teach_" + myTeach + " .insert-weight").val();
 		myStart = $("#tr-teach_" + myTeach + " .insert-gradeStart").val();
 		myEnd = $("#tr-teach_" + myTeach + " .insert-gradeEnd").val();
+		myYear = $("#tr-teach_" + myTeach + " .insert-year").val();
+		myTerm = $("#tr-teach_" + myTeach + " .insert-term").val();
 
 		form_data = {
 				kTeach: myTeach,
 				category: myCategory,
 				weight: myWeight,
 				gradeStart: myStart,
-				gradeEnd: myEnd
+				gradeEnd: myEnd,
+				year: myYear,
+				term: myTerm
 		};
 		$.ajax({
 			type: "post",

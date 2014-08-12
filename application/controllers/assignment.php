@@ -48,18 +48,18 @@ class Assignment extends MY_Controller
 			$year = $this->input->get("year");
 			bake_cookie("year",$year);
 		}
-		
+
 		$date_range = array();
 		if($this->input->get("date_start") && $this->input->get("date_end")){
 			$date_start = format_date($this->input->get("date_start"),"mysql");
 			$date_end = format_date($this->input->get("date_end"),"mysql");
 			$date_range["date_start"] = $date_start;
 			$date_range["date_end"] = $date_end;
-				
+
 		}
 		$grade_options ["from"] = "grade";
 		$grade_options ["join"] = "assignment";
-		
+
 		$data["grades"] = $this->assignment->get_grades($kTeach,$term,$year,$gradeStart,$gradeEnd,$stuGroup, $date_range);
 		foreach($data['grades'] as $grade){
 			$grade_options ['subject'] = $grade->subject;
@@ -114,13 +114,15 @@ class Assignment extends MY_Controller
 		//$gradeEnd = $this->session->userdata("gradeEnd");
 		$gradeStart = $this->input->cookie("gradeStart");
 		$gradeEnd = $this->input->cookie("gradeEnd");
-		$categories = $this->assignment->get_categories($userID, $gradeStart, $gradeEnd);
+		$year = $this->input->cookie("year");
+		$term = $this->input->cookie("term");
+		$categories = $this->assignment->get_categories($userID, $gradeStart, $gradeEnd,$year, $term);
 		if(empty($categories)){
 			$gradeRange = sprintf("grades %s to %s", $gradeStart, $gradeEnd);
 			if($gradeStart == $gradeEnd){
 				$gradeRange = sprintf("grade %s", $gradeStart);
 			}
-			printf('<p>You must create categories for %s first.<p/>',$gradeRange);
+			printf('<p>You must create categories for %s first for %s, %s.<p/>',$gradeRange,$term,$year);
 		}else{
 			$data["categories"] = get_keyed_pairs($categories, array("kCategory","category"));
 			$data["target"] = "assignment/edit";
@@ -162,7 +164,7 @@ class Assignment extends MY_Controller
 		$data['subjects'] = get_keyed_pairs($subjects, array('subject', 'subject'));
 		$data["assignment"] = $assignment;
 		$data["action"] = "update";
-		$categories = $this->assignment->get_categories($assignment->kTeach, $assignment->gradeStart, $assignment->gradeEnd);
+		$categories = $this->assignment->get_categories($assignment->kTeach, $assignment->gradeStart, $assignment->gradeEnd, $assignment->year, $assignment->term);
 		$data["categories"] = get_keyed_pairs($categories, array("kCategory","category"));
 		$this->load->view("assignment/edit",$data);
 	}
@@ -221,6 +223,9 @@ class Assignment extends MY_Controller
 		$weight = $this->input->post("weight");
 		$gradeStart = $this->input->post("gradeStart");
 		$gradeEnd = $this->input->post("gradeEnd");
+		$year = $this->input->post("year");
+		$term = $this->input->post("term");
+
 		$data = array();
 		if($category && $weight && $gradeStart && $gradeEnd){
 			$data["category"] = $category;
@@ -228,7 +233,8 @@ class Assignment extends MY_Controller
 			$data["weight"] = $weight;
 			$data["gradeStart"] = $gradeStart;
 			$data["gradeEnd"] = $gradeEnd;
-
+			$data["year"] = $year;
+			$data["term"] = $term;
 			$kCategory = $this->assignment->insert_category($data);
 			$category = $this->assignment->get_category($kCategory);
 			$data["category"] = $category;
@@ -248,11 +254,11 @@ class Assignment extends MY_Controller
 	function edit_categories()
 	{
 		$data["kTeach"] = $this->uri->segment(3);
-		//$data["gradeStart"] = $this->session->userdata("gradeStart");
-		//$data["gradeEnd"] = $this->session->userdata("gradeEnd");
 		$data["gradeStart"] = $this->input->cookie("gradeStart");
 		$data["gradeEnd"] = $this->input->cookie("gradeEnd");
-		$data["categories"] = $this->assignment->get_categories($data["kTeach"], $data["gradeStart"] , $data["gradeEnd"]);
+		$data["year"] = $this->input->cookie("year");
+		$data["term"] = $this->input->cookie("term");
+		$data["categories"] = $this->assignment->get_categories($data["kTeach"], $data["gradeStart"] , $data["gradeEnd"],$data["year"],$data["term"]);
 		$this->load->view("assignment/categories",$data);
 	}
 
@@ -261,13 +267,14 @@ class Assignment extends MY_Controller
 	 */
 	function update_category()
 	{
-		$kCategory = $this->input->get_post("kCategory");
-		$data["category"] = $this->input->get_post("category");
-		$data["weight"] = $this->input->get_post("weight");
-		$data["gradeStart"] = $this->input->get_post("gradeStart");
-		$data["gradeEnd"] = $this->input->get_post("gradeEnd");
+		$kCategory = $this->input->post("kCategory");
+		$data["category"] = $this->input->post("category");
+		$data["weight"] = $this->input->post("weight");
+		$data["gradeStart"] = $this->input->post("gradeStart");
+		$data["gradeEnd"] = $this->input->post("gradeEnd");
+		$data["term"] = $this->input->post("term");
+		$data["year"] = $this->input->post("year");
 		$this->assignment->update_category($kCategory,$data);
-		print $this->db->last_query();
 
 	}
 

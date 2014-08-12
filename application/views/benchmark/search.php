@@ -5,7 +5,7 @@
 <?=form_dropdown('subject', $subject_list, "", "id='subject'"); ?>
     </p>
     <p><label for="term">Term:</label> <?=$termMenu; ?>
-    <input type="text" name="year" id="year" size="5" maxlength="4" class="searchYear"  value="<?=$yearStart; ?>"/>
+    <input type="text" name="year" id="year" size="5" maxlength="4" class="year"  value="<?=$yearStart; ?>"/>
     -<input type="text" id="yearEnd" class='yearEnd' readonly value="<?=$yearEnd; ?>" size="5"/></p>
     <p>Grade Range: <input type="text" name="gradeStart" class="gradeStart" size="3" maxlength="1" value="<?=$gradeStart?>" />-
     <input type="text" name="gradeEnd" size="3" maxlength="1" class="gradeEnd" value="<?=$gradeEnd;?>" /></p>

@@ -13,12 +13,13 @@
 }
 
 body {
-	font-size: 12px;
+	font-size: 14px;
 	font-family: tahoma, sans-serif;
 	margin: 10px;
 	padding: 10px;
 	padding-right: 15px;
 	padding-top: 0px;
+	transition: auto .25s ease;
 }
 
 #page {
@@ -42,7 +43,6 @@ body {
 	font-size: .9em;
 	padding: 2px;
 	border: 1px solid black;
-	display: none;
 	margin: 3px;
 }
 
@@ -174,11 +174,9 @@ div.login-title {
 
 /* general notices */
 #notice {
-	position: absolute;
 	top: 25%;
 	left: 15%;
 	overflow: auto;
-	visibility: hidden;
 	float: none;
 	padding: 12px;
 	border-style: solid;
@@ -193,8 +191,14 @@ div.login-title {
 }
 
 .alert {
-	padding: 3px;
+	padding: 5px;
 	font-weight: bold;
+	text-align: center;
+	cursor: pointer;
+}
+
+#content .alert {
+	padding: 1em;
 }
 
 #new_popup {
@@ -204,9 +208,9 @@ div.login-title {
 
 /*general display elements */
 .info-box {
-	margin-left: auto;
+	/*margin-left: auto;
 	margin-right: auto;
-	width: 950px;
+	width: 950px;*/
 }
 
 .info-box .content {
@@ -217,7 +221,6 @@ div.login-title {
 }
 
 .page-list .student_list {
-	width: 250px;
 	margin-left: 0;
 }
 
@@ -303,7 +306,7 @@ div.narrative {
 .button {
 	text-align: center;
 	position: static;
-	padding: .35em;
+	padding: .75em;
 	border: 1px solid black;
 	cursor: pointer;
 	font-size: 1em;
@@ -314,7 +317,11 @@ div.narrative {
 
 td .button,.row .button,.button.small {
 	font-size: .9em;
-	padding: .35em .5em;
+	
+}
+
+td .button {
+	padding: .35em inherit;
 }
 
 a:hover, body {
@@ -341,6 +348,23 @@ a:hover, body {
 	cursor: pointer;
 }
 
+
+a.button {
+    text-decoration: none;
+}
+
+.button-box {
+    height: 25px;
+}
+
+
+.button-bar {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
 ul.button-list {
 	list-style: none;
 	padding-left: 0px;
@@ -349,6 +373,10 @@ ul.button-list {
 ul.button-list li {
 	display: inline;
 	padding: .35em 0 .35em .25em
+}
+
+ul.button-list li.first {
+	padding-left: 0;
 }
 
 ul.button-list li .button {
@@ -362,6 +390,25 @@ ul.button-list li .button.delete {
 .mini-buttons ul.button-list li .button {
 	margin: 0 1px;
 }
+
+.button-bar {
+	margin-top: 0;
+	padding-top: 0;
+}
+
+.button-bar ul.button-list li {
+	padding: 0;
+}
+.button-bar ul.button-list li .button {
+	margin:0;
+	border-radius: 0;
+	padding: .75em;
+	border-left: 1px solid #666;
+}
+.button-bar ul.button-list li.first .button {
+	border-left: none;
+}
+
 
 .help {
 	
@@ -524,6 +571,9 @@ legend {
 
 #yearSearch {
 	text-align: center;
+}
+input[type="text"].year,#yearEnd {
+	width: 3em;
 }
 
 #advancedSearch {
@@ -781,24 +831,6 @@ label {
 	border-color: #087CD5;
 }
 
-a.button {
-	text-decoration: none;
-}
-
-.button-box {
-	height: 25px;
-}
-
-.button-box .delete {
-	*margin-top: -5px;
-}
-
-.button-bar {
-	margin-top: 5px;
-	margin-bottom: 5px;
-	padding-top: 5px;
-	padding-bottom: 5px;
-}
 
 #search_list {
 	position: absolute;
@@ -809,27 +841,44 @@ a.button {
 	-moz-box-shadow: 3px 3px 4px #666;
 	-webkit-box-shadow: 3px 3px 4px #666;
 	box-shadow: 3px 3px 4px #666;
+	max-height: 500px;
+	overflow: scroll;
 }
 
 table.list td {
 	padding: 5px;
 	border-width: 0px;
+	vertical-align: top;
+
 }
 
 table.list {
-	border-spacing: 0px;
 	padding-bottom: 5px;
 	padding-top: 5px;
+		border-collapse: collapse;
 }
 
-table.list th {
+table.list thead tr {
 	border-bottom-style: solid;
 	border-bottom-width: 1px;
 	border-bottom-color: #000;
 }
 
-table.list tbody tr {
-	
+
+table.grid th, table.grid td {
+	border-left: solid 1px #999;
+	border-right: solid 1px #999;
+	border-top: solid 1px #999;
+	vertical-align: middle;
+}
+
+
+table.grid thead tr.first th {
+	border-bottom: none;
+}
+
+table.grid tbody tr:last-child {
+	border-bottom: solid 1px #999;
 }
 
 table.files {
@@ -916,13 +965,14 @@ fieldset.advanced div.advanced {
 }
 
 .search_fieldset {
-	width: 250px;
+	width: 350px;
 	padding-bottom: 20px;
 	padding-left: 10px;
 	padding-right: 10px;
 	display: block;
 	position: relative;
 	margin-bottom: 20px;
+
 }
 
 .search_fieldset legend {
@@ -938,11 +988,11 @@ fieldset.advanced div.advanced {
 }
 
 .student-row {
-	width: 500px;
+	/*width: 500px;*/
 	padding-left: 5px;
 }
 
-.studentName {
+.student-name {
 	font-weight: bold;
 	padding-top: .5em;
 	padding-bottom: .5em;
@@ -952,7 +1002,7 @@ fieldset.advanced div.advanced {
 	padding-bottom: .5em;
 }
 
-#search_list .studentName {
+#search_list .student-name {
 	padding-top: 0;
 }
 
@@ -1067,9 +1117,13 @@ th.assignment-field {
 	position: relative;
 }
 
-th.assignment-field .assignment-column-edit {
-	*position: absolute;
-	*bottom: 0;
+table.grade-chart thead tr:last-child th {
+	font-size: .85em;
+}
+
+th .assignment-column-edit {
+	width: 45px;
+	margin: 0 auto;
 }
 
 table.grade-chart th .chart-assignment {

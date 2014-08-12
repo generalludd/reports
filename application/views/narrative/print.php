@@ -8,22 +8,16 @@
 <title>Report for <?=$title;?>
 </title>
 <script type="text/javascript"
-	src="<?=base_url() . 'js/jquery.min.js'?>"></script>
-<link href='<?=base_url(). 'css/color.css';?>' rel='stylesheet'
+	src="<?=base_url('js/jquery.min.js'); ?>"></script>
+<link href='<?=base_url('css/color.css');?>' rel='stylesheet'
+	type='text/css' media='screen' />
+
+<link href='<?=base_url('css/report.css');?>' rel='stylesheet'
 	type='text/css' media='all' />
 
-<link href='<?=base_url(). 'css/print.css';?>' rel='stylesheet'
-	type='text/css' media='all' />
+<link href='<?=base_url('css/print.css');?>' rel='stylesheet'
+	type='text/css' media='print' />
 
-<style type="text/css" media="print">
-.control_panel {
-	display: none;
-}
-
-body {
-	margin-left: 0in;
-}
-</style>
 
 <script type="text/javascript">
 
@@ -66,8 +60,8 @@ body {
     </script>
 </head>
 
-<body>
-	<div class='control_panel'>
+<body class='narrative-report'>
+	<div class='control_panel no-print'>
 		<span class='font_label'>Font Size:</span> <span
 			class='button increaseFont'>Increase</span>&nbsp; <span
 			class='button resetFont'>Reset</span>&nbsp; <span

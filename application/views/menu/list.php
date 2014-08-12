@@ -13,7 +13,7 @@ echo create_button_bar($buttons);
 
 ?>
 
-<table>
+<table class="list">
 	<thead>
 		<tr>
 			<th>Human Label</th>

@@ -2,9 +2,8 @@
 ?>
 <div class='student_list'>
 <?php foreach($students as $student):
-	$student_style = "studentName";
+	$student_style = "student-name";
 	$name = format_name($student->stuFirst,$student->stuLast,$student->stuNickname);
-	$grade = format_grade($student->stuGrade);
 	?>
 	<p>
 		<span class='button <?=$js_class;?>'

@@ -15,7 +15,11 @@ backgrounds: #C7D7E9
 }
 
 .highlight {
-	background-color: yellow;
+	background-color: #FFFCAB;
+}
+
+.disabled{
+    background-color: #FFE4AB;
 }
 
 .message {
@@ -53,7 +57,7 @@ div.error {
 }
 
 div.error a {
-	color: yellow;
+	color: #FFFCAB;
 }
 
 div.error-text {
@@ -130,10 +134,9 @@ input.link {
 }
 
 .button:hover,submit:hover {
-	opacity: .90;
+	opacity: .90 !important;
 	color: #000;
 	border: none;
-	filter: Alpha(Opacity =                                               90);
 	/* 	background: #91b347 url(images/button_20_over.png) 50% 50% repeat-x; */
 	background: #67b021;
 	background: -moz-linear-gradient(top, #489310 0, #67b021 100%);
@@ -211,7 +214,7 @@ a.button {
 }
 
 .button.new,a.button.new {
-	border: 1px solid #ddd000;
+	/* border: 1px solid #ddd000; */
 	background-color: #eff11;
 	color: #000;
 	background: -moz-linear-gradient(top, #eeff11 0, #dff110 100%);
@@ -225,7 +228,7 @@ a.button {
 }
 
 .button.new:hover,.button.new.active {
-	border: 1px solid #ddd000;
+	/*border: 1px solid #ddd000;*/
 	background-color: #dff110;
 	background: -moz-linear-gradient(top, #dff110 0, #eeff11 100%);
 	background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #dff110),
@@ -235,15 +238,11 @@ a.button {
 	background: -ms-linear-gradient(top, #dff110 0, #eeff11 100%);
 	background: linear-gradient(top, #dff110 0, #eeff11 100%);
 	color: #000;
-	background: -moz-linear-gradient(top, #dff110 0, #eeff11 100%);
+	background: -moz-linear-gradient(top, #dff110 0, orange 100%);
 }
 
 .button.new:hover {
-	padding: .5em;
-}
-
-.button.new.active {
-	box-shadow: -1px -1px 1px #eeff11 inset;
+	box-shadow: -1px -1px 10px orange inset;
 }
 
 /* #DB5F3A */
@@ -284,14 +283,14 @@ a.button {
 /* #C3D0E2 */
 /* header page layout elements */
 #navigation {
-	background-color: #C7D7E9;
+	/*background-color: #C7D7E9;
 	background: -moz-linear-gradient(top, #c7d7e9 0, #c3d0e2 100%);
 	background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #c7d7e9),
 		color-stop(100%, #c3d0e2));
 	background: -webkit-linear-gradient(top, #c7d7e9 0, #c3d0e2 100%);
 	background: -o-linear-gradient(top, #c7d7e9 0, #c3d0e2 100%);
 	background: -ms-linear-gradient(top, #c7d7e9 0, #c3d0e2 100%);
-	background: linear-gradient(top, #c7d7e9 0, #c3d0e2 100%);
+	background: linear-gradient(top, #c7d7e9 0, #c3d0e2 100%);*/
 	border: none;
 	box-shadow: 2px 2px 4px #aaa;
 }
@@ -348,10 +347,7 @@ a.button {
 	color: black;
 }
 
-#addConcept {
-	background-color: #fdfdd8;
-	border-color: black;
-}
+
 
 h2,h3,.support-view legend,h4,h5,h6,tr.benchmark-grade {
 	background-color: #C7D7E9;
@@ -459,3 +455,6 @@ fieldset {
 	border-top-color: #C7D7E9;
 	border-left-color: #C7D7E9;
 }
+
+
+

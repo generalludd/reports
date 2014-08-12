@@ -362,8 +362,9 @@ class Narrative extends MY_Controller {
 		$this->load->model ( "teacher_model" );
 		$this->load->model ( "subject_model" );
 		$this->load->model ( "suggestion_model" );
-		$this->load->model ( "narrative_sort_model" );
+		$this->load->model ( "subject_sort_model" );
 		$this->load->model ( "preference_model" );
+		$this->load->model("grade_model");
 		$data ["accordion"] = $this->preference_model->get ( $this->session->userdata ( "userID" ), "accordion" );
 		$data ["defaultYear"] = get_current_year ();
 		$data ["defaultTerm"] = get_current_term ();
@@ -384,10 +385,10 @@ class Narrative extends MY_Controller {
 			$narrTerm = $this->uri->segment ( 5 );
 		}
 
-		$reportSort = $this->narrative_sort_model->get_sort ( $kStudent, $data ["defaultTerm"], $data ["defaultYear"] );
+		$reportSort = $this->subject_sort_model->get_sort ( $kStudent, $data ["defaultTerm"], $data ["defaultYear"],"narrative" );
 		$data ["reportSort"] = $reportSort;
 		$options ["reportSort"] = $data ["reportSort"];
-		$narratives = $this->narrative_model->get_for_student ( $kStudent, $options );
+		$narratives = $this->narrative_model->get_for_student ( $kStudent );
 		$data ["userRole"] = $this->session->userdata ( "dbRole" );
 		$data ["userID"] = $this->session->userdata ( "userID" );
 		$data ["narratives"] = $narratives;
@@ -569,7 +570,7 @@ class Narrative extends MY_Controller {
 	function print_student_report() {
 
 		if ($this->uri->segment ( 5 )) {
-			$this->load->model ( "narrative_sort_model" );
+			$this->load->model ( "subject_sort_model" );
 			$this->load->model ( "student_model" );
 			$this->load->model ( "attendance_model" );
 			$this->load->model ( "benchmark_model" );
@@ -580,20 +581,16 @@ class Narrative extends MY_Controller {
 			$narrYear = $this->uri->segment ( 5 );
 			$student_obj = $this->student_model->get ( $kStudent, "stuFirst,stuLast,stuNickname,baseGrade,baseYear" );
 			$student = format_name ( $student_obj->stuFirst, $student_obj->stuLast, $student_obj->stuNickname );
-			$stuGrade = get_current_grade ( $student_obj->baseGrade, $student_obj->baseYear, $narrYear );
+			$data ["stuGrade"] = get_current_grade ( $student_obj->baseGrade, $student_obj->baseYear, $narrYear );
 			$attendance = $this->attendance_model->summarize ( $kStudent, $narrTerm, $narrYear );
 			$data ["tardy"] = $attendance ["tardy"];
 			$data ["absent"] = $attendance ["absent"];
-			$data ["stuGrade"] = $this->student_model->get_grade ( $kStudent, $narrYear );
 			$data ["narrYear"] = $narrYear;
 			$data ["narrTerm"] = $narrTerm;
 			$narratives = $this->narrative_model->get_for_student ( $kStudent, array (
 					"narrTerm" => $narrTerm,
 					"narrYear" => $narrYear
 			) );
-			/*
-			 * foreach($narratives as $narrative){ $data["benchmarks"][$narrative->narrSubject] = $this->benchmark_model->get_for_student($kStudent,$narrative->narrSubject,$stuGrade, $narrTerm, $narrYear); }
-			 */
 
 			$this->load->model ( "preference_model", "preference" );
 			$data ["narratives"] = $narratives;
@@ -624,9 +621,16 @@ class Narrative extends MY_Controller {
 						$data ['grades'] [$narrative->narrSubject] = calculate_letter_grade ( $letter_grade, $pass_fail );
 						if ($narrative->narrTerm == "Year-End") {
 							$mid_year_grade = calculate_final_grade ( $mid_year_grades );
+							//a false value means no grades were entered for the term--assumes student was not enrolled.
+							if($mid_year_grade){
 							$data ['mid_year_grades'] [$narrative->narrSubject] = calculate_letter_grade ( $mid_year_grade, $pass_fail );
 							$data ['year_grade'] [$narrative->narrSubject] ['percent'] = ($letter_grade + $mid_year_grade) / 2;
 							$data ['year_grade'] [$narrative->narrSubject] ['grade'] = calculate_letter_grade ( ($letter_grade + $mid_year_grade) / 2 );
+							}else{
+								$data ['mid_year_grades'] [$narrative->narrSubject] = "Not Enrolled";
+								$data ['year_grade'] [$narrative->narrSubject] ['percent'] = $letter_grade;
+								$data ['year_grade'] [$narrative->narrSubject] ['grade'] = calculate_letter_grade ( $letter_grade, $pass_fail );
+							}
 						}
 					}
 				}
@@ -646,17 +650,17 @@ class Narrative extends MY_Controller {
 	 */
 	function show_sorter() {
 
-		$this->load->model ( "narrative_sort_model" );
-		$kStudent = $this->input->post ( "kStudent" );
+		$this->load->model ( "subject_sort_model" );
+		$kStudent = $this->input->get ( "kStudent" );
 		$data ["kStudent"] = $kStudent;
-		$data ["narrTerm"] = $this->input->post ( "narrTerm" );
-		$data ["narrYear"] = $this->input->post ( "narrYear" );
-		$data ["reportSort"] = $this->narrative_sort_model->get_sort ( $kStudent, $data ["narrTerm"], $data ["narrYear"] );
+		$data ["narrTerm"] = $this->input->get ( "narrTerm" );
+		$data ["narrYear"] = $this->input->get ( "narrYear" );
+		$data ["reportSort"] = $this->subject_sort_model->get_sort ( $kStudent, $data ["narrTerm"], $data ["narrYear"],"grades" );
 		$data ["kTeach"] = 1000;
-		$data ["target"] = "narrative/sorter";
+		$data ["target"] = "narrative/sort";
 		$data ["title"] = "Sorting Narratives";
 		$data ["school_year"] = format_schoolyear ( $data ["narrYear"], $data ["narrTerm"] );
-		$this->load->view ( $data ["target"], $data );
+		$this->load->view ( "page/index", $data );
 
 	}
 
@@ -668,12 +672,12 @@ class Narrative extends MY_Controller {
 	 */
 	function set_sort() {
 
-		$this->load->model ( "narrative_sort_model" );
+		$this->load->model ( "subject_sort_model" );
 		$kStudent = $this->input->post ( "kStudent" );
 		$narrYear = $this->input->post ( "narrYear" );
 		$narrTerm = $this->input->post ( "narrTerm" );
 		$reportSort = $this->input->post ( "reportSort" );
-		$this->narrative_sort_model->set_sort ( $kStudent, $narrTerm, $narrYear, $reportSort );
+		$this->subject_sort_model->set_sort ( $kStudent, $narrTerm, $narrYear, $reportSort );
 		redirect ( "narrative/student_list/$kStudent" );
 
 	}

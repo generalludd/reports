@@ -63,6 +63,22 @@ class Grade_model extends CI_Model
 		return $result;
 	}
 
+	/**
+	 *
+	 * @param int $kStudent
+	 * @param varchar $term
+	 * @param int $year
+	 * Does the student have grades for the given term?
+	 */
+	function has_grades($kStudent, $term, $year){
+		$this->db->from("grade");
+		$this->db->join("assignment","grade.kAssignment = assignment.kAssignment");
+		$this->db->where("kStudent",$kStudent);
+		$this->db->where("assignment.term",$term);
+		$this->db->where("assignment.year",$year);
+		$result = $this->db->get()->num_rows();
+	}
+
 
 	/**
 	 * batch_insert
@@ -81,7 +97,7 @@ class Grade_model extends CI_Model
 		$this->db->from("assignment");
 		$this->db->join("grade","grade.kAssignment = assignment.kAssignment","LEFT");
 		$this->db->join("student", "grade.kStudent = student.kStudent");
-		$this->db->where("(student.stuGrade BETWEEN $grade_start AND $grade_end)");
+		$this->db->where("((student.baseGrade + $year - student.baseYear) BETWEEN $grade_start AND $grade_end)");
 		$this->db->where("assignment.kTeach",$kTeach);
 		$this->db->where("term",$term);
 		$this->db->where("year",$year);
@@ -95,10 +111,10 @@ class Grade_model extends CI_Model
 	}
 
 	/**
-	 * 
+	 *
 	 * @param int $kAssignment
 	 * @param double $percentage
-	 * update all student grades for a given assignment based on the percentage change. 
+	 * update all student grades for a given assignment based on the percentage change.
 	 * In the UI if a teacher changes the number of points for a given assignment
 	 * this script is called to automatically update all the points proportionally
 	 */
@@ -162,29 +178,34 @@ class Grade_model extends CI_Model
 		}
 		return $output;
 	}
-	
+
 	/**
 	 *
 	 * @param int $kStudent
 	 * @param varchar $term
 	 * @param int $year
-	 * @param date $cutoff_date optional standard US date (mm-dd-yyyy) format converted in script to mysql
+	 * @param options array optional expects cutoff_date: standard US date (mm-dd-yyyy) format converted in script to mysql
 	 * @return object
 	 * get a distinct list of subjects for a student for the term, year and optional cutoff date.
 	 */
-	function get_subjects($kStudent, $term, $year, $cutoff_date = NULL){
-		if($cutoff_date){
-			$this->db->where(sprintf("`assignment`.`date` <= '%s'", format_date($cutoff_date,"mysql")));
+	function get_subjects($kStudent, $term, $year, $options = array()){
+		if(array_key_exists('cutoff_date',$options)){
+			$this->db->where(sprintf("`assignment`.`date` <= '%s'", format_date($options['cutoff_date'],"mysql")));
 		}
-		$this->db->from("grade");
-		$this->db->where("kStudent",$kStudent);
-		$this->db->join("assignment","grade.kAssignment=assignment.kAssignment","LEFT");
-		$this->db->select("subject");
-		$this->db->select("SUM(grade.points) as grade_points");
-		$this->db->select("SUM(assignment.points) as total_points");
-		$this->db->order_by("subject");
-		$this->db->group_by("subject");
-		$result = $this->db->get()->result();
+		$subject_sort = 'subject';
+		$this->load->model("subject_sort_model","subject_sort");
+
+		if($this->subject_sort->has_sort($kStudent, $term, $year, "grades")){
+			$subject_sort = get_subject_order($this->subject_sort->get_sort($kStudent,$term,$year,"grades"));
+		}else{
+			$this->load->model("global_subject_model","global_subject");
+			$this->load->model("student_model");
+			$student = $this->student_model->get($kStudent,"baseGrade,baseYear");
+			$stuGrade = get_current_grade($student->baseGrade, $student->baseYear, $year);
+			$subject_sort = get_subject_order($this->global_subject->get_by_grade($stuGrade,"grades"));
+		}
+		$query = sprintf("SELECT `subject` FROM (`grade`) LEFT JOIN `assignment` ON `grade`.`kAssignment`=`assignment`.`kAssignment` WHERE `grade`.`kStudent` = '%s' GROUP BY `subject` ORDER BY %s",$kStudent,$subject_sort);
+		$result = $this->db->query($query)->result();
 		return $result;
 
 

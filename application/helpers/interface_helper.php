@@ -50,21 +50,21 @@ function create_button($data)
 				$href = "href='#'";
 			}
 		}
-		
+
 		if(array_key_exists("target",$data)){
 			$target = "target='" . $data["target"] . "'";
 		}
-		
+
 		if(array_key_exists("title", $data)){
 			$title = "title ='" . $data["title"] . "'";
 		}
 		if($type != "pass-through"){
-			
-				
+
+
 			if(array_key_exists("class", $data)){
 				if(!is_array($data["class"])){
-					$data["class"] = array($data["class"]); 
-					
+					$data["class"] = array($data["class"]);
+
 				}
 			}else{
 				$data["class"] = array("button");
@@ -73,7 +73,7 @@ function create_button($data)
 				$data["class"][] = "active";
 			}
 			$class = sprintf("class='%s'", implode(" ",$data["class"]));
-			
+
 
 			$id = "";
 			if(array_key_exists("id", $data)){
@@ -126,13 +126,13 @@ function create_button_bar($buttons, $options = NULL ){
 		if(array_key_exists("selection", $options)){
 			$selection = $options["selection"];
 		}
-		
+
 		if(array_key_exists("class", $options)){
 			$class = $options["class"];
 		}
 	}
 	$button_list = array();
-	
+
 	//the "selection" option indicates the page in the interface. Currently as indicated by the uri->segment(1)
 	foreach($buttons as $button){
 		/*if($button["selection"] == $selection){
@@ -146,7 +146,7 @@ function create_button_bar($buttons, $options = NULL ){
 	}
 
 	$contents = implode("</li><li>", $button_list);
-	$template = "<ul class='button-list'><li>$contents</li></ul>";
+	$template = "<ul class='button-list'><li class='first'>$contents</li></ul>";
 	$output = "<div class='button-box $class'  $id>$template</div>";
 	return $output;
 }

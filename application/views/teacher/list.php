@@ -54,8 +54,10 @@
 			<a class="button teacher_search">Refine Search</a>
 		</div>
 	</fieldset>
+	<div class="button-box">
 	<a href="<?=site_url("teacher/create");?>"
 		class="button teacher_create new">New User</a>
+		</div>
 	<table class='list'>
 		<tbody>
 			<?

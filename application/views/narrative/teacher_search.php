@@ -19,7 +19,7 @@
 <?=get_term_menu('narrTerm', $narrTerm);?> </p>
 <p>
 <label for="narrYear">Year: </label>
-<?=form_dropdown('narrYear',get_year_list(), $narrYear, "id='narrYear' class='searchYear'");?>
+<?=form_dropdown('narrYear',get_year_list(), $narrYear, "id='narrYear' class='year'");?>
 -<input id="yearEnd" type="text" name="yearEnd" class='yearEnd' readonly
 	maxlength="4" size="5" value="<? $yearEnd=$narrYear+1;print $yearEnd; ?>" /></p>
 <input type="submit" class="button" value="Search"/>

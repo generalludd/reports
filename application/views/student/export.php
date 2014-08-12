@@ -13,7 +13,7 @@ foreach($students as $student){
 	$line[] = $student->stuGender;
 	$line[] = format_date($student->stuDOB, "standard");
 	$line[] = get_age($student->stuDOB);
-	$line[] = format_grade($student->listGrade);
+	$line[] = format_grade($student->stuGrade);
 	$line[] = format_grade($student->baseGrade);
 	$line[] = $student->baseYear;
 	$line[] = $student->stuEmail;
