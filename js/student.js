@@ -171,7 +171,8 @@ $(document).ready(function() {
 				);// end home.click
 
 				$('.save_student').live('click', function(event) {
-					saveStudent('save');
+					//saveStudent('save');
+					//return false;
 				}// end function(event)
 				);// end click
 
