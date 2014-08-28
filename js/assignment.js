@@ -8,24 +8,27 @@ $(document).ready(function(){
 	
 	$(".assignment-edit").live("click",function(){
 		myAssignment = this.id.split("_")[1];
+		
 		if($(this).parents("table.grade-chart").hasClass("locked")){
 			question = confirm("This assignment is entered for a previous term. Are you sure you want to edit it?");
-			if(question){
-				form_data = {
-						kAssignment: myAssignment,
-						ajax: 1
-				};
-				
-				$.ajax({
-					type:"get",
-					url: base_url + "assignment/edit",
-					data: form_data,
-					success: function(data){
-						showPopup("Edit Assigment",data,"auto");
-		
-					}
-				});
-			}
+		}else{
+			question = true;
+		}
+		if(question){
+			form_data = {
+					kAssignment: myAssignment,
+					ajax: 1
+			};
+			
+			$.ajax({
+				type:"get",
+				url: base_url + "assignment/edit",
+				data: form_data,
+				success: function(data){
+					showPopup("Edit Assigment",data,"auto");
+	
+				}
+			});
 		}
 	});
 	
