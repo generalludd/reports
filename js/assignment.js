@@ -11,7 +11,7 @@ $(document).ready(function(){
 		
 		if($(this).parents("table.grade-chart").hasClass("locked")){
 			question = confirm("This assignment is entered for a previous term. Are you sure you want to edit it?");
-		}else{
+		}else if($(this).parents("table.grade-charg").hasClass("editable")){
 			question = 1;
 		}
 		console.log(question);

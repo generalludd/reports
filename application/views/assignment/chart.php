@@ -32,7 +32,7 @@ if (! empty($assignments)) {
              $header->term == get_current_term()) {
         $classes[] = "editable";
     } else {
-        $classes[] = "editable";
+        $classes[] = "locked";
     }
     ?>
 <h2>
