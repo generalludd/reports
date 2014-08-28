@@ -355,7 +355,7 @@ a.button {
 }
 
 .button-box {
-    height: 25px;
+    height: 35px;
 }
 
 
@@ -1129,6 +1129,7 @@ table.grade-chart thead tr:last-child th {
 th .assignment-column-edit {
 	width: 45px;
 	margin: 0 auto;
+	white-space: pre-wrap;
 }
 
 table.grade-chart th .chart-assignment {

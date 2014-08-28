@@ -12,8 +12,10 @@ $(document).ready(function(){
 		if($(this).parents("table.grade-chart").hasClass("locked")){
 			question = confirm("This assignment is entered for a previous term. Are you sure you want to edit it?");
 		}else{
-			question = true;
+			question = 1;
 		}
+		console.log(question);
+		
 		if(question){
 			form_data = {
 					kAssignment: myAssignment,
@@ -296,24 +298,29 @@ $(document).ready(function(){
 	});
 	
 	$(".assignment-delete").live("click",function(){
+		href = window.location.href;
+	
 		choice = confirm("Are you sure you want to delete this assignment? It will delete all the related student grades along with it!");
 		if(choice){
 			second_chance = confirm("Are you absolutely sure? This cannot be easily undone if at all.");
 			if(second_chance){
 				form_data = {
-						kAssignment: $("#kAssignment").val()
+						kAssignment: $("#kAssignment").val(),
+						url: href
 				};
 				$.ajax({
 					type: "post",
 					url: base_url + "assignment/delete",
 					data: form_data,
 					success: function(data){
-						window.location.reload();
+						window.location.href = href;
 					}
+					
 				});
 				
 			}
 		}
+
 	});
 	
 	$(".update-category, .update-weight, .update-gradeStart, .update-gradeEnd").live("keyup",function(){

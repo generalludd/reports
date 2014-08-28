@@ -199,7 +199,7 @@ class Assignment extends MY_Controller
 		$year = $assignment->year;
 		$gradeStart = $assignment->gradeStart;
 		$gradeEnd = $assignment->gradeEnd;
-		redirect("assignment/chart?kTeach=$kTeach&term=$term&year=$year&gradeStart=$gradeStart&gradeEnd=$gradeEnd");
+		//redirect("assignment/chart?kTeach=$kTeach&term=$term&year=$year&gradeStart=$gradeStart&gradeEnd=$gradeEnd");
 	}
 
 	/**
