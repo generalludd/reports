@@ -13,3 +13,5 @@ php_errors.log
 /uploads/*
 /user_guide
 user_guide/*
+.project
+/.project
