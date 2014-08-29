@@ -107,6 +107,7 @@ class Assignment_model extends CI_Model
         $this->db->join("grade", "assignment.kAssignment=grade.kAssignment");
         $this->db->join("student", "grade.kStudent=student.kStudent");
         $this->db->join("assignment_category as category", "assignment.kCategory = category.kCategory", "LEFT");
+        $this->db->order_by("student.stuFirst");
         $this->db->order_by("student.stuLast");
         $this->db->order_by("student.kStudent");
         $this->db->order_by("assignment.date");
