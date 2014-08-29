@@ -163,6 +163,8 @@ class Student_model extends CI_Model
 		$this->db->order_by ( 'stuFirst', 'ASC' );
 		$this->db->from ( 'student' );
 		$this->db->from ( "teacher" );
+		$this->db->select("*");
+		$this->db->select(sprintf("(2014- `baseYear`  + `baseGrade`) as `stuGrade`",get_current_year()));
 		$result = $this->db->get ()->result ();
 		return $result;
 
