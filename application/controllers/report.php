@@ -37,7 +37,7 @@ class Report extends MY_Controller
 			$data["is_teacher"] = FALSE;
 		}
 		$data["kStudent"] = $kStudent;
-		$report =  $this->student->get($kStudent,"stuFirst,stuLast,stuNickname,teachFirst as advisorFirst,teachLast as advisorLast,teacher.kTeach as kAdvisor",TRUE);
+		$report =  $this->student->get($kStudent,"stuFirst,stuLast,stuNickname,teacher.teachFirst as advisorFirst,teacher.teachLast as advisorLast,teacher.kTeach as kAdvisor",TRUE);
 		$data["student"] = format_name($report->stuFirst,$report->stuLast,$report->stuNickname);
 		$data["advisor"] = format_name($report->advisorFirst,$report->advisorLast);
 		$data["report"] = $report;
