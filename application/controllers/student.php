@@ -177,6 +177,12 @@ class Student extends MY_Controller
 			$hasNeeds = $this->input->get("hasNeeds");
 			bake_cookie("hasNeeds", $hasNeeds);
 		}
+		$stuGroup = 0;
+		burn_cookie("stuGroup");
+		if($this->input->get("stuGroup")){
+		    $stuGroup = $this->input->get("stuGroup");
+		    bake_cookie("stuGroup", $stuGroup);
+		}
 
 		$includeFormerStudents = 0;
 		burn_cookie("includeFormerStudents");
@@ -191,7 +197,7 @@ class Student extends MY_Controller
 		}
 		//$this->session->set_userdata($session);
 		$data["criteria"] = $this->input->get();
-		$data["students"] = $this->student_model->advanced_find($year,$grades, $hasNeeds, $includeFormerStudents, $sorting);
+		$data["students"] = $this->student_model->advanced_find($year,$grades, $hasNeeds, $includeFormerStudents, $sorting,$stuGroup);
 		$data["title"] = "Student List";
 		if($this->input->get("export")){
 			$this->load->helper("download");

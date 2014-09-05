@@ -237,7 +237,7 @@ class Student_model extends CI_Model
 	 * @param boolean $hasNeeds
 	 * @param boolean $includeFormerStudents
 	 */
-	function advanced_find($year, $grades = array(), $hasNeeds = 0, $includeFormerStudents = 0, $sorting = NULL)
+	function advanced_find($year, $grades = array(), $hasNeeds = 0, $includeFormerStudents = 0, $sorting = NULL,$stuGroup = NULL)
 	{
 
 		$this->db->select ( "student.*,(baseGrade+$year-baseYear) AS stuGrade" );
@@ -256,6 +256,10 @@ class Student_model extends CI_Model
 			) );
 		} else {
 			$this->db->where ( "(`isEnrolled` = 1 OR `isGraduate` = 1)",NULL,FALSE );
+		}
+
+		if($stuGroup){
+$this->db->where("stuGroup",$stuGroup);
 		}
 
 		if ($hasNeeds == 1) {

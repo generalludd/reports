@@ -51,10 +51,13 @@ $default_row_style = array("student-row","row");
 	<div class='<?=implode(" ",$row_style);?>'>
 		<div class='<?=implode(" ", $student_style);?>'>
 			<a href=<?=site_url("student/view/$student->kStudent");?>
-				class='link'><?="$name";?> </a>
+				class='link'><?="$name";?></a>
 			<?=$enrolled;?>
 			<? if(get_value($student,"stuEmailPermission") == 1): ?>
 			<? echo "&nbsp;" . format_email($student->stuEmail);?>
+			<? endif;?>
+			<? if(get_value($student,"stuGroup") == "A"|| get_value($student,"stuGroup") == "B"):?>
+			<? echo "&nbsp;Group: $student->stuGroup";?>
 			<? endif;?>
 		</div>
 		<?

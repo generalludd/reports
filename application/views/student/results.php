@@ -22,7 +22,14 @@ if(array_key_exists("grades", $criteria)){
 	if(array_key_exists("includeFormerStudents", $criteria)){
 		echo "<li><strong>Including former students</strong></li>";
 	}
-	?>
+
+	if(array_key_exists("stuGroup",$criteria)):?>
+<li>Specialist Group:<strong> <?=$criteria["stuGroup"];?>
+
+
+<?endif;?>
+
+
 	<li>Found Count: <?=count($students);?></li>
 </ul>
 <div class='button-box'>
