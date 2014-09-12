@@ -29,7 +29,7 @@ if($dbRole == 1){
 	$buttons[] = array("selection" => "teacher\?", "text" => "List Teachers", "href" => site_url("teacher?gradeStart=0&gradeEnd=8"), "title" => "List all the teachers &amp; other users in the database");
 	$buttons[] = array("selection" => "narrative", "text" => "Narrative Search &amp; Replace", "href" => site_url("narrative/search"), "title" => "Search &amp; Replace Narrative Text");
 }elseif($dbRole == 3){ //aides
-	$buttons[] = array("selection" => "support", "text" => "Learning Support", "href" => site_url("student/advanced_search?hasNeeds=1&year=2011") );
+	$buttons[] = array("selection" => "support", "text" => "Learning Support", "href" => site_url("student/advanced_search?hasNeeds=1&year=" . get_current_year()) );
 }else{
 	$buttons[] = array("selection" => "template", "text" => "Subject Templates", "href" => site_url("template/list_templates/?kTeach=$userID&term=$term&year=$year"));
 	$buttons[] = array("selection" => "benchmark", "text" => "Benchmarks", "class" => array("button","show_benchmark_search"), "type" => "span");
