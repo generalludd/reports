@@ -44,9 +44,6 @@ $this->load->view($target);
 <!-- end sidebar --></div>
 <div id='search_list'></div>
 <div id="footer"><?$this->load->view('page/footer');?>
-<?php echo ini_get('upload_max_filesize');
-echo "<br/>";
-echo ini_get('allow_call_time_pass_reference'); ?>
 </div>
 </div>
 </body>
