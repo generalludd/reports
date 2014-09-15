@@ -36,14 +36,18 @@ if($this->uri->segment(1) == ""){
 <!-- main -->
 
 <div id="main"><!-- content -->
-<div id="content"><? 
+<div id="content"><?
 $this->load->view($target);
 ?></div>
 <!-- end content -->
 <div id="sidebar"></div>
 <!-- end sidebar --></div>
 <div id='search_list'></div>
-<div id="footer"><?$this->load->view('page/footer');?></div>
+<div id="footer"><?$this->load->view('page/footer');?>
+<?php echo ini_get('upload_max_filesize');
+echo "<br/>";
+echo ini_get('allow_call_time_pass_reference'); ?>
+</div>
 </div>
 </body>
 </html>
