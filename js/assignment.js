@@ -8,13 +8,13 @@ $(document).ready(function(){
 	
 	$(".assignment-edit").live("click",function(){
 		myAssignment = this.id.split("_")[1];
-		
+		question = 0;
 		if($(this).parents("table.grade-chart").hasClass("locked")){
 			question = confirm("This assignment is entered for a previous term. Are you sure you want to edit it?");
-		}else if($(this).parents("table.grade-charg").hasClass("editable")){
+		}else if($(this).parents("table.grade-chart").hasClass("editable")){
 			question = 1;
 		}
-		console.log(question);
+		//console.log(question);
 		
 		if(question){
 			form_data = {
