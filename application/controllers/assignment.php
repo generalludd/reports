@@ -60,6 +60,8 @@ class Assignment extends MY_Controller
 		$grade_options ["from"] = "grade";
 		$grade_options ["join"] = "assignment";
 		if($sort_order = $this->input->get("student_sort_order")){
+		    $this->load->model("preference_model","preference");
+		    $this->preference->update($kTeach, "student_sort_order", $sort_order);
 		    bake_cookie("student_sort_order", $sort_order);
 		}
 		$data["grades"] = $this->assignment->get_grades($kTeach,$term,$year,$gradeStart,$gradeEnd,$stuGroup, $date_range,$sort_order);
