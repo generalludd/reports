@@ -30,6 +30,10 @@ if(empty($year)){
 	<input type="text" name="date_end" id="date_end" class="datefield" value=""/>
 	</p>
 	<p>
+	<label for="student_sort_order">Sort Students by</label>
+	<?=form_dropdown("student_sort_order",array("stuFirst"=>"First Name","stuLast"=>"Last Name"),get_cookie("student_sort_order"),"id='student_sort_order'");?>
+	</p>
+	<p>
 	<input type="submit" class="button"/>
 	</p>
 </form>

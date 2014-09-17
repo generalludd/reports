@@ -24,11 +24,11 @@ class Assignment extends MY_Controller
 		if($this->input->get("kTeach")){
 			$kTeach = $this->input->get("kTeach");
 		}
+
 		$gradeStart = $this->input->get("gradeStart");
 		bake_cookie("gradeStart",$gradeStart);
 		$gradeEnd = $this->input->get("gradeEnd");
 		bake_cookie("gradeEnd",$gradeEnd);
-
 
 		$term = get_current_term();
 		if($this->input->get("term")){
@@ -59,8 +59,10 @@ class Assignment extends MY_Controller
 		}
 		$grade_options ["from"] = "grade";
 		$grade_options ["join"] = "assignment";
-
-		$data["grades"] = $this->assignment->get_grades($kTeach,$term,$year,$gradeStart,$gradeEnd,$stuGroup, $date_range);
+		if($sort_order = $this->input->get("student_sort_order")){
+		    bake_cookie("student_sort_order", $sort_order);
+		}
+		$data["grades"] = $this->assignment->get_grades($kTeach,$term,$year,$gradeStart,$gradeEnd,$stuGroup, $date_range,$sort_order);
 		foreach($data['grades'] as $grade){
 			$grade_options ['subject'] = $grade->subject;
 			$grade->final_grade = $this->assignment->get_for_student ( $grade->kStudent, $grade->term, $grade->year, $grade_options );
@@ -70,6 +72,7 @@ class Assignment extends MY_Controller
 		if(empty($data["assignments"])){
 			$data["category_count"] = $this->assignment->count_categories($kTeach, $gradeStart, $gradeEnd);
 		}
+
 		$data["kTeach"] = $kTeach;
 		$data["term"] = $term;
 		$data["year"] = $year;

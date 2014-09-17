@@ -1,16 +1,28 @@
-<?php defined('BASEPATH') or exit('No direct script access allowed');
+<?php
+
+defined('BASEPATH') or exit('No direct script access allowed');
 
 class Assignment_model extends CI_Model
 {
+
     var $kTeach;
+
     var $kCategory;
+
     var $assignment;
+
     var $date;
+
     var $points;
+
     var $subject;
+
     var $term;
+
     var $year;
+
     var $gradeStart;
+
     var $gradeEnd;
 
     function prepare_variables ()
@@ -44,7 +56,8 @@ class Assignment_model extends CI_Model
     function get ($kAssignment)
     {
         $this->db->where("kAssignment", $kAssignment);
-        $this->db->join("assignment_category as category", "assignment.kCategory = category.kCategory","LEFT");
+        $this->db->join("assignment_category as category",
+                "assignment.kCategory = category.kCategory", "LEFT");
         $this->db->select("assignment.*,category.weight,category.category");
         $this->db->from("assignment");
         $result = $this->db->get()->row();
@@ -90,33 +103,45 @@ class Assignment_model extends CI_Model
      * @param array $date_range
      * @return query result rows
      */
-    function get_grades ($kTeach, $term, $year, $gradeStart, $gradeEnd, $stuGroup = NULL, $date_range = array())
+    function get_grades ($kTeach, $term, $year, $gradeStart, $gradeEnd,  $stuGroup = NULL, $date_range = array(),$sort_order = NULL)
     {
         $this->db->from("assignment");
         $this->db->where("assignment.term", $term);
         $this->db->where("assignment.year", $year);
         $this->db->where("assignment.kTeach", $kTeach);
-        $this->db->where("(assignment.gradeStart = $gradeStart OR assignment.gradeEnd = $gradeEnd)");
+        $this->db->where(
+                "(assignment.gradeStart = $gradeStart OR assignment.gradeEnd = $gradeEnd)");
         if ($stuGroup) {
             $this->db->where("student.stuGroup", $stuGroup);
         }
         if ($date_range) {
-            $this->db->where(sprintf("(`assignment`.`date` BETWEEN '%s' AND '%s')", $date_range["date_start"], $date_range["date_end"]));
+            $this->db->where(
+                    sprintf("(`assignment`.`date` BETWEEN '%s' AND '%s')",
+                            $date_range["date_start"], $date_range["date_end"]));
         }
-        $this->db->where("((`student`.`baseGrade` + $year -`student`.`baseYear`) BETWEEN $gradeStart AND $gradeEnd)");
+        $this->db->where(
+                "((`student`.`baseGrade` + $year -`student`.`baseYear`) BETWEEN $gradeStart AND $gradeEnd)");
         $this->db->join("grade", "assignment.kAssignment=grade.kAssignment");
         $this->db->join("student", "grade.kStudent=student.kStudent");
-        $this->db->join("assignment_category as category", "assignment.kCategory = category.kCategory", "LEFT");
-        $this->db->order_by("student.stuFirst");
-        $this->db->order_by("student.stuLast");
+        $this->db->join("assignment_category as category",
+                "assignment.kCategory = category.kCategory", "LEFT");
+        if ($sort_order == "stuLast") {
+            $this->db->order_by("student.stuLast");
+            $this->db->order_by("student.stuFirst");
+        } else {
+            $this->db->order_by("student.stuFirst");
+            $this->db->order_by("student.stuLast");
+        }
         $this->db->order_by("student.kStudent");
         $this->db->order_by("assignment.date");
         $this->db->order_by("assignment.kAssignment");
         $this->db->order_by("assignment.term");
         $this->db->order_by("assignment.year");
-        $this->db->select("student.kStudent,student.stuFirst,student.stuLast,student.stuNickname, (`student`.`baseGrade` + $year -`student`.`baseYear`) as `stuGrade`,student.stuGroup");
+        $this->db->select(
+                "student.kStudent,student.stuFirst,student.stuLast,student.stuNickname, (`student`.`baseGrade` + $year -`student`.`baseYear`) as `stuGrade`,student.stuGroup");
         $this->db->select("grade.*");
-        $this->db->select("assignment.kTeach, assignment.assignment,assignment.points as assignment_total,assignment.subject, assignment.term,assignment.year");
+        $this->db->select(
+                "assignment.kTeach, assignment.assignment,assignment.points as assignment_total,assignment.subject, assignment.term,assignment.year");
         $this->db->select("category.weight,category.category");
         $result = $this->db->get()->result();
         return $result;
@@ -139,21 +164,31 @@ class Assignment_model extends CI_Model
             $this->db->where("student.stuGroup", $stuGroup);
         }
         $year = get_current_year();
-         if( $this->input->cookie("year")){
-        	$year = $this->input->cookie("year");
+        if ($this->input->cookie("year")) {
+            $year = $this->input->cookie("year");
         }
         $this->db->join("grade", "assignment.kAssignment=grade.kAssignment");
         $this->db->join("student", "grade.kStudent=student.kStudent");
-        $this->db->join("assignment_category as category", "assignment.kCategory = category.kCategory", "LEFT");
-        $this->db->order_by("student.stuFirst");
+        $this->db->join("assignment_category as category",
+                "assignment.kCategory = category.kCategory", "LEFT");
+        $sort_order = get_cookie("student_sort_order");
+        if ($sort_order == "stuLast") {
+            $this->db->order_by("student.stuLast");
+            $this->db->order_by("student.stuFirst");
+        } else {
+            $this->db->order_by("student.stuFirst");
+            $this->db->order_by("student.stuLast");
+        }
         $this->db->order_by("student.kStudent");
         $this->db->order_by("assignment.date");
         $this->db->order_by("assignment.kAssignment");
         $this->db->order_by("assignment.term");
         $this->db->order_by("assignment.year");
-        $this->db->select("student.kStudent,student.stuFirst,student.stuLast,student.stuNickname, (`baseGrade` + $year -`baseYear`) as`stuGrade`,student.stuGroup");
+        $this->db->select(
+                "student.kStudent,student.stuFirst,student.stuLast,student.stuNickname, (`baseGrade` + $year -`baseYear`) as`stuGrade`,student.stuGroup");
         $this->db->select("grade.*");
-        $this->db->select("assignment.kTeach, assignment.assignment,assignment.points as assignment_total,assignment.subject, assignment.term,assignment.year");
+        $this->db->select(
+                "assignment.kTeach, assignment.assignment,assignment.points as assignment_total,assignment.subject, assignment.term,assignment.year");
         $this->db->select("category.weight,category.category");
         $result = $this->db->get("assignment")->result();
         return $result;
@@ -167,8 +202,10 @@ class Assignment_model extends CI_Model
      * @param int $kStudent
      * @param string $term
      * @param int $year
-     * @param array $options, a limiter including the teacher (kTeach),
-     *        subject. grade_range is a puzzlement given the term and year are required.
+     * @param array $options,
+     *            a limiter including the teacher (kTeach),
+     *            subject. grade_range is a puzzlement given the term and year
+     *            are required.
      * @return array of student grade objects, the result of the query
      *
      */
@@ -177,7 +214,8 @@ class Assignment_model extends CI_Model
         $from = "assignment";
         $join = "grade";
 
-        if (array_key_exists("from", $options) && array_key_exists("join", $options)) {
+        if (array_key_exists("from", $options) &&
+                 array_key_exists("join", $options)) {
             $from = $options["from"];
             $join = $options["join"];
         }
@@ -204,17 +242,24 @@ class Assignment_model extends CI_Model
         // $this->db->where("assignment.gradeEnd = category.gradeEnd");
 
         $this->db->from($from);
-        $this->db->join($join, "assignment.kAssignment=grade.kAssignment AND grade.kStudent = $kStudent", "LEFT");
+        $this->db->join($join,
+                "assignment.kAssignment=grade.kAssignment AND grade.kStudent = $kStudent",
+                "LEFT");
         $this->db->join("student", "student.kStudent=grade.kStudent", "LEFT");
         $this->db->join("teacher", "teacher.kTeach=assignment.kTeach", "LEFT");
-        $this->db->join("menu", "grade.footnote = menu.value AND menu.category='grade_footnote'", "LEFT");
-        $this->db->join("assignment_category as category", "assignment.kCategory = category.kCategory", "LEFT");
+        $this->db->join("menu",
+                "grade.footnote = menu.value AND menu.category='grade_footnote'",
+                "LEFT");
+        $this->db->join("assignment_category as category",
+                "assignment.kCategory = category.kCategory", "LEFT");
         $this->db->select("category.category,category.weight");
         $this->db->select(
                 "assignment.kAssignment, assignment.term, assignment.year, assignment.subject, assignment.date, assignment.assignment, assignment.points as total_points");
-        $this->db->select("grade.kGrade,grade.points,grade.status,grade.footnote");
+        $this->db->select(
+                "grade.kGrade,grade.points,grade.status,grade.footnote");
         $this->db->select("menu.label");
-        $this->db->select("student.stuFirst,student.stuNickname,student.stuLast,student.stuGroup");
+        $this->db->select(
+                "student.stuFirst,student.stuNickname,student.stuLast,student.stuGroup");
         $this->db->select("teacher.teachFirst,teacher.teachLast");
         $this->db->order_by("assignment.subject");
         $this->db->order_by("assignment.date");
@@ -234,19 +279,25 @@ class Assignment_model extends CI_Model
      * @param array $date_range
      * @return query result object array
      */
-    function get_for_teacher ($kTeach, $term, $year, $gradeStart, $gradeEnd, $date_range = array())
+    function get_for_teacher ($kTeach, $term, $year, $gradeStart, $gradeEnd,
+            $date_range = array())
     {
         $this->db->where("assignment.kTeach", $kTeach);
         $this->db->where("assignment.term", $term);
         $this->db->where("assignment.year", $year);
-        $this->db->where("(assignment.gradeStart = $gradeStart OR assignment.gradeEnd = $gradeEnd)");
+        $this->db->where(
+                "(assignment.gradeStart = $gradeStart OR assignment.gradeEnd = $gradeEnd)");
         if ($date_range) {
-            $this->db->where(sprintf("(`assignment`.`date` BETWEEN '%s' AND '%s')", $date_range["date_start"], $date_range["date_end"]));
+            $this->db->where(
+                    sprintf("(`assignment`.`date` BETWEEN '%s' AND '%s')",
+                            $date_range["date_start"], $date_range["date_end"]));
         }
         $this->db->from("assignment");
-        $this->db->join("assignment_category as category", "assignment.kCategory = category.kCategory", "LEFT");
+        $this->db->join("assignment_category as category",
+                "assignment.kCategory = category.kCategory", "LEFT");
         $this->db->join("teacher", "assignment.kTeach=teacher.kTeach", "LEFT");
-        $this->db->select("assignment.*,category.weight,category.category,teacher.teachFirst,teacher.teachLast");
+        $this->db->select(
+                "assignment.*,category.weight,category.category,teacher.teachFirst,teacher.teachLast");
         $this->db->order_by("assignment.date");
         $this->db->order_by("assignment.kAssignment");
         $this->db->order_by("assignment.term");
@@ -293,7 +344,7 @@ class Assignment_model extends CI_Model
         return $result;
     }
 
-    function get_categories ($kTeach, $gradeStart, $gradeEnd,$year, $term)
+    function get_categories ($kTeach, $gradeStart, $gradeEnd, $year, $term)
     {
         $this->db->distinct("category");
         if ($kTeach) {
@@ -302,8 +353,8 @@ class Assignment_model extends CI_Model
         $this->db->where("kTeach", $kTeach);
         $this->db->where("gradeStart", $gradeStart);
         $this->db->where("gradeEnd", $gradeEnd);
-        $this->db->where("year",$year);
-        $this->db->where("term",$term);
+        $this->db->where("year", $year);
+        $this->db->where("term", $term);
         $this->db->order_by("weight", "DESC");
         $result = $this->db->get("assignment_category")->result();
         return $result;
