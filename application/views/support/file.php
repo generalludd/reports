@@ -1,6 +1,7 @@
 <?php
 
 ?>
+<h3>Remember to put as much information into the text fields above as you can.</h3>
 <form method="post" enctype="multipart/form-data" name="support-file-editor" id="support-file-editor" action="<?=site_url("support/attach_file");?>">
 <input type="hidden" name="kSupport" id="kSupport" value="<?=$kSupport?>"/>
 <input type="hidden" name="kStudent" id="kStudent" value="<?=$kStudent;?>"/>
