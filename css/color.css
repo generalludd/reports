@@ -182,7 +182,7 @@ a.button {
 	color: #fff;
 }
 
-.button.edit {
+.button.edit, .button.edit.active {
 	border: none;
 	background-color: #0077bd;
 	background: -moz-linear-gradient(top, #63ACE4 0, #0077bd 100%);
@@ -192,8 +192,9 @@ a.button {
 	background: -o-linear-gradient(top, #63ACE4 0, #0077bd 100%);
 	background: -ms-linear-gradient(top, #63ACE4 0, #0077bd 100%);
 	background: linear-gradient(top, #63ACE4 0, #0077bd 100%);
-	*background-image: url(images/edit_button.png);
 	color: #fff;
+	   box-shadow: -1px -1px 1px #0077bd inset;
+	
 }
 
 .button.edit:hover {
