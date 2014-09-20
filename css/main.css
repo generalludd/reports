@@ -325,7 +325,7 @@ td .button {
 	padding: .35em inherit;
 }
 
-a:hover, body {
+a {
 	transition: all .25s ease;
 }
 
