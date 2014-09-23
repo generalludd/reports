@@ -9,7 +9,7 @@ Built using the CodeIgniter Framework, this application can be run on any php/My
 This application has not yet been set up for easy installation by other schools. I have not yet created an installer or other tools to get the system up and running. My hope is to have this completed by version 6. 
 
 ### Authors and Contributors
-@fsmn is the author of this project. It was designed specifically for the Friends School of Minnesota, in Saint Paul, Minnesota. 
+@fsmn/@generalludd is the author of this project. It was designed specifically for the Friends School of Minnesota, in Saint Paul, Minnesota. 
 
 ### Support or Contact
 For assistance setting this up for your school, please contact us via https://fsmn.org
