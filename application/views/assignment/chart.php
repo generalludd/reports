@@ -182,14 +182,14 @@ if (! empty($assignments)) {
 	<span class='button new show-student-selector'>Add Student</span>
 </div>
 <? }else{ ?>
-<p>
+<p style="padding-bottom:1em">
 	You may need to create categories before creating assignments. <span
-		class="button edit assignment-categories-edit">Edit Categories</span>
+		class="button small edit assignment-categories-edit">Edit Categories</span>
 </p>
 <? if($category_count > 0){ ?>
 <p>
 	You have not entered any assignments or grades for this term. <span
-		class='button new assignment-create'>Add Assignment</span>
+		class='button small new assignment-create'>Add Assignment</span>
 </p>
 <?
     } // end if category_count

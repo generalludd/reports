@@ -221,9 +221,9 @@ class Student_model extends CI_Model
                     "`baseGrade`+2014-`baseYear`  BETWEEN $gradeStart AND $gradeEnd");
         }
 
-        if (get_array_value($constraints, "kTeach")) {
+        if (array_key_exists("kTeach", $constraints)) {
             $this->db->where("kTeach", $constraints["kTeach"]);
-        } elseif (get_array_value($constraints, 'humanitiesTeacher')) {
+        } elseif (array_key_exists("humanitiesTeacher", $constraints)) {
             $this->db->where("humanitiesTeacher",
                     $constraints['humanitiesTeacher']);
         }
@@ -245,7 +245,6 @@ class Student_model extends CI_Model
 
         $this->db->from("student");
         $result = $this->db->get()->result();
-        $this->session->set_flashdata("notice", $this->db->last_query());
         return $result;
     }
 
