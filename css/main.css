@@ -1147,6 +1147,7 @@ table.grade-chart th .chart-category {
 
 table.grade-chart th.assignment-field {
 	font-size: .85em;
+	width:80px;
 }
 
 table.grade-chart td {

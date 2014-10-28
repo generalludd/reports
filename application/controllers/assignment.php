@@ -149,7 +149,10 @@ class Assignment extends MY_Controller
 		$gradeStart = $this->input->post("gradeStart");
 		$gradeEnd = $this->input->post("gradeEnd");
 		$points = 0;
-		if($this->input->post("prepopulate") == 1){
+		bake_cookie("kCategory", $this->input->post("kCategory"));
+		$prepopulate = $this->input->post("prepopulate");
+		bake_cookie("prepopulate",$prepopulate);
+		if($prepopulate == 1){
 			$points = $this->input->post("points");
 		}
 		$students = $this->grade->batch_insert($kAssignment,$kTeach,$term,$year,$gradeStart,$gradeEnd,$points);

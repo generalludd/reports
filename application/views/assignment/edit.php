@@ -19,7 +19,7 @@ if($date = get_value($assignment,"date")){
 <p>
 <label for="kCategory">Category: </label>
 <span id="cat_span">
-<?=form_dropdown("kCategory",$categories,get_value($assignment,"kCategory"),"id='kCategory'");?>
+<?=form_dropdown("kCategory",$categories,get_value($assignment,"kCategory",get_cookie("kCategory")),"id='kCategory'");?>
 </span>
 </p>
 
@@ -31,8 +31,9 @@ if($date = get_value($assignment,"date")){
 </p>
 <? if($action == "insert"): ?>
 <p>
-	<label for="prepopulate">Start every student with total points for this assignment:</label>
-	<input type="checkbox" name="prepopulate" id="prepopulate" value="1"/>
+		<input type="checkbox" name="prepopulate" id="prepopulate" value="1" <?php echo (get_cookie("prepopulate") == 1 ? "checked":FALSE);?>/>
+		<label for="prepopulate">Start every student with total points for this assignment</label>
+
 	</p>
 <? endif; ?>
 <p>

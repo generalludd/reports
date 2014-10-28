@@ -80,7 +80,7 @@ if (! empty($assignments)) {
 				class="assignment-field">
 				<div>
 					<div
-						class="assignment-edit edit button"
+						class="assignment-edit edit small button"
 						id="ase_<?=$assignment->kAssignment;?>"
 						title="Edit this assignment">Edit</div>
 					<span class="chart-assignment"><?=$assignment->assignment;?></span><br />
@@ -103,7 +103,7 @@ if (! empty($assignments)) {
 		<? foreach($assignment_keys as $key):?>
 		<th>
 				<div
-					class='assignment-column-edit button'
+					class='assignment-column-edit small button'
 					id='ace_<?=$key;?>'>Edit Grades</div>
 			</th>
 		<? endforeach;?>
