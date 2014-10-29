@@ -250,7 +250,7 @@ class Assignment extends MY_Controller
 			$data["kTeach"] = $kTeach;
 			$this->load->view("assignment/category_row",$data);
 		}else{
-			echo "Something didn't work right. We are working on the problem.";
+			echo $this->db->last_query();
 		}
 
 
@@ -283,6 +283,7 @@ class Assignment extends MY_Controller
 		$data["term"] = $this->input->post("term");
 		$data["year"] = $this->input->post("year");
 		$this->assignment->update_category($kCategory,$data);
+		$this->session->set_flashdata("notice",$this->db->last_query());
 
 	}
 

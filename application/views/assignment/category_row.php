@@ -20,7 +20,7 @@ $yearEnd = $year + 1;
 		value="<?=get_value($category,"gradeEnd");?>" size="2" /></td>
 	<td>
 	<?=get_term_menu(sprintf("term_%s",get_value($category,"kCategory","new")), get_value($category,"term",get_current_term()),FALSE,array("classes"=>sprintf("%s-term",$action)));?>
-	
+
 	</td>
 	<td>
 	<?=form_dropdown("year", get_year_list(), $year ,sprintf("id='year_%s' class='year %s-year'",get_value($category,"kCategory","new"),$action)); ?>

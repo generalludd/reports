@@ -335,6 +335,8 @@ $(document).ready(function(){
 		myWeight = $("#weight_" + myId).val();
 		myStart = $("#gradeStart_" + myId).val();
 		myEnd = $("#gradeEnd_" + myId).val();
+		myYear = $("#year_" + myId).val();
+		myTerm = $("#term_" + my_id).val();
 		form_data = {
 				kCategory: myId,
 				category: myCategory,
