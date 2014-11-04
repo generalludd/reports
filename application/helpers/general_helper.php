@@ -191,9 +191,13 @@ function get_current_term($targetDate = NULL)
 	return "$term";
 }
 
-function get_term_menu($id, $currentTerm=null, $initial_blank = FALSE,$options = array()){
+function get_term_menu($id, $currentTerm=null, $initial_blank = FALSE,$options = array(),$is_required = FALSE){
 	$terms = array("Mid-Year", "Year-End");
-	$select[]="<select id='$id' name='$id'>";
+	$required = "";
+	if($is_required){
+	    $required = "required";
+	}
+	$select[]=sprintf("<select id='%s' name='%s' %s>",$id, $id, $required);
 	$classes = FALSE;
 	if(!empty($options)){
 		if(array_key_exists("classes", $options)){
@@ -554,7 +558,7 @@ function calculate_letter_grade($points,$pass_fail = FALSE)
 				break;
 			default:
 				$output = "Pass";
-				break; 
+				break;
 		}
 	}
 	return $output;

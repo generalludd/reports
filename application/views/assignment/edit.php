@@ -14,12 +14,12 @@ if($date = get_value($assignment,"date")){
 <input type="hidden" name="kAssignment" id="kAssignment" value="<?=get_value($assignment,"kAssignment");?>"/>
 <p>
 <label for="assignment">Assignment: </label>
-<input type="text" name="assignment" id="assignment" value="<?=get_value($assignment,"assignment");?>" size="25"/>
+<input type="text" name="assignment" id="assignment" value="<?=get_value($assignment,"assignment");?>" required size="25"/>
 </p>
 <p>
 <label for="kCategory">Category: </label>
 <span id="cat_span">
-<?=form_dropdown("kCategory",$categories,get_value($assignment,"kCategory",get_cookie("kCategory")),"id='kCategory'");?>
+<?=form_dropdown("kCategory",$categories,get_value($assignment,"kCategory",get_cookie("kCategory")),"id='kCategory' required");?>
 </span>
 </p>
 
@@ -27,7 +27,7 @@ if($date = get_value($assignment,"date")){
 <span class='button help' id="Assignment_Zero Points" title="Why would I want to have zero points?">Help</span></div>
 <p>
 <label for="points">Points: </label>
-<input type="text" name="points" id="points" style="width:25px" value="<?=get_value($assignment,"points");?>"/>
+<input type="text" name="points" id="points" style="width:25px" required value="<?=get_value($assignment,"points");?>"/>
 </p>
 <? if($action == "insert"): ?>
 <p>
@@ -38,17 +38,17 @@ if($date = get_value($assignment,"date")){
 <? endif; ?>
 <p>
 <label for="date">Date: </label>
-<input type="text" name="date" id="date" class="datefield" value="<?=$date;?>"/>
+<input type="text" name="date" id="date" class="datefield" required value="<?=$date;?>"/>
 </p>
 <p>
 <label for="subject">Subject: </label>
-<?=form_dropdown("subject",$subjects,get_value($assignment,"subject"),"id='subject'");?>
+<?=form_dropdown("subject",$subjects,get_value($assignment,"subject"),"id='subject' required");?>
 </p>
 <p>
 <label for="gradeStart">Grade: </label>
-<input type="text" id="gradeStart" name="gradeStart" value="<?=$gradeStart; ?>" size="3"
+<input type="text" id="gradeStart" name="gradeStart" value="<?=$gradeStart; ?>" required size="3"
 	maxlength="1"> -<input type="text" id="gradeEnd" name="gradeEnd"
-	value="<?=$gradeEnd;?>" size="3" maxlength="1"> </p>
+	value="<?=$gradeEnd;?>" size="3"  required maxlength="1"> </p>
 <p>	<label for="term">Term:
 </label><?=get_term_menu('term', $term);?></p>
 <p> <label for="year">Year: </label>

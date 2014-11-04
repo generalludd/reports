@@ -1,4 +1,4 @@
-<?php #reset_password 
+<?php #reset_password
 $output = "";
 if($errors):
 	if(is_array($errors)){
@@ -19,9 +19,9 @@ endif;
 <input type="hidden" name="kTeach" id="kTeach" value="<?=$kTeach;?>"/>
 <div class="reset-fields">
 <p><label for="new_password">New Password: </label><br/>
-<input type="password" id="new_password" name="new_password" value=""/></p>
+<input type="password" id="new_password" name="new_password" required value=""/></p>
 <p><label for="check_password">Re-enter New Password: </label><br/>
-<input type="password" id="check_password" name="check_password" value=""/>
+<input type="password" id="check_password" name="check_password" required value=""/>
 </p>
 </div>
 <p><input type="submit" name="submit" id="change-password" class="button" style="display:none" value="Reset" /></p>

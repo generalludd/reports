@@ -248,6 +248,7 @@
 		}
 	});
 	
+	/*Required field functions may no longer be needed with HTML5 */
 
 	$("select.required").live('change', function(event) {
 		var fieldName = $(this).attr('name');

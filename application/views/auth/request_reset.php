@@ -14,7 +14,7 @@ if($errors):
 	}else{
 		$output =  "$errors";
 	}
-	?> 
+	?>
 	<div class="error-text">
 <? print $output; ?>
 </div>
@@ -24,7 +24,7 @@ endif;
 
 <div class='login-inputs'>
 <p><label for="email">Enter Your Email Address to Reset Your Password</label><br />
-<input type="text" name="email" id="email"
+<input type="email" name="email" id="email" required
  class="login-text" /></p>
 <p><input type="submit" name="submit" class="button" value="Send" /></p>
 </div>
