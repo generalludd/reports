@@ -342,7 +342,9 @@ $(document).ready(function(){
 				category: myCategory,
 				weight: myWeight,
 				gradeStart: myStart,
-				gradeEnd: myEnd
+				gradeEnd: myEnd,
+				year: myYear,
+				term: myTerm
 		};
 		$.ajax({
 			type: "post",
