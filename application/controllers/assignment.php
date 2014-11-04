@@ -63,6 +63,8 @@ class Assignment extends MY_Controller
 		    $this->load->model("preference_model","preference");
 		    $this->preference->update($kTeach, "student_sort_order", $sort_order);
 		    bake_cookie("student_sort_order", $sort_order);
+		}else{
+		    $sort_order = get_cookie("student_sort_order");
 		}
 		$data["grades"] = $this->assignment->get_grades($kTeach,$term,$year,$gradeStart,$gradeEnd,$stuGroup, $date_range,$sort_order);
 		foreach($data['grades'] as $grade){
