@@ -336,7 +336,7 @@ $(document).ready(function(){
 		myStart = $("#gradeStart_" + myId).val();
 		myEnd = $("#gradeEnd_" + myId).val();
 		myYear = $("#year_" + myId).val();
-		myTerm = $("#term_" + my_id).val();
+		myTerm = $("#term_" + myId).val();
 		form_data = {
 				kCategory: myId,
 				category: myCategory,
