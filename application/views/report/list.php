@@ -1,8 +1,20 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
+$header[] = STUDENT_REPORT . "s";
+if($report_type == "student"){
+    $header[] = sprintf("for %s",format_name($person->stuNickname, $person->stuLast));
+}elseif($report_type=="teacher"){
+    $header[] = sprintf("reported by %s",format_name($person->teachFirst, $person->teachLast));
+}else{
+    $header[] = sprintf("reported to %s",format_name($person->advisorFirst, $person->advisorLast));
+}
 ?>
-<h2><?=STUDENT_REPORT?>s</h2>
+<h2><?=implode(" ",$header); ?></h2>
 <?
+if($report_type == "student"){
 $this->load->view("student/navigation",array("student"=>$person));
+}else{
+$this->load->view("teacher/navigation",array("teacher"=>$person,"kTeach"=>$person->kTeach));
+}
 ?>
 <input type="hidden"
 	id="report_type" name="report_type" value="<?=$report_type;?>" />

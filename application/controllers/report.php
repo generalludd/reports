@@ -209,13 +209,13 @@ class Report extends MY_Controller
 					break;
 				case "teacher":
 					$this->load->model("teacher_model","teacher");
-					$person = $this->teacher->get($key,"teachFirst,teachLast,dbRole,is_advisor,gradeStart,gradeEnd");
+					$person = $this->teacher->get($key,"teachFirst,teachLast,dbRole,is_advisor,gradeStart,gradeEnd,kTeach");
 					$title = sprintf("by %s %s", $person->teachFirst,$person->teachLast);
 
 					break;
 				case "advisor":
 					$this->load->model("teacher_model","teacher");
-					$person = $this->teacher->get($key,"teachFirst as advisorFirst,teachLast as advisorLast,dbRole,is_advisor,gradeStart,gradeEnd");
+					$person = $this->teacher->get($key,"teachFirst as advisorFirst,teachLast as advisorLast,dbRole,is_advisor,gradeStart,gradeEnd,kTeach");
 					$title = sprintf("to %s %s",$person->advisorFirst,$person->advisorLast);
 					break;
 			}
