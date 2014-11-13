@@ -22,9 +22,9 @@ Yes
 No
 <?endif;?>
 </td>
-<td><span class="button edit small edit-grade-preference" id="edit-grade-preference_<?=$preference->id;?>">Edit</span></td>
-<td>
-<span class="button small delete delete-grade-preference" id="delete-grade-preference_<?=$preference->id;?>">Delete</span>
+<td style="width: 150px;">
+<span class="button edit small edit-grade-preference" id="edit-grade-preference_<?=$preference->id;?>">Edit</span>&nbsp;
+<span class="button small delete delete-grade-preference" style="float:none;" id="delete-grade-preference_<?=$preference->id;?>">Delete</span>
 </td>
 </tr>
 <? endforeach;?>
