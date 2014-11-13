@@ -34,6 +34,7 @@ function format_date($date, $format = NULL){
 		default:
 			$output = $clean_date;
 	}
+	//return $date;
 	return $output;
 }
 

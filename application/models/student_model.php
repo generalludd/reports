@@ -1,42 +1,24 @@
 <?php
-if (! defined('BASEPATH'))
-    exit('No direct script access allowed');
+if (! defined('BASEPATH')) exit('No direct script access allowed');
 
 class Student_model extends CI_Model
 {
-
     var $kTeach;
-
     var $stuFirst;
-
     var $stuLast;
-
     var $stuNickname;
-
     var $stuGender;
-
     var $stuDOB;
-
     var $stuGroup;
-
     var $baseGrade = 0;
-
     var $baseYear;
-
     var $humanitiesTeacher;
-
     var $isEnrolled;
-
     var $isGraduate;
-
     var $stuEmail;
-
     var $stuEmailPermission;
-
     var $stuEmailPassword;
-
     var $recModified;
-
     var $recModifier;
 
     function __construct ()
@@ -66,12 +48,7 @@ class Student_model extends CI_Model
         for ($i = 0; $i < count($variables); $i ++) {
             $myVariable = $variables[$i];
             if ($this->input->post($myVariable)) {
-                if ($myVariable == "stuDOB") {
-                    $this->stuDOB = format_date($this->input->post('stuDOB'),
-                            'mysql');
-                } else {
-                    $this->$myVariable = $this->input->post($myVariable);
-                }
+                $this->$myVariable = $this->input->post($myVariable);
             }
         }
 
@@ -89,19 +66,15 @@ class Student_model extends CI_Model
         if ($fields) {
             $this->db->select($fields);
         } else {
-            $this->db->select(
-                    "student.*,(`baseGrade`+" . get_current_year() .
-                             "-`baseYear`) as stuGrade");
+            $this->db->select("student.*,(`baseGrade`+" . get_current_year() . "-`baseYear`) as stuGrade");
         }
         $this->db->join("teacher", "teacher.kTeach=student.kTeach");
         $this->db->select("teacher.teachFirst, teacher.teachLast");
-        $this->db->join("teacher as humanitiesTeacher",
-                "student.humanitiesTeacher = humanitiesTeacher.kTeach","LEFT");
-        $this->db->select(
-                "humanitiesTeacher.teachFirst as humanitiesFirst,humanitiesTeacher.teachLast as humanitiesLast");
+        $this->db->join("teacher as humanitiesTeacher", "student.humanitiesTeacher = humanitiesTeacher.kTeach", "LEFT");
+        $this->db->select("humanitiesTeacher.teachFirst as humanitiesFirst,humanitiesTeacher.teachLast as humanitiesLast");
 
         $result = $this->db->get()->row();
-       // $this->session->set_flashdata("notice", $this->db->last_query());
+        // $this->session->set_flashdata("notice", $this->db->last_query());
         if ($result) {
             return $result;
         } else {
@@ -125,13 +98,11 @@ class Student_model extends CI_Model
     function find_students ($stuName)
     {
         $this->load->model("preference_model", "preference");
-        $include_former_students = $this->preference->get(
-                $this->session->userdata("userID"), "show_former_students");
+        $include_former_students = $this->preference->get($this->session->userdata("userID"), "show_former_students");
         if ($include_former_students != "yes") {
             $this->db->where("isEnrolled", 1);
         }
-        $this->db->where(
-                "(CONCAT(`stuFirst`,' ', `stuLast`) LIKE '%$stuName%' OR CONCAT(`stuNickname`,' ', `stuLast`) LIKE '%$stuName%')");
+        $this->db->where("(CONCAT(`stuFirst`,' ', `stuLast`) LIKE '%$stuName%' OR CONCAT(`stuNickname`,' ', `stuLast`) LIKE '%$stuName%')");
         $this->db->order_by("stuFirst", "ASC");
         $this->db->order_by("stuLast", "ASC");
         $year = get_current_year();
@@ -164,10 +135,10 @@ class Student_model extends CI_Model
 
     /**
      *
-     * @param $kTeach int
-     *            This returns the students assigned to either a classroom
-     *            teacher or middle school
-     *            advisor depending on the grade of the student
+     * @param $kTeach int This returns the students assigned to either a
+     *        classroom
+     *        teacher or middle school
+     *        advisor depending on the grade of the student
      *
      */
     function get_students_by_class ($kTeach)
@@ -181,18 +152,16 @@ class Student_model extends CI_Model
         $this->db->from('student');
         $this->db->from("teacher");
         $this->db->select("*");
-        $this->db->select(
-                sprintf("(2014- `baseYear`  + `baseGrade`) as `stuGrade`",
-                        get_current_year()));
+        $this->db->select(sprintf("(2014- `baseYear`  + `baseGrade`) as `stuGrade`", get_current_year()));
         $result = $this->db->get()->result();
         return $result;
     }
 
     /**
      *
-     * @param $kTeach int
-     *            alias for get_students_by_class. This has been deprecated for
-     *            clarification purposes.
+     * @param $kTeach int alias for get_students_by_class. This has been
+     *        deprecated for
+     *        clarification purposes.
      */
     function get_students_by_teacher ($kTeach)
     {
@@ -200,6 +169,7 @@ class Student_model extends CI_Model
     }
 
     /**
+     *
      *
      *
      *
@@ -211,21 +181,18 @@ class Student_model extends CI_Model
      * @param int $gradeEnd
      * @param array $constraints
      */
-    function get_students_by_grade ($gradeStart, $gradeEnd,
-            $constraints = array())
+    function get_students_by_grade ($gradeStart, $gradeEnd, $constraints = array())
     {
         if ($gradeStart == $gradeEnd) {
             $this->db->where("(`baseGrade`+2014-`baseYear`)", $gradeStart);
         } else {
-            $this->db->where(
-                    "`baseGrade`+2014-`baseYear`  BETWEEN $gradeStart AND $gradeEnd");
+            $this->db->where("`baseGrade`+2014-`baseYear`  BETWEEN $gradeStart AND $gradeEnd");
         }
 
         if (array_key_exists("kTeach", $constraints)) {
             $this->db->where("kTeach", $constraints["kTeach"]);
         } elseif (array_key_exists("humanitiesTeacher", $constraints)) {
-            $this->db->where("humanitiesTeacher",
-                    $constraints['humanitiesTeacher']);
+            $this->db->where("humanitiesTeacher", $constraints['humanitiesTeacher']);
         }
         // @TODO need to have an override here to allow this to fork depending
         // on the calling method
@@ -236,8 +203,7 @@ class Student_model extends CI_Model
             $this->db->select($constraints["select"]);
         } else {
             $year = get_current_year();
-            $this->db->select(
-                    "student.*,(`baseGrade`+$year-`baseYear`) as `stuGrade`");
+            $this->db->select("student.*,(`baseGrade`+$year-`baseYear`) as `stuGrade`");
         }
         $this->db->order_by("stuGrade");
         $this->db->order_by("stuLast");
@@ -252,6 +218,7 @@ class Student_model extends CI_Model
      *
      *
      *
+     *
      * Find students based on a range of parameters
      *
      * @param int $year
@@ -259,8 +226,7 @@ class Student_model extends CI_Model
      * @param boolean $hasNeeds
      * @param boolean $includeFormerStudents
      */
-    function advanced_find ($year, $grades = array(), $hasNeeds = 0,
-            $includeFormerStudents = 0, $sorting = NULL, $stuGroup = NULL)
+    function advanced_find ($year, $grades = array(), $hasNeeds = 0, $includeFormerStudents = 0, $sorting = NULL, $stuGroup = NULL)
     {
         $this->db->select("student.*,(baseGrade+$year-baseYear) AS stuGrade");
         if (! empty($grades)) {
@@ -277,8 +243,7 @@ class Student_model extends CI_Model
                     1
             ));
         } else {
-            $this->db->where("(`isEnrolled` = 1 OR `isGraduate` = 1)", NULL,
-                    FALSE);
+            $this->db->where("(`isEnrolled` = 1 OR `isGraduate` = 1)", NULL, FALSE);
         }
 
         if ($stuGroup) {
@@ -307,15 +272,11 @@ class Student_model extends CI_Model
      * DEPRECATED/UNUSED
      * I don't think this is used anywhere else.
      *
-     * @param string $fields
-     *            fields to select
-     * @param string $order_fields
-     *            fields to order the results
-     * @param array $where_pairs
-     *            field=>value pairs for "where" constraints
+     * @param string $fields fields to select
+     * @param string $order_fields fields to order the results
+     * @param array $where_pairs field=>value pairs for "where" constraints
      */
-    function get_distinct_values ($fields, $order_fields = null,
-            $where_pairs = array())
+    function get_distinct_values ($fields, $order_fields = null, $where_pairs = array())
     {
         $this->db->from('student');
         $this->db->distinct();
@@ -360,8 +321,7 @@ class Student_model extends CI_Model
     function get_name ($kStudent)
     {
         $student = $this->get($kStudent, 'stuFirst,stuLast,stuNickname');
-        $output = format_name($student->stuFirst, $student->stuLast,
-                $student->stuNickname);
+        $output = format_name($student->stuFirst, $student->stuLast, $student->stuNickname);
         return $output;
     }
 
@@ -415,7 +375,8 @@ class Student_model extends CI_Model
     }
 
     function update_grades ()
-    {}
+    {
+    }
 
     /**
      * Delete student record only if the student has no entries in other tables.
@@ -431,10 +392,9 @@ class Student_model extends CI_Model
         $output = "0,You do not have permission to delete student records. Please contact the system administrator for assistance";
         if ($this->session->userdata("dbRole") == 1) {
             if ($this->has_records($kStudent) == 0) {
-                $this->db->delete('student',
-                        array(
-                                'kStudent' => $kStudent
-                        ));
+                $this->db->delete('student', array(
+                        'kStudent' => $kStudent
+                ));
                 $output = "1,The student record was successfully deleted";
             } else {
                 $output = "0,The student record has multiple dependent entries in other tables and cannot be deleted";
