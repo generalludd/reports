@@ -32,7 +32,7 @@ class Student_report_model extends CI_Model
 				}
 			}
 		}
-		
+
 		$this->recModified = mysql_timestamp();
 		$this->recModifier = $this->session->userdata('userID');
 	}
@@ -52,31 +52,31 @@ class Student_report_model extends CI_Model
 		$this->db->where("kReport",$kReport);
 		$this->prepare_variables();
 		$this->db->update("student_report",$this);
-		
+
 		//set the read report count session key to update user interface indicators of unread orange slips
 		if($this->session->userdata("userID") == $this->kAdvisor){
 			$report_count = $this->get_count($this->kAdvisor);
 			$data["report_count"] = $report_count;
 			bake_cookie("report_count", $report_count);
-				
+
 		}
 	}
 
 	function update_value($kReport,$target_field, $target_value){
-		
+
 		$this->db->where("kReport",$kReport);
 		$data['recModified'] = mysql_timestamp();
 		$data['recModifier'] = $this->session->userdata('userID');
 		$data[$target_field] = $target_value;
 		$this->db->update("student_report",$data);
-		//@TODO fix the display of unread count based on this information. 
+		//@TODO fix the display of unread count based on this information.
 		/*$kAdvisor = $this->get_value($kReport,"kAdvisor");
 		if($this->session->userdata("userID") == $kAdvisor){
 			$report_count = $this->get_count($kAdvisor);
 			bake_cookie("report_count",$report_count);
 		}*/
 	}
-	
+
 	function get_value($kReport, $target_field){
 		$this->db->where("kReport",$kReport);
 		$this->db->select($target_field);
@@ -102,7 +102,7 @@ class Student_report_model extends CI_Model
 		$this->db->join("teacher as author","student_report.recModifier = author.kTeach","LEFT");
 		$this->db->select("student_report.*,student.stuFirst,student.stuLast,student.stuNickname,student.stuEmail,teacher.teachFirst,teacher.teachLast,teacher.email as teachEmail,advisor.teachFirst as advisorFirst,advisor.teachLast as advisorLast, advisor.email as advisorEmail,author.teachFirst as authorFirst,author.teachLast as authorLast,author.email as authorEmail");
 		$output = $this->db->get()->row();
-		
+
 		return $output;
 	}
 
@@ -139,10 +139,10 @@ class Student_report_model extends CI_Model
 			}
 		}
 		if(array_key_exists("category",$options)){
-			
+
 			$this->db->where("student_report.category" ,$options["category"]);
 		}
-		
+
 		$this->db->join("teacher","teacher.kTeach=student_report.kTeach");
 		$this->db->join("teacher as advisor","student_report.kAdvisor=advisor.kTeach");
 		$this->db->join("student","student.kStudent=student_report.kStudent");

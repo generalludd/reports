@@ -200,7 +200,7 @@ class Report extends MY_Controller
 			switch($type){
 				case "student":
 					$this->load->model("student_model","student");
-					$person = $this->student->get($key,"stuFirst,stuLast,stuNickname");
+					$person = $this->student->get($key,"stuFirst,stuLast,stuNickname,student.*,(`baseGrade`+" . get_current_year() . "-`baseYear`) as stuGrade");
 					$title = sprintf("for %s" , format_name($person->stuFirst,$person->stuLast, $person->stuNickname));
 					$data["kStudent"] = $key;
 

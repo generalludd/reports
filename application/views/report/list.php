@@ -2,20 +2,7 @@
 ?>
 <h2><?=STUDENT_REPORT?>s</h2>
 <?
-$userID = $this->session->userdata("userID");
-$dbRole = $this->session->userdata("dbRole");
-$edit_buttons = array();
-if($type == "student"){
-	$this->load->view("student/navigation",array("student"=>$person,"kStudent" => $report_key));
-	$edit_buttons[] = array("selection" => "report", "text" => "Add $student_report", "class" => "button new small", "href" => site_url("report/create/$kStudent"));
-}else{
-	if($dbRole == 2 && $person->is_advisor == 1){
-		$edit_buttons[] = array("selection"=>"report/get_list/advisor", "href" =>site_url("report/get_list/advisor/$userID"),"text" => sprintf("%ss",STUDENT_REPORT));
-	}
-	$edit_buttons[] = array("selection" =>"report/get_list/teacher","href"=>site_url("report/get_list/teacher/$userID"),"text"=> sprintf("Submitted %ss", STUDENT_REPORT));
-}
-echo create_button_bar($edit_buttons);
-
+$this->load->view("student/navigation",array("student"=>$person));
 ?>
 <input type="hidden"
 	id="report_type" name="report_type" value="<?=$report_type;?>" />
