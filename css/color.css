@@ -18,8 +18,8 @@ backgrounds: #C7D7E9
 	background-color: #FFFCAB;
 }
 
-.disabled{
-    background-color: #FFE4AB;
+.disabled {
+	background-color: #FFE4AB;
 }
 
 .message {
@@ -182,7 +182,7 @@ a.button {
 	color: #fff;
 }
 
-.button.edit, .button.edit.active {
+.button.edit,.button.edit.active {
 	border: none;
 	background-color: #0077bd;
 	background: -moz-linear-gradient(top, #63ACE4 0, #0077bd 100%);
@@ -193,8 +193,7 @@ a.button {
 	background: -ms-linear-gradient(top, #63ACE4 0, #0077bd 100%);
 	background: linear-gradient(top, #63ACE4 0, #0077bd 100%);
 	color: #fff;
-	   box-shadow: -1px -1px 1px #0077bd inset;
-	
+	box-shadow: -1px -1px 1px #0077bd inset;
 }
 
 .button.edit:hover {
@@ -297,7 +296,9 @@ a.button {
 }
 
 #navigation input[type="text"] {
+	padding: .5em;
 	border-color: #aaa;
+	font-size: 1em;
 }
 
 #stuSearch {
@@ -348,8 +349,6 @@ a.button {
 	color: black;
 }
 
-
-
 h2,h3,.support-view legend,h4,h5,h6,tr.benchmark-grade {
 	background-color: #C7D7E9;
 	border: none;
@@ -368,11 +367,10 @@ h2,h3,.support-view legend,h4,h5,h6,tr.benchmark-grade {
 }
 
 .warning {
- background: url(images/ui-bg_diagonals-thick_18_b81900_40x40.png);
- color: #fff;
- font-weight: bold;
+	background: url(images/ui-bg_diagonals-thick_18_b81900_40x40.png);
+	color: #fff;
+	font-weight: bold;
 }
-
 
 .alert {
 	background-image: url(images/ui-bg_diagonals-thick_18_b81900_40x40.png);
@@ -463,6 +461,3 @@ fieldset {
 	border-top-color: #C7D7E9;
 	border-left-color: #C7D7E9;
 }
-
-
-
