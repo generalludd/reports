@@ -283,16 +283,7 @@ a.button {
 /* #C3D0E2 */
 /* header page layout elements */
 #navigation {
-	/*background-color: #C7D7E9;
-	background: -moz-linear-gradient(top, #c7d7e9 0, #c3d0e2 100%);
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #c7d7e9),
-		color-stop(100%, #c3d0e2));
-	background: -webkit-linear-gradient(top, #c7d7e9 0, #c3d0e2 100%);
-	background: -o-linear-gradient(top, #c7d7e9 0, #c3d0e2 100%);
-	background: -ms-linear-gradient(top, #c7d7e9 0, #c3d0e2 100%);
-	background: linear-gradient(top, #c7d7e9 0, #c3d0e2 100%);*/
 	border: none;
-	box-shadow: 2px 2px 4px #aaa;
 }
 
 #navigation input[type="text"] {
