@@ -1,4 +1,3 @@
-/uploads
 .settings
 /application/logs
 /application/cache
@@ -7,7 +6,7 @@
 /application/config/database.php
 */.DS_Store
 .DS_Store
-uploads
+uploads/*
 php_errors.log
 *.old
 /uploads/*
