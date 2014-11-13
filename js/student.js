@@ -261,6 +261,25 @@ $(document).ready(function() {
 				}
 			});
 		});
+		$("#grade-preferences").on("click",".delete-grade-preference",function(){
+			my_id = this.id.split("_")[1];
+			console.log(my_id);
+			question = confirm("Are you sure you want to delete this grade preference? This cannot be undone!");
+			if(question){
+				form_data = {
+						id:my_id,
+						ajax:1
+				};
+				$.ajax({
+					type: "post",
+					url: base_url + "grade_preference/delete",
+					data: form_data,
+					success: function(data){
+						$("#grade-preference-row_" + my_id).fadeOut();
+					}
+				});
+			}
+		});
 
 }// end ready
 );// end $(document)
