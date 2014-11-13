@@ -317,7 +317,8 @@ div.narrative {
 }
 
 td .button,.row .button,.button.small {
-	padding: .5em;
+	padding: .25em;
+	font-size: .9em;
 	
 }
 
