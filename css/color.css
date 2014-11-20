@@ -329,6 +329,7 @@ a.button {
 	border-radius: 3px;
 	box-shadow: 2px 2px 4px #aaa;
 	padding: 5px;
+	background-color: #f1f1f1;
 }
 
 #advancedSearch h2, #advancedSearch h5, #advancedSearch h6 {

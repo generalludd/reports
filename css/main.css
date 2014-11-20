@@ -830,6 +830,7 @@ label {
 	border-width: 1px;
 	border-style: solid;
 	border-color: #eee;
+	background-color: #fff;
 }
 
 #search_list {
