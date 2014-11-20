@@ -465,12 +465,12 @@ function get_array_value($array,$key){
 
 function format_email($email, $show_address = FALSE){
 	$output = "";
-	$address_text = "email";
+	$address_text = $email;
 	if($show_address){
 		$address_text = $email;
 	}
 	if(!empty($email)){
-		$output = "<a href='mailto:$email' title='$email'>$address_text</a>";
+		$output = "<span style='font-weight:normal'><a href='mailto:$email' title='$email'>$address_text</a></span>";
 	}
 	return $output;
 }
