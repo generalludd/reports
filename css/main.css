@@ -211,6 +211,7 @@ div.login-title {
 	/*margin-left: auto;
 	margin-right: auto;
 	width: 950px;*/
+	
 }
 
 .info-box .content {
@@ -313,21 +314,19 @@ div.narrative {
 	font-weight: normal;
 	transition: all .25s ease;
 	white-space: nowrap;
-	
 }
 
 td .button,.row .button,.button.small {
 	padding-top: .25em;
 	padding-bottom: .25em;
 	font-size: .9em;
-	
 }
 
 td .button {
 	padding: .35em inherit;
 }
 
-a, .button {
+a,.button {
 	transition: all .25s ease;
 }
 
@@ -351,21 +350,18 @@ a, .button {
 	cursor: pointer;
 }
 
-
 a.button {
-    text-decoration: none;
+	text-decoration: none;
 }
 
 .button-box {
-    height: 35px;
 }
 
-
 .button-bar {
-    margin-top: 5px;
-    margin-bottom: 5px;
-    padding-top: 5px;
-    padding-bottom: 5px;
+	margin-top: 5px;
+	margin-bottom: 5px;
+	padding-top: 5px;
+	padding-bottom: 5px;
 }
 
 ul.button-list {
@@ -374,7 +370,7 @@ ul.button-list {
 }
 
 ul.button-list li {
-	display: inline;
+	display: inline-block;
 	padding: .35em 0 .35em .25em
 }
 
@@ -387,7 +383,8 @@ ul.button-list li .button {
 }
 
 ul.button-list li .button.delete {
-	margin-top: -5px;
+	margin-left: 65%;
+	float: none;
 }
 
 .mini-buttons ul.button-list li .button {
@@ -402,16 +399,17 @@ ul.button-list li .button.delete {
 .button-bar ul.button-list li {
 	padding: 0;
 }
+
 .button-bar ul.button-list li .button {
-	margin:0;
+	margin: 0;
 	border-radius: 0;
 	padding: .75em;
 	border-left: 1px solid #666;
 }
+
 .button-bar ul.button-list li.first .button {
 	border-left: none;
 }
-
 
 .help {
 	
@@ -561,7 +559,7 @@ legend {
 }
 
 /* end div layout elements */
-ul.search  {
+ul.search {
 	padding: 0;
 }
 
@@ -574,6 +572,7 @@ ul.search  {
 #yearSearch {
 	text-align: center;
 }
+
 input[type="text"].year,#yearEnd {
 	width: 3em;
 }
@@ -813,10 +812,11 @@ label {
 }
 
 #searchForm fieldset {
-	border-width: 1px;
-	margin: 5%; *
-	box-shadow: 3px 3px 5px black;
+	border: 1px solid #eee;
+	margin: 5%; 
+	box-shadow: 2px 2px 3px #999;
 	background-color: white;
+	border-radius: 3px;
 }
 
 #searchForm fieldset label {
@@ -825,14 +825,12 @@ label {
 
 #searchForm fieldset legend {
 	padding: 6px;
-	border-radius: 5px; *
-	box-shadow: 3px 3px 5px black;
-	background-color: #C7D7E9;
+	border-radius: 3px;
+	box-shadow: 3px 3px 5px #999;
 	border-width: 1px;
 	border-style: solid;
-	border-color: #087CD5;
+	border-color: #eee;
 }
-
 
 #search_list {
 	position: absolute;
@@ -845,20 +843,18 @@ label {
 	box-shadow: 3px 3px 4px #666;
 	max-height: 500px;
 	overflow: scroll;
-	
 }
 
 table.list td {
 	padding: 5px;
 	border-width: 0px;
 	vertical-align: top;
-
 }
 
 table.list {
 	padding-bottom: 5px;
 	padding-top: 5px;
-		border-collapse: collapse;
+	border-collapse: collapse;
 }
 
 table.list thead tr {
@@ -867,14 +863,12 @@ table.list thead tr {
 	border-bottom-color: #000;
 }
 
-
-table.grid th, table.grid td {
+table.grid th,table.grid td {
 	border-left: solid 1px #999;
 	border-right: solid 1px #999;
 	border-top: solid 1px #999;
 	vertical-align: middle;
 }
-
 
 table.grid thead tr.first th {
 	border-bottom: none;
@@ -975,7 +969,9 @@ fieldset.advanced div.advanced {
 	display: block;
 	position: relative;
 	margin-bottom: 20px;
-
+	border-radius: 3px;
+	box-shadow: 3px 3px 5px #999;
+	border: 1px solid #ddd;
 }
 
 .search_fieldset legend {
@@ -1149,7 +1145,7 @@ table.grade-chart th .chart-category {
 
 table.grade-chart th.assignment-field {
 	font-size: .85em;
-	width:80px;
+	width: 80px;
 }
 
 table.grade-chart td {
@@ -1311,5 +1307,29 @@ th.grade-confirmation {
 }
 
 .fieldset h4 {
+	
+}
+
+
+
+.column {
+	float: left;
+	width: 40%;
+	position: relative;
+	display: block;
+	box-shadow: 3px 3px 3px #999;
+	margin: .5em;
+	padding: .5em;
+	border: 1px solid #eee;
+	border-radius: 3px;
+}
+
+.column.even {
+	clear: left;
+	margin-right: .5em;
+}
+.column.odd {
+	clear: right;
+	margin-left: .5em;
 	
 }

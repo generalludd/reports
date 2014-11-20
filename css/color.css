@@ -325,24 +325,21 @@ a.button {
 
 /* end div layout elements */
 #advancedSearch {
-	border: none;
-	background-color: #C7D7E9;
+	border: 1px solid #eee;
+	border-radius: 3px;
 	box-shadow: 2px 2px 4px #aaa;
+	padding: 5px;
 }
 
-#advancedSearch h5 {
-	background-color: #C7D7E9;
+#advancedSearch h2, #advancedSearch h5, #advancedSearch h6 {
+	text-align: center;
 	color: black;
-}
-
-#advancedSearch h6 {
-	background-color: #C7D7E9;
-	color: black;
+	box-shadow: none;
 }
 
 h2,h3,.support-view legend,h4,h5,h6,tr.benchmark-grade {
-	background-color: #C7D7E9;
 	border: none;
+	box-shadow: 3px 3px 5px #999;
 }
 
 .invert {
@@ -400,7 +397,7 @@ li.attendance {
 }
 
 #searchForm fieldset {
-	border-color: #6CAADC;
+	border-color: #eee;
 }
 
 #search_list {

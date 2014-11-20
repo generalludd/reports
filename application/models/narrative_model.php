@@ -20,7 +20,7 @@ class Narrative_model extends CI_Model
 	{
 
 		parent::__construct ();
-	
+
 	}
 
 	function prepare_variables()
@@ -34,7 +34,7 @@ class Narrative_model extends CI_Model
 				"narrTerm",
 				"narrSubject",
 				"narrGrade",
-				"narrYear" 
+				"narrYear"
 		);
 		for($i = 0; $i < count ( $variables ); $i ++) {
 			$myVariable = $variables [$i];
@@ -46,10 +46,10 @@ class Narrative_model extends CI_Model
 				}
 			}
 		}
-		
+
 		$this->recModified = mysql_timestamp ();
 		$this->recModifier = $this->session->userdata ( 'userID' );
-	
+
 	}
 
 	/**
@@ -72,7 +72,7 @@ class Narrative_model extends CI_Model
 		}
 		$result = $this->db->get ()->row ();
 		return $result;
-	
+
 	}
 
 	function get_multiple($narratives)
@@ -83,7 +83,7 @@ class Narrative_model extends CI_Model
 		$this->db->from ( "narrative" );
 		$result = $this->db->get ()->result ();
 		return $result;
-	
+
 	}
 
 	function get_value($kNarrative, $fieldName)
@@ -93,9 +93,9 @@ class Narrative_model extends CI_Model
 		$this->db->select ( $fieldName );
 		$this->db->from ( 'narrative' );
 		$result = $this->db->get ()->row ();
-		
+
 		return $result->$fieldName;
-	
+
 	}
 
 	function get_for_student($kStudent, $options = array())
@@ -108,18 +108,20 @@ class Narrative_model extends CI_Model
 			$where [] = "narrTerm = '{$options['narrTerm']}' AND narrYear = '{$options['narrYear']}'";
 			$where [] = "narrative.kTeach = teacher.kTeach AND narrative.kStudent = student.kStudent";
 			$from [] = "student";
+		}elseif(array_key_exists('narrYear',$options)){
+		    $where[] = sprintf("`narrYear` = '%s'",$options['narrYear']);
 		}
 		$query = "SELECT narrative.*, `teacher`.`teachFirst`, `teacher`.`teachLast` ";
 		$query .= " FROM `" . implode ( "`,`", $from ) . "`";
 		$query .= " WHERE " . implode ( " AND ", $where );
 		$query .= " ORDER BY `narrYear` DESC,";
 		$query .= " CASE WHEN `narrTerm` = 'Year-End' THEN 1 ELSE 2 END";
-		
+
 		// this allows optional sorting of subjects (if the student does well in one subject,
 		// the teacher/editors may wish to have it appear before those the student struggles with
 		$this->load->model("student_model");
 		$student = $this->student_model->get($kStudent);
-		
+
 		$this->load->model("global_subject_model","global_subject");
 		$year = get_current_year();
 		if(array_key_exists("narrYear",$options)){
@@ -130,11 +132,11 @@ class Narrative_model extends CI_Model
 			$subjects = $options ['reportSort'];
 		}
 		$subjectOrder = str_replace("subject","narrSubject", get_subject_order ( $subjects ));
-		
+
 		$query .= ", $subjectOrder";
 		$result = $this->db->query ( $query )->result ();
 		return $result;
-	
+
 	}
 
 	/**
@@ -152,7 +154,7 @@ class Narrative_model extends CI_Model
 		$this->db->where ( 'kStudent', $kStudent );
 		$this->db->where ( 'narrTerm', $narrTerm );
 		$this->db->where ( 'narrYear', $narrYear );
-		
+
 		$this->db->select ( 'DISTINCT(`narrSubject`)', TRUE );
 		$list = $this->db->get ( 'narrative' )->result ();
 		if ($list) {
@@ -164,7 +166,7 @@ class Narrative_model extends CI_Model
 			$output = FALSE;
 		}
 		return $output;
-	
+
 	}
 
 	/**
@@ -192,7 +194,7 @@ class Narrative_model extends CI_Model
 		$options ["narrTerm"] = $narrTerm;
 		$options ["narrYear"] = $narrYear;
 		return $this->get_narratives ( $options );
-	
+
 	}
 
 	function has_narrative($kStudent, $kTeach, $subject, $narrTerm, $narrYear)
@@ -207,7 +209,7 @@ class Narrative_model extends CI_Model
 		$this->db->select ( "kNarrative" );
 		$result = $this->db->get ()->result ();
 		return $result;
-	
+
 	}
 
 	function get_narratives($options)
@@ -216,11 +218,11 @@ class Narrative_model extends CI_Model
 		if (array_key_exists ( "kTeach", $options )) {
 			$this->db->where ( "narrative.kTeach", $options ["kTeach"] );
 		}
-		
+
 		if (array_key_exists ( "gradeStart", $options ) && array_key_exists ( "gradeEnd", $options )) {
 			$this->db->where ( "narrative.stuGrade BETWEEN " . $options ["gradeStart"] . " AND " . $options ["gradeEnd"] );
 		}
-		
+
 		if (array_key_exists ( "kStudent", $options )) {
 			$this->db->where ( "narrative.kStudent", $options ['kStudent'] );
 		}
@@ -231,23 +233,23 @@ class Narrative_model extends CI_Model
 		} else {
 			$this->db->where ( "narrative.narrYear", get_current_year () );
 		}
-		
+
 		if (array_key_exists ( "narrTerm", $options )) {
 			$this->db->where ( "narrative.narrTerm", $options ["narrTerm"] );
 		} else {
 			$this->db->where ( "narrative.narrTerm", get_current_term () );
 		}
-		
+
 		if (array_key_exists ( "narrSubject", $options )) {
 			$this->db->where ( "narrative.narrSubject", $options ["narrSubject"] );
 		}
-		
+
 		if (array_key_exists ( "order", $options )) {
 			$this->db->order_by ( "order", $options ['order'] );
 		} else {
 			//$this->db->order_by ( "narrative.stuGrade,student.stuLast,student.stuFirst ASC" );
 		}
-		
+
 		$this->db->from ( "narrative,teacher as modifier" );
 		$this->db->join ( "student", "narrative.kStudent = student.kStudent", "left" );
 		$this->db->where ( "narrative.recModifier = modifier.kTeach" );
@@ -255,7 +257,18 @@ class Narrative_model extends CI_Model
 		$this->db->select ( "narrative.*,(`student`.`baseGrade` + $narrYear - `student`.`baseYear`) as `currentGrade`, student.stuFirst, student.stuLast, student.stuNickname" );
 		$result = $this->db->get ()->result ();
 		return $result;
-	
+
+	}
+
+	function get_years($kStudent){
+	    $this->db->from("narrative,student");
+	    $this->db->where("narrative.kStudent",$kStudent);
+	    $this->db->group_by("narrYear");
+	    $this->db->select("narrYear");
+	    $this->db->select("(narrYear - baseYear + baseGrade) as stuGrade");
+	    $this->db->order_by("narrYear","DESC");
+	    $result = $this->db->get()->result();
+	    return $result;
 	}
 
 	/**
@@ -270,9 +283,9 @@ class Narrative_model extends CI_Model
 		$recModified = $this->get_value ( $kNarrative, 'recModified' );
 		return array (
 				$kNarrative,
-				format_timestamp ( $recModified ) 
+				format_timestamp ( $recModified )
 		);
-	
+
 	}
 
 	function update($kNarrative)
@@ -286,9 +299,9 @@ class Narrative_model extends CI_Model
 		$recModified = $this->get_value ( $kNarrative, 'recModified' );
 		return array (
 				$kNarrative,
-				format_timestamp ( $recModified ) 
+				format_timestamp ( $recModified )
 		);
-	
+
 	}
 
 	function delete($kNarrative)
@@ -298,20 +311,20 @@ class Narrative_model extends CI_Model
 		$this->backup_model->backup ( $kNarrative );
 		$delete_array ['kNarrative'] = $kNarrative;
 		$this->db->delete ( 'narrative', $delete_array );
-	
+
 	}
 
 	function text_replace($search, $replace, $kTeach, $narrYear, $narrTerm, $gradeStart, $gradeEnd)
 	{
 
 		$this->db->select ( "kNarrative" );
-		
+
 		$gradeSearch = "stuGrade BETWEEN $gradeStart AND $gradeEnd";
-		
+
 		if ($gradeStart == $gradeEnd) {
 			$gradeSearch = "stuGrade = $gradeStart";
 		}
-		
+
 		$this->db->where ( "kTeach", $kTeach );
 		$this->db->where ( "narrTerm", $narrTerm );
 		$this->db->where ( "narrYear", $narrYear );
@@ -333,12 +346,12 @@ class Narrative_model extends CI_Model
 				}
 			}
 		}
-		
+
 		return array (
 				"count" => $count,
-				"narratives" => $narratives 
+				"narratives" => $narratives
 		);
-	
+
 	}
 
 	function update_text($kNarrative, $narrText, $backup = FALSE)
@@ -351,10 +364,10 @@ class Narrative_model extends CI_Model
 		$data = array (
 				"narrText" => $narrText,
 				"recModifier" => $this->session->userdata ( "userID" ),
-				"recModified" => mysql_timestamp () 
+				"recModified" => mysql_timestamp ()
 		);
 		$this->db->update ( "narrative", $data );
-	
+
 	}
 
 	function update_value($kNarrative, $field, $value, $backup = FALSE)
@@ -364,12 +377,12 @@ class Narrative_model extends CI_Model
 			$this->backup ( $kNarrative );
 		}
 		$values = array (
-				$field => $value 
+				$field => $value
 		);
 		$this->db->where ( "kNarrative", $kNarrative );
 		$this->db->update ( "narrative", $values );
 		return $this->get_value ( $kNarrative, "narrGrade" );
-	
+
 	}
 
 	function backup($kNarrative)
@@ -382,16 +395,16 @@ class Narrative_model extends CI_Model
 		$backupDate = strtotime ( $lastBackup );
 		$interval = time () - $backupDate;
 		$baseInterval = 180; // seconds since last backup
-		                     
+
 		// compare the current narrative to the backed-up version
 		$baseDifference = 99; // percent difference from the saved version
 		$difference = $this->backup_model->get_backup_difference ( $kNarrative, $savedText );
-		
+
 		// back up the changes as matches the condition
 		if ($difference < $baseDifference && $interval > $baseInterval) {
 			$this->backup_model->insert ( $kNarrative );
 		}
-	
+
 	}
 
 }
