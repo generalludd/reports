@@ -1,33 +1,19 @@
 <?php
-
-if (! defined('BASEPATH'))
-    exit('No direct script access allowed');
+if (! defined('BASEPATH')) exit('No direct script access allowed');
 
 class Teacher_model extends CI_Model
 {
-
     var $teachFirst;
-
     var $teachLast;
-
     var $teachClass;
-
     var $username;
-
     var $email;
-
     var $gradeStart;
-
     var $gradeEnd;
-
     var $is_advisor;
-
     var $status;
-
     var $dbRole;
-
     var $recModified;
-
     var $recModifier;
 
     function __construct ()
@@ -75,7 +61,7 @@ class Teacher_model extends CI_Model
 
         if ($userRole == 1) {
             if ($userID != 1000) { // only the administrator should have any
-                                 // reason to see the other administrators.
+                                   // reason to see the other administrators.
                 $this->db->where("dbRole != ", 1);
             }
             if (array_key_exists("showInactive", $options)) {
@@ -91,8 +77,8 @@ class Teacher_model extends CI_Model
                 ));
             }
 
-            if (array_key_exists("role", $options)) {
-                $this->db->where_in("dbRole", $options["role"]);
+            if (array_key_exists("roles", $options)) {
+                $this->db->where_in("dbRole", $options["roles"]);
             } else {
                 $this->db->where_in("dbRole", array(
                         2,
@@ -101,21 +87,17 @@ class Teacher_model extends CI_Model
             }
 
             if (array_key_exists("gradeRange", $options)) {
-                $this->db->where(
-                        "gradeStart >= " . $options["gradeRange"]["gradeStart"]);
-                $this->db->where(
-                        "gradeStart <= " . $options["gradeRange"]["gradeEnd"]);
+                $this->db->where("gradeStart >= " . $options["gradeRange"]["gradeStart"]);
+                $this->db->where("gradeStart <= " . $options["gradeRange"]["gradeEnd"]);
             }
         } else {
             $this->db->where("dbRole != ", 1);
             $this->db->where("status", 1);
         }
 
-        $this->db->select(
-                "teacher.kTeach, teachFirst, teachLast,gradeStart, gradeEnd, dbRole, status");
+        $this->db->select("teacher.kTeach, teachFirst, teachLast,gradeStart, gradeEnd, dbRole, status");
         $this->db->from("teacher");
         $result = $this->db->get()->result();
-
         return $result;
     }
 
@@ -201,8 +183,7 @@ class Teacher_model extends CI_Model
     {
         // if($this->input->post("dbRole")){
         $data["dbRole"] = $this->input->post("dbRole");
-        if ($this->session->userdata("dbRole") == 1 &&
-                 $this->session->userdata("userID") == 1000) {
+        if ($this->session->userdata("dbRole") == 1 && $this->session->userdata("userID") == 1000) {
             $this->db->where("kTeach", $kTeach);
             $this->db->update("teacher", $data);
         }
@@ -225,19 +206,18 @@ class Teacher_model extends CI_Model
 
     /**
      * get all teachers for a given subject
+     *
      * @param string $subject
      * @return object array
      */
-
     function get_for_subject ($subject)
     {
         $this->db->from("teacher");
-        $this->db->join("teacher_subject",
-                "teacher.kTeach = teacher_subject.kTeach");
+        $this->db->join("teacher_subject", "teacher.kTeach = teacher_subject.kTeach");
         $this->db->where("teacher.status", 1);
         $this->db->where("teacher_subject.subject", $subject);
         $this->db->order_by("teacher.teachfirst");
-        $this->db->select("CONCAT(teachFirst,' ', teachLast) as teacherName",FALSE);
+        $this->db->select("CONCAT(teachFirst,' ', teachLast) as teacherName", FALSE);
         $this->db->select("teacher.kTeach");
         $result = $this->db->get()->result();
         return $result;
