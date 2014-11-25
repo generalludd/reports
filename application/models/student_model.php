@@ -154,6 +154,7 @@ class Student_model extends CI_Model
         $this->db->select("*");
         $this->db->select(sprintf("(2014- `baseYear`  + `baseGrade`) as `stuGrade`", get_current_year()));
         $result = $this->db->get()->result();
+        $this->session->set_flashdata("notice",$this->db->last_query());
         return $result;
     }
 

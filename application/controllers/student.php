@@ -187,7 +187,7 @@ class Student extends MY_Controller
     function teacher_student_list ()
     {
         $kTeach = $this->uri->segment(3);
-        $data["students"] = $this->student_model->get_students_by_teacher(
+        $data["students"] = $this->student_model->get_students_by_class(
                 $kTeach);
         $data["target"] = "student/list";
         $data["title"] = "Student List";
