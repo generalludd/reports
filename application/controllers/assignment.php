@@ -11,14 +11,14 @@ class Assignment extends MY_Controller
 			$this->load->model ( "grade_model", "grade" );
 			$this->load->model ( "assignment_model", "assignment" );
 			$this->load->helper ( "grade_helper" );
-		
+
 		}
 
 		function index()
 		{
 
 			$this->chart ();
-		
+
 		}
 
 		/**
@@ -32,34 +32,34 @@ class Assignment extends MY_Controller
 			{
 				$kTeach = $this->input->get ( "kTeach" );
 			}
-			
+
 			$gradeStart = $this->input->get ( "gradeStart" );
 			bake_cookie ( "gradeStart", $gradeStart );
 			$gradeEnd = $this->input->get ( "gradeEnd" );
 			bake_cookie ( "gradeEnd", $gradeEnd );
-			
+
 			$term = get_current_term ();
 			if ($this->input->get ( "term" ))
 			{
 				$term = $this->input->get ( "term" );
 				bake_cookie ( "term", $term );
 			}
-			
+
 			$stuGroup = NULL;
 			if ($this->input->get ( "stuGroup" ))
 			{
 				$stuGroup = $this->input->get ( "stuGroup" );
 			}
-			
+
 			bake_cookie ( "stuGroup", $stuGroup );
-			
+
 			$year = get_current_year ();
 			if ($this->input->get ( "year" ))
 			{
 				$year = $this->input->get ( "year" );
 				bake_cookie ( "year", $year );
 			}
-			
+
 			$date_range = array ();
 			if ($this->input->get ( "date_start" ) && $this->input->get ( "date_end" ))
 			{
@@ -88,7 +88,7 @@ class Assignment extends MY_Controller
 			{
 				$data ["category_count"] = $this->assignment->count_categories ( $kTeach, $gradeStart, $gradeEnd );
 			}
-			
+
 			$data ["kTeach"] = $kTeach;
 			$data ["term"] = $term;
 			$data ["year"] = $year;
@@ -97,7 +97,7 @@ class Assignment extends MY_Controller
 			$data ["gradeEnd"] = $gradeEnd;
 			if ($this->input->get ( "print" ) == 1)
 			{
-				//print each student report separated with page breaks. 
+				//print each student report separated with page breaks.
 			}
 			else
 			{
@@ -105,7 +105,7 @@ class Assignment extends MY_Controller
 				$data ["title"] = "Grade Chart";
 				$this->load->view ( "page/index", $data );
 			}
-		
+
 		}
 
 		/**
@@ -113,9 +113,6 @@ class Assignment extends MY_Controller
 		 */
 		function search()
 		{
-
-<<<<<<< Updated upstream
-		}
 		$grade_options ["from"] = "grade";
 		$grade_options ["join"] = "assignment";
 		if($sort_order = $this->input->get("student_sort_order")){
@@ -134,7 +131,6 @@ class Assignment extends MY_Controller
 		$data["category_count"] = 0;
 		if(empty($data["assignments"])){
 			$data["category_count"] = $this->assignment->count_categories($kTeach, $gradeStart, $gradeEnd);
-=======
 			$data ["kTeach"] = $this->session->userdata ( "userID" );
 			if ($this->input->get ( "kTeach" ))
 			{
@@ -146,8 +142,7 @@ class Assignment extends MY_Controller
 			$data ["gradeEnd"] = $this->input->cookie ( "gradeEnd" );
 			$data ["stuGroup"] = $this->input->cookie ( "stuGroup" );
 			$this->load->view ( "assignment/search", $data );
-		
->>>>>>> Stashed changes
+
 		}
 
 		/**
@@ -163,7 +158,7 @@ class Assignment extends MY_Controller
 			$subjects = $this->subject_model->get_for_teacher ( $kTeach );
 			$data ['subjects'] = get_keyed_pairs ( $subjects, array (
 					'subject',
-					'subject' 
+					'subject'
 			) );
 			$userID = $this->session->userdata ( "userID" );
 			// $gradeStart = $this->session->userdata("gradeStart");
@@ -186,13 +181,13 @@ class Assignment extends MY_Controller
 			{
 				$data ["categories"] = get_keyed_pairs ( $categories, array (
 						"kCategory",
-						"category" 
+						"category"
 				) );
 				$data ["target"] = "assignment/edit";
 				$data ["title"] = "Create an Assignment";
 				$this->load->view ( $data ["target"], $data );
 			}
-		
+
 		}
 
 		/**
@@ -217,7 +212,7 @@ class Assignment extends MY_Controller
 			}
 			$students = $this->grade->batch_insert ( $kAssignment, $kTeach, $term, $year, $gradeStart, $gradeEnd, $points );
 			redirect ( "assignment/chart?kTeach=$kTeach&term=$term&year=$year&gradeStart=$gradeStart&gradeEnd=$gradeEnd" );
-		
+
 		}
 
 		/**
@@ -233,17 +228,17 @@ class Assignment extends MY_Controller
 			$subjects = $this->subject_model->get_for_teacher ( $kTeach );
 			$data ['subjects'] = get_keyed_pairs ( $subjects, array (
 					'subject',
-					'subject' 
+					'subject'
 			) );
 			$data ["assignment"] = $assignment;
 			$data ["action"] = "update";
 			$categories = $this->assignment->get_categories ( $assignment->kTeach, $assignment->gradeStart, $assignment->gradeEnd, $assignment->year, $assignment->term );
 			$data ["categories"] = get_keyed_pairs ( $categories, array (
 					"kCategory",
-					"category" 
+					"category"
 			) );
 			$this->load->view ( "assignment/edit", $data );
-		
+
 		}
 
 		/**
@@ -260,7 +255,7 @@ class Assignment extends MY_Controller
 			$gradeStart = $this->input->post ( "gradeStart" );
 			$gradeEnd = $this->input->post ( "gradeEnd" );
 			redirect ( "assignment/chart?kTeach=$kTeach&term=$term&year=$year&gradeStart=$gradeStart&gradeEnd=$gradeEnd" );
-		
+
 		}
 
 		/**
@@ -293,7 +288,7 @@ class Assignment extends MY_Controller
 			$data ["action"] = "insert";
 			$data ["kTeach"] = $this->uri->segment ( 3 );
 			$this->load->view ( "assignment/category_row", $data );
-		
+
 		}
 
 		/**
@@ -309,7 +304,7 @@ class Assignment extends MY_Controller
 			$gradeEnd = $this->input->post ( "gradeEnd" );
 			$year = $this->input->post ( "year" );
 			$term = $this->input->post ( "term" );
-			
+
 			$data = array ();
 			if ($category && $weight && $gradeStart && $gradeEnd)
 			{
@@ -331,7 +326,7 @@ class Assignment extends MY_Controller
 			{
 				echo $this->db->last_query ();
 			}
-		
+
 		}
 
 		/**
@@ -347,7 +342,7 @@ class Assignment extends MY_Controller
 			$data ["term"] = $this->input->cookie ( "term" );
 			$data ["categories"] = $this->assignment->get_categories ( $data ["kTeach"], $data ["gradeStart"], $data ["gradeEnd"], $data ["year"], $data ["term"] );
 			$this->load->view ( "assignment/categories", $data );
-		
+
 		}
 
 		/**
@@ -365,6 +360,6 @@ class Assignment extends MY_Controller
 			$data ["year"] = $this->input->post ( "year" );
 			$this->assignment->update_category ( $kCategory, $data );
 			$this->session->set_flashdata ( "notice", $this->db->last_query () );
-		
+
 		}
 	}
