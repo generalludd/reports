@@ -5,6 +5,8 @@
 /application/config/database.php
 */.DS_Store
 .DS_Store
+*.sql
+!schema/*.sql
 uploads/*
 php_errors.log
 *.old
