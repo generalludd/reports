@@ -52,7 +52,6 @@ class Teacher extends MY_Controller
             $data["options"]["gradeRange"]["gradeEnd"] = $gradeEnd;
             bake_cookie("gradeStart", $gradeStart);
             bake_cookie("gradeEnd", $gradeEnd);
-
         }
 
         $data["teachers"] = $this->teacher_model->get_all($data["options"]);
@@ -116,20 +115,20 @@ class Teacher extends MY_Controller
         if ($kTeach) {
             $kTeach = $this->uri->segment(3);
             $teacher = $this->teacher_model->get($kTeach);
-            if($teacher){
-            $data["year"] = get_current_year();
-            $data["term"] = get_current_term();
-            $data["kTeach"] = $kTeach;
-            $data["teacher"] = $teacher;
-            $data["subjects"] = $this->subject_model->get_for_teacher($kTeach);
-            $data["target"] = "teacher/view";
-            $data["title"] = "Viewing Information for $teacher->teachFirst $teacher->teachLast";
-            $this->load->view("page/index", $data);
-            }else{
-                $this->session->set_flashdata("notice","No such user was found!");
+            if (!empty($teacher)) {
+                $data["year"] = get_current_year();
+                $data["term"] = get_current_term();
+                $data["kTeach"] = $kTeach;
+                $data["teacher"] = $teacher;
+                $data["subjects"] = $this->subject_model->get_for_teacher($kTeach);
+                $data["target"] = "teacher/view";
+                $data["title"] = "Viewing Information for $teacher->teachFirst $teacher->teachLast";
+                $this->load->view("page/index", $data);
+            } else {
+                $this->session->set_flashdata("notice", "No such user was found!");
                 redirect("teacher");
             }
-        }else{
+        } else {
             redirect("teacher");
         }
     }
