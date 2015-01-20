@@ -27,6 +27,6 @@ if($this->input->cookie("gradeEnd")){
 <?=form_dropdown("gradeEnd",$grades,$gradeEnd,"id='gradeEnd'");?>
 </p>
 <p>
-<input type="submit" class="button" value="search"/>
+<input type="submit" class="button" value="Search"/>
 </p>
 </form>

@@ -68,7 +68,7 @@ $(document).ready(function(){
 		});//end click
 	
 	
-	$('.save_teacher').live('click',
+	/*$('.save_teacher').live('click',
 			function(event){
 				var kTeach=$('#kTeach').val();
 				$('#teacher_edit').ajaxSubmit(
@@ -76,7 +76,7 @@ $(document).ready(function(){
 						document.location="index.php?target=teacher&action_task=view&kTeach="+kTeach;
 				});//end ajaxSubmit(function(response)
 			});//end click
-	
+*/	
 	$('.save_subject').live('click',
 			function(event){
 				var kTeach=$('#kTeach').val();

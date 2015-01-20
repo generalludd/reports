@@ -1,5 +1,4 @@
 <?php
-
 if (! defined('BASEPATH')) exit('No direct script access allowed');
 // @TODO: refine all get_post to the appropriate method.
 class Teacher extends MY_Controller
@@ -31,8 +30,11 @@ class Teacher extends MY_Controller
         }
 
         $roles = $this->input->get_post("role");
-        if (!$roles){
-            $roles = array(0=>2,1=>3);
+        if (! $roles) {
+            $roles = array(
+                    0 => 2,
+                    1 => 3
+            );
         }
         foreach ($roles as $role) {
             $data["roles"][] = array(
@@ -41,18 +43,20 @@ class Teacher extends MY_Controller
             );
         }
         $data["options"]["roles"] = $roles;
-
-        if ($this->input->get_post("gradeStart") >= 0 && $this->input->get_post("gradeEnd") >= 0) {
-            $gradeStart = $this->input->get_post("gradeStart");
-            $gradeEnd = $this->input->get_post("gradeEnd");
+        $data["options"]["gradeRange"]["gradeStart"] = 0;
+        $data["options"]["gradeRange"]["gradeEnd"] = 8;
+        if ($this->input->get("gradeStart") && $this->input->get("gradeEnd")) {
+            $gradeStart = $this->input->get("gradeStart");
+            $gradeEnd = $this->input->get("gradeEnd");
             $data["options"]["gradeRange"]["gradeStart"] = $gradeStart;
             $data["options"]["gradeRange"]["gradeEnd"] = $gradeEnd;
             bake_cookie("gradeStart", $gradeStart);
             bake_cookie("gradeEnd", $gradeEnd);
+
         }
 
         $data["teachers"] = $this->teacher_model->get_all($data["options"]);
-        //@TODO this is butt ugly code here below.
+        // @TODO this is butt ugly code here below.
         $data["options"]["roles"] = $data["roles"];
         $data["title"] = "List of Teachers";
         $this->load->view("page/index", $data);
@@ -107,18 +111,27 @@ class Teacher extends MY_Controller
     /**
      * Show a given teacher based on the uri_segment.
      */
-    function view ()
+    function view ($kTeach)
     {
-        $kTeach = $this->uri->segment(3);
-        $teacher = $this->teacher_model->get($kTeach);
-        $data["year"] = get_current_year();
-        $data["term"] = get_current_term();
-        $data["kTeach"] = $kTeach;
-        $data["teacher"] = $teacher;
-        $data["subjects"] = $this->subject_model->get_for_teacher($kTeach);
-        $data["target"] = "teacher/view";
-        $data["title"] = "Viewing Information for $teacher->teachFirst $teacher->teachLast";
-        $this->load->view("page/index", $data);
+        if ($kTeach) {
+            $kTeach = $this->uri->segment(3);
+            $teacher = $this->teacher_model->get($kTeach);
+            if($teacher){
+            $data["year"] = get_current_year();
+            $data["term"] = get_current_term();
+            $data["kTeach"] = $kTeach;
+            $data["teacher"] = $teacher;
+            $data["subjects"] = $this->subject_model->get_for_teacher($kTeach);
+            $data["target"] = "teacher/view";
+            $data["title"] = "Viewing Information for $teacher->teachFirst $teacher->teachLast";
+            $this->load->view("page/index", $data);
+            }else{
+                $this->session->set_flashdata("notice","No such user was found!");
+                redirect("teacher");
+            }
+        }else{
+            redirect("teacher");
+        }
     }
 
     /**
