@@ -9,7 +9,7 @@ if(empty($year)){
 
 ?>
 
-<form id="chart-search" name="chart-search" action="<?=site_url("assignment/chart");?>" method="get">
+<form style="max-width:370px" id="chart-search" name="chart-search" action="<?=site_url("assignment/chart");?>" method="get">
 <input type="hidden" id="kTeach" name="kTeach" value="<?=$kTeach; ?>"/>
 <p>
 <label for="gradeStart">Grade: </label>
@@ -26,6 +26,7 @@ if(empty($year)){
 <?=form_dropdown('year',get_year_list(), $year, "id='year' class='year'");?>
 -<input id="yearEnd" type="text" name="yearEnd" class='yearEnd' readonly
 	maxlength="4" size="5" value="<? $yearEnd=$year+1;print $yearEnd; ?>" /></p>
+	<div class="message">Setting a date range can speed up editing when you are dealing with large numbers of assignments.</div>
 	<p><label for="date_range">Date Range</label><input type="text" id="date_start" name="date_start" class="datefield" value="<?=get_cookie("assignment_date_start");?>"/>-
 	<input type="text" name="date_end" id="date_end" class="datefield" value="<?=get_cookie("assignment_date_end");?>"/>
 	</p>

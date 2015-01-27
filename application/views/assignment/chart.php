@@ -46,7 +46,7 @@ if (! empty($assignments)) {
 </h3>
 <? elseif(count($assignments > 10)): ?>
 <div class="alert">You can reduce the number of assignments displayed by
-	entering a date range when you run your grade search. This can speed up editing when you are dealing with large numbers of assignments.</div>
+	entering a date range when you run your grade search.<br/>This can speed up editing when you are dealing with large numbers of assignments.</div>
 <? endif;?>
 <div class="button-box">
 	<ul class="button-list">
