@@ -54,10 +54,12 @@ class Assignment extends MY_Controller
 
         $date_range = array();
         if ($this->input->get("date_start") && $this->input->get("date_end")) {
-            $date_start = format_date($this->input->get("date_start"), "mysql");
-            $date_end = format_date($this->input->get("date_end"), "mysql");
-            $date_range["date_start"] = $date_start;
-            $date_range["date_end"] = $date_end;
+           $date_start =  $this->input->get("date_start");
+           $date_end = $this->input->get("date_end");
+           bake_cookie("assignment_date_start", $date_start);
+           bake_cookie("assignment_date_end",$date_end);
+            $date_range["date_start"] = format_date($date_start, "mysql");
+            $date_range["date_end"] = format_date($date_end, "mysql");
         }
         $grade_options["from"] = "grade";
         $grade_options["join"] = "assignment";

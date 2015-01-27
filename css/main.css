@@ -1177,6 +1177,7 @@ table.grade-editor tbody tr td.grade-value {
 
 table.grade-editor tbody tr td.grade-value input {
 	border: none;
+	min-width:3em;
 }
 
 table.grade-editor thead tr th {

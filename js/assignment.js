@@ -175,7 +175,7 @@ $(document).ready(function(){
 			url: myUrl,
 			data: form_data,
 			success: function(data){
-				showPopup("Editing All Grades for an Assignment", data, "auto");
+				showPopup("Editing All Grades for an Assignment", data, "480px");
 			}
 		});
 		
