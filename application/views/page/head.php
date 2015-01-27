@@ -8,8 +8,8 @@
     content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;" />
 --><title><?=$title;?></title>
 <link type="text/css" rel="stylesheet" media="all" href="<?=base_url()?>css/main.css" />
-<link type="text/css" rel="stylesheet" media="all" href="<?=base_url()?>css/color.css"/>
-<link type="text/css" rel="stylesheet" media="all" href="<?=base_url()?>css/popup.css" />
+<link type="text/css" rel="stylesheet" media="screen" href="<?=base_url()?>css/color.css"/>
+<link type="text/css" rel="stylesheet" media="screen" href="<?=base_url()?>css/popup.css" />
 <link type="text/css" rel="stylesheet" media="print" href="<?=base_url()?>css/print.css" />
 <!-- jquery scripts -->
 <script type="text/javascript">
