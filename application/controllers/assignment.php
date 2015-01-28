@@ -53,20 +53,28 @@ class Assignment extends MY_Controller
         }
 
         $date_range = array();
+
         if ($this->input->get("date_start") && $this->input->get("date_end")) {
            $date_start =  $this->input->get("date_start");
            $date_end = $this->input->get("date_end");
            bake_cookie("assignment_date_start", $date_start);
            bake_cookie("assignment_date_end",$date_end);
-            $date_range["date_start"] = format_date($date_start, "mysql");
-            $date_range["date_end"] = format_date($date_end, "mysql");
+
+        }elseif(get_cookie("assignment_date_start") && get_cookie("assignment_date_end")){
+            $date_start = get_cookie("assignment_date_start");
+            $date_end = get_cookie("assignment_date_end");
         }
+        $date_range["date_start"] = format_date($date_start, "mysql");
+        $date_range["date_end"] = format_date($date_end, "mysql");
+
         $grade_options["from"] = "grade";
         $grade_options["join"] = "assignment";
         if ($sort_order = $this->input->get("student_sort_order")) {
             $this->load->model("preference_model", "preference");
             $this->preference->update($kTeach, "student_sort_order", $sort_order);
             bake_cookie("student_sort_order", $sort_order);
+        }else{
+            $sort_order = get_cookie("student_sort_order");
         }
         $data["grades"] = $this->assignment->get_grades($kTeach, $term, $year, $gradeStart, $gradeEnd, $stuGroup, $date_range, $sort_order);
         foreach ($data['grades'] as $grade) {
