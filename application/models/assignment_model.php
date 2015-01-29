@@ -64,10 +64,14 @@ class Assignment_model extends CI_Model
         return $result;
     }
 
-    function insert ()
+    function insert ($variables = array())
     {
-        $this->prepare_variables();
-        $this->db->insert("assignment", $this);
+        if(empty($variables)){
+            $this->prepare_variables();
+            $this->db->insert("assignment", $this);
+        }else{
+            $this->db->insert("assignment",$variables);
+        }
         $kAssignment = $this->db->insert_id();
         return $kAssignment;
     }

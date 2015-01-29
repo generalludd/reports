@@ -46,7 +46,7 @@ define('FOPEN_READ_WRITE_CREATE_STRICT',		'x+b');
 */
 define('OK', "<img src='/images/ok.png' alt='' width='12' height='12' border='0'>");
 define('X',"<img src='/images/delete.png' alt='' width='12' height='12' border='0'>");
-define('APP_VERSION', "5.2");
+define('APP_VERSION', "5.5b");
 //familiar name for student reports.
 define('STUDENT_REPORT','Orange Slip');
 

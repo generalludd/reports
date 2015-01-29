@@ -60,6 +60,9 @@ if (! empty($assignments)) {
 			class="button search-assignments"
 			id="sa_<?=$kTeach;?>"
 			title="Search for Current Grade Charts">New Grade Search</span></li>
+			<? if(get_cookie("beta_tester")):?>
+			<li><a href="<?=site_url("assignment/create_batch");?>" title="Insert a batch of assignments at once" class="button edit">Batch Insert</a></li>
+			<? endif; ?>
 	</ul>
 </div>
 <table class='<?=implode(" ",$classes);?>'>

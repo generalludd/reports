@@ -53,8 +53,8 @@ class Assignment extends MY_Controller
         }
 
         $date_range = array();
-$date_start = FALSE;
-$date_end = FALSE;
+        $date_start = FALSE;
+        $date_end = FALSE;
         if ($this->input->get("date_start") && $this->input->get("date_end")) {
             $date_start = $this->input->get("date_start");
             $date_end = $this->input->get("date_end");
@@ -64,9 +64,9 @@ $date_end = FALSE;
             $date_start = get_cookie("assignment_date_start");
             $date_end = get_cookie("assignment_date_end");
         }
-        if($date_start && $date_end){
-        $date_range["date_start"] = format_date($date_start, "mysql");
-        $date_range["date_end"] = format_date($date_end, "mysql");
+        if ($date_start && $date_end) {
+            $date_range["date_start"] = format_date($date_start, "mysql");
+            $date_range["date_end"] = format_date($date_end, "mysql");
         }
 
         $grade_options["from"] = "grade";
@@ -174,14 +174,15 @@ $date_end = FALSE;
             if ($gradeStart == $gradeEnd) {
                 $gradeRange = sprintf("grade %s", $gradeStart);
             }
-            printf('<p>You must create categories for %s first for %s, %s.<p/>', $gradeRange, $term, $year);
+            $this->session->set_flashdata("notice", sprintf('<p>You must create categories for %s first for %s, %s.<p/>', $gradeRange, $term, $year));
+            redirect("/");
         } else {
             $data["kTeach"] = $kTeach;
-            $data["gradeStart"]= $gradeStart;
-            $data["gradeEnd"]=$gradeEnd;
+            $data["gradeStart"] = $gradeStart;
+            $data["gradeEnd"] = $gradeEnd;
             $data["year"] = $year;
             $data["term"] = $term;
-            $data["count"] = 0; //used in the batch row adding option
+            $data["count"] = 0; // used in the batch row adding option
             $this->load->model("subject_model");
 
             $subjects = $this->subject_model->get_for_teacher($kTeach);
@@ -198,8 +199,6 @@ $date_end = FALSE;
             $this->load->view("page/index", $data);
         }
     }
-
-
 
     /**
      * insert an assignment into the database
@@ -223,7 +222,49 @@ $date_end = FALSE;
         redirect("assignment/chart?kTeach=$kTeach&term=$term&year=$year&gradeStart=$gradeStart&gradeEnd=$gradeEnd");
     }
 
-    function insert_batch(){
+    /**
+     * insert batch assignments using a special form.
+     */
+    function insert_batch ()
+    {
+        $kTeach = $this->input->post("kTeach");
+        $term = $this->input->post("term");
+        $year = $this->input->post("year");
+        $gradeStart = $this->input->post("gradeStart");
+        $gradeEnd = $this->input->post("gradeEnd");
+        $assignment = $this->input->post("assignment");
+        $count = count($assignment);
+
+        $date = $this->input->post("date");
+        $points = $this->input->post("points");
+        $prepopulate = $this->input->post("prepopulate");
+        $subject = $this->input->post("subject");
+        $kCategory = $this->input->post("kCategory");
+        $values["kTeach"] = $kTeach;
+        $values["year"] = $year;
+        $values["term"] = $term;
+        $values["gradeStart"] = $gradeStart;
+        $values["gradeEnd"] = $gradeEnd;
+        if($count < 2){
+            $this->session->set_flashdata("notice","You need to enter at least two assignments for this to work");
+redirect("assignment/create_batch");
+        }else{
+        for ($i = 0; $i < $count; $i ++) {
+            $values["assignment"] = $assignment[$i];
+            $student_points = 0;
+            if ($prepopulate[$i] == 1) {
+                $student_points = $points[$i];
+            }
+            $values["points"] = $points[$i];
+            $values["kCategory"] = $kCategory[$i];
+            $values["subject"] = $subject[$i];
+            $values["date"] = $date[$i];
+             $kAssignment = $this->assignment->insert($values);
+            $this->grade->batch_insert($kAssignment, $kTeach, $term, $year, $gradeStart, $gradeEnd, $points[$i]);
+        }
+        redirect("assignment/chart?kTeach=$kTeach&term=$term&year=$year&gradeStart=$gradeStart&gradeEnd=$gradeEnd");
+
+        }
     }
 
     /**

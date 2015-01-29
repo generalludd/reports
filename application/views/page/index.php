@@ -29,13 +29,15 @@ if($this->uri->segment(1) == ""){
 </div>
 </div>
 <?php endif; ?>
+
+<!-- main -->
+
+<div id="main">
 <?php if($this->session->flashdata("notice")):?>
 <div id="notice" class="message"><?=$this->session->flashdata("notice");
 ?></div>
 <?php endif?>
-<!-- main -->
-
-<div id="main"><!-- content -->
+<!-- content -->
 <div id="content"><?
 $this->load->view($target);
 ?></div>
