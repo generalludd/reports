@@ -899,8 +899,8 @@ table.files td.file-description {
 	width: 275px;
 }
 
-a.link,input.link {
-	text-decoration: underline;
+a.link,input.link,a {
+	text-decoration: none;
 }
 
 a.link:hover,input.link:hover {
