@@ -23,13 +23,11 @@ if (! empty($assignments)) {
      * Get the subject and relevant data from the first row of the assignments
      */
     $header = $assignments[0];
-    $header_string = sprintf("%s<br/>%s<br/>%s", $header->subject,
-            $header->term, format_schoolyear($header->year));
+    $header_string = sprintf("%s<br/>%s<br/>%s", $header->subject, $header->term, format_schoolyear($header->year));
     $classes = array(
             "grade-chart"
     );
-    if ($header->year == get_current_year() &&
-             $header->term == get_current_term()) {
+    if ($header->year == get_current_year() && $header->term == get_current_term()) {
         $classes[] = "editable";
     } else {
         $classes[] = "locked";
@@ -45,8 +43,11 @@ if (! empty($assignments)) {
 <?=sprintf("%s-%s",$this->input->get("date_start"), $this->input->get("date_end"));?>
 </h3>
 <? elseif(count($assignments > 10)): ?>
-<div class="alert">You can reduce the number of assignments displayed by
-	entering a date range when you run your grade search.<br/>This can speed up editing when you are dealing with large numbers of assignments.</div>
+<div class="alert">
+	You can reduce the number of assignments displayed by entering a date
+	range when you run your grade search.<br />This can speed up editing
+	when you are dealing with large numbers of assignments.
+</div>
 <? endif;?>
 <div class="button-box">
 	<ul class="button-list">
@@ -61,7 +62,10 @@ if (! empty($assignments)) {
 			id="sa_<?=$kTeach;?>"
 			title="Search for Current Grade Charts">New Grade Search</span></li>
 			<? if(get_cookie("beta_tester")):?>
-			<li><a href="<?=site_url("assignment/create_batch");?>" title="Insert a batch of assignments at once" class="button edit">Batch Insert</a></li>
+			<li><a
+			href="<?=site_url("assignment/create_batch");?>"
+			title="Insert a batch of assignments at once"
+			class="button edit">Batch Insert</a></li>
 			<? endif; ?>
 	</ul>
 </div>
@@ -121,8 +125,7 @@ if (! empty($assignments)) {
         foreach ($grades as $grade) {
             if ($current_student != $grade->kStudent) {
                 $rows[$grade->kStudent]["name"] = "<td class='student-name'><span class='student edit_student_grades' id='eg_$grade->kStudent'>$grade->stuNickname $grade->stuLast</span></td>";
-                $rows[$grade->kStudent]["name_string"] = format_name(
-                        $grade->stuNickname, $grade->stuLast);
+                $rows[$grade->kStudent]["name_string"] = format_name($grade->stuNickname, $grade->stuLast);
                 $rows[$grade->kStudent]["delete"] = sprintf(
                         "<td class='grade-delete-row'><span class='student delete button' id='dgr_%s_%s_%s' title='Delete the entire row'>Delete</span></td>",
                         $grade->kStudent, $header->term, $header->year);
@@ -131,10 +134,7 @@ if (! empty($assignments)) {
                 $student_points = 0;
 
                 $href = site_url(
-                        sprintf(
-                                "grade/report_card?kStudent=%s&year=%s&term=%s&subject=%s&print=true",
-                                $grade->kStudent,
-                                $this->input->cookie("year"),
+                        sprintf("grade/report_card?kStudent=%s&year=%s&term=%s&subject=%s&print=true", $grade->kStudent, $this->input->cookie("year"),
                                 $this->input->cookie("term"), $header->subject));
                 $rows[$grade->kStudent]["button"] = "<td class='student-button'><a class='button' target='_blank' href='$href'>Print</a></td>";
             } // end if current_student
@@ -149,31 +149,27 @@ if (! empty($assignments)) {
                 $points = "";
             } // end if points
 
+            if ($grade->status) {
+                $points = $grade->status;
+            }
+
             if ($grade->footnote) {
                 $points .= "[$grade->footnote]";
             } // end if footnote
 
-            $rows[$grade->kStudent]["totals"] = calculate_final_grade(
-                    $grade->final_grade);
+            $rows[$grade->kStudent]["totals"] = calculate_final_grade($grade->final_grade);
 
-            $rows[$grade->kStudent]["grades"][$grade->kAssignment] = sprintf(
-                    "<td class='grade-points edit' id='sag_%s_%s'  title='%s'>%s</td>",
-                    $grade->kAssignment, $grade->kStudent,
-                    format_name($grade->stuNickname, $grade->stuLast), $points);
+            $rows[$grade->kStudent]["grades"][$grade->kAssignment] = sprintf("<td class='grade-points edit' id='sag_%s_%s'  title='%s'>%s</td>",
+                    $grade->kAssignment, $grade->kStudent, format_name($grade->stuNickname, $grade->stuLast), $points);
         } // end foreach grades
 
         foreach ($rows as $row) {
             print
-                    sprintf(
-                            "<tr id='sgtr_%s' title='%s' class='grade-chart-row'>",
-                            $row['kStudent'], $row['name_string']);
+                    sprintf("<tr id='sgtr_%s' title='%s' class='grade-chart-row'>", $row['kStudent'], $row['name_string']);
             print $row["delete"];
             print $row["name"];
             print $row["button"];
-            print
-                    sprintf("<td>%s (%s%s)</td>",
-                            calculate_letter_grade($row['totals']),
-                            $row['totals'], "%");
+            print sprintf("<td>%s (%s%s)</td>", calculate_letter_grade($row['totals']), $row['totals'], "%");
             print implode("", $row["grades"]);
             print "</tr>";
         } // end foreach rows
@@ -185,7 +181,7 @@ if (! empty($assignments)) {
 	<span class='button new show-student-selector'>Add Student</span>
 </div>
 <? }else{ ?>
-<p style="padding-bottom:1em">
+<p style="padding-bottom: 1em">
 	You may need to create categories before creating assignments. <span
 		class="button small edit assignment-categories-edit">Edit Categories</span>
 </p>
