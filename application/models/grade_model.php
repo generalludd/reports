@@ -53,9 +53,14 @@ class Grade_model extends CI_Model
     function get ($kStudent, $kAssignment)
     {
         $this->db->where("kStudent", $kStudent);
-        $this->db->where("kAssignment", $kAssignment);
+        $this->db->where("assignment.kAssignment", $kAssignment);
+        $this->db->join("assignment","grade.kAssignment= assignment.kAssignment");
+        $this->db->where("assignment.kAssignment",$kAssignment);
         $this->db->from("grade");
+        $this->db->select("grade.*");
+        $this->db->select("assignment.points as assignment_total");
         $output = $this->db->get()->row();
+        $this->session->set_flashdata("notice",$this->db->last_query());
         return $output;
     }
 
