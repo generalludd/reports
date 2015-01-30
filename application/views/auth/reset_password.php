@@ -17,11 +17,11 @@ endif;
 <div id='password_note' class='notice error-text' style="display:none"><?=$output;?></div>
 <input type="hidden" name="reset_hash" id="reset_hash" value="<?=$reset_hash;?>"/>
 <input type="hidden" name="kTeach" id="kTeach" value="<?=$kTeach;?>"/>
-<div class="reset-fields">
+<div class="reset-fields login-inputs">
 <p><label for="new_password">New Password: </label><br/>
-<input type="password" id="new_password" name="new_password" required value=""/></p>
+<input type="password" id="new_password" name="new_password" required value="" placeholder="new password"/></p>
 <p><label for="check_password">Re-enter New Password: </label><br/>
-<input type="password" id="check_password" name="check_password" required value=""/>
+<input type="password" id="check_password" name="check_password" required value="" placeholder="re-enter password"/>
 </p>
 </div>
 <p><input type="submit" name="submit" id="change-password" class="button" style="display:none" value="Reset" /></p>

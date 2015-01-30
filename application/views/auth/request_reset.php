@@ -24,7 +24,7 @@ endif;
 
 <div class='login-inputs'>
 <p><label for="email">Enter Your Email Address to Reset Your Password</label><br />
-<input type="email" name="email" id="email" required
+<input type="email" name="email" id="email" required placeholder="your_email@fsmn.org"
  class="login-text" /></p>
 <p><input type="submit" name="submit" class="button" value="Send" /></p>
 </div>

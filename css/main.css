@@ -119,7 +119,7 @@ div.login-inputs {
 	width: 250px;
 }
 
-.login-inputs input[type="text"] {
+.login-inputs input[type="text"], .login-inputs input[type="password"] , .login-inputs input[type="email"]{
 	font-size: 1.2em;
 }
 
