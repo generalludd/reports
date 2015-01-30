@@ -20,12 +20,12 @@ if($this->input->cookie("gradeEnd")){
 <label for="showAdmin">Roles: </label><br/>
 <?=form_multiselect("role[]",$roles,2,"id='role'");?>
 </p>
-<p>
+<!-- <p>
 <label for="gradeStart">Grade Range:</label>
 <?=form_dropdown("gradeStart",$grades,$gradeStart,"id='gradeStart'");?>
 -
 <?=form_dropdown("gradeEnd",$grades,$gradeEnd,"id='gradeEnd'");?>
-</p>
+</p> -->
 <p>
 <input type="submit" class="button" value="Search"/>
 </p>

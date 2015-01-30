@@ -86,7 +86,7 @@ class Teacher_model extends CI_Model
                 ));
             }
 
-            if (array_key_exists("gradeRange", $options)) {
+            if (array_key_exists("gradeRange", $options) && $options["gradeRange"]["gradeStart"]>=0) {
                 $this->db->where("gradeStart >= " . $options["gradeRange"]["gradeStart"]);
                 $this->db->where("gradeStart <= " . $options["gradeRange"]["gradeEnd"]);
             }

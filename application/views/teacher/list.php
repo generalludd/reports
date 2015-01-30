@@ -19,13 +19,13 @@ if (! empty($options)) {
                 echo "<li>Show Inactive/Former Users: <strong>Yes</strong></li>";
                 break;
             case "gradeRange":
-                $gradeStart = format_grade($options["gradeRange"]["gradeStart"]);
-                $gradeEnd = format_grade($options["gradeRange"]["gradeEnd"]);
-                if ($gradeStart == $gradeEnd) {
-                    echo "<li>Grade: <strong>$gradeStart</strong></li>";
-                } else {
-                    echo "<li>Grade Range: <strong>$gradeStart-$gradeEnd</strong></li>";
-                }
+                    $gradeStart = format_grade($options["gradeRange"]["gradeStart"]);
+                    $gradeEnd = format_grade($options["gradeRange"]["gradeEnd"]);
+                    if ($gradeStart == $gradeEnd) {
+                        echo "<li>Grade: <strong>$gradeStart</strong></li>";
+                    } else {
+                        echo "<li>Grade Range: <strong>$gradeStart-$gradeEnd</strong></li>";
+                    }
                 break;
             case "roles":
                 echo "<li>Roles<ul>";
@@ -67,7 +67,6 @@ if (! empty($options)) {
 				<tr <? echo $teacher->status != 1? "class='disabled inactive'":"";?>>
 				<td style="width: 50%;"><?=format_name($teacher->teachFirst,$teacher->teachLast);?></td>
 				<td><? echo $teacher->dbRole !=1 ?  format_grade_range($teacher->gradeStart, $teacher->gradeEnd): ""; ?> </td>
-				</td>
 				<td><a
 					href="<?=site_url("teacher/view/$teacher->kTeach");?>"
 					class='button'>View/Edit</a></td>

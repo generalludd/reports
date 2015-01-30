@@ -228,7 +228,7 @@ function get_term_menu($id, $currentTerm=null, $initial_blank = FALSE,$options =
 function get_keyed_pairs($list,$pairs,$initialBlank = NULL,$other = NULL,$alternate = array()){
 	$output=false;
 	if($initialBlank){
-		$output[] = "";
+		$output[""] = "";
 	}
 	if(!empty($alternate)){
 		$output[$alternate['name']] = $alternate['value'];

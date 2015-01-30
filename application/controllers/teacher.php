@@ -43,8 +43,8 @@ class Teacher extends MY_Controller
             );
         }
         $data["options"]["roles"] = $roles;
-        $data["options"]["gradeRange"]["gradeStart"] = 0;
-        $data["options"]["gradeRange"]["gradeEnd"] = 8;
+        /* $data["options"]["gradeRange"]["gradeStart"] = -1;
+        $data["options"]["gradeRange"]["gradeEnd"] = -1;
         if ($this->input->get("gradeStart") && $this->input->get("gradeEnd")) {
             $gradeStart = $this->input->get("gradeStart");
             $gradeEnd = $this->input->get("gradeEnd");
@@ -52,7 +52,7 @@ class Teacher extends MY_Controller
             $data["options"]["gradeRange"]["gradeEnd"] = $gradeEnd;
             bake_cookie("gradeStart", $gradeStart);
             bake_cookie("gradeEnd", $gradeEnd);
-        }
+        } */
 
         $data["teachers"] = $this->teacher_model->get_all($data["options"]);
         // @TODO this is butt ugly code here below.
@@ -202,11 +202,11 @@ class Teacher extends MY_Controller
     function show_search ()
     {
         $grade_list = $this->menu_model->get_pairs("grade");
-        $data["grades"] = get_keyed_pairs($grade_list, array(
+      /*   $data["grades"] = get_keyed_pairs($grade_list, array(
                 "value",
                 "label"
-        ));
-        $this->load->view("teacher/search", $data);
+        ),TRUE); */
+        $this->load->view("teacher/search");
     }
 
     /**
