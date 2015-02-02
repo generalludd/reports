@@ -13,7 +13,11 @@ if (! defined('BASEPATH')) exit('No direct script access allowed');
  */
 // $config['base_url'] =
 // 'http://cerebratorium.local/~chrisdart/Dropbox/narrative_ci/';
-$config['base_url'] = '';
+if($_SERVER['HTTP_HOST']=="narrative.server.fsmn"){
+$config['base_url'] = 'http://reports.fsmn.org';
+}else{
+    $config['base_url'] = '';
+}
 /*
  * |-------------------------------------------------------------------------- |
  * Index File
