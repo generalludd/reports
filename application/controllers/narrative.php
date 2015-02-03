@@ -494,31 +494,31 @@ class Narrative extends MY_Controller
         $this->load->model("teacher_model");
         $kTeach = $this->uri->segment(3);
         if (empty($kTeach)) {
-            $kTeach = $this->input->get_post("kTeach");
+            $kTeach = $this->input->get("kTeach");
         }
         $options["kTeach"] = $kTeach;
 
-        if ($this->input->get_post("gradeStart") && $this->input->get_post("gradeEnd")) {
-            $options["gradeStart"] = $this->input->get_post("gradeStart");
+        if ($this->input->get("gradeStart") >=0 && $this->input->get("gradeEnd") >=0) {
+            $options["gradeStart"] = $this->input->get("gradeStart");
             bake_cookie("gradeStart", $options["gradeStart"]);
-            $options["gradeEnd"] = $this->input->get_post("gradeEnd");
+            $options["gradeEnd"] = $this->input->get("gradeEnd");
             bake_cookie("gradeEnd", $options["gradeEnd"]);
         }
 
-        if ($this->input->get_post("subject")) {
-            $options["narrSubject"] = $this->input->get_post("subject");
+        if ($this->input->get("subject")) {
+            $options["narrSubject"] = $this->input->get("subject");
             bake_cookie("narrative_subject", $options["narrSubject"]);
         }
 
         $options["narrYear"] = get_current_year();
-        if ($this->input->get_post("narrYear")) {
-            $options["narrYear"] = $this->input->get_post("narrYear");
+        if ($this->input->get("narrYear")) {
+            $options["narrYear"] = $this->input->get("narrYear");
             bake_cookie("narrYear", $options["narrYear"]);
         }
 
         $options["narrTerm"] = get_current_term();
-        if ($this->input->get_post("narrTerm")) {
-            $options["narrTerm"] = $this->input->get_post("narrTerm");
+        if ($this->input->get("narrTerm")) {
+            $options["narrTerm"] = $this->input->get("narrTerm");
             bake_cookie("narrTerm", $options["narrTerm"]);
         }
         $data["narratives"] = $this->narrative_model->get_narratives($options);
