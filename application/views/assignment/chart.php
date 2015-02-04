@@ -11,7 +11,8 @@ if ($stuGroup) {
     $gradeDisplay = sprintf("%s %s", $gradeDisplay, $stuGroup);
 }
 
-$buttons["refresh_page"] = array("text"=>"Refresh Page","span"=>"button refresh","target"=>"grades");
+$buttons["refresh_page"] = array("text"=>"Refresh Page","class"=>"button refresh","target"=>"grades");
+$buttons["new_search"] = array("text"=>"New Grade Search","class"=>"button ")
 ?>
 <input
 	type="hidden"
@@ -29,7 +30,7 @@ if (! empty($assignments)) {
     $classes = array(
             "grade-chart"
     );
-    if ($header->year >= get_current_year() && $header->term == get_current_term()) {
+    if (($header->year >= get_current_year() && $header->term == get_current_term() || $header->year >= get_current_year() && $header->term == "Year-End")) {
         $classes[] = "editable";
     } else {
         $classes[] = "locked";

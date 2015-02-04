@@ -183,7 +183,7 @@ function get_current_term($targetDate = NULL)
 	}else{
 		$month = date('n', $targetDate);
 	}
-	if($month > 2 and $month < 7){
+	if($month >2 and $month < 7){
 		$term = "Year-End";
 	}else{
 		$term = "Mid-Year";
