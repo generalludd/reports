@@ -365,12 +365,14 @@ class Assignment_model extends MY_Model
         return $result;
     }
 
-    function count_categories ($kTeach, $gradeStart, $gradeEnd)
+    function count_categories ($kTeach, $gradeStart, $gradeEnd, $year, $term)
     {
         $this->db->select("COUNT(kCategory) as count");
         $this->db->where("kTeach", $kTeach);
         $this->db->where("gradeStart", $gradeStart);
         $this->db->where("gradeEnd", $gradeEnd);
+        $this->db->where("term", $term);
+        $this->db->where("year",$year);
         $result = $this->db->get("assignment_category")->row();
         $this->_log("notice");
         return $result->count;

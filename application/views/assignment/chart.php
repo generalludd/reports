@@ -10,6 +10,8 @@ if ($gradeStart != $gradeEnd) {
 if ($stuGroup) {
     $gradeDisplay = sprintf("%s %s", $gradeDisplay, $stuGroup);
 }
+
+$buttons["refresh_page"] = array("text"=>"Refresh Page","span"=>"button refresh","target"=>"grades");
 ?>
 <input
 	type="hidden"
@@ -53,8 +55,8 @@ if (! empty($assignments)) {
 	<ul class="button-list">
 		<li><span class="button refresh">Refresh Page</span></li>
 		<? if($kTeach == $this->session->userdata("userID")): ?>
-		<li><span class="button edit assignment-categories-edit">Edit
-				Categories</span></li>
+		<li><a href="<?=site_url("assignment/edit_categories/$kTeach?year=$year&term=$term&gradeStart=$gradeStart&gradeEnd=$gradeEnd");?>" class="button edit assignment-categories-edit">Edit
+				Categories</a></li>
 		<? endif;?>
 
 		<li><span
@@ -63,7 +65,7 @@ if (! empty($assignments)) {
 			title="Search for Current Grade Charts">New Grade Search</span></li>
 			<? if(get_cookie("beta_tester")):?>
 			<li><a
-			href="<?=site_url("assignment/create_batch");?>"
+			href="<?=site_url("assignment/create_batch?kTeach=$kTeach&term=$term&year=$year&gradeStart=$gradeStart&gradeEnd=$gradeEnd");?>"
 			title="Insert a batch of assignments at once"
 			class="button edit">Batch Insert</a></li>
 			<? endif; ?>
@@ -183,10 +185,24 @@ if (! empty($assignments)) {
 <? }else{ ?>
 
 <p style="padding-bottom: 1em">
-	<?=$category_count == 0?"You may need to create categories before creating assignments.":""?>
-
-	<span
-		class="button small edit assignment-categories-edit">Edit Categories</span>
+	<?=$category_count == 0?"You may need to create categories before creating assignments.":""; ?>
+	<div class="button-box">
+	<ul class="button-list">
+	<li>
+	<a href="<?=site_url("assignment/edit_categories/$kTeach?year=$year&term=$term&gradeStart=$gradeStart&gradeEnd=$gradeEnd");?>"
+		class="button edit assignment-categories-edit">Edit Categories</a></li>
+		<li><span
+			class="button search-assignments"
+			id="sa_<?=$kTeach;?>"
+			title="Search for Current Grade Charts">New Grade Search</span></li>
+			<? if(get_cookie("beta_tester")):?>
+			<li><a
+			href="<?=site_url("assignment/create_batch?kTeach=$kTeach&term=$term&year=$year&gradeStart=$gradeStart&gradeEnd=$gradeEnd");?>"
+			title="Insert a batch of assignments at once"
+			class="button edit">Batch Insert</a></li>
+			<? endif; ?>
+			</ul>
+			</div>
 </p>
 <? if($category_count > 0){ ?>
 <p>

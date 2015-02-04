@@ -90,10 +90,8 @@ class Assignment extends MY_Controller
         }
         $data["assignments"] = $this->assignment->get_for_teacher($kTeach, $term, $year, $gradeStart, $gradeEnd, $date_range);
 
-        $data["category_count"] = 0;
-        if (empty($data["assignments"])) {
-            $data["category_count"] = $this->assignment->count_categories($kTeach, $gradeStart, $gradeEnd);
-        }
+
+        $data["category_count"] = $this->assignment->count_categories($kTeach, $gradeStart, $gradeEnd, $year, $term);
 
         $data["kTeach"] = $kTeach;
         $data["term"] = $term;
@@ -172,11 +170,11 @@ class Assignment extends MY_Controller
 
     function create_batch ()
     {
-        $kTeach = $this->session->userdata("userID");
-        $gradeStart = $this->input->cookie("gradeStart");
-        $gradeEnd = $this->input->cookie("gradeEnd");
-        $year = $this->input->cookie("year");
-        $term = $this->input->cookie("term");
+        $kTeach = $this->input->get("kTeach");
+        $gradeStart = $this->input->get("gradeStart");
+        $gradeEnd = $this->input->get("gradeEnd");
+        $year = $this->input->get("year");
+        $term = $this->input->get("term");
 
         $categories = $this->assignment->get_categories($kTeach, $gradeStart, $gradeEnd, $year, $term);
         if (empty($categories)) {
@@ -386,12 +384,19 @@ class Assignment extends MY_Controller
     function edit_categories ()
     {
         $data["kTeach"] = $this->uri->segment(3);
-        $data["gradeStart"] = $this->input->cookie("assignment_grade_start");
-        $data["gradeEnd"] = $this->input->cookie("assignment_grade_end");
-        $data["year"] = $this->input->cookie("year");
-        $data["term"] = $this->input->cookie("term");
+        $data["gradeStart"] = $this->input->get("gradeStart");
+        $data["gradeEnd"] = $this->input->get("gradeEnd");
+        $data["year"] = $this->input->get("year");
+        $data["term"] = $this->input->get("term");
         $data["categories"] = $this->assignment->get_categories($data["kTeach"], $data["gradeStart"], $data["gradeEnd"], $data["year"], $data["term"]);
-        $this->load->view("assignment/categories", $data);
+        $data["target"] = "assignment/categories";
+        if($this->input->get("ajax")){
+            $target = $data["target"];
+        }else{
+            $target = "page/index";
+            $data["title"] = "Editing Categories";
+        }
+        $this->load->view($target, $data);
     }
 
     /**

@@ -361,15 +361,18 @@ $(document).ready(function(){
 	
 	
 	$(".assignment-categories-edit").live("click",function(){
+		console.log($(this).attr("href"));
+
 		$.ajax({
-			url: base_url + "assignment/edit_categories/" + $("#kTeach").val(),
+			url: $(this).attr("href") + "&ajax=1", //base_url + "assignment/edit_categories/" + $("#kTeach").val(),
 			type: "get",
 			success: function(data){
 				showPopup("Editing Categories",data,"auto");
 			}
 			
 		});
-		
+		return false;
+
 	});
 	
 	$(".add-category").live("click",function(){
