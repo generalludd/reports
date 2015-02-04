@@ -12,7 +12,7 @@ if ($stuGroup) {
 }
 
 $buttons["refresh_page"] = array("text"=>"Refresh Page","class"=>"button refresh","target"=>"grades");
-$buttons["new_search"] = array("text"=>"New Grade Search","class"=>"button ")
+$buttons["new_search"] = array("text"=>"New Grade Search","class"=>"button edit assignment-categories-edit", "target"=>"grades","href"=>site_url("assignment/edit_categories/$kTeach?year=$year&term=$term&gradeStart=$gradeStart&gradeEnd=$gradeEnd"));
 ?>
 <input
 	type="hidden"
