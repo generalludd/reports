@@ -393,8 +393,7 @@ $(document).ready(function(){
 		myStart = $("#tr-teach_" + myTeach + " .insert-gradeStart").val();
 		myEnd = $("#tr-teach_" + myTeach + " .insert-gradeEnd").val();
 		myYear = $("#tr-teach_" + myTeach + " .insert-year").val();
-		myTerm = $("#tr-teach_" + myTeach + " .insert-term").val();
-
+		myTerm = $("#tr-teach_" + myTeach + " #term_new").val();
 		form_data = {
 				kTeach: myTeach,
 				category: myCategory,

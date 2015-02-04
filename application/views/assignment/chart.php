@@ -27,7 +27,7 @@ if (! empty($assignments)) {
     $classes = array(
             "grade-chart"
     );
-    if ($header->year == get_current_year() && $header->term == get_current_term()) {
+    if ($header->year >= get_current_year() && $header->term == get_current_term()) {
         $classes[] = "editable";
     } else {
         $classes[] = "locked";
@@ -181,8 +181,11 @@ if (! empty($assignments)) {
 	<span class='button new show-student-selector'>Add Student</span>
 </div>
 <? }else{ ?>
+
 <p style="padding-bottom: 1em">
-	You may need to create categories before creating assignments. <span
+	<?=$category_count == 0?"You may need to create categories before creating assignments.":""?>
+
+	<span
 		class="button small edit assignment-categories-edit">Edit Categories</span>
 </p>
 <? if($category_count > 0){ ?>

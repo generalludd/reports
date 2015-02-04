@@ -2,7 +2,7 @@
 
 if (! defined ( 'BASEPATH' ))
 	exit ( 'No direct script access allowed' );
-class Narrative_model extends CI_Model
+class Narrative_model extends MY_Model
 {
 	var $kNarrative;
 	var $kStudent;
@@ -256,7 +256,7 @@ class Narrative_model extends CI_Model
 		$this->db->select ( "modifier.teachFirst,modifier.teachLast" );
 		$this->db->select ( "narrative.*,(`student`.`baseGrade` + $narrYear - `student`.`baseYear`) as `currentGrade`, student.stuFirst, student.stuLast, student.stuNickname" );
 		$result = $this->db->get ()->result ();
-		$this->session->set_flashdata("notice",$this->db->last_query());
+$this->_log("notice");
 		return $result;
 
 	}

@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Grade_model extends CI_Model
+class Grade_model extends MY_Model
 {
 
     var $kTeach;
@@ -60,7 +60,7 @@ class Grade_model extends CI_Model
         $this->db->select("grade.*");
         $this->db->select("assignment.points as assignment_total");
         $output = $this->db->get()->row();
-        $this->session->set_flashdata("notice",$this->db->last_query());
+        $this->_log("notice");
         return $output;
     }
 
@@ -146,7 +146,7 @@ class Grade_model extends CI_Model
                         $grade_end, array(
                                 "humanitiesTeacher" => $kTeach
                         ));
-                $this->session->set_flashdata("notice", $this->db->last_query());
+                $this->_log("notice");
 
             }
         }

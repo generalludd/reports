@@ -27,8 +27,8 @@ if(empty($year)){
 -<input id="yearEnd" type="text" name="yearEnd" class='yearEnd' readonly
 	maxlength="4" size="5" value="<? $yearEnd=$year+1;print $yearEnd; ?>" /></p>
 	<div class="message">Setting a date range can speed up editing when you are dealing with large numbers of assignments.</div>
-	<p><label for="date_range">Date Range</label><input type="text" id="date_start" name="date_start" class="datefield" value="<?=get_cookie("assignment_date_start");?>"/>-
-	<input type="text" name="date_end" id="date_end" class="datefield" value="<?=get_cookie("assignment_date_end");?>"/>
+	<p><label for="date_range">Date Range</label><input type="text" id="date_start" name="date_start" class="datefield" value="<?=array_key_exists("date_start",$date_range)?$date_range["date_start"]:get_cookie("assignment_date_start");?>"/>-
+	<input type="text" name="date_end" id="date_end" class="datefield" value="<?=array_key_exists("date_end",$date_range)?$date_range["date_end"]:get_cookie("assignment_date_end");?>"/>
 	</p>
 	<p>
 	<label for="student_sort_order">Sort Students by</label>

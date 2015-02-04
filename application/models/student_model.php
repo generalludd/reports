@@ -1,7 +1,7 @@
 <?php
 if (! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Student_model extends CI_Model
+class Student_model extends MY_Model
 {
     var $kTeach;
     var $stuFirst;
@@ -74,7 +74,6 @@ class Student_model extends CI_Model
         $this->db->select("humanitiesTeacher.teachFirst as humanitiesFirst,humanitiesTeacher.teachLast as humanitiesLast");
 
         $result = $this->db->get()->row();
-        // $this->session->set_flashdata("notice", $this->db->last_query());
         if ($result) {
             return $result;
         } else {
@@ -154,7 +153,7 @@ class Student_model extends CI_Model
         $this->db->select("*");
         $this->db->select(sprintf("(2014- `baseYear`  + `baseGrade`) as `stuGrade`", get_current_year()));
         $result = $this->db->get()->result();
-        $this->session->set_flashdata("notice",$this->db->last_query());
+        $this->_log("notice");
         return $result;
     }
 

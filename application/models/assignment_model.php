@@ -2,7 +2,7 @@
 
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Assignment_model extends CI_Model
+class Assignment_model extends MY_Model
 {
 
     var $kTeach;
@@ -328,6 +328,7 @@ class Assignment_model extends CI_Model
         if (array_key_exists("kTeach", $values)) {
             $this->db->insert("assignment_category", $values);
             $kCategory = $this->db->insert_id();
+            $this->_log("notice");
         }
         return $kCategory;
     }
@@ -371,6 +372,7 @@ class Assignment_model extends CI_Model
         $this->db->where("gradeStart", $gradeStart);
         $this->db->where("gradeEnd", $gradeEnd);
         $result = $this->db->get("assignment_category")->row();
+        $this->_log("notice");
         return $result->count;
     }
 }

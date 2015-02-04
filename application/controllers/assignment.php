@@ -29,9 +29,9 @@ class Assignment extends MY_Controller
         }
 
         $gradeStart = $this->input->get("gradeStart");
-        bake_cookie("gradeStart", $gradeStart);
+        bake_cookie("assignment_grade_start", $gradeStart);
         $gradeEnd = $this->input->get("gradeEnd");
-        bake_cookie("gradeEnd", $gradeEnd);
+        bake_cookie("assignment_grade_end", $gradeEnd);
 
         $term = get_current_term();
         if ($this->input->get("term")) {
@@ -55,14 +55,19 @@ class Assignment extends MY_Controller
         $date_range = array();
         $date_start = FALSE;
         $date_end = FALSE;
+
         if ($this->input->get("date_start") && $this->input->get("date_end")) {
             $date_start = $this->input->get("date_start");
             $date_end = $this->input->get("date_end");
             bake_cookie("assignment_date_start", $date_start);
             bake_cookie("assignment_date_end", $date_end);
-        } elseif (get_cookie("assignment_date_start") && get_cookie("assignment_date_end")) {
-            $date_start = get_cookie("assignment_date_start");
-            $date_end = get_cookie("assignment_date_end");
+            // } elseif (get_cookie("assignment_date_start") &&
+        // get_cookie("assignment_date_end")) {
+            // $date_start = get_cookie("assignment_date_start");
+            // $date_end = get_cookie("assignment_date_end");
+        } else {
+            burn_cookie("assignment_date_end");
+            burn_cookie("assignment_date_start");
         }
         if ($date_start && $date_end) {
             $date_range["date_start"] = format_date($date_start, "mysql");
@@ -84,6 +89,7 @@ class Assignment extends MY_Controller
             $grade->final_grade = $this->assignment->get_for_student($grade->kStudent, $grade->term, $grade->year, $grade_options);
         }
         $data["assignments"] = $this->assignment->get_for_teacher($kTeach, $term, $year, $gradeStart, $gradeEnd, $date_range);
+
         $data["category_count"] = 0;
         if (empty($data["assignments"])) {
             $data["category_count"] = $this->assignment->count_categories($kTeach, $gradeStart, $gradeEnd);
@@ -95,6 +101,7 @@ class Assignment extends MY_Controller
         $data["stuGroup"] = $stuGroup;
         $data["gradeStart"] = $gradeStart;
         $data["gradeEnd"] = $gradeEnd;
+
         if ($this->input->get("print") == 1) {
             // print each student report separated with page breaks.
         } else {
@@ -115,9 +122,12 @@ class Assignment extends MY_Controller
         }
         $data["term"] = $this->input->cookie("term");
         $data["year"] = $this->input->cookie("year");
-        $data["gradeStart"] = $this->input->cookie("gradeStart");
-        $data["gradeEnd"] = $this->input->cookie("gradeEnd");
+        $data["gradeStart"] = $this->input->cookie("assignment_grade_start");
+        $data["gradeEnd"] = $this->input->cookie("assignment_grade_end");
         $data["stuGroup"] = $this->input->cookie("stuGroup");
+        $data["date_range"]["date_start"] = get_cookie("assignment_date_start");
+        $data["date_range"]["date_end"] = get_cookie("assignment_date_end");
+
         $this->load->view("assignment/search", $data);
     }
 
@@ -138,8 +148,8 @@ class Assignment extends MY_Controller
         $userID = $kTeach;
         // $gradeStart = $this->session->userdata("gradeStart");
         // $gradeEnd = $this->session->userdata("gradeEnd");
-        $gradeStart = $this->input->cookie("gradeStart");
-        $gradeEnd = $this->input->cookie("gradeEnd");
+        $gradeStart = $this->input->cookie("assignment_grade_start");
+        $gradeEnd = $this->input->cookie("assignment_grade_end");
         $year = $this->input->cookie("year");
         $term = $this->input->cookie("term");
         $categories = $this->assignment->get_categories($userID, $gradeStart, $gradeEnd, $year, $term);
@@ -245,25 +255,24 @@ class Assignment extends MY_Controller
         $values["term"] = $term;
         $values["gradeStart"] = $gradeStart;
         $values["gradeEnd"] = $gradeEnd;
-        if($count < 2){
-            $this->session->set_flashdata("notice","You need to enter at least two assignments for this to work");
-redirect("assignment/create_batch");
-        }else{
-        for ($i = 0; $i < $count; $i ++) {
-            $values["assignment"] = $assignment[$i];
-            $student_points = 0;
-            if ($prepopulate[$i] == 1) {
-                $student_points = $points[$i];
+        if ($count < 2) {
+            $this->session->set_flashdata("notice", "You need to enter at least two assignments for this to work");
+            redirect("assignment/create_batch");
+        } else {
+            for ($i = 0; $i < $count; $i ++) {
+                $values["assignment"] = $assignment[$i];
+                $student_points = 0;
+                if ($prepopulate[$i] == 1) {
+                    $student_points = $points[$i];
+                }
+                $values["points"] = $points[$i];
+                $values["kCategory"] = $kCategory[$i];
+                $values["subject"] = $subject[$i];
+                $values["date"] = $date[$i];
+                $kAssignment = $this->assignment->insert($values);
+                $this->grade->batch_insert($kAssignment, $kTeach, $term, $year, $gradeStart, $gradeEnd, $points[$i]);
             }
-            $values["points"] = $points[$i];
-            $values["kCategory"] = $kCategory[$i];
-            $values["subject"] = $subject[$i];
-            $values["date"] = $date[$i];
-             $kAssignment = $this->assignment->insert($values);
-            $this->grade->batch_insert($kAssignment, $kTeach, $term, $year, $gradeStart, $gradeEnd, $points[$i]);
-        }
-        redirect("assignment/chart?kTeach=$kTeach&term=$term&year=$year&gradeStart=$gradeStart&gradeEnd=$gradeEnd");
-
+            redirect("assignment/chart?kTeach=$kTeach&term=$term&year=$year&gradeStart=$gradeStart&gradeEnd=$gradeEnd");
         }
     }
 
@@ -377,8 +386,8 @@ redirect("assignment/create_batch");
     function edit_categories ()
     {
         $data["kTeach"] = $this->uri->segment(3);
-        $data["gradeStart"] = $this->input->cookie("gradeStart");
-        $data["gradeEnd"] = $this->input->cookie("gradeEnd");
+        $data["gradeStart"] = $this->input->cookie("assignment_grade_start");
+        $data["gradeEnd"] = $this->input->cookie("assignment_grade_end");
         $data["year"] = $this->input->cookie("year");
         $data["term"] = $this->input->cookie("term");
         $data["categories"] = $this->assignment->get_categories($data["kTeach"], $data["gradeStart"], $data["gradeEnd"], $data["year"], $data["term"]);
@@ -398,6 +407,5 @@ redirect("assignment/create_batch");
         $data["term"] = $this->input->post("term");
         $data["year"] = $this->input->post("year");
         $this->assignment->update_category($kCategory, $data);
-        $this->session->set_flashdata("notice", $this->db->last_query());
     }
 }

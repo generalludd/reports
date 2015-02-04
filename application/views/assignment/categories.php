@@ -3,9 +3,12 @@
 defined('BASEPATH') or exit('No direct script access allowed');
 ?>
 <div class="button-box">
+<ul class="button-list">
+<li>
 	<span
 		class="button new small add-category"
-		id="teach_<?=$kTeach;?>">Add Category</span>
+		id="teach_<?=$kTeach;?>">Add Category</span></li>
+		</ul>
 </div>
 <table
 	id="category-table"
