@@ -188,13 +188,13 @@ class Grade_model extends MY_Model
      *         kStudent kAssignment pair
      *         a table key, but I did not.
      */
-    function update ($kStudent, $kAssignment, $points, $status, $footnote)
+    function update ($kStudent, $kAssignment, $points = NULL, $status = 0, $footnote = 0)
     {
         $output = FALSE;
         $data = array(
-                "points" => $points,
-                "status" => $status,
-                "footnote" => $footnote
+                "points" => $points?$points:0,
+                "status" => $status?$status:0,
+                "footnote" => $footnote?$footnote:0,
         );
         if ($this->has_grade($kStudent, $kAssignment) > 0) {
             $this->db->where("kAssignment", $kAssignment);

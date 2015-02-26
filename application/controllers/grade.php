@@ -36,16 +36,16 @@ class Grade extends MY_Controller
                 $term = $this->input->cookie("term"); // get_current_term();
             }
             $options["grade_range"]["gradeStart"] = $this->input->get_post(
-                    "gradeStart");
+                    "assignment_grade_start");
             if (! $options["grade_range"]["gradeStart"]) {
-                $options["grade_range"]["gradeStart"] = $this->input->cookie(
-                        "gradeStart");
+                $options["grade_range"]["gradeStart"] = get_cookie(
+                        "assignment_grade_start");
             }
             $options["grade_range"]["gradeEnd"] = $this->input->get_post(
-                    "gradeEnd");
+                    "assignment_grade_end");
             if (! $options["grade_range"]["gradeEnd"]) {
-                $options["grade_range"]["gradeEnd"] = $this->input->cookie(
-                        "gradeEnd");
+                $options["grade_range"]["gradeEnd"] = get_cookie(
+                        "assignment_grade_end");
             }
 
             $footnotes = $this->menu_model->get_pairs("grade_footnote");
@@ -135,8 +135,8 @@ class Grade extends MY_Controller
     function select_student ()
     {
         $data["kTeach"] = $this->input->get("kTeach");
-        $data["term"] = $this->input->cookie("term");
-        $data["year"] = $this->input->cookie("year");
+        $data["term"] = get_cookie("term");
+        $data["year"] = get_cookie("year");
         $data["js_class"] = "select-student-for-grades";
         $data["action"] = "grade/edit";
         $this->load->view("student/mini_selector", $data);
