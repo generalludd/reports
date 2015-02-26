@@ -182,7 +182,7 @@ class Grade extends MY_Controller
             $value = $this->input->post("value");
             $result = $this->grade->update_value($kStudent, $kAssignment, $key,
                     $value);
-            echo $value;
+            echo OK;
         }
     }
 

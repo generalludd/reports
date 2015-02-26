@@ -493,7 +493,8 @@ function save_points_inline(myAssignment,myStudent,myKey,myValue, myGrade){
 			url: myUrl,
 			data: form_data,
 			success: function(data){
-				$("#save_" + myAssignment + "_" + myStudent).html(data).show().fadeOut(2000);
+				console.log(data);
+				$("#save_" + myAssignment).html(data).show().fadeOut(2000);
 			}
 		});
 	}else{

@@ -60,5 +60,5 @@ $student_name = format_name($header_record->stuNickname, $header_record->stuLast
 	</tbody>
 </table>
 <div class='button-box'>
-	<span class='button close_grade_editor' tabindex="<?=$tabindex;?>">Close</span>
+	<span class='button close_grade_editor small' tabindex="<?=$tabindex;?>">Close</span>
 </div>
