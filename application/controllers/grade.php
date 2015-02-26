@@ -86,13 +86,13 @@ class Grade extends MY_Controller
                     array(
                             "value",
                             "label"
-                    ), TRUE);
+                    ));
             $status = $this->menu_model->get_pairs("grade_status");
             $data["status"] = get_keyed_pairs($status,
                     array(
                             "value",
                             "label"
-                    ), TRUE);
+                    ));
             $this->load->view("grade/edit_cell", $data);
         }
     }
