@@ -437,12 +437,19 @@ $(document).ready(function(){
 	$(".add-batch-assignment-row").live("click",function(){
 		
 		$("table#batch-assignment-table tr.assignment:last").clone(true).insertAfter("table#batch-assignment-table tr.assignment:last");
+		if($("table#batch-assignment-table tr").length == 4){
 		$("table#batch-assignment-table tr.assignment:last").append("<td><a class='button delete-row delete'>Delete</a></td>");
+		}
 	//$("table.list tr.assignment:last input, table.list tr.assignment:last select").attr("id",this.name + $("table.list tr.assignment").length.toString() );
 	});
 	
 	$("table#batch-assignment-table .delete-row").live("click",function(){
 		$(this).parents("tr").remove();
+	});
+	
+	$("#batch-insert-assignments input[type='submit']").live('click', function(e){
+		e.preventDefault();
+		document.forms[0].submit();
 	});
 	
 	
