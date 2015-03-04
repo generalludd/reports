@@ -17,7 +17,7 @@ if($kTeach == $this->session->userdata("userID")){
 $buttons["edit_categories"] = array("text"=>"Edit Categories","class"=>"button edit assignment-categories-edit", "selection"=>"grades","href"=>site_url("assignment/edit_categories/$kTeach?year=$year&term=$term&gradeStart=$gradeStart&gradeEnd=$gradeEnd"));
 }
 if(get_cookie("beta_tester")){
-   $buttons["create_batch"] = array("text"=>"Batch Insert","selection"=>"","title"=>"Insert batches of assignments at once (Beta!)","href"=>site_url("assignment/create_batch?kTeach=$kTeach&term=$term&year=$year&gradeStart=$gradeStart&gradeEnd=$gradeEnd"), "class"=>"button edit");
+   $buttons["create_batch"] = array("text"=>"Batch Insert (BETA)","selection"=>"","title"=>"Insert batches of assignments at once (Beta!)","href"=>site_url("assignment/create_batch?kTeach=$kTeach&term=$term&year=$year&gradeStart=$gradeStart&gradeEnd=$gradeEnd"), "class"=>"button edit");
 }
 
 
