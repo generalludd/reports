@@ -1,4 +1,4 @@
-<?php defined('BASEPATH') OR exit('No direct script access allowed'); 
+<?php defined('BASEPATH') OR exit('No direct script access allowed');
 // edit_column.php Chris Dart Feb 3, 2013 7:57:59 PM chrisdart@cerebratorium.com
 
 ?>
@@ -9,7 +9,7 @@
 <li><label>Total Points: </label><?=$assignment->points>0?$assignment->points. " Points" :"Make-Up Points";?></li>
 <li><label>Date: </label><?=format_date($assignment->date,'standard');?></li>
 <?if($stuGroup = $this->input->cookie("stuGroup")): ?>
-<li><label>Student Group: </label><?=$stuGroup;?></li> 
+<li><label>Student Group: </label><?=$stuGroup;?></li>
 <? endif;?>
 </ul>
 </div>
@@ -35,13 +35,13 @@
 			<td class='grade-value'><input type="text"
 				id="g_<?=$grade->kAssignment;?>_<?=$grade->kStudent;?>" name="points" size="2"
 				class="column-grade assignment-string assignment-field"
-				value="<?=get_value($grade,"points");?>" tabindex="<?=$tabindex;?>" />
+				value="<?=get_value($grade,"points");?>" autocomplete="off" tabindex="<?=$tabindex;?>" />
 			</td>
 			<td class='grade-status'><?=form_dropdown("status",$status, get_value($grade,"status"),sprintf("id='status_%s_%s' class='assignment-field'",$grade->kAssignment,$grade->kStudent));?>
 			</td>
 			<td class='grade-footnote'><?=form_dropdown("footnote",$footnotes, get_value($grade,"footnote"),
 					sprintf("id='footnote_%s_%s' class='assignment-field'",$grade->kAssignment, $grade->kStudent));?>
-					
+
 			</td>
 			<td class='grade-button'><span style='margin-left: 5px;'
 				id='save_<?=$grade->kAssignment;?>_<?=$grade->kStudent;?>'></span>
@@ -49,7 +49,7 @@
 		</tr>
 
 		<?
-		//increment the tabindex for the next row item. 
+		//increment the tabindex for the next row item.
 		$tabindex++;
 } ?>
 	</tbody>

@@ -42,7 +42,7 @@ $student_name = format_name($header_record->stuNickname, $header_record->stuLast
 			<td class='grade-value'><input type="text"
 				id="g_<?=$grade->kAssignment;?>_<?=$kStudent;?>" name="points" size="2"
 				class="assignment-grade assignment-string assignment-field"
-				value="<?=get_value($grade,"points");?>" tabindex="<?=$tabindex;?>" />
+				value="<?=get_value($grade,"points");?>" autocomplete='off' tabindex="<?=$tabindex;?>" />
 			</td>
 			<td class='grade-status'><?=form_dropdown("status",$status, get_value($grade,"status"),sprintf("id='status_%s_%s' class='assignment-field'",$grade->kAssignment,$kStudent));?>
 			</td>
@@ -54,7 +54,7 @@ $student_name = format_name($header_record->stuNickname, $header_record->stuLast
 		</tr>
 
 		<?
-		//increment the tabindex for the next row item. 
+		//increment the tabindex for the next row item.
 		$tabindex++;
 } ?>
 	</tbody>
