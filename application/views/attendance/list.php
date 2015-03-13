@@ -1,16 +1,16 @@
 <?php
 $student_link = NULL;
-$search_title = "";
+$search_title = "<h3>$title</h3>";
 $button_bar = "";
 $search_button = "<div class='button-box'><span class='button show_attendance_search'>Modify Search</span></div>";
 $add_button = "";
 $search_fieldset = "";
 if($kStudent){
 	$student_name = format_name( $student->stuNickname, $student->stuLast, $student->stuNickname);
-	$search_title =  "<h3>$student_name</h3>";
+	$search_title =  "<h3>$title: $student_name</h3>";
 	$button_bar = $this->load->view("student/navigation", $kStudent, TRUE);
-	$search_button =  "<div class='button-box'><span class='show_attendance_search button' id='shas_$kStudent'>Change Search Parameters</span></div>";
-	$add_button = "<p><a class='button new add_attendance' id='saa_$kStudent' title='Add attendance record'>Add Attendance</a></p>";
+	$search_button =  create_button_bar(array(array("text"=>"Refine Search","class"=>"button search show_attendance_search","id"=>"show-attendance-search_$kStudent")));
+	$add_button = create_button_bar(array(array("text"=>"Add Attendance","class"=>"button new add_attendance","id"=>"student-add-attendance_$kStudent","Add an attendance record")));
 }
 
 if($action == "search"){
@@ -83,7 +83,7 @@ if(!empty($attendance)):
 			<? if($this->session->userdata("dbRole") == 1): ?>
 			<a class='edit_attendance edit button small'
 				id='a_<?=$item->kAttendance;?>' title="Edit">Edit</a>
-				
+
 				<? endif; ?>
 				</td>
 			<td><?=$attendDate;?></td>
