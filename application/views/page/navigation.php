@@ -33,7 +33,7 @@ if($dbRole == 1){
 }else{
 	$buttons[] = array("selection" => "template", "text" => "Subject Templates", "href" => site_url("template/list_templates/?kTeach=$userID&term=$term&year=$year"));
 	$buttons[] = array("selection" => "benchmark", "text" => "Benchmarks", "class" => array("button","show_benchmark_search"), "type" => "span");
-	$buttons[] = array("selection" => "narrative/teacher_list", "text" => "Current Narratives", "href" => site_url("narrative/teacher_list/$userID"), "title" => "List all of your narratives" );
+	$buttons[] = array("selection" => "narrative/teacher_list", "text" => "Current Narratives", "class"=>array("button","teacher_narrative_search"), "id"=>"navigation-narrative-search_$userID", "title" => "List all of your narratives" );
 	$buttons[] = array("selection" => "narrative/show_missing", "text" => "Missing Narratives", "class" => array("button","missing_narrative_search"), "id" => "mns_$userID", "title" => "Show the students for whom you have not yet written a report this term" );
 if($is_advisor){
 	$buttons[] = array("selection" => "report/get_list", "text" => sprintf("%ss%s",STUDENT_REPORT,$count), "href"=> site_url("report/get_list/advisor/$userID"), "title" => sprintf("Show your %ss %s", strtolower(STUDENT_REPORT),$count_text));
