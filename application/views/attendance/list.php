@@ -41,7 +41,7 @@ endif;
 
 $current_student = NULL;
 if($errors == "dup"){
-	print "<div class='notice' style='margin:1em 0;padding: .5em;'>It looks like you have tried to enter a duplicate attendance record for $student. Please verify.</div>";
+	print "<div class='warning' style='margin:1em 0;padding: .5em;'>It looks like you have tried to enter a duplicate attendance record for $student. Please verify.</div>";
 }
 if(!empty($attendance)):
 
@@ -67,10 +67,9 @@ if(!empty($attendance)):
 			$student_name = format_name($item->stuFirst, $item->stuLast, $item->stuNickname);
 			print "<tr><td colspan=6><a class='link' href='" . site_url("student/view/$item->kStudent");
 			print "' title='View student info'>$student_name</a>&nbsp;";
-			if($this->session->userdata("userID") == 1):
+			//@TODO clean this up!
 			print "<a class='button new small add_attendance'
 				 id='saa_$item->kStudent' title='Add attendance record'>Add</a>";
-			endif;
 		echo "</td></tr>";
 
 			$current_student = $item->kStudent;
@@ -80,7 +79,8 @@ if(!empty($attendance)):
 	?>
 		<tr>
 			<td>
-			<? if($this->session->userdata("dbRole") == 1): ?>
+			<? if($this->session->userdata("dbRole") == 1): //@TODO Clean this Up!?>
+
 			<a class='edit_attendance edit button small'
 				id='a_<?=$item->kAttendance;?>' title="Edit">Edit</a>
 
@@ -101,9 +101,9 @@ if(!empty($attendance)):
 		else:
 		if($kStudent):
 		print "<p>$student_name does not have any attendance entries for the current year";
-		if($this->session->userdata("userID") == 1):
-			print "&nbsp;<span class='add_attendance button' id='saa_$kStudent'>Add Record</span></p>";
-		endif;
+
+			print $add_button;
+
 		else:
 		print "<p>No records for the given search were found.&nbsp;<span class='button show_attendance_search'>Search again</span></p>";
 		endif;
