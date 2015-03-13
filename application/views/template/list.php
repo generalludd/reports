@@ -1,6 +1,6 @@
-<?php #template/list
+<?php
+
 ?>
-<div class='info-box'>
 <h2>Showing Subject Templates for <?=$teacher;?></h2>
 <fieldset class="search_fieldset"><legend>Search Parameters</legend> <?
 if(!empty($options)){
@@ -30,47 +30,47 @@ if(!empty($options)){
 	}
 	echo "</ul>";
 }
-	
+
 }else{
 	echo "<p>Showing all Templates.</p>";
 
 }
+
+$buttons[] = array("text"=>"Refine Search","class"=>"button template_search","id"=>"ts_$kTeach");
+echo create_button_bar($buttons);
 ?>
 
-<div class="button-box"><a class="button template_search"
-	id="ts_<?=$kTeach?>">Refine Search</a></div>
 </fieldset>
-<p><a class="button new" href="<?=site_url("template/create/$kTeach")?>">New Template</a></p>
+<?=create_button_bar(array(array("text"=>"New Template","class"=>"button new","href"=>site_url("template/create/$kTeach"))));?>
 
-<?
-$activeTerm = "";
-if(!empty($templates)){
-	foreach($templates as $template):
-		$currentTerm = $template->term . " " . format_schoolyear($template->year);
-		if($currentTerm != $activeTerm){
-			?>
-<h4><?=$currentTerm?></h4>
-			<?  $activeTerm = $currentTerm;
-		}
-		?>
-<p><a href="<?=site_url("template/edit/$template->kTemplate")?>" class="button">Edit</a>
-&nbsp;<?="<strong>$template->subject</strong>, $currentTerm," . format_grade_range($template->gradeStart, $template->gradeEnd, TRUE);?>
-<?
-if(!empty($template->type)){
-	echo " type: $template->type ";
-}
-if($template->isActive == 0){
-	echo "<span class='highlight' style='padding:2px;'>Inactive Template</span>";
-}
-?>
-</p>
-<hr />
+<? if(!empty($templates)): ?>
+<table class="list subject-templates">
+        		<thead>
+            		<tr>
+                		<th></th>
+                		<th>Subject</th>
+                		<th>Term</th>
+                		<th>Grades</th>
+                		<th>Description</th>
+                		<th>Status</th>
+            		</tr>
+        		</thead>
+        	<tbody>
+<? foreach($templates as $template): ?>
+		<? $currentTerm = $template->term . " " . format_schoolyear($template->year); ?>
 
-<?
-	endforeach;
-}else{
-	echo "<p>There were no results for this search.</p>";
-}
+		<tr>
+    		<td><?=create_button(array("text"=>"Edit","class"=>"button small edit","href"=>site_url("template/edit/$template->kTemplate")));?></td>
+    		<td><strong><?=$template->subject;?></strong></td>
+    		<td><?=$currentTerm?></td>
+    		<td><?=format_grade_range($template->gradeStart, $template->gradeEnd, TRUE);?> </td>
+            <td><?=!empty($template->type)?$template->type:"";?></td>
+            <td class="status"><?=$template->isActive == 0?"Inactive":"Active";?> </td>
+       </tr>
+<? endforeach;?>
+	</tbody>
+</table>
+<? else: ?>
+	<p>There were no results for this search.</p>
+<? endif;
 
-?>
-</div>

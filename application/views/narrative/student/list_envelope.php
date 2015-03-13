@@ -1,6 +1,5 @@
 <?php ?>
 
-<div class='info-box'>
 	<form id='narrative_add' name='narrative_add'
 		action='"<?= site_url("narrative/$action")?>"' method='post'>
 		<input type='hidden' id='kStudent' name='kStudent'
@@ -37,4 +36,4 @@ print $term;
 }?>
 
 	</div>
-</div>
+

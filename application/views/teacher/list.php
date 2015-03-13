@@ -1,5 +1,4 @@
 <?php ?>
-<div class='info-box'>
 	<h2>Teacher List</h2>
 	<fieldset class="search_fieldset">
 		<legend>Search Parameters</legend>
@@ -53,7 +52,7 @@ if (! empty($options)) {
 	<? if($this->session->userdata("dbRole") == 1):?>
 	<?=create_button_bar(array(array("text"=>"New User","class"=>"button new teacher_create","href"=>site_url("teacher/create"))));?>
 	<? endif;?>
-</div>
+
 <? foreach($roles as $role):?>
 <div class="column column-3">
 	<h4><?=$role["label"];?></h4>

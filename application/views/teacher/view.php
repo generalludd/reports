@@ -19,33 +19,32 @@ if($gradeStart == $gradeEnd){
 	$gradeRange = "$gradeStart-$gradeEnd";
 }
 ?>
-<div class='info-box'>
 <input
 	type="hidden" id="kTeach" name="kTeach"
 	value='<? echo $teacher->kTeach; ?>'>
 <h3>Info for <?php print "$teacher->teachFirst $teacher->teachLast"; ?></h3>
 <?=$button_bar;?>
-<div class='content'>
+<div class='content inner'>
 <?
 
 $userID = $this->session->userdata("userID");
 if($kTeach == $userID || $userID == 1000){
 
 	$edit_buttons[] = array("selection"=>"edit", "class"=>"teacher_edit button edit", "id"=>"et_$kTeach", "text"=>"Edit Info");
-	
+
 	$edit_buttons[] = array("selection"=>"auth","type"=>"span","class"=>array("button","password_edit","edit"), "text"=>"Change Password");
 	$edit_buttons[] = array("selection"=>"preference", "text" => "Preferences", "href" => site_url("preference/view/$kTeach") );
 	if($userID == 1000 && $kTeach != $userID){
 		$edit_buttons[] = array("selection" => "edit", "class" => "masquerade button","href" => site_url("/admin/masquerade/$kTeach"), "text" => "Masquerade" );
 	}
-	
+
 	print create_button_bar($edit_buttons);
-	
+
 }
 ?>
 <p><label>First Name: </label><? print $teacher->teachFirst; ?></p>
 <p><label>Last Name: </label><? print $teacher->teachLast; ?></p>
-<p><label>User Account Status: </label> <?php 
+<p><label>User Account Status: </label> <?php
 if($teacher->status==1){
 	print "Enabled";
 }else{
@@ -53,7 +52,7 @@ if($teacher->status==1){
 }
 ?></p>
 <? //@TODO change the text version of dbRole to pull the menu variable value from the DB instead of hard coding these values ?>
-<p><label>Database Role: </label> <?php 
+<p><label>Database Role: </label> <?php
 switch($teacher->dbRole){
 	case 1:
 		print "Administrator/Narrative Reviewer";
@@ -82,7 +81,6 @@ echo implode("<br/>", $subjectList);
 <?php endif;?>
 </div>
 
-</div>
 
 
 

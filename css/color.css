@@ -1,15 +1,4 @@
-/*
-buttons: #55770E
-borders (dark): #087CD5
-borders (light): #6CAADC
-link: #2A3194
-link-hover: #424ef4
-warnings: #ff8538
-warning borders (light) #EC9C6C
-warning borders (dark) #FF8538
-notices: #e69528
-backgrounds: #C7D7E9
-*/
+
 .narrText {
 	border-color: silver gray gray silver;
 }
@@ -138,25 +127,22 @@ input.link {
 }
 
 .button.help {
-	*border: 1px solid #dff110;
-	*background-color: #dff110;
-	*color: black;
-	border: none;
-	background-color: transparent;
-	color: transparent;
-	background-image: url(images/help.png);
-	background-repeat: no-repeat;
+border: none;
+  background-color: transparent;
+  color: transparent;
+  background-image: url(images/help.png);
+  background-repeat: no-repeat;
+  text-indent: -9999px;
+  display: inline-block;
+  padding: 0 15px;
+  height: 24px;
+  vertical-align: top;
 }
 
 .button.help:hover {
-	*background-color: #dff110;
-	*background-image: url(images/help_button_hover.png);
+background-position: 0;
 }
 
-/* .button.active:hover { */
-/* 	background-color: #ffe45c; */
-/* 	background-image: url(images/ui-bg_highlight-soft_75_ffe45c_1x100.png); */
-/* } */
 a.button {
 	color: #fff;
 }
@@ -227,7 +213,7 @@ a.button {
 	background-color: #bd362f;
 }
 
-.button.print {
+.button.print , .button.export{
 	background-color: #CF46CC;
 	background: -moz-linear-gradient(top, #CF46CC 0, #8C2D8B 100%);
 	background: linear-gradient(top, #CF46CC 0, #8C2D8B 100%);

@@ -1,4 +1,7 @@
-<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed'); ?>
+<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+
+
+?>
 
 <form name='template_selector' method='post'
 	action='<?=site_url("narrative/create");?>' id='template_selector'><?

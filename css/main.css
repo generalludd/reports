@@ -185,14 +185,7 @@ div.login-title {
 }
 
 /*general display elements */
-.info-box {
-	/*margin-left: auto;
-	margin-right: auto;
-	width: 950px;*/
-	
-}
-
-.info-box .content {
+.content.inner {
 	margin-left: auto;
 	margin-right: auto;
 	width: 950px;
@@ -830,6 +823,10 @@ table.list thead tr {
 	border-bottom-color: #000;
 }
 
+table.list thead tr th {
+	text-align: left;
+}
+
 table.grid th,table.grid td {
 	border-left: solid 1px #999;
 	border-right: solid 1px #999;
@@ -928,7 +925,7 @@ fieldset.advanced div.advanced {
 	padding-left: 55px;
 }
 
-.search_fieldset {
+.search_fieldset, fieldset {
 	width: 350px;
 	padding-bottom: 20px;
 	padding-left: 10px;
@@ -945,7 +942,7 @@ fieldset.advanced div.advanced {
 	font-size: 1.2em;
 }
 
-.search_fieldset .button-box {
+fieldset .button-box {
 	display: block;
 	float: right;
 	position: relative;
@@ -1271,13 +1268,13 @@ th.grade-confirmation {
 	width: 40ex;
 }
 
-.fieldset {
+/*.fieldset {
 	border-radius: 3px 3px 3px 3px;
 	border-color: #eee;
 	background-color: #fff;
 	box-shadow: 1px 1px 1px #ccc;
 	position: relative;
-}
+}*/
 
 .fieldset h4 {
 	

@@ -1,4 +1,5 @@
 <?php
+
 $current_year = get_current_year();
 ?>
 
