@@ -452,6 +452,16 @@ $(document).ready(function(){
 		document.forms[0].submit();
 	});
 	
+	$(".batch-print-grades").live("click",function(e){
+		e.preventDefault();
+		batch_print_grades();
+	});
+	
+	$(".edit_student_grades-notice").live("click",function(e){
+		showPopup("Notice","<h4>Notice!</h4><p>Editing student grades in batch is now done with the blue <span class='button small edit'>Edit</span> button next to the student's name</p>","auto");
+		
+		
+	});
 	
 });
 
@@ -508,3 +518,29 @@ function save_points_inline(myAssignment,myStudent,myKey,myValue, myGrade){
 		save_student_points(myAssignment,myStudent);
 	}
 }
+
+
+function batch_print_grades(){
+	var id_array = $.map($(".grade-chart-row"),function(n,i){
+		return n.id.split("_")[1];
+	});
+
+	form_data = {
+			ids: id_array,
+			kTeach: $("#kTeach").val(),
+			action: "select"
+	};
+	
+	console.log(form_data);
+	
+	$.ajax({
+		type:"post",
+		data: form_data,
+		url: base_url + "grade/batch_print",
+		success: function(data){
+			showPopup("Batch Grade Printer",data,"auto");
+		}
+		
+	});
+}
+

@@ -173,27 +173,12 @@ div.login-title {
 }
 
 /* general notices */
-#notice {
-	top: 25%;
-	left: 15%;
-	overflow: auto;
-	float: none;
-	padding: 12px;
-	border-style: solid;
-	border-width: 1px;
-}
 
-.notice {
-	font-size: 1em;
-	font-weight: bold;
-	cursor: pointer;
-	padding: 3px;
-}
-
-.alert {
-	padding: 5px;
-	font-weight: bold;
-	text-align: center;
+.alert , .message, .warning, .notice {
+	padding: 15px;
+  margin-bottom: 20px;
+  border: 1px solid transparent;
+  border-radius: 4px;
 	cursor: pointer;
 }
 
@@ -297,7 +282,7 @@ div.narrative {
 	visibility: hidden;
 }
 
-.button,#navigation,#advancedSearch,#browser_warning,.notice,.warning,#searchForm fieldset,h2,h3,h4,h5,.support-view legend,input[type="submit"],#navigation input[type="text"]
+.button,#navigation,#advancedSearch,#browser_warning,#searchForm fieldset,h2,h3,h4,h5,.support-view legend,input[type="submit"],#navigation input[type="text"]
 	{
 	-moz-border-radius: 3px;
 	-webkit-border-radius: 3px;
@@ -440,7 +425,7 @@ legend {
 #header {
 	padding: 0;
 	position: relative;
-	height: 60px;
+	height: 150px;
 }
 
 #page-title {
@@ -508,7 +493,6 @@ legend {
 #main {
 	position: relative;
 	padding: 0 5em 2em 2em;
-	margin-top: 4.5em;
 }
 
 #content {
@@ -1125,7 +1109,7 @@ table.grade-chart thead tr:last-child th {
 	font-size: .85em;
 }
 
-th .assignment-column-edit {
+th .assignment-column-edit, th .batch-print-grades {
 	width: 45px;
 	margin: 0 auto;
 	white-space: pre-wrap;
@@ -1199,6 +1183,11 @@ table.report-card th,table.report-card td {
 
 table.report-card .notes-column {
 	border: none;
+}
+
+.report-card h2 {
+	background: transparent;
+	box-shadow: none;
 }
 
 #orange-slip,#assignment-field textarea,#comment-field textarea {
