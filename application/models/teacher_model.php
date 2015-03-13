@@ -91,6 +91,7 @@ class Teacher_model extends CI_Model
                 $this->db->where("gradeStart <= " . $options["gradeRange"]["gradeEnd"]);
             }
         } else {
+
             $this->db->where("dbRole != ", 1);
             $this->db->where("status", 1);
         }

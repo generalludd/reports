@@ -19,14 +19,16 @@ if($this->uri->segment(1) == ""){
 <div id='header'>
 
 <? if($_SERVER['HTTP_HOST'] == "test-reports.server.fsmn"): ?>
-<div id="page-title" class="alert">WARNING: THIS IS THE STAGING SERVER. CHANGES MADE HERE ARE IMAGINARY!</div>
+<div id="page-title">WARNING: THIS IS THE STAGING SERVER. CHANGES MADE HERE ARE IMAGINARY!</div>
 <? else: ?>
 <div id='page-title'>Friends School Student Information System</div>
 <? endif;?>
+<nav id="top-nav">
 <div id='utility'><? $this->load->view('page/utility');?></div>
 <div id='navigation'>
 <?  $this->load->view('page/navigation'); ?>
 </div>
+</nav>
 </div>
 <?php endif; ?>
 
@@ -34,16 +36,14 @@ if($this->uri->segment(1) == ""){
 
 <div id="main">
 <?php if($this->session->flashdata("notice")):?>
-<div class="notice"><?=$this->session->flashdata("notice");
-?></div>
+<div class="notice"><?=$this->session->flashdata("notice");?>
+</div>
 <?php endif?>
 <?php if($this->session->flashdata("message")):?>
-<div class="message"><?=$this->session->flashdata("message");
-?></div>
+<div class="message"><?=$this->session->flashdata("message");?></div>
 <?php endif?>
 <?php if($this->session->flashdata("warning")):?>
-<div class="warning"><?=$this->session->flashdata("warning");
-?></div>
+<div class="warning"><?=$this->session->flashdata("warning");?></div>
 <?php endif?>
 <!-- content -->
 <div id="content"><?

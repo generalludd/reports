@@ -182,7 +182,7 @@ class Assignment extends MY_Controller
             if ($gradeStart == $gradeEnd) {
                 $gradeRange = sprintf("grade %s", $gradeStart);
             }
-            $this->session->set_flashdata("notice", sprintf('<p>You must create categories for %s first for %s, %s.<p/>', $gradeRange, $term, $year));
+            $this->session->set_flashdata("warning", sprintf('<p>You must create categories for %s first for %s, %s.<p/>', $gradeRange, $term, $year));
             redirect("/");
         } else {
             $data["kTeach"] = $kTeach;
@@ -254,7 +254,7 @@ class Assignment extends MY_Controller
         $values["gradeStart"] = $gradeStart;
         $values["gradeEnd"] = $gradeEnd;
         if ($count < 2) {
-            $this->session->set_flashdata("notice", "You need to enter at least two assignments for this to work");
+            $this->session->set_flashdata("warning", "You need to enter at least two assignments for this to work");
             redirect("assignment/create_batch");
         } else {
             for ($i = 0; $i < $count; $i ++) {

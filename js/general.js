@@ -13,7 +13,7 @@
         window.print();
     });
 	
-	$(".alert").live("click",function(){
+	$(".alert,.message,.warning,.notice").live("click",function(){
 		$(this).fadeOut("slow");
 	});
 		
@@ -270,12 +270,6 @@
 	// $("select.required[value='']").next().html("Required
 	// Field!");
 
-	
-	$("#browser_warning").live('click',
-		function(){
-			$(".notice").fadeOut();
-		}
-	);
 	
 	$(".edit-subject-sort").live("click",function(){
 		my_id = this.id.split("_");

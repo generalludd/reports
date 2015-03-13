@@ -233,7 +233,6 @@ class Grade extends MY_Controller
                 $data["print_student_name"] = TRUE;
                 $data["student"] = $this->student->get($kStudent);
                 $data["grades"] = $this->assignment->get_for_student($kStudent, $term, $year, $options);
-                $this->session->set_flashdata("notice",$this->db->last_query());
                 $data["batch"] = TRUE;
                 $output["charts"][] = $this->load->view("grade/chart", $data, TRUE);
             }

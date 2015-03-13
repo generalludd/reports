@@ -50,11 +50,9 @@ if (! empty($options)) {
 			<a class="button teacher_search">Refine Search</a>
 		</div>
 	</fieldset>
-	<div class="button-box">
-		<a
-			href="<?=site_url("teacher/create");?>"
-			class="button teacher_create new small">New User</a>
-	</div>
+	<? if($this->session->userdata("dbRole") == 1):?>
+	<?=create_button_bar(array(array("text"=>"New User","class"=>"button new teacher_create","href"=>site_url("teacher/create"))));?>
+	<? endif;?>
 </div>
 <? foreach($roles as $role):?>
 <div class="column column-3">
@@ -65,11 +63,10 @@ if (! empty($options)) {
 <? if($teacher->dbRole == $role["value"]):?>
 
 				<tr <? echo $teacher->status != 1? "class='disabled inactive'":"";?>>
-				<td style="width: 50%;"><?=format_name($teacher->teachFirst,$teacher->teachLast);?></td>
-				<td><? echo $teacher->dbRole !=1 ?  format_grade_range($teacher->gradeStart, $teacher->gradeEnd): ""; ?> </td>
-				<td><a
+				<td style="width: 50%;"><a
 					href="<?=site_url("teacher/view/$teacher->kTeach");?>"
-					class='button'>View/Edit</a></td>
+					class='link'><?=format_name($teacher->teachFirst,$teacher->teachLast);?></a></td>
+				<td><? echo $teacher->dbRole !=1 ?  format_grade_range($teacher->gradeStart, $teacher->gradeEnd): ""; ?> </td>
 			</tr>
 
 <? endif; ?>

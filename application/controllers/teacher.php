@@ -55,7 +55,6 @@ class Teacher extends MY_Controller
         } */
 
         $data["teachers"] = $this->teacher_model->get_all($data["options"]);
-        // @TODO this is butt ugly code here below.
         $data["options"]["roles"] = $data["roles"];
         $data["title"] = "List of Teachers";
         $this->load->view("page/index", $data);
@@ -125,10 +124,12 @@ class Teacher extends MY_Controller
                 $data["title"] = "Viewing Information for $teacher->teachFirst $teacher->teachLast";
                 $this->load->view("page/index", $data);
             } else {
-                $this->session->set_flashdata("notice", "No such user was found!");
+                $this->session->set_flashdata("warning", "No such user was found!");
                 redirect("teacher");
             }
         } else {
+            $this->session->set_flashdata("warning", "No teacher id was given!");
+
             redirect("teacher");
         }
     }

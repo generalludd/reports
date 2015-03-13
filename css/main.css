@@ -39,13 +39,6 @@ body {
 	display: none;
 }
 
-.message {
-	font-size: .9em;
-	padding: 2px;
-	border: 1px solid black;
-	margin: 3px;
-}
-
 .student_roster {
 	height: 85%;
 	overflow: auto;
@@ -282,7 +275,7 @@ div.narrative {
 	visibility: hidden;
 }
 
-.button,#navigation,#advancedSearch,#browser_warning,#searchForm fieldset,h2,h3,h4,h5,.support-view legend,input[type="submit"],#navigation input[type="text"]
+.button,#navigation,#advancedSearch,#searchForm fieldset,h2,h3,h4,h5,.support-view legend,input[type="submit"],#navigation input[type="text"]
 	{
 	-moz-border-radius: 3px;
 	-webkit-border-radius: 3px;
@@ -400,10 +393,6 @@ ul.button-list li .button.delete {
 	
 }
 
-#utility .button-box {
-	*font-size: .8em;
-}
-
 }
 textarea {
 	font-size: 1em;
@@ -434,18 +423,27 @@ legend {
 	font-weight: bold;
 }
 
+#utility .button-box {
+    margin:0;
+}
+
+#utility ul {
+	margin:0;
+}
+
 #navigation,#advancedSearch {
 	padding: 1px;
 }
 
 #navigation {
-	position: relative;
-	float: left;
-	width: 100%;
-	padding: .75em 0 0 1em;
-	height: 2.5em;
-	min-width: 700px;
-	margin-bottom: .5em;
+margin-top: 1em;
+  display: inline-block;
+  position: relative;
+  width: 100%;
+  padding: .75em 0 0 1em;
+  height: 2.5em;
+  min-width: 700px;
+  margin-bottom: .5em;
 }
 
 #navigation ul {
@@ -633,9 +631,9 @@ h2 {
 	position: relative;
 	border-style: solid;
 	border-width: 1px;
-	margin-top: 10px;
-	margin-bottom: 10px;;
-	padding: 10px;
+	margin-top: 1em;
+	margin-bottom: 1em;
+	padding: 0;
 }
 
 h3,.support-view legend {
@@ -778,22 +776,6 @@ label {
 	height: auto;
 }
 
-.warning {
-	padding: 5px;
-	height: 150px;
-	width: 320px;
-	left: 20px;
-	top: 50px;
-	position: absolute;
-	visibility: hidden;
-}
-
-#browser_warning {
-	font-size: 1.2em;
-	width: 50%;
-	padding: 5px;
-	text-align: center;
-}
 
 #searchForm fieldset {
 	border: 1px solid #eee;
@@ -1323,4 +1305,8 @@ th.grade-confirmation {
 	clear: right;
 	margin-left: .5em;
 	
+}
+
+.column-3 {
+	width: auto;
 }
