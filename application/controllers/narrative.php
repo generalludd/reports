@@ -503,6 +503,8 @@ class Narrative extends MY_Controller
             bake_cookie("gradeStart", $options["gradeStart"]);
             $options["gradeEnd"] = $this->input->get("gradeEnd");
             bake_cookie("gradeEnd", $options["gradeEnd"]);
+        }else{
+
         }
 
         if ($this->input->get("subject")) {

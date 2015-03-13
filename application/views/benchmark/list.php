@@ -58,11 +58,16 @@ if($benchmarks){
 $term=get_current_term();
 $year=get_current_year();
 //      print $chartMessage;
+
+$buttons[] = array("text"=>"New Benchmark","class"=>"new_benchmark new button");
+$buttons[] = array("text"=>"Search for Benchmarks","class"=>"button show_benchmark_search");
+$buttons[] = array("text"=>"Edit Chart Legends","class"=>"button legend_search edit");
+print create_button_bar($buttons);
 ?>
-<div class='button-bar'>
+<!-- <div class='button-bar'>
 <span class='new_benchmark new button'>New Benchmark</span>
 <span class='show_benchmark_search button'>Search for Benchmarks</span>
-<span class='legend_search button edit'>Edit Chart Legends</span>
+<span class='legend_search button edit'>Edit Chart Legends</span> -->
 <?
 if( $this->session->userdata("dbRole") == 1){
 	print "<a class='button' href='" .site_url("benchmark/teacher_list?term=" . get_current_term() . "&year=" . get_current_year()) ." '>Show Current Benchmarks</a> ";
