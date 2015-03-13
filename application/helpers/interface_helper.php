@@ -69,7 +69,7 @@ function create_button($data)
 			}else{
 				$data["class"] = array("button");
 			}
-			if( preg_match("/" . str_replace("/", "\/", $data["selection"]) . "/" ,$_SERVER['REQUEST_URI'])){
+			if(array_key_exists("selection",$data) &&  preg_match("/" . str_replace("/", "\/", $data["selection"]) . "/" ,$_SERVER['REQUEST_URI'])){
 				$data["class"][] = "active";
 			}
 			$class = sprintf("class='%s'", implode(" ",$data["class"]));

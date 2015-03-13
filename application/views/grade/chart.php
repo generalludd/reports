@@ -9,14 +9,21 @@ $assignment_total = 0;
 $footnotes = array();
 $categories = array();
 $weight_sums = 0;
+$count = 0;
 ?>
-
 <div class='report-header report-teacher report-<?=$count;?>'>
+
+
 	<?="$header->subject, $teacher";?>
 	<? if($pass_fail):?>
 	<br/>Grades are Pass/Fail
 	<? endif;?>
 </div>
+
+<? if(isset($print_student_name)):?>
+<h2><?=format_name($student->stuFirst,$student->stuLast, $student->stuNickname);?></h2>
+<? endif; ?>
+
 <div class='report-body'>
 	<table class="report-card">
 		<thead>
@@ -39,7 +46,7 @@ $weight_sums = 0;
 				</td>
 				<td><?=$grade->category;?>
 				</td>
-				<td><?=$grade->status?$grade->status:$grade->points;?> 
+				<td><?=$grade->status?$grade->status:$grade->points;?>
 				<? if($grade->footnote){
 					echo "<sup>$grade->footnote</sup>";
 					$footnotes[$grade->footnote] = $grade->label;
@@ -71,14 +78,14 @@ $weight_sums = 0;
 		</tbody>
 
 	</table>
-	<? if(!empty($footnotes)) : 
+	<? if(!empty($footnotes)) :
 	asort($footnotes);
 	$keys = array_keys($footnotes);
 	$values = array_values($footnotes); ?>
 	<div class='footnotes'>
 		<div class='caption'>Notes</div>
 		<ul>
-			<? 
+			<?
 
 			for($i = 0; $i<count($keys); $i++): ?>
 
@@ -87,7 +94,6 @@ $weight_sums = 0;
 		</ul>
 	</div>
 	<? endif; ?>
-</div>
 <div class='report-header report-summary'>
 	<?=$header->subject; ?>
 	Category Summary
@@ -95,6 +101,7 @@ $weight_sums = 0;
 	<br/>Grades are Pass/Fail
 	<? endif;?>
 </div>
+
 <div class='report-body'>
 	<table class="report-card">
 		<thead>
@@ -105,7 +112,7 @@ $weight_sums = 0;
 				<th class="percent-column">Percent</th>
 				<th class="weight-column">Weight</th>
 				<th class="grade-column">Grade</th>
-		
+
 		</thead>
 		<tbody>
 			<? foreach($categories as $category): ?>
@@ -133,4 +140,4 @@ $weight_sums = 0;
 
 		</tfoot>
 	</table>
-</div>
+	</div>

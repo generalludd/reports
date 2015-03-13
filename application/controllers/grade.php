@@ -35,17 +35,13 @@ class Grade extends MY_Controller
             if (! $term) {
                 $term = $this->input->cookie("term"); // get_current_term();
             }
-            $options["grade_range"]["gradeStart"] = $this->input->get_post(
-                    "assignment_grade_start");
+            $options["grade_range"]["gradeStart"] = $this->input->get_post("assignment_grade_start");
             if (! $options["grade_range"]["gradeStart"]) {
-                $options["grade_range"]["gradeStart"] = get_cookie(
-                        "assignment_grade_start");
+                $options["grade_range"]["gradeStart"] = get_cookie("assignment_grade_start");
             }
-            $options["grade_range"]["gradeEnd"] = $this->input->get_post(
-                    "assignment_grade_end");
+            $options["grade_range"]["gradeEnd"] = $this->input->get_post("assignment_grade_end");
             if (! $options["grade_range"]["gradeEnd"]) {
-                $options["grade_range"]["gradeEnd"] = get_cookie(
-                        "assignment_grade_end");
+                $options["grade_range"]["gradeEnd"] = get_cookie("assignment_grade_end");
             }
 
             $footnotes = $this->menu_model->get_pairs("grade_footnote");
@@ -56,16 +52,14 @@ class Grade extends MY_Controller
                     ), TRUE);
             $status = $this->menu_model->get_pairs("grade_status");
 
-            $data["status"] = get_keyed_pairs($status,
-                    array(
-                            "value",
-                            "label"
-                    ), TRUE);
+            $data["status"] = get_keyed_pairs($status, array(
+                    "value",
+                    "label"
+            ), TRUE);
             $data["kStudent"] = $kStudent;
             $data["kTeach"] = $kTeach;
             $options["kTeach"] = $kTeach;
-            $data["grades"] = $this->assignment->get_for_student($kStudent,
-                    $term, $year, $options);
+            $data["grades"] = $this->assignment->get_for_student($kStudent, $term, $year, $options);
             $this->load->view("grade/edit", $data);
         }
     }
@@ -88,11 +82,10 @@ class Grade extends MY_Controller
                             "label"
                     ));
             $status = $this->menu_model->get_pairs("grade_status");
-            $data["status"] = get_keyed_pairs($status,
-                    array(
-                            "value",
-                            "label"
-                    ));
+            $data["status"] = get_keyed_pairs($status, array(
+                    "value",
+                    "label"
+            ));
             $this->load->view("grade/edit_cell", $data);
         }
     }
@@ -109,20 +102,17 @@ class Grade extends MY_Controller
         }
         $this->load->model("menu_model");
         $data["assignment"] = $this->assignment->get($kAssignment);
-        $data["grades"] = $this->assignment->get_assignment_grades($kAssignment,
-                $stuGroup);
+        $data["grades"] = $this->assignment->get_assignment_grades($kAssignment, $stuGroup);
         $footnotes = $this->menu_model->get_pairs("grade_footnote");
-        $data["footnotes"] = get_keyed_pairs($footnotes,
-                array(
-                        "value",
-                        "label"
-                ), TRUE);
+        $data["footnotes"] = get_keyed_pairs($footnotes, array(
+                "value",
+                "label"
+        ), TRUE);
         $status = $this->menu_model->get_pairs("grade_status");
-        $data["status"] = get_keyed_pairs($status,
-                array(
-                        "value",
-                        "label"
-                ), TRUE);
+        $data["status"] = get_keyed_pairs($status, array(
+                "value",
+                "label"
+        ), TRUE);
         $data["target"] = "grade/edit_column";
         $data["title"] = "Editing Grades for a Given Assignment";
         $this->load->view($data["target"], $data);
@@ -153,8 +143,7 @@ class Grade extends MY_Controller
             $points = $this->input->post("points");
             $status = $this->input->post("status");
             $footnote = $this->input->post("footnote");
-            $result = $this->grade->update($kStudent, $kAssignment, $points,
-                    $status, $footnote);
+            $result = $this->grade->update($kStudent, $kAssignment, $points, $status, $footnote);
             $grade = $this->grade->get($kStudent, $kAssignment);
             $points = $grade->points;
             if ($grade->points == 0 && $grade->assignment_total == 0) {
@@ -180,8 +169,7 @@ class Grade extends MY_Controller
         if ($kStudent && $kAssignment) {
             $key = $this->input->post("key");
             $value = $this->input->post("value");
-            $result = $this->grade->update_value($kStudent, $kAssignment, $key,
-                    $value);
+            $result = $this->grade->update_value($kStudent, $kAssignment, $key, $value);
             echo OK;
         }
     }
@@ -199,6 +187,63 @@ class Grade extends MY_Controller
         $term = $this->input->post("term");
         $this->grade->delete_row($kStudent, $kTeach, $term, $year);
         echo $this->db->last_query();
+    }
+
+    function batch_print ()
+    {
+        if ($this->input->post("action") == "select") {
+
+            $this->load->model("subject_model");
+            $kTeach = $this->input->post("kTeach");
+            $subjects = $this->subject_model->get_for_teacher($kTeach);
+            $data['subjects'] = get_keyed_pairs($subjects, array(
+                    'subject',
+                    'subject'
+            ));
+            $data["stuGroup"] = FALSE;
+            $data['kTeach'] = $kTeach;
+            $data["gradeStart"] = get_cookie("assignment_grade_start");
+            $data["gradeEnd"] = get_cookie("assignment_grade_end");
+
+            $data['ids'] = implode(",", $this->input->post("ids"));
+            $this->load->view("grade/batch_selector", $data);
+        } elseif ($this->input->post("action") == "print" ) {
+
+            $ids = explode(",",$this->input->post("ids"));
+            $kTeach = $this->input->post("kTeach");
+            $term = $this->input->post("term");
+            $year = $this->input->post("year");
+            $subject = $this->input->post("subject");
+            $this->load->model("student_model", "student");
+            $options = array();
+            $options["from"] = "grade";
+            $options["join"] = "assignment";
+            $options["kTeach"] = $kTeach;
+
+            $this->load->model("grade_preference_model", "grade_preferences");
+            $options['subject'] = $subject;
+            foreach ($ids as $kStudent) {
+                $data = array();
+                $data["subject"] = $subject;
+                $data["pass_fail"] = $this->grade_preferences->get_all($kStudent,
+                        array(
+                                "school_year" => $year,
+                                "subject" => $subject
+                        ));
+                $data["print_student_name"] = TRUE;
+                $data["student"] = $this->student->get($kStudent);
+                $data["grades"] = $this->assignment->get_for_student($kStudent, $term, $year, $options);
+                $this->session->set_flashdata("notice",$this->db->last_query());
+                $data["batch"] = TRUE;
+                $output["charts"][] = $this->load->view("grade/chart", $data, TRUE);
+            }
+
+            $output["title"] = "Batch Report Cards";
+            $output["term"] = $term;
+            $output["year"] = $year;
+            $output["target"] = "grade/report_card";
+            $this->load->view("page/index",$output);
+        }
     }
 
     /**
@@ -227,7 +272,7 @@ class Grade extends MY_Controller
      * report_card displays a report card based on submitted criteria for year,
      * term, cutoff-date, and subject.
      */
-    function report_card ()
+    function report_card ($print = FALSE)
     {
         if ($kStudent = $this->input->get("kStudent")) {
             $this->load->model("student_model", "student");
@@ -271,21 +316,17 @@ class Grade extends MY_Controller
 
             $data["kStudent"] = $kStudent;
             $data["student"] = $student;
-            $output["student_name"] = format_name($student->stuNickname,
-                    $student->stuLast);
+            $output["student_name"] = format_name($student->stuNickname, $student->stuLast);
             $data["title"] = $output["student_name"];
             $output["charts"] = array();
             $i = 0;
             foreach ($subjects as $subject) {
                 $options["subject"] = $subject->subject;
-                $data["grades"] = $this->assignment->get_for_student($kStudent,
-                        $term, $year, $options);
+                $data["grades"] = $this->assignment->get_for_student($kStudent, $term, $year, $options);
                 // if the student has any grades entered, process them here,
                 // otherwise ignore.
-                $this->load->model("grade_preference_model",
-                        "grade_preferences");
-                $data["pass_fail"] = $this->grade_preferences->get_all(
-                        $kStudent,
+                $this->load->model("grade_preference_model", "grade_preferences");
+                $data["pass_fail"] = $this->grade_preferences->get_all($kStudent,
                         array(
                                 "school_year" => $year,
                                 "subject" => $subject->subject
@@ -293,16 +334,15 @@ class Grade extends MY_Controller
                 if (count($data["grades"])) {
                     $data["subject"] = $subject->subject;
                     $data["count"] = $i; // count is used to identify the chart
-                                          // number in the output for css
-                                          // purposes.
-                    $output["charts"][] = $this->load->view("grade/chart",
-                            $data, TRUE);
+                                         // number in the output for css
+                                         // purposes.
+                    $output["charts"][] = $this->load->view("grade/chart", $data, TRUE);
                 }
             }
 
             if ($output) {
 
-                $this->load->view("page/index", $output);
+                $this->load->view("page/index", $output, $print);
             }
         }
     }

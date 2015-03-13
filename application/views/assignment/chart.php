@@ -19,6 +19,8 @@ $buttons["edit_categories"] = array("text"=>"Edit Categories","class"=>"button e
 if(get_cookie("beta_tester")){
    $buttons["create_batch"] = array("text"=>"Batch Insert (BETA)","selection"=>"","title"=>"Insert batches of assignments at once (Beta!)","href"=>site_url("assignment/create_batch?kTeach=$kTeach&term=$term&year=$year&gradeStart=$gradeStart&gradeEnd=$gradeEnd"), "class"=>"button edit");
 }
+$buttons["batch_print_grades"] = array("text"=>"Batch Print Grades","title"=>"Print report cards for this subject for all the selected students",
+        "class"=>"button print batch-print-grades", "href"=>"#");
 
 
 ?>
@@ -67,6 +69,7 @@ if (! empty($assignments)) {
 			<th colspan='2'><?=$header_string;?>
 			</th>
 			<th></th>
+			<th></th>
 			<th class='chart-final-grade'>Final Grade</th>
 			<?
 
@@ -98,7 +101,7 @@ if (! empty($assignments)) {
 				class='button new assignment-create'>Add&nbsp;Assignment</span></th>
 		</tr>
 		<tr class="second">
-			<th colspan=4></th>
+			<th colspan=5></th>
 		<? foreach($assignment_keys as $key):?>
 		<th>
 				<div
@@ -116,7 +119,7 @@ if (! empty($assignments)) {
         $current_student = FALSE;
         foreach ($grades as $grade) {
             if ($current_student != $grade->kStudent) {
-                $rows[$grade->kStudent]["name"] = "<td class='student-name'><span class='student edit_student_grades' id='eg_$grade->kStudent'>$grade->stuNickname $grade->stuLast</span></td>";
+                $rows[$grade->kStudent]["name"] = "<td class='student-name'><span class='student edit_student_grades-notice'>$grade->stuNickname $grade->stuLast</span></td>";
                 $rows[$grade->kStudent]["name_string"] = format_name($grade->stuNickname, $grade->stuLast);
                 $rows[$grade->kStudent]["delete"] = sprintf(
                         "<td class='grade-delete-row'><span class='student delete button' id='dgr_%s_%s_%s' title='Delete the entire row'>Delete</span></td>",
@@ -128,7 +131,8 @@ if (! empty($assignments)) {
                 $href = site_url(
                         sprintf("grade/report_card?kStudent=%s&year=%s&term=%s&subject=%s&print=true", $grade->kStudent, $this->input->cookie("year"),
                                 $this->input->cookie("term"), $header->subject));
-                $rows[$grade->kStudent]["button"] = "<td class='student-button'><a class='button' target='_blank' href='$href'>Print</a></td>";
+$rows[$grade->kStudent]["edit-button"] = "<td class='student-button'><a class='button edit edit_student_grades' id='eg_$grade->kStudent'>Edit</a></td>";
+                $rows[$grade->kStudent]["button"] = "<td class='student-button'><a class='button print' target='_blank' href='$href'>Print</a></td>";
             } // end if current_student
 
             $points = $grade->points;
@@ -160,6 +164,7 @@ if (! empty($assignments)) {
                     sprintf("<tr id='sgtr_%s' title='%s' class='grade-chart-row'>", $row['kStudent'], $row['name_string']);
             print $row["delete"];
             print $row["name"];
+            print $row["edit-button"];
             print $row["button"];
             print sprintf("<td>%s (%s%s)</td>", calculate_letter_grade($row['totals']), $row['totals'], "%");
             print implode("", $row["grades"]);
