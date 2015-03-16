@@ -29,7 +29,7 @@ if(array_key_exists("grades", $criteria)){
 </ul>
 <?
 $buttons[] = array("text"=>"Modify Search","title"=>"Modify Search","class"=>"button search", "href"=>site_url("/"));
-$buttons[] = array("text"=>"Export List","title"=>"Export this list as a comma-separated list","class"=>"button export","href"=>$_SERVER['REQUEST_URI']. "&export=true","type"=>"a");
+$buttons[] = array("text"=>"Export List","href"=>$_SERVER['REQUEST_URI']. "&export=true","title"=>"Export this list as a comma-separated list","class"=>"button export","type"=>"a");
 echo create_button_bar($buttons);
 ?>
 </fieldset>

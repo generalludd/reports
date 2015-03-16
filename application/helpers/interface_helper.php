@@ -43,13 +43,12 @@ function create_button($data)
 			if(isset($data["type"])){
 				$type = $data["type"];
 			}
-		} else {
+		}
 			if(array_key_exists("href", $data)){
 				$href = "href='" . $data["href"] . "'";
 			}else{
 				$href = "href='#'";
 			}
-		}
 
 		if(array_key_exists("target",$data)){
 			$target = "target='" . $data["target"] . "'";
