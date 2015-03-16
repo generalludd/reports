@@ -660,7 +660,7 @@ h3,h4,h5,.support-view legend {
 	margin-top: 4px;
 	margin-bottom: 4px;
 	padding: 5px;
-	padding-left: 10px;
+	padding-left: 0;
 }
 
 /*attendance values*/
