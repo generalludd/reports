@@ -1,6 +1,5 @@
 <?php
 
-
 $thisSubject = "";
 $thisCategory = "";
 $thisTerm = "";

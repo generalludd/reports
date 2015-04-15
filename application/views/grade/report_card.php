@@ -22,7 +22,7 @@ if(isset($batch) && $batch){
 		</div>
 		<? endif; ?>
 		<? if($i == 0 ) :
-		$buttons[] = array("selection"=>"none","type"=>"span","class"=>array("button","print"),"text"=>"Print");
+		$buttons[] = array("selection"=>"none","type"=>"span","class"=>array("button","print","do-print"),"text"=>"Print");
 		echo create_button_bar($buttons);
 		endif; ?>
 		<div class='report-header report-term'>

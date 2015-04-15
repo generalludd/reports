@@ -9,7 +9,7 @@
 		$(".datefield").datepicker();
 	});
 	
-	$('.button.print').live('click', function(event){
+	$('.button.do-print').live('click', function(event){
         window.print();
     });
 	

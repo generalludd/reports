@@ -46,7 +46,7 @@
             changeFont(pSize, tdSize);
             });
 
-            $('.print').live('click', function(event){
+            $('.do-print').live('click', function(event){
                 window.print();
             });
     })
@@ -66,7 +66,7 @@
 			class='button increaseFont'>Increase</span>&nbsp; <span
 			class='button resetFont'>Reset</span>&nbsp; <span
 			class='button reduceFont'>Reduce</span>&nbsp; <span
-			class='button print'>Print</span>
+			class='button print do-print'>Print</span>
 	</div>
 	<p class="school">
 		Friends School of Minnesota <br /> 1365 Englewood Avenue <br /> St.
