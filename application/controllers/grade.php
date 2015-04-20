@@ -320,22 +320,24 @@ class Grade extends MY_Controller
             $output["charts"] = array();
             $i = 0;
             foreach ($subjects as $subject) {
-                $options["subject"] = $subject->subject;
-                $data["grades"] = $this->assignment->get_for_student($kStudent, $term, $year, $options);
-                // if the student has any grades entered, process them here,
-                // otherwise ignore.
-                $this->load->model("grade_preference_model", "grade_preferences");
-                $data["pass_fail"] = $this->grade_preferences->get_all($kStudent,
-                        array(
-                                "school_year" => $year,
-                                "subject" => $subject->subject
-                        ));
-                if (count($data["grades"])) {
-                    $data["subject"] = $subject->subject;
-                    $data["count"] = $i; // count is used to identify the chart
-                                         // number in the output for css
-                                         // purposes.
-                    $output["charts"][] = $this->load->view("grade/chart", $data, TRUE);
+                if($subject->subject != "Music"){//music does not offer grades for print-out
+                    $options["subject"] = $subject->subject;
+                    $data["grades"] = $this->assignment->get_for_student($kStudent, $term, $year, $options);
+                    // if the student has any grades entered, process them here,
+                    // otherwise ignore.
+                    $this->load->model("grade_preference_model", "grade_preferences");
+                    $data["pass_fail"] = $this->grade_preferences->get_all($kStudent,
+                            array(
+                                    "school_year" => $year,
+                                    "subject" => $subject->subject
+                            ));
+                    if (count($data["grades"])) {
+                        $data["subject"] = $subject->subject;
+                        $data["count"] = $i; // count is used to identify the chart
+                                             // number in the output for css
+                                             // purposes.
+                        $output["charts"][] = $this->load->view("grade/chart", $data, TRUE);
+                    }
                 }
             }
 
