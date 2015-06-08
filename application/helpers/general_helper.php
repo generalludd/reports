@@ -155,11 +155,14 @@ function format_schoolyear($year, $term = NULL){
 	return "$firstHalf-$secondHalf";
 }
 
-function get_year_list($initial_blank = FALSE){
+function get_year_list($initial_blank = FALSE,$next_year = FALSE){
 	$baseYear = 2006;
 	$narrYear = get_current_year();
 	if($initial_blank){
 		$result[] = "";
+	}
+	if($next_year){
+		$narrYear = $narrYear+1;
 	}
 	for($i=$baseYear;$i <= $narrYear;$i++){
 		$result[$i]=$i;

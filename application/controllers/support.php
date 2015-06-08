@@ -68,7 +68,7 @@ class Support extends MY_Controller
 			$data["support"] = $this->student_model->get($kStudent);
 			$data["title"] = "Add Student Support Documentation";
 			$data["support_files"] = false;
-			$data["year_list"] = get_year_list();
+			$data["year_list"] = get_year_list(FALSE,TRUE);
 			$data["target"] = "support/edit";
 			$this->load->view("page/index", $data);
 		}
