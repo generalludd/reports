@@ -11,13 +11,9 @@ if (! defined('BASEPATH')) exit('No direct script access allowed');
  * CodeIgniter will guess the protocol, domain and | path to your installation.
  * |
  */
-// $config['base_url'] =
-// 'http://cerebratorium.local/~chrisdart/Dropbox/narrative_ci/';
-if($_SERVER['HTTP_HOST']=="narrative.server.fsmn"){
-$config['base_url'] = 'http://reports.fsmn.org';
-}else{
+
     $config['base_url'] = '';
-}
+
 /*
  * |-------------------------------------------------------------------------- |
  * Index File
