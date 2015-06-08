@@ -3,17 +3,18 @@
 }else{
 	$print = FALSE;
 }
-$body_class = $this->uri->segment(1);
-if($this->uri->segment(1) == ""){
-	$body_class = "front";
+if(!isset($body_classes)){
+	$body_classes = array("not-front");
 }
+$body_classes[] = "browser";
+$body_classes[] = $this->uri->segment(1);
 ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html">
 <html>
 <head>
 <? $this->load->view('page/head');?>
 </head>
-<body class="browser <?=$body_class;?>">
+<body class="<?=implode(" ",$body_classes);?>">
 <div id="page">
 <?php if(!$print): ?>
 <div id='header'>
