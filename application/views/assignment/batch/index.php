@@ -1,9 +1,12 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 
 // batch_insert.php Chris Dart Jan 28, 2015 4:23:12 PM chrisdart@cerebratorium.com
-$buttons[] = array("text"=>"New Grade Search","class"=>"button search-assignments","id"=>sprintf("sa_%s",$kTeach),"selection"=>"","href"=>"#");
+$buttons[] = array(	"text" => "New Grade Search",
+		"href"=>base_url("assignment/search/$kTeach"),
+		"class" => "button dialog",
+		"selection" => "grades" );
  if($kTeach == $this->session->userdata("userID")){
-$buttons[] = array("text"=>"Edit Categories","class"=>"button edit assignment-categories-edit","title"=>"Edit the assignment categories for this term","selection"=>"",
+$buttons[] = array("text"=>"Edit Categories","class"=>"button edit dialog","title"=>"Edit the assignment categories for this term","selection"=>"",
         "href"=>site_url("assignment/edit_categories/$kTeach?year=$year&term=$term&gradeStart=$gradeStart&gradeEnd=$gradeEnd"));
  }
 $buttons[] = array("text"=>"New Row","class"=>"button new add-batch-assignment-row","id"=>"row-add_$kTeach","title"=>"Add a new row of assignments","selection"=>"");

@@ -6,45 +6,6 @@ $(document).ready(function(){
 		}
 	});
 	
-	$(".assignment-edit").live("click",function(e){
-		e.preventDefault();
-		myAssignment = this.id.split("_")[1];
-		question = 0;
-		if($(this).parents("table.grade-chart").hasClass("locked")){
-			question = confirm("This assignment is entered for a previous term. Are you sure you want to edit it?");
-		}else if($(this).parents("table.grade-chart").hasClass("editable")){
-			question = 1;
-		}
-		//console.log(question);
-		
-		if(question){
-			form_data = {
-					kAssignment: myAssignment,
-					ajax: 1
-			};
-			
-			$.ajax({
-				type:"get",
-				url: base_url + "assignment/edit",
-				data: form_data,
-				success: function(data){
-					showPopup("Edit Assigment",data,"auto");
-	
-				}
-			});
-		}
-	});
-	
-	$(".assignment-create").live("click",function(e){
-		e.preventDefault();
-		$.ajax({
-			type:"get",
-			url: base_url + "assignment/create",
-			success: function(data){
-				showPopup("Add Assignment",data,"auto");
-			}
-		});
-	});
 	
 	$(".editable .grade-points.edit").live("click",function(e){
 		e.preventDefault();
@@ -77,22 +38,6 @@ $(document).ready(function(){
 		$(this).parent(".grade-points").html(myPoints).addClass("edit");
 	});
 	
-//	$(".search-assignments").live("click",function(e){
-//		e.preventDefault();
-//		myTeach = this.id.split("_")[1];
-//		form_data = {
-//				kTeach: myTeach,
-//				ajax: 1
-//		};
-//		$.ajax({
-//			type: "get",
-//			data: form_data,
-//			url: base_url + "assignment/search",
-//			success: function(data){
-//				showPopup("Search for Assigment Charts",data, "auto");
-//			}
-//		});
-//	});
 	
 	$(".show-student-selector").live("click",function(){
 		
@@ -330,21 +275,6 @@ $(document).ready(function(){
 	});
 	
 	
-	$(".assignment-categories-edit").live("click",function(){
-		console.log($(this).attr("href"));
-
-		$.ajax({
-			url: $(this).attr("href") + "&ajax=1", //base_url + "assignment/edit_categories/" + $("#kTeach").val(),
-			type: "get",
-			success: function(data){
-				showPopup("Editing Categories",data,"auto");
-			}
-			
-		});
-		return false;
-
-	});
-	
 	$(".add-category").live("click",function(){
 		myTeach = this.id.split("_")[1];
 		
@@ -477,7 +407,10 @@ function save_points_inline(myAssignment,myStudent,myKey,myValue, myGrade){
 		save_student_points(myAssignment,myStudent);
 	}
 }
-
+/**
+ * The .map() function allows us to iterate through the grade-chart-row items for ids (for each student id)
+ * to generate a printable chart of grades for teachers to use in conferences. 
+ */
 
 function batch_print_grades(){
 	var id_array = $.map($(".grade-chart-row"),function(n,i){

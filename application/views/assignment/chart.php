@@ -25,7 +25,7 @@ $buttons ["grade_search"] = array (
 if ($kTeach == $this->session->userdata ( "userID" )) {
 	$buttons ["edit_categories"] = array (
 			"text" => "Edit Categories",
-			"class" => "button edit assignment-categories-edit",
+			"class" => "button edit dialog",
 			"selection" => "grades",
 			"href" => base_url ( "assignment/edit_categories/$kTeach?year=$year&term=$term&gradeStart=$gradeStart&gradeEnd=$gradeEnd" ) 
 	);
@@ -97,7 +97,7 @@ if (! empty ( $assignments )) {
 
 			<th id="as_<?=$assignment->kAssignment;?>" class="assignment-field buttons">
 				<div>
-					<a class="assignment-edit edit small button" id="ase_<?=$assignment->kAssignment;?>" href="<?php echo base_url("assignment/edit/$assignment->kAssignment");?>" title="Edit this assignment">Edit</a>
+					<a class="dialog edit small button" id="ase_<?=$assignment->kAssignment;?>" href="<?php echo base_url("assignment/edit/$assignment->kAssignment");?>" title="Edit this assignment">Edit</a>
 					<span class="chart-assignment"><?=$assignment->assignment;?></span>
 					<br />
 					<span class='chart-category'><?=$assignment->category;?> </span>
@@ -115,7 +115,7 @@ if (! empty ( $assignments )) {
 
 			<? endforeach; ?>
 			<th class='assignment-button'>
-				<span class='button new assignment-create'>Add&nbsp;Assignment</span>
+			<?php echo create_button(array("text"=>"Add Assignment","href"=>base_url("assignment/create/$kTeach"),"class"=>"button dialog new") )?>
 			</th>
 		</tr>
 		<tr class="second">
