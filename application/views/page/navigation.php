@@ -40,7 +40,7 @@ if($is_advisor){
 
 }
 	if($gradeEnd > 4){
-		$buttons[] = array("selection" => "assignment", "text" => "Grades","class"=> array("button","search-assignments"),"id" =>"sa_$userID","title" => "Search for current grade charts");
+		$buttons[] = array("selection" => "assignment", "text" => "Grades","class"=> array("button","dialog"),"id" =>"sa_$userID","title" => "Search for current grade charts", "href"=>base_url("assignment/search/$userID"));
 	}
 
 	$buttons[] = array("selection" => "student", "text" => "List Students", "href" => site_url("student/teacher_student_list/$userID"));
