@@ -219,8 +219,8 @@ class Narrative_model extends MY_Model
 			$this->db->where ( "narrative.kTeach", $options ["kTeach"] );
 		}
 
-		if (array_key_exists ( "gradeStart", $options ) && array_key_exists ( "gradeEnd", $options )) {
-			$this->db->where ( "narrative.stuGrade BETWEEN " . $options ["gradeStart"] . " AND " . $options ["gradeEnd"] );
+		if (array_key_exists ( "gradeStart", $options ) && array_key_exists ( "gradeEnd", $options ) && $options['gradeStart']!="" && $options['gradeEnd'] != "") {
+			$this->db->where ( sprintf("narrative.stuGrade BETWEEN %s AND %s",$options ["gradeStart"],  $options ["gradeEnd"]));
 		}
 
 		if (array_key_exists ( "kStudent", $options )) {
