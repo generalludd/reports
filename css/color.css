@@ -231,7 +231,7 @@ a.button {
 }
 
 #navigation input[type="text"] {
-	padding: .5em;
+	padding: 1.35em .5em;
 	border-color: #aaa;
 	font-size: 1em;
 }
