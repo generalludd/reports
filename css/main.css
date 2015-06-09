@@ -1056,6 +1056,7 @@ h4.ui-accordion-header {
 
 table.grade-chart {
 	margin-bottom: 1em;
+	font-size: inherit;
 }
 
 table.report-card,table.grade-chart {
@@ -1088,10 +1089,11 @@ table.grade-chart thead tr:last-child th {
 	font-size: .85em;
 }
 
-th .assignment-column-edit, th .batch-print-grades {
+th.buttons a, th div.buttons a, th .batch-print-grades {
 	width: 45px;
 	margin: 0 auto;
 	white-space: pre-wrap;
+	display: block;
 }
 
 table.grade-chart th .chart-assignment {
@@ -1108,7 +1110,7 @@ table.grade-chart th .chart-category {
 }
 
 table.grade-chart th.assignment-field {
-	font-size: .85em;
+	font-size: .9em;
 	width: 80px;
 }
 

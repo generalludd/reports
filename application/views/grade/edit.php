@@ -1,15 +1,13 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 //use first record for student name
-$header_record = $grades[0];
-$student_name = format_name($header_record->stuNickname, $header_record->stuLast);
 ?>
 <input
 	type="hidden" name="kStudent" id="kStudent" value="<?=$kStudent;?>" />
 <input
 	type="hidden" name="kTeach" id="kTeach" value="<?=$kTeach;?>" />
-<h5>
-	<?=$student_name;?>
-</h5>
+<h3>
+	<?=$title;?>
+</h3>
 <table class='grade-editor'>
 	<thead>
 		<tr>

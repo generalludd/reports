@@ -69,7 +69,7 @@ $default_row_style = array("student-row","row");
 			$buttons[] = array("selection" => "report", "href" => site_url("report/get_list/student/$student->kStudent"), "class" => "button","text" => sprintf("%ss",STUDENT_REPORT));
 			$buttons[] = array("selection" => "report","href" => site_url("report/create/$student->kStudent"), "text" => sprintf("Add %s",STUDENT_REPORT), "class" => "button new report-add",
 					"id" => sprintf("add-report_%s", $student->kStudent));
-			$buttons[] = array("selection" => "grade/report_card", "class"=> "button get-student-grades", "id"=> sprintf("gss_%s",$student->kStudent), "text" => "Grades", "type" => "span");
+			$buttons[] = array("selection" => "grade/report_card", "class"=> "button dialog", "id"=> sprintf("gss_%s",$student->kStudent), "text" => "Grades", "href" => base_url("grade/select_report_card/$student->kStudent"));
 
 		}
 		$options["class"] = "mini-buttons";

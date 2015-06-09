@@ -168,48 +168,8 @@ $(document).ready(function(){
 		
 		
 	});
-	
-	$(".editable .assignment-column-edit").live("click",function(e){
-		e.preventDefault();
-		myAssignment = this.id.split("_")[1];
-		form_data = {
-				kAssignment: myAssignment,
-				ajax: 1
-		};
-		myUrl = base_url + "grade/edit_column";
-		
-		$.ajax({
-			type: "POST",
-			url: myUrl,
-			data: form_data,
-			success: function(data){
-				showPopup("Editing All Grades for an Assignment", data, "480px");
-			}
-		});
-		
-	});
 
-	
-	$(".editable .edit_student_grades").live("click",function(e){
-		e.preventDefault();
-		myTeach = $("#kTeach").val();
-		myStudent = this.id.split("_")[1];
-		form_data = {
-			kTeach: myTeach,
-			kStudent: myStudent,
-			ajax: 1
-		};
-		myUrl = base_url + "grade/edit";
-		$.ajax({
-			type:"GET",
-			url: myUrl,
-			data: form_data,
-			success: function(data){
-				showPopup("Editing Student Grades",data, "auto");
-			}
-			
-		});
-	});
+
 	
 	$(".editable .save_student_grade").live("click",function(){
 		myID = this.id.split("_");
@@ -414,7 +374,8 @@ $(document).ready(function(){
 				gradeStart: myStart,
 				gradeEnd: myEnd,
 				year: myYear,
-				term: myTerm
+				term: myTerm,
+				ajax: 1
 		};
 		$.ajax({
 			type: "post",
@@ -428,21 +389,6 @@ $(document).ready(function(){
 		//$(this).html(myTeach);
 	});
 	
-	$(".get-student-grades").live("click",function(){
-		myStudent = this.id.split("_")[1];
-		form_data = {
-				kStudent: myStudent
-		};
-		$.ajax({
-			type:"get",
-			data: form_data,
-			url: base_url + "grade/select_report_card",
-			success: function(data){
-				showPopup("Selecting Grade Report", data,"auto");
-			}
-		});
-		
-	});
 	
 	$(".add-batch-assignment-row").live("click",function(){
 		

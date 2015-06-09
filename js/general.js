@@ -36,7 +36,7 @@
 			 url: my_url,
 			 data: form_data,
 			 success: function(data){
-				 showPopup("Dialog",data,"auto");
+				 showPopup("",data,"auto");
 			 }
 		 });
 	 });
