@@ -6,7 +6,8 @@ $(document).ready(function(){
 		}
 	});
 	
-	$(".assignment-edit").live("click",function(){
+	$(".assignment-edit").live("click",function(e){
+		e.preventDefault();
 		myAssignment = this.id.split("_")[1];
 		question = 0;
 		if($(this).parents("table.grade-chart").hasClass("locked")){
@@ -34,7 +35,8 @@ $(document).ready(function(){
 		}
 	});
 	
-	$(".assignment-create").live("click",function(){
+	$(".assignment-create").live("click",function(e){
+		e.preventDefault();
 		$.ajax({
 			type:"get",
 			url: base_url + "assignment/create",
@@ -44,7 +46,8 @@ $(document).ready(function(){
 		});
 	});
 	
-	$(".editable .grade-points.edit").live("click",function(){
+	$(".editable .grade-points.edit").live("click",function(e){
+		e.preventDefault();
 		myId = this.id.split("_");
 		myAssignment = myId[1];
 		myStudent = myId[2];
@@ -52,7 +55,8 @@ $(document).ready(function(){
 		myPoints = $(this).html();
 		form_data = {
 			kStudent: myStudent,
-			kAssignment: myAssignment
+			kAssignment: myAssignment,
+			ajax: 1,
 		};
 		$.ajax({
 			type:"get",
@@ -73,10 +77,12 @@ $(document).ready(function(){
 		$(this).parent(".grade-points").html(myPoints).addClass("edit");
 	});
 	
-	$(".search-assignments").live("click",function(){
+	$(".search-assignments").live("click",function(e){
+		e.preventDefault();
 		myTeach = this.id.split("_")[1];
 		form_data = {
-				kTeach: myTeach
+				kTeach: myTeach,
+				ajax: 1
 		};
 		$.ajax({
 			type: "get",
@@ -141,13 +147,14 @@ $(document).ready(function(){
 		$("#search_list").fadeOut();
 	});
 	
-	$(".select-student-for-grades").live("click",function(){
-		
+	$(".select-student-for-grades").live("click",function(e){
+		e.preventDefault();
 		form_data = {
 				kStudent: this.id.split("_")[1],
 				kTeach: $("#kTeach").val(),
 				term:$("#term").val(),
-				year: $("#year").val()
+				year: $("#year").val(),
+				ajax: 1
 		};
 		$.ajax({
 			type:"get",
@@ -162,7 +169,8 @@ $(document).ready(function(){
 		
 	});
 	
-	$(".editable .assignment-column-edit").live("click",function(){
+	$(".editable .assignment-column-edit").live("click",function(e){
+		e.preventDefault();
 		myAssignment = this.id.split("_")[1];
 		form_data = {
 				kAssignment: myAssignment,
@@ -182,12 +190,14 @@ $(document).ready(function(){
 	});
 
 	
-	$(".editable .edit_student_grades").live("click",function(){
+	$(".editable .edit_student_grades").live("click",function(e){
+		e.preventDefault();
 		myTeach = $("#kTeach").val();
 		myStudent = this.id.split("_")[1];
 		form_data = {
 			kTeach: myTeach,
 			kStudent: myStudent,
+			ajax: 1
 		};
 		myUrl = base_url + "grade/edit";
 		$.ajax({
@@ -458,6 +468,7 @@ $(document).ready(function(){
 	});
 	
 	$(".edit_student_grades-notice").live("click",function(e){
+		e.preventDefault();
 		showPopup("Notice","<h4>Notice!</h4><p>Editing student grades in batch is now done with the blue <span class='button small edit'>Edit</span> button next to the student's name</p>","auto");
 		
 		
@@ -480,7 +491,8 @@ function save_student_points(myAssignment,myStudent)
 			kAssignment: myAssignment,
 			status: myStatus,
 			footnote: myFootnote,
-			points: myPoints
+			points: myPoints,
+			ajax: 1
 			
 	};
 	$.ajax({
@@ -502,7 +514,8 @@ function save_points_inline(myAssignment,myStudent,myKey,myValue, myGrade){
 				kStudent:myStudent,
 				kAssignment:myAssignment,
 				key:myKey,
-				value: myValue
+				value: myValue,
+				ajax: 1
 		};
 		myUrl = base_url + "grade/update_value";
 		$.ajax({
@@ -528,7 +541,8 @@ function batch_print_grades(){
 	form_data = {
 			ids: id_array,
 			kTeach: $("#kTeach").val(),
-			action: "select"
+			action: "select",
+			ajax: 1
 	};
 	
 	console.log(form_data);

@@ -24,6 +24,22 @@
 			  alert(order);
 	      }
     });
+	 
+	 $(".dialog").live("click",function(e){
+		 e.preventDefault();
+		 my_url = $(this).attr("href");
+		 form_data = {
+				 ajax: 1
+		 };
+		 $.ajax({
+			 type: "get",
+			 url: my_url,
+			 data: form_data,
+			 success: function(data){
+				 showPopup("Dialog",data,"auto");
+			 }
+		 });
+	 });
 		$("table thead").addClass("theader");
 //	$("table tr:nth-child(even)").addClass("striped");
 
@@ -314,6 +330,7 @@ function showPopup(myTitle,data,popupWidth,x,y){
 
 	return false;
 }
+
 
 
 function showSidebar(title,data,containerWidth,contentWidth,sidebarWidth){
