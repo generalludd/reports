@@ -8,7 +8,7 @@ if(empty($year)){
 }
 
 ?>
-
+<h3><?php echo $title;?></h3>
 <form style="max-width:370px" id="chart-search" name="chart-search" action="<?=site_url("assignment/chart");?>" method="get">
 <input type="hidden" id="kTeach" name="kTeach" value="<?=$kTeach; ?>"/>
 <p>

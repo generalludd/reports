@@ -18,7 +18,8 @@ $buttons ["refresh_page"] = array (
 );
 $buttons ["grade_search"] = array (
 		"text" => "New Grade Search",
-		"class" => "button search-assignments",
+		"href"=>base_url("assignment/search/$kTeach"),
+		"class" => "button dialog",
 		"selection" => "grades" 
 );
 if ($kTeach == $this->session->userdata ( "userID" )) {

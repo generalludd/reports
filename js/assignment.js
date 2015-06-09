@@ -77,22 +77,22 @@ $(document).ready(function(){
 		$(this).parent(".grade-points").html(myPoints).addClass("edit");
 	});
 	
-	$(".search-assignments").live("click",function(e){
-		e.preventDefault();
-		myTeach = this.id.split("_")[1];
-		form_data = {
-				kTeach: myTeach,
-				ajax: 1
-		};
-		$.ajax({
-			type: "get",
-			data: form_data,
-			url: base_url + "assignment/search",
-			success: function(data){
-				showPopup("Search for Assigment Charts",data, "auto");
-			}
-		});
-	});
+//	$(".search-assignments").live("click",function(e){
+//		e.preventDefault();
+//		myTeach = this.id.split("_")[1];
+//		form_data = {
+//				kTeach: myTeach,
+//				ajax: 1
+//		};
+//		$.ajax({
+//			type: "get",
+//			data: form_data,
+//			url: base_url + "assignment/search",
+//			success: function(data){
+//				showPopup("Search for Assigment Charts",data, "auto");
+//			}
+//		});
+//	});
 	
 	$(".show-student-selector").live("click",function(){
 		
