@@ -1,7 +1,7 @@
 <?php
 $current_year = get_current_year();
 ?>
-
+<h3><?php echo $title;?></h3>
 <form id="legend_search" name="legend_search" action="<?=site_url("benchmark_legend/list_all");?>" method="get">
 <input type="hidden" name="kTeach" id="kTeach" value="<?=$kTeach;?>" />
 <p>

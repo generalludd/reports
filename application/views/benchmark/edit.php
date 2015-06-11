@@ -1,5 +1,6 @@
 <?php
 ?>
+<h3><?php echo $title;?></h3>
 <form
 	id="benchmark"
 	action="<?=site_url("benchmark/$action");?>"
