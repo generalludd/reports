@@ -1,6 +1,7 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 
 ?>
+<h3><?php echo $title;?></h3>
 <form id="teacher_narratives_search" name="teacher_narratives_search" method="get" action="<?=site_url("narrative/teacher_list");?>">
 <p>
 <label for="kTeach">Teacher:</label>

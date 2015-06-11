@@ -24,7 +24,7 @@ if(!empty($conditional_buttons)){
 	<?=$studentName;?>
 </h3>
 <form id="narrativeEditor"
-	action="<?=base_url();?>index.php/suggestion/<?=$action;?>"
+	action="<?=site_url("suggestion/$action");?>"
 	method="post" name="narrativeEditor">
 
 	<?

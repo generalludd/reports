@@ -20,7 +20,7 @@ Subject: <strong><?=$subject;?></strong>
 </li>
 </ul>
 <div class="button-box">
-<a class="button missing_narrative_search" id="mns_<?=$kTeach?>">Refine Search</a></div>
+<a class="button dialog" href="<?php echo site_url("narrative/search_missing/$kTeach");?>">Refine Search</a></div>
 </fieldset>
 <table class="list">
 <thead>

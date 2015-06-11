@@ -4,23 +4,7 @@ $(document).ready(function() {
 //		saveNarrative();
 //		$(message).fadeOut();
 //	}
-	$('.view_narratives').live('click', function(event) {
-				if (this.id) {
-					var kStudent = this.id.split("_")[1];
-				} else {
-					var kStudent = $("#kStudent").val();
-				}
-				document.location = base_url +  "narrative/student_list/"
-						+ kStudent;
-			}// end function(event);
-	);// end home.click
-	
 
-	$('.edit_narrative').live('click', function(event) {
-		var myNarrative = this.id.split('_')[1];
-		editNarrative(myNarrative);
-	}// end function(event)
-	);// end edit_narrative.click
 	
 	
 	$('.edit_narrative_inline').live('click', function(event){
@@ -109,37 +93,9 @@ $(document).ready(function() {
 		$("#course_grade").html("<input type='text' name='narrGrade' id='narrGrade' value='" + val + "'/>");
 	});
 	
-	$('.teacher_narrative_search').live("click", function(event){
-		myTeach =  this.id.split("_")[1];
 
-		$.ajax({
-			type:"POST",
-			url: base_url + "narrative/search_teacher_narratives/"+ myTeach,
-			success:function(data){
-				showPopup("Search Teacher Narratives",data,"auto");
-			}
-		});
-		
-		
-	});
 	
 	
-	$('.missing_narrative_search').live('click', function(event){
-		 myTeach = this.id.split("_")[1];
-		 myUrl = base_url + "narrative/search_missing";
-		form_data = {
-				kTeach: myTeach,
-				ajax: 1
-		};
-		$.ajax({
-			url: myUrl,
-			type: 'GET',
-			data: form_data,
-			success: function(data){
-			showPopup("Search for Missing Narratives", data, 'auto');
-		}
-		});
-	});
 
 	$('#narrSubject').live('change', function(event) {
 		var narrSubject = this.value;
@@ -485,10 +441,7 @@ $(document).ready(function() {
 
 
 
-function editNarrative(myNarrative) {
-	document.location = base_url + "narrative/edit/"+ myNarrative;
-	return false;
-}
+
 /*
  * @function mergeSentences @params myCount intdescription:  used in the
  * sentence-display format of narrative reports to count the number of sentences

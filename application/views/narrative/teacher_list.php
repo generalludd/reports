@@ -44,11 +44,10 @@ if(!empty($options)){
 echo "<p>Showing all Users.</p>";
 
 }
-?>
 
-		<div class="button-box">
-			<a class="button teacher_narrative_search" id="tns_<?=$kTeach;?>">Refine Search</a>
-		</div>
+$buttons[] = array("text"=>"Refine Search","href"=>site_url("narrative/search_teacher_narratives/$kTeach"),"class"=>"button dialog");
+print create_button_bar($buttons);
+?>	
 	</fieldset>
 <?
 if(!empty($narratives)){
@@ -118,6 +117,6 @@ if(!empty($narratives)){
 }
 ?>
 <p>
-<a class='button small missing_narrative_search' id='mns_<?=$kTeach;?>'>View
+<a class='button small dialog' href="<?php echo site_url("narrative/search_missing/$kTeach");?>">View
 Missing Narratives</a>
 </p>

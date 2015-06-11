@@ -28,7 +28,7 @@
 	?>
 
 	<div class="button-box">
-		<a class="button dialog" href="<?php echo base_url("benchmark_legend/search");?>" id="ts_">Refine Search</a>
+		<a class="button dialog" href="<?php echo site_url("benchmark_legend/search");?>" id="ts_">Refine Search</a>
 	</div>
 </fieldset>
 

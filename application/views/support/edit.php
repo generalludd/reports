@@ -110,7 +110,7 @@ Help, etc. Include start and end date if applicable</div> <textarea
 	</thead>
 	<tbody>
 	<? foreach($support_files as $file):?>
-	<tr id='fr_$file->kFile'><td><a href='<?=base_url() ."uploads/$file->file_name";?>' target='_blank'><?=$file->file_display_name;?></a></td>
+	<tr id='fr_$file->kFile'><td><a href='<?=base_url("uploads/$file->file_name");?>' target='_blank'><?=$file->file_display_name;?></a></td>
 	<td><?=$file->file_description;?></td>
 	<td><span class='button delete delete-support-file' id='dsf_<?=$file->kFile;?>'>Delete</span></td></tr>
 	<?endforeach; ?>

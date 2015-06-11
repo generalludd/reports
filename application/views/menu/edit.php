@@ -2,7 +2,7 @@
 
 ?>
 
-<form id="edit-menu-item" name="edit-menu-item" method="post" action="<?=base_url("menu/$action");?>">
+<form id="edit-menu-item" name="edit-menu-item" method="post" action="<?=site_url("menu/$action");?>">
 
 <input type="hidden" name="kMenu" id="kMenu" value="<?=get_value($menu_item,"kMenu");?>"/>
 <p>

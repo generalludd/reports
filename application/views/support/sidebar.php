@@ -71,7 +71,7 @@ print create_button_bar($buttons);
 	</thead>
 	<tbody>
 	<? foreach($files_array as $file):?>
-	<tr><td class='file-name'><a href='<?=base_url() ."uploads/$file->file_name";?>' target='_blank'><?=$file->file_display_name;?></a></td>
+	<tr><td class='file-name'><a href='<?=base_url("uploads/$file->file_name");?>' target='_blank'><?=$file->file_display_name;?></a></td>
 	<td class='file-description'><?=$file->file_description;?></td></tr>
 	<? endforeach; ?>
 	</tbody>

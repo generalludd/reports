@@ -1,8 +1,8 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 ?>
 
-<? 	$buttons[] = array("selection" => "benchmark", "text" => "Benchmarks", "class" => "button dialog", "href" => base_url("benchmark/search"));
-	$buttons[] = array("selection" => "search", "text" => "Search", "class" => "button dialog", "href" => base_url("benchmark_legend/search"));
+<? 	$buttons[] = array("selection" => "benchmark", "text" => "Benchmarks", "class" => "button dialog", "href" => site_url("benchmark/search"));
+	$buttons[] = array("selection" => "search", "text" => "Search", "class" => "button dialog", "href" => site_url("benchmark_legend/search"));
 	print create_button_bar($buttons, array("id" =>"legend-buttons"));
 	
 ?>

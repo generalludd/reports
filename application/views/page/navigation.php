@@ -20,27 +20,27 @@ if($unread_reports > 0){
 }
 $term = get_current_term();
 $year = get_current_year();
-$buttons[] = array("selection"=>"home", "text"=>"Home", "href" => base_url() );
+$buttons[] = array("selection"=>"home", "text"=>"Home", "href" => site_url() );
 $buttons[] = array("selection" =>"search", "text" => '<input type="text" id="stuSearch" name="stuSearch" size="20" value="find students" />', "type" => "pass-through");
 
 if($dbRole == 1){
 	$buttons[] = array("selection" => "student", "text" => "New Student", "class" => array("button","new","add_student"), "type"=>"span", "title" => "Add a new student to the database");
-	$buttons[] = array("selection" => "attendance" , "text" => "Search Attendance", "class" => array("button","dialog"), "href" => base_url("attendance/show_search"), "title" => "Search attendance records");
+	$buttons[] = array("selection" => "attendance" , "text" => "Search Attendance", "class" => array("button","dialog"), "href" => site_url("attendance/show_search"), "title" => "Search attendance records");
 	$buttons[] = array("selection" => "teacher", "text" => "List Teachers", "href" => site_url("teacher?gradeStart=0&gradeEnd=8"), "title" => "List all the teachers &amp; other users in the database");
 	$buttons[] = array("selection" => "narrative", "text" => "Narrative Search &amp; Replace", "href" => site_url("narrative/search"), "title" => "Search &amp; Replace Narrative Text");
 }elseif($dbRole == 3){ //aides
 	$buttons[] = array("selection" => "support", "text" => "Learning Support", "href" => site_url("student/advanced_search?hasNeeds=1&year=" . get_current_year()) );
 }else{
 	$buttons[] = array("selection" => "template", "text" => "Subject Templates", "href" => site_url("template/list_templates/?kTeach=$userID&term=$term&year=$year"));
-	$buttons[] = array("selection" => "benchmark", "text" => "Benchmarks", "class" => array("button","dialog"), "href" => base_url("benchmark/search"));
-	$buttons[] = array("selection" => "narrative/teacher_list", "text" => "Current Narratives", "class"=>array("button","teacher_narrative_search"), "id"=>"navigation-narrative-search_$userID", "title" => "List all of your narratives" );
-	$buttons[] = array("selection" => "narrative/show_missing", "text" => "Missing Narratives", "class" => array("button","missing_narrative_search"), "id" => "mns_$userID", "title" => "Show the students for whom you have not yet written a report this term" );
+	$buttons[] = array("selection" => "benchmark", "text" => "Benchmarks", "class" => array("button","dialog"), "href" => site_url("benchmark/search"));
+	$buttons[] = array("selection" => "narrative/teacher_list", "text" => "Current Narratives", "class"=>array("button","dialog"), "href"=>site_url("narrative/search_teacher_narratives/$userID"), "title" => "List all of your narratives" );
+	$buttons[] = array("selection" => "narrative/show_missing", "text" => "Missing Narratives", "class" => array("button","dialog"),"href"=>site_url("narrative/search_missing/$userID"), "title" => "Show the students for whom you have not yet written a report this term" );
 if($is_advisor){
 	$buttons[] = array("selection" => "report/get_list", "text" => sprintf("%ss%s",STUDENT_REPORT,$count), "href"=> site_url("report/get_list/advisor/$userID"), "title" => sprintf("Show your %ss %s", strtolower(STUDENT_REPORT),$count_text));
 
 }
 	if($gradeEnd > 4){
-		$buttons[] = array("selection" => "assignment", "text" => "Grades","class"=> array("button","dialog"),"id" =>"sa_$userID","title" => "Search for current grade charts", "href"=>base_url("assignment/search/$userID"));
+		$buttons[] = array("selection" => "assignment", "text" => "Grades","class"=> array("button","dialog"),"id" =>"sa_$userID","title" => "Search for current grade charts", "href"=>site_url("assignment/search/$userID"));
 	}
 
 	$buttons[] = array("selection" => "student", "text" => "List Students", "href" => site_url("student/teacher_student_list/$userID"));

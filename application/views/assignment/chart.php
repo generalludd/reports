@@ -18,7 +18,7 @@ $buttons ["refresh_page"] = array (
 );
 $buttons ["grade_search"] = array (
 		"text" => "New Grade Search",
-		"href"=>base_url("assignment/search/$kTeach"),
+		"href"=>site_url("assignment/search/$kTeach"),
 		"class" => "button dialog",
 		"selection" => "grades" 
 );
@@ -27,7 +27,7 @@ if ($kTeach == $this->session->userdata ( "userID" )) {
 			"text" => "Edit Categories",
 			"class" => "button edit dialog",
 			"selection" => "grades",
-			"href" => base_url ( "assignment/edit_categories/$kTeach?year=$year&term=$term&gradeStart=$gradeStart&gradeEnd=$gradeEnd" ) 
+			"href" => site_url ( "assignment/edit_categories/$kTeach?year=$year&term=$term&gradeStart=$gradeStart&gradeEnd=$gradeEnd" ) 
 	);
 }
 if (get_cookie ( "beta_tester" )) {
@@ -35,7 +35,7 @@ if (get_cookie ( "beta_tester" )) {
 			"text" => "Batch Insert (BETA)",
 			"selection" => "",
 			"title" => "Insert batches of assignments at once (Beta!)",
-			"href" => base_url ( "assignment/create_batch?kTeach=$kTeach&term=$term&year=$year&gradeStart=$gradeStart&gradeEnd=$gradeEnd" ),
+			"href" => site_url ( "assignment/create_batch?kTeach=$kTeach&term=$term&year=$year&gradeStart=$gradeStart&gradeEnd=$gradeEnd" ),
 			"class" => "button edit" 
 	);
 }
@@ -97,7 +97,7 @@ if (! empty ( $assignments )) {
 
 			<th id="as_<?=$assignment->kAssignment;?>" class="assignment-field buttons">
 				<div>
-					<a class="dialog edit small button" id="ase_<?=$assignment->kAssignment;?>" href="<?php echo base_url("assignment/edit/$assignment->kAssignment");?>" title="Edit this assignment">Edit</a>
+					<a class="dialog edit small button" id="ase_<?=$assignment->kAssignment;?>" href="<?php echo site_url("assignment/edit/$assignment->kAssignment");?>" title="Edit this assignment">Edit</a>
 					<span class="chart-assignment"><?=$assignment->assignment;?></span>
 					<br />
 					<span class='chart-category'><?=$assignment->category;?> </span>
@@ -115,14 +115,14 @@ if (! empty ( $assignments )) {
 
 			<? endforeach; ?>
 			<th class='assignment-button'>
-			<?php echo create_button(array("text"=>"Add Assignment","href"=>base_url("assignment/create/$kTeach"),"class"=>"button dialog new") )?>
+			<?php echo create_button(array("text"=>"Add Assignment","href"=>site_url("assignment/create/$kTeach"),"class"=>"button dialog new") )?>
 			</th>
 		</tr>
 		<tr class="second">
 			<th colspan=5></th>
 		<? foreach($assignment_keys as $key):?>
 		<th class="buttons">
-				<a href="<?php echo base_url("grade/edit_column/$key");?>" class='dialog small button' id='ace_<?=$key;?>'>Edit Grades</a>
+				<a href="<?php echo site_url("grade/edit_column/$key");?>" class='dialog small button' id='ace_<?=$key;?>'>Edit Grades</a>
 			</th>
 		<? endforeach;?>
 		</tr>

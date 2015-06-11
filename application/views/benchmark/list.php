@@ -37,7 +37,7 @@ if($benchmarks){
 		}
 
  		$benchmarkRow = sprintf("<tr class='benchmark-row' id='benchmark_%s'><td class='benchmark-text' title='%s, %s'>%s</td>",$benchmark->kBenchmark,$currentGrade, $termDisplay,$benchmark->benchmark);
-		$benchmarkRow .= sprintf("<td><a class='link dialog' href='%s'>Edit</a></td>",base_url("benchmark/edit/$benchmark->kBenchmark"));
+		$benchmarkRow .= sprintf("<td><a class='link dialog' href='%s'>Edit</a></td>",site_url("benchmark/edit/$benchmark->kBenchmark"));
 		$benchmarkRow .= sprintf("<td><a class='link dialog' href='%s'>Duplicate</a></td>",site_url("benchmark/duplicate/$benchmark->kBenchmark"));
 		$benchmarkRow .= sprintf("<td><a class='link delete_benchmark' id='delete_%s'>Delete</a></td></tr>",$benchmark->kBenchmark);
 		$table[] = $benchmarkRow;
@@ -58,8 +58,8 @@ $year=get_current_year();
 //      print $chartMessage;
 
 $buttons[] = array("text"=>"New Benchmark","class"=>"new_benchmark new button");
-$buttons[] = array("text"=>"Search for Benchmarks","class"=>"button dialog","href"=>base_url("benchmark/search"));
-$buttons[] = array("text"=>"Edit Chart Legends","class"=>"button dialog edit","href"=>base_url("benchmark_legend/search"));
+$buttons[] = array("text"=>"Search for Benchmarks","class"=>"button dialog","href"=>site_url("benchmark/search"));
+$buttons[] = array("text"=>"Edit Chart Legends","class"=>"button dialog edit","href"=>site_url("benchmark_legend/search"));
 print create_button_bar($buttons);
 ?>
 <?

@@ -37,7 +37,7 @@ if(!empty($conditional_buttons)){
 	<?=$studentName;?>
 </h3>
 <form id="narrativeEditor"
-	action="<?=base_url();?>index.php/narrative/<?=$action;?>"
+	action="<?=site_url("narrative/$action");?>"
 	method="post" name="narrativeEditor">
 
 	<?
@@ -110,7 +110,7 @@ window.setInterval(function(){
 
 		$("#ajax").val(1);
 		var formData = $("#narrativeEditor").serialize();
-		var myUrl = base_url + "narrative/" + action;
+		var myUrl = site_url + "narrative/" + action;
 		$.ajax({
 			url: myUrl,
 			type: 'POST',
