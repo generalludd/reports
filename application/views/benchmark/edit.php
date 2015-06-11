@@ -78,7 +78,7 @@
 	<p>
 		<input
 			type="submit"
-			class='save_benchmark button'
+			class='button'
 			value="Save" />
 	</p>
 </form>
