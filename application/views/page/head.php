@@ -13,7 +13,7 @@
 <link type="text/css" rel="stylesheet" media="print" href="<?=base_url("css/print.css")?>" />
 <!-- jquery scripts -->
 <script type="text/javascript">
-var base_url = '<?=base_url("index.php/");?>';
+var base_url = '<?=site_url("index.php") . "/";?>';
 var root_url = '<?=base_url();?>';
 </script>
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>

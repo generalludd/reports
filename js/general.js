@@ -1,6 +1,5 @@
 ﻿$(document).ready(function(){
 //	$('#content').css({height:'500px'});
-
 	$(".refresh").live("click",function(){
 		window.location.reload();
 	});
@@ -311,6 +310,7 @@
 
 
 function showPopup(myTitle,data,popupWidth,x,y){
+	$("#popup").remove();
 	if(!popupWidth){
 		popupWidth=300;
 	}

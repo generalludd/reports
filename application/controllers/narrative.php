@@ -19,7 +19,7 @@ class Narrative extends MY_Controller {
 	function select_type()
 	{
 		$this->load->model ( "subject_model" );
-		$data ["kStudent"] = $this->input->post ( "kStudent" );
+		$data ["kStudent"] = $this->input->get ( "kStudent" );
 		$data ["kTeach"] = $this->session->userdata ( "userID" );
 		$currentTerm = get_current_term ();
 		$data ["term_menu"] = get_term_menu ( "term", $currentTerm );
@@ -32,10 +32,8 @@ class Narrative extends MY_Controller {
 				"subject",
 				"subject" 
 		) );
-		
-		if ($this->input->post ( "ajax" )) {
-			$this->load->view ( $data ["target"], $data );
-		}
+		$this->_view($data);
+	
 	}
 	
 	// @TODO merge narrative report search for student with joins with teacher
@@ -56,9 +54,9 @@ class Narrative extends MY_Controller {
 		$this->load->model ( 'subject_model' );
 		$this->load->model ( "suggestion_model" );
 		
-		$kStudent = $this->input->get_post ( 'kStudent' );
-		$kTeach = $this->input->get_post ( 'kTeach' );
-		$data ['narrSubject'] = $this->input->get_post ( 'narrSubject' );
+		$kStudent = $this->input->get ( 'kStudent' );
+		$kTeach = $this->input->get ( 'kTeach' );
+		$data ['narrSubject'] = $this->input->get ( 'narrSubject' );
 		$data ['narrTerm'] = get_current_term ();
 		$data ['narrYear'] = get_current_year ();
 		$data ['kTeach'] = $kTeach;
@@ -99,9 +97,8 @@ class Narrative extends MY_Controller {
 		
 		// if there is a kTemplate value with the $_POST, then
 		// apply the associated template to the new narrative
-		if ($this->input->post ( 'kTemplate' ) != 0) {
+		if ($kTemplate = $this->input->get ( 'kTemplate' )) {
 			
-			$kTemplate = $this->input->post ( 'kTemplate' );
 			$name = $student->stuNickname;
 			$gender = $student->stuGender;
 			$template = $this->template_model->get ( $kTemplate );
