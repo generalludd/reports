@@ -815,6 +815,7 @@ table.list {
 	padding-bottom: 5px;
 	padding-top: 5px;
 	border-collapse: collapse;
+	font-size: inherit;
 }
 
 table.list thead tr {
