@@ -438,7 +438,7 @@ margin-top: 1em;
   width: 100%;
   padding: .75em 0 0 1em;
   height: 2.5em;
-  min-width: 700px;
+  white-space: nowrap;
   margin-bottom: .5em;
 }
 
