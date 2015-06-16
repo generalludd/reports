@@ -576,6 +576,7 @@ class Narrative extends MY_Controller {
 	 */
 	function show_missing()
 	{
+		
 		$this->load->model ( "subject_model" );
 		$this->load->model ( "student_model" );
 		$this->load->model ( "teacher_model" );
