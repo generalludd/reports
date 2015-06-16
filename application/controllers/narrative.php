@@ -207,7 +207,7 @@ class Narrative extends MY_Controller {
 		// $data["needsButton"] = $this->get_need_button($kStudent);
 		// $data["suggestionsButton"] =
 		// $this->get_suggestion_button($kNarrative);
-		$data ["hasSuggestions"] = TRUE; // $this->suggestion_model->exists($kNarrative);
+		//$data ["hasSuggestions"] = TRUE; // $this->suggestion_model->exists($kNarrative);
 		$data ["target"] = "narrative/edit";
 		$data ["action"] = "update";
 		$data ["title"] = "Editing Narrative Report for $studentName for $narrative->narrSubject";
@@ -339,7 +339,7 @@ class Narrative extends MY_Controller {
 		$data ['target'] = "narrative/view";
 		$data ['title'] = "Viewing Narrative Report for $studentName for $narrative->narrSubject";
 		// @TODO edits/suggestions checking.
-		$data ["hasSuggestions"] = $this->suggestion_model->exists ( $kNarrative );
+		//$data ["hasSuggestions"] = $this->suggestion_model->exists ( $kNarrative );
 		$data ["backups"] = $this->backup_model->get_all ( $kNarrative );
 		$data ['studentName'] = $studentName;
 		$data ['recModifier'] = $this->teacher_model->get ( $narrative->recModifier, 'teachFirst,teachLast' );

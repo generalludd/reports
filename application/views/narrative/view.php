@@ -6,26 +6,26 @@ $report_grade = $narrative->narrGrade;
 if ($letter_grade) {
 	$report_grade = $letter_grade;
 }
-?><h3><?="$studentName: $narrative->narrSubject for Grade $stuGrade, $narrative->narrTerm $narrative->narrYear";?></h3><p>	<a href="<?=site_url("narrative/student_list/$narrative->kStudent");?>" class='button'>Back to Narratives</a></p><p>	<span class='highlight'>Last Modified: <?=format_timestamp( $narrative->recModified); ?> by <?="$recModifier->teachFirst $recModifier->teachLast"; ?></span></p><p>Written by: <?=$teacher;?></p><? if($hasSuggestions): ?><p>	<span class="highlight">Has Suggested Edits</span></p><? endif; ?><!-- middle schoolers get letter grades in some classes --><? if($stuGrade >= 5): ?><p>Report Grade: <?=$report_grade; ?></p><? endif; ?><?php
+?><h3><?="$studentName: $narrative->narrSubject for Grade $stuGrade, $narrative->narrTerm $narrative->narrYear";?></h3><p>	<a href="<?=site_url("narrative/student_list/$narrative->kStudent");?>" class='button'>Back to Narratives</a></p><p>	<span class='highlight'>Last Modified: <?=format_timestamp( $narrative->recModified); ?> by <?="$recModifier->teachFirst $recModifier->teachLast"; ?></span></p><p>Written by: <?=$teacher;?></p> <? //if($hasSuggestions): ?><!-- <p> --><!-- 	<span class="highlight">Has Suggested Edits</span> --><!-- </p> --> <? //endif; ?><!-- middle schoolers get letter grades in some classes --><? if($stuGrade >= 5): ?><p>Report Grade: <?=$report_grade; ?></p><? endif; ?><?php
 
 
 $buttons [] = array (
 		"text" => "Edit Original",
-		"href" => base_url ( "narrative/edit/$narrative->kNarrative" ),
+		"href" => site_url ( "narrative/edit/$narrative->kNarrative" ),
 		"class" => "button edit",
 		"id" => "n_$narrative->kNarrative" 
 ); // ,
 if ($benchmarks_available) {
 	$buttons [] = array (
 			"text" => "Edit Benchmarks",
-			"href" => base_url ( "benchmark/edit_for_student/$narrative->kNarrative" ),
+			"href" => site_url ( "benchmark/edit_for_student/$narrative->kNarrative" ),
 			"class" => "button dialog" 
 	);
 }
 if ($backups) {
 	$buttons [] = array (
 			"text" => "Show Backups",
-			"href" => base_url ( "narrative/list_backups/$narrative->kNarrative" ) 
+			"href" => site_url ( "narrative/list_backups/$narrative->kNarrative" ) 
 	);
 }
 print create_button_bar ( $buttons );

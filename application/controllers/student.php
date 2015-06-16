@@ -94,11 +94,7 @@ class Student extends MY_Controller
                 ));
         $data["target"] = "student/edit";
         $data["title"] = "Add a New Student";
-        if ($this->input->post("ajax")) {
-            $this->load->view($data["target"], $data);
-        } else {
-            $this->load->view("page/index", $data);
-        }
+        $this->_view($data);
     }
 
     /**
@@ -143,7 +139,7 @@ class Student extends MY_Controller
                             "teacher"
                     ));
             $data["target"] = "student/edit";
-            $data["title"] = "Add a New Student";
+            $data["title"] = sprintf("Edit %s",format_name($student->stuFirst, $student->stuLast, $student->stuNickname));
             if ($this->input->post("ajax")) {
                 $this->load->view($data["target"], $data);
             } else {

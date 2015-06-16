@@ -5,6 +5,7 @@ if(get_value($preference,"pass_fail") == 1){
 	$pass_fail_check = "checked";
 }
 ?>
+<h3><?php echo $title;?></h3>
 <form name="grade-preference-editor" id="grade-preference-editor" action="<?=site_url("grade_preference/$action");?>" method="post">
 <input type="hidden" name= "kStudent" id="kStudent" value="<?=$kStudent;?>"/>
 <p>

@@ -142,10 +142,10 @@ if (! empty ( $assignments )) {
 				$current_student = $grade->kStudent;
 				$student_points = 0;
 				
-				$href = base_url ( sprintf ( "grade/report_card?kStudent=%s&year=%s&term=%s&subject=%s&print=true", $grade->kStudent, $this->input->cookie ( "year" ), $this->input->cookie ( "term" ), $header->subject ) );
+				$href = site_url ( sprintf ( "grade/report_card?kStudent=%s&year=%s&term=%s&subject=%s&print=true", $grade->kStudent, $this->input->cookie ( "year" ), $this->input->cookie ( "term" ), $header->subject ) );
 				$rows [$grade->kStudent] ["edit-button"] = sprintf ( "<td class='student-button'>%s</td>", create_button ( array (
 						"text" => "Edit",
-						"href" => base_url ( "grade/edit/$grade->kStudent/$grade->kTeach" ),
+						"href" => site_url ( "grade/edit/$grade->kStudent/$grade->kTeach" ),
 						"class" => array (
 								"button",
 								"edit",

@@ -10,9 +10,8 @@ class Grade_preference extends MY_Controller
         $this->load->model("grade_preference_model", "preference");
     }
 
-    function edit ()
+    function edit ($id)
     {
-        $id = $this->input->get("id");
         $data["action"] = "update";
         $data["preference"] = $this->preference->get($id);
         $data["kStudent"] = $data["preference"]->kStudent;
@@ -24,12 +23,14 @@ class Grade_preference extends MY_Controller
                 "subject",
                 "subject"
         ));
-        $this->load->view("grade_preference/edit", $data);
+        $data['title'] = "Editing a Grade Preference";
+        $data['target'] = "grade_preference/edit";
+        
+        $this->_view($data);
     }
 
-    function create ()
+    function create ($kStudent)
     {
-        $kStudent = $this->input->get("kStudent");
         $data["preference"] = "";
         $data["kStudent"] = $kStudent;
 
@@ -41,8 +42,11 @@ class Grade_preference extends MY_Controller
                 "subject",
                 "subject"
         ));
+        $data['title'] = "Adding a Grade Preference";
+        $data['target'] = "grade_preference/edit";
+        
         $data["action"] = "insert";
-        $this->load->view("grade_preference/edit", $data);
+		$this->_view($data);
     }
 
     function view ()

@@ -24,7 +24,7 @@ $buttons[] = array("selection"=>"home", "text"=>"Home", "href" => site_url() );
 $buttons[] = array("selection" =>"search", "text" => '<input type="text" id="stuSearch" name="stuSearch" size="20" value="find students" />', "type" => "pass-through");
 
 if($dbRole == 1){
-	$buttons[] = array("selection" => "student", "text" => "New Student", "class" => array("button","new","add_student"), "type"=>"span", "title" => "Add a new student to the database");
+	$buttons[] = array("selection" => "student", "text" => "New Student", "class" => array("button","new","dialog"), "href"=>site_url("student/create"), "title" => "Add a new student to the database");
 	$buttons[] = array("selection" => "attendance" , "text" => "Search Attendance", "class" => array("button","dialog"), "href" => site_url("attendance/show_search"), "title" => "Search attendance records");
 	$buttons[] = array("selection" => "teacher", "text" => "List Teachers", "href" => site_url("teacher?gradeStart=0&gradeEnd=8"), "title" => "List all the teachers &amp; other users in the database");
 	$buttons[] = array("selection" => "narrative", "text" => "Narrative Search &amp; Replace", "href" => site_url("narrative/search"), "title" => "Search &amp; Replace Narrative Text");

@@ -23,7 +23,7 @@ No
 <?endif;?>
 </td>
 <td style="width: 150px;">
-<span class="button edit small edit-grade-preference" id="edit-grade-preference_<?=$preference->id;?>">Edit</span>&nbsp;
+<a class="button edit small dialog" href="<?php echo site_url("grade_preference/edit/$preference->id");?>">Edit</a>&nbsp;
 <span class="button small delete delete-grade-preference" style="float:none;" id="delete-grade-preference_<?=$preference->id;?>">Delete</span>
 </td>
 </tr>

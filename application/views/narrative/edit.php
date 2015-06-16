@@ -20,11 +20,11 @@ $conditional_bar = FALSE;
 if($hasNeeds){
 	$conditional_buttons[] = array("selection" => "support", "text" => "Show Learning Support", "class" => "button show_support", "type" => "span", "id" => "need_$hasNeeds->kSupport");
 }
-
+/*
 if($hasSuggestions){
 	$conditional_buttons[] = array("selection" => "suggestions", "text"=>"View Suggested Edits", "class" => "button view_edits", "type" => "span", "id" => "edit_$narrative->kNarrative");
 }
-
+*/
 if(!empty($conditional_buttons)){
 	$conditional_bar = create_button_bar($conditional_buttons);
 }

@@ -57,7 +57,7 @@ if (isset($options)) {
 ?>
 
 	<div class="button-box">
-		<a class="button dialog" href="<?php echo base_url("report/search?report_type=$report_type&report_key=$report_key");?>">Refine Search</a>
+		<a class="button dialog" href="<?php echo site_url("report/search?report_type=$report_type&report_key=$report_key");?>">Refine Search</a>
 	</div>
 </fieldset>
 <? if(!empty($reports)): ?>
