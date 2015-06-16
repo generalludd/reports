@@ -8,6 +8,10 @@
 	padding: 5px;
 	margin: 5px;
 }
+div.warning,div.message,div.notice {
+	padding: 1em;
+	margin: 1em 0;
+}
 
 .button {
 	-border-radius: 3px;

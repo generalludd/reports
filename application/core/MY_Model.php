@@ -9,7 +9,7 @@ class MY_Model extends CI_Model {
     }
 
     function _log($target = "notice",$live_server = FALSE){
-       if($_SERVER['HTTP_HOST'] == "test-reports.server.fsmn" || $live_server == TRUE){
+       if($_SERVER['HTTP_HOST'] == "reports" || $live_server == TRUE){
            $this->session->set_flashdata($target, $this->db->last_query());
        }
     }

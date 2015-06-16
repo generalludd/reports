@@ -644,6 +644,8 @@ class Narrative extends MY_Controller {
 					$grades = $this->assignment->get_for_student ( $kStudent, $narrative->narrTerm, $narrative->narrYear, $grade_options );
 					if ($narrative->narrTerm == "Year-End") {
 						$mid_year_grades = $this->assignment->get_for_student ( $kStudent, "Mid-Year", $narrative->narrYear, $grade_options );
+				
+					$final_grades = $this->assignment->get_for_student($kStudent, FALSE,$narrative->narrYear,$grade_options);
 					}
 					// change the narrGrade value if no grades have been entered
 					// for this student.
@@ -662,6 +664,7 @@ class Narrative extends MY_Controller {
 							if ($mid_year_grade) {
 								$data ['mid_year_grades'] [$narrative->narrSubject] = calculate_letter_grade ( $mid_year_grade, $pass_fail );
 									$data ['year_grade'] [$narrative->narrSubject] ['percent'] = $pass_fail?NULL:($letter_grade + $mid_year_grade) / 2;
+									$data['final_grade'][$narrative->narrSubject] = calculate_final_grade($final_grades);
 								$data ['year_grade'] [$narrative->narrSubject] ['grade'] = calculate_letter_grade ( ($letter_grade + $mid_year_grade) / 2, $pass_fail );
 							} else {
 								$data ['mid_year_grades'] [$narrative->narrSubject] = "Not Enrolled";

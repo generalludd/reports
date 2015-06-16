@@ -62,6 +62,11 @@
 
 <body class='narrative-report'>
 	<div class='control_panel no-print'>
+	<?php if($this->session->flashdata("warning")):?>
+	<div class="warning">
+	<?php print $this->session->flashdata("warning");?>
+	</div>
+	<?php endif; ?>
 		<span class='font_label'>Font Size:</span> <span
 			class='button increaseFont'>Increase</span>&nbsp; <span
 			class='button resetFont'>Reset</span>&nbsp; <span
@@ -109,11 +114,12 @@
 			if ($narrTerm == "Year-End"  && $submits_report_card == "yes") {
 
 				printf ( "<div class='grade'>Mid-Year Term Grade: %s</div>", $mid_year_grades [$narrative->narrSubject] );
-				$final_grade = $year_grade [$narrative->narrSubject]['percent'] ;
-				if($final_grade){
-					$final_grade = sprintf(" (%s&#037;)",$final_grade);
+				//$final_grade = $year_grade [$narrative->narrSubject]['percent'] ;
+				$final_grade_output = FALSE;
+				if($final_grade[$narrative->narrSubject]){
+					$final_grade_output = sprintf(" (%s&#037;)",$final_grade[$narrative->narrSubject]);
 				}
-				printf ( "<div class='grade'>%s Final Grade: %s%s</div>", $narrative->narrSubject,$year_grade [$narrative->narrSubject]['grade'] , $final_grade );
+				printf ( "<div class='grade'>%s Final Grade: %s%s</div>", $narrative->narrSubject,$year_grade [$narrative->narrSubject]['grade'] , $final_grade_output );
 			}
 			// @TODO modify insert chart issues here.
 			$data ['legend'] = $this->legend->get_one ( array (
