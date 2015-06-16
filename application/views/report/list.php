@@ -25,16 +25,6 @@ if ($report_type == "student") {
     ));
 }
 ?>
-<input
-	type="hidden"
-	id="report_type"
-	name="report_type"
-	value="<?=$report_type;?>" />
-<input
-	type="hidden"
-	id="report_key"
-	name="report_key"
-	value="<?=$report_key;?>" />
 <fieldset class="search_fieldset">
 	<legend>Search Parameters</legend>
 	<?
@@ -67,7 +57,7 @@ if (isset($options)) {
 ?>
 
 	<div class="button-box">
-		<a class="button report_search">Refine Search</a>
+		<a class="button dialog" href="<?php echo base_url("report/search?report_type=$report_type&report_key=$report_key");?>">Refine Search</a>
 	</div>
 </fieldset>
 <? if(!empty($reports)): ?>
@@ -144,7 +134,7 @@ if (isset($options)) {
 			</td>
 			<td class='field buttons'><a
 				href="<?=site_url("report/edit/$report->kReport");?>"
-				class="button edit">Edit</a></td>
+				class="button edit dialog">Edit</a></td>
 
 			<?
 

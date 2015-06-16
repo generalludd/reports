@@ -67,7 +67,7 @@ $default_row_style = array("student-row","row");
 		$buttons[] = array("selection" => "support","href" => site_url("support/list_all/$student->kStudent"), "class" => "button", "text" => "Learning Support");
 		if($stuGrade >=5) {
 			$buttons[] = array("selection" => "report", "href" => site_url("report/get_list/student/$student->kStudent"), "class" => "button","text" => sprintf("%ss",STUDENT_REPORT));
-			$buttons[] = array("selection" => "report","href" => site_url("report/create/$student->kStudent"), "text" => sprintf("Add %s",STUDENT_REPORT), "class" => "button new report-add",
+			$buttons[] = array("selection" => "report","href" => site_url("report/create/$student->kStudent"), "text" => sprintf("Add %s",STUDENT_REPORT), "class" => "button new dialog",
 					"id" => sprintf("add-report_%s", $student->kStudent));
 			$buttons[] = array("selection" => "grade/report_card", "class"=> "button dialog", "id"=> sprintf("gss_%s",$student->kStudent), "text" => "Grades", "href" => site_url("grade/select_report_card/$student->kStudent"));
 

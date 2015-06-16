@@ -49,11 +49,8 @@ class Report extends MY_Controller
 		$data["action"] = "insert";
 		$data["title"] = sprintf("Adding an %s for %s", STUDENT_REPORT, $data["student"]);
 		$data["target"] = "report/edit";
-		if($this->input->get("ajax")){
-			$this->load->view($data["target"], $data);
-		}else{
-			$this->load->view("page/index",$data);
-		}
+		$this->_view($data);
+		
 	}
 
 	/**
@@ -111,11 +108,7 @@ class Report extends MY_Controller
 		$data["action"] = "update";
 		$data["title"] = sprintf("Editing an %s for %s", STUDENT_REPORT, $data["student"]);
 		$data["target"] = "report/edit";
-		if($this->input->get("ajax")){
-			$this->load->view($data["target"],$data);
-		}else{
-			$this->load->view("page/index",$data);
-		}
+		$this->_view($data);
 	}
 
 	/**
@@ -182,7 +175,8 @@ class Report extends MY_Controller
 		$data["categories"] = get_keyed_pairs($this->menu->get_pairs("report_category"),array("value","label"),TRUE);
 
 		$data["title"] = sprintf("Searching for %ss submitted %s %s",STUDENT_REPORT,$preposition,$name);
-		$this->load->view("report/search",$data);
+		$data["target"] = "report/search";
+		$this->_view($data);
 	}
 
 	/**
