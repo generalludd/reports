@@ -109,7 +109,11 @@
 			if ($narrTerm == "Year-End"  && $submits_report_card == "yes") {
 
 				printf ( "<div class='grade'>Mid-Year Term Grade: %s</div>", $mid_year_grades [$narrative->narrSubject] );
-				printf ( "<div class='grade'>%s Final Grade: %s (%s&#037;)</div>", $narrative->narrSubject,$year_grade [$narrative->narrSubject]['grade'] , $year_grade [$narrative->narrSubject]['percent'] );
+				$final_grade = $year_grade [$narrative->narrSubject]['percent'] ;
+				if($final_grade){
+					$final_grade = sprintf(" (%s&#037;)",$final_grade);
+				}
+				printf ( "<div class='grade'>%s Final Grade: %s%s</div>", $narrative->narrSubject,$year_grade [$narrative->narrSubject]['grade'] , $final_grade );
 			}
 			// @TODO modify insert chart issues here.
 			$data ['legend'] = $this->legend->get_one ( array (

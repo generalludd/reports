@@ -32,8 +32,7 @@ class Narrative extends MY_Controller {
 				"subject",
 				"subject" 
 		) );
-		$this->_view($data);
-	
+		$this->_view ( $data );
 	}
 	
 	// @TODO merge narrative report search for student with joins with teacher
@@ -535,7 +534,7 @@ class Narrative extends MY_Controller {
 		}
 		$data ["title"] = "Searching Teacher Narratives";
 		$data ["target"] = "narrative/teacher_search";
-		$this->_view($data);
+		$this->_view ( $data );
 	}
 
 	/**
@@ -564,7 +563,7 @@ class Narrative extends MY_Controller {
 		) );
 		$data ["target"] = "narrative/search_missing";
 		$data ["title"] = "Search for Missing Narratives";
-		$this->_view($data);
+		$this->_view ( $data );
 	}
 
 	/**
@@ -576,7 +575,6 @@ class Narrative extends MY_Controller {
 	 */
 	function show_missing()
 	{
-		
 		$this->load->model ( "subject_model" );
 		$this->load->model ( "student_model" );
 		$this->load->model ( "teacher_model" );
@@ -663,11 +661,11 @@ class Narrative extends MY_Controller {
 							// the term--assumes student was not enrolled.
 							if ($mid_year_grade) {
 								$data ['mid_year_grades'] [$narrative->narrSubject] = calculate_letter_grade ( $mid_year_grade, $pass_fail );
-								$data ['year_grade'] [$narrative->narrSubject] ['percent'] = ($letter_grade + $mid_year_grade) / 2;
-								$data ['year_grade'] [$narrative->narrSubject] ['grade'] = calculate_letter_grade ( ($letter_grade + $mid_year_grade) / 2,$pass_fail );
+									$data ['year_grade'] [$narrative->narrSubject] ['percent'] = $pass_fail?NULL:($letter_grade + $mid_year_grade) / 2;
+								$data ['year_grade'] [$narrative->narrSubject] ['grade'] = calculate_letter_grade ( ($letter_grade + $mid_year_grade) / 2, $pass_fail );
 							} else {
 								$data ['mid_year_grades'] [$narrative->narrSubject] = "Not Enrolled";
-								$data ['year_grade'] [$narrative->narrSubject] ['percent'] = $letter_grade;
+								$data ['year_grade'] [$narrative->narrSubject] ['percent'] = $pass_fail?NULL: $letter_grade;
 								$data ['year_grade'] [$narrative->narrSubject] ['grade'] = calculate_letter_grade ( $letter_grade, $pass_fail );
 							}
 						}
