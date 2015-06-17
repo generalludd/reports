@@ -268,15 +268,12 @@ div.narrative {
 	visibility: hidden;
 }
 
-.button,#navigation,#advancedSearch,#searchForm fieldset,h2,h3,h4,h5,.support-view legend,input[type="submit"],#navigation input[type="text"]
-	{
+.button,#advancedSearch,#searchForm fieldset,h2,h3,h4,h5,.support-view legend,input[type="submit"], input[type="text"]	{
 	-moz-border-radius: 3px;
 	-webkit-border-radius: 3px;
 	border-radius: 3px;
 }
-#navigation .button{
-	margin: 0;
-}
+
 
 .button {
 	text-align: center;
@@ -307,6 +304,7 @@ a,.button {
 #navigation input[type="text"] {
 	height: 18px;
 	border: 1px solid transparent;
+	border-radius: 0;
 }
 
 .unread {
@@ -345,15 +343,12 @@ ul.button-list {
 
 ul.button-list li {
 	display: inline-block;
-	padding: .35em 0 .35em .25em
+	padding:0;
 }
 
-ul.button-list li.first {
-	padding-left: 0;
-}
 
 ul.button-list li .button {
-	margin: 0 5px;
+	margin: 0;
 }
 
 ul.button-list li .button.delete {
@@ -427,17 +422,12 @@ legend {
 	margin:0;
 }
 
-#navigation,#advancedSearch {
-	padding: 1px;
-}
+
 
 #navigation {
-margin-top: 1em;
   display: inline-block;
   position: relative;
   width: 100%;
-  padding: .75em 0 0 1em;
-  height: 2.5em;
   white-space: nowrap;
   margin-bottom: .5em;
 }
@@ -445,33 +435,6 @@ margin-top: 1em;
 #navigation ul {
 	padding: 0;
 	margin: 0;
-}
-
-#navigation li {
-	display: inline;
-	margin-left: 0.25em;
-	margin-top: 0.5em;
-	margin-left: 0.25em;
-	/*border-left-width:0.1em;
-	border-left-style:solid;*/
-}
-
-#navigation li:first-child {
-	display: inline;
-	padding-left: 0;
-	margin-left: 0;
-	/*border-left:none;*/
-}
-
-#navigation li a a {
-	text-decoration: none;
-}
-
-#navigation .button-box {
-	float: left;
-	top: 2px;
-	position: absolute;
-	width: 100%;
 }
 
 #utility {
@@ -562,7 +525,6 @@ input[type="text"].year,#yearEnd {
 	margin-left: auto;
 	width: 50%;
 	min-width: 500px;
-	width: 50%;
 }
 
 #advancedSearch h5 {

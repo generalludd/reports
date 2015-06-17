@@ -75,6 +75,9 @@ function create_button ($data)
         if (array_key_exists("title", $data)) {
             $title = "title ='" . $data["title"] . "'";
         }
+        
+
+        
         if ($type != "pass-through") {
 
             if (array_key_exists("class", $data)) {
@@ -87,6 +90,9 @@ function create_button ($data)
                 $data["class"] = array(
                         "button"
                 );
+            }
+            if(array_key_exists("position",$data)){
+            	 $data["class"][] = $data["position"];
             }
             if (array_key_exists("selection", $data) && preg_match("/" . str_replace("/", "\/", $data["selection"]) . "/", $_SERVER['REQUEST_URI'])) {
                 $data["class"][] = "active";
@@ -151,17 +157,20 @@ function create_button_bar ($buttons, $options = NULL)
 
     // the "selection" option indicates the page in the interface. Currently as
     // indicated by the uri->segment(1)
-    foreach ($buttons as $button) {
-        /*
-         * if($button["selection"] == $selection){
-         * if(array_key_exists("class",$button)){ $button["class"] .= " active";
-         * }else{ $button["class"] = "button active"; } }
-         */
-        $button_list[] = create_button($button);
+    for ($i = 0; $i < count($buttons); $i++) {
+    	$button = $buttons[$i];
+    	$position = "middle";
+      if($i == 0){
+      	$position = "first";
+      }
+      if($i == count($buttons) -1){
+      	$position = "last";
+      }
+        $button_list[] = sprintf("<li class='%s'>%s</li>",$position,create_button($button));
     }
 
-    $contents = implode("</li><li>", $button_list);
-    $template = "<ul class='button-list'><li class='first'>$contents</li></ul>";
+    $contents = implode("\r", $button_list);
+    $template = "<ul class='button-list'>$contents</ul>";
     $output = "<div class='button-box $class'  $id>$template</div>";
     return $output;
 }

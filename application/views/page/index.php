@@ -24,12 +24,12 @@ $body_classes[] = $this->uri->segment(1);
 <? else: ?>
 <div id='page-title'>Friends School Student Information System</div>
 <? endif;?>
-<nav id="top-nav">
+<div id="top-nav">
 <div id='utility'><? $this->load->view('page/utility');?></div>
-<div id='navigation'>
+<nav id='navigation'>
 <?  $this->load->view('page/navigation'); ?>
-</div>
 </nav>
+</div>
 </div>
 <?php endif; ?>
 
