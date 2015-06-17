@@ -338,7 +338,7 @@ a.button {
 
 ul.button-list {
 	list-style: none;
-	padding-left: 0px;
+	padding-left: 0;
 }
 
 ul.button-list li {
@@ -936,8 +936,7 @@ fieldset .button-box {
 }
 
 .button-box {
-	margin-top: .5em;
-	*padding-bottom: .5em;
+	padding: 1px 0;
 }
 
 .button-list .link {

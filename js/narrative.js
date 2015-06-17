@@ -207,64 +207,7 @@ $(document).ready(function() {
 
 		});// end new_narrative.click
 
-
-
 	
-	$('.view_edits').live('click',function() {
-		 form_data = {
-				kNarrative: $('#kNarrative').val()
-		};
-		 myUrl = base_url + "suggestion/view";
-		$.get('ajax.switch.php', {
-			target : 'narrative',
-			action_task : "show_edits",
-			kNarrative : myNarrative
-		}, function(data) {
-			showSidebar('Proposed Changes', data,
-					'95%', '60%', '35%');
-			$('#sidebarContainer').animate( {
-				top : '25%'
-			});
-		});// end get
-	});// end show_edits
-		
-	
-	$(".delete_edits").live('click', function(){
-			var myNarrative = $("#kNarrative").val();
-			action = confirm("Are you sure you want to delete these edits? This cannot be undone!");
-			if(action) {
-				second_action = confirm("Are you really sure? There is no going back here except to redo your edits. (The original narrative is not affected)");
-				if(second_action) {
-					$.post('ajax.switch.php', 
-					 {
-						target: 'narrative',
-						action_task: "delete_suggestions",
-						kNarrative: myNarrative
-					 }, function(data){
-						 document.location = "index.php?target=narrative&action_task=view&kNarrative=" + myNarrative;
-					 });
-				}
-			}
-		});
-
-	
-	$('.suggest_phrases').live('click',function(event) {
-		alert("Due to quirks in the suggested-phrase system, this feature is currently disabled. Thank you for your patience and continued patronage while we (I) work on this problem!");
-		return false;
-		var myTeacher = $('#kTeach').val();
-		var mySubject = $('#narrSubject').val();
-		var myStudent = $('#kStudent').val();
-		$.get('ajax.switch.php', {
-			target : 'template',
-			action_task : 'suggest_phrases',
-			kStudent : myStudent,
-			subject : mySubject
-		}, function(data) {
-			showSidebar('Suggested Phrases',
-					data, '95%', '65%', '25%');
-	
-		});// end get
-	});// end suggest_phrases.click
 
 	$('.return_to_narrative').live('click', function(event) {
 		var myNarrative = this.id.split('_')[1];

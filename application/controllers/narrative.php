@@ -51,7 +51,6 @@ class Narrative extends MY_Controller {
 		$this->load->model ( 'teacher_model' );
 		$this->load->model ( 'template_model' );
 		$this->load->model ( 'subject_model' );
-		$this->load->model ( "suggestion_model" );
 		
 		$kStudent = $this->input->get ( 'kStudent' );
 		$kTeach = $this->input->get ( 'kTeach' );
@@ -106,9 +105,6 @@ class Narrative extends MY_Controller {
 		
 		// check to see if the student has special needs
 		$data ["hasNeeds"] = $this->support_model->get_current ( $kStudent, "kSupport" );
-		// there are no suggestions for this report. The suggestions system has
-		// been deprecated due to lack of usefulness.
-		$data ["hasSuggestions"] = NULL;
 		$data ['target'] = 'narrative/edit';
 		$data ['title'] = "Add a Narrative for $student->stuFirst $student->stuLast";
 		$this->load->view ( 'page/index', $data );
@@ -148,7 +144,6 @@ class Narrative extends MY_Controller {
 		$this->load->model ( "template_model" );
 		$this->load->model ( "subject_model" );
 		$this->load->model ( "support_model" );
-		$this->load->model ( "suggestion_model" );
 		
 		$kNarrative = $this->uri->segment ( 3 );
 		
@@ -204,10 +199,6 @@ class Narrative extends MY_Controller {
 				$data ['default_grade'] = $narrative->narrGrade;
 			}
 		}
-		// $data["needsButton"] = $this->get_need_button($kStudent);
-		// $data["suggestionsButton"] =
-		// $this->get_suggestion_button($kNarrative);
-		//$data ["hasSuggestions"] = TRUE; // $this->suggestion_model->exists($kNarrative);
 		$data ["target"] = "narrative/edit";
 		$data ["action"] = "update";
 		$data ["title"] = "Editing Narrative Report for $studentName for $narrative->narrSubject";
@@ -289,7 +280,6 @@ class Narrative extends MY_Controller {
 	{
 		$this->load->model ( 'student_model' );
 		$this->load->model ( 'teacher_model' );
-		$this->load->model ( 'suggestion_model' );
 		$this->load->model ( 'benchmark_model' );
 		$this->load->model ( 'benchmark_legend_model', 'legend' );
 		$this->load->model ( 'backup_model' );
@@ -338,8 +328,6 @@ class Narrative extends MY_Controller {
 		$studentName = format_name ( $narrative->stuFirst, $narrative->stuLast, $narrative->stuNickname );
 		$data ['target'] = "narrative/view";
 		$data ['title'] = "Viewing Narrative Report for $studentName for $narrative->narrSubject";
-		// @TODO edits/suggestions checking.
-		//$data ["hasSuggestions"] = $this->suggestion_model->exists ( $kNarrative );
 		$data ["backups"] = $this->backup_model->get_all ( $kNarrative );
 		$data ['studentName'] = $studentName;
 		$data ['recModifier'] = $this->teacher_model->get ( $narrative->recModifier, 'teachFirst,teachLast' );
@@ -368,7 +356,6 @@ class Narrative extends MY_Controller {
 		$this->load->model ( "student_model" );
 		$this->load->model ( "teacher_model" );
 		$this->load->model ( "subject_model" );
-		$this->load->model ( "suggestion_model" );
 		$this->load->model ( "subject_sort_model" );
 		
 		$data ["defaultYear"] = get_current_year ();
