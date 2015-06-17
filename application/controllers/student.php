@@ -100,10 +100,9 @@ class Student extends MY_Controller
     /**
      * display an edit interface for
      */
-    function edit ()
+    function edit ($kStudent)
     {
-        if ($this->input->post("kStudent")) {
-            $kStudent = $this->input->post("kStudent");
+        if ($kStudent) {
             $student = $this->student_model->get($kStudent);
             if (empty($student->stuEmail) &&
                      get_current_grade($student->baseGrade, $student->baseYear,
@@ -140,11 +139,7 @@ class Student extends MY_Controller
                     ));
             $data["target"] = "student/edit";
             $data["title"] = sprintf("Edit %s",format_name($student->stuFirst, $student->stuLast, $student->stuNickname));
-            if ($this->input->post("ajax")) {
-                $this->load->view($data["target"], $data);
-            } else {
-                $this->load->view("page/index", $data);
-            }
+            $this->_view($data);
         }
     }
 
