@@ -2,7 +2,7 @@
 
 // batch_insert.php Chris Dart Jan 28, 2015 4:23:12 PM chrisdart@cerebratorium.com
 $buttons[] = array(	"text" => "New Grade Search",
-		"href"=>site_url"assignment/search/$kTeach"),
+		"href"=>site_url("assignment/search/$kTeach"),
 		"class" => "button dialog",
 		"selection" => "grades" );
  if($kTeach == $this->session->userdata("userID")){

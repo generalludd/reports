@@ -11,19 +11,19 @@ if ($stuGroup) {
 	$gradeDisplay = sprintf ( "%s %s", $gradeDisplay, $stuGroup );
 }
 
-$buttons ["refresh_page"] = array (
+$buttons [] = array (
 		"text" => "Refresh Page",
 		"class" => "button refresh",
 		"selection" => "grades" 
 );
-$buttons ["grade_search"] = array (
+$buttons [] = array (
 		"text" => "New Grade Search",
 		"href"=>site_url("assignment/search/$kTeach"),
 		"class" => "button dialog",
 		"selection" => "grades" 
 );
 if ($kTeach == $this->session->userdata ( "userID" )) {
-	$buttons ["edit_categories"] = array (
+	$buttons [] = array (
 			"text" => "Edit Categories",
 			"class" => "button edit dialog",
 			"selection" => "grades",
@@ -31,7 +31,7 @@ if ($kTeach == $this->session->userdata ( "userID" )) {
 	);
 }
 if (get_cookie ( "beta_tester" )) {
-	$buttons ["create_batch"] = array (
+	$buttons [] = array (
 			"text" => "Batch Insert (BETA)",
 			"selection" => "",
 			"title" => "Insert batches of assignments at once (Beta!)",
@@ -39,7 +39,7 @@ if (get_cookie ( "beta_tester" )) {
 			"class" => "button edit" 
 	);
 }
-$buttons ["batch_print_grades"] = array (
+$buttons [] = array (
 		"text" => "Batch Print Grades",
 		"title" => "Print report cards for this subject for all the selected students",
 		"class" => "button print batch-print-grades",

@@ -4,7 +4,7 @@ if($this->session->userdata("dbRole") == 1 && $kTeach != $this->session->userdat
 	$buttons[] = array("selection" => "narrative", "href" => site_url("narrative/search_teacher_narratives/$kTeach"), "text" => "List Narratives", "class"=>array("button","dialog"),"id"=>"tns_$kTeach");
 	$buttons[] = array("selection" => "template/list_templates", "href"=>  site_url("template/list_templates/?kTeach=$kTeach&term=$term&year=$year") , "text" => "Subject Templates" );
 	if($teacher->gradeEnd > 4){
-		$buttons[] = array("selection" => "assignment", "text" => "Grades","class"=> array("button","search-assignments"),"id" =>"sa_$kTeach","title" => "Search for current grade charts");
+		$buttons[] = array("href" => site_url("assignment/search/$kTeach"), "text" => "Grades","class"=> array("button","dialog"),"id" =>"sa_$kTeach","title" => "Search for current grade charts");
 	}
 	$buttons[] = array("selection" => "student/teacher_student_list", "href"=>site_url("student/teacher_student_list/$kTeach"), "text"=>"List Students");
 	$buttons[] = array("selection" => "narrative/teacher_list", "href"=> site_url("narrative/teacher_list/$kTeach/print"), "text" => "Print Narratives" );
