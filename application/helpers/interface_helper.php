@@ -166,7 +166,7 @@ function create_button_bar ($buttons, $options = NULL)
       if($i == count($buttons) -1){
       	$position = "last";
       }
-        $button_list[] = sprintf("<li class='%s'>%s</li>",$position,create_button($button));
+        $button_list[] = sprintf("<li class='%s'>%s</li>",$position,create_button($buttons[$i]));
     }
 
     $contents = implode("\r", $button_list);
