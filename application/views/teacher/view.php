@@ -1,9 +1,9 @@
 <?php
 
-$buttons["year"] = $year;
-$buttons["term"] = $term;
-$buttons["kTeach"] = $kTeach;
-$button_bar =  $this->load->view("teacher/navigation",$buttons, TRUE);
+$data["year"] = $year;
+$data["term"] = $term;
+$data["kTeach"] = $kTeach;
+$button_bar =  $this->load->view("teacher/navigation",$data, TRUE);
 
 $gradeStart = $teacher->gradeStart;
 $gradeEnd = $teacher->gradeEnd;
