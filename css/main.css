@@ -770,6 +770,10 @@ label {
 	overflow: scroll;
 }
 
+table {
+	font-size: inherit;
+}
+
 table.list td {
 	padding: 5px;
 	border-width: 0px;
