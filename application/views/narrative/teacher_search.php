@@ -1,6 +1,7 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 
 ?>
+<h3><?php echo $title;?></h3>
 <form id="teacher_narratives_search" name="teacher_narratives_search" method="get" action="<?=site_url("narrative/teacher_list");?>">
 <p>
 <label for="kTeach">Teacher:</label>
@@ -19,7 +20,7 @@
 <?=get_term_menu('narrTerm', $narrTerm);?> </p>
 <p>
 <label for="narrYear">Year: </label>
-<?=form_dropdown('narrYear',get_year_list(), $narrYear, "id='narrYear' class='searchYear'");?>
+<?=form_dropdown('narrYear',get_year_list(), $narrYear, "id='narrYear' class='year'");?>
 -<input id="yearEnd" type="text" name="yearEnd" class='yearEnd' readonly
 	maxlength="4" size="5" value="<? $yearEnd=$narrYear+1;print $yearEnd; ?>" /></p>
 <input type="submit" class="button" value="Search"/>

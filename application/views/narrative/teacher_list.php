@@ -37,18 +37,17 @@ if(!empty($options)){
 				echo "<li>" .ucfirst($key) . "<strong>$value</strong></li>";
 		}
 	}
-		
+
 		echo "</ul>";
 
 }else{
 echo "<p>Showing all Users.</p>";
 
 }
-?>
 
-		<div class="button-box">
-			<a class="button teacher_narrative_search" id="tns_<?=$kTeach;?>">Refine Search</a>
-		</div>
+$buttons[] = array("text"=>"Refine Search","href"=>site_url("narrative/search_teacher_narratives/$kTeach"),"class"=>"button dialog");
+print create_button_bar($buttons);
+?>	
 	</fieldset>
 <?
 if(!empty($narratives)){
@@ -82,7 +81,7 @@ if(!empty($narratives)){
 		echo "<p><b>$narrative->narrSubject</b></p>";
 		$edit_buttons[] = array("selection"=>"view","text"=>"View","href"=> site_url("narrative/view/$narrative->kNarrative"), "title"=>"$narrSummary");
 		$edit_buttons[] = array("selection" =>"edit_inline","text"=>"Edit Inline","class" =>"button edit edit_narrative_inline", "id" => "enil_$narrative->kNarrative", "title" => "Edit this narrative here" );
-		
+
 		if($narrative->stuGrade >= 5){
 			$button_type = "new";
 			$button_text = "Add Grade";
@@ -94,7 +93,7 @@ if(!empty($narratives)){
 			//$edit_buttons[] = array("selection" =>"edit_grade","text" => $button_text, "type" => "span", "class" => "button $button_type grade_edit", "id" => "ngedit_$narrative->kNarrative");
 		}
 		$edit_buttons[] = array("selection" => "message", "type" => "span", "class" => "text","text" => "(Last edited on " . format_timestamp($narrative->recModified) . " by $narrative->teachFirst $narrative->teachLast)", "id" => "time_$narrative->kNarrative");
-		
+
 		echo create_button_bar($edit_buttons);
 		echo  "<div id='text_$narrative->kNarrative'>$narrText</div>";
 		$thisTerm = $sortTerm;
@@ -111,13 +110,13 @@ if(!empty($narratives)){
 	echo "not written any reports yet for this term.</p>";
 	?>
 <p>
-<a href="<?=site_url("template/list_templates/?kTeach=$kTeach");?>" class="button">Edit Templates</a> 
-	<a href="<?=site_url("");?>" class='button'>Search for Students</a></p>
+<a href="<?=site_url("template/list_templates/?kTeach=$kTeach");?>" class="button small">Edit Templates</a>
+	<a href="<?=site_url("");?>" class='button small'>Search for Students</a></p>
 
 	<?
 }
 ?>
 <p>
-<a class='button missing_narrative_search' id='mns_<?=$kTeach;?>'>View
+<a class='button small dialog' href="<?php echo site_url("narrative/search_missing/$kTeach");?>">View
 Missing Narratives</a>
 </p>

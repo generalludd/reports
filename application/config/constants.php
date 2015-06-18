@@ -44,11 +44,11 @@ define('FOPEN_READ_WRITE_CREATE_STRICT',		'x+b');
 | These modes are used when working with icons in scripts
 |
 */
-define('OK', "<img src='/images/ok.png' alt='' width='12' height='12' border='0'>"); 
+define('OK', "<img src='/images/ok.png' alt='' width='12' height='12' border='0'>");
 define('X',"<img src='/images/delete.png' alt='' width='12' height='12' border='0'>");
-define('APP_VERSION', "5");
-//familiar name for student reports. 
-define('STUDENT_REPORT','Orange Slip'); 
+define('APP_VERSION', "6.5");
+//familiar name for student reports.
+define('STUDENT_REPORT','Orange Slip');
 
 /* End of file constants.php */
 /* Location: ./application/config/constants.php */

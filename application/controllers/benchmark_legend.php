@@ -142,6 +142,12 @@ class benchmark_legend extends MY_Controller
 		$subjects = $this->subject_model->get_for_teacher($kTeach);
 		$data["subjects"] = get_keyed_pairs($subjects, array("subject","subject"),TRUE);
 		$data["grades"] = $this->teacher_model->get($kTeach,array("gradeStart","gradeEnd"));
-		$this->load->view("benchmark_legend/search", $data);
+		$data["title"] = "Search Benchmarks";
+		$data["target"] = "benchmark_legend/search";
+		if($this->input->get("ajax")){
+		$this->load->view($data["target"], $data);
+		}else{
+			$this->load->view("page/index",$data);
+		}
 	}
 }

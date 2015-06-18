@@ -13,12 +13,13 @@
 }
 
 body {
-	font-size: 12px;
+	font-size: 14px;
 	font-family: tahoma, sans-serif;
 	margin: 10px;
 	padding: 10px;
 	padding-right: 15px;
 	padding-top: 0px;
+	transition: auto .25s ease;
 }
 
 #page {
@@ -36,14 +37,6 @@ body {
 
 .hidden {
 	display: none;
-}
-
-.message {
-	font-size: .9em;
-	padding: 2px;
-	border: 1px solid black;
-	display: none;
-	margin: 3px;
 }
 
 .student_roster {
@@ -119,7 +112,7 @@ div.login-inputs {
 	width: 250px;
 }
 
-.login-inputs input[type="text"] {
+.login-inputs input[type="text"], .login-inputs input[type="password"] , .login-inputs input[type="email"]{
 	font-size: 1.2em;
 }
 
@@ -173,28 +166,17 @@ div.login-title {
 }
 
 /* general notices */
-#notice {
-	position: absolute;
-	top: 25%;
-	left: 15%;
-	overflow: auto;
-	visibility: hidden;
-	float: none;
-	padding: 12px;
-	border-style: solid;
-	border-width: 1px;
-}
 
-.notice {
-	font-size: 1em;
-	font-weight: bold;
+.alert , .message, .warning, .notice {
+	padding: 15px;
+  margin-bottom: 20px;
+  border: 1px solid transparent;
+  border-radius: 4px;
 	cursor: pointer;
-	padding: 3px;
 }
 
-.alert {
-	padding: 3px;
-	font-weight: bold;
+#content .alert {
+	padding: 1em;
 }
 
 #new_popup {
@@ -203,13 +185,7 @@ div.login-title {
 }
 
 /*general display elements */
-.info-box {
-	margin-left: auto;
-	margin-right: auto;
-	width: 950px;
-}
-
-.info-box .content {
+.content.inner {
 	margin-left: auto;
 	margin-right: auto;
 	width: 950px;
@@ -217,7 +193,6 @@ div.login-title {
 }
 
 .page-list .student_list {
-	width: 250px;
 	margin-left: 0;
 }
 
@@ -293,35 +268,43 @@ div.narrative {
 	visibility: hidden;
 }
 
-.button,#navigation,#advancedSearch,#browser_warning,.notice,.warning,#searchForm fieldset,h2,h3,h4,h5,.support-view legend,input[type="submit"],#navigation input[type="text"]
-	{
+.button,#advancedSearch,#searchForm fieldset,h2,h3,h4,h5,.support-view legend,input[type="submit"], input[type="text"]	{
 	-moz-border-radius: 3px;
 	-webkit-border-radius: 3px;
 	border-radius: 3px;
 }
 
+
 .button {
 	text-align: center;
 	position: static;
-	padding: .35em;
+	padding: .75em;
 	border: 1px solid black;
 	cursor: pointer;
 	font-size: 1em;
 	font-weight: normal;
+	transition: all .25s ease;
+	white-space: nowrap;
 }
 
 td .button,.row .button,.button.small {
+	padding-top: .25em;
+	padding-bottom: .25em;
 	font-size: .9em;
-	padding: .35em .5em;
 }
 
-.button:hover {
-	
+td .button {
+	padding: .35em inherit;
+}
+
+a,.button {
+	transition: all .25s ease;
 }
 
 #navigation input[type="text"] {
 	height: 18px;
 	border: 1px solid transparent;
+	border-radius: 0;
 }
 
 .unread {
@@ -339,34 +322,66 @@ td .button,.row .button,.button.small {
 	cursor: pointer;
 }
 
+a.button {
+	text-decoration: none;
+}
+
+.button-box {
+}
+
+.button-bar {
+	margin-top: 5px;
+	margin-bottom: 5px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
+
 ul.button-list {
 	list-style: none;
-	padding-left: 0px;
+	padding-left: 0;
 }
 
 ul.button-list li {
-	display: inline;
-	padding: .35em 0 .35em .25em
+	display: inline-block;
+	padding:0;
 }
 
+
 ul.button-list li .button {
-	margin: 0 5px;
+	margin: 0;
 }
 
 ul.button-list li .button.delete {
-	margin-top: -5px;
+	margin-left: 65%;
+	float: none;
 }
 
 .mini-buttons ul.button-list li .button {
 	margin: 0 1px;
 }
 
-.help {
-	
+.button-bar {
+	margin-top: 0;
+	padding-top: 0;
 }
 
-#utility .button-box {
-	*font-size: .8em;
+.button-bar ul.button-list li {
+	padding: 0;
+}
+
+.button-bar ul.button-list li .button {
+	margin: 0;
+	border-radius: 0;
+	padding: .75em;
+	border-left: 1px solid #666;
+}
+
+.button-bar ul.button-list li.first .button {
+	border-left: none;
+}
+
+.help {
+	
 }
 
 }
@@ -390,7 +405,7 @@ legend {
 #header {
 	padding: 0;
 	position: relative;
-	height: 60px;
+	height: auto;
 }
 
 #page-title {
@@ -399,50 +414,27 @@ legend {
 	font-weight: bold;
 }
 
-#navigation,#advancedSearch {
-	padding: 1px;
+#utility .button-box {
+    margin:0;
 }
 
+#utility ul {
+	margin:0;
+}
+
+
+
 #navigation {
-	position: relative;
-	float: left;
-	width: 100%;
-	padding: .75em 0 0 1em;
-	height: 2.5em;
-	min-width: 700px;
-	margin-bottom: .5em;
+  display: inline-block;
+  position: relative;
+  width: 100%;
+  white-space: nowrap;
+  margin-bottom: .5em;
 }
 
 #navigation ul {
 	padding: 0;
 	margin: 0;
-}
-
-#navigation li {
-	display: inline;
-	margin-left: 0.25em;
-	margin-top: 0.5em;
-	margin-left: 0.25em;
-	/*border-left-width:0.1em;
-	border-left-style:solid;*/
-}
-
-#navigation li:first-child {
-	display: inline;
-	padding-left: 0;
-	margin-left: 0;
-	/*border-left:none;*/
-}
-
-#navigation li a a {
-	text-decoration: none;
-}
-
-#navigation .button-box {
-	float: left;
-	top: 2px;
-	position: absolute;
-	width: 100%;
 }
 
 #utility {
@@ -458,7 +450,6 @@ legend {
 #main {
 	position: relative;
 	padding: 0 5em 2em 2em;
-	margin-top: 2.5em;
 }
 
 #content {
@@ -509,9 +500,8 @@ legend {
 }
 
 /* end div layout elements */
-.search ol {
+ul.search {
 	padding: 0;
-	margin: 0;
 }
 
 .search li {
@@ -524,6 +514,10 @@ legend {
 	text-align: center;
 }
 
+input[type="text"].year,#yearEnd {
+	width: 3em;
+}
+
 #advancedSearch {
 	border-width: 1px;
 	border-style: solid;
@@ -531,7 +525,6 @@ legend {
 	margin-left: auto;
 	width: 50%;
 	min-width: 500px;
-	width: 50%;
 }
 
 #advancedSearch h5 {
@@ -596,9 +589,9 @@ h2 {
 	position: relative;
 	border-style: solid;
 	border-width: 1px;
-	margin-top: 10px;
-	margin-bottom: 10px;;
-	padding: 10px;
+	margin-top: 1em;
+	margin-bottom: 1em;
+	padding: 0;
 }
 
 h3,.support-view legend {
@@ -632,7 +625,7 @@ h3,h4,h5,.support-view legend {
 	margin-top: 4px;
 	margin-bottom: 4px;
 	padding: 5px;
-	padding-left: 10px;
+	padding-left: 0;
 }
 
 /*attendance values*/
@@ -741,28 +734,13 @@ label {
 	height: auto;
 }
 
-.warning {
-	padding: 5px;
-	height: 150px;
-	width: 320px;
-	left: 20px;
-	top: 50px;
-	position: absolute;
-	visibility: hidden;
-}
-
-#browser_warning {
-	font-size: 1.2em;
-	width: 50%;
-	padding: 5px;
-	text-align: center;
-}
 
 #searchForm fieldset {
-	border-width: 1px;
-	margin: 5%; *
-	box-shadow: 3px 3px 5px black;
+	border: 1px solid #eee;
+	margin: 5%; 
+	box-shadow: 2px 2px 3px #999;
 	background-color: white;
+	border-radius: 3px;
 }
 
 #searchForm fieldset label {
@@ -771,31 +749,12 @@ label {
 
 #searchForm fieldset legend {
 	padding: 6px;
-	border-radius: 5px; *
-	box-shadow: 3px 3px 5px black;
-	background-color: #C7D7E9;
+	border-radius: 3px;
+	box-shadow: 3px 3px 5px #999;
 	border-width: 1px;
 	border-style: solid;
-	border-color: #087CD5;
-}
-
-a.button {
-	text-decoration: none;
-}
-
-.button-box {
-	height: 25px;
-}
-
-.button-box .delete {
-	*margin-top: -5px;
-}
-
-.button-bar {
-	margin-top: 5px;
-	margin-bottom: 5px;
-	padding-top: 5px;
-	padding-bottom: 5px;
+	border-color: #eee;
+	background-color: #fff;
 }
 
 #search_list {
@@ -807,27 +766,46 @@ a.button {
 	-moz-box-shadow: 3px 3px 4px #666;
 	-webkit-box-shadow: 3px 3px 4px #666;
 	box-shadow: 3px 3px 4px #666;
+	max-height: 500px;
+	overflow: scroll;
 }
 
 table.list td {
 	padding: 5px;
 	border-width: 0px;
+	vertical-align: top;
 }
 
 table.list {
-	border-spacing: 0px;
 	padding-bottom: 5px;
 	padding-top: 5px;
+	border-collapse: collapse;
+	font-size: inherit;
 }
 
-table.list th {
+table.list thead tr {
 	border-bottom-style: solid;
 	border-bottom-width: 1px;
 	border-bottom-color: #000;
 }
 
-table.list tbody tr {
-	
+table.list thead tr th {
+	text-align: left;
+}
+
+table.grid th,table.grid td {
+	border-left: solid 1px #999;
+	border-right: solid 1px #999;
+	border-top: solid 1px #999;
+	vertical-align: middle;
+}
+
+table.grid thead tr.first th {
+	border-bottom: none;
+}
+
+table.grid tbody tr:last-child {
+	border-bottom: solid 1px #999;
 }
 
 table.files {
@@ -850,8 +828,8 @@ table.files td.file-description {
 	width: 275px;
 }
 
-a.link,input.link {
-	text-decoration: underline;
+a.link,input.link,a {
+	text-decoration: none;
 }
 
 a.link:hover,input.link:hover {
@@ -914,20 +892,24 @@ fieldset.advanced div.advanced {
 }
 
 .search_fieldset {
-	width: 250px;
+	width: 350px;
 	padding-bottom: 20px;
 	padding-left: 10px;
 	padding-right: 10px;
 	display: block;
 	position: relative;
 	margin-bottom: 20px;
+	border-radius: 3px;
+	box-shadow: 3px 3px 5px #999;
+	border: 1px solid #ddd;
 }
 
 .search_fieldset legend {
 	font-size: 1.2em;
 }
 
-.search_fieldset .button-box {
+
+fieldset .button-box {
 	display: block;
 	float: right;
 	position: relative;
@@ -936,11 +918,11 @@ fieldset.advanced div.advanced {
 }
 
 .student-row {
-	width: 500px;
+	/*width: 500px;*/
 	padding-left: 5px;
 }
 
-.studentName {
+.student-name {
 	font-weight: bold;
 	padding-top: .5em;
 	padding-bottom: .5em;
@@ -950,13 +932,16 @@ fieldset.advanced div.advanced {
 	padding-bottom: .5em;
 }
 
-#search_list .studentName {
+#search_list .student-name {
 	padding-top: 0;
 }
 
 .button-box {
-	margin-top: .5em;
-	*padding-bottom: .5em;
+	padding: 1px 0;
+}
+
+.button-list .link {
+	padding: 0 .5em;
 }
 
 ul.buttons {
@@ -1037,6 +1022,7 @@ h4.ui-accordion-header {
 
 table.grade-chart {
 	margin-bottom: 1em;
+	font-size: inherit;
 }
 
 table.report-card,table.grade-chart {
@@ -1065,9 +1051,15 @@ th.assignment-field {
 	position: relative;
 }
 
-th.assignment-field .assignment-column-edit {
-	*position: absolute;
-	*bottom: 0;
+table.grade-chart thead tr:last-child th {
+	font-size: .85em;
+}
+
+th.buttons a, th div.buttons a, th .batch-print-grades {
+	width: 45px;
+	margin: 0 auto;
+	white-space: pre-wrap;
+	display: block;
 }
 
 table.grade-chart th .chart-assignment {
@@ -1084,7 +1076,8 @@ table.grade-chart th .chart-category {
 }
 
 table.grade-chart th.assignment-field {
-	font-size: .85em;
+	font-size: .9em;
+	width: 80px;
 }
 
 table.grade-chart td {
@@ -1115,6 +1108,7 @@ table.grade-editor tbody tr td.grade-value {
 
 table.grade-editor tbody tr td.grade-value input {
 	border: none;
+	min-width:3em;
 }
 
 table.grade-editor thead tr th {
@@ -1136,6 +1130,11 @@ table.report-card th,table.report-card td {
 
 table.report-card .notes-column {
 	border: none;
+}
+
+.report-card h2 {
+	background: transparent;
+	box-shadow: none;
 }
 
 #orange-slip,#assignment-field textarea,#comment-field textarea {
@@ -1237,14 +1236,42 @@ th.grade-confirmation {
 	width: 40ex;
 }
 
-.fieldset {
+/*.fieldset {
 	border-radius: 3px 3px 3px 3px;
 	border-color: #eee;
 	background-color: #fff;
 	box-shadow: 1px 1px 1px #ccc;
 	position: relative;
-}
+}*/
 
 .fieldset h4 {
 	
+}
+
+
+
+.column {
+	float: left;
+	width: 40%;
+	position: relative;
+	display: block;
+	box-shadow: 3px 3px 3px #999;
+	margin: .5em;
+	padding: .5em;
+	border: 1px solid #eee;
+	border-radius: 3px;
+}
+
+.column.even {
+	clear: left;
+	margin-right: .5em;
+}
+.column.odd {
+	clear: right;
+	margin-left: .5em;
+	
+}
+
+.column-3 {
+	width: auto;
 }

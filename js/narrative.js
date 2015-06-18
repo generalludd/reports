@@ -4,23 +4,7 @@ $(document).ready(function() {
 //		saveNarrative();
 //		$(message).fadeOut();
 //	}
-	$('.view_narratives').live('click', function(event) {
-				if (this.id) {
-					var kStudent = this.id.split("_")[1];
-				} else {
-					var kStudent = $("#kStudent").val();
-				}
-				document.location = base_url +  "narrative/student_list/"
-						+ kStudent;
-			}// end function(event);
-	);// end home.click
-	
 
-	$('.edit_narrative').live('click', function(event) {
-		var myNarrative = this.id.split('_')[1];
-		editNarrative(myNarrative);
-	}// end function(event)
-	);// end edit_narrative.click
 	
 	
 	$('.edit_narrative_inline').live('click', function(event){
@@ -109,147 +93,7 @@ $(document).ready(function() {
 		$("#course_grade").html("<input type='text' name='narrGrade' id='narrGrade' value='" + val + "'/>");
 	});
 	
-	$('.teacher_narrative_search').live("click", function(event){
-		myTeach =  this.id.split("_")[1];
 
-		$.ajax({
-			type:"POST",
-			url: base_url + "narrative/search_teacher_narratives/"+ myTeach,
-			success:function(data){
-				showPopup("Search Teacher Narratives",data,"auto");
-			}
-		});
-		
-		
-	});
-	
-	
-	$('.missing_narrative_search').live('click', function(event){
-		 myTeach = this.id.split("_")[1];
-		 myUrl = base_url + "narrative/search_missing";
-		form_data = {
-				kTeach: myTeach,
-				ajax: 1
-		};
-		$.ajax({
-			url: myUrl,
-			type: 'GET',
-			data: form_data,
-			success: function(data){
-			showPopup("Search for Missing Narratives", data, 'auto');
-		}
-		});
-	});
-
-	$('#narrSubject').live('change', function(event) {
-		var narrSubject = this.value;
-	}// end function(event);
-	);// end change
-
-	$('.view_narrative').live('click', function(event) {
-			var myNarrative = this.id.split("_")[1];
-			document.location = base_url + 'narrative/view/' + myNarrative;
-		}// end function(event)
-	);// end view_narrative.click
-
-	$('.suggest_edits').live('click', function() {
-			var myNarrative = this.id.split('_')[1];
-			
-			document.location = "index.php?target=narrative&action_task=suggest_edits&kNarrative="
-				+ myNarrative;
-	}); // end suggest_edits
-
-	
-	$('.select_narrative_type').live('click', function(event) {
-			var userRole = $('#userRole').val();
-			var defaultTerm = $('#defaultTerm').val();
-			var defaultYear = $('#defaultYear').val();
-			var myStudent = this.id.split("_")[1];
-			 myTeach = $("#userID").val();
-			
-			form_data = {
-					kTeach: myTeach,
-					kStudent: myStudent,
-					narrYear: defaultYear,
-					narrTerm: defaultTerm,
-					ajax: 1
-			};
-			 myUrl = base_url + "narrative/select_type";
-			$.ajax({
-				url: myUrl,
-				type: 'POST',
-				data: form_data,
-				success: function(data){
-				showPopup('Select Narrative Type',
-						data, 'auto');
-			}
-			});
-	});// end select_narrative_type
-
-	$('.list_student_narratives').live('click', function(event) {
-			var kStudent = $('#kStudent').val();
-			var kTeach = $('#kTeach').val();
-			document.location = base_url + 'narrative/student_list/' + kStudent;
-	});
-
-	$('.list_teacher_narratives').live('click',function(event) {
-			var myTeacher = this.id.split('_')[1];
-			document.location = 'index.php?target=narrative&action_task=teacher_list&' + myTeacher;
-	});
-
-	$('.print_teacher_narratives').live('click', function(event) {
-				 myTeach = this.id.split('_')[1];
-				// var myWindow=new Window();
-			// myWindow.document="ajax.switch.php?target=narrative&action_task=print_teacher_narratives&kTeach="
-			// + myTeach;
-	});
-
-	$('.narrative_print_select').live('click', function(event){
-		var myStudent = $("#kStudent").val();
-		var myTerm = this.id.split("_")[1];
-		var myYear = this.id.split("_")[2];
-		form_data = {
-				kStudent: myStudent,
-				narrTerm: myTerm,
-				narrYear: myYear,
-				ajax: 1
-		};
-		 myUrl = base_url + "narrative/student_print";
-		$.ajax({
-			url: myUrl,
-			type: 'POST',
-			data: form_data,
-			success: function(data){
-			showPopup("Select Narrative Report", data, 'auto');
-		}
-		});
-	
-	});
-	
-	
-	$('.print_narrative').live('click', function(event) {
-		document.forms['narrativePrintSelect'].submit();
-	});// end click
-
-	$('.narrative_change_sort').live('click', function(event){
-		var myStudent = $("#kStudent").val();
-		var myTerm = this.id.split("_")[1];
-		var myYear = this.id.split("_")[2];
-		form_data = {
-				kStudent: myStudent,
-				narrTerm: myTerm,
-				narrYear: myYear
-		};
-		 myUrl = base_url + "narrative/show_sorter/";
-		$.ajax({
-			url: myUrl,	
-			type: 'POST',
-			data: form_data,
-			success: function(data){
-			showPopup('Editing Subject Sort Order',data,'auto' );
-		}
-		});
-	});
 
 	$('.save_close_narrative').live("click",function(event) {
 		var narrText = $('#narrText').val();
@@ -351,41 +195,7 @@ $(document).ready(function() {
 		}
 	});
 	
-	$("#teacher_narratives_search #kTeach").live("change",function(event){
-		myTeach = $(this).val();
-		$.ajax({
-			type:"GET",
-			data: {kTeach:myTeach},
-			url: base_url + "teacher/subject_menu",
-			success: function(data){
-				$("#teacher_narratives_search #subject_menu").html(data);
-			}
-		});
-		
-		$.ajax({
-			type:"GET",
-			data: {kTeach:myTeach},
-			url: base_url + "teacher/grade_range",
-			success: function(data){
-				$("#teacher_narratives_search #grade_range").html(data);
-			}
-		});
-	});
-	
 
-	/*
- 	$('#kTeach').live('change', function(event) {
-		var myTeach = $('#kTeach').val();
-		$.get('ajax.switch.php', {
-			target : 'teacher',
-			action_task : 'teacher_menu',
-			kTeach : myTeach,
-			id : 'narrSubject'
-		}, function(data) {
-			$('#subjectMenu').html(data);
-		});
-	});
-*/
 	
 	$('.add_narrative').live('click',
 
@@ -397,64 +207,7 @@ $(document).ready(function() {
 
 		});// end new_narrative.click
 
-
-
 	
-	$('.view_edits').live('click',function() {
-		 form_data = {
-				kNarrative: $('#kNarrative').val()
-		};
-		 myUrl = base_url + "suggestion/view";
-		$.get('ajax.switch.php', {
-			target : 'narrative',
-			action_task : "show_edits",
-			kNarrative : myNarrative
-		}, function(data) {
-			showSidebar('Proposed Changes', data,
-					'95%', '60%', '35%');
-			$('#sidebarContainer').animate( {
-				top : '25%'
-			});
-		});// end get
-	});// end show_edits
-		
-	
-	$(".delete_edits").live('click', function(){
-			var myNarrative = $("#kNarrative").val();
-			action = confirm("Are you sure you want to delete these edits? This cannot be undone!");
-			if(action) {
-				second_action = confirm("Are you really sure? There is no going back here except to redo your edits. (The original narrative is not affected)");
-				if(second_action) {
-					$.post('ajax.switch.php', 
-					 {
-						target: 'narrative',
-						action_task: "delete_suggestions",
-						kNarrative: myNarrative
-					 }, function(data){
-						 document.location = "index.php?target=narrative&action_task=view&kNarrative=" + myNarrative;
-					 });
-				}
-			}
-		});
-
-	
-	$('.suggest_phrases').live('click',function(event) {
-		alert("Due to quirks in the suggested-phrase system, this feature is currently disabled. Thank you for your patience and continued patronage while we (I) work on this problem!");
-		return false;
-		var myTeacher = $('#kTeach').val();
-		var mySubject = $('#narrSubject').val();
-		var myStudent = $('#kStudent').val();
-		$.get('ajax.switch.php', {
-			target : 'template',
-			action_task : 'suggest_phrases',
-			kStudent : myStudent,
-			subject : mySubject
-		}, function(data) {
-			showSidebar('Suggested Phrases',
-					data, '95%', '65%', '25%');
-	
-		});// end get
-	});// end suggest_phrases.click
 
 	$('.return_to_narrative').live('click', function(event) {
 		var myNarrative = this.id.split('_')[1];
@@ -485,10 +238,7 @@ $(document).ready(function() {
 
 
 
-function editNarrative(myNarrative) {
-	document.location = base_url + "narrative/edit/"+ myNarrative;
-	return false;
-}
+
 /*
  * @function mergeSentences @params myCount intdescription:  used in the
  * sentence-display format of narrative reports to count the number of sentences

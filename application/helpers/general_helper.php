@@ -155,11 +155,14 @@ function format_schoolyear($year, $term = NULL){
 	return "$firstHalf-$secondHalf";
 }
 
-function get_year_list($initial_blank = FALSE){
+function get_year_list($initial_blank = FALSE,$next_year = FALSE){
 	$baseYear = 2006;
 	$narrYear = get_current_year();
 	if($initial_blank){
 		$result[] = "";
+	}
+	if($next_year){
+		$narrYear = $narrYear+1;
 	}
 	for($i=$baseYear;$i <= $narrYear;$i++){
 		$result[$i]=$i;
@@ -183,7 +186,7 @@ function get_current_term($targetDate = NULL)
 	}else{
 		$month = date('n', $targetDate);
 	}
-	if($month > 2 and $month < 7){
+	if($month >2 and $month < 7){
 		$term = "Year-End";
 	}else{
 		$term = "Mid-Year";
@@ -191,9 +194,19 @@ function get_current_term($targetDate = NULL)
 	return "$term";
 }
 
-function get_term_menu($id, $currentTerm=null, $initial_blank = FALSE){
+function get_term_menu($id, $currentTerm=null, $initial_blank = FALSE,$options = array(),$is_required = FALSE){
 	$terms = array("Mid-Year", "Year-End");
-	$select[]="<select id='$id' name='$id'>";
+	$required = "";
+	if($is_required){
+	    $required = "required";
+	}
+	$select[]=sprintf("<select id='%s' name='%s' %s>",$id, $id, $required);
+	$classes = FALSE;
+	if(!empty($options)){
+		if(array_key_exists("classes", $options)){
+			$classes = sprintf("class='%s'",$options["classes"]);
+		}
+	}
 	if($initial_blank){
 		$select[] = "<option value=''></option>";
 	}
@@ -202,7 +215,7 @@ function get_term_menu($id, $currentTerm=null, $initial_blank = FALSE){
 		if($term == $currentTerm){
 			$selection = "selected";
 		}
-		$select[]="<option value='$term' $selection>$term</option>";
+		$select[]="<option value='$term' $classes $selection>$term</option>";
 
 	}
 	$select[]="</select>";
@@ -218,7 +231,7 @@ function get_term_menu($id, $currentTerm=null, $initial_blank = FALSE){
 function get_keyed_pairs($list,$pairs,$initialBlank = NULL,$other = NULL,$alternate = array()){
 	$output=false;
 	if($initialBlank){
-		$output[] = "";
+		$output[""] = "";
 	}
 	if(!empty($alternate)){
 		$output[$alternate['name']] = $alternate['value'];
@@ -391,15 +404,16 @@ function get_grade_order(){
 
 function get_subject_order($subjects = NULL)
 {
+	//@TODO there should be a UI-available tool for global sorting.
 	if(!$subjects){
-		$subjects = "Introduction,Academic Progress,Humanities,Reading,Writing,Math,Science,Social Studies,Social Studies/Science,Social/Emotional,Music,Physical Education,Spanish,Art";
+		$subjects = "Introduction,Academic Progress,Humanities,Reading,Writing,Science,Math,Social Studies,Social Studies/Science,Social/Emotional,Music,Physical Education,Spanish,Art";
 	}
 	$subjectOrder = "CASE ";
 	$list = explode(",", $subjects);
 	for($i=0;$i<count($list);$i++){
 		$mySubject = $list[$i];
 		$x=$i+1;
-		$subjectOrder .= "WHEN narrSubject='$mySubject' THEN $x ";
+		$subjectOrder .= "WHEN subject='$mySubject' THEN $x ";
 	}
 	$subjectOrder .= "END";
 	return $subjectOrder;
@@ -454,12 +468,12 @@ function get_array_value($array,$key){
 
 function format_email($email, $show_address = FALSE){
 	$output = "";
-	$address_text = "email";
+	$address_text = $email;
 	if($show_address){
 		$address_text = $email;
 	}
 	if(!empty($email)){
-		$output = "<a href='mailto:$email' title='$email'>$address_text</a>";
+		$output = "<span style='font-weight:normal'><a href='mailto:$email' title='$email'>$address_text</a></span>";
 	}
 	return $output;
 }
@@ -518,7 +532,7 @@ function calculate_letter_grade($points,$pass_fail = FALSE)
 	$output = "";
 	$plus = 6;
 	$minus = 3;
-	
+	$letter = "";
 	if(strval($points) >= 99){
 		$output = "A+";
 	}elseif(strval($points) > 93){
@@ -547,7 +561,7 @@ function calculate_letter_grade($points,$pass_fail = FALSE)
 				break;
 			default:
 				$output = "Pass";
-				break; 
+				break;
 		}
 	}
 	return $output;

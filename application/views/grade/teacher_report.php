@@ -1,11 +1,11 @@
-<?php 
+<?php
 
 //$this->load->view("student/navigation", array("kStudent",$kStudent));
 $i = 0; //iteration of row numbers for css styling and printing
 
 ?>
 <h1 class='no-print'>Report Card Printout for Teacher</h1>
-<? $buttons[] = array("selection"=>"none","type"=>"span","class"=>array("button","print"),"text"=>"Print");
+<? $buttons[] = array("selection"=>"none","type"=>"span","class"=>array("button","print","do-print"),"text"=>"Print");
 echo create_button_bar($buttons); ?>
 <div id='report-card'>
 

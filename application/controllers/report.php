@@ -37,7 +37,7 @@ class Report extends MY_Controller
 			$data["is_teacher"] = FALSE;
 		}
 		$data["kStudent"] = $kStudent;
-		$report =  $this->student->get($kStudent,"stuFirst,stuLast,stuNickname,teachFirst as advisorFirst,teachLast as advisorLast,teacher.kTeach as kAdvisor",TRUE);
+		$report =  $this->student->get($kStudent,"stuFirst,stuLast,stuNickname,teacher.teachFirst as advisorFirst,teacher.teachLast as advisorLast,teacher.kTeach as kAdvisor",TRUE);
 		$data["student"] = format_name($report->stuFirst,$report->stuLast,$report->stuNickname);
 		$data["advisor"] = format_name($report->advisorFirst,$report->advisorLast);
 		$data["report"] = $report;
@@ -49,11 +49,8 @@ class Report extends MY_Controller
 		$data["action"] = "insert";
 		$data["title"] = sprintf("Adding an %s for %s", STUDENT_REPORT, $data["student"]);
 		$data["target"] = "report/edit";
-		if($this->input->get("ajax")){
-			$this->load->view($data["target"], $data);
-		}else{
-			$this->load->view("page/index",$data);
-		}
+		$this->_view($data);
+		
 	}
 
 	/**
@@ -111,11 +108,7 @@ class Report extends MY_Controller
 		$data["action"] = "update";
 		$data["title"] = sprintf("Editing an %s for %s", STUDENT_REPORT, $data["student"]);
 		$data["target"] = "report/edit";
-		if($this->input->get("ajax")){
-			$this->load->view($data["target"],$data);
-		}else{
-			$this->load->view("page/index",$data);
-		}
+		$this->_view($data);
 	}
 
 	/**
@@ -182,7 +175,8 @@ class Report extends MY_Controller
 		$data["categories"] = get_keyed_pairs($this->menu->get_pairs("report_category"),array("value","label"),TRUE);
 
 		$data["title"] = sprintf("Searching for %ss submitted %s %s",STUDENT_REPORT,$preposition,$name);
-		$this->load->view("report/search",$data);
+		$data["target"] = "report/search";
+		$this->_view($data);
 	}
 
 	/**
@@ -200,7 +194,7 @@ class Report extends MY_Controller
 			switch($type){
 				case "student":
 					$this->load->model("student_model","student");
-					$person = $this->student->get($key,"stuFirst,stuLast,stuNickname,stuGrade");
+					$person = $this->student->get($key,"stuFirst,stuLast,stuNickname,student.*,(`baseGrade`+" . get_current_year() . "-`baseYear`) as stuGrade");
 					$title = sprintf("for %s" , format_name($person->stuFirst,$person->stuLast, $person->stuNickname));
 					$data["kStudent"] = $key;
 
@@ -209,13 +203,13 @@ class Report extends MY_Controller
 					break;
 				case "teacher":
 					$this->load->model("teacher_model","teacher");
-					$person = $this->teacher->get($key,"teachFirst,teachLast,dbRole,is_advisor,gradeStart,gradeEnd");
+					$person = $this->teacher->get($key,"teachFirst,teachLast,dbRole,is_advisor,gradeStart,gradeEnd,kTeach");
 					$title = sprintf("by %s %s", $person->teachFirst,$person->teachLast);
 
 					break;
 				case "advisor":
 					$this->load->model("teacher_model","teacher");
-					$person = $this->teacher->get($key,"teachFirst as advisorFirst,teachLast as advisorLast,dbRole,is_advisor,gradeStart,gradeEnd");
+					$person = $this->teacher->get($key,"teachFirst as advisorFirst,teachLast as advisorLast,dbRole,is_advisor,gradeStart,gradeEnd,kTeach");
 					$title = sprintf("to %s %s",$person->advisorFirst,$person->advisorLast);
 					break;
 			}

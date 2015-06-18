@@ -3,7 +3,7 @@ $kAssign = $grade->kAssignment;
 ?>
 <input type="hidden" id="kStudent" name="kStudent" value="<?=$grade->kStudent;?>"/>
 <input type="hidden" id="kAssignment" name="kAssignment" value="<?=$grade->kAssignment;?>"/>
-<input type="text" name="points" id="points_<?=$grade->kAssignment;?>_<?=$grade->kStudent;?>" size="2" class="assignment-grade" value="<?=$grade->points;?>" /><br/>
+<input type="text" name="points" id="points_<?=$grade->kAssignment;?>_<?=$grade->kStudent;?>" autocomplete='off' size="2" class="assignment-grade" value="<?=$grade->points;?>" /><br/>
 &nbsp;
 <? $status_key = sprintf("'status_%s_%s'", $grade->kAssignment, $grade->kStudent);?>
 <?=form_dropdown("status",$status, $grade->status,"id=$status_key");?><br/>

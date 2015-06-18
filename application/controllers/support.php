@@ -68,7 +68,7 @@ class Support extends MY_Controller
 			$data["support"] = $this->student_model->get($kStudent);
 			$data["title"] = "Add Student Support Documentation";
 			$data["support_files"] = false;
-			$data["year_list"] = get_year_list();
+			$data["year_list"] = get_year_list(FALSE,TRUE);
 			$data["target"] = "support/edit";
 			$this->load->view("page/index", $data);
 		}
@@ -147,8 +147,8 @@ class Support extends MY_Controller
 	{
 		$config['upload_path'] = './uploads';
 		$this->load->helper('directory');
-		$config['allowed_types'] = 'gif|jpg|png|pdf|rtf|PDF|JPG|JPEG|RTF';
-		$config['max_size'] = '1000';
+		$config['allowed_types'] = 'gif|jpg|png|pdf|rtf|PDF|JPG|JPEG|RTF|doc|docx|DOC|DOCX';
+		$config['max_size'] = '0'; //rely on PHP's built-in limit
 		$config['max_width']  = '1024';
 		$config['max_height']  = '768';
 

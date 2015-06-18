@@ -3,11 +3,11 @@ $current_subject = "";
 $current_category = "";
 foreach($benchmarks as $benchmark){
 	if($benchmark->subject != $current_subject){
-		echo "<h4>$benchmark->subject</h4>";
+		echo "<h3>$benchmark->subject</h3>";
 		$current_subject = $benchmark->subject;
 	}
 	if($benchmark->category != $current_category){
-		echo "<h5>$benchmark->category</h5>";
+		echo "<h4>$benchmark->category</h4>";
 		$current_category = $benchmark->category;
 	}
 	?>

@@ -25,8 +25,11 @@ class Menu_model extends CI_Model
 		}
 	}
 
-	function get_all()
+	function get_all($category = NULL)
 	{
+	    if($category){
+	        $this->db->where("category",$category);
+	    }
 		$this->db->order_by("category");
 		$this->db->order_by("label");
 		$this->db->from("menu");
@@ -68,7 +71,15 @@ class Menu_model extends CI_Model
 		return $result;
 
 	}
-	
+
+	function get_label($category,$value){
+$this->db->from("menu");
+$this->db->where("category", $category);
+$this->db->where("value" , $value);
+$result = $this->db->get()->row();
+return $result->label;
+	}
+
 	function get_categories()
 	{
 		$this->db->from("menu");
@@ -78,7 +89,7 @@ class Menu_model extends CI_Model
 		$result = $this->db->get()->result();
 		return $result;
 	}
-	
+
 	function item_exists($label, $value)
 	{
 		$this->db->where("label",$label);
@@ -87,7 +98,7 @@ class Menu_model extends CI_Model
 		$result = $this->db->get()->num_rows();
 		return $result;
 	}
-	
+
 	function insert()
 	{
 		$this->prepare_variables();

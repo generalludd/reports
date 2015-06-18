@@ -67,16 +67,7 @@ $(document).ready(function(){
 				
 		});//end click
 	
-	
-	$('.save_teacher').live('click',
-			function(event){
-				var kTeach=$('#kTeach').val();
-				$('#teacher_edit').ajaxSubmit(
-					function(response){
-						document.location="index.php?target=teacher&action_task=view&kTeach="+kTeach;
-				});//end ajaxSubmit(function(response)
-			});//end click
-	
+
 	$('.save_subject').live('click',
 			function(event){
 				var kTeach=$('#kTeach').val();
@@ -93,41 +84,10 @@ $(document).ready(function(){
 	});
 	
 	
-	$('.teacher_view').live('click',function(){
-		var myTeach="";
-		var myTeach=this.id.split('_')[1];
-		viewTeacher(myTeach);
-	});
+
 	
 	
-	$('.teacher_list').live('click',function(){
-		listTeachers(true,true);
-	});
-	
-	
-	$('.teacher_student_list').live('click',function(){
-		var myTeach=this.id.split('_')[1];
-		listTeacherStudents(myTeach);
-	});
-	
-	
-	$('.teacher_narratives_list').live('click',function(event){
-		var myTeach=this.id.split('_')[1];
-		listTeacherNarratives(myTeach);
-	});
-	
-	
-	$('.teacher_narratives_print').live('click',function(event){
-		var myTeach=this.id.split('_')[1];
-		printTeacherNarratives(myTeach);
-	});
-	
-	
-	$('.teacher_templates_print').live('click',function(event){
-		var myTeach=this.id.split('_')[1];
-		printTeacherTemplates(myTeach);
-	});
-	
+
 	$('.teacher_create').live("click", function(event){
 		var myUrl = base_url + "teacher/create";
 		var form_data = {
@@ -175,39 +135,4 @@ function editTeacher(myTeach) {
 
 }
 
-function viewTeacher(myTeach) {
-	document.location="index.php?target=teacher&action_task=view&kTeach="+myTeach;
-	return false;
-}
 
-function listTeachers(showAdmin,showInactive) {
-	var url="index.php?target=teacher&action_task=list";
-	if(showAdmin) {
-		url=url + "&showAdmin=true";
-	}
-	if(showInactive) {
-		url=url + "&showInactive=true";
-	}
-	document.location = url;
-	return false;
-}
-
-function listTeacherStudents(myTeach) {
-	//document.location="index.php?target=teacher&action_task=list_students&kTeach="+myTeach;
-	return false;
-}
-
-function listTeacherNarratives(myTeach) {
-	//document.location="index.php?target=narrative&action_task=teacher_list&kTeach="+myTeach;
-	return false;
-}
-
-function printTeacherNarratives(myTeach) {
-	//window.open('ajax.switch.php?target=narrative&action_task=print_teacher_narratives&kTeach='+myTeach);
-	return false;
-}
-
-function printTeacherTemplates(myTeach) {
-	//window.open('ajax.switch.php?target=template&action_task=print_teacher_templates&kTeach='+myTeach);
-	return false;
-}

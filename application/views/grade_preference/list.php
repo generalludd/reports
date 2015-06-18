@@ -13,7 +13,7 @@
 <tbody>
 <? foreach($grade_preferences as $preference):?>
 
-<tr>
+<tr id="grade-preference-row_<?=$preference->id;?>">
 <td><?=$preference->subject;?></td>
 <td><?=format_schoolyear($preference->school_year);?></td>
 <td><? if( $preference->pass_fail == 1):?>
@@ -22,7 +22,10 @@ Yes
 No
 <?endif;?>
 </td>
-<td><span class="button edit edit-grade-preference" id="edit-grade-preference_<?=$preference->id;?>">Edit</span></td>
+<td style="width: 150px;">
+<a class="button edit small dialog" href="<?php echo site_url("grade_preference/edit/$preference->id");?>">Edit</a>&nbsp;
+<span class="button small delete delete-grade-preference" style="float:none;" id="delete-grade-preference_<?=$preference->id;?>">Delete</span>
+</td>
 </tr>
 <? endforeach;?>
 </tbody>

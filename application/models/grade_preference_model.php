@@ -50,9 +50,16 @@ class Grade_Preference_model extends CI_Model
 
 		$this->db->order_by("school_year");
 		$this->db->order_by("subject");
-		
+
 		$this->db->from("grade_preference");
 		$result = $this->db->get()->result();
 		return $result;
+	}
+
+	function delete($id){
+	    $kStudent = $this->get($id)->kStudent;
+	    $this->db->delete("grade_preference",array("id"=>$id));
+	    return $kStudent;
+
 	}
 }

@@ -59,6 +59,7 @@ $(".template_search").live("click", function(event){
 	
 	$('.select_template').live('click',
 		function(event){
+		event.preventDefault();
 			var myStudent=$('#kStudent').val();
 			var myTeach=$('#kTeach').val();
 			var myYear = $("#year").val();
@@ -79,8 +80,9 @@ $(".template_search").live("click", function(event){
 				url: myUrl,
 				data: form_data,
 				success:function(data){
+					console.log($("#narrative_process").html());
 				$("#ui-dialog-title-popup").html("Select Narrative Template");
-				$("#narrative_process").html(data);
+				$("#popup").html(data);
 			}
 			});
 			

@@ -26,4 +26,12 @@ class MY_Controller extends CI_Controller
     {
         redirect();
     }
+    
+    function _view($data){
+    	if($this->input->get("ajax")){
+    		$this->load->view($data["target"],$data);
+    	}else{
+    		$this->load->view("page/index",$data);
+    	}
+    }
 }

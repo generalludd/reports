@@ -2,6 +2,7 @@
 ?>
 
 <h2>Showing Missing Narratives for <?=$teacher;?></h2>
+
 <fieldset class="search_fieldset"><legend>Search Parameters</legend>
 <ul>
 <li>
@@ -20,7 +21,7 @@ Subject: <strong><?=$subject;?></strong>
 </li>
 </ul>
 <div class="button-box">
-<a class="button missing_narrative_search" id="mns_<?=$kTeach?>">Refine Search</a></div>
+<a class="button dialog" href="<?php echo site_url("narrative/search_missing/$kTeach");?>">Refine Search</a></div>
 </fieldset>
 <table class="list">
 <thead>
@@ -37,9 +38,9 @@ Subject: <strong><?=$subject;?></strong>
 		?>
 		<tr>
 		<td><a href="<?=site_url("student/view/$student->kStudent");?>" title="view student info"><?=$student_name;?></a></td>
-		<td><?=format_grade($student->stuGrade);?></td>
+		<td><?=format_grade($student->baseGrade + get_current_year() - $student->baseYear);?></td>
 		<td>
-		<span class="button new select_narrative_type" id="an_<?=$student->kStudent;?>">Add Narrative</span>
+		<a href="<?php echo site_url("narrative/select_type?kStudent=$student->kStudent");?>" class="button dialog new" id="an_<?=$student->kStudent;?>">Add Narrative</span>
 		</td>
 		</tr>
 <?

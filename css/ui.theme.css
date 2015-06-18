@@ -1041,8 +1041,7 @@
 
 /* Overlays */
 .ui-widget-overlay {
-	background: #6caadc url(images/ui-bg_flat_0_6caadc_40x100.png) 50% 50%
-		repeat-x;
+	background: #6caadc;
 	opacity: .30;
 	filter: Alpha(Opacity = 30);
 }

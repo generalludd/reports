@@ -6,36 +6,9 @@ $(document).ready(function(){
 		}
 	});
 	
-	$(".assignment-edit").live("click",function(){
-		myAssignment = this.id.split("_")[1];
-		form_data = {
-				kAssignment: myAssignment,
-				ajax: 1
-		};
-		
-		$.ajax({
-			type:"get",
-			url: base_url + "assignment/edit",
-			data: form_data,
-			success: function(data){
-				showPopup("Edit Assigment",data,"auto");
-
-			}
-		});
-		
-	});
 	
-	$(".assignment-create").live("click",function(){
-		$.ajax({
-			type:"get",
-			url: base_url + "assignment/create",
-			success: function(data){
-				showPopup("Add Assignment",data,"auto");
-			}
-		});
-	});
-	
-	$(".grade-points.edit").live("click",function(){
+	$(".editable .grade-points.edit").live("click",function(e){
+		e.preventDefault();
 		myId = this.id.split("_");
 		myAssignment = myId[1];
 		myStudent = myId[2];
@@ -43,7 +16,8 @@ $(document).ready(function(){
 		myPoints = $(this).html();
 		form_data = {
 			kStudent: myStudent,
-			kAssignment: myAssignment
+			kAssignment: myAssignment,
+			ajax: 1,
 		};
 		$.ajax({
 			type:"get",
@@ -59,25 +33,11 @@ $(document).ready(function(){
 		
 	});
 	
-	$(".point-editor").live("blur",function(){
+	$("editable .point-editor").live("blur",function(){
 		myPoints = $(this).val();
 		$(this).parent(".grade-points").html(myPoints).addClass("edit");
 	});
 	
-	$(".search-assignments").live("click",function(){
-		myTeach = this.id.split("_")[1];
-		form_data = {
-				kTeach: myTeach
-		};
-		$.ajax({
-			type: "get",
-			data: form_data,
-			url: base_url + "assignment/search",
-			success: function(data){
-				showPopup("Search for Assigment Charts",data, "auto");
-			}
-		});
-	});
 	
 	$(".show-student-selector").live("click",function(){
 		
@@ -132,13 +92,14 @@ $(document).ready(function(){
 		$("#search_list").fadeOut();
 	});
 	
-	$(".select-student-for-grades").live("click",function(){
-		
+	$(".select-student-for-grades").live("click",function(e){
+		e.preventDefault();
 		form_data = {
 				kStudent: this.id.split("_")[1],
 				kTeach: $("#kTeach").val(),
 				term:$("#term").val(),
-				year: $("#year").val()
+				year: $("#year").val(),
+				ajax: 1
 		};
 		$.ajax({
 			type:"get",
@@ -152,47 +113,10 @@ $(document).ready(function(){
 		
 		
 	});
-	
-	$(".assignment-column-edit").live("click",function(){
-		myAssignment = this.id.split("_")[1];
-		form_data = {
-				kAssignment: myAssignment,
-				ajax: 1
-		};
-		myUrl = base_url + "grade/edit_column";
-		
-		$.ajax({
-			type: "POST",
-			url: myUrl,
-			data: form_data,
-			success: function(data){
-				showPopup("Editing All Grades for an Assignment", data, "auto");
-			}
-		});
-		
-	});
+
 
 	
-	$(".edit_student_grades").live("click",function(){
-		myTeach = $("#kTeach").val();
-		myStudent = this.id.split("_")[1];
-		form_data = {
-			kTeach: myTeach,
-			kStudent: myStudent,
-		};
-		myUrl = base_url + "grade/edit";
-		$.ajax({
-			type:"GET",
-			url: myUrl,
-			data: form_data,
-			success: function(data){
-				showPopup("Editing Student Grades",data, "auto");
-			}
-			
-		});
-	});
-	
-	$(".save_student_grade").live("click",function(){
+	$(".editable .save_student_grade").live("click",function(){
 		myID = this.id.split("_");
 		myAssignment = myID[1];
 		myStudent = myID[2];		
@@ -232,7 +156,6 @@ $(document).ready(function(){
 		myPoints = $("#points_" + myAssignment + "_" + myStudent).val();
 		myStatus = $("#status_" + myAssignment + "_" + myStudent).val();
 		myFootnote = $("#footnote_" + myAssignment + "_" + myStudent).val();
-		myUrl = base_url + "grade/update";
 		form_data = {
 				kStudent: myStudent,
 				kAssignment: myAssignment,
@@ -243,11 +166,12 @@ $(document).ready(function(){
 		};
 		$.ajax({
 			type: "POST",
-			url: myUrl,
+			url: base_url + "grade/update",
 			data: form_data,
 			success: function(data){
-				//$(".save_cell_grade").parent().html(data);
-				window.location.reload();
+				$(".save_cell_grade").parents("td.grade-points").html(data).addClass('edit');
+				console.log(data);
+				//window.location.reload();
 			}
 		});
 	});
@@ -257,7 +181,7 @@ $(document).ready(function(){
 		window.location.reload();
 	});
 	
-	$(".grade-delete-row .button").live("click",function(){
+	$(".editable .grade-delete-row .button").live("click",function(){
 		choice = confirm("Are you sure you want to delete this student's grade entries for the entire term? This cannot be undone!");
 		if(choice){
 			second_chance = confirm("This will delete all the grades entered for this student for the current term. Click OK only if you are absolute sure you want to do this!");
@@ -289,24 +213,29 @@ $(document).ready(function(){
 	});
 	
 	$(".assignment-delete").live("click",function(){
+		href = window.location.href;
+	
 		choice = confirm("Are you sure you want to delete this assignment? It will delete all the related student grades along with it!");
 		if(choice){
 			second_chance = confirm("Are you absolutely sure? This cannot be easily undone if at all.");
 			if(second_chance){
 				form_data = {
-						kAssignment: $("#kAssignment").val()
+						kAssignment: $("#kAssignment").val(),
+						url: href
 				};
 				$.ajax({
 					type: "post",
 					url: base_url + "assignment/delete",
 					data: form_data,
 					success: function(data){
-						window.location.reload();
+						window.location.href = href;
 					}
+					
 				});
 				
 			}
 		}
+
 	});
 	
 	$(".update-category, .update-weight, .update-gradeStart, .update-gradeEnd").live("keyup",function(){
@@ -321,12 +250,16 @@ $(document).ready(function(){
 		myWeight = $("#weight_" + myId).val();
 		myStart = $("#gradeStart_" + myId).val();
 		myEnd = $("#gradeEnd_" + myId).val();
+		myYear = $("#year_" + myId).val();
+		myTerm = $("#term_" + myId).val();
 		form_data = {
 				kCategory: myId,
 				category: myCategory,
 				weight: myWeight,
 				gradeStart: myStart,
-				gradeEnd: myEnd
+				gradeEnd: myEnd,
+				year: myYear,
+				term: myTerm
 		};
 		$.ajax({
 			type: "post",
@@ -341,18 +274,6 @@ $(document).ready(function(){
 		
 	});
 	
-	
-	$(".assignment_categories_edit").live("click",function(){
-		$.ajax({
-			url: base_url + "assignment/edit_categories/" + $("#kTeach").val(),
-			type: "get",
-			success: function(data){
-				showPopup("Editing Categories",data,"auto");
-			}
-			
-		});
-		
-	});
 	
 	$(".add-category").live("click",function(){
 		myTeach = this.id.split("_")[1];
@@ -374,13 +295,17 @@ $(document).ready(function(){
 		myWeight = $("#tr-teach_" + myTeach + " .insert-weight").val();
 		myStart = $("#tr-teach_" + myTeach + " .insert-gradeStart").val();
 		myEnd = $("#tr-teach_" + myTeach + " .insert-gradeEnd").val();
-
+		myYear = $("#tr-teach_" + myTeach + " .insert-year").val();
+		myTerm = $("#tr-teach_" + myTeach + " #term_new").val();
 		form_data = {
 				kTeach: myTeach,
 				category: myCategory,
 				weight: myWeight,
 				gradeStart: myStart,
-				gradeEnd: myEnd
+				gradeEnd: myEnd,
+				year: myYear,
+				term: myTerm,
+				ajax: 1
 		};
 		$.ajax({
 			type: "post",
@@ -394,23 +319,42 @@ $(document).ready(function(){
 		//$(this).html(myTeach);
 	});
 	
-	$(".get-student-grades").live("click",function(){
-		myStudent = this.id.split("_")[1];
-		form_data = {
-				kStudent: myStudent
-		};
-		$.ajax({
-			type:"get",
-			data: form_data,
-			url: base_url + "grade/select_report_card",
-			success: function(data){
-				showPopup("Selecting Grade Report", data,"auto");
-			}
-		});
+	
+	$(".add-batch-assignment-row").live("click",function(){
+		
+		$("table#batch-assignment-table tr.assignment:last").clone(true).insertAfter("table#batch-assignment-table tr.assignment:last");
+		if($("table#batch-assignment-table tr").length == 4){
+		$("table#batch-assignment-table tr.assignment:last").append("<td><a class='button delete-row delete'>Delete</a></td>");
+		}
+	//$("table.list tr.assignment:last input, table.list tr.assignment:last select").attr("id",this.name + $("table.list tr.assignment").length.toString() );
+	});
+	
+	$("table#batch-assignment-table .delete-row").live("click",function(){
+		$(this).parents("tr").remove();
+	});
+	
+	$("#batch-insert-assignments input[type='submit']").live('click', function(e){
+		e.preventDefault();
+		document.forms[0].submit();
+	});
+	
+	$(".batch-print-grades").live("click",function(e){
+		e.preventDefault();
+		batch_print_grades();
+	});
+	
+	$(".edit_student_grades-notice").live("click",function(e){
+		e.preventDefault();
+		showPopup("Notice","<h4>Notice!</h4><p>Editing student grades in batch is now done with the blue <span class='button small edit'>Edit</span> button next to the student's name</p>","auto");
+		
 		
 	});
 	
 });
+
+function set_id(target,me,val){
+	
+}
 
 function save_student_points(myAssignment,myStudent)
 {
@@ -423,7 +367,8 @@ function save_student_points(myAssignment,myStudent)
 			kAssignment: myAssignment,
 			status: myStatus,
 			footnote: myFootnote,
-			points: myPoints
+			points: myPoints,
+			ajax: 1
 			
 	};
 	$.ajax({
@@ -445,7 +390,8 @@ function save_points_inline(myAssignment,myStudent,myKey,myValue, myGrade){
 				kStudent:myStudent,
 				kAssignment:myAssignment,
 				key:myKey,
-				value: myValue
+				value: myValue,
+				ajax: 1
 		};
 		myUrl = base_url + "grade/update_value";
 		$.ajax({
@@ -453,10 +399,41 @@ function save_points_inline(myAssignment,myStudent,myKey,myValue, myGrade){
 			url: myUrl,
 			data: form_data,
 			success: function(data){
-				$("#save_" + myAssignment + "_" + myStudent).html(data).show().fadeOut(2000);
+				console.log(data);
+				$("#save_" + myAssignment).html(data).show().fadeOut(2000);
 			}
 		});
 	}else{
 		save_student_points(myAssignment,myStudent);
 	}
 }
+/**
+ * The .map() function allows us to iterate through the grade-chart-row items for ids (for each student id)
+ * to generate a printable chart of grades for teachers to use in conferences. 
+ */
+
+function batch_print_grades(){
+	var id_array = $.map($(".grade-chart-row"),function(n,i){
+		return n.id.split("_")[1];
+	});
+
+	form_data = {
+			ids: id_array,
+			kTeach: $("#kTeach").val(),
+			action: "select",
+			ajax: 1
+	};
+	
+	console.log(form_data);
+	
+	$.ajax({
+		type:"post",
+		data: form_data,
+		url: base_url + "grade/batch_print",
+		success: function(data){
+			showPopup("Batch Grade Printer",data,"auto");
+		}
+		
+	});
+}
+

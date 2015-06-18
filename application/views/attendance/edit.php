@@ -1,4 +1,4 @@
-<?php #attendance_edit.inc 
+<?php #attendance_edit.inc
 $length_status = "";
 $attendLength = get_value($attendance, "attendLength","");
 if($attendLength == 1){
@@ -22,7 +22,7 @@ if(get_value($attendance,"attendDate",FALSE)){
 <label for="attendType">Type</label>
 	<?=form_dropdown("attendType",$attendTypes, get_value($attendance, "attendType"), "id='attendType'");
 	?> <label for="attendDate">Date</label><input type="text"
-	name="attendDate" id="attendDate" class="datefield"
+	name="attendDate" id="attendDate" required class="datefield"
 	value="<?=$attendDate;?>" /><br />
 <p class='attend_details'><label for="attendSubtype">Subtype</label>
 <?=form_dropdown("attendSubtype",$attendSubtypes, get_value($attendance, "attendSubtype"), "id='attendSubtype'");?></p>

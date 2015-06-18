@@ -12,6 +12,7 @@ class Home extends MY_Controller
 	{
 		$this->load->model("menu_model");
 		$student_sort = $this->menu_model->get_pairs("student_sort");
+		$data["body_classes"] = array("front");
 		$data["student_sort"] = get_keyed_pairs($student_sort, array("value","label"));
 		$data['target'] = "student/search";
 		$data['title'] = "Narrative Reporting System";

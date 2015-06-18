@@ -55,7 +55,7 @@ class Auth extends CI_Controller
 				$this->load->model("preference_model","preference");
 				$preferences = $this->preference->get_distinct($result->kTeach);
 				set_user_cookies($preferences);
-
+				bake_cookie("student_sort_order",$this->preference->get($result->kTeach,"student_sort_order"));
 				//if the teacher is an advisor, get the number of unread reports;
 				if($result->is_advisor == 1){
 					$this->load->model("student_report_model","report");
@@ -75,6 +75,7 @@ class Auth extends CI_Controller
 			}else{
 				redirect("");
 			}
+
 		}else{
 			$this->index($username, "Your username or password are not correct. Please try again");
 		}

@@ -1,120 +1,78 @@
 <?php ?>
-<div class='info-box'>
 	<h2>Teacher List</h2>
 	<fieldset class="search_fieldset">
 		<legend>Search Parameters</legend>
 		<?
-		if(!empty($options)){
+if (! empty($options)) {
 
-			$keys = array_keys($options);
-			$values = array_values($options);
+    $keys = array_keys($options);
+    $values = array_values($options);
 
-			echo "<ul>";
+    echo "<ul>";
 
-			for($i = 0; $i < count($options); $i++){
-				$key = $keys[$i];
-				$value = $values[$i];
-				switch($key){
-					case "showInactive":
-						echo "<li>Show Inactive/Former Users: <strong>Yes</strong></li>";
-						break;
-					case "gradeRange":
-						$gradeStart = format_grade($options["gradeRange"]["gradeStart"]);
-						$gradeEnd = format_grade($options["gradeRange"]["gradeEnd"]);
-						if($gradeStart == $gradeEnd){
-							echo "<li>Grade: <strong>$gradeStart</strong></li>";
-						}else{
-							echo "<li>Grade Range: <strong>$gradeStart-$gradeEnd</strong></li>";
-						}
-						break;
-					case "role":
-						$role_labels = array(1=>"Administrators",2=>"Editors/Teachers",3=>"Aides");
-						echo "<li>Roles<ul>";
-						for($t = 0; $t < count($value); $t++){
-							echo "<li>" . $role_labels[$value[$t]] . "</li>";
-						}
-						echo "</ul></li>";
-						break;
-					default:
-						echo "<li>" . ucfirst($keys[$i]) .": <strong>";
-						echo $values[$i] . "</strong></li>";
+    for ($i = 0; $i < count($options); $i ++) {
+        $key = $keys[$i];
+        $value = $values[$i];
+        switch ($key) {
+            case "showInactive":
+                echo "<li>Show Inactive/Former Users: <strong>Yes</strong></li>";
+                break;
+            case "gradeRange":
+                    $gradeStart = format_grade($options["gradeRange"]["gradeStart"]);
+                    $gradeEnd = format_grade($options["gradeRange"]["gradeEnd"]);
+                    if ($gradeStart == $gradeEnd) {
+                        echo "<li>Grade: <strong>$gradeStart</strong></li>";
+                    } else {
+                        echo "<li>Grade Range: <strong>$gradeStart-$gradeEnd</strong></li>";
+                    }
+                break;
+            case "roles":
+                echo "<li>Roles<ul>";
+                foreach ($value as $role) {
 
-				}
-
-			}
-			echo "</ul>";
-
-		}else{
-			echo "<p>Showing all Users.</p>";
-
-		}
-		?>
+                    echo "<li>" . $role["label"] . "</li>";
+                }
+                echo "</ul></li>";
+                break;
+            default:
+                echo "<li>" . ucfirst($keys[$i]) . ": <strong>";
+                echo $values[$i] . "</strong></li>";
+        }
+    }
+    echo "</ul>";
+} else {
+    echo "<p>Showing all Users.</p>";
+}
+?>
 
 		<div class="button-box">
 			<a class="button teacher_search">Refine Search</a>
 		</div>
 	</fieldset>
-	<a href="<?=site_url("teacher/create");?>"
-		class="button teacher_create new">New User</a>
-	<table class='list'>
+	<? if($this->session->userdata("dbRole") == 1):?>
+	<?=create_button_bar(array(array("text"=>"New User","class"=>"button new teacher_create","href"=>site_url("teacher/create"))));?>
+	<? endif;?>
+
+<? foreach($roles as $role):?>
+<div class="column column-3">
+	<h4><?=$role["label"];?></h4>
+	<table class="list">
 		<tbody>
-			<?
+<? foreach ($teachers as $teacher):?>
+<? if($teacher->dbRole == $role["value"]):?>
 
+				<tr <? echo $teacher->status != 1? "class='disabled inactive'":"";?>>
+				<td style="width: 50%;"><a
+					href="<?=site_url("teacher/view/$teacher->kTeach");?>"
+					class='link'><?=format_name($teacher->teachFirst,$teacher->teachLast);?></a></td>
+				<td><? echo $teacher->dbRole !=1 ?  format_grade_range($teacher->gradeStart, $teacher->gradeEnd): ""; ?> </td>
+			</tr>
 
-			$currentStatus="";
-			$currentRole="";
-			foreach($teachers as $teacher){
-				$kTeach = $teacher->kTeach;
-				$teacherName = "$teacher->teachFirst $teacher->teachLast";
-				$gradeStart = format_grade($teacher->gradeStart);
-				$gradeEnd  =format_grade($teacher->gradeEnd);
-				$gradePair = "$gradeStart - $gradeEnd";
-				if($teacher->dbRole != $currentRole){
-					$roleRow="";
-					$currentRole=$teacher->dbRole;
-					if($teacher->status == 1){
-						switch($currentRole){
-							case 1:
-								$roleRow="<tr><td colspan='3' style='font-weight:bold'>Administrators</td></tr>";
-								break;
-							case 2:
-								$roleRow="<tr><td colspan='3' style='font-weight:bold'>Faculty</td></tr>";
-								break;
-							case 3:
-								$roleRow="<tr><td colspan='3' style='font-weight:bold'>Aides and Support Staff</td></tr>";
-								break;
-							default:
-								break;
-						}
-					}
-					echo $roleRow;
-				}
-
-				if($teacher->status != $currentStatus){
-					$statusRow="";
-					$currentStatus=$teacher->status;
-					if($currentStatus!=1){
-						$statusRow="<tr><td colspan='3' style='font-weight:bold'>Inactive/Former Teachers</td></tr>";
-					}
-					echo $statusRow;
-				}
-
-				if($gradeStart == $gradeEnd){
-					$gradePair = $gradeStart;
-				}
-				echo "<tr><td style='width:50%'>$teacherName</td><td>";
-				if($currentRole != 1){
-					echo $gradePair;
-				}
-				echo "</td><td><a href=". site_url("teacher/view/$kTeach") . " class='button'>View/Edit</a>";
-				// if(teacherHasNarratives($kTeach)){
-				//     echo "&nbsp;<span class='button teacher_narratives_list' id='n_$kTeach'>Narratives</span>";
-				//   }
-				echo "</td></tr>";
-
-			}
-			?>
-		</tbody>
+<? endif; ?>
+<? endforeach; ?>
+</tbody>
 	</table>
-
 </div>
+<? endforeach;?>
+
+

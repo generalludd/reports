@@ -21,14 +21,9 @@ if($hasNeeds){
 	$conditional_buttons[] = array("selection" => "support", "text" => "Show Learning Support", "class" => "button show_support", "type" => "span", "id" => "need_$hasNeeds->kSupport");
 }
 
-if($hasSuggestions){
-	$conditional_buttons[] = array("selection" => "suggestions", "text"=>"View Suggested Edits", "class" => "button view_edits", "type" => "span", "id" => "edit_$narrative->kNarrative");
-}
-
 if(!empty($conditional_buttons)){
 	$conditional_bar = create_button_bar($conditional_buttons);
 }
-
 
 
 ?>
@@ -37,7 +32,7 @@ if(!empty($conditional_buttons)){
 	<?=$studentName;?>
 </h3>
 <form id="narrativeEditor"
-	action="<?=base_url();?>index.php/narrative/<?=$action;?>"
+	action="<?=site_url("narrative/$action");?>"
 	method="post" name="narrativeEditor">
 
 	<?
@@ -83,7 +78,8 @@ if(!empty($conditional_buttons)){
 		<p>Course Grade (middle school only):
 			<? if($this->input->cookie("submits_report_card") == "yes"): ?>
 			<!-- override-narrative-grade allows a teacher who usually provides student grades to override the grade under special circumstances -->
-			<span id="course_grade"><?=$default_grade;?></span>&nbsp;<span class='button small override-narrative-grade'>Override</span>
+			<!-- <span id="course_grade"><?=$default_grade;?></span>&nbsp;<span class='button small override-narrative-grade'>Override</span>  -->
+			<?=$default_grade;?>
 			<? else: ?>
 				<span id="course_grade"><input type="text" name="narrGrade" id="narrGrade" value='<?=get_value($narrative,'narrGrade', $default_grade);?>' size="27"></span>
 			<?php endif;?>
@@ -109,7 +105,7 @@ window.setInterval(function(){
 
 		$("#ajax").val(1);
 		var formData = $("#narrativeEditor").serialize();
-		var myUrl = base_url + "narrative/" + action;
+		var myUrl = site_url + "narrative/" + action;
 		$.ajax({
 			url: myUrl,
 			type: 'POST',

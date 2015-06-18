@@ -1,0 +1,117 @@
+@CHARSET "UTF-8";
+
+.control_panel {
+	font-size: 12px;
+	font-family: tahoma, sans-serif;
+}
+.font_label {
+	padding: 5px;
+	margin: 5px;
+}
+div.warning,div.message,div.notice {
+	padding: 1em;
+	margin: 1em 0;
+}
+
+.button {
+	-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	border-radius: 3px;
+	text-align: center;
+	position: static;
+	padding: .15em;
+	padding-right: .25em;
+	padding-left: .25em;
+	border-style: solid;
+	border-width: 1px;
+	cursor: pointer;
+	font-weight: normal;
+}
+.subject {
+	font-weight: bold;
+	text-transform: uppercase;
+	float: left;
+}
+
+.student {
+	font-weight: bold;
+}
+
+.teacher {
+	text-align: right;
+}
+
+
+
+.term {
+	text-align: center;
+	margin-top: -5px;
+	margin-bottom: 25px;
+}
+
+.school {
+	font-weight: bold;
+	text-align: center;
+}
+
+.title {
+	text-transform: uppercase;
+	text-align: center;
+}
+
+.section {
+	width: 100%;
+	float: left;
+	padding-bottom: 1em;
+}
+
+.left {
+	width: 50%;
+	float: left;
+}
+
+.right {
+	text-align: right;
+	margin-left: 50%;
+	width: auto;
+}
+
+.pagebreak {
+	page-break-before: always;
+}
+
+sup {
+	font-size: 10px;
+}
+
+.footnote {
+	font-size: 12px;
+}
+
+body {
+	font-family: "Times New Roman";
+	width: 6.80in;
+	margin: .35in;
+	font-size: 12pt;
+}
+
+blockquote {
+	font-size: 85%;
+}
+
+
+table {
+	border: 1px;
+	font-size: 14px;
+	border-collapse: collapse;
+	width: 100%;
+}
+
+td {
+	border: 1px solid black;
+	padding: 5px;
+}
+
+td:last-child {
+	border-right: 1px solid black;
+}

@@ -1,6 +1,5 @@
 ﻿$(document).ready(function(){
 //	$('#content').css({height:'500px'});
-
 	$(".refresh").live("click",function(){
 		window.location.reload();
 	});
@@ -9,9 +8,13 @@
 		$(".datefield").datepicker();
 	});
 	
-	$('.button.print').live('click', function(event){
+	$('.button.do-print').live('click', function(event){
         window.print();
     });
+	
+	$(".alert,.message,.warning,.notice").live("click",function(){
+		$(this).fadeOut("slow");
+	});
 		
 	 $("#sortable").sortable({
 	      handle : '.handle',
@@ -20,6 +23,22 @@
 			  alert(order);
 	      }
     });
+	 
+	 $(".dialog").live("click",function(e){
+		 e.preventDefault();
+		 my_url = $(this).attr("href");
+		 form_data = {
+				 ajax: 1
+		 };
+		 $.ajax({
+			 type: "get",
+			 url: my_url,
+			 data: form_data,
+			 success: function(data){
+				 showPopup("",data,"auto");
+			 }
+		 });
+	 });
 		$("table thead").addClass("theader");
 //	$("table tr:nth-child(even)").addClass("striped");
 
@@ -36,13 +55,13 @@
 		});
 	});
 	
-	$('.searchYear').live('change',function(){
+	$('.year').live('change',function(){
 		var myYear=$(this).val();
 		if(myYear != 0){
 			var endYear=parseInt(myYear) + 1;
-			$('.yearEnd').val(endYear);
+			$(this).siblings('#yearEnd').val(endYear);
 		}else{
-			$('.yearEnd').val("");
+			$(this).siblings('#yearEnd').val("");
 		}
 	});
 
@@ -244,6 +263,7 @@
 		}
 	});
 	
+	/*Required field functions may no longer be needed with HTML5 */
 
 	$("select.required").live('change', function(event) {
 		var fieldName = $(this).attr('name');
@@ -266,17 +286,31 @@
 	// Field!");
 
 	
-	$("#browser_warning").live('click',
-		function(){
-			$(".notice").fadeOut();
-		}
-	);
+	$(".edit-subject-sort").live("click",function(){
+		my_id = this.id.split("_");
+		form_data = {
+				grade_start: my_id[0],
+				grade_end: my_id[1],
+				context: my_id[2],
+				ajax: 1
+		};
+		$.ajax({
+			type:"get",
+			data: form_data,
+			url: base_url + "config/edit_sort",
+			success :function(data){
+				showPopup("Edit Global Sort",data,"auto");
+			}
+		});
+		
+	});
 	
-	}//end document function
+		}//end document function
 );//end ready
 
 
 function showPopup(myTitle,data,popupWidth,x,y){
+	$("#popup").remove();
 	if(!popupWidth){
 		popupWidth=300;
 	}
@@ -296,6 +330,7 @@ function showPopup(myTitle,data,popupWidth,x,y){
 
 	return false;
 }
+
 
 
 function showSidebar(title,data,containerWidth,contentWidth,sidebarWidth){

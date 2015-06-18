@@ -1,7 +1,7 @@
 <?php
 $current_year = get_current_year();
 ?>
-
+<h3><?php echo $title;?></h3>
 <form id="legend_search" name="legend_search" action="<?=site_url("benchmark_legend/list_all");?>" method="get">
 <input type="hidden" name="kTeach" id="kTeach" value="<?=$kTeach;?>" />
 <p>
@@ -16,7 +16,7 @@ $current_year = get_current_year();
 <label for="term">Term: </label><?=get_term_menu("term", get_current_term(),TRUE);?>
 </p>
 <p>
-<label for="year">School Year: </label><?=form_dropdown("year", $years, $current_year ,"id='year' class='searchYear'"); ?>-
+<label for="year">School Year: </label><?=form_dropdown("year", $years, $current_year ,"id='year' class='year'"); ?>-
 <input type="text" id="yearEnd" name="yearEnd" class='yearEnd' size="5" maxlength="4"
 	readonly value="<?=$current_year + 1?>" />
 	</p>
