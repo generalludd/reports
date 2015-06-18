@@ -135,7 +135,7 @@
 			}
 		}
 
-		$narrText = strip_slashes ( $narrative->narrText );
+		$narrText = stripslashes ( $narrative->narrText );
 		print "<p>$narrText</p>";
 		if ($has_benchmarks) {
 			$this->load->view ( "benchmark/chart", $data );
