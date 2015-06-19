@@ -5,7 +5,7 @@
  * Preference types can be created by the administrator or through the database directly, and then set by users.
  * Of course, they don't do anything unless they are recognized programmatically in the application scripts. 
  */
-class preference_type_model extends CI_Model
+class Preference_type_model extends CI_Model
 {
 	
 	var $type;

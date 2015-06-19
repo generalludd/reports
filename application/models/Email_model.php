@@ -1,6 +1,6 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 
-class email_model extends CI_Model
+class Email_model extends CI_Model
 {
 	var $default;
 	var $mailpath;
