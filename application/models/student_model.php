@@ -183,10 +183,12 @@ class Student_model extends MY_Model
      */
     function get_students_by_grade ($gradeStart, $gradeEnd, $constraints = array())
     {
+    	$year = get_current_year();
+    	 
         if ($gradeStart == $gradeEnd) {
-            $this->db->where("(`baseGrade`+2014-`baseYear`)", $gradeStart);
+            $this->db->where("(`baseGrade` -`baseYear` + $year) = $gradeStart", FALSE,FALSE);
         } else {
-            $this->db->where("`baseGrade`+2014-`baseYear`  BETWEEN $gradeStart AND $gradeEnd");
+            $this->db->where("baseGrade - baseYear  + $year  BETWEEN $gradeStart AND $gradeEnd");
         }
 
         if (array_key_exists("kTeach", $constraints)) {
@@ -202,8 +204,8 @@ class Student_model extends MY_Model
         if (array_key_exists("select", $constraints)) {
             $this->db->select($constraints["select"]);
         } else {
-            $year = get_current_year();
-            $this->db->select("student.*,(`baseGrade`+$year-`baseYear`) as `stuGrade`");
+            $this->db->select("student.*");
+            $this->db->select("`baseGrade` - `baseYear` + $year as `stuGrade`",FALSE);
         }
         $this->db->order_by("stuGrade");
         $this->db->order_by("stuLast");
@@ -211,6 +213,7 @@ class Student_model extends MY_Model
 
         $this->db->from("student");
         $result = $this->db->get()->result();
+        $this->_log();
         return $result;
     }
 
