@@ -1,7 +1,7 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 
-class benchmark_model extends CI_Model
+class Benchmark_model extends CI_Model
 {
 	var $term;
 	var $year;
