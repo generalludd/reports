@@ -70,7 +70,7 @@ if(!empty($attendance)):
 			print "<tr><td colspan=6><a class='link' href='" . site_url("student/view/$item->kStudent");
 			print "' title='View student info'>$student_name</a>&nbsp;";
 			//@TODO clean this up!
-			echo create_button(array("text"=>"Add","href"=>site_url("attendance/create/$item->kStudent"),"class"=>"button new dialog","id"=>"student-add-attendance_$item->kStudent")); 
+			echo create_button(array("text"=>"Add","href"=>site_url("attendance/create/$item->kStudent"),"class"=>"button new small dialog","id"=>"student-add-attendance_$item->kStudent")); 
 		echo "</td></tr>";
 
 			$current_student = $item->kStudent;
