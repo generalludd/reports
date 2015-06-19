@@ -231,11 +231,11 @@ class Student_model extends MY_Model
      */
     function advanced_find ($year, $grades = array(), $hasNeeds = 0, $includeFormerStudents = 0, $sorting = NULL, $stuGroup = NULL)
     {
-        $this->db->select("student.*,(baseGrade+$year-baseYear) AS stuGrade");
+        $this->db->select("student.*,(baseGrade+$year-baseYear) AS stuGrade",TRUE);
         if (! empty($grades)) {
-            $this->db->where_in("`baseGrade`+$year-`baseYear`", $grades);
+            $this->db->where_in("`baseGrade`+$year-`baseYear`", $grades,FALSE);
         } else {
-            $this->db->where("`baseGrade` + $year - `baseYear` BETWEEN 0 AND 8");
+            $this->db->where("`baseGrade` + $year - `baseYear` BETWEEN 0 AND 8",FALSE,FALSE);
         }
         // if (! $includeFormerStudents) {
         // $this->db->where ( "`baseGrade`+$year-`baseYear` < 9" );
