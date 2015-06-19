@@ -79,8 +79,8 @@ if(!empty($narratives)){
 		$narrSummary = $narrSplit[0];
 		$narrText = stripslashes($narrative->narrText);
 		echo "<p><b>$narrative->narrSubject</b></p>";
-		$edit_buttons[] = array("selection"=>"view","text"=>"View","href"=> site_url("narrative/view/$narrative->kNarrative"), "title"=>"$narrSummary");
-		$edit_buttons[] = array("selection" =>"edit_inline","text"=>"Edit Inline","class" =>"button edit edit_narrative_inline", "id" => "enil_$narrative->kNarrative", "title" => "Edit this narrative here" );
+		$edit_buttons[] = array("selection"=>"view","text"=>"View","href"=> site_url("narrative/view/$narrative->kNarrative"), "title"=>"$narrSummary","class"=>"button small");
+		$edit_buttons[] = array("selection" =>"edit_inline","text"=>"Edit Inline","class" =>"button edit small edit_narrative_inline", "id" => "enil_$narrative->kNarrative", "title" => "Edit this narrative here" );
 
 		if($narrative->stuGrade >= 5){
 			$button_type = "new";
