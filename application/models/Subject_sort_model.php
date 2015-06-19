@@ -1,5 +1,5 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-class subject_sort_model extends CI_Model
+class Subject_sort_model extends CI_Model
 {
 	var $kStudent;
 	var $narrTerm;
