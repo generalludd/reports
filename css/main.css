@@ -1063,6 +1063,20 @@ table.grade-chart thead tr:last-child th {
 	font-size: 12px !important;
 }
 
+.report-chart {
+		clear: both;
+}
+
+.report-body {
+float: left;
+}
+
+.report-summary {
+float: left;
+max-width: 45%;
+padding-left: .5em;
+}
+
 th.buttons a, th div.buttons a, th .batch-print-grades {
 	width: 45px;
 	margin: 0 auto;
@@ -1192,7 +1206,8 @@ table.report td.field.buttons, table.report th.field.buttons {
 
 .report-header {
 	font-weight: bold;
-	margin: 1em 0;
+	font-size: 1.2em;
+	margin: .25em 0 1em 0;
 }
 
 .report-cutoff {

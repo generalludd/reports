@@ -7,7 +7,7 @@ if(isset($batch) && $batch){
 }
 ?>
 
-
+<!-- grade/report_card -->
 <div id='report-card' class="<?=implode(" ",$classes);?>">
 
 	<? foreach($charts as $chart): ?>
@@ -17,12 +17,12 @@ if(isset($batch) && $batch){
 
 <? else: ?>
 		<div class='report-title'>
-			Friends School of Minnesota <br />Report Card for
+			Friends School of Minnesota Report Card for
 			<?=$student_name;?>
 		</div>
 		<? endif; ?>
 		<? if($i == 0 ) :
-		$buttons[] = array("selection"=>"none","type"=>"span","class"=>array("button","print","do-print"),"text"=>"Print");
+		$buttons[] = array("selection"=>"none","type"=>"span","class"=>array("button","print","do-print","small"),"text"=>"Print");
 		echo create_button_bar($buttons);
 		endif; ?>
 		<div class='report-header report-term'>
