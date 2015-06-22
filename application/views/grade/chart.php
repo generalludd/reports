@@ -13,9 +13,9 @@ $categories = array ();
 $weight_sums = 0;
 $count = 0;
 ?>
-<div class='report-header report-teacher report-<?=$count;?>'>
-
-
+<div class='grade-report report-teacher report-<?=$count;?>'>
+<div class='report-body'>
+<div class='report-header'>
 	<?="$header->subject, $teacher";?>
 	<? if($pass_fail):?>
 	<br />Grades are Pass/Fail
@@ -26,7 +26,7 @@ $count = 0;
 <h2><?=format_name($student->stuFirst,$student->stuLast, $student->stuNickname);?></h2>
 <? endif; ?>
 
-<div class='report-body'>
+
 	<table class="report-card">
 		<thead>
 			<tr>
@@ -46,11 +46,11 @@ foreach ( $grades as $grade ) {
 					?>
 			<tr>
 				<td><?=format_date($grade->date,"standard");?></td>
-				<td><?=$grade->assignment; ?>
+				<td><?=$grade->assignment; ?></div>
 				</td>
-				<td><?=$grade->category;?>
+				<td><?=$grade->category;?></div>
 				</td>
-				<td><?=$grade->status?$grade->status:$grade->points;?>
+				<td><?=$grade->status?$grade->status:$grade->points;?></div>
 				<?
 					
 if ($grade->footnote) {
@@ -58,9 +58,8 @@ if ($grade->footnote) {
 						$footnotes [$grade->footnote] = $grade->label;
 					}
 					?></td>
-				<td><?=$grade->total_points > 0?$grade->total_points:"Make-Up Points";?>
+				<td><?=$grade->total_points > 0?$grade->total_points:"Make-Up Points";?></div>
 				</td>
-				<!-- <td class='notes-column'><?=$grade->footnote != 0 ? $grade->label:"";?></td>  -->
 
 			</tr>
 			<?
@@ -105,7 +104,9 @@ if (! empty ( $footnotes )) :
 		</ul>
 	</div>
 	<? endif; ?>
-<div class='report-header report-summary'>
+	</div>
+	<div class='report-summary'>
+<div class='report-header'>
 	<?=$header->subject; ?>
 	Category Summary
 	<? if($pass_fail):?>
@@ -113,7 +114,7 @@ if (! empty ( $footnotes )) :
 	<? endif;?>
 </div>
 
-	<div class='report-body'>
+
 		<table class="report-card">
 			<thead>
 				<tr>
@@ -134,7 +135,7 @@ if (! empty ( $footnotes )) :
 					<td><?=$category["total_points"]; ?></td>
 					<td><?=$category_grade;?>%</td>
 					<td><?=$category["weight"];?>%</td>
-					<td><?=calculate_letter_grade($category_grade, $pass_fail);?>
+					<td><?=calculate_letter_grade($category_grade, $pass_fail);?></td>
 			
 				
 				</tr>

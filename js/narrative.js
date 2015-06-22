@@ -96,6 +96,7 @@ $(document).ready(function() {
 
 
 	$('.save_close_narrative').live("click",function(event) {
+		event.preventDefault();
 		var narrText = $('#narrText').val();
 		if (narrText == "") {
 			alert("You haven't entered any text in the narrative yet. No need to save.");

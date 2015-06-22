@@ -112,7 +112,8 @@ div.login-inputs {
 	width: 250px;
 }
 
-.login-inputs input[type="text"], .login-inputs input[type="password"] , .login-inputs input[type="email"]{
+.login-inputs input[type="text"], .login-inputs input[type="password"],
+	.login-inputs input[type="email"] {
 	font-size: 1.2em;
 }
 
@@ -151,7 +152,7 @@ div.login-title {
 	box-shadow: 1px 1px 1px #000;
 }
 
-#login_form .login-text,.reset-fields input,.reset-fields label {
+#login_form .login-text, .reset-fields input, .reset-fields label {
 	width: 90%;
 	margin-left: auto;
 	margin-right: auto;
@@ -166,13 +167,16 @@ div.login-title {
 }
 
 /* general notices */
-
-.alert , .message, .warning, .notice {
+.alert, .message, .warning, .notice {
 	padding: 15px;
-  margin-bottom: 20px;
-  border: 1px solid transparent;
-  border-radius: 4px;
+	margin-bottom: 20px;
+	border: 1px solid transparent;
+	border-radius: 4px;
 	cursor: pointer;
+}
+
+#message {
+	display: none;
 }
 
 #content .alert {
@@ -208,7 +212,7 @@ div.result {
 }
 
 /*student list elements*/
-div.entry,div.list {
+div.entry, div.list {
 	width: 60%;
 	text-indent: 2%;
 	height: 2ex;
@@ -268,12 +272,12 @@ div.narrative {
 	visibility: hidden;
 }
 
-.button,#advancedSearch,#searchForm fieldset,h2,h3,h4,h5,.support-view legend,input[type="submit"], input[type="text"]	{
+.button, #advancedSearch, #searchForm fieldset, h2, h3, h4, h5,
+	.support-view legend, input[type="submit"], input[type="text"] {
 	-moz-border-radius: 3px;
 	-webkit-border-radius: 3px;
 	border-radius: 3px;
 }
-
 
 .button {
 	text-align: center;
@@ -287,7 +291,7 @@ div.narrative {
 	white-space: nowrap;
 }
 
-td .button,.row .button,.button.small {
+td .button, .row .button, .button.small {
 	padding-top: .25em;
 	padding-bottom: .25em;
 	font-size: .9em;
@@ -297,7 +301,7 @@ td .button {
 	padding: .35em inherit;
 }
 
-a,.button {
+a, .button {
 	transition: all .25s ease;
 }
 
@@ -327,6 +331,7 @@ a.button {
 }
 
 .button-box {
+	
 }
 
 .button-bar {
@@ -343,9 +348,8 @@ ul.button-list {
 
 ul.button-list li {
 	display: inline-block;
-	padding:0;
+	padding: 0;
 }
-
 
 ul.button-list li .button {
 	margin: 0;
@@ -415,21 +419,19 @@ legend {
 }
 
 #utility .button-box {
-    margin:0;
+	margin: 0;
 }
 
 #utility ul {
-	margin:0;
+	margin: 0;
 }
 
-
-
 #navigation {
-  display: inline-block;
-  position: relative;
-  width: 100%;
-  white-space: nowrap;
-  margin-bottom: .5em;
+	display: inline-block;
+	position: relative;
+	width: 100%;
+	white-space: nowrap;
+	margin-bottom: .5em;
 }
 
 #navigation ul {
@@ -514,7 +516,7 @@ ul.search {
 	text-align: center;
 }
 
-input[type="text"].year,#yearEnd {
+input[type="text"].year, #yearEnd {
 	width: 3em;
 }
 
@@ -594,7 +596,7 @@ h2 {
 	padding: 0;
 }
 
-h3,.support-view legend {
+h3, .support-view legend {
 	font-size: 1.5em;
 	font-weight: bold;
 	margin: 1em 0;
@@ -621,7 +623,7 @@ h5 {
 	margin: 0;
 }
 
-h3,h4,h5,.support-view legend {
+h3, h4, h5, .support-view legend {
 	margin-top: 4px;
 	margin-bottom: 4px;
 	padding: 5px;
@@ -734,10 +736,9 @@ label {
 	height: auto;
 }
 
-
 #searchForm fieldset {
 	border: 1px solid #eee;
-	margin: 5%; 
+	margin: 5%;
 	box-shadow: 2px 2px 3px #999;
 	background-color: white;
 	border-radius: 3px;
@@ -797,7 +798,7 @@ table.list thead tr th {
 	text-align: left;
 }
 
-table.grid th,table.grid td {
+table.grid th, table.grid td {
 	border-left: solid 1px #999;
 	border-right: solid 1px #999;
 	border-top: solid 1px #999;
@@ -832,11 +833,11 @@ table.files td.file-description {
 	width: 275px;
 }
 
-a.link,input.link,a {
+a.link, input.link, a {
 	text-decoration: none;
 }
 
-a.link:hover,input.link:hover {
+a.link:hover, input.link:hover {
 	cursor: pointer;
 }
 
@@ -845,13 +846,13 @@ table.attendance {
 	border: 1px #ccc solid;
 }
 
-table.attendance td,table.attendance th {
+table.attendance td, table.attendance th {
 	padding: 5px;
 	border-right: 1px #ccc solid;
 	border-bottom: 1px #ccc solid;
 }
 
-table.attendance td:last-child,table.attendance th:last-child {
+table.attendance td:last-child, table.attendance th:last-child {
 	border-right: 0;
 }
 
@@ -911,7 +912,6 @@ fieldset.advanced div.advanced {
 .search_fieldset legend {
 	font-size: 1.2em;
 }
-
 
 fieldset .button-box {
 	display: block;
@@ -1029,7 +1029,7 @@ table.grade-chart {
 	font-size: inherit;
 }
 
-table.report-card,table.grade-chart {
+table.report-card, table.grade-chart {
 	border-collapse: collapse;
 }
 
@@ -1042,7 +1042,7 @@ table.grade-chart th.assignment-edit {
 	width: 70px;
 }
 
-table.grade-chart th,table.grade-chart td {
+table.grade-chart th, table.grade-chart td {
 	border: 1px solid black;
 }
 
@@ -1059,6 +1059,10 @@ table.grade-chart thead tr:last-child th {
 	font-size: .85em;
 }
 
+.grade-report {
+	font-size: 12px !important;
+}
+
 th.buttons a, th div.buttons a, th .batch-print-grades {
 	width: 45px;
 	margin: 0 auto;
@@ -1070,8 +1074,8 @@ table.grade-chart th .chart-assignment {
 	font-weight: bold;
 }
 
-table.grade-chart th .chart-category,table.grade-chart th .chart-points,table.grade-chart th .chart-date
-	{
+table.grade-chart th .chart-category, table.grade-chart th .chart-points,
+	table.grade-chart th .chart-date {
 	font-weight: normal;
 }
 
@@ -1112,7 +1116,7 @@ table.grade-editor tbody tr td.grade-value {
 
 table.grade-editor tbody tr td.grade-value input {
 	border: none;
-	min-width:3em;
+	min-width: 3em;
 }
 
 table.grade-editor thead tr th {
@@ -1123,11 +1127,12 @@ table.grade-chart td.student-name {
 	min-width: 150px;
 }
 
-.grade-points.edit:hover,.assignment-edit:hover,td.student-name:hover {
+.grade-points.edit:hover, .assignment-edit:hover, td.student-name:hover
+	{
 	cursor: pointer;
 }
 
-table.report-card th,table.report-card td {
+table.report-card th, table.report-card td {
 	padding: 5px;
 	border: 1px solid black;
 }
@@ -1141,7 +1146,7 @@ table.report-card .notes-column {
 	box-shadow: none;
 }
 
-#orange-slip,#assignment-field textarea,#comment-field textarea {
+#orange-slip, #assignment-field textarea, #comment-field textarea {
 	width: 400px;
 }
 
@@ -1159,7 +1164,7 @@ table.report td.field {
 	border-left: 1px solid #c3c3c3;
 }
 
-td.field.report-comment,td.field.report-assignment {
+td.field.report-comment, td.field.report-assignment {
 	width: 150px;
 }
 
@@ -1167,11 +1172,11 @@ td.field.report-parent-contact {
 	
 }
 
-td.field.report-contact-date,td.field.report-student {
+td.field.report-contact-date, td.field.report-student {
 	border-right: 1px solid #c3c3c3;
 }
 
-table.report td.field.buttons,table.report th.field.buttons {
+table.report td.field.buttons, table.report th.field.buttons {
 	border: none;
 }
 
@@ -1247,12 +1252,9 @@ th.grade-confirmation {
 	box-shadow: 1px 1px 1px #ccc;
 	position: relative;
 }*/
-
 .fieldset h4 {
 	
 }
-
-
 
 .column {
 	float: left;
@@ -1270,10 +1272,10 @@ th.grade-confirmation {
 	clear: left;
 	margin-right: .5em;
 }
+
 .column.odd {
 	clear: right;
 	margin-left: .5em;
-	
 }
 
 .column-3 {
