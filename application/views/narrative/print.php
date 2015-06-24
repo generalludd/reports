@@ -1,5 +1,5 @@
-<?php #narrative_print_header.inc ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<?php  ?>
+<!DOCTYPE html>
 
 <html>
 
@@ -7,16 +7,12 @@
 <meta http-equiv="content-type" content="text/html;charset=utf-8" />
 <title>Report for <?=$title;?>
 </title>
-<script type="text/javascript"
-	src="<?=base_url('js/jquery.min.js'); ?>"></script>
-<link href='<?=base_url('css/color.css');?>' rel='stylesheet'
-	type='text/css' media='screen' />
+<script type="text/javascript" src="<?=base_url('js/jquery.min.js'); ?>"></script>
+<link href='<?=base_url('css/color.css');?>' rel='stylesheet' type='text/css' media='screen' />
 
-<link href='<?=base_url('css/report.css');?>' rel='stylesheet'
-	type='text/css' media='all' />
+<link href='<?=base_url('css/report.css');?>' rel='stylesheet' type='text/css' media='all' />
 
-<link href='<?=base_url('css/print.css');?>' rel='stylesheet'
-	type='text/css' media='print' />
+<link href='<?=base_url('css/print.css');?>' rel='stylesheet' type='text/css' media='print' />
 
 
 <script type="text/javascript">
@@ -67,15 +63,17 @@
 	<?php print $this->session->flashdata("warning");?>
 	</div>
 	<?php endif; ?>
-		<span class='font_label'>Font Size:</span> <span
-			class='button increaseFont'>Increase</span>&nbsp; <span
-			class='button resetFont'>Reset</span>&nbsp; <span
-			class='button reduceFont'>Reduce</span>&nbsp; <span
-			class='button print do-print'>Print</span>
+		<span class='font_label'>Font Size:</span>
+		<span class='button increaseFont'>Increase</span>
+		&nbsp;
+		<span class='button resetFont'>Reset</span>
+		&nbsp;
+		<span class='button reduceFont'>Reduce</span>
+		&nbsp;
+		<span class='button print do-print'>Print</span>
 	</div>
 	<p class="school">
-		Friends School of Minnesota <br /> 1365 Englewood Avenue <br /> St.
-		Paul, MN 55104
+		Friends School of Minnesota <br /> 1365 Englewood Avenue <br /> St. Paul, MN 55104
 	</p>
 	<p class="title">
 		<b><?
@@ -87,9 +85,13 @@
 	</p>
 	<p>
 		<span class="student">Student: <? echo $student; ?>
-		</span> <span style='text-align: right; float: right'>Absent: <? echo $absent; ?>
-		</span> <br /> <span class="student">Grade: <? echo format_grade($stuGrade); ?>
-		</span> <span style='text-align: right; float: right'>Tardy: <? echo $tardy; ?>
+		</span>
+		<span style='text-align: right; float: right'>Absent: <? echo $absent; ?>
+		</span>
+		<br />
+		<span class="student">Grade: <? echo format_grade($stuGrade); ?>
+		</span>
+		<span style='text-align: right; float: right'>Tardy: <? echo $tardy; ?>
 		</span>
 
 	</p>
@@ -108,33 +110,45 @@
 		$has_benchmarks = FALSE;
 		// benchmarks are only used in grades 5 and up.
 		if ($stuGrade > 4) {
-			printf ( "<div class='grade'>%s Term Grade: %s</div>", $narrTerm, $grades [$narrative->narrSubject] );
 			$submits_report_card = $this->preference->get ( $narrative->kTeach, "submits_report_card" );
-			//@TODO this submits_report_card function needs to be cleaned up and moved to the controller.
-			if ($narrTerm == "Year-End"  && $submits_report_card == "yes") {
-
-				printf ( "<div class='grade'>Mid-Year Term Grade: %s</div>", $mid_year_grades [$narrative->narrSubject] );
-				//$final_grade = $year_grade [$narrative->narrSubject]['percent'] ;
-				$final_grade_output = FALSE;
-				if($final_grade[$narrative->narrSubject]){
-					$final_grade_output = sprintf(" (%s&#037;)",$final_grade[$narrative->narrSubject]);
+			if (array_key_exists ( $narrative->narrSubject, $grades ) && isset ( $grades [$narrative->narrSubject] )) {
+				printf ( "<div class='grade'>%s Term Grade: %s</div>", $narrTerm, $grades [$narrative->narrSubject] );
+				// @TODO this submits_report_card function needs to be cleaned up and moved to the controller.
+				if ($narrTerm == "Year-End" && $submits_report_card == "yes") {
+					if (array_key_exists ( $narrative->narrSubject, $mid_year_grades )) {
+						printf ( "<div class='grade'>Mid-Year Term Grade: %s</div>", $mid_year_grades [$narrative->narrSubject] );
+					}
+					$final_grade_output = FALSE;
+					if (array_key_exists ( $narrative->narrSubject, $mid_year_grades )) {
+						if ($final_grade [$narrative->narrSubject]) {
+							$final_grade_output = sprintf ( " (%s&#037;)", $final_grade [$narrative->narrSubject] );
+						}
+						printf ( "<div class='grade'>%s Final Grade: %s%s</div>", $narrative->narrSubject, $year_grade [$narrative->narrSubject] ['grade'], $final_grade_output );
+					}
 				}
-				printf ( "<div class='grade'>%s Final Grade: %s%s</div>", $narrative->narrSubject,$year_grade [$narrative->narrSubject]['grade'] , $final_grade_output );
+			} else {
+				if ($submits_report_card == "yes") {
+					print "<div class='grade'>Mid-Year Term Grade: $narrative->narrGrade</div>";
+					
+					if ($narrTerm == "Year-End") {
+						print "<div class='grade'>Year-End Grade: $narrative->narrGrade</div>";
+					}
+				}
 			}
 			// @TODO modify insert chart issues here.
 			$data ['legend'] = $this->legend->get_one ( array (
 					"kTeach" => $narrative->kTeach,
 					"subject" => $narrative->narrSubject,
 					"term" => $narrative->narrTerm,
-					"year" => $narrative->narrYear
+					"year" => $narrative->narrYear 
 			) );
 			$has_benchmarks = $this->benchmark_model->student_has_benchmarks ( $narrative->kStudent, $narrative->narrSubject, $narrative->stuGrade, $narrative->narrTerm, $narrative->narrYear );
-
+			
 			if ($has_benchmarks) {
 				$data ["benchmarks"] = $this->benchmark_model->get_for_student ( $narrative->kStudent, $narrative->narrSubject, $stuGrade, $narrTerm, $narrYear );
 			}
 		}
-
+		
 		$narrText = stripslashes ( $narrative->narrText );
 		print "<p>$narrText</p>";
 		if ($has_benchmarks) {

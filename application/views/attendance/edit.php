@@ -39,7 +39,7 @@ if(get_value($attendance,"attendDate",FALSE)){
 <input type='submit' class='button' value='Save'/>
 
 <?php if($action == "update"):?>
-<span class='delete_attendance delete button'>Delete</span>
+<span class='delete delete-item button'>Delete</span>
 <?php endif ?>
 
 </div>

@@ -78,9 +78,9 @@ if(!empty($conditional_buttons)){
 		</p>
 		<p>Course Grade (middle school only):
 			<? if($this->input->cookie("submits_report_card") == "yes"): ?>
-			<!-- override-narrative-grade allows a teacher who usually provides student grades to override the grade under special circumstances -->
-			<!-- <span id="course_grade"><?=$default_grade;?></span>&nbsp;<span class='button small override-narrative-grade'>Override</span>  -->
-			<?=$default_grade;?>
+			<span id="course_grade"><?=$default_grade;?></span>&nbsp;<a class='button small override-narrative-grade' href="#" title="override-narrative-grade allows a teacher who usually provides student grades to override the grade under special circumstances
+			">Override</a>
+			
 			<? else: ?>
 				<span id="course_grade"><input type="text" name="narrGrade" id="narrGrade" value='<?=get_value($narrative,'narrGrade', $default_grade);?>' size="27"></span>
 			<?php endif;?>
