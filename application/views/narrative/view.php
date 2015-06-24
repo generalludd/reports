@@ -25,7 +25,8 @@ if ($benchmarks_available) {
 if ($backups) {
 	$buttons [] = array (
 			"text" => "Show Backups",
-			"href" => site_url ( "narrative/list_backups/$narrative->kNarrative" ) 
+			"href" => site_url ( "narrative/list_backups/$narrative->kNarrative" ),
+			"class" =>"button small"
 	);
 }
 print create_button_bar ( $buttons );
