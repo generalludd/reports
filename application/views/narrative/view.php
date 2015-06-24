@@ -12,14 +12,14 @@ if ($letter_grade) {
 $buttons [] = array (
 		"text" => "Edit Original",
 		"href" => site_url ( "narrative/edit/$narrative->kNarrative" ),
-		"class" => "button edit",
+		"class" => "button edit small",
 		"id" => "n_$narrative->kNarrative" 
 ); // ,
 if ($benchmarks_available) {
 	$buttons [] = array (
 			"text" => "Edit Benchmarks",
 			"href" => site_url ( "benchmark/edit_for_student/$narrative->kNarrative" ),
-			"class" => "button dialog" 
+			"class" => "button dialog small" 
 	);
 }
 if ($backups) {

@@ -17,8 +17,9 @@ if($action == "insert"){
 }
 $conditional_buttons = array();
 $conditional_bar = FALSE;
+//@TODO condense the following 7 lines of code into three/four
 if($hasNeeds){
-	$conditional_buttons[] = array("selection" => "support", "text" => "Show Learning Support", "class" => "button show_support", "type" => "span", "id" => "need_$hasNeeds->kSupport");
+	$conditional_buttons[] = array("selection" => "support", "text" => "Show Learning Support", "class" => "button show_support small", "type" => "span", "id" => "need_$hasNeeds->kSupport");
 }
 
 if(!empty($conditional_buttons)){
