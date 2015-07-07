@@ -22,7 +22,8 @@ class Support extends MY_Controller
 		$data["kStudent"] = $kStudent;
 		$data["student"] = $student;
 		$data["student_name"] = format_name($student->stuFirst, $student->stuLast, $student->stuNickname);
-		$data["has_current"] = $this->support_model->get_current($kStudent)->year;
+		$has_current = $this->support_model->get_current($kStudent);
+		$data['has_current'] = get_value($has_current,"year");
 		$data["title"] = sprintf("Viewing Student Support for %s",$data["student_name"]);
 		$data["support"] = $this->support_model->get_all($kStudent);
 		$data["target"] = "support/list";
