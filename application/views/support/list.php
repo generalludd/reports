@@ -1,7 +1,7 @@
 <?php #special_need_view.inc
 $current_year = get_current_year();
 if($this->session->userdata("dbRole")<3){
-	$current_year = get_current_year()+1;
+	$current_year = get_current_year();
 }
 ?>
 <h3><?php echo $title; ?></h3>
