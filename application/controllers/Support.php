@@ -12,11 +12,6 @@ class Support extends MY_Controller
 
 	function list_all($kStudent = FALSE, $errors = NULL)
 	{
-		if(!$kStudent){
-			$kStudent = $this->uri->segment(3);
-		}
-
-
 		$this->load->model("student_model");
 		$student = $this->student_model->get($kStudent);
 		$data["kStudent"] = $kStudent;
