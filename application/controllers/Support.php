@@ -22,7 +22,7 @@ class Support extends MY_Controller
 		$data["kStudent"] = $kStudent;
 		$data["student"] = $student;
 		$data["student_name"] = format_name($student->stuFirst, $student->stuLast, $student->stuNickname);
-		$data["has_current"] = $this->support_model->get_current($kStudent);
+		$data["has_current"] = $this->support_model->get_current($kStudent)->year;
 		$data["title"] = sprintf("Viewing Student Support for %s",$data["student_name"]);
 		$data["support"] = $this->support_model->get_all($kStudent);
 		$data["target"] = "support/list";
@@ -59,11 +59,15 @@ class Support extends MY_Controller
 	}
 
 
-	function create()
+	function create($kStudent,$year = NULL)
 	{
-		if($this->uri->segment(3)){
+		if($kStudent){
 			$this->load->model("student_model");
-			$kStudent = $this->uri->segment(3);
+			if($year){
+				$data['year'] = $year;
+			}else{
+				$data['year'] = get_current_year();
+			}
 			$data["action"] = "insert";
 			$data["support"] = $this->student_model->get($kStudent);
 			$data["title"] = "Add Student Support Documentation";
@@ -89,16 +93,15 @@ class Support extends MY_Controller
 	}
 
 
-	function edit()
+	function edit($kSupport)
 	{
-		if($this->uri->segment(3)){
-			$kSupport = $this->uri->segment(3);
+		if($kSupport){
 			$data["action"] = "update";
 			$data["support"] = $this->support_model->get($kSupport);
 			$data["title"] = "Editing Student Support";
 			$this->load->model("file_model");
 			$data["support_files"] = $this->file_model->get_all($kSupport);
-			$data["year_list"] = get_year_list();
+			$data["year_list"] = get_year_list(FALSE,TRUE);
 			$data["target"] = "support/edit";
 			$this->load->view("page/index", $data);
 		}

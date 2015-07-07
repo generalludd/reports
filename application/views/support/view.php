@@ -50,14 +50,15 @@ if (! $print) {
 			"selection" => "support",
 			"href" => site_url ( "support/edit/$entry->kSupport" ),
 			"text" => "Edit",
-			"class" => "button edit" 
+			"class" => "button edit small" 
 	);
 	
 	$buttons [] = array (
 			"selection" => "print",
 			"href" => site_url ( "support/view/$entry->kSupport/print" ),
 			"target" => "_blank",
-			"text" => "Print" 
+			"text" => "Print" ,
+			"class"=>"small button print"
 	);
 	print create_button_bar ( $buttons );
 }
