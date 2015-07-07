@@ -77,6 +77,7 @@ if(!empty($conditional_buttons)){
 			maxlength="4" size="5" value="<?=$yearEnd; ?>" />
 		<?php if($stuGrade >= 5):?>
 		</p>
+		<!-- @TODO Put calculated final grade here.  -->
 		<p>Course Grade (middle school only):
 			<? if($this->input->cookie("submits_report_card") == "yes" && !$narrative->narrGrade): ?>
 			<span id="course_grade"><?=$default_grade;?></span>&nbsp;<a class='button small override-narrative-grade' href="#" title="override-narrative-grade allows a teacher who usually provides student grades to override the grade under special circumstances
