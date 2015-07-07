@@ -39,8 +39,21 @@
 			 }
 		 });
 	 });
-		$("table thead").addClass("theader");
-//	$("table tr:nth-child(even)").addClass("striped");
+	 
+		$('.delete-item').live('click',
+				function(e){
+			e.preventDefault();
+			me = $(this);
+			my_id = me.parents("form").attr("id");
+						$("#action").val("delete");
+						choice=confirm("Are you absolutely sure you want to delete this? This cannot be undone!");
+						if(choice) {
+							document.forms[my_id].submit();
+						}else{
+							return false;
+						}
+					}//end function(event)
+			);//end click
 
 	 
 	$('.home').live('click',
