@@ -39,106 +39,102 @@ $buttons [] = array (
 		"selection" => "save-continue",
 		"text" => "Save &amp; Continue",
 		"class" => "save-continue-support button",
-		"type" => "span" 
+		"type" => "a" 
 );
 $buttons [] = array (
 		"selection" => "save-close",
 		"text" => "Save &amp; Close",
 		"class" => "save-close-support button",
-		"type" => "span" 
+		"type" => "a" 
 );
 $buttons [] = array (
 		"selection" => "cancel",
 		"text" => "Cancel",
 		"class" => "button cancel-support-edit",
-		"type" => "span" 
+		"type" => "a" 
 );
 $buttons [] = array (
 		"selection" => "print",
 		"text" => "Print",
 		"class" => "button $hide_item",
 		"id" => "print-support",
-		"type" => "span" 
+		"type" => "a" 
 );
 $buttons [] = array (
 		"selection" => "delete",
 		"text" => "Delete",
 		"class" => "delete button $hide_item",
 		"id" => "delete-support",
-		"type" => "span" 
+		"type" => "a" 
 );
 
-$button_box = create_button_bar ( $buttons, array (
-		"id" => "support-editor-buttons" 
-) );
+$button_box = create_button_bar ( $buttons );
 ?>
-<form id="support-editor" action="<?=site_url("support/$action")?>" method="post" name="support-editor">
+<form name="support-editor" id="support_editor" class="editor" action="<?php echo site_url("support/$action");?>" method="post">
 
 
-<?=$button_box;?>
+	<?php echo $button_box;?>
 
-	<input type="hidden" name="action" id="action" value="<?=$action?>" />
+	<input type="hidden" name="action" id="action" value="<?php echo $action?>" />
 	<input type="hidden" name="ajax" id="ajax" value="" />
-	<input type="hidden" name="kStudent" id="kStudent" value="<?=get_value($support,"kStudent"); ?>" />
-	<input type="hidden" name="kSupport" id="kSupport" value="<?=get_value($support,"kSupport"); ?>" />
-	<h3>Special Needs Support Summary for <?=$studentName;?></h3>
+	<input type="hidden" name="kStudent" id="kStudent" value="<?php echo get_value($support,"kStudent"); ?>" />
+	<input type="hidden" name="kSupport" id="kSupport" value="<?php echo get_value($support,"kSupport"); ?>" />
+	<h3>Special Needs Support Summary for <?php echo $studentName;?></h3>
 	<div id='message' class='message'></div>
-	<label for="year">Year for this Documentation:</label> <?=form_dropdown("year", $year_list, $year, "id='year' class='yearStart'"); ?>-
-<input id='yearEnd' name='yearEnd' size="5" maxlength="4" value='<?=$year_end; ?>' readonly />
-	<br />
 	<p>
-		<input type="checkbox" id="meeting" name="meeting" value="1" <?=$meetingChecked;?> /> Fall Meeting Completed for <?=format_schoolyear(get_value($support,"year", $year)); ?></p>
-	<p>Date <?=$support->stuFirst; ?> was formally tested:<input type="text" name="testDate" id="testDate" class="datefield"
-			value="<?=$test_date;?>" size="17"
-		>
+		<label for="year">Year for this Documentation:</label> <?php echo form_dropdown("year", $year_list, $year, "id='year' class='yearStart'"); ?>&dash;
+		<input id='yearEnd' name='yearEnd' size="5" maxlength="4" value='<?php echo $year_end; ?>' readonly />
+	</p>
+	<p>
+		<input type="checkbox" id="meeting" name="meeting" value="1" <?php echo $meetingChecked;?> /> Fall Meeting Completed for <?php echo format_schoolyear(get_value($support,"year", $year)); ?>
+	</p>
+	<p>
+		<label for="testDate">Date <?php echo $support->stuFirst; ?> was formally tested: </label>
+		<input type="text" name="testDate" id="testDate" class="datefield" value="<?php echo $test_date;?>" size="17">
 	</p>
 	<div class='<?php if(get_cookie("accordion") == "enable"){print "accordion";} ?>' id='needAccordion'>
 		<h3>
-			<a href="#" style="color: #000; text-decoration: none;">Special Need/Diagnosis</a>
+			<a>Special Need/Diagnosis</a>
 		</h3>
 		<div>
-			<p class="notice">Please enter meds, Galtier attendance, etc under "Outside Services" below</p>
-			<textarea name="specialNeed" id="specialNeed" class="tinymce" style="width: 99%" rows="25" cols="91"><?=get_value($support,"specialNeed");?></textarea>
+			<p class="notice">Use this only for description/diagnosis. Please enter meds, Galtier attendance, etc under "Outside Services" section below
+				this.</p>
+			<textarea name="specialNeed" id="specialNeed" class="tinymce" style="width: 99%" rows="25" cols="91"><?php echo get_value($support,"specialNeed");?></textarea>
 		</div>
 		<h3 id="iep-section">
-			<a href="#" style="color: #000; text-decoration: none;">IEP and SPPS Support</a>
+			<a>IEP and SPPS Support</a>
 		</h3>
 		<div>
 			<p>
-				Has Active IEP:
-				<input type="checkbox" id="hasIEP" name="hasIEP" value="1" <?=$iepChecked; ?> />
-				<br /> Receives SPPS Services
-				<input type="checkbox" id="hasSPPS" name="hasSPPS" value="1" <?=$sppsChecked; ?> />
+				<label for="hasIEP">Has Active IEP:</label>
+				<input type="checkbox" id="hasIEP" name="hasIEP" value="1" <?php echo $iepChecked; ?> />
+			</p>
+			<p>
+				<label for="hasSPPS">Receives SPPS Services</label>
+				<input type="checkbox" id="hasSPPS" name="hasSPPS" value="1" <?php echo $sppsChecked; ?> />
 			</p>
 		</div>
 		<h3 id="services-section">
-			<a href="#" style="color: #000; text-decoration: none;">Outside services, Galtier, medications or other treatments</a>
+			<a>Outside services, Galtier, medications or other treatments</a>
 		</h3>
 		<div>
-			<div class='notice'>(i.e. Orton-Gillingham, Galtier, Homework Help, etc. Include start and end date if applicable</div>
-			<textarea name="outsideSupport" id="outsideSupport" rows="15" style="width: 99%" class="tinymce"><?=get_value($support, "outsideSupport"); ?></textarea>
+			<div class='notice'>i.e. Orton-Gillingham, Galtier, Homework Help, etc. Include start and end date if applicable.</div>
+			<textarea name="outsideSupport" id="outsideSupport" rows="15" style="width: 99%" class="tinymce"><?php echo get_value($support, "outsideSupport"); ?></textarea>
 		</div>
-		<h3 id="modifications-section">
-			<a href="#" style="color: #000; text-decoration: none;">Accommodations at FSM</a>
-		</h3>
-		<div>
-			<textarea name="modification" id="modification" class="tinymce" style="width: 99%" rows="25" cols="91"><?=get_value($support,"modification"); ?></textarea>
-		</div>
-
 		<h3 id="attachment-section">
-			<a href="#" style="color: #000; text-decoration: none;">File Attachments</a>
+			<a>File Attachments</a>
 		</h3>
 		<div>
 			<div class="alert hidden" id="attachment-content-warning" style="width: 45%">Make sure that any important points covered in attached files
 				are also summarized above. This makes it easier for faculty and aides to quickly read a student's profile.</div>
 			<p>
-				<span class='insert-message notice <?=$show_item;?>'>You must save this document before you can attach files.</span>
+				<span class='insert-message notice <?php echo $show_item;?>'>You must save this document before you can attach files.</span>
 
-				<span class="button show-support-file-uploader <?=$hide_item;?>">Add a File</span>
+				<span class="button show-support-file-uploader <?php echo $hide_item;?>">Add a File</span>
 			</p>
-
-<? if($support_files): ?>
-<table id="support-file-list" class="files list">
+		
+			<? if($support_files): ?>
+				<table id="support-file-list" class="files list">
 				<thead>
 					<tr>
 						<th>
@@ -151,20 +147,23 @@ $button_box = create_button_bar ( $buttons, array (
 					</tr>
 				</thead>
 				<tbody>
-	<? foreach($support_files as $file):?>
-	<tr id='fr_$file->kFile'>
+						<? foreach($support_files as $file):?>
+							<tr id='fr_<?php echo $file->kFile;?>'>
 						<td>
-							<a href='<?=base_url("uploads/$file->file_name");?>' target='_blank'><?=$file->file_display_name;?></a>
+							<a href='<?php echo base_url("uploads/$file->file_name");?>' target='_blank'><?php echo $file->file_display_name;?></a>
 						</td>
-						<td><?=$file->file_description;?></td>
+						<td><?php echo $file->file_description;?></td>
 						<td>
-							<span class='button delete delete-support-file' id='dsf_<?=$file->kFile;?>'>Delete</span>
+							<span class='button delete delete-support-file' id='dsf_<?php echo $file->kFile;?>'>Delete</span>
 						</td>
 					</tr>
-	<?endforeach; ?>
-	</tbody>
+						<?endforeach; ?>
+					</tbody>
 			</table>
-	<?php endif; ?></div>
+			<?php endif; ?>
+		</div>
+
+
 	</div>
 
 </form>
@@ -173,5 +172,4 @@ $button_box = create_button_bar ( $buttons, array (
 $(".show-support-file-uploader").live("mouseover", function(){
 	$("#attachment-content-warning").slideDown();
 });
-
 	</script>
