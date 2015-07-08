@@ -309,6 +309,8 @@ a, .button {
 	height: 18px;
 	border: 1px solid transparent;
 	border-radius: 0;
+	padding: .8em .5em;
+	font-size: 1em;
 }
 
 .unread {
@@ -916,7 +918,7 @@ fieldset.advanced div.advanced {
 fieldset .button-box {
 	display: block;
 	float: right;
-	z-index:1;
+	z-index: 1;
 	position: relative;
 	margin-left: auto;
 	margin-right: auto;
@@ -1065,17 +1067,17 @@ table.grade-chart thead tr:last-child th {
 }
 
 .report-chart {
-		clear: both;
+	clear: both;
 }
 
 .report-body {
-float: left;
+	float: left;
 }
 
 .report-summary {
-float: left;
-max-width: 45%;
-padding-left: .5em;
+	float: left;
+	max-width: 45%;
+	padding-left: .5em;
 }
 
 th.buttons a, th div.buttons a, th .batch-print-grades {
