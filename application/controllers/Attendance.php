@@ -189,8 +189,8 @@ class Attendance extends MY_Controller {
 			$data ["kStudent"] = $this->uri->segment ( 3 );
 		}
 		
-		if ($this->input->post ( "kStudent" ) > 0) {
-			$data ["kStudent"] = $this->input->post ( "kStudent" );
+		if ($this->input->get ( "kStudent" ) > 0) {
+			$data ["kStudent"] = $this->input->get ( "kStudent" );
 		}
 		
 		if ($data ["kStudent"]) {
@@ -198,23 +198,23 @@ class Attendance extends MY_Controller {
 		}
 		
 		$data ["startDate"] = get_current_year () . "-08-01";
-		if ($this->input->post ( "startDate" )) {
-			$data ["startDate"] = format_date ( $this->input->post ( "startDate" ), "mysql" );
+		if ($this->input->get ( "startDate" )) {
+			$data ["startDate"] = format_date ( $this->input->get ( "startDate" ), "mysql" );
 		}
 		
 		$data ["endDate"] = date ( "Y-m-j" );
-		if ($this->input->post ( "endDate" )) {
-			$data ["endDate"] = format_date ( $this->input->post ( "endDate" ), "mysql" );
+		if ($this->input->get ( "endDate" )) {
+			$data ["endDate"] = format_date ( $this->input->get ( "endDate" ), "mysql" );
 		}
 		
 		$data ["attendType"] = NULL;
-		if ($this->input->post ( "attendType" )) {
-			$data ["attendType"] = $this->input->post ( "attendType" );
+		if ($this->input->get ( "attendType" )) {
+			$data ["attendType"] = $this->input->get ( "attendType" );
 		}
 		
 		$data ["attendSubtype"] = NULL;
-		if ($this->input->post ( "attendSubtype" )) {
-			$data ["attendSubtype"] = $this->input->post ( "attendSubtype" );
+		if ($this->input->get ( "attendSubtype" )) {
+			$data ["attendSubtype"] = $this->input->get ( "attendSubtype" );
 		}
 		
 		$data ['attendance'] = $this->attendance_model->search ( $data );

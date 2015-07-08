@@ -1,5 +1,5 @@
 <?php ?>
-<form id='attendance_search' name='attendance_search' action='<?=site_url("attendance/search");?>' method='post'>
+<form id='attendance_search' name='attendance_search' action='<?=site_url("attendance/search");?>' method='get'>
 <input type="hidden" value="<?=$kStudent;?>" name="kStudent" id="kStudent"/>
 <?php if($kStudent):?>
 <p>Search for attendance records for <?=$student;?></p>

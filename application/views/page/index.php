@@ -9,7 +9,7 @@ if(!isset($body_classes)){
 $body_classes[] = "browser";
 $body_classes[] = $this->uri->segment(1);
 ?>
-<!DOCTYPE html">
+<!DOCTYPE html>
 <html>
 <head>
 <? $this->load->view('page/head');?>
