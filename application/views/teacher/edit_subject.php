@@ -9,6 +9,6 @@
 <?=form_dropdown("subGradeStart", $grades, $gradeStart, "id='subGradeStart'"); ?>
 -
 <?=form_dropdown("subGradeEnd", $grades, $gradeEnd, "id='subGradeEnd'"); ?>
-&nbsp;<span class='button insert_subject'>Add</span>
+&nbsp;<span class='button insert_subject small'>Add</span>
 </form>
 </div>
