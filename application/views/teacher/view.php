@@ -66,21 +66,24 @@ switch($teacher->dbRole){
 }
 
 ?></p>
-<?php if($teacher->dbRole == 2):?>
+<?php  if(get_value($teacher, "dbRole",NULL) == 2):?>
 <p><label>Classroom:</label> <? print $teacher->teachClass; ?></p>
 <p><label>Grade Range Taught: </label><? print $gradeRange;?></p>
-<fieldset><legend>Subjects Taught</legend> <?
-$subjectList = array();
-foreach($subjects as $subject){
-	$subjectList[] =  $subject->subject;
-}
-echo implode("<br/>", $subjectList);
 
-?></fieldset>
 
-<?php endif;?>
+	<h4>Subjects Taught</h4>
+	<p>This information is used to generate any menus indicating the subjects
+	<? if($userID == $teacher->kTeach){
+		print " you teach.";
+	}else{
+		print get_value($teacher, 'teachFirst'). " teaches.";
+	}?></p>
+<?
+$this->load->view("teacher/subject_list");
+echo "<p><span class='add_subject button small new' id='t_$teacher->kTeach'>Add a Subject</span></p>";
+
+endif;?>
 </div>
-
 
 
 

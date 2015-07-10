@@ -120,9 +120,20 @@ class Teacher extends MY_Controller
                 $data["kTeach"] = $kTeach;
                 $data["teacher"] = $teacher;
                 $data["subjects"] = $this->subject_model->get_for_teacher($kTeach);
+                $classrooms = $this->menu_model->get_pairs("classroom");
+                $data["classrooms"] = get_keyed_pairs($classrooms, array(
+                		"value",
+                		"label"
+                ));
+                $grades = $this->menu_model->get_pairs("grade");
+                $data["grades"] = get_keyed_pairs($grades, array(
+                		"value",
+                		"label"
+                ));
                 $data["target"] = "teacher/view";
                 $data["title"] = "Viewing Information for $teacher->teachFirst $teacher->teachLast";
                 $this->load->view("page/index", $data);
+              
             } else {
                 $this->session->set_flashdata("warning", "No such user was found!");
                 redirect("teacher");
@@ -270,10 +281,10 @@ class Teacher extends MY_Controller
      */
     function insert_subject ()
     {
-        $kTeach = $this->input->get_post("kTeach");
-        $subject = $this->input->get_post("subject");
-        $gradeStart = $this->input->get_post("subGradeStart");
-        $gradeEnd = $this->input->get_post("subGradeEnd");
+        $kTeach = $this->input->post("kTeach");
+        $subject = $this->input->post("subject");
+        $gradeStart = $this->input->post("subGradeStart");
+        $gradeEnd = $this->input->post("subGradeEnd");
         $this->teacher_model->insert_subject($kTeach, $subject, $gradeStart, $gradeEnd);
         $teacher = $this->teacher_model->get($kTeach, "gradeStart,gradeEnd");
         $data['subjects'] = $this->subject_model->get_for_teacher($kTeach);

@@ -32,9 +32,10 @@ $(document).ready(function(){
 		var form_data = {
 				kTeach: myTeach,
 				subject: mySubject,
-				gradeStart: myStart,
-				gradeEnd:myEnd
+				subGradeStart: myStart,
+				subGradeEnd:myEnd
 		};
+		console.log(form_data);
 		var myUrl = base_url + "teacher/insert_subject";
 		$.ajax({
 			type: "POST",

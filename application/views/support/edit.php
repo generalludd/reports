@@ -70,7 +70,7 @@ $buttons [] = array (
 
 $button_box = create_button_bar ( $buttons );
 ?>
-<form name="support-editor" id="support_editor" class="editor" action="<?php echo site_url("support/$action");?>" method="post">
+<form name="support-editor" id="support-editor" class="editor" action="<?php echo site_url("support/$action");?>" method="post">
 
 
 	<?php echo $button_box;?>
