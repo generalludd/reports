@@ -363,7 +363,6 @@ class Assignment extends MY_Controller {
 		$gradeEnd = $this->input->post ( 'gradeEnd' );
 		$year = $this->input->post ( 'year' );
 		$term = $this->input->post ( 'term' );
-		
 		$data = array ();
 		if ($category && $weight && $gradeStart && $gradeEnd) {
 			$data ['category'] = $category;

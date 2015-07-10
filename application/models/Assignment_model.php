@@ -336,7 +336,6 @@ class Assignment_model extends MY_Model {
 		$this->db->where ( "term", $term );
 		$this->db->where ( "year", $year );
 		$result = $this->db->get ( "assignment_category" )->row ();
-		$this->_log ( "notice" );
 		return $result->count;
 	}
 }

@@ -18,7 +18,7 @@ $buttons [] = array (
 );
 $buttons [] = array (
 		"text" => "New Grade Search",
-		"href"=>site_url("assignment/search/$kTeach"),
+		"href" => site_url ( "assignment/search/$kTeach" ),
 		"class" => "button dialog",
 		"selection" => "grades" 
 );
@@ -38,6 +38,13 @@ if (get_cookie ( "beta_tester" )) {
 			"href" => site_url ( "assignment/create_batch?kTeach=$kTeach&term=$term&year=$year&gradeStart=$gradeStart&gradeEnd=$gradeEnd" ),
 			"class" => "button edit" 
 	);
+}
+if($category_count > 0){
+$buttons [] = array (
+		"text" => "Add Assignment",
+		"href" => site_url ( "assignment/create/$kTeach" ),
+		"class" => "button dialog new" 
+);
 }
 $buttons [] = array (
 		"text" => "Batch Print Grades",
@@ -97,7 +104,9 @@ if (! empty ( $assignments )) {
 
 			<th id="as_<?=$assignment->kAssignment;?>" class="assignment-field buttons">
 				<div>
-					<a class="dialog edit small button" id="ase_<?=$assignment->kAssignment;?>" href="<?php echo site_url("assignment/edit/$assignment->kAssignment");?>" title="Edit this assignment">Edit</a>
+					<a class="dialog edit small button" id="ase_<?=$assignment->kAssignment;?>"
+						href="<?php echo site_url("assignment/edit/$assignment->kAssignment");?>" title="Edit this assignment"
+					>Edit</a>
 					<span class="chart-assignment"><?=$assignment->assignment;?></span>
 					<br />
 					<span class='chart-category'><?=$assignment->category;?> </span>
@@ -111,8 +120,6 @@ if (! empty ( $assignments )) {
 				</div>
 			<? $assignment_keys[] = $assignment->kAssignment;?>
 			</th>
-
-
 			<? endforeach; ?>
 			<th class='assignment-button'>
 			<?php echo create_button(array("text"=>"Add Assignment","href"=>site_url("assignment/create/$kTeach"),"class"=>"button dialog new") )?>
@@ -200,10 +207,7 @@ if (! empty ( $assignments )) {
 	<?=$category_count == 0?"<p style='padding-bottom: 1em;'>You may need to create categories before creating assignments.</p>":""; ?>
 	<?=create_button_bar($buttons);?>
 <? if($category_count > 0){ ?>
-<p>
-	You have not entered any assignments or grades for this term.
-	<span class='button small new assignment-create'>Add Assignment</span>
-</p>
+<p>You have not entered any assignments or grades for this term.</p>
 <?
 	} // end if category_count
 } //end if assignments
