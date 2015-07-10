@@ -30,20 +30,19 @@ if ($kTeach == $this->session->userdata ( "userID" )) {
 			"href" => site_url ( "assignment/edit_categories/$kTeach?year=$year&term=$term&gradeStart=$gradeStart&gradeEnd=$gradeEnd" ) 
 	);
 }
-if (get_cookie ( "beta_tester" )) {
-	$buttons [] = array (
-			"text" => "Batch Insert (BETA)",
-			"selection" => "",
-			"title" => "Insert batches of assignments at once (Beta!)",
-			"href" => site_url ( "assignment/create_batch?kTeach=$kTeach&term=$term&year=$year&gradeStart=$gradeStart&gradeEnd=$gradeEnd" ),
-			"class" => "button edit" 
-	);
-}
 if($category_count > 0){
+	
 $buttons [] = array (
 		"text" => "Add Assignment",
 		"href" => site_url ( "assignment/create/$kTeach" ),
 		"class" => "button dialog new" 
+);
+$buttons [] = array (
+		"text" => "Batch Add Assignments",
+		"selection" => "",
+		"title" => "Insert batches of assignments at once (Beta!)",
+		"href" => site_url ( "assignment/create_batch?kTeach=$kTeach&term=$term&year=$year&gradeStart=$gradeStart&gradeEnd=$gradeEnd" ),
+		"class" => "button new dialog"
 );
 }
 $buttons [] = array (
@@ -142,7 +141,7 @@ if (! empty ( $assignments )) {
 		$current_student = FALSE;
 		foreach ( $grades as $grade ) {
 			if ($current_student != $grade->kStudent) {
-				$rows [$grade->kStudent] ["name"] = "<td class='student-name'><span class='student edit_student_grades-notice'>$grade->stuNickname $grade->stuLast</span></td>";
+				$rows [$grade->kStudent] ["name"] = sprintf("<td class='student-name'><a href='%s' title='View %s&rsquo;s student info' class='student'>%s</a></td>",base_url("/student/view/$grade->kStudent"),format_name($grade->stuNickname, $grade->stuLast),format_name($grade->stuNickname, $grade->stuLast));
 				$rows [$grade->kStudent] ["name_string"] = format_name ( $grade->stuNickname, $grade->stuLast );
 				$rows [$grade->kStudent] ["delete"] = sprintf ( "<td class='grade-delete-row'><span class='student delete button' id='dgr_%s_%s_%s' title='Delete the entire row'>Delete</span></td>", $grade->kStudent, $header->term, $header->year );
 				$rows [$grade->kStudent] ["kStudent"] = $grade->kStudent;

@@ -206,7 +206,12 @@ class Assignment extends MY_Controller {
 			) );
 			$data ['target'] = 'assignment/batch/index';
 			$data ['title'] = 'Enter Batch Assignments';
-			$this->load->view ( 'page/index', $data );
+			if($this->input->get("ajax")){
+				$this->_view($data);
+			}else{
+				$this->load->view ( 'page/index', $data );
+				
+			}
 		}
 	}
 

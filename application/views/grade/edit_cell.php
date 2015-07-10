@@ -10,4 +10,4 @@ $kAssign = $grade->kAssignment;
 &nbsp;
 <? $footnote_key = sprintf("'footnote_%s_%s'", $grade->kAssignment, $grade->kStudent);?>
 <?=form_dropdown("footnote",$footnotes, $grade->footnote,"id=$footnote_key");?>
-<div class="button-box"><span class='button save_cell_grade'>Save</span></div>
+<div class="button-box"><span class='link save_cell_grade'>Save</span></div>

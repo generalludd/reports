@@ -55,5 +55,5 @@
 	</tbody>
 </table>
 <div class='button-box'>
-	<span class='button close_grade_editor' tabindex="<?=$tabindex;?>">Close</span>
+	<span class='button small close_grade_editor' tabindex="<?=$tabindex;?>">Close</span>
 </div>

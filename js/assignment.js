@@ -343,12 +343,6 @@ $(document).ready(function(){
 		batch_print_grades();
 	});
 	
-	$(".edit_student_grades-notice").live("click",function(e){
-		e.preventDefault();
-		showPopup("Notice","<h4>Notice!</h4><p>Editing student grades in batch is now done with the blue <span class='button small edit'>Edit</span> button next to the student's name</p>","auto");
-		
-		
-	});
 	
 });
 

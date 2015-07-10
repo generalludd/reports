@@ -1,15 +1,16 @@
-<?php defined('BASEPATH') OR exit('No direct script access allowed');
+<?php
+
+defined ( 'BASEPATH' ) or exit ( 'No direct script access allowed' );
 
 // batch_insert.php Chris Dart Jan 28, 2015 4:23:12 PM chrisdart@cerebratorium.com
-$buttons[] = array(	"text" => "New Grade Search",
-		"href"=>site_url("assignment/search/$kTeach"),
-		"class" => "button dialog",
-		"selection" => "grades" );
- if($kTeach == $this->session->userdata("userID")){
-$buttons[] = array("text"=>"Edit Categories","class"=>"button edit dialog","title"=>"Edit the assignment categories for this term","selection"=>"",
-        "href"=>site_url("assignment/edit_categories/$kTeach?year=$year&term=$term&gradeStart=$gradeStart&gradeEnd=$gradeEnd"));
- }
-$buttons[] = array("text"=>"New Row","class"=>"button new add-batch-assignment-row","id"=>"row-add_$kTeach","title"=>"Add a new row of assignments","selection"=>"");
+
+$buttons [] = array (
+		"text" => "New Row",
+		"class" => "button new small add-batch-assignment-row",
+		"id" => "row-add_$kTeach",
+		"title" => "Add a new row of assignments",
+		"selection" => "" 
+);
 
 ?>
 
@@ -18,43 +19,37 @@ $buttons[] = array("text"=>"New Row","class"=>"button new add-batch-assignment-r
 <p>A minimum of two rows are required.</p>
 
 <form name="batch-insert-assignments" id="batch-insert-assignments" method="post" action="<?=site_url("assignment/insert_batch");?>">
-<input type="hidden" name="kTeach" value="<?=$kTeach;?>"/>
-<input type="hidden" name="year" value="<?=$year;?>"/>
-<input type="hidden" name="term" value="<?=$term;?>"/>
-<input type="hidden" name="gradeStart" value="<?=$gradeStart;?>"/>
-<input type="hidden" name="gradeEnd" value="<?=$gradeEnd;?>"/>
+	<input type="hidden" name="kTeach" value="<?=$kTeach;?>" />
+	<input type="hidden" name="year" value="<?=$year;?>" />
+	<input type="hidden" name="term" value="<?=$term;?>" />
+	<input type="hidden" name="gradeStart" value="<?=$gradeStart;?>" />
+	<input type="hidden" name="gradeEnd" value="<?=$gradeEnd;?>" />
 
-<table class="grid" id="batch-assignment-table">
-<thead>
-<tr>
-<th>
-Category
-</th>
-<th>
-Assignment</th>
-<th>
-Points</th>
-<th>
-<a title="Give every student the max points available from the start." class="link" href="#max-pts">Max Pts*</a>
-</th>
-<th>
-Date (mm/dd/yyyy)</th>
-<th>
-Subject
-</th>
-</thead>
-<tbody>
+	<table class="grid" id="batch-assignment-table">
+		<thead>
+			<tr>
+				<th>Category</th>
+				<th>Assignment</th>
+				<th>Points</th>
+				<th>
+					<a title="Give every student the max points available from the start." class="link" href="#max-pts">Max Pts*</a>
+				</th>
+				<th>Date (mm/dd/yyyy)</th>
+				<th>Subject</th>
+		
+		</thead>
+		<tbody>
 <? $this->load->view("assignment/batch/row");?>
 <? $this->load->view("assignment/batch/row");?>
 
 </tbody>
-</table>
-<p>
-<sup>*</sup>Give every student the max points available from the start.
-</p>
+	</table>
+	<p>
+		<sup>*</sup>Give every student the max points available from the start.
+	</p>
 
-<p>
-<a id="#max-pts"></a>
-<input type="submit" class="button new" value="Insert Batch"/>
-</p>
+	<p>
+		<a id="#max-pts"></a>
+		<input type="submit" class="button new small" value="Insert Batch" />
+	</p>
 </form>
