@@ -114,6 +114,12 @@ $button_box = create_button_bar ( $buttons );
 				<input type="checkbox" id="hasSPPS" name="hasSPPS" value="1" <?php echo $sppsChecked; ?> />
 			</p>
 		</div>
+		<h3>
+		<a href="#">Accommodations at FSM</a>
+		</h3>
+		<div>
+			<textarea name="modification" id="modification" class="tinymce" style="width: 99%" rows="13" cols="91"><?=get_value($support,"modification"); ?></textarea>
+		</div>
 		<h3 id="services-section">
 			<a>Outside services, Galtier, medications or other treatments</a>
 		</h3>
