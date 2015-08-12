@@ -239,6 +239,17 @@ class Student extends MY_Controller
             $this->load->view("page/index", $data);
         }
     }
+    
+    function get_class_lists($grade_start = NULL, $grade_end = NULL){
+    	$teachers = $this->teacher_model->get_all(array("roles"=>2,"gradeSort"=>1,"gradeRange"=>array("gradeStart"=>$grade_start,"gradeEnd"=>$grade_end)));
+    	foreach($teachers as $teacher){
+    		$teacher->students = $this->student_model->get_students_by_class($teacher->kTeach);
+    	}
+    	$data["teachers"] = $teachers;
+    	$data["target"] = "student/classes";
+    	$data["title"] = "Class Lists";
+    	$this->load->view("page/index",$data);
+    }
 
     // @TODO this needs to also check teacher email accounts to avoid
     // duplication there.

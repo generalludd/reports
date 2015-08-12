@@ -1,7 +1,7 @@
 <?php
 if (! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Teacher_model extends CI_Model
+class Teacher_model extends MY_Model
 {
     var $teachFirst;
     var $teachLast;
@@ -55,6 +55,9 @@ class Teacher_model extends CI_Model
         // $dbRole=2;
         $this->db->order_by("status", "DESC");
         $this->db->order_by("dbRole", "DESC");
+        if(array_key_exists("gradeSort",$options)){
+        	$this->db->order_by("gradeStart","ASC");
+        }
         $this->db->order_by("teachLast", "ASC");
         $this->db->order_by("gradeStart", "ASC");
         $this->db->order_by("gradeEnd", "ASC");
@@ -88,7 +91,7 @@ class Teacher_model extends CI_Model
 
             if (array_key_exists("gradeRange", $options) && $options["gradeRange"]["gradeStart"]>=0) {
                 $this->db->where("gradeStart >= " . $options["gradeRange"]["gradeStart"]);
-                $this->db->where("gradeStart <= " . $options["gradeRange"]["gradeEnd"]);
+                $this->db->where("gradeEnd <= " . $options["gradeRange"]["gradeEnd"]);
             }
         } else {
 
@@ -96,9 +99,10 @@ class Teacher_model extends CI_Model
             $this->db->where("status", 1);
         }
 
-        $this->db->select("teacher.kTeach, teachFirst, teachLast,gradeStart, gradeEnd, dbRole, status");
+        $this->db->select("teacher.kTeach, teachFirst, teachLast,gradeStart, gradeEnd, dbRole, status,teachClass");
         $this->db->from("teacher");
         $result = $this->db->get()->result();
+        $this->_log();
         return $result;
     }
 

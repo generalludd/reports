@@ -140,7 +140,7 @@ class Student_model extends MY_Model
      *        advisor depending on the grade of the student
      *
      */
-    function get_students_by_class ($kTeach)
+    function get_students_by_class ($kTeach, $grade_range = array())
     {
         $this->db->where('student.isEnrolled', 1);
         $this->db->where('student.kTeach', $kTeach);
@@ -151,22 +151,12 @@ class Student_model extends MY_Model
         $this->db->from('student');
         $this->db->from("teacher");
         $this->db->select("*");
-        $this->db->select(sprintf("(2014- `baseYear`  + `baseGrade`) as `stuGrade`", get_current_year()));
+        $year = get_current_year();
+        $this->db->select(sprintf("($year- `baseYear`  + `baseGrade`) as `stuGrade`", get_current_year()));
         $result = $this->db->get()->result();
-        $this->_log("notice");
         return $result;
     }
 
-    /**
-     *
-     * @param $kTeach int alias for get_students_by_class. This has been
-     *        deprecated for
-     *        clarification purposes.
-     */
-    function get_students_by_teacher ($kTeach)
-    {
-        return $this->get_students_by_class($kTeach);
-    }
 
     /**
      *
@@ -266,53 +256,10 @@ class Student_model extends MY_Model
         } else {
             $this->db->order_by("stuLast,stuFirst", "ASC");
         }
-
         $result = $this->db->get()->result();
         return $result;
     }
 
-    /**
-     * DEPRECATED/UNUSED
-     * I don't think this is used anywhere else.
-     *
-     * @param string $fields fields to select
-     * @param string $order_fields fields to order the results
-     * @param array $where_pairs field=>value pairs for "where" constraints
-     */
-    function get_distinct_values ($fields, $order_fields = null, $where_pairs = array())
-    {
-        $this->db->from('student');
-        $this->db->distinct();
-
-        if (is_array($fields)) {
-            foreach ($fields as $field) {
-                $this->db->select($field);
-            }
-        } else {
-            $this->db->select($fields);
-        }
-
-        if ($order_fields) {
-            if (is_array($order_fields)) {
-                foreach ($order_fields as $order) {
-                    $this->db->order_by($order);
-                }
-            } else {
-                $this->db->order_by($order_fields);
-            }
-        }
-
-        if (is_array($where_pairs)) {
-            $keys = array_keys($where_pairs);
-            $values = array_values($where_pairs);
-            for ($i = 0; $i < count($where_pairs); $i ++) {
-                $this->db->where($keys[$i], $values[$i]);
-            }
-        }
-
-        $result = $this->db->get()->result();
-        return $result;
-    }
 
     function get_grade ($kStudent, $narrYear = NULL)
     {

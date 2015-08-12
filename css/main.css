@@ -1299,3 +1299,20 @@ th.grade-confirmation {
 .column-3 {
 	width: auto;
 }
+
+.class-listing.column-3{
+	width: 1.75in;
+}
+
+.class-listing .row {
+	padding: .4em 0;
+	margin: 0 .2em;
+	border-bottom: 1px solid #000;
+	
+}
+.class-listing .row.empty{
+	/*border: none;*/
+}
+.classroom.header {
+	background-color: yellow;
+}
