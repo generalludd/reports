@@ -9,6 +9,10 @@ class Attendance extends MY_Controller {
 		parent::__construct ();
 		$this->load->model ( "attendance_model" );
 	}
+	
+	function take(){
+		
+	}
 
 	/**
 	 * create a dialog for inserting a new attendance entry for a student
