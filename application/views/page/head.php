@@ -1,12 +1,10 @@
 <?php  ?>
-
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="cache-control" content="no-store" />
 <meta http-equiv="pragma" content="no-cache">
 <meta http-equiv="expires" content="-1">
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<!--<meta name="viewport"
-    content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;" />
---><title><?=$title;?></title>
+<title><?=$title;?></title>
 <link type="text/css" rel="stylesheet" media="all" href="<?=base_url("css/main.css")?>" />
 <link type="text/css" rel="stylesheet" media="screen" href="<?=base_url("css/color.css")?>"/>
 <link type="text/css" rel="stylesheet" media="screen" href="<?=base_url("css/popup.css")?>" />

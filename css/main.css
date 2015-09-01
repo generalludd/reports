@@ -25,7 +25,6 @@ body {
 #page {
 	margin-left: auto;
 	margin-right: auto;
-	min-width: 940px;
 	position: relative;
 	padding-bottom: 10px;
 }
@@ -520,6 +519,10 @@ ul.search {
 
 input[type="text"].year, #yearEnd {
 	width: 3em;
+}
+
+input[type='text'].grade {
+	width: 2em;
 }
 
 #advancedSearch {
@@ -1300,7 +1303,7 @@ th.grade-confirmation {
 	width: auto;
 }
 
-.class-listing.column-3{
+.class-listing.column-3 {
 	width: 1.75in;
 }
 
@@ -1308,11 +1311,30 @@ th.grade-confirmation {
 	padding: .4em 0;
 	margin: 0 .2em;
 	border-bottom: 1px solid #000;
+}
+
+.class-listing .row.empty {
+	/*border: none;*/
 	
 }
-.class-listing .row.empty{
-	/*border: none;*/
-}
+
 .classroom.header {
 	background-color: yellow;
+}
+
+
+
+@media ( max-width : 736px ) {
+	
+	#navigation .button, #navigation input {
+	display: none;
+}
+
+#navigation .button.mobile, #navigation input.mobile {
+	display: inherit;
+}
+#navigation .button-list li {
+	display: block;
+}
+
 }

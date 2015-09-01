@@ -171,6 +171,19 @@ class Teacher_model extends MY_Model
         $result = $this->db->get()->row();
         return $result->teacher;
     }
+    
+    function get_by_subject($subject){
+    	$this->db->where("subject",$subject);
+    	$this->db->from("teacher");
+    	$this->db->join("teacher_subject","kTeach=kTeach");
+    	$this->db->where("teacher.status",1);
+    	$this->db->select("teacher.*");
+    	$this->db->select("teacher_subject.gradeStart,teacher_subject.gradeEnd,teacher_subject.subject, teacher_subject.kSubject");
+    	$this->db->order_by("teacher.teachLast");
+    	$result = $this->db->get()->result();
+    	$this->_log();
+    	return $result;
+    }
 
     /**
      * Setter

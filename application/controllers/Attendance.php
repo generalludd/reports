@@ -146,6 +146,7 @@ class Attendance extends MY_Controller {
 	function show_search($kStudent = NULL)
 	{
 		$this->load->model ( "menu_model" );
+		$this->load->model("teacher_model","teacher");
 		$data ["student"] = NULL;
 		$data['kStudent'] = NULL;
 		$data['title'] = "Searching Attendance";
@@ -165,6 +166,7 @@ class Attendance extends MY_Controller {
 				"label",
 				"value" 
 		), TRUE );
+
 		$data ['target'] = "attendance/search";
 		if ($this->input->get ( "ajax" )) {
 			$this->load->view ( $data ['target'], $data );
@@ -220,7 +222,7 @@ class Attendance extends MY_Controller {
 		if ($this->input->get ( "attendSubtype" )) {
 			$data ["attendSubtype"] = $this->input->get ( "attendSubtype" );
 		}
-		
+			
 		$data ['attendance'] = $this->attendance_model->search ( $data );
 		// @TODO add a line displaying the search query
 		$data ["title"] = "Attendance Search Results";
@@ -229,6 +231,25 @@ class Attendance extends MY_Controller {
 		$this->load->view ( "page/index", $data );
 	}
 
+	function check_attendance(){
+		if($this->input->get("search") == 1){
+			//search interface
+			$this->load->model("teacher_model","teacher");
+			$humanities_teachers = $this->teacher->get_for_subject("humanities");
+			$data['humanities_teachers'] = get_keyed_pairs($humanities_teachers,array("kTeach","teacherName"),TRUE);
+			$data['stuGroup'] = array("","A","B");
+			$teachers = $this->teacher->get_teacher_pairs();
+			$data['teachers'] = get_keyed_pairs($teachers,array("kTeach","teacher"),TRUE);
+			$data['target'] = "attendance/check_search";
+				$data['title'] = "Check Attendance";
+			if($this->input->get("ajax")==1){
+				$this->load->view($data['target'],$data);
+			}else{
+			$this->load->view("page/index",$data);
+			}
+		}
+	}
+	
 	/**
 	 * summarize the student's attendance for final printed reports.
 	 */
