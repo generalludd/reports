@@ -40,6 +40,32 @@
 		 });
 	 });
 	 
+	 $(".inline").live("click",function(e){
+		 e.preventDefault();
+		 my_location = window.location.href;
+		 me = this;
+		 my_url = $(me).attr("href");
+		 form_data = {
+				 ajax: 1,
+				 url: my_location
+		 };
+		 $.ajax({
+			 type:"get",
+			 url: my_url,
+			 data: form_data,
+			 success: function(data){
+				if($(me).hasClass("attendance-check")){
+					$(me).parents(".checklist.row").children("p.student-info").append("<span class='highlight'>Absent</span>");
+					$(me).parent("li").html(data);
+				}
+				if($(me).hasClass("revert-absence")){
+					$(me).parents(".checklist.row").children("p").children("span").remove();
+					$(me).parent("li").html(data);
+				}
+			 }
+		 });
+	 });
+	 
 		$('.delete-item').live('click',
 				function(e){
 			e.preventDefault();

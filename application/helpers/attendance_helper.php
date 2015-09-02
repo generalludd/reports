@@ -4,6 +4,7 @@ defined ( 'BASEPATH' ) or exit ( 'No direct script access allowed' );
 
 function format_attendance ( $attendance )
 {
+	$output = array();
 	if ($attendance) {
 		if ($attendance->attendType) {
 			$output [] = $attendance->attendType;

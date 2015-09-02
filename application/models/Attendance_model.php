@@ -56,6 +56,17 @@ class Attendance_model extends MY_Model
 			$result = $this->db->get ()->row ();
 			return $result;
 		}
+		
+		function get_for_teacher($date,$kTeach){
+			$this->db->where("attendDate", $date);
+			$this->db->where("student_attendance.recModifier",$kTeach);
+			$this->db->join("student","student_attendance.kStudent=student.kStudent");
+			$this->db->from("student_attendance");
+			$this->db->select("student_attendance.*");
+			$this->db->select("student.stuFirst, student.stuLast, student.stuNickname");
+			$result = $this->db->get()->result();
+			return $result;
+		}
 
 		function insert ()
 		{
@@ -71,6 +82,28 @@ class Attendance_model extends MY_Model
 				return false;
 			}
 		}
+		
+		function mark($date,$kStudent, $type){
+			$this->attendDate = $date;
+			$this->kStudent = $kStudent;
+			if(!$this->search(array("startDate"=>$date, "endDate"=>$date,"kStudent"=>$kStudent))){
+				$this->attendType = $type;
+				$this->recModifier = $this->session->userdata("userID");
+				$this->recModified = mysql_timestamp();
+				$this->db->insert("student_attendance", $this);
+				return $this->db->insert_id();
+			}
+		}
+		
+		function revert($kAttendance, $kTeach){
+			//only allows the user who created the attendance mark to uncheck it;
+			$attendance = $this->get($kAttendance);
+			if($attendance->recModifier == $kTeach || $this->session->userdata("dbRole") == 1){
+				$this->delete($kAttendance);
+				return $attendance;
+			}
+		}
+		
 
 		function update ( $kAttendance )
 		{
@@ -152,7 +185,7 @@ class Attendance_model extends MY_Model
 
 		function get_by_date ( $date, $kStudent )
 		{
-			$this->db->where("attendDate",format_date($date,"mysql"));
+			$this->db->where("attendDate",$date);
 			$this->db->where("kStudent",$kStudent);
 			$this->db->from("student_attendance");
 			$result = $this->db->get ()->row ();
