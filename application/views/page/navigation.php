@@ -22,7 +22,7 @@ $term = get_current_term();
 $year = get_current_year();
 $buttons[] = array("selection"=>"home", "text"=>"Home", "href" => site_url() );
 $buttons[] = array("selection" =>"search", "text" => '<input type="text" id="stuSearch" name="stuSearch" class="mobile" size="20" value="find students" />', "type" => "pass-through");
-$buttons[] = array("selection"=>"attendance","text"=>"Check Attendance","class"=>"search button dialog mobile","href"=>site_url("attendance/check_attendance?search=1"));
+$buttons[] = array("selection"=>"attendance","text"=>"Check Attendance","class"=>"search button dialog mobile","href"=>site_url("attendance/check?search=1"));
 if($dbRole == 1){
 	$buttons[] = array("selection" => "student", "text" => "New Student", "class" => array("button","new","dialog"), "href"=>site_url("student/create"), "title" => "Add a new student to the database");
 	$buttons[] = array("selection" => "attendance" , "text" => "Search Attendance", "class" => array("button","dialog"), "href" => site_url("attendance/show_search"), "title" => "Search attendance records");

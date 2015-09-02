@@ -159,10 +159,6 @@ class Student_model extends MY_Model
 
 
     /**
-     *
-     *
-     *
-     *
      * Lists enrolled students by grade with added constraints.
      * The constraints array can contain kTeach, and a select variable with
      * a list of fields to include in the result
@@ -178,7 +174,7 @@ class Student_model extends MY_Model
         if ($gradeStart == $gradeEnd) {
             $this->db->where("(`baseGrade` -`baseYear` + $year) = $gradeStart", FALSE,FALSE);
         } else {
-            $this->db->where("baseGrade - baseYear  + $year  BETWEEN $gradeStart AND $gradeEnd");
+            $this->db->where("(baseGrade - baseYear  + $year ) BETWEEN $gradeStart AND $gradeEnd");
         }
 
         if (array_key_exists("kTeach", $constraints)) {
