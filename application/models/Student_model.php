@@ -182,6 +182,10 @@ class Student_model extends MY_Model
         } elseif (array_key_exists("humanitiesTeacher", $constraints)) {
             $this->db->where("humanitiesTeacher", $constraints['humanitiesTeacher']);
         }
+        
+        if(array_key_exists("stuGroup",$constraints)){
+        	$this->db->where("stuGroup",$constraints['stuGroup']);
+        }
         // @TODO need to have an override here to allow this to fork depending
         // on the calling method
         // some situations may require showing students by grade to include

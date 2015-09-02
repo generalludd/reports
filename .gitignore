@@ -1,7 +1,6 @@
 .settings
 /application/logs
 /application/cache
-/application/config/email.php
 /application/config/database.php
 */.DS_Store
 .DS_Store

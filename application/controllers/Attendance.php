@@ -243,8 +243,8 @@ class Attendance extends MY_Controller {
 			), TRUE );
 			$data ['stuGroup'] = array (
 					"",
-					"A",
-					"B" 
+					"a"=>"A",
+					"b"=>"B" 
 			);
 			$teachers = $this->teacher->get_teacher_pairs ();
 			$data ['teachers'] = get_keyed_pairs ( $teachers, array (
@@ -329,8 +329,8 @@ class Attendance extends MY_Controller {
 		$data ['teacher_name'] = format_name ( $teacher->teachFirst, $teacher->teachLast );
 		$message = $this->load->view ( "attendance/checklist/email", $data, TRUE );
 		$this->email->from ( $teacher->email );
-		$this->email->to ( "technology@fsmn.org" );
-		// $this->email->cc($teacher->email);
+		$this->email->to ( "frontoffice@fsmn.org" );
+	// $this->email->cc($teacher->email);
 		
 		$this->email->subject ( $subject );
 		$this->email->message ( $message );
