@@ -14,13 +14,10 @@ $kTeach = $this->session->userdata("userID");
 				</span>
 				<?php endif; ?>
 				</p>
-				<?php if($student->attendance):?>
-			<?php $kAttendance = get_value($student->attendance, "kAttendance");?>
-			<?php echo create_button_bar(array(array("text"=>"Present","class"=>"button inline small attendance-check","href"=>base_url("attendance/revert?kTeach=$kTeach&kAttendance=$kAttendance"))));?>
-				<?php else: ?>
-				<?php echo create_button_bar(array(array("text"=>"Mark Absent","class"=>"button inline new small attendance-check","href"=>base_url("attendance/absent?date=$date&kStudent=$student->kStudent"))));?>
-				<?php endif; ?>
-		</div><!-- End student_attendance -->
+				<div class="attendance-buttons">
+				<?php echo $student->buttons;?>
+				</div>
+	</div><!-- End student_attendance -->
 <?php endforeach; ?>
 </div>
 <?php echo create_button_bar(array(array("text"=>"Attendance Complete","class"=>"button dialog insert","href"=>base_url("attendance/complete/$date/$kTeach"))));?>

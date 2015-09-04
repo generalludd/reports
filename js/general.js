@@ -56,11 +56,13 @@
 			 success: function(data){
 				if($(me).hasClass("attendance-check")){
 					$(me).parents(".checklist.row").children("p.student-info").append("<span class='highlight'>Absent</span>");
-					$(me).parent("li").html(data);
+					$(me).parents(".checklist.row").css("background-color","#EDEDED");
+					$(me).parents(".attendance-buttons").html(data);
 				}
 				if($(me).hasClass("revert-absence")){
 					$(me).parents(".checklist.row").children("p").children("span").remove();
-					$(me).parent("li").html(data);
+					$(me).parents(".checklist.row").css("background-color","#ffffff")
+					$(me).parents(".attendance-buttons").html(data);
 				}
 			 }
 		 });

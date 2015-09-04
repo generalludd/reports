@@ -284,7 +284,11 @@ class Attendance extends MY_Controller {
 				$this->load->model ( "student_model", "student" );
 				$students = $this->student->get_students_by_grade ( $options ['gradeStart'], $options ['gradeEnd'], $options );
 				foreach ( $students as $student ) {
+					if(!$kTeach){
+						$kTeach = $this->session->userdata("userID");
+					}
 					$student->attendance = $this->attendance->get_by_date ( $date, $student->kStudent );
+					$student->buttons = $this->_checklist_buttons( $date, $student->kStudent, $kTeach, get_value($student->attendance,"kAttendance"));
 				}
 				$data ["students"] = $students;
 				$data ["target"] = "attendance/checklist/list";
@@ -301,8 +305,10 @@ class Attendance extends MY_Controller {
 				$kAttendance = $this->attendance->mark ( $date, $kStudent, "Absent" );
 				if ($kAttendance) {
 					$kTeach = $this->session->userdata ( "userID" );
-					$output = sprintf ( "<a href='%s' class='button inline small revert-absence'>Revert</a>", base_url ( "attendance/revert?kTeach=$kTeach&kAttendance=$kAttendance" ) );
-					echo $output;
+					echo $this->_checklist_buttons( $date, $kStudent,$kTeach, $kAttendance);
+					
+// 					$output = sprintf ( "<a href='%s' class='button inline edit small revert-absence'>Revert</a>", base_url ( "attendance/revert?kTeach=$kTeach&kAttendance=$kAttendance" ) );
+// 					echo $output;
 				}
 			}
 		}
@@ -313,19 +319,14 @@ class Attendance extends MY_Controller {
 		if ($kAttendance = $this->input->get ( "kAttendance" )) {
 			if ($kTeach = $this->input->get ( "kTeach" )) {
 				$record = $this->attendance->revert ( $kAttendance, $kTeach );
-				$output = sprintf ( "<a href='%s' class='button inline new small attendance-check'>Mark Absent</a>", base_url ( "attendance/absent?date=$record->attendDate&kStudent=$record->kStudent" ) );
-				echo $output;
+				$kTeach = $this->session->userdata ( "userID" );
+				echo $this->_checklist_buttons($record->attendDate, $record->kStudent, $kTeach);
 			}
 		}
 	}
 
 	function complete($date, $kTeach)
 	{
-		$config ['email_config'] = array (
-				'mailtype' => 'html',
-				'mailpath' => '/usr/sbin/sendmail' 
-		)
-		;
 		$this->load->model ( "teacher_model", "teacher" );
 		$date = format_date ( $date );
 		$teacher = $this->teacher->get ( $kTeach, "email,teachFirst,teachLast" );
@@ -368,5 +369,15 @@ class Attendance extends MY_Controller {
 		
 		$attendance = $this->attendance->summarize ( $kStudent, $term, $year );
 		print "Days Tardy: " . $attendance ['tardy'] . ", Days Absent: " . $attendance ["absent"];
+	}
+	
+	function _checklist_buttons( $date, $kStudent,$kTeach, $kAttendance=NULL){
+		if($kAttendance){
+			$buttons[] = array("text"=>"Revert","class"=>"button inline edit small revert-absence","href"=>base_url("attendance/revert?kTeach=$kTeach&kAttendance=$kAttendance"));
+		}else{
+			$buttons[] = array("text"=>"Mark Absent","class"=>"button inline new small attendance-check","href"=>base_url("attendance/absent?date=$date&kStudent=$kStudent"));
+		    $buttons[] = array("text"=>"Present","class"=>"button inline small mark-present","id"=>sprintf("mark-present_%s",$kStudent)); 
+		}
+		return create_button_bar($buttons);
 	}
 }

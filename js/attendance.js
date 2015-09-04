@@ -9,6 +9,14 @@ $(document).ready(function(){
 		}
 	});
 
+	
+	$(".mark-present").live("click",function(e){
+		e.preventDefault();
+		me = this;
+		my_id = me.id.split("_")[1];
+		my_parent = $(me).parents(".checklist.row");
+		$(my_parent).css("background-color","#999999");
+	});
 }// end ready
 
 );// end $(document)
