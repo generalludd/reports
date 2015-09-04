@@ -144,13 +144,23 @@ class Teacher_model extends MY_Model
         }
     }
 
-    function get_teacher_pairs ($dbRole = 2, $status = 1)
+    function get_teacher_pairs ($dbRole = 2, $status = 1, $grade_range = NULL)
     {
         if ($dbRole) {
             $this->db->where('dbRole', 2);
         }
         if ($status) {
             $this->db->where('status', 1);
+        }
+        if($grade_range){
+        	if($grade_range == "lower-school"){
+        		$this->db->where_in("gradeStart",array(0,1,2,3,4));
+        		$this->db->where_in("gradeEnd",array(0,1,2,3,4));
+        	}elseif($grade_range == "middle-school"){
+        		$this->db->where_in("gradeStart",array(5,6,7,8));
+        		$this->db->where_in("gradeEnd",array(5,6,7,8));
+        		
+        	}
         }
         $this->db->select("CONCAT(teachFirst,' ',teachLast) as teacher", false);
         $this->db->select('kTeach');
