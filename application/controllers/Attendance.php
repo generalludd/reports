@@ -266,9 +266,16 @@ class Attendance extends MY_Controller {
 					$options ['humanitiesTeacher'] = $humanitiesTeacher;
 				}
 				if ($gradeStart = $this->input->get ( 'gradeStart' )) {
+					if(strtolower($gradeStart) == "k"){
+						$gradeStart = 0;
+					}
 					$options ["gradeStart"] = $gradeStart;
+					
 				}
 				if ($gradeEnd = $this->input->get ( "gradeEnd" )) {
+					if(strtolower($gradeEnd) == "k"){
+						$gradeEnd = 0;
+					}
 					$options ["gradeEnd"] = $gradeEnd;
 				}
 				if ($stuGroup = $this->input->get ( "stuGroup" )) {
