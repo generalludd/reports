@@ -320,7 +320,30 @@ function create_grade_checklist($start = 0, $limit = 8, $name = "grades", $grade
 	return $grades;
 }
 
-
+/**
+ * create a copy of the student class or group. Classes are for lower grades, groups are for middle school. 
+ * @param Int $student_grade
+ * @param string $student_group
+ * @return string
+ */
+function format_classroom($student_class, $student_grade, $student_group=NULL){
+	switch($student_grade){
+		case(5):
+		case(6):
+			$class="5/6";
+			break;
+		case(7):
+		case(8):
+			$class="7/8";
+			break;
+		default:
+			$class = $student_class;
+	}
+	if($class=="5/6" || $class == "7/8"){
+		$class = $class . $student_group;
+	}
+	return $class;
+}
 
 function format_grade_text($number = 0){
 	switch($number){

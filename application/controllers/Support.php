@@ -148,8 +148,8 @@ class Support extends MY_Controller
 		$this->load->helper('directory');
 		$config['allowed_types'] = 'gif|jpg|png|pdf|rtf|PDF|JPG|JPEG|RTF|doc|docx|DOC|DOCX';
 		$config['max_size'] = '0'; //rely on PHP's built-in limit
-		$config['max_width']  = '1024';
-		$config['max_height']  = '768';
+		$config['max_width']  = '0';
+		$config['max_height']  = '0';
 
 		$this->load->library('upload', $config);
 		$kStudent = $this->input->post('kStudent');

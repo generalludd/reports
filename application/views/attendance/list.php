@@ -62,13 +62,20 @@ if(!empty($attendance)):
 	</thead>
 	<tbody>
 	<?
-
+$current_class = "";
 	foreach($attendance as $item):
+	$student_class = format_classroom($item->teachClass, $item->stuGrade, $item->stuGroup);
+	
 	if(!$kStudent){
 		if($item->kStudent != $current_student){
+			if($student_class != $current_class){
+				$current_class = $student_class;
+				echo "<tr><td colspan=6>$current_class</td></tr>";
+			}
 			$student_name = format_name($item->stuFirst, $item->stuLast, $item->stuNickname);
 			print "<tr><td colspan=6><a class='link' href='" . site_url("student/view/$item->kStudent");
 			print "' title='View student info'>$student_name</a>&nbsp;";
+			echo "Grade: " . format_grade( $item->stuGrade) . "&nbsp;";
 			//@TODO clean this up!
 			echo create_button(array("text"=>"Add","href"=>site_url("attendance/create/$item->kStudent"),"class"=>"button new small dialog","id"=>"student-add-attendance_$item->kStudent")); 
 		echo "</td></tr>";

@@ -172,6 +172,15 @@ class Attendance_model extends MY_Model
 				$this->db->where ( "`student_attendance`.`kStudent`", "`student`.`kStudent`", FALSE );
 				$this->db->from ( "student_attendance" );
 				$this->db->from ( "student" );
+				$this->db->select("student_attendance.*");
+				$this->db->select("student.*");
+				$year = get_current_year();
+				$this->db->select("($year - student.baseYear + student.baseGrade) as stuGrade",FALSE);
+				$this->db->join("teacher","student.kTeach = teacher.kTeach");
+				$this->db->select("teacher.teachFirst, teacher.teachLast, teacher.teachClass");
+				$this->db->order_by("stuGrade");
+				$this->db->order_by("student.stuGroup");
+				$this->db->order_by("student.kTeach");
 				$this->db->order_by ( "student.stuLast" );
 				$this->db->order_by ( "student.stuFirst" );
 				$this->db->order_by ( "attendDate", "DESC" );
