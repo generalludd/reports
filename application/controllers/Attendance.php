@@ -233,9 +233,10 @@ class Attendance extends MY_Controller {
 
 	function check()
 	{
+		$this->load->model ( "teacher_model", "teacher" );
+		
 		if ($this->input->get ( "search" ) == 1) {
 			// search interface
-			$this->load->model ( "teacher_model", "teacher" );
 			$humanities_teachers = $this->teacher->get_for_subject ( "humanities" );
 			$data ['humanities_teachers'] = get_keyed_pairs ( $humanities_teachers, array (
 					"kTeach",
@@ -246,6 +247,8 @@ class Attendance extends MY_Controller {
 					"a" => "A",
 					"b" => "B" 
 			);
+			$teacher = $this->teacher->get ( $this->session->userdata ( "userID" ) );
+			$data ['teacher'] = $teacher;
 			$teachers = $this->teacher->get_teacher_pairs ( 2, 1, "lower-school" );
 			$data ['teachers'] = get_keyed_pairs ( $teachers, array (
 					"kTeach",
@@ -260,28 +263,42 @@ class Attendance extends MY_Controller {
 			}
 		} else {
 			if ($date = $this->input->get ( "date" )) {
+				$cookie_day = "";// sprintf ( "%s-", date ( "D" ) );
 				if ($kTeach = $this->input->get ( "kTeach" )) {
 					$options ['kTeach'] = $kTeach;
+					bake_cookie ( $cookie_day . "kTeach", $kTeach );
 				} elseif ($humanitiesTeacher = $this->input->get ( "humanitiesTeacher" )) {
 					$options ['humanitiesTeacher'] = $humanitiesTeacher;
+					bake_cookie ( $cookie_day . "humanitiesTeacher", $humanitiesTeacher );
+				} else {
+					burn_cookie ( $cookie_day . "humanitiesTeacher" );
 				}
+				
 				if ($gradeStart = $this->input->get ( 'gradeStart' )) {
 					if (strtolower ( $gradeStart ) == "k") {
 						$gradeStart = 0;
 					}
 					$options ["gradeStart"] = $gradeStart;
+					bake_cookie ( $cookie_day . "gradeStart", format_grade ( $gradeStart ) );
+				} else {
+					burn_cookie ( $cookie_day . "gradeStart" );
 				}
 				if ($gradeEnd = $this->input->get ( "gradeEnd" )) {
 					if (strtolower ( $gradeEnd ) == "k") {
 						$gradeEnd = 0;
 					}
 					$options ["gradeEnd"] = $gradeEnd;
+					bake_cookie ( $cookie_day . "gradeEnd", format_grade ( $gradeEnd ) );
+				} else {
+					burn_cookie ( $cookie_day . "gradeEnd" );
 				}
 				if ($stuGroup = $this->input->get ( "stuGroup" )) {
 					$options ['stuGroup'] = $stuGroup;
+					bake_cookie ( $cookie_day . "stuGroup", $stuGroup );
 					$stuGroup = strtoupper ( $stuGroup );
 				} else {
 					$stuGroup = "";
+					burn_cookie ( $cookie_day . "stuGroup" );
 				}
 				$this->load->model ( "student_model", "student" );
 				$students = $this->student->get_students_by_grade ( $options ['gradeStart'], $options ['gradeEnd'], $options );
@@ -292,10 +309,21 @@ class Attendance extends MY_Controller {
 					$student->attendance = $this->attendance->get_by_date ( $date, $student->kStudent );
 					$student->buttons = $this->_checklist_buttons ( $date, $student->kStudent, $kTeach, get_value ( $student->attendance, "kAttendance" ) );
 				}
+				$teachClass = "";
+				if ($gradeEnd < 5 || $gradeStart == $gradeEnd || $humanitiesTeacher) {
+					
+					if ($gradeEnd < 5) {
+						$teacher = $this->teacher->get ( $kTeach );
+						
+					} elseif ($humanitiesTeacher) {
+						$teacher = $this->teacher->get ( $humanitiesTeacher );
+					}
+					$teachClass = sprintf(", %s", $teacher->teachClass);
+				}
+				$data ['options'] = $options;
 				$data ["students"] = $students;
 				$data ["target"] = "attendance/checklist/list";
-				
-				$data ["title"] = sprintf ( "Attendance Checklist for %s, Grade(s) %s%s", format_date ( $date ), format_grade_range ( $gradeStart, $gradeEnd ), $stuGroup );
+				$data ["title"] = sprintf ( "Attendance Checklist for %s, Grade%s %s%s%s", format_date ( $date ), $gradeStart != $gradeEnd ? "s" : "", format_grade_range ( $gradeStart, $gradeEnd ), $stuGroup, $teachClass );
 				$this->load->view ( "page/index", $data );
 			}
 		}

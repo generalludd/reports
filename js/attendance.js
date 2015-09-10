@@ -18,20 +18,27 @@ $(document).ready(function(){
 		$(my_parent).css("background-color","#999999");
 	});
 	
-	$("#attendance-check #gradeEnd ").live("change",function(e){
+	$("#attendance-check #gradeEnd ").live("keyup",function(e){
 		e.preventDefault();
 		me = $(this).val();
 		if(me == $("#gradeStart").val()){
 			//hide everything but the grades and date. 
 			$("#attendance-check .lower-school").fadeOut();
 			$("#attendance-check .middle-school").fadeOut();
+			$("#kTeach").val("");
+			$("#humanitiesTeacher").val("");
+			$("#stuGroup").val("");
 		}else if(me < 5){
 			//lower school not kindergarten. 
 			$("#attendance-check .lower-school").fadeIn();
 			$("#attendance-check .middle-school").fadeOut();
+			$("#humanitiesTeacher").val("");
+			$("#stuGroup").val("");
 		}else{
 			$("#attendance-check .middle-school").fadeIn();
 			$("#attendance-check .lower-school").fadeOut();
+			$("#kTeach").val("");
+
 		}
 	})
 }// end ready
