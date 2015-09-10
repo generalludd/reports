@@ -264,6 +264,7 @@ class Attendance extends MY_Controller {
 		} else {
 			if ($date = $this->input->get ( "date" )) {
 				$cookie_day = "";// sprintf ( "%s-", date ( "D" ) );
+				burn_cookie($cookie_day . "kTeach");
 				if ($kTeach = $this->input->get ( "kTeach" )) {
 					$options ['kTeach'] = $kTeach;
 					bake_cookie ( $cookie_day . "kTeach", $kTeach );
@@ -310,13 +311,14 @@ class Attendance extends MY_Controller {
 					$student->buttons = $this->_checklist_buttons ( $date, $student->kStudent, $kTeach, get_value ( $student->attendance, "kAttendance" ) );
 				}
 				$teachClass = "";
-				if ($gradeEnd < 5 || $gradeStart == $gradeEnd || $humanitiesTeacher) {
+				if ($gradeEnd < 5 || $humanitiesTeacher) {
 					
 					if ($gradeEnd < 5) {
 						$teacher = $this->teacher->get ( $kTeach );
 						
 					} elseif ($humanitiesTeacher) {
 						$teacher = $this->teacher->get ( $humanitiesTeacher );
+						
 					}
 					$teachClass = sprintf(", %s", $teacher->teachClass);
 				}
