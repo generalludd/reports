@@ -10,7 +10,7 @@
 	
 <?php endforeach;?>
 <?php else: ?>
-<p><?php $teacherName; ?> has marked all students as present.</p>
+<p><?php $teacherName; ?> has completed attendance with no additional absences.</p>
 <?php endif; ?>
 </body>
 </html>
