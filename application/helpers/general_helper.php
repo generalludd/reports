@@ -37,6 +37,15 @@ function format_date($date, $format = NULL){
 	return $output;
 }
 
+function format_date_range($date_one, $date_two = NULL){
+	if($date_one == $date_two || $date_two == NULL){
+		$output =  $date_one;
+	}else{
+		$output = sprintf("%s to %s",$date_one,$date_two);
+	}
+	return $output;
+}
+
 
 function format_time($time, $showSeconds = false){
 	$pm = substr_count($time, "PM");

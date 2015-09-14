@@ -148,8 +148,8 @@ class Attendance extends MY_Controller {
 		$this->load->model ( "menu_model" );
 		$this->load->model ( "teacher_model", "teacher" );
 		$data ["student"] = NULL;
-		$data ['kStudent'] = NULL;
-		$data ['title'] = "Searching Attendance";
+		$data ['kStudent'] = $kStudent;
+		$data ['title'] = "Searching Attendance (all students)";
 		if ($kStudent) {
 			$data ["kStudent"] = $kStudent;
 			$this->load->model ( "student_model" );
@@ -181,38 +181,37 @@ class Attendance extends MY_Controller {
 	 * @param string $error
 	 *        	The error is optional and is not currently used in the scripts.
 	 */
-	function search($error = NULL)
+	function search($kStudent = NULL)
 	{
-		$data ["errors"] = $error;
 		
-		$data ["kStudent"] = NULL;
-		$data ["student"] = NULL;
 		
-		$this->load->model ( "student_model" );
+	
+		$data ["kStudent"] = $kStudent;
+		
 		
 		// has student information been passed to this script?
-		if ($this->uri->segment ( 3 )) {
-			$data ["kStudent"] = $this->uri->segment ( 3 );
-		}
 		
-		if ($this->input->get ( "kStudent" ) > 0) {
-			$data ["kStudent"] = $this->input->get ( "kStudent" );
-		}
-		
-		if ($data ["kStudent"]) {
+		if ($kStudent) {
+			$this->load->model ( "student_model" );
 			$data ["student"] = $this->student_model->get ( $data ["kStudent"] );
+		}else{
+			$data ["student"] = NULL;
 		}
 		
-		$data ["startDate"] = get_current_year () . "-08-01";
-		if ($this->input->get ( "startDate" )) {
-			$data ["startDate"] = format_date ( $this->input->get ( "startDate" ), "mysql" );
+		$startDate = get_current_year () . "-08-01";
+		$data['startDate'] = $startDate;
+		if ( $this->input->get ( "startDate" )) {
+			$startDate = $this->input->get("startDate");
+			$data ["startDate"] = $startDate;
+			
 		}
 		
-		$data ["endDate"] = date ( "Y-m-j" );
-		if ($this->input->get ( "endDate" )) {
-			$data ["endDate"] = format_date ( $this->input->get ( "endDate" ), "mysql" );
+		$endDate = date ("Y-m-j");
+		$data ["endDate"] = $endDate;
+		if ( $this->input->get ( "endDate" )) {
+			$endDate = $this->input->get("endDate");
+			$data ["endDate"] = $endDate;
 		}
-		
 		$data ["attendType"] = NULL;
 		if ($this->input->get ( "attendType" )) {
 			$data ["attendType"] = $this->input->get ( "attendType" );
@@ -225,7 +224,7 @@ class Attendance extends MY_Controller {
 		
 		$data ['attendance'] = $this->attendance->search ( $data );
 		// @TODO add a line displaying the search query
-		$data ["title"] = "Attendance Search Results";
+		$data ["title"] = sprintf("Attendance Search Results: %s",format_date_range(format_date($startDate,"standard"),format_date($endDate,"standard")));
 		$data ["target"] = "attendance/list";
 		$data ["action"] = "search";
 		$this->load->view ( "page/index", $data );

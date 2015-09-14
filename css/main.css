@@ -837,6 +837,18 @@ table.files td.file-name {
 table.files td.file-description {
 	width: 275px;
 }
+table .button-box .button-list  {
+	white-space: nowrap;
+
+	}
+
+table .button-box ul.button-list {
+	
+	margin: 0;
+}
+
+table .button-box .button-list li a {
+}
 
 a.link, input.link, a {
 	text-decoration: none;
@@ -870,6 +882,19 @@ table.attendance tr:last-child td {
 	width: 150px;
 }
 
+.attendance th.a-grade {
+	width: auto;
+}
+.attendance th.a-class {
+	width: auto;
+}
+.attendance th.a-type{
+	width: auto;
+}
+.attendance th.a-subtype {
+	width: auto;
+}
+
 .attendance th.a-date {
 	width: 80px;
 }
@@ -878,8 +903,12 @@ table.attendance tr:last-child td {
 	width: 30px;
 }
 
+.attendance th.a-length {
+	width: auto;
+}
+
 .attendance th.a-note {
-	width: 300px;
+	width: auto;
 }
 
 .support-view {
@@ -1341,36 +1370,5 @@ th.grade-confirmation {
 	display: block;
 }
 
-	/* Force table to not be like tables anymore */
-	table, thead, tbody, th, td, tr { 
-		display: block; 
-	}
-	
-	/* Hide table headers (but not display: none;, for accessibility) */
-	thead tr { 
-		position: absolute;
-		top: -9999px;
-		left: -9999px;
-	}
-	
-	tr { border: 1px solid #ccc; }
-	
-	td { 
-		/* Behave  like a "row" */
-		border: none;
-		border-bottom: 1px solid #eee; 
-		position: relative;
-		padding-left: 50%; 
-	}
-	
-	td:before { 
-		/* Now like a table header */
-		position: absolute;
-		/* Top/left values mimic padding */
-		top: 6px;
-		left: 6px;
-		width: 45%; 
-		padding-right: 10px; 
-		white-space: nowrap;
-	}
+
 }
