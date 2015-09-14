@@ -72,13 +72,13 @@ class Attendance extends MY_Controller {
 			$this->load->model ( "menu_model" );
 			$attendList = $this->menu_model->get_pairs ( "attendance" );
 			$data ["attendTypes"] = get_keyed_pairs ( $attendList, array (
-					"label",
-					"value" 
+					"value",
+					"label" 
 			), TRUE );
 			$attendSublist = $this->menu_model->get_pairs ( "attend-subtype" );
 			$data ["attendSubtypes"] = get_keyed_pairs ( $attendSublist, array (
-					"label",
-					"value" 
+					"value",
+					"label" 
 			), TRUE );
 			$data ["action"] = "update";
 			if ($this->input->get ( "ajax" )) {
@@ -158,15 +158,14 @@ class Attendance extends MY_Controller {
 		}
 		$attendList = $this->menu_model->get_pairs ( "attendance" );
 		$data ["attendTypes"] = get_keyed_pairs ( $attendList, array (
-				"label",
-				"value" 
+				"value",
+				"label" 
 		), TRUE );
 		$attendSublist = $this->menu_model->get_pairs ( "attend-subtype" );
 		$data ["attendSubtypes"] = get_keyed_pairs ( $attendSublist, array (
-				"label",
-				"value" 
+				"value",
+				"label" 
 		), TRUE );
-		
 		$data ['target'] = "attendance/search";
 		if ($this->input->get ( "ajax" )) {
 			$this->load->view ( $data ['target'], $data );

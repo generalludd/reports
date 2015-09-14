@@ -52,6 +52,9 @@ if (! empty ( $attendance )) :
 		<tr>
 			<th class='a-button no-print'></th>
 			<th class='a-name'>Name</th>
+			<?php if($kStudent):?>
+			<th class='a-date'>Date</th>
+			<?php endif;?>
 			<th class='a-grade'>Grade</th>
 			<th class='a-class'>Class</th>
 			<th class='a-type'>Type</th>
@@ -86,6 +89,9 @@ if (! empty ( $attendance )) :
 				<? endif; ?>
 				</td>
 		<td style="white-space: nowrap;"><a href="<?php echo site_url("student/view/$item->kStudent");?>" title="view details for <?php echo $student_name; ?>"><?php echo $student_name;?></a></td>
+		<?php if($kStudent):?>
+		<td><?php echo format_date($item->attendDate,"standard");?></td>
+		<?php endif; ?>
 		<td><?php echo format_grade($item->stuGrade);?></td>
 		<td><?php echo format_classroom($item->teachClass, $item->stuGrade, $item->stuGroup);?></td>
 		<td><?=$item->attendType;?></td>
@@ -102,18 +108,18 @@ if (! empty ( $attendance )) :
 
  <?
 else :
-	if ($kStudent) :
-		print "<p>$student_name does not have any attendance entries for the current year";
+	if ($kStudent) :?>
+	<p><a href="<?php echo site_url("student/view/$kStudent");?>" title="View student's record"><?php echo format_name($student->stuNickname, $student->stuLast)?></a> does not have any attendance entries for the selected search"</p>
 		
-		print $add_button;
+		<?php echo $add_button; ?>
 	 
 
-	else :
-		print "<p>No records for the given search were found.&nbsp;<span class='button show_attendance_search'>Search again</span></p>";
+	<?php else : ?>
+		<p>No records for the given search were found</p>
 	
 
-	endif;
-endif;
+	<?php endif; ?>
+<?php endif;
 
 
 

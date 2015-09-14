@@ -200,7 +200,8 @@ class Attendance_model extends MY_Model
 			$result = $this->db->get ()->row ();
 			return $result;
 		}
-
+		
+/* Deprecated */
 		function attendance_count_for_student ( $type, $values )
 		{
 			$term = $values ['term'];
@@ -222,8 +223,10 @@ class Attendance_model extends MY_Model
 			$this->db->where ( "kStudent", $kStudent );
 			$this->db->where ( "attendType", $type );
 			$this->db->where ( "attendDate BETWEEN $between", FALSE );
+			$this->db->where_not("attendSubtype","Holiday");
 			$this->db->order_by ( "attendDate", "ASC" );
 			$this->db->from ( "student_attendance" );
+			
 			$result = $this->db->get ()->num_rows ();
 			return $result;
 		}
@@ -243,7 +246,11 @@ class Attendance_model extends MY_Model
 			
 			$this->db->where ( "kStudent", $kStudent );
 			$this->db->where ( "attendDate BETWEEN $between" );
+			$this->db->where("attendSubtype !=","Holiday");
 			$this->db->group_by ( "attendType,attendSubtype,attendLength" );
+			$this->db->join("menu","student_attendance.attendType = menu.value");
+			$this->db->join("menu subtype","student_attendance.attendSubtype = subtype.label");
+				
 			$this->db->select ( "count(attendType) as typeCount", FALSE );
 			$this->db->select ( "attendType, attendSubtype, attendLength" );
 			$this->db->from ( "student_attendance" );
