@@ -3,10 +3,7 @@
 	$(".refresh").live("click",function(){
 		window.location.reload();
 	});
-	
-	$(".datefield").live("focus", function(){
-		$(".datefield").datepicker();
-	});
+
 	
 	$('.button.do-print').live('click', function(event){
         window.print();
@@ -305,27 +302,6 @@
 		}
 	});
 	
-	/*Required field functions may no longer be needed with HTML5 */
-
-	$("select.required").live('change', function(event) {
-		var fieldName = $(this).attr('name');
-		var fieldValue = $(this).val();
-		validateField(fieldName, fieldValue);
-	});
-	
-	$("input.required").live('blur', function(event) {
-		if ($(this).val() == '') {
-			$(this).addClass('error');
-			$("form input[type='submit'].button").prop('disabled',true);
-			$("form input[type='submit'].button").addClass("active");
-		} else {
-			$(this).removeClass('error');
-			$("form input[type='submit'].button").removeClass("active");
-			$("form input[type='submit'].button").prop('disabled',false);
-		}
-	});
-	// $("select.required[value='']").next().html("Required
-	// Field!");
 
 	
 	$(".edit-subject-sort").live("click",function(){
