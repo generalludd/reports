@@ -33,6 +33,7 @@ if ($action == "search") {
 	$search_fieldset .= "</ul>$search_button</fieldset>";
 }
 
+
 print $search_title;
 print $button_bar;
 print $search_fieldset;
@@ -41,7 +42,9 @@ if ($this->session->userdata ( "dbRole" ) == 1) :
 
 
 endif;
-
+if($kStudent){
+	print create_button_bar(array(array("selection"=>"attendance","href"=>site_url("attendance/create/$student->kStudent"),"class"=>"button dialog new","text"=>"Add Attendance")));
+}
 $current_student = NULL;
 if (! empty ( $attendance )) :
 	

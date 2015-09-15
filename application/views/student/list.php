@@ -64,6 +64,7 @@ $default_row_style = array("student-row","row");
 		$buttons = array();
 		$buttons[] = array("selection"=>"narrative", "href" => site_url("narrative/student_list/$student->kStudent"), "class" => "button", "text" =>"Narratives");
 		$buttons[] = array("selection" => "attendance", "href" => site_url("attendance/search/$student->kStudent"), "class" => "button", "text" => "Attendance" );
+		$buttons[] = array("selection"=>"attendance","href"=>site_url("attendance/create/$student->kStudent"),"class"=>"button dialog new","text"=>"Add Attendance");
 		$buttons[] = array("selection" => "support","href" => site_url("support/list_all/$student->kStudent"), "class" => "button", "text" => "Learning Support");
 		if($stuGrade >=5) {
 			$buttons[] = array("selection" => "report", "href" => site_url("report/get_list/student/$student->kStudent"), "class" => "button","text" => sprintf("%ss",STUDENT_REPORT));
