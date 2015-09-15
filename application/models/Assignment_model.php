@@ -31,11 +31,7 @@ class Assignment_model extends MY_Model {
 			$myVariable = $variables [$i];
 			if ($this->input->post ( $myVariable )) {
 				$post = $this->input->post ( $myVariable );
-				if ($myVariable == "date") {
-					$this->$myVariable = format_date ( $post, "mysql" );
-				} else {
-					$this->$myVariable = $post;
-				}
+				$this->$myVariable = $post;
 			}
 		}
 	}

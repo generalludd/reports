@@ -254,7 +254,7 @@ class Grade_model extends MY_Model
         if (array_key_exists('cutoff_date', $options)) {
             $this->db->where(
                     sprintf("`assignment`.`date` <= '%s'",
-                            format_date($options['cutoff_date'], "mysql")));
+                            $options['cutoff_date']));
         }
         $subject_sort = 'subject';
         $this->load->model("subject_sort_model", "subject_sort");

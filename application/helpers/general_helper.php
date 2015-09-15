@@ -15,7 +15,7 @@ function mysql_timestamp()
 function format_date($date, $format = NULL){
 	//$format=mysql//yyyy-mm-dd
 	//$format=standard//mm-dd-yyyy
-	$clean_date = str_replace("-","/",$date);
+	$clean_date = str_replace("/","-",$date);
 	switch($format){
 		case "mysql":
 			$parts = explode("/", $clean_date);
@@ -25,11 +25,11 @@ function format_date($date, $format = NULL){
 			$output = "$year-$month-$day";
 			break;
 		case "standard":
-			$parts = explode("/", $clean_date);
+			$parts = explode("-", $clean_date);
 			$year = $parts[0];
 			$month = $parts[1];
 			$day = $parts[2];
-			$output = "$month/$day/$year";
+			$output = "$month-$day-$year";
 			break;
 		default:
 			$output = $clean_date;

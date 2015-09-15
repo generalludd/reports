@@ -21,8 +21,8 @@ if(get_value($attendance,"attendDate",FALSE)){
 <p><strong><?=$student;?></strong></p>
 <label for="attendType">Type</label>
 	<?=form_dropdown("attendType",$attendTypes, get_value($attendance, "attendType"), "id='attendType'");
-	?> <label for="attendDate">Date</label><input type="text"
-	name="attendDate" id="attendDate" required class="datefield"
+	?> <label for="attendDate">Date</label><input type="date"
+	name="attendDate" id="attendDate" required 
 	value="<?=$attendDate;?>" /><br />
 <p class='attend_details'><label for="attendSubtype">Subtype</label>
 <?=form_dropdown("attendSubtype",$attendSubtypes, get_value($attendance, "attendSubtype"), "id='attendSubtype'");?></p>

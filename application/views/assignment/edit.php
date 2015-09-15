@@ -3,10 +3,8 @@ $year = get_value($assignment,"year",$this->input->cookie("year"));
 $term = get_value($assignment,"term",$this->input->cookie("term"));
 $gradeStart = get_value($assignment,"gradeStart",$this->input->cookie("assignment_grade_start"));
 $gradeEnd = get_value($assignment,"gradeEnd",$this->input->cookie("assignment_grade_end"));
-$date = "";
-if($date = get_value($assignment,"date")){
-	$date = format_date($date,"standard");
-}
+$date = get_value($assignment,"date");
+	
 
 ?>
 <h3><?php echo $title;?></h3>
@@ -39,7 +37,7 @@ if($date = get_value($assignment,"date")){
 <? endif; ?>
 <p>
 <label for="date">Date: </label>
-<input type="text" name="date" id="date" class="datefield" required value="<?=$date;?>"/>
+<input type="date" name="date" id="date" required value="<?=$date;?>"/>
 </p>
 <p>
 <label for="subject">Subject: </label>

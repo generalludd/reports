@@ -12,8 +12,8 @@
 </p>
 <p>
 <label for="start_time">Date Range</label>
-<input type="text" class="datefield" name="time_start" id="time_start" value=""/>-
-<input type="text" class="datefield" name="time_end" id="time_end" value=""/>
+<input type="date" name="time_start" id="time_start" value=""/>-
+<input type="date" name="time_end" id="time_end" value=""/>
 
 </p>
 <p>

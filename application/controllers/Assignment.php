@@ -68,8 +68,8 @@ class Assignment extends MY_Controller {
 			burn_cookie ( 'assignment_date_start' );
 		}
 		if ($date_start && $date_end) {
-			$date_range ['date_start'] = format_date ( $date_start, 'mysql' );
-			$date_range ['date_end'] = format_date ( $date_end, 'mysql' );
+			$date_range ['date_start'] = $date_start;
+			$date_range ['date_end'] =  $date_end;
 		}
 		
 		$grade_options ['from'] = 'grade';

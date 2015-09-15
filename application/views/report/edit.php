@@ -33,9 +33,9 @@ if($contact_date){
 		<?=$advisor;?>
 	</p>
 	<p id="date-field">
-		<label for="report_date">Date: </label> <input id="report_date"
-			name="report_date" class="datefield"
-			value="<?=format_date(get_value($report,"report_date",date("Y-m-d")),"standard");?>" />
+		<label for="report_date">Date: </label> <input type="date" id="report_date"
+			name="report_date"
+			value="<?=get_value($report,"report_date",date("Y-m-d"));?>" />
 	</p>
 	<? if($action == "insert"): ?>
 		<label for="email_advisor">Email Advisor</label> <input
@@ -106,8 +106,8 @@ if($contact_date){
 	}?>
 		</p>
 		<p id="contact-date-field">
-			<label for="contact_date">Date: </label> <input type="text"
-				name="contact_date" id="contact_date" class="datefield"
+			<label for="contact_date">Date: </label> <input type="date"
+				name="contact_date" id="contact_date"
 				value="<?=$contact_date;?>" />
 		</p>
 	</fieldset>

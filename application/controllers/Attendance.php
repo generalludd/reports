@@ -323,7 +323,7 @@ class Attendance extends MY_Controller {
 				$data ['options'] = $options;
 				$data ["students"] = $students;
 				$data ["target"] = "attendance/checklist/list";
-				$data ["title"] = sprintf ( "Attendance Checklist for %s, Grade%s %s%s%s", format_date ( $date ), $gradeStart != $gradeEnd ? "s" : "", format_grade_range ( $gradeStart, $gradeEnd ), $stuGroup, $teachClass );
+				$data ["title"] = sprintf ( "Attendance Checklist for %s, Grade%s %s%s%s", format_date ( $date,"standard" ), $gradeStart != $gradeEnd ? "s" : "", format_grade_range ( $gradeStart, $gradeEnd ), $stuGroup, $teachClass );
 				$this->load->view ( "page/index", $data );
 			}
 		}
@@ -359,9 +359,8 @@ class Attendance extends MY_Controller {
 	function complete($date, $kTeach)
 	{
 		$this->load->model ( "teacher_model", "teacher" );
-		$date = format_date ( $date );
 		$teacher = $this->teacher->get ( $kTeach, "email,teachFirst,teachLast" );
-		$subject = sprintf ( "Attendance for %s %s, %s", $teacher->teachFirst, $teacher->teachLast, $date );
+		$subject = sprintf ( "Attendance for %s %s, %s", $teacher->teachFirst, $teacher->teachLast, format_date($date,"standard") );
 		
 		$data ['subject'] = $subject;
 		$data ['records'] = $this->attendance->get_for_teacher ( $date, $kTeach );

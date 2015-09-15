@@ -23,11 +23,6 @@ if (! isset ( $year )) {
 }
 $year_end = $year + 1;
 $test_date = get_value ( $support, "testDate" );
-if (! empty ( $test_date )) {
-	$test_date = format_date ( $test_date, "standard" );
-} else {
-	$test_date = "";
-}
 $hide_item = "hidden";
 $show_item = "";
 if ($action == "update") {
@@ -90,7 +85,7 @@ $button_box = create_button_bar ( $buttons );
 	</p>
 	<p>
 		<label for="testDate">Date <?php echo $support->stuFirst; ?> was formally tested: </label>
-		<input type="text" name="testDate" id="testDate" class="datefield" value="<?php echo $test_date;?>" size="17">
+		<input type="date" name="testDate" id="testDate" value="<?php echo $test_date;?>" size="17">
 	</p>
 	<div class='<?php if(get_cookie("accordion") == "enable"){print "accordion";} ?>' id='needAccordion'>
 		<h3>

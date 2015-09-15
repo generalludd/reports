@@ -7,11 +7,11 @@ $date_end = $this->session->userdata("date_end");
 <input type="hidden" id="report_key" name="report_key" value="<?=$report_key;?>"/>
 <p>
 <label for="date_start">Start Date</label>
-<input type="text" class="datefield" name="date_start" id="date_start" value="<?=$date_start;?>"/>
+<input type="date" name="date_start" id="date_start" value="<?=$date_start;?>"/>
 </p>
 <p>
 <label for="date_end">End Date</label>
-<input type="text" class="datefield" name="date_end" id="date_end" value="<?=$date_end;?>"/>
+<input type="date" name="date_end" id="date_end" value="<?=$date_end;?>"/>
 </p>
 <p>
 <label for="category">Category</label>

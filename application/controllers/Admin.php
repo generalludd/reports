@@ -86,8 +86,8 @@ class admin extends MY_Controller{
 		}
 
 		if($this->input->get_post("time_start") && $this->input->get_post("time_end")){
-			$time_start = format_date($this->input->get_post("time_start"),"mysql");
-			$time_end = format_date($this->input->get_post("time_end"),"mysql");
+			$time_start = $this->input->get_post("time_start");
+			$time_end = $this->input->get_post("time_end");
 			$time_end .= " 23:59:59";// make the end time the end of the same day
 			$options["date_range"]["time_start"] = $time_start;
 			$options["date_range"]["time_end"] = $time_end;
