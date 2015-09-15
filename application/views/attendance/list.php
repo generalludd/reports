@@ -112,7 +112,7 @@ if (! empty ( $attendance )) :
  <?
 else :
 	if ($kStudent) :?>
-	<p><a href="<?php echo site_url("student/view/$kStudent");?>" title="View student's record"><?php echo format_name($student->stuNickname, $student->stuLast)?></a> does not have any attendance entries for the selected search"</p>
+	<p><a href="<?php echo site_url("student/view/$kStudent");?>" title="View student's record"><?php echo format_name($student->stuNickname, $student->stuLast)?></a> does not have any attendance entries for the selected search</p>
 		
 		<?php echo $add_button; ?>
 	 
