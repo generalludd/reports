@@ -5,9 +5,9 @@ if($attendLength == 1){
 	$length_status = "checked";
 }
 
-$attendDate = date("m/d/Y");
+$attendDate = date("Y-m-j");
 if(get_value($attendance,"attendDate",FALSE)){
-	$attendDate = format_date(get_value($attendance,"attendDate"),"standard");
+	$attendDate = get_value($attendance,"attendDate");
 }
 ?>
 <form name="attendanceEditor" id="attendanceEditor" method="post"
