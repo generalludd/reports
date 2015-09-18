@@ -28,7 +28,7 @@
 		foreach($grades as $grade){
 			?>
 		<tr id="<?=get_value($grade, "kGrade",0);?>">
-			<td class='grade-description'><?=format_date($grade->date,"standard");?>
+			<td class='grade-description'><?=format_date($grade->date);?>
 			</td>
 			<td class='grade-description'><?=$grade->assignment;?>
 			</td>

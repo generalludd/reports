@@ -204,8 +204,7 @@ class Attendance extends MY_Controller {
 			$data ["startDate"] = $startDate;
 			
 		}
-		
-		$endDate = date ("Y-m-j");
+		$endDate = $startDate; //assume a single date search by default
 		$data ["endDate"] = $endDate;
 		if ( $this->input->get ( "endDate" )) {
 			$endDate = $this->input->get("endDate");
@@ -223,7 +222,8 @@ class Attendance extends MY_Controller {
 		
 		$data ['attendance'] = $this->attendance->search ( $data );
 		// @TODO add a line displaying the search query
-		$data ["title"] = sprintf("Attendance Search Results: %s",format_date_range(format_date($startDate,"standard"),format_date($endDate,"standard")));
+		
+		$data ["title"] = sprintf("Attendance Search Results: %s",format_date_range($startDate,$endDate));
 		$data ["target"] = "attendance/list";
 		$data ["action"] = "search";
 		$this->load->view ( "page/index", $data );
@@ -360,7 +360,7 @@ class Attendance extends MY_Controller {
 	{
 		$this->load->model ( "teacher_model", "teacher" );
 		$teacher = $this->teacher->get ( $kTeach, "email,teachFirst,teachLast" );
-		$subject = sprintf ( "Attendance for %s %s, %s", $teacher->teachFirst, $teacher->teachLast, format_date($date,"standard") );
+		$subject = sprintf ( "Attendance for %s %s, %s", $teacher->teachFirst, $teacher->teachLast, format_date($date) );
 		
 		$data ['subject'] = $subject;
 		$data ['records'] = $this->attendance->get_for_teacher ( $date, $kTeach );

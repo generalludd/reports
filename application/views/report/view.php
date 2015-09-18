@@ -12,7 +12,7 @@ print create_button_bar($edit_buttons);
 ?>
 	<div  class='field' id="date-field">
 		<label>Date: </label>
-		<?=format_date($report->report_date,"standard");?>
+		<?=format_date($report->report_date);?>
 	</div>
 	<div class='field' id="advisor-name-field">
 		<label for="advisor-name">Advisor: </label>
@@ -53,7 +53,7 @@ print create_button_bar($edit_buttons);
 	<div class='field' id="contact-date-field">
 	<label for="contact_date">Date: </label>
 	<? if($report->contact_date){
-		print format_date($report->contact_date,"standard");
+		print format_date($report->contact_date);
 	}?>
 	</div>
 </div>

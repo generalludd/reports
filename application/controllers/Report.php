@@ -256,7 +256,7 @@ class Report extends MY_Controller
 		$subject = sprintf("%s submission from %s %s for %s",STUDENT_REPORT,$report->teachFirst, $report->teachLast,$student);
 		$body[] = "Student: " . $student;
 		$body[] = "Category: " . $report->category;
-		$body[] = "Date: " . format_date($report->report_date, "standard");
+		$body[] = "Date: " . format_date($report->report_date);
 		if(isset($report->assignment)){
 			$body[] = "Assignment: $report->assignment";
 		}

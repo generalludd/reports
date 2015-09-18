@@ -28,7 +28,7 @@ if ($report_type == "student") {
 <fieldset class="search_fieldset">
 	<legend>Search Parameters</legend>
 	<?
-if (isset($options)) {
+if (isset($options) && !empty($options)) {
 
     $keys = array_keys($options);
     $values = array_values($options);
@@ -42,8 +42,7 @@ if (isset($options)) {
             case "date_range":
                 $date_start = $options["date_range"]["date_start"];
                 $date_end = $options["date_range"]["date_end"];
-                echo "<li>From: <strong>$date_start</strong></li>";
-                echo "<li>To: <strong>$date_end</strong></li>";
+                printf( "<li>From: <strong>%s</strong></li>",format_date_range($date_start, $date_end));
                 break;
             default:
                 echo sprintf("<li>%s <strong>%s</strong></li>", ucfirst($key), $value);
@@ -104,7 +103,7 @@ if (isset($options)) {
 			<td class='field report-category'><?=$report->category;if ($report->category == "Missing Homework") {if ($report->assignment_status == 1) {echo " (Turned In Late)";}}?></td>
 			<td class='field report-teacher-name'><?=$teacher;?>
 			</td>
-			<td class='field report-date'><?=format_date($report->report_date,"standard");?>
+			<td class='field report-date'><?=format_date($report->report_date);?>
 			</td>
 			<td class='field report-assignment'><?=$report->assignment;?></td>
 			<td class='field report-comment'><?=$report->comment;?></td>
@@ -130,7 +129,7 @@ if (isset($options)) {
 			</td>
 			<td class='field report-contact-method'><?=$report->contact_method;?>
 			</td>
-			<td class='field report-contact-date'><? if($report->contact_date): echo format_date($report->contact_date,'standard');endif;?>
+			<td class='field report-contact-date'><? if($report->contact_date): echo format_date($report->contact_date);endif;?>
 			</td>
 			<td class='field buttons'><a
 				href="<?=site_url("report/edit/$report->kReport");?>"

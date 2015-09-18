@@ -114,7 +114,7 @@ if (! empty ( $assignments )) {
 					<span class='chart-points'> <?=$assignment->points>0?$assignment->points. " Points" :"Make-Up Points";?>
 			</span>
 					<br />
-					<span class='chart-date'><?=format_date($assignment->date,'standard');?>
+					<span class='chart-date'><?=format_date($assignment->date);?>
 			</span>
 				</div>
 			<? $assignment_keys[] = $assignment->kAssignment;?>

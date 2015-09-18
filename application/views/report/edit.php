@@ -2,7 +2,7 @@
 $contact_method = get_value($report,"contact_method");
 $contact_date = get_value($report, "contact_date");
 if($contact_date){
-	$contact_date = format_date($contact_date,"standard");
+	$contact_date = format_date($contact_date);
 }
 ?>
 

@@ -13,13 +13,9 @@ $search_button = create_button_bar ( array (
 
 $add_button = "";
 $search_fieldset = "";
-
 if ($action == "search") {
 	$options = array ();
-	$startDate = format_date ( $startDate, "standard" );
-	$endDate = format_date ( $endDate, "standard" );
-	$options [] = "Start Date: <strong>$startDate</strong>";
-	$options [] = "End Date: <strong>$endDate</strong>";
+	$options [] = sprintf("Date Range: <strong>%s</strong>",format_date_range($startDate,$endDate));
 	if (! empty ( $attendType )) {
 		$options [] = "Attendance Type: <strong>$attendType</strong>";
 	}
@@ -93,7 +89,7 @@ if (! empty ( $attendance )) :
 				</td>
 		<td style="white-space: nowrap;"><a href="<?php echo site_url("student/view/$item->kStudent");?>" title="view details for <?php echo $student_name; ?>"><?php echo $student_name;?></a></td>
 		<?php if($kStudent):?>
-		<td><?php echo format_date($item->attendDate,"standard");?></td>
+		<td><?php echo format_date($item->attendDate);?></td>
 		<?php endif; ?>
 		<td><?php echo format_grade($item->stuGrade);?></td>
 		<td><?php echo format_classroom($item->teachClass, $item->stuGrade, $item->stuGroup);?></td>

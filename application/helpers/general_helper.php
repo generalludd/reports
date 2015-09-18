@@ -1,285 +1,243 @@
-<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+<?php
+if (! defined ( 'BASEPATH' ))
+	exit ( 'No direct script access allowed' );
 
 function mysql_timestamp()
 {
-	return date('Y-m-d H:i:s');
-
+	return date ( 'Y-m-d H:i:s' );
 }
 
-/*
+/**
  * @function format_date
-* @params $date date string
-* @params $format string
-*description:  this shouldn't be in this file, but I didn't want to create a new file with general formatting tools yet.
-*/
-function format_date($date, $format = NULL){
-	//$format=mysql//yyyy-mm-dd
-	//$format=standard//mm-dd-yyyy
-	$clean_date = str_replace("/","-",$date);
-	switch($format){
-		case "mysql":
-			$parts = explode("/", $clean_date);
-			$month = $parts[0];
-			$day = $parts[1];
-			$year = $parts[2];
-			$output = "$year-$month-$day";
-			break;
-		case "standard":
-			$parts = explode("-", $clean_date);
-			$year = $parts[0];
-			$month = $parts[1];
-			$day = $parts[2];
-			$output = "$month-$day-$year";
-			break;
-		default:
-			$output = $clean_date;
+ * @params $date date string
+ * @params $format string
+ * description: this shouldn't be in this file, but I didn't want to create a new file with general formatting tools yet.
+ * idea courtesy:
+ * http://stackoverflow.com/questions/13194322/php-regex-to-check-date-is-in-yyyy-mm-dd-format
+ */
+function format_date($date, $format = NULL)
+{
+	$date = str_replace ( "/", "-", $date );
+	$output = $date;
+	if ($date) {
+		$new_date = DateTime::createFromFormat ( 'm-d-Y', $date );
+		if ($new_date && $format == "mysql") {
+			$output = $new_date->format ( 'Y-m-d' );
+		} else{ // assume standard date format
+			$new_date = DateTime::createFromFormat ( 'Y-m-d', $date );
+			if ($new_date) {
+				$output = $new_date->format ( 'm/d/Y' );
+			}
+		}
 	}
 	return $output;
 }
 
-function format_date_range($date_one, $date_two = NULL){
-	if($date_one == $date_two || $date_two == NULL){
-		$output =  $date_one;
-	}else{
-		$output = sprintf("%s to %s",$date_one,$date_two);
+/**
+ * Format a range of two dates, if the second is null or the same as the first, show just one date. 
+ * @param unknown $date_one
+ * @param string $date_two
+ * @return unknown
+ */
+function format_date_range($date_one, $date_two = NULL)
+{
+	if ($date_one == $date_two || $date_two == NULL) {
+		$output = format_date ( $date_one );
+	} else {
+		$output = sprintf ( "%s to %s", format_date($date_one), format_date ( $date_two ) );
 	}
 	return $output;
 }
 
-
-function format_time($time, $showSeconds = false){
-	$pm = substr_count($time, "PM");
-	$am = substr_count($time, "AM");
-	if($pm || $am){
-		$outputFormat = 24;
-	}else{
-		$outputFormat = 12;
-	}
-	$time = str_ireplace("PM", "", $time);
-	$time = str_ireplace("AM", "", $time);
-	$parts = explode(":", trim($time));
-	$hour = $parts[0];
-	$minute = $parts[1];
-	$seconds = $parts[2];
-
-	if($outputFormat == 12 ){
-		if( $hour > 12 ){
-			$hour = $hour - 12;
-			$meridian = "PM";
-		}else{
-			$meridian = "AM";
-		}
-		$output = "$hour:$minute";
-		if($showSeconds){
-			$output .= ":$seconds";
-		}
-		$output .= " $meridian";
-
-	}elseif($outputFormat == 24){
-		if($pm){
-			$hour += 12;
-		}
-		$output = "$hour:$minute";
-		if($showSeconds){
-			$output .= ":$seconds";
-		}
-
-	}
-
-	return $output;
-}
-
-
-
-function format_timestamp($timeStamp,$include_time = TRUE){
+function format_timestamp($timeStamp, $include_time = TRUE)
+{
 	$output = $timeStamp;
 	$pattern = $pattern = '/^[0-9]{4}\-[0-9]{2}\-[0-9]{2}\ [0-9]{2}\:[0-9]{2}\:[0-9]{2}$/';
-	if(preg_match($pattern,$timeStamp)){
-		$items = explode(" ", $timeStamp);
-		$date = format_date($items[0], 'standard');
+	if (preg_match ( $pattern, $timeStamp )) {
+		$items = explode ( " ", $timeStamp );
+		$date = format_date ( $items [0], 'standard' );
 		$time = "";
-		if($include_time){
-			$time = $items[1];
-
-			if(count($items) > 2 ){
-				$time .= " " . $items[2];
+		if ($include_time) {
+			$time = $items [1];
+			
+			if (count ( $items ) > 2) {
+				$time .= " " . $items [2];
 			}
-			$time = ", " . format_time($time);
-
+			$time = ", " . format_time ( $time );
 		}
 		$output = "$date$time";
 	}
 	return $output;
 }
 
-
-
-function get_value($object, $item, $default = null){
+function get_value($object, $item, $default = null)
+{
 	$output = $default;
-
-	if($default){
+	
+	if ($default) {
 		$output = $default;
 	}
-	if($object){
-
-		$var_list = get_object_vars($object);
-		$var_keys = array_keys($var_list);
-		if (in_array($item, $var_keys) ){
+	if ($object) {
+		
+		$var_list = get_object_vars ( $object );
+		$var_keys = array_keys ( $var_list );
+		if (in_array ( $item, $var_keys )) {
 			$output = $object->$item;
 		}
 	}
 	return $output;
 }
 
-
 function get_current_grade($baseGrade, $baseYear, $targetYear = null)
 {
-	if($targetYear == null){
-		$targetYear = get_current_year();
+	if ($targetYear == null) {
+		$targetYear = get_current_year ();
 	}
-	if($baseGrade == "K") {
+	if ($baseGrade == "K") {
 		$baseGrade = 0;
 	}
 	$grade = $baseGrade + ($targetYear - $baseYear);
 	return $grade;
 }
 
-
-
 /**
  * @TODO consider a system preference or constant declaration for the cutoff month.
  */
-function get_current_year(){
-	$year = date("Y");//get the current year
-	$month = date("n"); //get the current month as an integer
-	if($month < 7){
-		$year = $year-1; //if the current month is during the spring term
+function get_current_year()
+{
+	$year = date ( "Y" ); // get the current year
+	$month = date ( "n" ); // get the current month as an integer
+	if ($month < 7) {
+		$year = $year - 1; // if the current month is during the spring term
 	}
 	return $year;
 }
 
-function format_schoolyear($year, $term = NULL){
+function format_schoolyear($year, $term = NULL)
+{
 	$firstHalf = $year;
-	$secondHalf = strval($year)+1;
+	$secondHalf = strval ( $year ) + 1;
 	return "$firstHalf-$secondHalf";
 }
 
-function get_year_list($initial_blank = FALSE,$next_year = FALSE){
+function get_year_list($initial_blank = FALSE, $next_year = FALSE)
+{
 	$baseYear = 2006;
-	$narrYear = get_current_year();
-	if($initial_blank){
-		$result[] = "";
+	$narrYear = get_current_year ();
+	if ($initial_blank) {
+		$result [] = "";
 	}
-	if($next_year){
-		$narrYear = $narrYear+1;
+	if ($next_year) {
+		$narrYear = $narrYear + 1;
 	}
-	for($i=$baseYear;$i <= $narrYear;$i++){
-		$result[$i]=$i;
+	for($i = $baseYear; $i <= $narrYear; $i ++) {
+		$result [$i] = $i;
 	}
 	return $result;
 }
-
-
-
 
 /**
  * @TODO this may be something that could be modified with a system preference using the "config" table
  * for term names, durations and cutoffs.
  * for now it is hard-coded.
- * @param date $targetDate
+ *
+ * @param date $targetDate        	
  */
 function get_current_term($targetDate = NULL)
 {
-	if($targetDate == NULL){
-		$month = date('n');
-	}else{
-		$month = date('n', $targetDate);
+	if ($targetDate == NULL) {
+		$month = date ( 'n' );
+	} else {
+		$month = date ( 'n', $targetDate );
 	}
-	if($month >2 and $month < 7){
+	if ($month > 2 and $month < 7) {
 		$term = "Year-End";
-	}else{
+	} else {
 		$term = "Mid-Year";
 	}
 	return "$term";
 }
 
-function get_term_menu($id, $currentTerm=null, $initial_blank = FALSE,$options = array(),$is_required = FALSE){
-	$terms = array("Mid-Year", "Year-End");
+function get_term_menu($id, $currentTerm = null, $initial_blank = FALSE, $options = array(), $is_required = FALSE)
+{
+	$terms = array (
+			"Mid-Year",
+			"Year-End" 
+	);
 	$required = "";
-	if($is_required){
-	    $required = "required";
+	if ($is_required) {
+		$required = "required";
 	}
-	$select[]=sprintf("<select id='%s' name='%s' %s>",$id, $id, $required);
+	$select [] = sprintf ( "<select id='%s' name='%s' %s>", $id, $id, $required );
 	$classes = FALSE;
-	if(!empty($options)){
-		if(array_key_exists("classes", $options)){
-			$classes = sprintf("class='%s'",$options["classes"]);
+	if (! empty ( $options )) {
+		if (array_key_exists ( "classes", $options )) {
+			$classes = sprintf ( "class='%s'", $options ["classes"] );
 		}
 	}
-	if($initial_blank){
-		$select[] = "<option value=''></option>";
+	if ($initial_blank) {
+		$select [] = "<option value=''></option>";
 	}
-	foreach($terms as $term){
+	foreach ( $terms as $term ) {
 		$selection = "";
-		if($term == $currentTerm){
+		if ($term == $currentTerm) {
 			$selection = "selected";
 		}
-		$select[]="<option value='$term' $classes $selection>$term</option>";
-
+		$select [] = "<option value='$term' $classes $selection>$term</option>";
 	}
-	$select[]="</select>";
-	$output=join("\n",$select);
+	$select [] = "</select>";
+	$output = join ( "\n", $select );
 	return $output;
 }
 
 /*
  * @params $table varchar table name
-* @params $data array consisting of "where" string or array, and "select" comma-delimited string
-* @returns an array of key-value pairs reflecting a Database primary key and human-meaningful string
-*/
-function get_keyed_pairs($list,$pairs,$initialBlank = NULL,$other = NULL,$alternate = array()){
-	$output=false;
-	if($initialBlank){
-		$output[""] = "";
+ * @params $data array consisting of "where" string or array, and "select" comma-delimited string
+ * @returns an array of key-value pairs reflecting a Database primary key and human-meaningful string
+ */
+function get_keyed_pairs($list, $pairs, $initialBlank = NULL, $other = NULL, $alternate = array())
+{
+	$output = false;
+	if ($initialBlank) {
+		$output [""] = "";
 	}
-	if(!empty($alternate)){
-		$output[$alternate['name']] = $alternate['value'];
+	if (! empty ( $alternate )) {
+		$output [$alternate ['name']] = $alternate ['value'];
 	}
-
-	foreach($list as $item){
-		$key_name = $pairs[0];
-		$key_value = $pairs[1];
-		$output[$item->$key_name] = $item->$key_value;
+	
+	foreach ( $list as $item ) {
+		$key_name = $pairs [0];
+		$key_value = $pairs [1];
+		$output [$item->$key_name] = $item->$key_value;
 	}
-	if($other){
-		$output["other"] = "Other...";
+	if ($other) {
+		$output ["other"] = "Other...";
 	}
 	return $output;
-
 }
 
 /**
  * This should probably be adjusted or renamed.
  * This is currently only used to identify the kind of teacher for a given
  * student based on the student's grade
- * @param int $grade
+ *
+ * @param int $grade        	
  */
 function get_teacher_type($grade)
 {
-	if($grade == "K"){
+	if ($grade == "K") {
 		$grade = 0;
 	}
 	$teacherType = "Classroom Teacher";
-	if($grade > 4){
+	if ($grade > 4) {
 		$teacherType = "Middle School Advisor";
 	}
 	return $teacherType;
 }
 
-
 function format_grade($grade)
 {
-	if($grade == "0" || $grade == NULL){
+	if ($grade == "0" || $grade == NULL) {
 		$grade = "K";
 	}
 	return $grade;
@@ -287,164 +245,184 @@ function format_grade($grade)
 
 function format_grade_range($gradeStart, $gradeEnd, $show_label = FALSE)
 {
-
 	$label = "Grade:";
-	if($gradeStart == $gradeEnd){
-		$output = format_grade($gradeStart);
-	}else{
-		switch($gradeStart + $gradeEnd){
-			case 0:
-				$output = format_grade($gradeStart);
+	if ($gradeStart == $gradeEnd) {
+		$output = format_grade ( $gradeStart );
+	} else {
+		switch ($gradeStart + $gradeEnd) {
+			case 0 :
+				$output = format_grade ( $gradeStart );
 				break;
-			case 13:
+			case 13 :
 				$output = "Middle School";
 				break;
-			case 4:
+			case 4 :
 				$output = "Lower School";
 				break;
-			default:
-				$output = format_grade($gradeStart) . "-" . format_grade($gradeEnd);
+			default :
+				$output = format_grade ( $gradeStart ) . "-" . format_grade ( $gradeEnd );
 				$label = "Grades:";
 		}
 	}
-	if($show_label){
+	if ($show_label) {
 		$output = "$label&nbsp;$output";
 	}
 	return $output;
 }
 
-function create_grade_checklist($start = 0, $limit = 8, $name = "grades", $grade_cookie = array()){
+function create_grade_checklist($start = 0, $limit = 8, $name = "grades", $grade_cookie = array())
+{
 	$id = $name;
 	$name = $name . "[]";
-	for($i = $start; $i <= $limit; $i++){
-		$text = format_grade_text($i);
+	for($i = $start; $i <= $limit; $i ++) {
+		$text = format_grade_text ( $i );
 		$checked = "";
-		if(is_array($grade_cookie) && !empty($grade_cookie)){
-			if(in_array($i, $grade_cookie)){
+		if (is_array ( $grade_cookie ) && ! empty ( $grade_cookie )) {
+			if (in_array ( $i, $grade_cookie )) {
 				$checked = "checked";
 			}
 		}
-		$grades[] = "<li><input type='checkbox' name='$name' id='$id' $checked value='$i'>$text</li>";
+		$grades [] = "<li><input type='checkbox' name='$name' id='$id' $checked value='$i'>$text</li>";
 	}
 	return $grades;
 }
 
 /**
- * create a copy of the student class or group. Classes are for lower grades, groups are for middle school. 
- * @param Int $student_grade
- * @param string $student_group
+ * create a copy of the student class or group.
+ * Classes are for lower grades, groups are for middle school.
+ *
+ * @param Int $student_grade        	
+ * @param string $student_group        	
  * @return string
  */
-function format_classroom($student_class, $student_grade, $student_group=NULL){
-	switch($student_grade){
-		case(5):
-		case(6):
-			$class="5/6";
+function format_classroom($student_class, $student_grade, $student_group = NULL)
+{
+	switch ($student_grade) {
+		case (5) :
+		case (6) :
+			$class = "5/6";
 			break;
-		case(7):
-		case(8):
-			$class="7/8";
+		case (7) :
+		case (8) :
+			$class = "7/8";
 			break;
-		default:
+		default :
 			$class = $student_class;
 	}
-	if($class=="5/6" || $class == "7/8"){
+	if ($class == "5/6" || $class == "7/8") {
 		$class = $class . $student_group;
 	}
 	return $class;
 }
 
-function format_grade_text($number = 0){
-	switch($number){
-		case 0:
+function format_grade_text($number = 0)
+{
+	switch ($number) {
+		case 0 :
 			$output = "Kindergarten";
 			break;
-		case 1:
+		case 1 :
 			$output = "First";
 			break;
-		case 2:
+		case 2 :
 			$output = "Second";
 			break;
-		case 3:
+		case 3 :
 			$output = "Third";
 			break;
-		case 4:
+		case 4 :
 			$output = "Fourth";
 			break;
-		case 5:
+		case 5 :
 			$output = "Fifth";
 			break;
-		case 6:
+		case 6 :
 			$output = "Sixth";
 			break;
-		case 7:
+		case 7 :
 			$output = "Seventh";
 			break;
-		case 8:
+		case 8 :
 			$output = "Eighth";
 			break;
 	}
 	return $output;
 }
 
-
-function format_name($firstName, $lastName, $nickname=NULL, $separator=NULL){
-	$name[]=$firstName;
+function format_name($firstName, $lastName, $nickname = NULL, $separator = NULL)
+{
+	$name [] = $firstName;
 	$informal = "";
-	switch($separator){
-		case "parenthesis": // for parenthesis/parentheses
-			$openSeparator="(";
-			$closeSeparator=")";
-		case "informal": // set stage for showing nickname instead of first name
+	switch ($separator) {
+		case "parenthesis" : // for parenthesis/parentheses
+			$openSeparator = "(";
+			$closeSeparator = ")";
+		case "informal" : // set stage for showing nickname instead of first name
 			$informal = true;
 			break;
-		case "highlight":
+		case "highlight" :
 			$openSeparator = "<span class='highlight'>(";
 			$closeSeparator = ")</span>";
-		default:
-			$openSeparator="\"";
-			$closeSeparator="\"";
+		default :
+			$openSeparator = "\"";
+			$closeSeparator = "\"";
 	}
-	if($informal){
-		if($nickname != NULL){
-			$name['firstName'] = $nickname;
-		}else{
-			$name['firstName'] = $firstName;
+	if ($informal) {
+		if ($nickname != NULL) {
+			$name ['firstName'] = $nickname;
+		} else {
+			$name ['firstName'] = $firstName;
 		}
-	}else if($nickname != NULL and $nickname != $firstName){
-		$name['nickname']=$openSeparator.$nickname.$closeSeparator;
+	} else if ($nickname != NULL and $nickname != $firstName) {
+		$name ['nickname'] = $openSeparator . $nickname . $closeSeparator;
 	}
-	$name['lastName']=$lastName;
-
-	$output=join(" ", $name);
+	$name ['lastName'] = $lastName;
+	
+	$output = join ( " ", $name );
 	return $output;
 }
 
 /*
  * create an "ORDER" query instruction that allows proper sorting of grades
-*/
-function get_grade_order(){
-	$grades=array("LS","K","1-2",1,2,"3-4",3,4,"MS","5-6",5,6,"7-8",7,8);
-	for($i=0;$i<count($grades);$i++){
-		$grade=$grades[$i];
-		$output[]="(CASE WHEN grade='$grade' THEN 1 ELSE 0 END)";
+ */
+function get_grade_order()
+{
+	$grades = array (
+			"LS",
+			"K",
+			"1-2",
+			1,
+			2,
+			"3-4",
+			3,
+			4,
+			"MS",
+			"5-6",
+			5,
+			6,
+			"7-8",
+			7,
+			8 
+	);
+	for($i = 0; $i < count ( $grades ); $i ++) {
+		$grade = $grades [$i];
+		$output [] = "(CASE WHEN grade='$grade' THEN 1 ELSE 0 END)";
 	}
-	$order="(". join("+",$output). ") ASC";
+	$order = "(" . join ( "+", $output ) . ") ASC";
 	return $order;
-
 }
 
 function get_subject_order($subjects = NULL)
 {
-	//@TODO there should be a UI-available tool for global sorting.
-	if(!$subjects){
+	// @TODO there should be a UI-available tool for global sorting.
+	if (! $subjects) {
 		$subjects = "Introduction,Academic Progress,Humanities,Reading,Writing,Science,Math,Social Studies,Social Studies/Science,Social/Emotional,Music,Physical Education,Spanish,Art";
 	}
 	$subjectOrder = "CASE ";
-	$list = explode(",", $subjects);
-	for($i=0;$i<count($list);$i++){
-		$mySubject = $list[$i];
-		$x=$i+1;
+	$list = explode ( ",", $subjects );
+	for($i = 0; $i < count ( $list ); $i ++) {
+		$mySubject = $list [$i];
+		$x = $i + 1;
 		$subjectOrder .= "WHEN subject='$mySubject' THEN $x ";
 	}
 	$subjectOrder .= "END";
@@ -453,29 +431,28 @@ function get_subject_order($subjects = NULL)
 
 /**
  *
- * @param string $glue
- * @param array $list
+ * @param string $glue        	
+ * @param array $list        	
  * @param string $conjunction
- *
- * creates a list in proper English list format (lists less than 3 have no comma, list with 3 or more have commas and final conjunction)
+ *        	creates a list in proper English list format (lists less than 3 have no comma, list with 3 or more have commas and final conjunction)
  */
-
-function grammatical_implode($glue, $list, $conjunction = "and"){
+function grammatical_implode($glue, $list, $conjunction = "and")
+{
 	$output = $list;
-	if(is_array($list)){
-		if(count($list) == 1){
-			$output = implode("",$list);
-		}elseif(count($list) == 2){
-			$output = implode(" $conjunction ", $list);
-		}else{
-			for($i=0; $i < count($list); $i++){
+	if (is_array ( $list )) {
+		if (count ( $list ) == 1) {
+			$output = implode ( "", $list );
+		} elseif (count ( $list ) == 2) {
+			$output = implode ( " $conjunction ", $list );
+		} else {
+			for($i = 0; $i < count ( $list ); $i ++) {
 				$prefix = "";
-				if($i + 1 == count($list)){
+				if ($i + 1 == count ( $list )) {
 					$prefix = $conjunction;
 				}
-				$adjusted_list[] = $prefix . " " . $list[$i];
+				$adjusted_list [] = $prefix . " " . $list [$i];
 			}
-			$output = implode($glue, $adjusted_list);
+			$output = implode ( $glue, $adjusted_list );
 		}
 	}
 	return $output;
@@ -483,127 +460,141 @@ function grammatical_implode($glue, $list, $conjunction = "and"){
 
 /**
  *
- * @param varchar $array
+ * @param varchar $array        	
  * @param varchar $key
- * return an array key value if it exists and is not empty
+ *        	return an array key value if it exists and is not empty
  */
-
-function get_array_value($array,$key){
+function get_array_value($array, $key)
+{
 	$result = FALSE;
-	if(array_key_exists($key,$array)){
-		if(isset($array[$key])){
-			$result = $array[$key];
+	if (array_key_exists ( $key, $array )) {
+		if (isset ( $array [$key] )) {
+			$result = $array [$key];
 		}
 	}
 	return $result;
 }
 
-function format_email($email, $show_address = FALSE){
+function format_email($email, $show_address = FALSE)
+{
 	$output = "";
 	$address_text = $email;
-	if($show_address){
+	if ($show_address) {
 		$address_text = $email;
 	}
-	if(!empty($email)){
+	if (! empty ( $email )) {
 		$output = "<span style='font-weight:normal'><a href='mailto:$email' title='$email'>$address_text</a></span>";
 	}
 	return $output;
 }
 
-function get_age($dob){
-	$birth = new DateTime($dob);
-	$today = new DateTime("now");
-	$interval = date_diff($birth, $today);
-	return $interval->format('%Y');
-}
-
-
-function format_table($data,$header = array(),$options = array()){
-	$table = array();
-	$table_class = "";
-	if(array_key_exists("table_class", $options)){
-		$table_class = "class='" . $options["table_class"] . "'";
-	}
-	$table[] = "<table $table_class >";
-
-
-	if(!empty($header)){
-		$thead_class = "";
-		if(array_key_exists("thead_class", $options)){
-			$thead_class = "class='" . $options["thead_class"] . "'";
-		}
-		$table[] = "<thead $thead_class><tr>";
-		foreach($header as $head){
-			$table[] = "<th>$head</th>";
-		}
-		$table[] = "</tr></thead>";
-	}
-
-	$tbody_class = "";
-	if(array_key_exists("tbody_class", $options)){
-		$tbody_class = "class='" . $options["tbody_class"] . "'";
-	}
-	$table[] = "<tbody $tbody_class>";
-	foreach($data as $row){
-		$table[] = "<tr>";
-		foreach($row as $item){
-			$table[] = "<td>" . format_timestamp($item) . "</td>";
-		}
-		$table[] = "</tr>";
-	}
-	$table[] ="</tbody></table>";
-
-	return implode("",$table);
-}
-
-
-function calculate_letter_grade($points,$pass_fail = FALSE)
+function get_age($dob)
 {
-	$letters = array("9"=>"A",8=>"B",7=>"C",6=>"D",5=>"F");
+	$birth = new DateTime ( $dob );
+	$today = new DateTime ( "now" );
+	$interval = date_diff ( $birth, $today );
+	return $interval->format ( '%Y' );
+}
+
+function format_table($data, $header = array(), $options = array())
+{
+	$table = array ();
+	$table_class = "";
+	if (array_key_exists ( "table_class", $options )) {
+		$table_class = "class='" . $options ["table_class"] . "'";
+	}
+	$table [] = "<table $table_class >";
+	
+	if (! empty ( $header )) {
+		$thead_class = "";
+		if (array_key_exists ( "thead_class", $options )) {
+			$thead_class = "class='" . $options ["thead_class"] . "'";
+		}
+		$table [] = "<thead $thead_class><tr>";
+		foreach ( $header as $head ) {
+			$table [] = "<th>$head</th>";
+		}
+		$table [] = "</tr></thead>";
+	}
+	
+	$tbody_class = "";
+	if (array_key_exists ( "tbody_class", $options )) {
+		$tbody_class = "class='" . $options ["tbody_class"] . "'";
+	}
+	$table [] = "<tbody $tbody_class>";
+	foreach ( $data as $row ) {
+		$table [] = "<tr>";
+		foreach ( $row as $item ) {
+			$table [] = "<td>" . format_timestamp ( $item ) . "</td>";
+		}
+		$table [] = "</tr>";
+	}
+	$table [] = "</tbody></table>";
+	
+	return implode ( "", $table );
+}
+
+function calculate_letter_grade($points, $pass_fail = FALSE)
+{
+	$letters = array (
+			"9" => "A",
+			8 => "B",
+			7 => "C",
+			6 => "D",
+			5 => "F" 
+	);
 	$valence = "";
 	$output = "";
 	$plus = 6;
 	$minus = 3;
 	$letter = "";
-	if(strval($points) >= 99){
+	if (strval ( $points ) >= 99) {
 		$output = "A+";
-	}elseif(strval($points) > 93){
+	} elseif (strval ( $points ) > 93) {
 		$output = "A";
-	}elseif(strval($points) < 60){
+	} elseif (strval ( $points ) < 60) {
 		$output = "F";
-	}else{
-		$split = str_split($points);
-		$tens = $split[0];
-		$hundreds = $split[1];
-		if($hundreds < $minus){
+	} else {
+		$split = str_split ( $points );
+		$tens = $split [0];
+		$hundreds = $split [1];
+		if ($hundreds < $minus) {
 			$valence = "-";
-		}elseif($hundreds > $plus){
+		} elseif ($hundreds > $plus) {
 			$valence = "+";
-		}else{
+		} else {
 			$valuence = "";
-
 		}
-		$letter = $letters[$tens];
+		$letter = $letters [$tens];
 		$output = $letter . $valence;
 	}
-	if($pass_fail){
-		switch($letter){
-			case "F":
+	if ($pass_fail) {
+		switch ($letter) {
+			case "F" :
 				$output = "Fail";
 				break;
-			default:
+			default :
 				$output = "Pass";
 				break;
 		}
 	}
 	return $output;
-
 }
 
-function bake_cookie($name,$value){
-	set_cookie(array("name"=>$name,"value"=>$value,"expire"=>0));
+function bake_cookie($name, $value)
+{
+	set_cookie ( array (
+			"name" => $name,
+			"value" => $value,
+			"expire" => 0 
+	) );
 }
 
-function burn_cookie($name){
-	set_cookie(array("name"=>$name,"value"=>"","expire"=>NULL));
+function burn_cookie($name)
+{
+	set_cookie ( array (
+			"name" => $name,
+			"value" => "",
+			"expire" => NULL 
+	) );
 }

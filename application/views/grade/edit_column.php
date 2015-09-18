@@ -7,7 +7,7 @@
 <ul>
 <li><label>Category: </label><?=$assignment->category;?></li>
 <li><label>Total Points: </label><?=$assignment->points>0?$assignment->points. " Points" :"Make-Up Points";?></li>
-<li><label>Date: </label><?=format_date($assignment->date,'standard');?></li>
+<li><label>Date: </label><?=format_date($assignment->date);?></li>
 <?if($stuGroup = $this->input->cookie("stuGroup")): ?>
 <li><label>Student Group: </label><?=$stuGroup;?></li>
 <? endif;?>

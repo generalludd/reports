@@ -15,7 +15,7 @@
 			if($keys[$i] != "date_range"){
 				echo "<li>" . $keys[$i] .": <strong>" . $values[$i]. "</strong></li>";
 			}else{
-				$time_start = format_date($values[$i]["time_start"],"standard");
+				$time_start = format_date($values[$i]["time_start"]);
 				$time_end = format_timestamp($values[$i]["time_end"],FALSE);
 				echo "<li>Date Range: <strong>$time_start-$time_end</strong></li>";
 			}

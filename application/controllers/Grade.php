@@ -298,7 +298,7 @@
 				if ($cutoff_date = $this->input->get ( "cutoff_date" )) {
 					bake_cookie ( "cutoff_date", $cutoff_date );
 					$options ["cutoff_date"] =  $cutoff_date;
-					$output ["cutoff_date"] = format_date($cutoff_date,"standard");
+					$output ["cutoff_date"] = format_date($cutoff_date);
 				}
 				
 				$term = get_current_term ();

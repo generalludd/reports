@@ -44,7 +44,7 @@ foreach ( $grades as $grade ) {
 				if (($grade->points > 0 && $grade->total_points == 0) || ($grade->total_points > 0)) {
 					?>
 			<tr>
-				<td><?=format_date($grade->date,"standard");?></td>
+				<td><?=format_date($grade->date);?></td>
 				<td><?=$grade->assignment; ?></div>
 				</td>
 				<td><?=$grade->category;?></div>

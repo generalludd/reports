@@ -1,6 +1,6 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
-$date_start = $this->session->userdata("date_start");
-$date_end = $this->session->userdata("date_end");
+$date_start = get_cookie("date_start");
+$date_end = get_cookie("date_end");
 ?>
 <h5><?=$title;?></h5>
 <form id="report_search" name="report_search" action="<?=site_url("report/get_list/$report_type/$report_key");?>" method="get">
