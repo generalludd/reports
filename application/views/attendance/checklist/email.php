@@ -1,3 +1,4 @@
+<?php $startDate = date("Y-m-d");?>
 <html>
 <body>
 <h1><?php echo $subject; ?></h1>
@@ -6,7 +7,7 @@
 <p>Please verify each record</p>
 <?php foreach($records as $record): ?>
 	<p><?php echo format_name($record->stuFirst, $record->stuLast, $record->stuNickname);?>
-	<a href="<?php echo base_url("attendance/search/$record->kStudent");?>">View or Update</a></p>
+	<a href="<?php echo base_url("attendance/search/$record->kStudent?startDate=$startDate");?>">View or Update</a></p>
 	
 <?php endforeach;?>
 <?php else: ?>

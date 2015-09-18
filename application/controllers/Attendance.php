@@ -197,7 +197,7 @@ class Attendance extends MY_Controller {
 			$data ["student"] = NULL;
 		}
 		
-		$startDate = get_current_year () . "-08-01";
+		$startDate = date("Y-m-d");
 		$data['startDate'] = $startDate;
 		if ( $this->input->get ( "startDate" )) {
 			$startDate = $this->input->get("startDate");
