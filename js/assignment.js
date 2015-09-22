@@ -94,9 +94,11 @@ $(document).ready(function(){
 	
 	$(".select-student-for-grades").live("click",function(e){
 		e.preventDefault();
+		my_student = this.id.split("_")[1];
+		my_teach = $("#kTeach").val();
 		form_data = {
-				kStudent: this.id.split("_")[1],
-				kTeach: $("#kTeach").val(),
+				kStudent: my_student,
+				kTeach: my_teach,
 				term:$("#term").val(),
 				year: $("#year").val(),
 				ajax: 1
@@ -104,7 +106,7 @@ $(document).ready(function(){
 		$.ajax({
 			type:"get",
 			data: form_data,
-			url: base_url + "grade/edit",
+			url: base_url + "grade/edit/" + my_student + "/" + my_teach ,
 			success: function(data){
 				$("#mini-selector").html(data);
 			}
