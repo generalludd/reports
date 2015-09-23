@@ -32,8 +32,13 @@ $(document).ready(function(){
 			//lower school not kindergarten. 
 			$("#attendance-check .lower-school").fadeIn();
 			$("#attendance-check .middle-school").fadeOut();
+			get_teacher_menu("lower-school","kTeach-wrapper");
 			$("#humanitiesTeacher").val("");
 			$("#stuGroup").val("");
+		}else if($("#gradeStart").val() == 5 && me == 8){
+			get_teacher_menu("advisor","#kTeach-wrapper");
+			$("#attendance-check .lower-school").fadeIn();
+			$("#attendance-check .middle-school").fadeOut();
 		}else{
 			$("#attendance-check .middle-school").fadeIn();
 			$("#attendance-check .lower-school").fadeOut();

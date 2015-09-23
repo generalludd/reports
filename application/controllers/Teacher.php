@@ -208,6 +208,40 @@ class Teacher extends MY_Controller
         }
     }
 
+    function teacher_menu(){
+    	if($data = $this->input->get("data")){
+    		$data = json_decode($data);
+    	}
+    	$db_role = 2; //default to teachers
+    	if($this->input->get("db_role")){
+    		$db_role = $this->input->get("db_role");
+    	}
+    	$status = 1; //default to active users
+    	if($this->input->get("status")){
+    		$status = $this->input->get("status");
+    	}
+    	$teacher_group = "";
+    	if( $this->input->get("teacher_group")){
+    		$teacher_group =  $this->input->get("teacher_group");
+    	}
+    	
+    	
+    	$kTeach = "";
+    	if( $this->input->get("kTeach")){
+    		$kTeach =  $this->input->get("kTeach");
+    	}
+    	$settings = "";
+    	if( $this->input->get("settings")){
+    		$settings =  $this->input->get("settings");
+    	}
+    	$teachers = $this->teacher_model->get_teacher_pairs ( $db_role, $status, $teacher_group );
+    	$selections = get_keyed_pairs ( $teachers, array (
+    			"kTeach",
+    			"teacher"
+    	), TRUE );
+    	$output = form_dropdown("kTeach",$selections, $kTeach,$settings );
+    	echo $output;
+    }
     /**
      * display a filtering dialog for showing various users of the system.
      */

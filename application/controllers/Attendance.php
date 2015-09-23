@@ -182,32 +182,27 @@ class Attendance extends MY_Controller {
 	 */
 	function search($kStudent = NULL)
 	{
-		
-		
-	
 		$data ["kStudent"] = $kStudent;
-		
 		
 		// has student information been passed to this script?
 		
 		if ($kStudent) {
 			$this->load->model ( "student_model" );
 			$data ["student"] = $this->student_model->get ( $data ["kStudent"] );
-		}else{
+		} else {
 			$data ["student"] = NULL;
 		}
 		
-		$startDate = date("Y-m-d");
-		$data['startDate'] = $startDate;
-		if ( $this->input->get ( "startDate" )) {
-			$startDate = $this->input->get("startDate");
+		$startDate = date ( "Y-m-d" );
+		$data ['startDate'] = $startDate;
+		if ($this->input->get ( "startDate" )) {
+			$startDate = $this->input->get ( "startDate" );
 			$data ["startDate"] = $startDate;
-			
 		}
-		$endDate = $startDate; //assume a single date search by default
+		$endDate = $startDate; // assume a single date search by default
 		$data ["endDate"] = $endDate;
-		if ( $this->input->get ( "endDate" )) {
-			$endDate = $this->input->get("endDate");
+		if ($this->input->get ( "endDate" )) {
+			$endDate = $this->input->get ( "endDate" );
 			$data ["endDate"] = $endDate;
 		}
 		$data ["attendType"] = NULL;
@@ -223,7 +218,7 @@ class Attendance extends MY_Controller {
 		$data ['attendance'] = $this->attendance->search ( $data );
 		// @TODO add a line displaying the search query
 		
-		$data ["title"] = sprintf("Attendance Search Results: %s",format_date_range($startDate,$endDate));
+		$data ["title"] = sprintf ( "Attendance Search Results: %s", format_date_range ( $startDate, $endDate ) );
 		$data ["target"] = "attendance/list";
 		$data ["action"] = "search";
 		$this->load->view ( "page/index", $data );
@@ -247,7 +242,11 @@ class Attendance extends MY_Controller {
 			);
 			$teacher = $this->teacher->get ( $this->session->userdata ( "userID" ) );
 			$data ['teacher'] = $teacher;
-			$teachers = $this->teacher->get_teacher_pairs ( 2, 1, "lower-school" );
+			if (get_cookie ( "gradeStart" ) == 5 && get_cookie ( "gradeEnd" ) == 8) {
+				$teachers = $this->teacher->get_teacher_pairs ( 2, 1, "advisors" );
+			} else {
+				$teachers = $this->teacher->get_teacher_pairs ( 2, 1, "lower-school" );
+			}
 			$data ['teachers'] = get_keyed_pairs ( $teachers, array (
 					"kTeach",
 					"teacher" 
@@ -261,8 +260,8 @@ class Attendance extends MY_Controller {
 			}
 		} else {
 			if ($date = $this->input->get ( "date" )) {
-				$cookie_day = "";// sprintf ( "%s-", date ( "D" ) );
-				burn_cookie($cookie_day . "kTeach");
+				$cookie_day = ""; // sprintf ( "%s-", date ( "D" ) );
+				burn_cookie ( $cookie_day . "kTeach" );
 				if ($kTeach = $this->input->get ( "kTeach" )) {
 					$options ['kTeach'] = $kTeach;
 					bake_cookie ( $cookie_day . "kTeach", $kTeach );
@@ -309,21 +308,19 @@ class Attendance extends MY_Controller {
 					$student->buttons = $this->_checklist_buttons ( $date, $student->kStudent, $kTeach, get_value ( $student->attendance, "kAttendance" ) );
 				}
 				$teachClass = "";
-				if ($gradeEnd < 5 || $humanitiesTeacher) {
+				if ($gradeEnd < 5 || ($gradeStart == 5 && $gradeEnd == 8) || $humanitiesTeacher) {
 					
-					if ($gradeEnd < 5) {
+					if (($gradeStart == 5 && $gradeEnd == 8) || $gradeEnd < 5) {
 						$teacher = $this->teacher->get ( $kTeach );
-						
 					} elseif ($humanitiesTeacher) {
 						$teacher = $this->teacher->get ( $humanitiesTeacher );
-						
 					}
-					$teachClass = sprintf(", %s", $teacher->teachClass);
+					$teachClass = sprintf ( ", %s", $teacher->teachClass );
 				}
 				$data ['options'] = $options;
 				$data ["students"] = $students;
 				$data ["target"] = "attendance/checklist/list";
-				$data ["title"] = sprintf ( "Attendance Checklist for %s, Grade%s %s%s%s", format_date ( $date,"standard" ), $gradeStart != $gradeEnd ? "s" : "", format_grade_range ( $gradeStart, $gradeEnd ), $stuGroup, $teachClass );
+				$data ["title"] = sprintf ( "Attendance Checklist for %s, Grade%s %s%s%s", format_date ( $date, "standard" ), $gradeStart != $gradeEnd ? "s" : "", format_grade_range ( $gradeStart, $gradeEnd ), $stuGroup, $teachClass );
 				$this->load->view ( "page/index", $data );
 			}
 		}
@@ -360,7 +357,7 @@ class Attendance extends MY_Controller {
 	{
 		$this->load->model ( "teacher_model", "teacher" );
 		$teacher = $this->teacher->get ( $kTeach, "email,teachFirst,teachLast" );
-		$subject = sprintf ( "Attendance for %s %s, %s", $teacher->teachFirst, $teacher->teachLast, format_date($date) );
+		$subject = sprintf ( "Attendance for %s %s, %s", $teacher->teachFirst, $teacher->teachLast, format_date ( $date ) );
 		
 		$data ['subject'] = $subject;
 		$data ['records'] = $this->attendance->get_for_teacher ( $date, $kTeach );

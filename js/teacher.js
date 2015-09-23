@@ -84,7 +84,6 @@ $(document).ready(function(){
 		return false;
 	});
 	
-	
 
 	
 	
@@ -134,6 +133,19 @@ function editTeacher(myTeach) {
 	});
 	return false;
 
+}
+
+function get_teacher_menu(group,my_target){
+	form_data = {teacher_group:group,settings:"id='kTeach'"};
+	$.ajax({
+		data: form_data,
+		url: base_url + "teacher/teacher_menu",
+		type: "get",
+		success: function(menu){
+			console.log(menu);
+			$(my_target).html(menu);
+		}
+	});
 }
 
 

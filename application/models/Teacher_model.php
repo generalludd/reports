@@ -144,7 +144,7 @@ class Teacher_model extends MY_Model
         }
     }
 
-    function get_teacher_pairs ($dbRole = 2, $status = 1, $grade_range = NULL)
+    function get_teacher_pairs ($dbRole = 2, $status = 1, $teacher_group = NULL)
     {
         if ($dbRole) {
             $this->db->where('dbRole', 2);
@@ -152,16 +152,19 @@ class Teacher_model extends MY_Model
         if ($status) {
             $this->db->where('status', 1);
         }
-        if($grade_range){
-        	if($grade_range == "lower-school"){
+       if($teacher_group){
+        	if($teacher_group == "lower-school"){
         		$this->db->where_in("gradeStart",array(0,1,2,3,4));
         		$this->db->where_in("gradeEnd",array(0,1,2,3,4));
-        	}elseif($grade_range == "middle-school"){
+        	}elseif($teacher_group == "advisor"){
+        		$this->db->where("is_advisor",1);
+        	}elseif($teacher_group == "middle-school"){
         		$this->db->where_in("gradeStart",array(5,6,7,8));
         		$this->db->where_in("gradeEnd",array(5,6,7,8));
         		
         	}
         }
+
         $this->db->select("CONCAT(teachFirst,' ',teachLast) as teacher", false);
         $this->db->select('kTeach');
         $direction = "ASC";
@@ -169,6 +172,7 @@ class Teacher_model extends MY_Model
 
         $this->db->order_by($order_field, $direction);
         $this->db->from('teacher');
+        
         $query = $this->db->get()->result();
         return $query;
     }
