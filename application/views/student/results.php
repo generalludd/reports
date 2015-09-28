@@ -35,7 +35,7 @@ if(array_key_exists("grades", $criteria)){
        <li>Found Count: <strong><?=count($students);?></strong></li>
 </ul>
 <?
-$buttons[] = array("text"=>"Modify Search","title"=>"Modify Search","class"=>"button search", "href"=>site_url("/"));
+$buttons[] = array("text"=>"Modify Search","title"=>"Modify Search","class"=>"button search", "href"=>site_url("/home?refine=1"));
 $buttons[] = array("text"=>"Export List","href"=>$_SERVER['REQUEST_URI']. "&export=true","title"=>"Export this list as a comma-separated list","class"=>"button export","type"=>"a");
 echo create_button_bar($buttons);
 ?>

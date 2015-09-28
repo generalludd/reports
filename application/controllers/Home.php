@@ -11,6 +11,11 @@ class Home extends MY_Controller
 	function index()
 	{
 		$this->load->model("menu_model");
+		if($this->input->get("refine")){
+			$data['refine'] = TRUE;
+		}else{
+			$data['refine'] = FALSE;
+		}
 		$student_sort = $this->menu_model->get_pairs("student_sort");
 		$data["body_classes"] = array("front");
 		$data["student_sort"] = get_keyed_pairs($student_sort, array("value","label"));

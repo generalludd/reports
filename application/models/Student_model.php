@@ -250,7 +250,6 @@ class Student_model extends MY_Model
     	if(array_key_exists("kTeach",$options)){
     		$this->db->where("student.kTeach",$options['kTeach']);
     		$this->db->order_by("teacher.teachFirst");
-    		$this->db->select("teacher.teachClass");
     		
     	}
     	$this->db->join("teacher","student.kTeach=teacher.kTeach");
@@ -290,6 +289,7 @@ class Student_model extends MY_Model
     	
     	$this->db->select("student.*,(baseGrade+$year-baseYear) AS stuGrade",TRUE);
         $this->db->select("CONCAT(teacher.teachFirst, ' ' , teacher.teachLast) as teacherName",FALSE);
+        $this->db->select("teacher.teachClass");
         $this->db->select("CONCAT(humanitiesTeacher.teachFirst, ' ' ,humanitiesTeacher.teachLast) as humanitiesTeacher",FALSE);
         $this->db->group_by("student.kStudent");
     	$result = $this->db->get()->result();
