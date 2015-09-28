@@ -269,8 +269,13 @@ class Student_model extends MY_Model
     		$this->db->join("support", "student.kStudent = support.kStudent");
             $this->db->group_by("support.kStudent");
     	}
+    	
+    	if(array_key_exists("class_list",$options)){
+    		$this->db->order_by("teacher.gradeStart");
+    		$this->db->order_by("teacher.teachClass");
+    	}
     	$this->db->order_by("stuGrade", "ASC");
-    	 
+    	
     	if(array_key_exists("sorting",$options)){
     		if($options["sorting"] == "last_first"){
     			$this->db->order_by("student.stuLast");
@@ -293,7 +298,6 @@ class Student_model extends MY_Model
         $this->db->select("CONCAT(humanitiesTeacher.teachFirst, ' ' ,humanitiesTeacher.teachLast) as humanitiesTeacher",FALSE);
         $this->db->group_by("student.kStudent");
     	$result = $this->db->get()->result();
-    	$this->_log();
     	return $result;
     }
 
