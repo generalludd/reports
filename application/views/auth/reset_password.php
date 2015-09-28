@@ -15,7 +15,7 @@ endif;
 <form id="password-resetter" name="password-resetter" action="<?=site_url("auth/complete_reset")?>" method="post" >
 
 <div id='password_note' class='notice error-text' style="display:none"><?=$output;?></div>
-<input type="hidden" name="reset_hash" id="reset_hash" value="<?=$reset_hash;?>"/>
+<input type="hidden" name="resetHash" id="resetHash" value="<?=$resetHash;?>"/>
 <input type="hidden" name="kTeach" id="kTeach" value="<?=$kTeach;?>"/>
 <div class="reset-fields login-inputs">
 <p><label for="new_password">New Password: </label><br/>

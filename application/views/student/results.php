@@ -25,6 +25,13 @@ if(array_key_exists("grades", $criteria)){
 	<? if(array_key_exists("stuGroup",$criteria)):?>
 	    <li>Specialist Group:<strong> <?=$criteria["stuGroup"];?></strong>
     <?endif;?>
+    
+    <?php if(array_key_exists("kTeach",$criteria)):?>
+    <li>Classroom Teacher or Advisor: <strong><?php echo $criteria['teacher']; ?></strong></li>
+    <?php endif; ?>
+        <?php if(array_key_exists("humanitiesTeacher",$criteria)):?>
+    <li>Humanities Teacher: <strong><?php echo $criteria['humanitiesName'];?></strong></li>
+    <?php endif; ?>
        <li>Found Count: <strong><?=count($students);?></strong></li>
 </ul>
 <?

@@ -135,10 +135,8 @@ class Grade_model extends MY_Model
             $this->load->model("student_model", "student");
 
             if (get_value($subjects[0], "subject") != "Humanities") {
-                $students = $this->student->advanced_find($year,
-                        array(
-                                $grade_start,
-                                $grade_end
+                $students = $this->student->get_all($year,
+                        array("grades"=>array($grade_start,$grade_end),
                         ));
             } else {
 

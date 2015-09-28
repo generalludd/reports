@@ -46,14 +46,14 @@ class admin extends MY_Controller{
 				$data['dbRole'] = $teacher->dbRole;
 				$data['userID'] = $teacher->kTeach;
 				//set the number of unread reports for advisors as is done with standard login.
-				if($teacher->is_advisor == 1){
+				if($teacher->isAdvisor == 1){
 					$this->load->model("student_report_model","report");
 					$unread_reports = $this->report->get_count($teacher->kTeach);
 					bake_cookie("unread_reports",$unread_reports);
 				}
 				bake_cookie("gradeStart",$teacher->gradeStart);
 				bake_cookie("gradeEnd",$teacher->gradeEnd);
-				bake_cookie("is_advisor",$teacher->is_advisor);
+				bake_cookie("isAdvisor",$teacher->isAdvisor);
 				if(get_value($teacher, "submits_report_card",FALSE)){
 					bake_cookie("submits_report_card", $teacher->submits_report_card);
 				}

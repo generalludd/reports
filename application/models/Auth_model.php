@@ -45,7 +45,7 @@ class Auth_model extends CI_Model
 	{
 		$this->db->where("username", $username);
 		$this->db->where("pwd", $this->encrypt($password));
-		$this->db->select("teacher.kTeach as kTeach, dbRole,gradeStart,gradeEnd,is_advisor");
+		$this->db->select("teacher.kTeach as kTeach, dbRole,gradeStart,gradeEnd,isAdvisor");
 		$this->db->from("teacher");
 		$query = $this->db->get();
 		$count = $query->num_rows();
@@ -148,10 +148,10 @@ class Auth_model extends CI_Model
 	 * create a 32bit md5 hash of the current date/time that can be used in a reset
 	 * uri string to verify the user has has requested a change for a lost password.
 	 */
-	function set_reset_hash($kTeach)
+	function set_resetHash($kTeach)
 	{
 		$hash = $this->encrypt(now());
-		$data["reset_hash"] = $hash;
+		$data["resetHash"] = $hash;
 		$this->db->where("kTeach", $kTeach);
 		$this->db->update("teacher",$data);
 		return $hash;
@@ -159,18 +159,18 @@ class Auth_model extends CI_Model
 
 	/**
 	 * @param int $kTeach
-	 * @param 32bit varchar $reset_hash
+	 * @param 32bit varchar $resetHash
 	 * @param string $password
 	 * @return boolean
 	 * using the hash from a uri as validation, this allows a user to reset a lost password
 	 */
-	function reset_password($kTeach, $reset_hash, $password)
+	function reset_password($kTeach, $resetHash, $password)
 	{
 		$this->db->where("kTeach", $kTeach);
-		$this->db->where("reset_hash", $reset_hash);
-		$this->db->where("`reset_hash` IS NOT NULL");
+		$this->db->where("resetHash", $resetHash);
+		$this->db->where("`resetHash` IS NOT NULL");
 		$data["pwd"] = $this->encrypt($password);
-		$data["reset_hash"] = "";
+		$data["resetHash"] = "";
 		$this->db->update("teacher", $data);
 		$username = $this->get_username($kTeach);
 		return $this->validate($username, $password);

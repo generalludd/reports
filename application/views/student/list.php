@@ -2,6 +2,7 @@
 
 $current_grade = NULL;
 $current_teacher = NULL;
+$humanities_teacher = NULL;
 $default_row_style = array("student-row","row");
 ?>
 <div class='student_list'>
@@ -29,17 +30,28 @@ $default_row_style = array("student-row","row");
 		}
 	}
 	$name = format_name($student->stuFirst,$student->stuLast,$student->stuNickname);
-	if(get_value($student,"teachFirst",FALSE)):
-	if($current_teacher != $student->kTeach):
+	if(array_key_exists("kTeach",$criteria)):
+	if($current_teacher != $student->teacherName):
 	?>
 	<h3 class='teacher_row'>
-		<?="Students of $student->teachFirst $student->teachLast"?>
+		<?="Students of $student->teacherName"?>
 	</h3>
 
 	<?
-	$current_teacher = $student->kTeach;
+	$current_teacher = $student->teacherName;
 	endif;
 	endif;
+	if(array_key_exists("humanitiesTeacher",$criteria)):
+	if($humanities_teacher != $student->humanitiesTeacher):
+	?>
+		<h3 class='teacher_row'>
+			<?="$student->humanitiesTeacher's Humanities Class"?>
+		</h3>
+	
+		<?
+		$humanities_teacher = $student->humanitiesTeacher;
+		endif;
+		endif;
 	if($current_grade != $stuGrade): ?>
 
 	<h4 class='grade_row'>

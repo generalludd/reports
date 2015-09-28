@@ -207,57 +207,92 @@ class Student_model extends MY_Model
         return $result;
     }
 
+    
     /**
-     *
-     *
-     *
-     *
-     * Find students based on a range of parameters
-     *
+     * 
      * @param int $year
-     * @param array $grades
-     * @param boolean $hasNeeds
-     * @param boolean $includeFormerStudents
+     * @param array $options
+     * options include 
+     * grades
+     * includeFormerStudents
+     * stuGroup (middle school)
+     * kTeach (advisor or classroom teacher)
+     * humanitiesTeacher (kTeach)
+     * hasNeeds (has special needs/accommodations)
+     * sorting (first_last or last_first);
+     * 
      */
-    function advanced_find ($year, $grades = array(), $hasNeeds = 0, $includeFormerStudents = 0, $sorting = NULL, $stuGroup = NULL)
-    {
-        $this->db->select("student.*,(baseGrade+$year-baseYear) AS stuGrade",TRUE);
-        if (! empty($grades)) {
-            $this->db->where_in("`baseGrade`+$year-`baseYear`", $grades,FALSE);
-        } else {
-            $this->db->where("`baseGrade` + $year - `baseYear` BETWEEN 0 AND 8",FALSE,FALSE);
-        }
-        // if (! $includeFormerStudents) {
-        // $this->db->where ( "`baseGrade`+$year-`baseYear` < 9" );
-        // }
-        if ($includeFormerStudents == 1) {
-            $this->db->where_in("isEnrolled", array(
-                    0,
-                    1
-            ));
-        } else {
-            $this->db->where("(`isEnrolled` = 1 OR `isGraduate` = 1)", NULL, FALSE);
-        }
+    
+    function get_all($year, $options = array()){
+    	
+    	
+    	$this->db->from("student");
+    	 
+    	if (array_key_exists("grades",$options)) {
+    		$this->db->where_in("`baseGrade`+$year-`baseYear`", $options["grades"],FALSE);
+    	} else {
+    		$this->db->where("`baseGrade` + $year - `baseYear` BETWEEN 0 AND 8",FALSE,FALSE);
+    	}
+    	
+    	if (array_key_exists("includeFormerStudents",$options) && $options["includeFormerStudents"] == 1) {
+    		$this->db->where_in("isEnrolled", array(
+    				0,
+    				1
+    		));
+    	} else {
+    		$this->db->where("(`isEnrolled` = 1 OR `isGraduate` = 1)", NULL, FALSE);
+    	}
+    	
+    	if(array_key_exists("stuGroup",$options)){
+    		$this->db->where("stuGroup",$options["stuGroup"]);
+    	}
+    	
+    	if(array_key_exists("kTeach",$options)){
+    		$this->db->where("student.kTeach",$options['kTeach']);
+    		$this->db->order_by("teacher.teachFirst");
+    	}
+    	$this->db->join("teacher","student.kTeach=teacher.kTeach");
+    	 
 
-        if ($stuGroup) {
-            $this->db->where("stuGroup", $stuGroup);
-        }
-
-        if ($hasNeeds == 1) {
-            $this->db->join("support", "student.kStudent = support.kStudent");
+    	if(array_key_exists("humanitiesTeacher",$options)){
+    		$this->db->where("student.humanitiesTeacher",$options['humanitiesTeacher']);
+    		$this->db->order_by("humanitiesTeacher.teachFirst");
+    		$humanitiesTeacher = $options['humanitiesTeacher'];
+    		$this->db->join("teacher as humanitiesTeacher","student.humanitiesTeacher = teacher.kTeach AND humanitiesTeacher.kTeach = $humanitiesTeacher");
+    		
+    	}else{
+    		$this->db->join("teacher as humanitiesTeacher","student.humanitiesTeacher = teacher.kTeach","LEFT");
+    	}
+    	
+    	if(array_key_exists("hasNeeds",$options)){
+    		$this->db->join("support", "student.kStudent = support.kStudent");
             $this->db->group_by("support.kStudent");
-        }
-
-        $this->db->from("student");
-        $this->db->order_by("stuGrade", "ASC");
-
-        if ($sorting == "first_last") {
-            $this->db->order_by("stuFirst,stuLast", "ASC");
-        } else {
-            $this->db->order_by("stuLast,stuFirst", "ASC");
-        }
-        $result = $this->db->get()->result();
-        return $result;
+    	}
+    	$this->db->order_by("stuGrade", "ASC");
+    	 
+    	if(array_key_exists("sorting",$options)){
+    		if($options["sorting"] == "last_first"){
+    			$this->db->order_by("student.stuLast");
+    			$this->db->order_by("student.stuNickname");
+    			$this->db->order_by("student.stuFirst");
+    		}elseif($options["sorting"] == "first_last"){
+    			$this->db->order_by("student.stuNickname");
+    			$this->db->order_by("student.stuFirst");
+    			$this->db->order_by("student.stuLast");
+    		}
+    	}else{//by default search by first name/last name
+    		$this->db->order_by("student.stuNickname");
+    		$this->db->order_by("student.stuFirst");
+    		$this->db->order_by("student.stuLast");
+    	}
+    	
+    	$this->db->select("student.*,(baseGrade+$year-baseYear) AS stuGrade",TRUE);
+        $this->db->select("CONCAT(teacher.teachFirst, ' ' , teacher.teachLast) as teacherName",FALSE);
+        $this->db->select("CONCAT(humanitiesTeacher.teachFirst, ' ' ,humanitiesTeacher.teachLast) as humanitiesTeacher",FALSE);
+        $this->db->group_by("student.kStudent");
+    	$result = $this->db->get()->result();
+    	$this->_log();
+    	return $result;
     }
 
 

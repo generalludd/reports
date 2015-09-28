@@ -45,7 +45,7 @@ class Auth extends CI_Controller
 				//useful cookies for enhanced user experience
 				bake_cookie("gradeStart", $result->gradeStart);
 				bake_cookie("gradeEnd", $result->gradeEnd);
-				bake_cookie("isAdvisor",$result->is_advisor);
+				bake_cookie("isAdvisor",$result->isAdvisor);
 				if(get_value($result, "submits_report_card",FALSE)){
 					bake_cookie("submits_report_card", $result->submits_report_card);
 				}
@@ -57,7 +57,7 @@ class Auth extends CI_Controller
 				set_user_cookies($preferences);
 				bake_cookie("student_sort_order",$this->preference->get($result->kTeach,"student_sort_order"));
 				//if the teacher is an advisor, get the number of unread reports;
-				if($result->is_advisor == 1){
+				if($result->isAdvisor == 1){
 					$this->load->model("student_report_model","report");
 					$unread_reports =  $this->report->get_count($result->kTeach);
 					$data["unread_reports"] = $unread_reports;
@@ -153,7 +153,7 @@ class Auth extends CI_Controller
 		$email = trim($this->input->get_post("email"));
 		$kTeach = $this->auth_model->email_exists($email);
 		if($kTeach){
-			$hash = $this->auth_model->set_reset_hash($kTeach);
+			$hash = $this->auth_model->set_resetHash($kTeach);
 			$link = site_url("auth/show_reset/$kTeach/$hash");
 			$this->email->from("technology@fsmn.org");
 			$this->email->to($email);
@@ -175,9 +175,9 @@ class Auth extends CI_Controller
 	function show_reset($errors = NULL)
 	{
 		$data["kTeach"] = $this->uri->segment(3);
-		$data["reset_hash"] = $this->uri->segment(4);
+		$data["resetHash"] = $this->uri->segment(4);
 		$data["errors"] = array($errors);
-		if($data["kTeach"] != "" && $data["reset_hash"] != ""){
+		if($data["kTeach"] != "" && $data["resetHash"] != ""){
 			$data["target"] = "auth/reset_password";
 			$this->load->view("auth/index", $data);
 		}else{
@@ -192,10 +192,10 @@ class Auth extends CI_Controller
 	function complete_reset()
 	{
 		$kTeach = $this->input->post("kTeach");
-		$reset_hash = $this->input->post("reset_hash");
+		$resetHash = $this->input->post("resetHash");
 		$password = $this->input->post("new_password");
 		$check_password = $this->input->post("check_password");
-		$result = $this->auth_model->reset_password($kTeach, $reset_hash, $password);
+		$result = $this->auth_model->reset_password($kTeach, $resetHash, $password);
 		if($result){
 			$this->index("","You can now log in with your new password");
 		}else{

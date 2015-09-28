@@ -119,7 +119,7 @@ class Report extends MY_Controller
 
 		$kReport = $this->input->post("kReport");
 		$this->report->update($kReport);
-		if($this->input->cookie("is_advisor") == 1){
+		if($this->input->cookie("isAdvisor") == 1){
 			$this->load->model("student_report_model","report");
 			$userID = $this->session->userdata("userID");
 			$unread_reports = $this->report->get_count($userID);
@@ -203,13 +203,13 @@ class Report extends MY_Controller
 					break;
 				case "teacher":
 					$this->load->model("teacher_model","teacher");
-					$person = $this->teacher->get($key,"teachFirst,teachLast,dbRole,is_advisor,gradeStart,gradeEnd,kTeach");
+					$person = $this->teacher->get($key,"teachFirst,teachLast,dbRole,isAdvisor,gradeStart,gradeEnd,kTeach");
 					$title = sprintf("by %s %s", $person->teachFirst,$person->teachLast);
 
 					break;
 				case "advisor":
 					$this->load->model("teacher_model","teacher");
-					$person = $this->teacher->get($key,"teachFirst as advisorFirst,teachLast as advisorLast,dbRole,is_advisor,gradeStart,gradeEnd,kTeach");
+					$person = $this->teacher->get($key,"teachFirst as advisorFirst,teachLast as advisorLast,dbRole,isAdvisor,gradeStart,gradeEnd,kTeach");
 					$title = sprintf("to %s %s",$person->advisorFirst,$person->advisorLast);
 					break;
 			}
