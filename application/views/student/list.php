@@ -34,7 +34,7 @@ $default_row_style = array("student-row","row");
 	if($current_teacher != $student->teacherName):
 	?>
 	<h3 class='teacher_row'>
-		<?="Students of $student->teacherName"?>
+		<?="Students of $student->teacherName ($student->teachClass)";?>
 	</h3>
 
 	<?

@@ -288,6 +288,7 @@ class Student_model extends MY_Model
     	
     	$this->db->select("student.*,(baseGrade+$year-baseYear) AS stuGrade",TRUE);
         $this->db->select("CONCAT(teacher.teachFirst, ' ' , teacher.teachLast) as teacherName",FALSE);
+        $this->db->select("teacher.teachClass");
         $this->db->select("CONCAT(humanitiesTeacher.teachFirst, ' ' ,humanitiesTeacher.teachLast) as humanitiesTeacher",FALSE);
         $this->db->group_by("student.kStudent");
     	$result = $this->db->get()->result();

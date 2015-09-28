@@ -1,7 +1,7 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 
 $filename = "student_export.csv";
-$header = "First Name,Nickname,Last Name,Gender,Birthday,Age,Current Grade,Enrollment Grade,Enrollment Year,MS-Group,Classroom Teacher/Advisor,Humanities Teacher,Email,Email Active";
+$header = "First Name,Nickname,Last Name,Gender,Birthday,Age,Current Grade,Enrollment Grade,Enrollment Year,Classroom,MS-Group,Classroom Teacher/Advisor,Humanities Teacher,Email,Email Active";
 if($this->session->userdata("userID") == 1000){
 	$header .= ",Email Password";
 }
@@ -16,6 +16,7 @@ foreach($students as $student){
 	$line[] = format_grade($student->stuGrade);
 	$line[] = format_grade($student->baseGrade);
 	$line[] = $student->baseYear;
+	$line[] = $student->teachClass;
 	$line[] = $student->stuGroup;
 	$line[]= $student->teacherName;
 	$line[] = $student->humanitiesTeacher;
