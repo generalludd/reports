@@ -263,7 +263,7 @@ class Student_model extends MY_Model
     		$this->db->join("teacher as humanitiesTeacher","student.humanitiesTeacher = humanitiesTeacher.kTeach");
     		
     	}else{
-    		$this->db->join("teacher as humanitiesTeacher","student.humanitiesTeacher = teacher.kTeach","LEFT");
+    		$this->db->join("teacher as humanitiesTeacher","student.humanitiesTeacher = humanitiesTeacher.kTeach","LEFT");
     	}
     	
     	
