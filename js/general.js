@@ -80,13 +80,6 @@
 				}
 			}//end function(event)
 		);//end click
-
-	 
-	$('.home').live('click',
-		function(event){
-			document.location = base_url;
-		}//end function(event);
-	);//end home.click
 	
 	$('.submit_feedback').live('click',function(event){
 		$.get('ajax.switch.php',{target:'feedback'},function(data){
