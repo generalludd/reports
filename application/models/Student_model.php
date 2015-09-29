@@ -247,23 +247,25 @@ class Student_model extends MY_Model
     		$this->db->where("stuGroup",$options["stuGroup"]);
     	}
     	
-    	if(array_key_exists("kTeach",$options)){
+    	if(array_key_exists("kTeach",$options) && !empty($options['kTeach'])){
     		$this->db->where("student.kTeach",$options['kTeach']);
     		$this->db->order_by("teacher.teachFirst");
-    		
+    		 
+    		 
     	}
+    	
     	$this->db->join("teacher","student.kTeach=teacher.kTeach");
     	 
-
     	if(array_key_exists("humanitiesTeacher",$options)){
     		$this->db->where("student.humanitiesTeacher",$options['humanitiesTeacher']);
     		$this->db->order_by("humanitiesTeacher.teachFirst");
     		$humanitiesTeacher = $options['humanitiesTeacher'];
-    		$this->db->join("teacher as humanitiesTeacher","student.humanitiesTeacher = teacher.kTeach AND humanitiesTeacher.kTeach = $humanitiesTeacher");
+    		$this->db->join("teacher as humanitiesTeacher","student.humanitiesTeacher = humanitiesTeacher.kTeach");
     		
     	}else{
     		$this->db->join("teacher as humanitiesTeacher","student.humanitiesTeacher = teacher.kTeach","LEFT");
     	}
+    	
     	
     	if(array_key_exists("hasNeeds",$options)){
     		$this->db->join("support", "student.kStudent = support.kStudent");
@@ -296,8 +298,10 @@ class Student_model extends MY_Model
         $this->db->select("CONCAT(teacher.teachFirst, ' ' , teacher.teachLast) as teacherName",FALSE);
         $this->db->select("teacher.teachClass");
         $this->db->select("CONCAT(humanitiesTeacher.teachFirst, ' ' ,humanitiesTeacher.teachLast) as humanitiesTeacher",FALSE);
+        $this->db->select("humanitiesTeacher.teachClass");
         $this->db->group_by("student.kStudent");
     	$result = $this->db->get()->result();
+    	$this->_log();
     	return $result;
     }
 
