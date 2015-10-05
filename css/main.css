@@ -312,11 +312,14 @@ a, .button {
 }
 
 .unread {
-	margin-left: 5px;
-	border-radius: 5px;
-	padding: 1px 3px;
-	border: 1px solid #000;
-	font-weight: bold;
+    margin-left: 5px;
+    border-radius: 100%;
+    padding: 1px 3px;
+    border: none;
+    font-weight: bold;
+    width: 1em;
+    display: inline-block;
+    box-shadow: 1px 1px 3px #000 inset;
 }
 
 .image_button {
