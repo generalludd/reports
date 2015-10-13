@@ -1,10 +1,14 @@
 <?php
-
+$today = date("Y-m-d");
+if($today < MID_YEAR){
+	$start_date = YEAR_START;
+}else{
+	$start_date = MID_YEAR;
+}
 $buttons[] = array("selection" => "student/[A-z]", "href" => site_url("student/view/$kStudent"), "text"=>"Student Info");
 
 $buttons[] =array("selection" => "narrative", "href"=>site_url("narrative/student_list/$kStudent"), "text"=>"Narratives");
-
-$buttons[] = array("selection" => "attendance", "href"=>  site_url("attendance/search/$kStudent"), "text" => "Attendance" );
+$buttons[] = array("selection" => "attendance", "href"=>  site_url("attendance/search/$kStudent?startDate=$start_date&endDate=$today"), "text" => "Attendance" );
 
 $buttons[] = array("selection"=>"attendance","href"=>site_url("attendance/create/$student->kStudent"),"class"=>"button dialog new","text"=>"Add Attendance");
 

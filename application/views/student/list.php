@@ -73,9 +73,15 @@ $default_row_style = array("student-row","row");
 			<? endif;?>
 		</div>
 		<?
+		$today = date("Y-m-d");
+		if($today < SECOND_TERM){
+			$start_date = FIRST_TERM;
+		}else{
+			$start_date = SECOND_TERM;
+		}
 		$buttons = array();
 		$buttons[] = array("selection"=>"narrative", "href" => site_url("narrative/student_list/$student->kStudent"), "class" => "button", "text" =>"Narratives");
-		$buttons[] = array("selection" => "attendance", "href" => site_url("attendance/search/$student->kStudent"), "class" => "button", "text" => "Attendance" );
+		$buttons[] = array("selection" => "attendance", "href" => site_url("attendance/search/$student->kStudent?startDate=$start_date&endDate=$today"), "class" => "button", "text" => "Attendance" );
 		$buttons[] = array("selection"=>"attendance","href"=>site_url("attendance/create/$student->kStudent"),"class"=>"button dialog new","text"=>"Add Attendance");
 		$buttons[] = array("selection" => "support","href" => site_url("support/list_all/$student->kStudent"), "class" => "button", "text" => "Learning Support");
 		if($stuGrade >=5) {
