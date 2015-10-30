@@ -51,23 +51,9 @@ function format_date_range($date_one, $date_two = NULL)
 
 function format_timestamp($timeStamp, $include_time = TRUE)
 {
-	$output = $timeStamp;
-	$pattern = $pattern = '/^[0-9]{4}\-[0-9]{2}\-[0-9]{2}\ [0-9]{2}\:[0-9]{2}\:[0-9]{2}$/';
-	if (preg_match ( $pattern, $timeStamp )) {
-		$items = explode ( " ", $timeStamp );
-		$date = format_date ( $items [0], 'standard' );
-		$time = "";
-		if ($include_time) {
-			$time = $items [1];
-			
-			if (count ( $items ) > 2) {
-				$time .= " " . $items [2];
-			}
-			$time = ", " . format_time ( $time );
-		}
-		$output = "$date$time";
-	}
+	$output = date("m-d-Y g:i:s a",strtotime($timeStamp));
 	return $output;
+	
 }
 
 function get_value($object, $item, $default = null)
