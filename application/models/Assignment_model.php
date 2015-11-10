@@ -210,8 +210,8 @@ class Assignment_model extends MY_Model {
 		if (array_key_exists ( "grade_range", $options )) {
 			$gradeStart = $options ["grade_range"] ["gradeStart"];
 			$gradeEnd = $options ["grade_range"] ["gradeEnd"];
-			$this->db->where ( "assignment.gradeStart", $gradeStart );
-			$this->db->where ( "assignment.gradeEnd", $gradeEnd );
+			$this->db->where ( "assignment.gradeStart>=", $gradeStart );
+			$this->db->where ( "assignment.gradeEnd<=", $gradeEnd );
 		}
 		
 		// $this->db->where("assignment.gradeStart = category.gradeStart");
@@ -234,6 +234,7 @@ class Assignment_model extends MY_Model {
 		$this->db->order_by ( "assignment.kAssignment" );
 		$this->db->order_by ( "assignment.kCategory" );
 		$result = $this->db->get ()->result ();
+		$this->_log();
 		return $result;
 	}
 

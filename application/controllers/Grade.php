@@ -314,6 +314,8 @@
 				$output ["year"] = $year;
 				$student = $this->student->get ( $kStudent, "stuNickname,stuLast" );
 				
+				//if there's a subject submitted, then use that, otherwise get all the subjects
+				//the student is registered for
 				if ($subject = $this->input->get ( "subject" )) {
 					$array = array (
 							"subject" => $subject 
@@ -322,8 +324,8 @@
 				} else {
 					$subjects = $this->grade->get_subjects ( $kStudent, $term, $year );
 				}
-				$data ["target"] = "grade/report_card";
 				
+				$data ["target"] = "grade/report_card";
 				$data ["kStudent"] = $kStudent;
 				$data ["student"] = $student;
 				$output ["student_name"] = format_name ( $student->stuNickname, $student->stuLast );
