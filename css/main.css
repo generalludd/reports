@@ -317,7 +317,7 @@ a, .button {
     padding: 1px 3px;
     border: none;
     font-weight: bold;
-    width: 1em;
+    width: auto;
     display: inline-block;
     box-shadow: 1px 1px 3px #000 inset;
 }

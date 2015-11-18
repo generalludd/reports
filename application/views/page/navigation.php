@@ -43,7 +43,7 @@ if($isAdvisor){
 		$buttons[] = array("selection" => "assignment", "text" => "Grades","class"=> array("button","dialog"),"id" =>"sa_$userID","title" => "Search for current grade charts", "href"=>site_url("assignment/search/$userID"));
 	}
 
-	$buttons[] = array("selection" => "student", "text" => "List Students", "href" => site_url("student/teacher_student_list/$userID"));
+	$buttons[] = array("selection" => "student", "text" => "List Students", "href" => site_url("student/search?kTeach=$userID&year=". get_current_year()));
 }
 print create_button_bar($buttons);
 
