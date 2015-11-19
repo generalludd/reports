@@ -148,10 +148,23 @@ class Attendance_model extends MY_Model {
 
 	function search($options)
 	{
-		if (key_exists ( "startDate", $options ) && key_exists ( "endDate", $options )) {
-			$startDate = $options ["startDate"];
-			$endDate = $options ["endDate"];
-			$this->db->where ( "attendDate BETWEEN '$startDate' AND '$endDate'" );
+		if (key_exists ( "startDate", $options ) || key_exists ( "endDate", $options )) {
+			$startDate = FALSE;
+			$endDate = FALSE;
+			if (array_key_exists ( "startDate", $options )) {
+				$startDate = $options ["startDate"];
+			}
+			if (array_key_exists ( "endDate", $options )) {
+				$endDate = $options ["endDate"];
+			}
+			if ($startDate && ! $endDate) {
+				$this->db->where ( 'attendDate >=', $startDate );
+			} elseif ($endDate && ! $startDate) {
+				$this->db->where ( 'attendDate <=', $endDate );
+			} elseif ($startDate && $endDate) {
+				$this->db->where ( "attendDate BETWEEN '$startDate' AND '$endDate'" );
+			}
+			
 			if (key_exists ( "attendType", $options )) {
 				if (! empty ( $options ["attendType"] )) {
 					$this->db->where ( "attendType", $options ["attendType"] );
@@ -268,24 +281,46 @@ class Attendance_model extends MY_Model {
 		$summary ["tardy"] = $tardy;
 		return $summary;
 	}
-	
-	function get_truants($start_date = YEAR_START, $threshold = 5){
-		$this->db->from("student_attendance");
-		$this->db->select("COUNT(attendType) AS total",FALSE);
-		$this->db->select("student_attendance.kStudent");
-		$this->db->join("student","student.kStudent = student_attendance.kStudent");
-		$this->db->select("student.stuFirst, student.stuLast, student.stuNickname");
-		$this->db->where("attendDate >=",$start_date);
-		$this->db->group_by("student_attendance.kStudent");
-		$result = $this->db->get()->result();
-		$this->load->model("student_model","student");
-		$output = array();
-		foreach($result as $truancy){
-			if($truancy->total > $threshold){
-				 $output[] = $truancy;
+
+	function check_truancy($kStudent,$subtype = FALSE)
+	{
+		$start_date = get_term_start();
+		$this->db->from ( "student_attendance" );
+		$this->db->where ( "student_attendance.kStudent", $kStudent );
+		$this->db->where ( "student_attendance.attendDate >=", $start_date );
+		$this->db->where_in ( "student_attendance.attendType", array (
+				'Absent',
+				'Tardy' 
+		) );
+		if($subtype){
+			$this->db->where("student_attendance.attendSubtype",$subtype);
+		}
+		$this->db->join ( "student", "student.kStudent=student_attendance.kStudent" );
+		$this->db->select ( "COUNT(`attendType`) AS total", FALSE );
+		$this->db->select ( "student.*" );
+		$this->db->order_by ( "student_attendance.attendDate" );
+		$result = $this->db->get ()->row ();
+		$this->_log ("message");
+		return $result;
+	}
+
+	function get_truants($start_date = YEAR_START, $threshold = TRUANCY_THRESHOLD)
+	{
+		$this->db->from ( "student_attendance" );
+		$this->db->select ( "COUNT(attendType) AS total", FALSE );
+		$this->db->select ( "student_attendance.kStudent" );
+		$this->db->join ( "student", "student.kStudent = student_attendance.kStudent" );
+		$this->db->select ( "student.stuFirst, student.stuLast, student.stuNickname" );
+		$this->db->where ( "attendDate >=", $start_date );
+		$this->db->group_by ( "student_attendance.kStudent" );
+		$result = $this->db->get ()->result ();
+		$output = array ();
+		foreach ( $result as $truancy ) {
+			if ($truancy->total > $threshold) {
+				$output [] = $truancy;
 			}
 		}
-		$this->_log();
+		$this->_log ();
 		return $output;
 	}
 }

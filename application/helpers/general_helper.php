@@ -9,11 +9,14 @@ function mysql_timestamp()
 
 /**
  * @function format_date
- * @params $date date string
- * @params $format string
- * description: this shouldn't be in this file, but I didn't want to create a new file with general formatting tools yet.
- * idea courtesy:
- * http://stackoverflow.com/questions/13194322/php-regex-to-check-date-is-in-yyyy-mm-dd-format
+ * 
+ * @param s $date
+ *        	date string
+ * @param s $format
+ *        	string
+ *        	description: this shouldn't be in this file, but I didn't want to create a new file with general formatting tools yet.
+ *        	idea courtesy:
+ *        	http://stackoverflow.com/questions/13194322/php-regex-to-check-date-is-in-yyyy-mm-dd-format
  */
 function format_date($date, $format = NULL)
 {
@@ -23,7 +26,7 @@ function format_date($date, $format = NULL)
 		$new_date = DateTime::createFromFormat ( 'm-d-Y', $date );
 		if ($new_date && $format == "mysql") {
 			$output = $new_date->format ( 'Y-m-d' );
-		} else{ // assume standard date format
+		} else { // assume standard date format
 			$new_date = DateTime::createFromFormat ( 'Y-m-d', $date );
 			if ($new_date) {
 				$output = $new_date->format ( 'm/d/Y' );
@@ -34,26 +37,32 @@ function format_date($date, $format = NULL)
 }
 
 /**
- * Format a range of two dates, if the second is null or the same as the first, show just one date. 
- * @param unknown $date_one
- * @param string $date_two
+ * Format a range of two dates, if the second is null or the same as the first, show just one date.
+ *
+ * @param unknown $date_one        	
+ * @param string $date_two        	
  * @return unknown
  */
 function format_date_range($date_one, $date_two = NULL)
 {
 	if ($date_one == $date_two || $date_two == NULL) {
-		$output = format_date ( $date_one );
+		if ($date_one == YEAR_START) {
+			$output = "Since the start of school.";
+		} elseif ($date_one == MID_YEAR) {
+			$output = "Since the start of the current term.";
+		} else {
+			$output = format_date ( $date_one );
+		}
 	} else {
-		$output = sprintf ( "%s to %s", format_date($date_one), format_date ( $date_two ) );
+		$output = sprintf ( "%s to %s", format_date ( $date_one ), format_date ( $date_two ) );
 	}
 	return $output;
 }
 
 function format_timestamp($timeStamp, $include_time = TRUE)
 {
-	$output = date("m-d-Y g:i:s a",strtotime($timeStamp));
+	$output = date ( "m-d-Y g:i:s a", strtotime ( $timeStamp ) );
 	return $output;
-	
 }
 
 function get_value($object, $item, $default = null)
@@ -173,6 +182,13 @@ function get_term_menu($id, $currentTerm = null, $initial_blank = FALSE, $option
 	}
 	$select [] = "</select>";
 	$output = join ( "\n", $select );
+	return $output;
+}
+
+function get_term_start($current_term = FALSE)
+{
+	$current_term || $current_term = get_current_term ();
+	$output = $current_term == "Mid-Year"?YEAR_START:MID_YEAR;
 	return $output;
 }
 

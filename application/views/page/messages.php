@@ -8,3 +8,6 @@
 <?php if($this->session->flashdata("warning")):?>
 <div class="warning"><?=$this->session->flashdata("warning");?></div>
 <?php endif?>
+<?php if($this->session->flashdata("log")):?>
+<div class="warning"><?=$this->session->flashdata("log");?></div>
+<?php endif?>

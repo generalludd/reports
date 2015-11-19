@@ -26,7 +26,9 @@ if ($action == "search") {
 	$search_fieldset = "<fieldset class='search_fieldset no-print'>";
 	$search_fieldset .= "<legend>Search Parameters</legend><ul>";
 	$search_fieldset .= $search_parameters;
+
 	$search_fieldset .= "</ul>$search_button</fieldset>";
+
 }
 
 
@@ -38,15 +40,19 @@ if ($this->session->userdata ( "dbRole" ) == 1) :
 
 
 endif;
-if($kStudent){
-	print create_button_bar(array(array("selection"=>"attendance","href"=>site_url("attendance/create/$student->kStudent"),"class"=>"button dialog new","text"=>"Add Attendance")));
-}
+
 $current_student = NULL;
 if (! empty ( $attendance )) :
 	
 	?>
+<?php if($kStudent):?>
 
-<table class='attendance'>
+<?php 	print create_button_bar(array(array("selection"=>"attendance","href"=>site_url("attendance/create/$student->kStudent"),"class"=>"button dialog new","text"=>"Add Attendance")));?>
+<h4>Attendance Summary</h4>
+<p>Days Absent: <strong><?php echo $summary['absent'];?></strong>, Days Tardy: <strong><?php echo $summary['tardy'];?></strong></p>
+<?php endif; ?>
+
+<table class='attendance' style='clear:both;'>
 	<thead>
 		<tr>
 			<th class='a-button no-print'></th>

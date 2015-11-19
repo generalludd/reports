@@ -103,10 +103,19 @@ class Attendance extends MY_Controller {
 			$kAttendance = $this->attendance->insert ();
 			$error = FALSE;
 			if (! $kAttendance) {
-				$error = "This student already has an attendance record for " . $this->input->post ( "attendDate" );
+				$error = "This student already has an attendance record for " . format_date ( $this->input->post ( "attendDate" ) );
+				$this->session->set_flashdata ( "warning", $error );
+			} else {
+				$subtype = $this->input->post ( "attendSubtype" );
+				if ($subtype && $subtype == "Unexcused") {
+					$truancy = $this->attendance->check_truancy ( $kStudent, "Unexcused" );
+				} else {
+					$subtype = FALSE;
+					$truancy = $this->attendance->check_truancy ( $kStudent );
+				}
+				$this->truancy_notification ( $truancy, $subtype );
 			}
-			$this->session->set_flashdata ( "warning", $error );
-			redirect ( "attendance/search/$kStudent" );
+			redirect ( "attendance/search/$kStudent?showAll=1" );
 		}
 	}
 
@@ -123,7 +132,7 @@ class Attendance extends MY_Controller {
 			$this->attendance->update ( $kAttendance );
 		}
 		$kStudent = $this->input->post ( "kStudent" );
-		redirect ( "attendance/search/$kStudent" );
+		redirect ( "attendance/search/$kStudent?showAll=1" );
 	}
 
 	/**
@@ -192,14 +201,16 @@ class Attendance extends MY_Controller {
 		} else {
 			$data ["student"] = NULL;
 		}
-		
-		$startDate = date ( "Y-m-d" );
+		$startDate = FALSE;
 		$data ['startDate'] = $startDate;
 		if ($this->input->get ( "startDate" )) {
 			$startDate = $this->input->get ( "startDate" );
 			$data ["startDate"] = $startDate;
+		} elseif ($this->input->get ( "showAll" )) {
+			$startDate = get_current_term () == "Mid-Year" ? YEAR_START : MID_YEAR;
+			$data ['startDate'] = $startDate;
 		}
-		$endDate = $startDate; // assume a single date search by default
+		$endDate = FALSE;
 		$data ["endDate"] = $endDate;
 		if ($this->input->get ( "endDate" )) {
 			$endDate = $this->input->get ( "endDate" );
@@ -214,8 +225,14 @@ class Attendance extends MY_Controller {
 		if ($this->input->get ( "attendSubtype" )) {
 			$data ["attendSubtype"] = $this->input->get ( "attendSubtype" );
 		}
-		
+
 		$data ['attendance'] = $this->attendance->search ( $data );
+		
+		$data['summary'] = NULL;
+		
+		if($kStudent){
+			$data['summary'] = $this->attendance->summarize($kStudent,get_current_term(),get_current_year());
+		}
 		// @TODO add a line displaying the search query
 		
 		$data ["title"] = sprintf ( "Attendance Search Results: %s", format_date_range ( $startDate, $endDate ) );
@@ -331,6 +348,7 @@ class Attendance extends MY_Controller {
 		if ($date = $this->input->get ( "date" )) {
 			if ($kStudent = $this->input->get ( "kStudent" )) {
 				$kAttendance = $this->attendance->mark ( $date, $kStudent, "Absent" );
+				$this->truancy_notification ( $this->attendance->check_truancy ( $kStudent ) );
 				if ($kAttendance) {
 					$kTeach = $this->session->userdata ( "userID" );
 					echo $this->_checklist_buttons ( $date, $kStudent, $kTeach, $kAttendance );
@@ -404,18 +422,65 @@ class Attendance extends MY_Controller {
 		print "Days Tardy: " . $attendance ['tardy'] . ", Days Absent: " . $attendance ["absent"];
 	}
 
-	function check_truancy($start_date = YEAR_START, $threshold = 5)
+	/**
+	 * Unused function.
+	 */
+	/*
+	 * function check_truancy($threshold)
+	 * {
+	 * $truants = $this->attendance->get_truants ( $start_date, $threshold );
+	 * $data['start_date'] = $start_date;
+	 * $end_date = $this->input->get("end_date");
+	 * $end_date || $end_date = date("m-d-Y");
+	 * $data['end_date'] = $end_date;
+	 * $data['truants'] = $truants;
+	 * $data['target'] = "attendance/truants";
+	 * $data['title'] = sprintf("Truancy Alerts as of %s" , date("m-d-Y"));
+	 * $this->load->view("page/index",$data);
+	 *
+	 * }
+	 * //
+	 */
+	
+	/**
+	 *
+	 * @param stdObj $record
+	 *        	send an email notification to head of school when a student is truant after a threshold is met.
+	 */
+	function truancy_notification($record,$subtype = FALSE )
 	{
-		$truants = $this->attendance->get_truants ( $start_date, $threshold );
-		$data['start_date'] = $start_date;
-		$end_date = $this->input->get("end_date");
-		$end_date || $end_date = date("m-d-Y");
-		$data['end_date'] = $end_date;
-		$data['truants'] = $truants;
-		$data['target'] = "attendance/truants";
-		$data['title'] = sprintf("Truancy Alerts as of %s" , date("m-d-Y"));
-		$this->load->view("page/index",$data);		
-		
+		print $subtype;
+		if (($subtype == "Unexcused" && $record->total > UNEXCUSED_ABSENCE_THRESHOLD) || $record->total > TRUANCY_THRESHOLD) {
+			$subtype || $subtype = "total";
+			$today = date ( 'Y-m-d' );
+			if (get_current_term () == "Mid-Year") {
+				$startDate = YEAR_START;
+			} else {
+				$startDate = MID_YEAR;
+			}
+			$student = format_name ( $record->stuNickname, $record->stuLast );
+			$subject = sprintf ( "Truancy alert for %s", $student );
+			if($subtype == "Unexcused"){
+				$threshold =UNEXCUSED_ABSENCE_THRESHOLD;
+			
+			}else{
+				$threshold = TRUANCY_THRESHOLD;
+			}
+			$body['absences'] = sprintf ( "As of %s, %s has had %s %s absences since the start of the term.", date ( 'm-d-Y' ), $student, $record->total, strtolower($subtype));
+			$body['handbook'] = sprintf("This exceeds the limit of %s %s absences as identified in the school handbook.",$threshold, strtolower($subtype));
+			$body ['link'] = sprintf ( "You can view %s's record <a href='%s'>here.</a>", $record->stuNickname, site_url ( "attendance/search/$record->kStudent?startDate=$startDate" ) );
+			$this->email->from ( "frontoffice@fsmn.org" );
+			$this->email->to ( "chrisd@fsmn.org" );
+			$message = implode ( "\n", $body );
+			$this->email->subject ( $subject );
+			$this->email->message ( $message );
+			$this->email->send ();
+			if ($this->session->userdata ( "userID" ) == 1000) {
+				$this->email->print_debugger ();
+			}
+			
+			$this->session->set_userdata ( "warning",  sprintf("%s %s An alert message has been sent to the head and assistant head of school. You do not need take any further action.",$body['absences'],$body['handbook']) );
+		}
 	}
 
 	function _checklist_buttons($date, $kStudent, $kTeach, $kAttendance = NULL)
