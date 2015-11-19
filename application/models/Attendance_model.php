@@ -269,6 +269,21 @@ class Attendance_model extends MY_Model {
 		return $summary;
 	}
 	
+	function check_truancy($kStudent,$start_date = YEAR_START){
+		$this->db->from("student_attendance");
+		$this->db->where("student_attendance.kStudent",$kStudent);
+		$this->db->where("student_attendance.attendDate >=",$start_date);
+		$this->db->where("student_attendance.attendSubtype !=","Holiday");
+		$this->db->join("student","student.kStudent=student_attendance.kStudent");
+		$this->db->select("COUNT(`attendType`) AS total",FALSE);
+		$this->db->select("student.*");
+		$this->db->order_by("student_attendance.attendDate");
+		$result = $this->db->get()->row();
+		$this->_log();
+		return $result;
+		
+	}
+	
 	function get_truants($start_date = YEAR_START, $threshold = 5){
 		$this->db->from("student_attendance");
 		$this->db->select("COUNT(attendType) AS total",FALSE);
