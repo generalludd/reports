@@ -105,7 +105,12 @@ class Attendance extends MY_Controller {
 			if (! $kAttendance) {
 				$error = "This student already has an attendance record for " . $this->input->post ( "attendDate" );
 			}
-			$this->session->set_flashdata ( "warning", $error );
+			$truancy = $this->attendance->check_truancy($kStudent);
+			$this->truancy_notification($truancy);
+			
+			if($error){
+				$this->session->set_flashdata ( "warning", $error );
+			}
 			redirect ( "attendance/search/$kStudent" );
 		}
 	}
@@ -331,6 +336,7 @@ class Attendance extends MY_Controller {
 		if ($date = $this->input->get ( "date" )) {
 			if ($kStudent = $this->input->get ( "kStudent" )) {
 				$kAttendance = $this->attendance->mark ( $date, $kStudent, "Absent" );
+				$this->truancy_notification($this->attendance->check_truancy($kStudent));
 				if ($kAttendance) {
 					$kTeach = $this->session->userdata ( "userID" );
 					echo $this->_checklist_buttons ( $date, $kStudent, $kTeach, $kAttendance );
@@ -416,6 +422,34 @@ class Attendance extends MY_Controller {
 		$data['title'] = sprintf("Truancy Alerts as of %s" , date("m-d-Y"));
 		$this->load->view("page/index",$data);		
 		
+	}
+	
+	/**
+	 * @param stdObj $record
+	 * send an email notification to head of school when a student is truant after a threshold is met. 
+	 */
+	function truancy_notification($record)
+	{
+		if($record->total > TRUANCY_THRESHOLD){
+		$today = date('Y-m-d');
+		$start_date = YEAR_START;
+		$student = format_name($record->nickName, $record->stuLast);
+		$subject = sprintf("Truancy alert for %s",$student);
+		$body[] = sprintf("As of %s %s has been absent %s days since the start of the school year.",date('m-d-Y'), $student, $record->total);
+		$body[] = sprintf("You can view %s's record <a href='%s'>here.</a>",$record->stuNickname, site_url("attendance/search/$record->kStudent?startDate=$start_date&endDate=$today"));
+		$this->email->from("frontoffice@fsmn.org");
+		$this->email->to("head@fsmn.org");
+		$message = implode("\n", $body);
+	
+		$this->email->subject($subject);
+		$this->email->message($message);
+		$this->email->send();
+		if($this->session->userdata("userID") == 1000){
+			$this->email->print_debugger();
+		}
+		$this->session->set_userdata("notice",sprintf("%s has been identified as having more than %s many absences since the start of the school year. 
+				An alert message has been sent to the head of school for evaluation. You do not need to take any action at this point.",$student,TRUANCY_THRESHOLD));
+		}
 	}
 
 	function _checklist_buttons($date, $kStudent, $kTeach, $kAttendance = NULL)
