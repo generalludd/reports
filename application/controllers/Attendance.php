@@ -404,6 +404,20 @@ class Attendance extends MY_Controller {
 		print "Days Tardy: " . $attendance ['tardy'] . ", Days Absent: " . $attendance ["absent"];
 	}
 
+	function check_truancy($start_date = YEAR_START, $threshold = 5)
+	{
+		$truants = $this->attendance->get_truants ( $start_date, $threshold );
+		$data['start_date'] = $start_date;
+		$end_date = $this->input->get("end_date");
+		$end_date || $end_date = date("m-d-Y");
+		$data['end_date'] = $end_date;
+		$data['truants'] = $truants;
+		$data['target'] = "attendance/truants";
+		$data['title'] = sprintf("Truancy Alerts as of %s" , date("m-d-Y"));
+		$this->load->view("page/index",$data);		
+		
+	}
+
 	function _checklist_buttons($date, $kStudent, $kTeach, $kAttendance = NULL)
 	{
 		if ($kAttendance) {

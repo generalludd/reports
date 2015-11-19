@@ -24,7 +24,7 @@ else
         $domain = $default_domain;
 }
 
-if ( ! empty($_SERVER['SERVER_PORT'] == 443))
+if ( $_SERVER['SERVER_PORT'] == 443)
 {
         $config['base_url'] = 'https://'.$domain;
 }
