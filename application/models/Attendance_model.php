@@ -268,4 +268,24 @@ class Attendance_model extends MY_Model {
 		$summary ["tardy"] = $tardy;
 		return $summary;
 	}
+	
+	function get_truants($start_date = YEAR_START, $threshold = 5){
+		$this->db->from("student_attendance");
+		$this->db->select("COUNT(attendType) AS total",FALSE);
+		$this->db->select("student_attendance.kStudent");
+		$this->db->join("student","student.kStudent = student_attendance.kStudent");
+		$this->db->select("student.stuFirst, student.stuLast, student.stuNickname");
+		$this->db->where("attendDate >=",$start_date);
+		$this->db->group_by("student_attendance.kStudent");
+		$result = $this->db->get()->result();
+		$this->load->model("student_model","student");
+		$output = array();
+		foreach($result as $truancy){
+			if($truancy->total > $threshold){
+				 $output[] = $truancy;
+			}
+		}
+		$this->_log();
+		return $output;
+	}
 }
