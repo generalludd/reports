@@ -223,6 +223,10 @@ a.button {
 	background: -o-linear-gradient(top, #CF46CC 0, #8C2D8B 100%);
 	background: -ms-linear-gradient(top, #CF46CC 0, #8C2D8B 100%);
 }
+
+.link.delete {
+	color: #da4f49;
+}
 /* #CAD6E9 */
 /* #C3D0E2 */
 /* header page layout elements */

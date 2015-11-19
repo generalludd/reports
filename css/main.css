@@ -400,6 +400,10 @@ textarea {
 	float: right;
 }
 
+.link.delete {
+	float: none;
+}
+
 label {
 	font-weight: bold;
 }
@@ -1112,6 +1116,10 @@ table.grade-chart thead tr:last-child th {
 	float: left;
 	max-width: 45%;
 	padding-left: .5em;
+}
+
+.no-wrap {
+	white-space: nowrap;
 }
 
 th.buttons a, th div.buttons a, th .batch-print-grades {
