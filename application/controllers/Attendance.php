@@ -115,6 +115,7 @@ class Attendance extends MY_Controller {
 				}
 				$this->truancy_notification ( $truancy, $subtype );
 			}
+
 			redirect ( "attendance/search/$kStudent?showAll=1" );
 		}
 	}
@@ -348,7 +349,9 @@ class Attendance extends MY_Controller {
 		if ($date = $this->input->get ( "date" )) {
 			if ($kStudent = $this->input->get ( "kStudent" )) {
 				$kAttendance = $this->attendance->mark ( $date, $kStudent, "Absent" );
+
 				$this->truancy_notification ( $this->attendance->check_truancy ( $kStudent ) );
+
 				if ($kAttendance) {
 					$kTeach = $this->session->userdata ( "userID" );
 					echo $this->_checklist_buttons ( $date, $kStudent, $kTeach, $kAttendance );
@@ -449,7 +452,6 @@ class Attendance extends MY_Controller {
 	 */
 	function truancy_notification($record,$subtype = FALSE )
 	{
-		print $subtype;
 		if (($subtype == "Unexcused" && $record->total > UNEXCUSED_ABSENCE_THRESHOLD) || $record->total > TRUANCY_THRESHOLD) {
 			$subtype || $subtype = "total";
 			$today = date ( 'Y-m-d' );
@@ -479,9 +481,11 @@ class Attendance extends MY_Controller {
 				$this->email->print_debugger ();
 			}
 			
-			$this->session->set_userdata ( "warning",  sprintf("%s %s An alert message has been sent to the head and assistant head of school. You do not need take any further action.",$body['absences'],$body['handbook']) );
+			$this->session->set_userdata ( "message",  sprintf("%s %s An alert message has been sent to the head and assistant head of school. You do not need take any further action.",$body['absences'],$body['handbook']) );
 		}
 	}
+	
+
 
 	function _checklist_buttons($date, $kStudent, $kTeach, $kAttendance = NULL)
 	{

@@ -1,13 +1,12 @@
 <?php if($this->session->flashdata("notice")):?>
-<div class="notice"><?=$this->session->flashdata("notice");?>
-</div>
+<div class="notice"><?=$this->session->flashdata("notice");?></div>
 <?php endif?>
 <?php if($this->session->flashdata("message")):?>
-<div class="message"><?=$this->session->flashdata("message");?></div>
+<div class="message notice"><?=$this->session->flashdata("message");?></div>
 <?php endif?>
 <?php if($this->session->flashdata("warning")):?>
-<div class="warning"><?=$this->session->flashdata("warning");?></div>
+<div class="warning notice "><?=$this->session->flashdata("warning");?></div>
 <?php endif?>
 <?php if($this->session->flashdata("log")):?>
-<div class="warning"><?=$this->session->flashdata("log");?></div>
+<div class="log notice"><?=$this->session->flashdata("log");?></div>
 <?php endif?>

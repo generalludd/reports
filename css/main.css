@@ -165,7 +165,7 @@ div.login-title {
 }
 
 /* general notices */
-.alert, .message, .warning, .notice {
+.alert, .message, .warning, .notice, .log {
 	padding: 15px;
 	margin-bottom: 20px;
 	border: 1px solid transparent;

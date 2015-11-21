@@ -300,7 +300,6 @@ class Attendance_model extends MY_Model {
 		$this->db->select ( "student.*" );
 		$this->db->order_by ( "student_attendance.attendDate" );
 		$result = $this->db->get ()->row ();
-		$this->_log ("message");
 		return $result;
 	}
 
@@ -320,7 +319,6 @@ class Attendance_model extends MY_Model {
 				$output [] = $truancy;
 			}
 		}
-		$this->_log ();
 		return $output;
 	}
 }
