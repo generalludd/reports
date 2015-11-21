@@ -468,7 +468,7 @@ class Attendance extends MY_Controller {
 			}else{
 				$threshold = TRUANCY_THRESHOLD;
 			}
-			$body['absences'] = sprintf ( "As of %s, %s has had %s %s absences since the start of the term.", date ( 'm-d-Y' ), $student, $record->total, strtolower($subtype));
+			$body['absences'] = sprintf ( "As of %s, %s has had %s %s absences since the start of the term.", date ( 'm/d/Y' ), $student, $record->total, strtolower($subtype));
 			$body['handbook'] = sprintf("This exceeds the limit of %s %s absences as identified in the school handbook.",$threshold, strtolower($subtype));
 			$body ['link'] = sprintf ( "You can view %s's record <a href='%s'>here.</a>", $record->stuNickname, site_url ( "attendance/search/$record->kStudent?startDate=$startDate" ) );
 			$this->email->from ( "frontoffice@fsmn.org" );
