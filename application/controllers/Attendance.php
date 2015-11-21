@@ -481,7 +481,7 @@ class Attendance extends MY_Controller {
 				$this->email->print_debugger ();
 			}
 			
-			$this->session->set_flashdata ( "message",  sprintf("%s %s An alert message has been sent to the head and assistant head of school. You do not need take any further action.",$body['absences'],$body['handbook']) );
+			$this->session->set_flashdata ( "warning",  sprintf("%s %s An alert message has been sent to the head and assistant head of school. You do not need take any further action.",$body['absences'],$body['handbook']) );
 		}
 	}
 	
