@@ -8,7 +8,7 @@ class MY_Model extends CI_Model {
         parent::__construct();
     }
 
-    function _log($target = "notice",$live_server = FALSE){
+    function _log($target = "log",$live_server = FALSE){
        if($_SERVER['HTTP_HOST'] == "reports" || $live_server == TRUE){
            $this->session->set_flashdata($target, $this->db->last_query());
        }

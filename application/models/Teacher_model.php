@@ -101,7 +101,6 @@ class Teacher_model extends MY_Model {
 		$this->db->select ( "teacher.kTeach, teachFirst, teachLast,gradeStart, gradeEnd, dbRole, status,teachClass" );
 		$this->db->from ( "teacher" );
 		$result = $this->db->get ()->result ();
-		$this->_log ();
 		return $result;
 	}
 
@@ -136,7 +135,6 @@ class Teacher_model extends MY_Model {
 			$this->db->select ( "CONCAT(teacher.teachFirst, ' ', teacher.teachLast) as teachName", FALSE );
 		}
 		$result = $this->db->get ()->row ();
-		$this->_log ();
 		if ($result) {
 			return $result;
 		} else {
@@ -199,7 +197,6 @@ class Teacher_model extends MY_Model {
 		$this->db->from ( 'teacher' );
 		
 		$query = $this->db->get ()->result ();
-		$this->_log();
 		return $query;
 	}
 
@@ -222,7 +219,6 @@ class Teacher_model extends MY_Model {
 		$this->db->select ( "teacher_subject.gradeStart,teacher_subject.gradeEnd,teacher_subject.subject, teacher_subject.kSubject" );
 		$this->db->order_by ( "teacher.teachLast" );
 		$result = $this->db->get ()->result ();
-		$this->_log ();
 		return $result;
 	}
 
