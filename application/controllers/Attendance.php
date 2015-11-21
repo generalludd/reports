@@ -472,7 +472,7 @@ class Attendance extends MY_Controller {
 			$body['handbook'] = sprintf("This exceeds the limit of %s %s absences as identified in the school handbook.",$threshold, strtolower($subtype));
 			$body ['link'] = sprintf ( "You can view %s's record <a href='%s'>here.</a>", $record->stuNickname, site_url ( "attendance/search/$record->kStudent?startDate=$startDate" ) );
 			$this->email->from ( "frontoffice@fsmn.org" );
-			$this->email->to ( "chrisd@fsmn.org" );
+			$this->email->to ( "head@fsmn.org" );
 			$message = implode ( "\n", $body );
 			$this->email->subject ( $subject );
 			$this->email->message ( $message );
@@ -481,7 +481,7 @@ class Attendance extends MY_Controller {
 				$this->email->print_debugger ();
 			}
 			
-			$this->session->set_userdata ( "message",  sprintf("%s %s An alert message has been sent to the head and assistant head of school. You do not need take any further action.",$body['absences'],$body['handbook']) );
+			$this->session->set_flashdata ( "message",  sprintf("%s %s An alert message has been sent to the head and assistant head of school. You do not need take any further action.",$body['absences'],$body['handbook']) );
 		}
 	}
 	
