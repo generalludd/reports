@@ -194,7 +194,7 @@ a.button {
 
 /* #DB5F3A */
 /* #C9192D */
-.button.delete {
+.button.delete, .button.absent {
 	color: #ffffff;
 	text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
 	background-color: #da4f49;
@@ -222,6 +222,20 @@ a.button {
 		color-stop(100%, #8C2D8B));
 	background: -o-linear-gradient(top, #CF46CC 0, #8C2D8B 100%);
 	background: -ms-linear-gradient(top, #CF46CC 0, #8C2D8B 100%);
+}
+
+.button .tardy {
+	color: #000;
+	background-color: #F8DA06;
+		background-image: -moz-linear-gradient(top, #F8DA06, #f89406);
+	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#F8DA06),
+		to(#f89406));
+	background-image: -webkit-linear-gradient(top, #F8DA06, #f89406);
+	background-image: -o-linear-gradient(top, #F8DA06, #f89406);
+	background-image: linear-gradient(to bottom, #F8DA06, #f89406);
+	background-repeat: repeat-x;
+	border-color: #f89406 #f89406 #ad6704;
+	border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
 }
 
 .link.delete {

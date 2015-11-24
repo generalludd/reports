@@ -9,6 +9,7 @@
 <link type="text/css" rel="stylesheet" media="screen" href="<?=base_url("css/color.css")?>"/>
 <link type="text/css" rel="stylesheet" media="screen" href="<?=base_url("css/popup.css")?>" />
 <link type="text/css" rel="stylesheet" media="print" href="<?=base_url("css/print.css")?>" />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 <!-- jquery scripts -->
 <script type="text/javascript">
 var base_url = '<?=site_url("index.php") . "/";?>';

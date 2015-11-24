@@ -42,17 +42,25 @@
 		 my_location = window.location.href;
 		 me = this;
 		 my_url = $(me).attr("href");
+		 my_id = this.id;
 		 form_data = {
 				 ajax: 1,
-				 url: my_location
+				 url: my_location,
+				 info: my_id
 		 };
+		 console.log(my_id);
 		 $.ajax({
-			 type:"get",
+			 type:"post",
 			 url: my_url,
 			 data: form_data,
 			 success: function(data){
 				if($(me).hasClass("attendance-check")){
-					$(me).parents(".checklist.row").children("p.student-info").append("<span class='highlight'>Absent</span>");
+					if($(me).hasClass("absent")){
+						attendance_type = "Absent";
+					}else{
+						attendance_type = "Tardy";
+					}
+					$(me).parents(".checklist.row").children("p.student-info").append("<span class='highlight'>" + attendance_type + "</span>");
 					$(me).parents(".checklist.row").css("background-color","#EDEDED");
 					$(me).parents(".attendance-buttons").html(data);
 				}

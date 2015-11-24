@@ -346,21 +346,21 @@ class Attendance extends MY_Controller {
 
 	function absent()
 	{
-		if ($date = $this->input->get ( "date" )) {
-			if ($kStudent = $this->input->get ( "kStudent" )) {
-				$kAttendance = $this->attendance->mark ( $date, $kStudent, "Absent" );
-
-				$this->truancy_notification ( $this->attendance->check_truancy ( $kStudent ) );
-
-				if ($kAttendance) {
-					$kTeach = $this->session->userdata ( "userID" );
-					echo $this->_checklist_buttons ( $date, $kStudent, $kTeach, $kAttendance );
-					
-					// $output = sprintf ( "<a href='%s' class='button inline edit small revert-absence'>Revert</a>", base_url ( "attendance/revert?kTeach=$kTeach&kAttendance=$kAttendance" ) );
-					// echo $output;
-				}
+		//@TODO convert to a POST form, since this is not really secure!
+		
+		if($info = $this->input->post("info")){
+			$data = explode("_",$info);
+			$type = $data[0];
+			$date = $data[1];
+			$kStudent = $data[2];
+			$kAttendance = $this->attendance->mark ( $date, $kStudent, $type );
+			$this->truancy_notification ( $this->attendance->check_truancy ( $kStudent ) );
+			if ($kAttendance) {
+				$kTeach = $this->session->userdata ( "userID" );
+				echo $this->_checklist_buttons ( $date, $kStudent, $kTeach, $kAttendance );
 			}
 		}
+		
 	}
 
 	function revert()
@@ -497,9 +497,16 @@ class Attendance extends MY_Controller {
 			);
 		} else {
 			$buttons [] = array (
-					"text" => "Mark Absent",
-					"class" => "button inline new small attendance-check",
-					"href" => base_url ( "attendance/absent?date=$date&kStudent=$kStudent" ) 
+					"text" => "Mark Tardy <i class='fa fa-clock-o'></i>",
+					"class" => "button inline new small attendance-check tardy",
+					"href" => base_url ( "attendance/absent?date=$date&kStudent=$kStudent&attendType=Tardy" ),
+					"id"=>sprintf("Tardy_%s_%s",$date,$kStudent),
+			);
+			$buttons [] = array (
+					"text" => "Mark Absent <i class='fa fa-calendar-times-o'></i>",
+					"class" => "button inline small attendance-check absent",
+					"href" => base_url ( "attendance/absent?date=$date&kStudent=$kStudent&attendType=Absent" ),
+					"id"=>sprintf("Absent_%s_%s",$date,$kStudent),
 			);
 			$buttons [] = array (
 					"text" => "Present",

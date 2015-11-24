@@ -289,8 +289,7 @@ class Attendance_model extends MY_Model {
 		$this->db->where ( "student_attendance.kStudent", $kStudent );
 		$this->db->where ( "student_attendance.attendDate >=", $start_date );
 		$this->db->where_in ( "student_attendance.attendType", array (
-				'Absent',
-				'Tardy' 
+				'Absent'
 		) );
 		if($subtype){
 			$this->db->where("student_attendance.attendSubtype",$subtype);
