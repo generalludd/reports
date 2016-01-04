@@ -1,27 +1,5 @@
 $('#popupContainer').ready(function(){
-	
-	$('.password_edit').live('click',function(){
-		var myTeach="";
-		if(this.id) {
-			 myTeach=this.id.split('_')[1];
-		}else if($('#kTeach')) {
-			 myTeach=$('#kTeach').val();
-		}
-		var myUrl = base_url + "user/edit_password";
-		var form_data = {
-				kTeach: myTeach,
-				ajax: 1
-		};
-		$.ajax({
-			type: "POST",
-			url: myUrl,
-			data: form_data,
-			success: function(data){
-			showPopup("Change Password", data, "auto");
-		}
-		});
-	}); // end password_edit
-	
+
 	
 	$('#new_password').live('keyup',function(){
 		matchPasswords();

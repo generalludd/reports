@@ -32,7 +32,7 @@ if($kTeach == $userID || $userID == 1000){
 
 	$edit_buttons[] = array("selection"=>"edit", "class"=>"button edit dialog","href"=>site_url("teacher/edit?kTeach=$kTeach"), "text"=>"Edit Info");
 
-	$edit_buttons[] = array("selection"=>"auth","type"=>"span","class"=>array("button","dialog","edit"),"href"=>site_url("user/edit_password?kTeach=$kTeach"), "text"=>"Change Password");
+	$edit_buttons[] = array("selection"=>"auth","class"=>array("button","dialog","edit"),"href"=>site_url("user/edit_password?kTeach=$kTeach"), "text"=>"Change Password");
 	$edit_buttons[] = array("selection"=>"preference", "text" => "Preferences", "href" => site_url("preference/view/$kTeach") );
 	if($userID == 1000 && $kTeach != $userID){
 		$edit_buttons[] = array("selection" => "edit", "class" => "masquerade button","href" => site_url("/admin/masquerade/$kTeach"), "text" => "Masquerade" );
