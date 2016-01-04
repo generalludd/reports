@@ -30,7 +30,7 @@ if($gradeStart == $gradeEnd){
 $userID = $this->session->userdata("userID");
 if($kTeach == $userID || $userID == 1000){
 
-	$edit_buttons[] = array("selection"=>"edit", "class"=>"teacher_edit button edit", "id"=>"et_$kTeach", "text"=>"Edit Info");
+	$edit_buttons[] = array("selection"=>"edit", "class"=>"teacher_edit button edit dialog", "id"=>"et_$kTeach", "text"=>"Edit Info");
 
 	$edit_buttons[] = array("selection"=>"auth","type"=>"span","class"=>array("button","password_edit","edit"), "text"=>"Change Password");
 	$edit_buttons[] = array("selection"=>"preference", "text" => "Preferences", "href" => site_url("preference/view/$kTeach") );
