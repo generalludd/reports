@@ -113,7 +113,12 @@ class Benchmark extends MY_Controller {
 		), FALSE );
 		$data ["action"] = "insert";
 		$data ["target"] = "benchmark/edit";
+		$data["title"]= "Create a Benchmark";
+		if($this->input->get("ajax")){
 		$this->load->view ( $data ["target"], $data );
+		}else{
+			$this->load->view("page/index",$data);
+		}
 	}
 
 	function duplicate($kBenchmark)
