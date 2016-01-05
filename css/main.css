@@ -314,12 +314,11 @@ a, .button {
 .unread {
     margin-left: 5px;
     border-radius: 100%;
-    padding: 1px 3px;
+    padding:3px 3px;
     border: none;
     font-weight: bold;
     width: auto;
     display: inline-block;
-    box-shadow: 1px 1px 3px #000 inset;
 }
 
 .image_button {
