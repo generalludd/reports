@@ -78,41 +78,41 @@ $(document).ready(function(){
 	});//end clicck
 	
 	
-	$('.teacher_edit').live('click',function(){
-		var myTeach=this.id.split('_')[1];
-		editTeacher(myTeach);
-		return false;
-	});
+//	$('.teacher_edit').live('click',function(){
+//		var myTeach=this.id.split('_')[1];
+//		editTeacher(myTeach);
+//		return false;
+//	});
 	
 
 	
 	
 
-	$('.teacher_create').live("click", function(event){
-		var myUrl = base_url + "teacher/create";
-		var form_data = {
-				ajax: 1
-		};
-		$.ajax({
-			type:"post",
-			url: myUrl,
-			data: form_data,
-			success: function(data){
-				showPopup("Add a new teacher",data,"auto");
-			}
-		});
-		return false;
-	});
-	
-	$(".teacher_search").live("click",function(event){
-		$.ajax({
-			type:"GET",
-			url: base_url + "teacher/show_search",
-			success: function(data){
-				showPopup("Search for Users",data,"auto");
-			}
-		});
-	});
+//	$('.teacher_create').live("click", function(event){
+//		var myUrl = base_url + "teacher/create";
+//		var form_data = {
+//				ajax: 1
+//		};
+//		$.ajax({
+//			type:"post",
+//			url: myUrl,
+//			data: form_data,
+//			success: function(data){
+//				showPopup("Add a new teacher",data,"auto");
+//			}
+//		});
+//		return false;
+//	});
+//	
+//	$(".teacher_search").live("click",function(event){
+//		$.ajax({
+//			type:"GET",
+//			url: base_url + "teacher/show_search",
+//			success: function(data){
+//				showPopup("Search for Users",data,"auto");
+//			}
+//		});
+//	});
 	
 });// end ready
 

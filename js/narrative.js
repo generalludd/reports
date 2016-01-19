@@ -124,7 +124,7 @@ $(document).ready(function() {
 				success: function(data){
 					var strings = data.split("|");
 					if(action == "insert"){
-						$("#kNarrative").val(strings[0]);
+						$("#kNarrative").val(strings[0].trim());
 						$("#action").val("update");
 						$("#narrativeEditor").attr("action",base_url + "narrative/update");
 						$(".delete-container").html("<span class='delete button delete_narrative' id='dn_" + strings[0] + "'>Delete</span>");
@@ -141,36 +141,6 @@ $(document).ready(function() {
 		}
 	}); // end function(event)
 	
-
-	$('.save_edits').live('click',function(event) {
-			var originalText = $('#originalText').val();
-			var narrText = $('#narrText').val();
-			if (narrText == originalText) {
-				alert("You have not made any changes to the original document. No need to save.");
-			} else {
-				$('#save_action').val('view');
-				document.forms['narrativeEditor'].submit();
-			}
-	});
-
-	
-	$('.save_continue_edits').live('click', function(event) {
-		var myText = $('#narrText').val();
-		var myNarrative = $('#kNarrative').val();
-		$.post('ajax.switch.php', {
-			target : 'narrative',
-			action_task : 'save_edits',
-			save_action : 'edit',
-			narrText : myText,
-			kNarrative : myNarrative
-		}, function(data) {
-			var message = data;
-			$('.message').html(message).fadeIn('slow');
-			$('#status').val(true);
-
-		});// end post
-	}); // end save_continue_edits
-
 	$('.delete_narrative').live('click', function(event) {
 		var kNarrative = $("#kNarrative").val();
 		var kStudent = $("#kStudent").val();
@@ -239,26 +209,6 @@ $(document).ready(function() {
 
 
 
-
-/*
- * @function mergeSentences @params myCount intdescription:  used in the
- * sentence-display format of narrative reports to count the number of sentences
- * (fields). @dependencies form_submission.js:saveData()
- */
-function mergeSentences(myCount) {
-	// repeat through a predictable set of fields and copy their values to a
-	// final container
-	var myText = "";
-	for ( var i = 0; i < myCount; i++) {
-		if (document.getElementById("line" + i)) {
-			myText = myText + " " + document.getElementById("line" + i).value;
-		}
-	}
-	if (myText != "") {
-		narrText = document.getElementById('narrText');
-		narrText.value = myText;
-	}
-}
 
 /*
  * @function deleteNarrative @params kNarrative int database keydescription: 

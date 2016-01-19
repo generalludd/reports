@@ -10,7 +10,7 @@ class user extends MY_Controller
 
 	function edit_password()
 	{
-		$kTeach = $this->input->post("kTeach");
+		$kTeach = $this->input->get("kTeach");
 		$userID = $this->session->userdata("userID");
 		if($kTeach == $userID || $userID == 1000){
 			$data["kTeach"] = $kTeach;
