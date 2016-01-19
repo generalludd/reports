@@ -103,11 +103,8 @@ if(!empty($conditional_buttons)){
 <script type="text/javascript">
 window.setInterval(function(){
 	tinyMCE.triggerSave();
-	
 	var narrText = $('#narrText').val();
-	console.log(narrText);
 	var action = $("#action").val();
-	
 		$("#ajax").val(1);
 		var formData = $("#narrativeEditor").serialize();
 		var myUrl = base_url + "narrative/" + action;
