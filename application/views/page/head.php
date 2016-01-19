@@ -16,16 +16,31 @@
 var base_url = '<?=site_url("index.php") . "/";?>';
 var root_url = '<?=base_url();?>';
 </script>
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.min.js"></script>
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
+<script type="text/javascript" src="https://code.jquery.com/jquery-migrate-1.3.0.min.js"></script>
+<script type="text/javascript" src="https://code.jquery.com/ui/1.8.24/jquery-ui.min.js"></script>
 <script type="text/javascript" src="<?=base_url("js/cookie.jquery.js");?>"></script>
 
 <!-- General Script  -->
 <script type="text/javascript" src="<?=base_url("js/general.js");?>"></script>
 
 <!-- Rich Text Editor Script -->
-<script type="text/javascript" src="<?=base_url("tiny_mce/jquery.tinymce.js");?>"></script>
-<script type="text/javascript" src="<?=base_url("js/editor.js");?>"></script>
+<!-- TODO: add this only when on a rich-text editing page -->
+  <script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
+
+<script>tinymce.init({ selector:'textarea.tinymce',
+	menubar: false,
+	min_height:400,
+	toolbar: 'bold,italic,|,fullpage,|,cut,copy,paste,pastetext,pasteword,cleanup,code,|,undo,redo,|,bullist,numlist',
+	invalid_styles: 'color font-size font-family',
+	plugins: 'fullpage,paste,code',
+	setup: function (editor) {
+	        editor.on('change', function () {
+	            editor.save();
+	        });
+	    }
+	});</script>
+
 
 <!-- TARGET-specific scripts -->
 <script type="text/javascript" src="<?=base_url("js/teacher.js");?>"></script>

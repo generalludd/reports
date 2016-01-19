@@ -27,6 +27,7 @@
 		 form_data = {
 				 ajax: 1
 		 };
+		 console.log(my_url);
 		 $.ajax({
 			 type: "get",
 			 url: my_url,
