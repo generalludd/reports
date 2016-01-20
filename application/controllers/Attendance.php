@@ -412,7 +412,7 @@ class Attendance extends MY_Controller {
 		$data ['teacher_name'] = format_name ( $teacher->teachFirst, $teacher->teachLast );
 		$message = $this->load->view ( "attendance/checklist/email", $data, TRUE );
 		$this->email->from ( $teacher->email );
-		$this->email->to ( "chrisd@fsmn.org" );
+		$this->email->to ( "frontoffice@fsmn.org" );
 		// $this->email->cc($teacher->email);
 		
 		$this->email->subject ( $subject );
