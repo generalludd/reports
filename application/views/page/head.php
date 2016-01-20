@@ -25,6 +25,7 @@ var root_url = '<?=base_url();?>';
 
 <!-- Rich Text Editor Script -->
 <!-- TODO: add this only when on a rich-text editing page -->
+<?php if(isset($rich_text)):?>
   <script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
 
 <script>tinymce.init({ selector:'textarea.tinymce',
@@ -40,7 +41,7 @@ var root_url = '<?=base_url();?>';
 	        });
 	    }
 	});</script>
-
+<?php endif; ?>
 
 <!-- TARGET-specific scripts -->
 <script type="text/javascript" src="<?=base_url("js/teacher.js");?>"></script>

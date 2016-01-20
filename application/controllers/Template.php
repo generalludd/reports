@@ -151,6 +151,7 @@ class Template extends MY_Controller
 		$data["gradeStart"] = "";
 		$data["gradeEnd"] = "";
 		$data["grade_list"] = get_keyed_pairs($grades,array("value","label"));
+		$data['rich_text'] = TRUE;
 		$data["target"] = "template/edit";
 		$data["action"] = "update";
 		$data["title"] = "Editing a Subject Template";
@@ -180,6 +181,7 @@ class Template extends MY_Controller
 		$subjects = $this->subject_model->get_for_teacher($kTeach);
 		$data["subjects"] = get_keyed_pairs($subjects, array("subject","subject"),FALSE);
 		$data["template"] = FALSE;
+		$data['rich_text'] = TRUE;
 		$data["target"] = "template/edit";
 		$data["action"] = "insert";
 		$data["title"] = "Creating a New Subject Template";

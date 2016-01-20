@@ -74,6 +74,7 @@ class Narrative extends MY_Controller {
 		) );
 		$data ['studentName'] = format_name ( $student->stuFirst, $student->stuLast, $student->stuNickname );
 		$data ['default_grade'] = $this->input->cookie ( "default_grade" );
+		$data['rich_text'] = TRUE;
 		$submits_report_card = $this->input->cookie ( "submits_report_card" );
 		if ($submits_report_card == "yes") {
 			$this->load->model ( "assignment_model", "assignment" );
@@ -166,6 +167,7 @@ class Narrative extends MY_Controller {
 				"kTeach",
 				"teacher" 
 		) );
+		$data["rich_text"] = TRUE;
 		$data ["narrText"] = "";
 		$studentName = format_name ( $student->stuFirst, $student->stuLast, $student->stuNickname );
 		$data ["hasNeeds"] = $this->support_model->get_current ( $kStudent, "kSupport" );
