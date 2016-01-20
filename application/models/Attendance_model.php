@@ -2,15 +2,16 @@
 if (! defined ( 'BASEPATH' ))
 	exit ( 'No direct script access allowed' );
 class Attendance_model extends MY_Model {
-	var $kAttendance = NULL;
-	var $kStudent = NULL;
-	var $attendDate = NULL;
-	var $attendType = NULL;
-	var $attendSubtype = NULL;
-	var $attendLength = NULL;
-	var $attendNote = NULL;
-	var $recModifier = NULL;
-	var $recModified = NULL;
+	var $kAttendance;
+	var $kStudent;
+	var $attendDate;
+	var $attendType;
+	var $attendSubtype;
+	var $attendLength;
+	var $attendNote;
+	var $attendOverride;
+	var $recModifier;
+	var $recModified;
 
 	function __construct()
 	{
@@ -99,6 +100,11 @@ class Attendance_model extends MY_Model {
 		if ($attendance->recModifier == $kTeach || $this->session->userdata ( "dbRole" ) == 1) {
 			$this->delete ( $kAttendance );
 			return $attendance;
+		}else{
+			$this->db->where("kAttendance",$kAttendance);
+			$this->db->update("student_attendance",array("attendOverride"=>1,"recModifier"=>$kTeach));
+			return $attendance;
+			
 		}
 	}
 
