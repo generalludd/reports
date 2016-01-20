@@ -115,7 +115,7 @@ class Attendance extends MY_Controller {
 				}
 				$this->truancy_notification ( $truancy, $subtype );
 			}
-
+			
 			redirect ( "attendance/search/$kStudent?showAll=1" );
 		}
 	}
@@ -226,13 +226,13 @@ class Attendance extends MY_Controller {
 		if ($this->input->get ( "attendSubtype" )) {
 			$data ["attendSubtype"] = $this->input->get ( "attendSubtype" );
 		}
-
+		
 		$data ['attendance'] = $this->attendance->search ( $data );
 		
-		$data['summary'] = NULL;
+		$data ['summary'] = NULL;
 		
-		if($kStudent){
-			$data['summary'] = $this->attendance->summarize($kStudent,get_current_term(),get_current_year());
+		if ($kStudent) {
+			$data ['summary'] = $this->attendance->summarize ( $kStudent, get_current_term (), get_current_year () );
 		}
 		// @TODO add a line displaying the search query
 		
@@ -346,13 +346,12 @@ class Attendance extends MY_Controller {
 
 	function absent()
 	{
-		//@TODO convert to a POST form, since this is not really secure!
-		
-		if($info = $this->input->post("info")){
-			$data = explode("_",$info);
-			$type = $data[0];
-			$date = $data[1];
-			$kStudent = $data[2];
+		// @TODO convert to a POST form, since this is not really secure!
+		if ($info = $this->input->post ( "info" )) {
+			$data = explode ( "_", $info );
+			$type = $data [0];
+			$date = $data [1];
+			$kStudent = $data [2];
 			$kAttendance = $this->attendance->mark ( $date, $kStudent, $type );
 			$this->truancy_notification ( $this->attendance->check_truancy ( $kStudent ) );
 			if ($kAttendance) {
@@ -360,7 +359,6 @@ class Attendance extends MY_Controller {
 				echo $this->_checklist_buttons ( $date, $kStudent, $kTeach, $kAttendance );
 			}
 		}
-		
 	}
 
 	function revert()
@@ -381,11 +379,36 @@ class Attendance extends MY_Controller {
 		$subject = sprintf ( "Attendance for %s %s, %s", $teacher->teachFirst, $teacher->teachLast, format_date ( $date ) );
 		
 		$data ['subject'] = $subject;
-		$data ['records'] = $this->attendance->get_for_teacher ( $date, $kTeach );
+		$search_array = FALSE;
+		
+// 		$options = array (
+// 				"humanitiesTeacher",
+// 				"stuGroup",
+// 				"kTeach",
+// 				"gradeStart",
+// 				"gradeEnd" 
+// 		);
+// 		$cookie_day = "";  // sprintf ( "%s-", date ( "D" ) );
+// 		for ( $i=0;$i<count($options);$i++ ) {
+// 			print get_cookie($cookie_day . $options[$i]);
+				
+// 			if (get_cookie ( $options[$i] )) {
+// 				$search_array [$options[$i]] = get_cookie ($cookie_day .  $options[$i] );
+// 			}
+
+// 		}
+		if ($search_array) {
+			$search_array['startDate'] = $date;
+			$search_array['attendType'] = array("Absent","Tardy");
+			$data ['records'] = $this->attendance->search ( $search_array );
+		} else {
+			$data ['records'] = $this->attendance->get_for_teacher ( $date, $kTeach );
+		}
+		
 		$data ['teacher_name'] = format_name ( $teacher->teachFirst, $teacher->teachLast );
 		$message = $this->load->view ( "attendance/checklist/email", $data, TRUE );
 		$this->email->from ( $teacher->email );
-		$this->email->to ( "frontoffice@fsmn.org" );
+		$this->email->to ( "chrisd@fsmn.org" );
 		// $this->email->cc($teacher->email);
 		
 		$this->email->subject ( $subject );
@@ -450,7 +473,7 @@ class Attendance extends MY_Controller {
 	 * @param stdObj $record
 	 *        	send an email notification to head of school when a student is truant after a threshold is met.
 	 */
-	function truancy_notification($record,$subtype = FALSE )
+	function truancy_notification($record, $subtype = FALSE)
 	{
 		if (($subtype == "Unexcused" && $record->total > UNEXCUSED_ABSENCE_THRESHOLD) || $record->total > TRUANCY_THRESHOLD) {
 			$subtype || $subtype = "total";
@@ -462,14 +485,13 @@ class Attendance extends MY_Controller {
 			}
 			$student = format_name ( $record->stuNickname, $record->stuLast );
 			$subject = sprintf ( "Truancy alert for %s", $student );
-			if($subtype == "Unexcused"){
-				$threshold =UNEXCUSED_ABSENCE_THRESHOLD;
-			
-			}else{
+			if ($subtype == "Unexcused") {
+				$threshold = UNEXCUSED_ABSENCE_THRESHOLD;
+			} else {
 				$threshold = TRUANCY_THRESHOLD;
 			}
-			$body['absences'] = sprintf ( "As of %s, %s has had %s %s absences since the start of the term.", date ( 'm/d/Y' ), $student, $record->total, strtolower($subtype));
-			$body['handbook'] = sprintf("This exceeds the limit of %s %s absences as identified in the school handbook.",$threshold, strtolower($subtype));
+			$body ['absences'] = sprintf ( "As of %s, %s has had %s %s absences since the start of the term.", date ( 'm/d/Y' ), $student, $record->total, strtolower ( $subtype ) );
+			$body ['handbook'] = sprintf ( "This exceeds the limit of %s %s absences as identified in the school handbook.", $threshold, strtolower ( $subtype ) );
 			$body ['link'] = sprintf ( "You can view %s's record <a href='%s'>here.</a>", $record->stuNickname, site_url ( "attendance/search/$record->kStudent?startDate=$startDate" ) );
 			$this->email->from ( "frontoffice@fsmn.org" );
 			$this->email->to ( "head@fsmn.org" );
@@ -481,11 +503,9 @@ class Attendance extends MY_Controller {
 				$this->email->print_debugger ();
 			}
 			
-			$this->session->set_flashdata ( "warning",  sprintf("%s %s An alert message has been sent to the head and assistant head of school. You do not need take any further action.",$body['absences'],$body['handbook']) );
+			$this->session->set_flashdata ( "warning", sprintf ( "%s %s An alert message has been sent to the head and assistant head of school. You do not need take any further action.", $body ['absences'], $body ['handbook'] ) );
 		}
 	}
-	
-
 
 	function _checklist_buttons($date, $kStudent, $kTeach, $kAttendance = NULL)
 	{
@@ -500,13 +520,13 @@ class Attendance extends MY_Controller {
 					"text" => "Mark Tardy <i class='fa fa-clock-o'></i>",
 					"class" => "button inline new small attendance-check tardy",
 					"href" => base_url ( "attendance/absent?date=$date&kStudent=$kStudent&attendType=Tardy" ),
-					"id"=>sprintf("Tardy_%s_%s",$date,$kStudent),
+					"id" => sprintf ( "Tardy_%s_%s", $date, $kStudent ) 
 			);
 			$buttons [] = array (
 					"text" => "Mark Absent <i class='fa fa-calendar-times-o'></i>",
 					"class" => "button inline small attendance-check absent",
 					"href" => base_url ( "attendance/absent?date=$date&kStudent=$kStudent&attendType=Absent" ),
-					"id"=>sprintf("Absent_%s_%s",$date,$kStudent),
+					"id" => sprintf ( "Absent_%s_%s", $date, $kStudent ) 
 			);
 			$buttons [] = array (
 					"text" => "Present",
