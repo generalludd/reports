@@ -33,6 +33,7 @@ var root_url = '<?=base_url();?>';
 	toolbar: 'bold,italic,|,fullpage,|,cut,copy,paste,pastetext,pasteword,cleanup,code,|,undo,redo,|,bullist,numlist',
 	invalid_styles: 'color font-size font-family line-height',
 	plugins: 'fullpage,paste,code',
+	invalid_elements: 'div,font',
 	setup: function (editor) {
 	        editor.on('change', function () {
 	            editor.save();
