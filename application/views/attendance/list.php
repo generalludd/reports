@@ -72,6 +72,8 @@ if (! empty ( $attendance )) :
 	<?
 	$current_class = "";?>
 	<?php foreach ( $attendance as $item ) :?>
+	<tr>
+
 		<?php $buttons = array (); ?>
 		<?php $student_class = format_classroom ( $item->teachClass, $item->stuGrade, $item->stuGroup ); ?>
 	<?php	if ($student_class != $current_class) :?>
@@ -102,7 +104,7 @@ if (! empty ( $attendance )) :
 		<td><?=$item->attendType;?></td>
 		<td><?=$item->attendSubtype;?></td>
 		<td><?=$item->attendLength;?></td>
-		<td><?=$item->attendNote;?></td>
+		<td><?=$item->attendNote;?><?php echo $item->attendOverride?" <span class='highlight'>($item->teachFirst $item->teachLast has marked this student as present during daily attendance. Please delete accordingly.)</span>":"";?></td>
 
 		</tr>
 
