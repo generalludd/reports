@@ -78,7 +78,7 @@ if(!empty($conditional_buttons)){
 		</p>
 		<!-- @TODO Put calculated final grade here.  -->
 		<p>Course Grade (middle school only):
-			<? if($this->input->cookie("submits_report_card") == "yes" && !$narrative->narrGrade): ?>
+			<? if($this->input->cookie("submits_report_card") && $this->input->cookie("submits_report_card") == "yes" && ! get_value($narrative,"narrGrade",FALSE)): ?>
 			<span id="course_grade"><?=$default_grade;?></span>&nbsp;<a class='button small override-narrative-grade' href="#" title="override-narrative-grade allows a teacher who usually provides student grades to override the grade under special circumstances
 			">Override</a>
 			
@@ -92,7 +92,6 @@ if(!empty($conditional_buttons)){
 		echo $conditional_bar;
 	} ?>
 
-	<p>
 		<textarea id="narrText" name="narrText" class="tinymce"
 			style="width: 99.75%;" rows="19" cols="107">
 			<?=get_value($narrative, 'narrText', $narrText);?>
@@ -133,3 +132,4 @@ window.setInterval(function(){
 }, 60000);
 
 </script>
+

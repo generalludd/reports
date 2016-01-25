@@ -26,21 +26,27 @@ var root_url = '<?=base_url();?>';
 <!-- Rich Text Editor Script -->
 <!-- TODO: add this only when on a rich-text editing page -->
 <?php if(isset($rich_text)):?>
-  <script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
+<script src="//tinymce.cachefly.net/4.3/tinymce.min.js"></script>
 
 <script>tinymce.init({ selector:'textarea.tinymce',
 	menubar: false,
 	min_height:400,
-	toolbar: 'bold,italic,|,fullpage,|,cut,copy,paste,pastetext,pasteword,cleanup,code,|,undo,redo,|,bullist,numlist,|,spellchecker',
+	toolbar: 'bold,italic,|,fullpage,|,cut,copy,paste,pastetext,pasteword,cleanup,code,|,undo,redo,|,bullist,numlist',
 	invalid_styles: 'color font-size font-family line-height',
-	plugins: 'fullpage,paste,code,spellchecker',
+	plugins: 'fullpage,paste,code',
 	invalid_elements: 'div,font',
 	setup: function (editor) {
 	        editor.on('change', function () {
 	            editor.save();
 	        });
-	    }
-	});</script>
+	    },
+	    browser_spellcheck: true,
+	    contextmenu: false
+
+	});
+
+</script> 
+	
 <?php endif; ?>
 
 <!-- TARGET-specific scripts -->
