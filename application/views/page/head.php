@@ -31,9 +31,9 @@ var root_url = '<?=base_url();?>';
 <script>tinymce.init({ selector:'textarea.tinymce',
 	menubar: false,
 	min_height:400,
-	toolbar: 'bold,italic,|,fullpage,|,cut,copy,paste,pastetext,pasteword,cleanup,code,|,undo,redo,|,bullist,numlist',
+	toolbar: 'bold,italic,|,fullpage,|,cut,copy,paste,pastetext,pasteword,cleanup,code,|,undo,redo,|,bullist,numlist,|,spellchecker',
 	invalid_styles: 'color font-size font-family line-height',
-	plugins: 'fullpage,paste,code',
+	plugins: 'fullpage,paste,code,spellchecker',
 	invalid_elements: 'div,font',
 	setup: function (editor) {
 	        editor.on('change', function () {
