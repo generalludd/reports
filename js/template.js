@@ -32,29 +32,11 @@ $(".template_search").live("click", function(event){
 	
 });
 	
-	$(".template_save_continue").live('click',
-			function(event){
-				var myAction=$('#action').val();
-			$("#ajax").val(1);
-				var form_data = $("#template_editor").serialize();
-				var myUrl = base_url + "template/update";
-				$.ajax({
-					type: "POST",
-					url: myUrl,
-					data: form_data,
-					success: function(data){
-					var message = data;
-						if(myAction == "insert") {
-							var strings = data(",");
-							$("#kTemplate").val(strings[0]);
-							var	message=strings[1];
-							$('#action').val("update");
-						}
-					$("#message").html(message).addClass("highlight");
-					$("#ajax").val(0);
-				}//end function
-				});//end ajax
-			}//end function(event);	
+	$(".template_save_continue").live('click',function(event){
+		console.log("here");
+		save_continue_template();
+	}
+			
 	);//end change
 	
 	$('.select_template').live('click',
@@ -120,3 +102,30 @@ $(".template_search").live("click", function(event){
 		$("#message").html("Template is marked to be reactiveated on the next save.");
 	});
 });
+
+function save_continue_template(){
+
+		var my_action=$('#action').val();
+		tinyMCE.triggerSave();
+
+	$("#ajax").val(1);
+		var form_data = $("#template_editor").serialize();
+		var myUrl = base_url + "template/" + my_action;
+		$.ajax({
+			type: "POST",
+			url: myUrl,
+			data: form_data,
+			success: function(data){
+			var message = data;
+			console.log(data);
+				if(my_action == "insert") {
+					var strings = data.split("|");
+					$("#kTemplate").val(strings[0]);
+					var	message=strings[1];
+					$('#action').val("update");
+				}
+			$("#message").html(message).show();
+			$("#ajax").val(0);
+		}//end function
+		});//end ajax
+}

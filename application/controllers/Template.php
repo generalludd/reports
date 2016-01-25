@@ -203,7 +203,7 @@ class Template extends MY_Controller
 
 		if($this->input->post("ajax")){
 			if($kTemplate){
-				echo "$kTemplate,The template was successfully added at: " . date("m-d-Y H:i");
+				echo "$kTemplate|The template was successfully added at: " . date("m-d-Y H:i");
 			}else{
 				echo "0,The template did not get saved correctly. Please copy the text into your favorite text editor and contact technical support";
 			}
