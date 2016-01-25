@@ -123,6 +123,9 @@ function save_continue_template(){
 					$("#kTemplate").val(strings[0]);
 					var	message=strings[1];
 					$('#action').val("update");
+					$("#template_editor").attr("action",base_url + "template/update");
+					$("#editing-buttons .button-list").append("<li><span class='delete button delete_template'>Disable Template</span></li>");
+
 				}
 			$("#message").html(message).show();
 			$("#ajax").val(0);
