@@ -220,7 +220,7 @@ class Narrative_model extends MY_Model
 		}
 
 		if (array_key_exists ( "gradeStart", $options ) && array_key_exists ( "gradeEnd", $options ) && $options['gradeStart']!="" && $options['gradeEnd'] != "") {
-			$this->db->where ( sprintf("narrative.stuGrade BETWEEN %s AND %s",$options ["gradeStart"],  $options ["gradeEnd"]));
+			$this->db->where ( sprintf("narrative.stuGrade BETWEEN %s AND %s",$options ["gradeStart"],  $options ["gradeEnd"]), FALSE, FALSE);
 		}
 
 		if (array_key_exists ( "kStudent", $options )) {
