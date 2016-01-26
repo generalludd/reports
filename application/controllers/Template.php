@@ -76,7 +76,7 @@ class Template extends MY_Controller
 			$options["where"]["year"] = $this->input->get_post("year");
 		}
 
-		if($this->input->get_post("subject") != "0"){
+		if($this->input->get("subject") != NULL){
 			$options["where"]["subject"] = $this->input->get_post("subject");
 			//$this->session->set_userdata("template_subject",$options["where"]["subject"]);
 			bake_cookie("template_subject",$options["where"]["subject"]);
