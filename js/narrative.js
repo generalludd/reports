@@ -108,37 +108,8 @@ $(document).ready(function() {
 
 	
 	$('.save_continue_narrative').live('click', function(event) {
-		var narrText = $('#narrText').val();
-		$("#originalText").val(narrText);
-		var action = $("#action").val();
-		if (narrText == "") {
-			alert("You haven't entered any text in the narrative yet. No need to save.");
-		} else {
-			$("#ajax").val(1);
-			var formData = $("#narrativeEditor").serialize();
-			 myUrl = base_url + "narrative/" + action;
-			$.ajax({
-				url: myUrl,
-				type: 'POST',
-				data: formData,
-				success: function(data){
-					var strings = data.split("|");
-					if(action == "insert"){
-						$("#kNarrative").val(strings[0].trim());
-						$("#action").val("update");
-						$("#narrativeEditor").attr("action",base_url + "narrative/update");
-						$(".delete-container").html("<span class='delete button delete_narrative' id='dn_" + strings[0] + "'>Delete</span>");
-					}
-					$("#message").html("Narrative last updated " + strings[1]).show();
-					
-				},
-				error: function(data){
-					$("#message").html("An error occurred.").show();
-				}
-			});
-			$("#ajax").val(0);
-			//saveNarrative();
-		}
+		event.preventDefault();
+		save_continue_narrative();
 	}); // end function(event)
 	
 	$('.delete_narrative').live('click', function(event) {
@@ -207,7 +178,40 @@ $(document).ready(function() {
 	}// end function()
 	);// end document.ready
 
+function save_continue_narrative(){
+	tinyMCE.triggerSave();
+	var narrText = $('#narrText').val();
+	$("#originalText").val(narrText);
+	if (narrText == "") {
+		alert("You haven't entered any text in the narrative yet. No need to save.");
+	} else {
+	var action = $("#action").val();
+	$("#ajax").val(1);
+	var formData = $("#narrativeEditor").serialize();
+	var myUrl = base_url + "narrative/" + action;
+	$.ajax({
+		dataType: "json",
+		url: myUrl,
+		type: 'POST',
+		data: formData,
+		success: function(data){
+			if(action == "insert"){
+				$("#kNarrative").val(data.kNarrative);
+				$("#action").val("update");
+				$("#narrativeEditor").attr("action",base_url + "narrative/update");
+				$("#editing-buttons .button-list").append("<li><span class='delete button delete_narrative' id='dn_" + data.timestamp + "'>Delete</span></li>");
+			}
+			$("#message").html("Narrative auto-saved: " + data.timestamp).show();
 
+		},
+		error: function(data){
+			$("#message").html("An error occurred. Press 'Save and Continue' to save your work.").show();
+		}
+	});
+		$("#ajax").val(0);
+		//saveNarrative();
+}
+}
 
 
 /*

@@ -283,8 +283,8 @@ $this->_log("notice");
 		$kNarrative = $this->db->insert_id ();
 		$recModified = $this->get_value ( $kNarrative, 'recModified' );
 		return array (
-				$kNarrative,
-				format_timestamp ( $recModified )
+				"kNarrative"=>$kNarrative,
+				"timestamp"=>format_timestamp ( $recModified ),
 		);
 
 	}
@@ -299,8 +299,8 @@ $this->_log("notice");
 		$this->db->update ( 'narrative', $this );
 		$recModified = $this->get_value ( $kNarrative, 'recModified' );
 		return array (
-				$kNarrative,
-				format_timestamp ( $recModified )
+				"kNarrative"=>$kNarrative,
+				"timestamp"=>format_timestamp ( $recModified )
 		);
 
 	}

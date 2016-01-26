@@ -45,7 +45,7 @@ if(!empty($conditional_buttons)){
 				"enclosure" => array("type" => "span","class"=>"delete-container"));
 	}
 
-	print create_button_bar($edit_buttons);
+	print create_button_bar($edit_buttons,array("id"=>"editing-buttons"));
 	?>
 
 	<input type="hidden" name="target" id="target" value="narrative" /> <input
@@ -101,34 +101,7 @@ if(!empty($conditional_buttons)){
 
 <script type="text/javascript">
 window.setInterval(function(){
-	tinyMCE.triggerSave();
-	var narrText = $('#narrText').val();
-	var action = $("#action").val();
-		$("#ajax").val(1);
-		var formData = $("#narrativeEditor").serialize();
-		var myUrl = base_url + "narrative/" + action;
-		$.ajax({
-			url: myUrl,
-			type: 'POST',
-			data: formData,
-			success: function(data){
-				var strings = data.split("|");
-				if(action == "insert"){
-					$("#kNarrative").val(strings[0]);
-					$("#action").val("update");
-					$("#narrativeEditor").attr("action",base_url + "narrative/update");
-					$(".delete-container").html("<span class='delete button delete_narrative' id='dn_" + strings[0] + "'>Delete</span>");
-				}
-				$("#message").html("Narrative auto-saved: " + strings[1]).show();
-
-			},
-			error: function(data){
-				$("#message").html("An error occurred. Press 'Save and Continue' to save your work.").show();
-			}
-		});
-		$("#ajax").val(0);
-		//saveNarrative();
-
+	save_continue_narrative();
 }, 60000);
 
 </script>

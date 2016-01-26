@@ -124,7 +124,7 @@ class Narrative extends MY_Controller {
 	{
 		$result = $this->narrative_model->insert ();
 		if ($this->input->post ( 'ajax' )) {
-			echo implode ( "|", $result );
+			echo json_encode($result);
 		} else {
 			redirect ( 'narrative/view/' . $result [0] );
 		}
@@ -235,7 +235,7 @@ class Narrative extends MY_Controller {
 		$kNarrative = $this->input->post ( 'kNarrative' );
 		$result = $this->narrative_model->update ( $kNarrative );
 		if ($this->input->post ( 'ajax' )) {
-			echo implode ( "|", $result );
+			echo json_encode($result);
 		} else {
 			redirect ( 'narrative/view/' . $kNarrative );
 		}
