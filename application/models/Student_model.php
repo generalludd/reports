@@ -174,7 +174,7 @@ class Student_model extends MY_Model
         if ($gradeStart == $gradeEnd) {
             $this->db->where("(`baseGrade` -`baseYear` + $year) = $gradeStart", FALSE,FALSE);
         } else {
-            $this->db->where("(baseGrade - baseYear  + $year ) BETWEEN $gradeStart AND $gradeEnd");
+            $this->db->where("(baseGrade - baseYear  + $year) BETWEEN  $gradeStart AND $gradeEnd",FALSE,FALSE);
         }
 
         if (array_key_exists("kTeach", $constraints)) {
@@ -231,7 +231,7 @@ class Student_model extends MY_Model
     	if (array_key_exists("grades",$options)) {
     		$this->db->where_in("`baseGrade`+$year-`baseYear`", $options["grades"],FALSE);
     	} else {
-    		$this->db->where("`baseGrade` + $year - `baseYear` BETWEEN 0 AND 8",FALSE,FALSE);
+    		$this->db->where_in("`baseGrade` + $year - `baseYear`",array(0,1,2,3,4,5,6,7,8),FALSE,FALSE);
     	}
     	
     	if (array_key_exists("includeFormerStudents",$options) && $options["includeFormerStudents"] == 1) {
