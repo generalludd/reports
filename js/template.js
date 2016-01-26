@@ -33,7 +33,6 @@ $(".template_search").live("click", function(event){
 });
 	
 	$(".template_save_continue").live('click',function(event){
-		console.log("here");
 		save_continue_template();
 	}
 			
@@ -104,31 +103,28 @@ $(".template_search").live("click", function(event){
 });
 
 function save_continue_template(){
-
-		var my_action=$('#action').val();
 		tinyMCE.triggerSave();
-
-	$("#ajax").val(1);
+		var my_action=$('#action').val();
+		$("#ajax").val(1);
 		var form_data = $("#template_editor").serialize();
 		var myUrl = base_url + "template/" + my_action;
 		$.ajax({
+			dataType: "json",
 			type: "POST",
 			url: myUrl,
 			data: form_data,
 			success: function(data){
-			var message = data;
-			console.log(data);
+				console.log(data);
 				if(my_action == "insert") {
-					var strings = data.split("|");
-					$("#kTemplate").val(strings[0]);
-					var	message=strings[1];
+					$("#kTemplate").val(data.kTemplate);
 					$('#action').val("update");
 					$("#template_editor").attr("action",base_url + "template/update");
 					$("#editing-buttons .button-list").append("<li><span class='delete button delete_template'>Disable Template</span></li>");
 
 				}
-			$("#message").html(message).show();
-			$("#ajax").val(0);
+			$("#message").html(data.message).show();
+			
 		}//end function
 		});//end ajax
+		$("#ajax").val(0);
 }

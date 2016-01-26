@@ -3,17 +3,17 @@
 
 class Template_model extends CI_Model
 {
-	var $kTeach = 0;
-	var $template = "";
-	var $subject = "";
-	var $term = "";
-	var $year = "";
-	var $gradeStart = "";
-	var $gradeEnd = "";
-	var $type = "";
+	var $kTeach;
+	var $template;
+	var $subject;
+	var $term;
+	var $year;
+	var $gradeStart = 0;
+	var $gradeEnd = 0;
+	var $type;
 	var $isActive = 0;
-	var $recModified = "";
-	var $recModifier = "";
+	var $recModified;
+	var $recModifier;
 
 
 	function __construct()

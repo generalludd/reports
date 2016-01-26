@@ -200,12 +200,14 @@ class Template extends MY_Controller
 	function insert()
 	{
 		$kTemplate = $this->template_model->insert();
-
+		$data['kTemplate'] = $kTemplate;
 		if($this->input->post("ajax")){
 			if($kTemplate){
-				echo "$kTemplate|The template was successfully added at: " . date("m-d-Y H:i");
+				$data['message'] = "The template was successfully added at: " . date("m-d-Y g:i:s a");
+				echo json_encode($data);
 			}else{
-				echo "0,The template did not get saved correctly. Please copy the text into your favorite text editor and contact technical support";
+				$data['message'] ="The template did not get saved correctly. Please copy the text into your favorite text editor and contact technical support";
+				echo json_encode($data);
 			}
 
 		}else{
@@ -225,10 +227,11 @@ class Template extends MY_Controller
 	function update()
 	{
 		$kTemplate = $this->input->post("kTemplate");
-
+		$data['kTemplate'] = $kTemplate;
 		$this->template_model->update($kTemplate);
 		if($this->input->post("ajax")){
-			echo "The template was successfully saved at " . date("m-d-Y H:i:s");
+			$data['message'] = "The template was successfully saved at " . date("m-d-Y g:i:s a");
+			echo json_encode($data);
 		}else{
 			$kTeach = $this->input->post("kTeach");
 			$year = $this->input->post("year");
