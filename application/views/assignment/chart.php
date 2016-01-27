@@ -51,7 +51,6 @@ $buttons [] = array (
 		"class" => "button print batch-print-grades",
 		"href" => "#" 
 );
-
 ?>
 <input type="hidden" name="kTeach" id="kTeach" value="<?=$kTeach;?>" />
 <?
@@ -111,7 +110,7 @@ if (! empty ( $assignments )) {
 					<span class='chart-category'><?=$assignment->category;?> </span>
 					<br />
 					<!-- an assignment with 0 points is calculated as a make-up points for assignments -->
-					<span class='chart-points'> <?=$assignment->points>0?$assignment->points. " Points" :"Make-Up Points";?>
+					<span class='chart-points'> <?=$assignment->points>0?$assignment->points. " Points" : capitalize($assignment->points_type);?>
 			</span>
 					<br />
 					<span class='chart-date'><?=format_date($assignment->date);?>
@@ -210,4 +209,6 @@ if (! empty ( $assignments )) {
 <?
 	} // end if category_count
 } //end if assignments
+
+echo capitalize("my_string");
 

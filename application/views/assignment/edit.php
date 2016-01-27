@@ -22,11 +22,12 @@ $date = get_value($assignment,"date");
 </span>
 </p>
 
-<div >Enter zero points for make-up points
+<div >Enter zero points for make-up or extra-credit points
 <span class='button help' id="Assignment_Zero Points" title="Why would I want to have zero points?">Help</span></div>
 <p>
 <label for="points">Points: </label>
 <input type="text" name="points" id="points" style="width:25px" required value="<?=get_value($assignment,"points");?>"/>
+<span id="points-type"></span>
 </p>
 <? if($action == "insert"): ?>
 <p>

@@ -5,6 +5,20 @@ $(document).ready(function(){
 			$("#category").focus();
 		}
 	});
+	$("#edit-assignment #points").live("keyup",function(e){
+		console.log("here");
+		if($(this).val() == 0){
+			$.ajax({
+				type:"get",
+				url: base_url + "assignment/point_types_menu",
+				success:function(data){
+					$("#points-type").html(data);
+				}
+			})
+	
+		}
+		
+	});
 	
 	
 	$(".editable .grade-points.edit").live("click",function(e){

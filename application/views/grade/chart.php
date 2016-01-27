@@ -57,7 +57,7 @@ if ($grade->footnote) {
 						$footnotes [$grade->footnote] = $grade->label;
 					}
 					?></td>
-				<td><?=$grade->total_points > 0?$grade->total_points:"Make-Up Points";?></div>
+				<td><?=$grade->total_points > 0?$grade->total_points:capitalize($grade->points_type);?></div>
 				</td>
 
 			</tr>

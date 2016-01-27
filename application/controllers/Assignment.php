@@ -355,6 +355,12 @@ class Assignment extends MY_Controller {
 		$data ['kTeach'] = $this->uri->segment ( 3 );
 		$this->load->view ( 'assignment/category_row', $data );
 	}
+	
+	function point_types_menu(){
+		$this->load->model("menu_model","menu");
+		$menu_items = get_keyed_pairs($this->menu->get_pairs("points_type"),array("value","label"));
+		echo form_dropdown("points_type",$menu_items);
+	}
 
 	/**
 	 * add a created category into the database

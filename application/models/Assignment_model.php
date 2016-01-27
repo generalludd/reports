@@ -6,6 +6,7 @@ class Assignment_model extends MY_Model {
 	var $assignment;
 	var $date;
 	var $points;
+	var $points_type;
 	var $subject;
 	var $term;
 	var $year;
@@ -20,6 +21,7 @@ class Assignment_model extends MY_Model {
 				"kCategory",
 				"date",
 				"points",
+				"points_type",
 				"subject",
 				"term",
 				"year",
@@ -67,7 +69,7 @@ class Assignment_model extends MY_Model {
 		$this->db->where ( "kAssignment", $kAssignment );
 		$this->db->update ( "assignment", $this );
 		// if the grade is not 0 then adjust the student points accordingly.
-		// 0 points for a grade will be calculated as make-up points for quizzes
+		// 0 points for a grade will be calculated as make-up or extra-credit points for quizzes
 		// or other assignments.
 		if ($this->points != 0) {
 			$this->load->model ( "grade_model", "grade" );
@@ -224,7 +226,7 @@ class Assignment_model extends MY_Model {
 		$this->db->join ( "menu", "grade.footnote = menu.value AND menu.category='grade_footnote'", "LEFT" );
 		$this->db->join ( "assignment_category as category", "assignment.kCategory = category.kCategory", "LEFT" );
 		$this->db->select ( "category.category,category.weight" );
-		$this->db->select ( "assignment.kAssignment, assignment.term, assignment.year, assignment.subject, assignment.date, assignment.assignment, assignment.points as total_points" );
+		$this->db->select ( "assignment.kAssignment, assignment.term, assignment.year, assignment.subject, assignment.date, assignment.assignment,assignment.points_type, assignment.points as total_points" );
 		$this->db->select ( "grade.kGrade,grade.points,grade.status,grade.footnote" );
 		$this->db->select ( "menu.label" );
 		$this->db->select ( "student.stuFirst,student.stuNickname,student.stuLast,student.stuGroup" );
