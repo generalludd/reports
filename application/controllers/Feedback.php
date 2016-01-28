@@ -68,29 +68,5 @@ class Feedback extends My_Controller {
 
 	}
 	
-	
-	/** 
-	 * This function is unused due to complications with authenticated SMTP sending in CI
-	 * @return boolean
-	 */
-	function initialize()
-	{
-		$this->load->model("email_model");
-		$email = $this->email_model->get_default();
-		$config = FALSE;
-		if($email){
-			$config["mailpath"] = $email->mailpath;
-			$config["protocol"] = $email->protocol;
-			$config["smtp_host"] = $email->smtp_host;
-			$config["smtp_auth"] = $email->smtp_auth;
-			$config["smtp_port"] = $email->smtp_port;
-			$config["smtp_user"] = $email->smtp_user;
-			$config["smtp_pass"] = $email->smtp_pass;
-			$config["newline"] = $email->newline;
-			$config["charset"] = $email->charset;
-
-		}
-		return $config;
-	}
 
 }
