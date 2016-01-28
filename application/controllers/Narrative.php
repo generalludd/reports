@@ -126,7 +126,7 @@ class Narrative extends MY_Controller {
 		if ($this->input->post ( 'ajax' )) {
 			echo json_encode($result);
 		} else {
-			redirect ( 'narrative/view/' . $result [0] );
+			redirect ( 'narrative/view/' . $result ['kNarrative'] );
 		}
 	}
 

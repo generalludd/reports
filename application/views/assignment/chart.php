@@ -210,5 +210,4 @@ if (! empty ( $assignments )) {
 	} // end if category_count
 } //end if assignments
 
-echo capitalize("my_string");
 
