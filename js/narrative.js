@@ -1,15 +1,5 @@
 $(document).ready(function() {
-//	if($("#narrativeEditor")) {
-//		$(message).fadeOut().delay(60000);
-//		saveNarrative();
-//		$(message).fadeOut();
-//	}
 
-	$(".enable-rich-text").live("click",function(event){
-		my_id = this.id.split("_")[1];
-		enable_rich_text(my_id);
-		$('html, body').animate({ scrollTop: $("#text_"+my_id).offset().top}, 1000);
-	})
 	
 	$('.edit_narrative_inline').live('click', function(event){
 		//var action = confirm("Are you sure you want to edit this here? This provides limited editing here and provides text only in raw html.");
@@ -30,22 +20,19 @@ $(document).ready(function() {
 				success: function(data){
 						$("#text_" + myNarrative).html(data);
 						$("#enil_" + myNarrative).html("Save").addClass("new").removeClass("edit").removeClass("edit_narrative_inline").addClass("save_narrative_inline");
-						document.location = document.location + "enil_" + myNarrative;
+						
 				} //end function
 			});//end ajax
-
-			
+			$('html, body').animate({ scrollTop: $("#student-text_" + myNarrative).offset().top}, 1000);
 
 	}); //end edit_narrative_inline
 		
 	$('.save_narrative_inline').live('click', function(event){
-		tinyMCE.triggerSave();
+			tinyMCE.triggerSave();
 	
 			var myNarrative = $("#kNarrative").val();
-			console.log(myNarrative);
 			var myTeach = $("#kTeach").val();
 			var myText = $("#narrText_" + myNarrative).val();
-			console.log(myText);
 			var form_data = {
 					kNarrative: myNarrative,
 					narrText: myText,
@@ -63,7 +50,8 @@ $(document).ready(function() {
 					$("#enil_" + myNarrative).html("Edit Inline").addClass("edit").removeClass("new").removeClass("save_narrative_inline").addClass("edit_narrative_inline").focus();
 				}// end success-function
 			}); //end ajax
-			
+			$('html, body').animate({ scrollTop: $("#student-text_" + myNarrative).offset().top}, 1000);
+
 	});//end edit_narrative_inplace
 	
 
@@ -220,24 +208,7 @@ function save_continue_narrative(){
 }
 }
 
-function enable_rich_text(my_id){
-	tinymce.init({ selector:'textarea#narrText_' + my_id,
-		menubar: false,
-		min_height:400,
-		toolbar: 'bold,italic,|,fullpage,|,cut,copy,paste,pastetext,pasteword,cleanup,code,|,undo,redo,|,bullist,numlist',
-		invalid_styles: 'color font-size font-family line-height font-weight',
-		plugins: 'fullpage,paste,code',
-		invalid_elements: 'div,font,a,html,head,body',
-		setup: function (editor) {
-		        editor.on('change', function () {
-		            editor.save();
-		        });
-		    },
-		    browser_spellcheck: true,
-		    contextmenu: false
 
-		});
-}
 
 /*
  * @function deleteNarrative @params kNarrative int database keydescription: 

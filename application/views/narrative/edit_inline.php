@@ -10,10 +10,10 @@
 
 <div><textarea id="narrText_<?php echo $narrative->kNarrative;?>" name="narrText" 
 	style="width: 99.75%;" rows="19" cols="107"><?=stripslashes($narrative->narrText);?></textarea></div>
-<p><span class="button new save_narrative_inline">Save</span>&nbsp;<a href="#" class="enable-rich-text button" id="rtf_<?php echo $narrative->kNarrative;?>">Enable Rich Text</a></p>
+<p><span class="button new save_narrative_inline">Save</span></p>
 </form>
 <script>
-tinymce.init({ selector:'textarea.tinymce',
+tinymce.init({ selector:'textarea#narrText_' + <?php echo $narrative->kNarrative;?>,
 	menubar: false,
 	min_height:400,
 	toolbar: 'bold,italic,|,fullpage,|,cut,copy,paste,pastetext,pasteword,cleanup,code,|,undo,redo,|,bullist,numlist',

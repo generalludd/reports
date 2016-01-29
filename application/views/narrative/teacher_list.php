@@ -68,7 +68,7 @@ if(!empty($narratives)){
 			$thisTerm = $sortTerm;
 		}
 		if($student != $thisStudent){
-			echo "<h4>$student</h4>";
+			echo "<h4 id='student-text_$narrative->kNarrative'>$student</h4>";
 			$thisStudent = $student;
 			if($sortTerm == $thisTerm){
 				$thisTerm="";
