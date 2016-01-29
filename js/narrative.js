@@ -7,7 +7,7 @@ $(document).ready(function() {
 
 	$(".enable-rich-text").live("click",function(event){
 		my_id = this.id.split("_")[1];
-		enable_rich_text();
+		enable_rich_text(my_id);
 		$('html, body').animate({ scrollTop: $("#text_"+my_id).offset().top}, 1000);
 	})
 	
@@ -41,10 +41,11 @@ $(document).ready(function() {
 	$('.save_narrative_inline').live('click', function(event){
 		tinyMCE.triggerSave();
 	
-		var myNarrative = $("#kNarrative").val();
+			var myNarrative = $("#kNarrative").val();
+			console.log(myNarrative);
 			var myTeach = $("#kTeach").val();
-			var myText = $("#narrText").val();
-			
+			var myText = $("#narrText_" + myNarrative).val();
+			console.log(myText);
 			var form_data = {
 					kNarrative: myNarrative,
 					narrText: myText,
@@ -219,8 +220,8 @@ function save_continue_narrative(){
 }
 }
 
-function enable_rich_text(){
-	tinymce.init({ selector:'textarea.tinymce',
+function enable_rich_text(my_id){
+	tinymce.init({ selector:'textarea#narrText_' + my_id,
 		menubar: false,
 		min_height:400,
 		toolbar: 'bold,italic,|,fullpage,|,cut,copy,paste,pastetext,pasteword,cleanup,code,|,undo,redo,|,bullist,numlist',
