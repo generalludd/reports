@@ -1,4 +1,6 @@
-<?php defined ( 'BASEPATH' ) or exit ( 'No direct script access allowed' );
+<?php
+
+defined ( 'BASEPATH' ) or exit ( 'No direct script access allowed' );
 // student grade chart;
 $header = $grades [0];
 $teacher = format_name ( $header->teachFirst, $header->teachLast );
@@ -13,8 +15,8 @@ $count = 0;
 ?>
 <!-- grade/chart -->
 <div class='grade-report report-teacher report-<?=$count;?>'>
-<div class='report-body'>
-<div class='report-header'>
+	<div class='report-body'>
+		<div class='report-header'>
 	<?="$header->subject, $teacher";?>
 	<? if($pass_fail):?>
 	<br />Grades are Pass/Fail
@@ -27,54 +29,58 @@ $count = 0;
 
 
 	<table class="report-card">
-		<thead>
-			<tr>
-				<th class='date-column'>Date</th>
-				<th class='assignment-column'>Assignment</th>
-				<th class='category-colunn'>Category</th>
-				<th class='points-column'>Points</th>
-				<th class='totals-column'>Possible</th>
-				<!-- <th class='notes-column'></th> -->
-			</tr>
-		</thead>
-		<tbody>
+			<thead>
+				<tr>
+					<th class='date-column'>Date</th>
+					<th class='assignment-column'>Assignment</th>
+					<th class='category-colunn'>Category</th>
+					<th class='points-column'>Points</th>
+					<th class='totals-column'>Possible</th>
+					<!-- <th class='notes-column'></th> -->
+				</tr>
+			</thead>
+			<tbody>
 			<?
 			
-foreach ( $grades as $grade ) {
+			foreach ( $grades as $grade ) {
 				if (($grade->points > 0 && $grade->total_points == 0) || ($grade->total_points > 0)) {
 					?>
 			<tr>
-				<td><?=format_date($grade->date);?></td>
-				<td><?=$grade->assignment; ?></div>
+					<td><?=format_date($grade->date);?></td>
+					<td><?=$grade->assignment; ?>
 				</td>
-				<td><?=$grade->category;?></div>
+					<td><?=$grade->category;?>
 				</td>
-				<td><?=$grade->status?$grade->status:$grade->points;?></div>
+					<td><?=$grade->status?$grade->status:$grade->points;?>
 				<?
 					
-if ($grade->footnote) {
+					if ($grade->footnote) {
 						echo "<sup>$grade->footnote</sup>";
 						$footnotes [$grade->footnote] = $grade->label;
 					}
 					?></td>
-				<td><?=$grade->total_points > 0?$grade->total_points:capitalize($grade->points_type);?></div>
+					<td><?=$grade->total_points > 0?$grade->total_points:capitalize($grade->points_type);?>
 				</td>
 
-			</tr>
+				</tr>
 			<?
 					
 					// if the student does not have an assignment listed as absent,excused, incomplete, redo, then calculate the grade otherwise ignore
 					if (empty ( $grade->status )) {
 						$points = $grade->points;
 						$student_total += $grade->points * $grade->weight;
+						//if the category has not been added to the total categories then add it to the $categories array for the totals count below. 
+						//If it does exist, just update the totals for the category. 
 						if (! array_key_exists ( $grade->category, $categories )) {
 							$categories [$grade->category] ["category"] = $grade->category;
 							$categories [$grade->category] ["weight"] = $grade->weight;
 							$categories [$grade->category] ["total_points"] = $grade->total_points;
 							$categories [$grade->category] ["points"] = $points;
 						} else {
+							// get the total possible points for this category;
 							$categories [$grade->category] ["total_points"] += $grade->total_points;
 							$categories [$grade->category] ["points"] += $points;
+							
 						}
 					}
 				} // end if
@@ -82,17 +88,17 @@ if ($grade->footnote) {
 			?>
 		</tbody>
 
-	</table>
+		</table>
 	<?
 	
-if (! empty ( $footnotes )) :
+	if (! empty ( $footnotes )) :
 		asort ( $footnotes );
 		$keys = array_keys ( $footnotes );
 		$values = array_values ( $footnotes );
 		?>
 	<div class='footnotes'>
-		<div class='caption'>Notes</div>
-		<ul>
+			<div class='caption'>Notes</div>
+			<ul>
 			<?
 		
 		for($i = 0; $i < count ( $keys ); $i ++) :
@@ -101,11 +107,11 @@ if (! empty ( $footnotes )) :
 			<li><?=sprintf("%s: %s", $keys[$i],$values[$i]);?></li>
 			<? endfor;?>
 		</ul>
-	</div>
+		</div>
 	<? endif; ?>
 	</div>
 	<div class='report-summary'>
-<div class='report-header'>
+		<div class='report-header'>
 	<?=$header->subject; ?>
 	Category Summary
 	<? if($pass_fail):?>
@@ -135,8 +141,8 @@ if (! empty ( $footnotes )) :
 					<td><?=$category_grade;?>%</td>
 					<td><?=$category["weight"];?>%</td>
 					<td><?=calculate_letter_grade($category_grade, $pass_fail);?></td>
-			
-				
+
+
 				</tr>
 			<? $assignment_total += $category_grade * $category["weight"]; ?>
 			<? $weight_sums += $category["weight"];?>
