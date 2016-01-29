@@ -34,22 +34,7 @@ $(document).ready(function() {
 				} //end function
 			});//end ajax
 
-			tinymce.init({ selector:'textarea.tinymce',
-				menubar: false,
-				min_height:400,
-				toolbar: 'bold,italic,|,fullpage,|,cut,copy,paste,pastetext,pasteword,cleanup,code,|,undo,redo,|,bullist,numlist',
-				invalid_styles: 'color font-size font-family line-height font-weight',
-				plugins: 'fullpage,paste,code',
-				invalid_elements: 'div,font,a,html,head,body',
-				setup: function (editor) {
-				        editor.on('change', function () {
-				            editor.save();
-				        });
-				    },
-				    browser_spellcheck: true,
-				    contextmenu: false
-
-				});
+			
 
 	}); //end edit_narrative_inline
 		
