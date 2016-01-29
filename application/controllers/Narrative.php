@@ -456,6 +456,7 @@ class Narrative extends MY_Controller {
 		$data ["narratives"] = $this->narrative_model->get_narratives ( $options );
 		$data ["options"] = $options;
 		$teacher = $this->teacher_model->get_name ( $kTeach );
+		$data["rich_text"] = TRUE;
 		$data ["teacher"] = $teacher;
 		$data ["kTeach"] = $kTeach;
 		$data ["title"] = "Showing current narratives for $teacher";

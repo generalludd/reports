@@ -5,7 +5,11 @@ $(document).ready(function() {
 //		$(message).fadeOut();
 //	}
 
-	
+	$(".enable-rich-text").live("click",function(event){
+		my_id = this.id.split("_")[1];
+		enable_rich_text();
+		$('html, body').animate({ scrollTop: $("#text_"+my_id).offset().top}, 1000);
+	})
 	
 	$('.edit_narrative_inline').live('click', function(event){
 		//var action = confirm("Are you sure you want to edit this here? This provides limited editing here and provides text only in raw html.");
@@ -30,12 +34,29 @@ $(document).ready(function() {
 				} //end function
 			});//end ajax
 
-		//}//end if
+			tinymce.init({ selector:'textarea.tinymce',
+				menubar: false,
+				min_height:400,
+				toolbar: 'bold,italic,|,fullpage,|,cut,copy,paste,pastetext,pasteword,cleanup,code,|,undo,redo,|,bullist,numlist',
+				invalid_styles: 'color font-size font-family line-height font-weight',
+				plugins: 'fullpage,paste,code',
+				invalid_elements: 'div,font,a,html,head,body',
+				setup: function (editor) {
+				        editor.on('change', function () {
+				            editor.save();
+				        });
+				    },
+				    browser_spellcheck: true,
+				    contextmenu: false
+
+				});
 
 	}); //end edit_narrative_inline
 		
 	$('.save_narrative_inline').live('click', function(event){
-			var myNarrative = $("#kNarrative").val();
+		tinyMCE.triggerSave();
+	
+		var myNarrative = $("#kNarrative").val();
 			var myTeach = $("#kTeach").val();
 			var myText = $("#narrText").val();
 			
@@ -213,6 +234,24 @@ function save_continue_narrative(){
 }
 }
 
+function enable_rich_text(){
+	tinymce.init({ selector:'textarea.tinymce',
+		menubar: false,
+		min_height:400,
+		toolbar: 'bold,italic,|,fullpage,|,cut,copy,paste,pastetext,pasteword,cleanup,code,|,undo,redo,|,bullist,numlist',
+		invalid_styles: 'color font-size font-family line-height font-weight',
+		plugins: 'fullpage,paste,code',
+		invalid_elements: 'div,font,a,html,head,body',
+		setup: function (editor) {
+		        editor.on('change', function () {
+		            editor.save();
+		        });
+		    },
+		    browser_spellcheck: true,
+		    contextmenu: false
+
+		});
+}
 
 /*
  * @function deleteNarrative @params kNarrative int database keydescription: 
