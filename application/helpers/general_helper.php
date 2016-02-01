@@ -67,7 +67,7 @@ function format_timestamp($timeStamp, $include_time = TRUE)
 
 function capitalize($key){
 	$key = humanize($key,"_");
-	return ucwords($key," ");
+	return ucwords($key);
 }
 
 function get_value($object, $item, $default = null)
