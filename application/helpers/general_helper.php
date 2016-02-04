@@ -570,19 +570,16 @@ function calculate_letter_grade($points, $pass_fail = FALSE)
 		} elseif ($hundreds > $plus) {
 			$valence = "+";
 		} else {
-			$valuence = "";
+			$valence = "";
 		}
 		$letter = $letters [$tens];
 		$output = $letter . $valence;
 	}
 	if ($pass_fail) {
-		switch ($letter) {
-			case "F" :
-				$output = "Fail";
-				break;
-			default :
-				$output = "Pass";
-				break;
+		if($points > 59){
+			$output = "Pass";
+		}else{
+			$output="Fail";
 		}
 	}
 	return $output;
