@@ -3,6 +3,21 @@
 	$(".refresh").live("click",function(){
 		window.location.reload();
 	});
+	
+	$("#search_replace #kTeach").live('change',function(event){
+		kTeach = $(this).val();
+		form_data = {
+				ajax: 1
+		}
+		$.ajax({
+			type:"get",
+			data: form_data,
+			url: base_url + "teacher/grade_range/" + kTeach,
+			success: function(data){
+				$("#grade-range").html(data);
+			}
+		})
+	});
 
 	
 	$('.button.do-print').live('click', function(event){

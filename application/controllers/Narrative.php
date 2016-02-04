@@ -734,11 +734,17 @@ class Narrative extends MY_Controller {
 		$data ["teachers"] = get_keyed_pairs ( $teacher_pairs, array (
 				"kTeach",
 				"teacher" 
-		) );
+		),TRUE );
 		$data ["kTeach"] = $this->session->userdata ( "userID" );
 		$data ["target"] = "narrative/search";
 		$data ["title"] = "Narrative Search & Replace";
+		$this->session->set_flashdata("warning","Please follow the instructions very carefully. Mistakes may be recoverable, but not without considerable effort!");
+		
+		if($this->input->get("ajax")==1){
+			$this->load->view($data['target'],$data);
+		}else{
 		$this->load->view ( "page/index", $data );
+		}
 	}
 
 	/**
