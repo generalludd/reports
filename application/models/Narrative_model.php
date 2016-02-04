@@ -317,19 +317,19 @@ $this->_log("notice");
 
 	function text_replace($search, $replace, $kTeach, $narrYear, $narrTerm, $gradeStart, $gradeEnd)
 	{
-
+		if(!empty($search)){
 		$this->db->select ( "kNarrative" );
 
-		$gradeSearch = "stuGrade BETWEEN $gradeStart AND $gradeEnd";
 
 		if ($gradeStart == $gradeEnd) {
-			$gradeSearch = "stuGrade = $gradeStart";
+			$this->db->where("stuGrade",$gradeStart);
+		}else{
+			$this->db->where ( sprintf("narrative.stuGrade BETWEEN %s AND %s",$gradeStart,  $gradeEnd), FALSE, FALSE);
 		}
 
 		$this->db->where ( "kTeach", $kTeach );
 		$this->db->where ( "narrTerm", $narrTerm );
 		$this->db->where ( "narrYear", $narrYear );
-		$this->db->where ( $gradeSearch );
 		$this->db->from ( "narrative" );
 		$narrative_list = $this->db->get ()->result ();
 		$narratives = array ();
@@ -352,6 +352,13 @@ $this->_log("notice");
 				"count" => $count,
 				"narratives" => $narratives
 		);
+		}else{
+			return array("count"=>0,
+					"narratives"=>FALSE,
+			);
+			
+			
+		}
 
 	}
 
