@@ -287,6 +287,9 @@ class Teacher extends MY_Controller {
 				"value",
 				"label" 
 		) );
+		if(($teacher_grades->gradeEnd - $teacher_grades->gradeStart) < 3){
+		$grades = array($teacher_grades->gradeStart => format_grade($teacher_grades->gradeStart),$teacher_grades->gradeEnd => format_grade($teacher_grades->gradeEnd));
+		}
 		$output = form_dropdown ( "gradeStart", $grades, $teacher_grades->gradeStart, "id='gradeStart'" );
 		$output .= "-" . form_dropdown ( "gradeEnd", $grades, $teacher_grades->gradeEnd, "id='gradeEnd'" );
 		if ($this->input->get ( "ajax" ) == 1) {
