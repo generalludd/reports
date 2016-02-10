@@ -260,10 +260,10 @@ class Attendance_model extends MY_Model {
 		
 		$this->db->where ( "kStudent", $kStudent );
 		$this->db->where ( "attendDate BETWEEN $between" );
-		$this->db->where ( "attendSubtype !=", "Holiday" );
+		//$this->db->where ( "attendSubtype !=", "Holiday" );//ignoring religious holidays
 		$this->db->group_by ( "attendType,attendSubtype,attendLength" );
-		$this->db->join ( "menu", "student_attendance.attendType = menu.value" );
-		$this->db->join ( "menu subtype", "student_attendance.attendSubtype = subtype.label" );
+		$this->db->join ( "menu", "student_attendance.attendType = menu.value","LEFT" );
+		$this->db->join ( "menu subtype", "student_attendance.attendSubtype = subtype.label","LEFT" );
 		
 		$this->db->select ( "count(attendType) as typeCount", FALSE );
 		$this->db->select ( "attendType, attendSubtype, attendLength" );
@@ -274,9 +274,9 @@ class Attendance_model extends MY_Model {
 		$tardy = 0;
 		if ($result != false) {
 			foreach ( $result as $row ) {
-				if ($row->attendType == "Absent" && $row->attendLength == "") {
+				if ($row->attendType == "Absent" && $row->attendLength == "" && $row->attendSubtype !="Holiday") {
 					$absent += $row->typeCount;
-				} elseif ($row->attendType == "Absent" && $row->attendLength == "Half-Day") {
+				} elseif ($row->attendType == "Absent" && $row->attendLength == "Half-Day" && $row->attendSubtype !="Holiday") {
 					$absent += $row->typeCount / 2;
 				} elseif ($row->attendType == "Tardy") {
 					$tardy += $row->typeCount;
@@ -285,6 +285,7 @@ class Attendance_model extends MY_Model {
 		}
 		$summary ["absent"] = $absent;
 		$summary ["tardy"] = $tardy;
+		$this->_log();
 		return $summary;
 	}
 
