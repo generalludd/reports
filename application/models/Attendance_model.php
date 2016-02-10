@@ -260,7 +260,6 @@ class Attendance_model extends MY_Model {
 		
 		$this->db->where ( "kStudent", $kStudent );
 		$this->db->where ( "attendDate BETWEEN $between" );
-		//$this->db->where ( "attendSubtype !=", "Holiday" );//ignoring religious holidays
 		$this->db->group_by ( "attendType,attendSubtype,attendLength" );
 		$this->db->join ( "menu", "student_attendance.attendType = menu.value","LEFT" );
 		$this->db->join ( "menu subtype", "student_attendance.attendSubtype = subtype.label","LEFT" );
@@ -278,14 +277,13 @@ class Attendance_model extends MY_Model {
 					$absent += $row->typeCount;
 				} elseif ($row->attendType == "Absent" && $row->attendLength == "Half-Day" && $row->attendSubtype !="Holiday") {
 					$absent += $row->typeCount / 2;
-				} elseif ($row->attendType == "Tardy") {
+				} elseif ($row->attendType == "Tardy" && $row->attendSubtype != "Holiday") {
 					$tardy += $row->typeCount;
 				}
 			}
 		}
 		$summary ["absent"] = $absent;
 		$summary ["tardy"] = $tardy;
-		$this->_log();
 		return $summary;
 	}
 
