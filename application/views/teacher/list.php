@@ -49,9 +49,7 @@ if (! empty($options)) {
 			<a class="button dialog search" href="<?php echo site_url("teacher/show_search?refine=1");?>">Refine Search</a>
 		</div>
 	</fieldset>
-	<? if($this->session->userdata("dbRole") == 1):?>
-	<?=create_button_bar(array(array("text"=>"New User","class"=>"button new dialog","href"=>site_url("teacher/create"))));?>
-	<? endif;?>
+	<?=create_button_bar(array(array("text"=>"New User","class"=>"button new dialog","href"=>site_url("teacher/create"),"dbRole"=>1)));?>
 
 <? foreach($roles as $role):?>
 <div class="column column-3">

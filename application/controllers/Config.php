@@ -14,7 +14,7 @@ class Config extends MY_Controller {
 	{
 		if ($this->session->userdata ( "dbRole" ) == 1) {
 			$data["items"] = $this->config_model->get_all();
-			$data["title"] = "Editing Site-wide Configuration";
+			$data["title"] = "Editing Site-Wide Configuration Variables";
 			$data["target"] = "config/list";
 			$this->load->view("page/index",$data);
 		}else{
@@ -23,9 +23,21 @@ class Config extends MY_Controller {
 		}
 	}
 	
+	function create(){
+		$data["title"]= "Add a Global Configuration Variable";
+		$data["target"] = "config/create";
+		$data["action"] = "insert";
+		$data["config"] = NULL;
+		if($this->input->get("ajax")==1){
+			$this->load->view($data["target"],$data);
+		}else{
+			$this->load->view("page/index",$data);
+		}
+	}
+	
 	function edit($kConfig){
 		$data["config"] = $this->config_model->get($kConfig);
-		$data["title"] = "Edit a Configuration";
+		$data["title"] = "Edit a Global Configuration Variable";
 		$data["target"] = "config/edit";
 		$data["action"] = "update";
 		if($this->input->get("ajax")==1){

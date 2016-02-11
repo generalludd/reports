@@ -4,15 +4,21 @@
 
 <form id="edit-config" name="edit-config" action="<?php echo base_url("config/$action");?>" method="post">
 <input type="hidden" name="kConfig" value="<?php echo get_value($config, "kConfig");?>"/>
+<input type="hidden" name="config_group" value=<?php echo get_value($config,"config_group");?>"/>
 <input type="hidden" name="config_key" value="<?php echo get_value($config,"config_key");?>"/>
-<input type="hidden" name="config_description" value="<?php echo get_value($config,"config_description");?>"/>
-<p><?php echo $config->config_description;?></p>
+<p style="max-width:380px;font-weight: bold;"><?php echo get_value($config,"config_description");?></p>
 <p>
-<label for=config_value"><?php echo ucwords(humanize($config->config_key),"_");?></label>&nbsp;
+<label for=config_value"><?php echo ucwords(humanize(get_value($config,"config_key")),"_");?></label>&nbsp;
 <input type="text" name="config_value" value="<?php echo get_value($config,"config_value");?>"/>
 <p>
 <p>
-<input type="submit" name="submit" value="<?php echo ucfirst($action);?>" class="button edit"/>
+<label for="config_description" style="display:block; padding-bottom: 1em">Description</label>
+<textarea name="config_description" style="min-width: 380px;min-height:2em">
+<?php echo get_value($config,"config_description");?>
+</textarea>
+</p>
+<p>
+<input type="submit" name="submit" value="<?php echo ucfirst($action);?>" class="button edit" />
 </p>
 
 

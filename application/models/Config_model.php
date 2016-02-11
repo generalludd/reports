@@ -74,6 +74,7 @@ class Config_model extends CI_Model
 		if($config_group){
 			$this->db->where("config_group", $config_group);
 		}
+		$this->db->order_by("config_group");
 		$result = $this->db->get()->result();
 		return $result;
 	}

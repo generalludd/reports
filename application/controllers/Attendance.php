@@ -461,7 +461,7 @@ class Attendance extends MY_Controller {
 	 */
 	function truancy_notification($record, $subtype = FALSE)
 	{
-		if (($subtype == "Unexcused" && $record->total > UNEXCUSED_ABSENCE_THRESHOLD) || $record->total > TRUANCY_THRESHOLD) {
+		if (($subtype == "Unexcused" && $record->total > UNEXCUSED_THRESHOLD) || $record->total > TRUANCY_THRESHOLD) {
 			$subtype || $subtype = "total";
 			$today = date ( 'Y-m-d' );
 			if (get_current_term () == "Mid-Year") {
@@ -471,8 +471,10 @@ class Attendance extends MY_Controller {
 			}
 			$student = format_name ( $record->stuNickname, $record->stuLast );
 			$subject = sprintf ( "Truancy alert for %s", $student );
-			if ($subtype == "Unexcused") {
-				$threshold = UNEXCUSED_ABSENCE_THRESHOLD;
+			if ($subtype == "Unexcused" ) {
+				$threshold = UNEXCUSED_THRESHOLD;
+			}elseif($subtype == "Illness"){
+				$threshold = ILLNESS_THRESHOLD;
 			} else {
 				$threshold = TRUANCY_THRESHOLD;
 			}
@@ -480,7 +482,7 @@ class Attendance extends MY_Controller {
 			$body ['handbook'] = sprintf ( "This exceeds the limit of %s %s absences as identified in the school handbook.", $threshold, strtolower ( $subtype ) );
 			$body ['link'] = sprintf ( "You can view %s's record <a href='%s'>here.</a>", $record->stuNickname, site_url ( "attendance/search/$record->kStudent?startDate=$startDate" ) );
 			$this->email->from ( "frontoffice@fsmn.org" );
-			$this->email->to ( "head@fsmn.org" );
+			$this->email->to ( "head@fsmn.org,assistanthead@fsmn.org" );
 			$message = implode ( "\n", $body );
 			$this->email->subject ( $subject );
 			$this->email->message ( $message );
