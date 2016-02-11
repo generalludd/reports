@@ -248,12 +248,12 @@ class Attendance_model extends MY_Model {
 	function summarize($kStudent, $term, $year)
 	{
 		$this->load->model ( "config_model" );
-		$year_start = $this->config_model->get ( "year-start", "config_value" )->config_value;
-		$term_end = $this->config_model->get ( "year-end", "config_value" )->config_value;
+		$year_start = $this->config_model->get_by_key ( "year-start", "config_value" )->config_value;
+		$term_end = $this->config_model->get_by_key( "year-end", "config_value" )->config_value;
 		$nextYear = $year + 1;
 		
 		if ($term == "Mid-Year") {
-			$term_end = $this->config_model->get ( "mid-year", "config_value" )->config_value;
+			$term_end = $this->config_model->get_by_key( "mid-year", "config_value" )->config_value;
 		}
 		
 		$between = "'$year" . "-" . $year_start . "' AND '" . $nextYear . "-$term_end'";

@@ -26,8 +26,15 @@ class Config_model extends CI_Model
 		}
 	}
 	
+	function get($kConfig){
+		$this->db->from("config");
+		$this->db->where("kConfig",$kConfig);
+		$result = $this->db->get()->row();
+		return $result;
+	}
+	
 
-	function get($config_key, $fields = NULL)
+	function get_by_key($config_key, $fields = NULL)
 	{
 
 		if(!empty($fields)){
@@ -69,6 +76,12 @@ class Config_model extends CI_Model
 		}
 		$result = $this->db->get()->result();
 		return $result;
+	}
+	
+	function update($kConfig){
+		$this->db->where("kConfig",$kConfig);
+		$this->prepare_variables();
+		$this->db->update("config",$this);
 	}
 
 	

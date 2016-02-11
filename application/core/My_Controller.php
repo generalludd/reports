@@ -21,8 +21,8 @@ class MY_Controller extends CI_Controller
             die();
         }else{
         	$this->load->model("config_model");
-        	define("YEAR_START", get_current_year() . "-" . $this->config_model->get ( "year-start", "config_value" )->config_value);
-        	define("MID_YEAR", get_current_year() + 1 . "-" .  $this->config_model->get ( "mid-year", "config_value" )->config_value);
+        	define("YEAR_START", get_current_year() . "-" . $this->config_model->get_by_key ( "year-start", "config_value" )->config_value);
+        	define("MID_YEAR", get_current_year() + 1 . "-" .  $this->config_model->get_by_key ( "mid-year", "config_value" )->config_value);
         }
     }
 

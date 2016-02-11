@@ -11,6 +11,9 @@ if($this->session->userdata("userID")== 1000){
 }else{
 	$user_buttons[] = array("selection" => "feedback", "text" =>"Feedback", "type" => "span", "class" => "link create_feedback");
 }
+if($this->session->userdata("dbRole")==1){
+	$user_buttons[]= array("selection"=>"config","text"=>"Global Settings","title"=>"Settings for semester end dates, etc","href"=>site_url("config"), "class"=>"link");
+}
 $user_buttons[] = array("selection" => "auth","class"=>"link", "text" => "Log Out", "href" => site_url("auth/logout"),"title" => $this->session->userdata("username"));
 
 print create_button_bar($user_buttons);
