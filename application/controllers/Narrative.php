@@ -495,7 +495,7 @@ class Narrative extends MY_Controller {
 				"subject" 
 		) );
 		
-		if ($this->session->userdata ( "userRole" ) == 1) {
+		if ($this->session->userdata ( "dbRole" ) == 1) {
 			$subjects = $this->subject_model->get_all ();
 		}
 		$grade_list = $this->menu_model->get_pairs ( "grade" );
@@ -672,47 +672,6 @@ class Narrative extends MY_Controller {
 	}
 
 	/**
-	 * DEPRECATED
-	 * this function was designed to allow the sorting of the student's various
-	 * narratives within their final report presumably to place
-	 * them in an order that reflects best on the student's performance.
-	 * This feature has not been needed and may be removed from the system.
-	 */
-	function show_sorter()
-	{
-		$this->load->model ( "subject_sort_model" );
-		$kStudent = $this->input->get ( "kStudent" );
-		$data ["kStudent"] = $kStudent;
-		$data ["narrTerm"] = $this->input->get ( "narrTerm" );
-		$data ["narrYear"] = $this->input->get ( "narrYear" );
-		$data ["reportSort"] = $this->subject_sort_model->get_sort ( $kStudent, $data ["narrTerm"], $data ["narrYear"], "grades" );
-		$data ["kTeach"] = 1000;
-		$data ["target"] = "narrative/sort";
-		$data ["title"] = "Sorting Narratives";
-		$data ["school_year"] = format_schoolyear ( $data ["narrYear"], $data ["narrTerm"] );
-		$this->load->view ( "page/index", $data );
-	}
-
-	/**
-	 * DEPRECATED
-	 * This functions with the show_sorter interface to create a sorting order
-	 * for a student's individual narratives within their
-	 * full report.
-	 * As mentioned above, this has been deprecated because the feature has not
-	 * been need thusfar.
-	 */
-	function set_sort()
-	{
-		$this->load->model ( "subject_sort_model" );
-		$kStudent = $this->input->post ( "kStudent" );
-		$narrYear = $this->input->post ( "narrYear" );
-		$narrTerm = $this->input->post ( "narrTerm" );
-		$reportSort = $this->input->post ( "reportSort" );
-		$this->subject_sort_model->set_sort ( $kStudent, $narrTerm, $narrYear, $reportSort );
-		redirect ( "narrative/student_list/$kStudent" );
-	}
-
-	/**
 	 * Shows a form that allows editors to search and replace phrases in a batch
 	 * of narratives based on selected
 	 * criteria in the form.
@@ -785,9 +744,8 @@ class Narrative extends MY_Controller {
 	 * @TODO create an interface for showing deleted narratives for a given
 	 * teacher, term, year or other criteria.
 	 */
-	function list_backups()
+	function list_backups($kNarrative)
 	{
-		$kNarrative = $this->uri->segment ( 3 );
 		$this->load->model ( "backup_model" );
 		$data ["backups"] = $this->backup_model->get_all ( $kNarrative, "recModified,narrText" );
 		$data ["kNarrative"] = $kNarrative;
