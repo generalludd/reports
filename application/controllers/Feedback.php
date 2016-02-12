@@ -61,7 +61,7 @@ class Feedback extends My_Controller {
 		$this->email->subject($subject);
 		$this->email->message($message);
 		$this->email->send();
-		if($this->session->userdata("userID") == 1000){
+		if($this->session->userdata("userID") == ROOT_USER){
 			$this->email->print_debugger();
 		}
 		echo "<p>Your feedback has been sent.<br/>A copy of your message will appear in your inbox at $teacher->email</p>";

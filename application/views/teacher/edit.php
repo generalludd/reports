@@ -29,14 +29,12 @@ if($isAdvisor){
 <input type="text" id="email" class="required" name="email" value="<?=get_value($teacher, 'email');?>" />
 </p>
 
-<? if($this->session->userdata("dbRole") == 1 && $this->session->userdata("userID") == 1000){
-	//if(get_value($teacher,"kTeach",0) != 1000){
+<? if($this->session->userdata("dbRole") == 1 && $this->session->userdata("userID") == ROOT_USER){
 		echo "<p><label for='dbRole'>User Role</label>";
 		echo form_dropdown('dbRole', $dbRoles, get_value($teacher,'dbRole'), 'id="dbRole"');
 		echo "</p><p><label for='status'>User Status</label>";
 		echo form_dropdown('status', $userStatus, get_value($teacher,'status'), 'id="status"');
 		echo "</p>";
-	//}
 	
 }?>
 

@@ -35,7 +35,7 @@ class Preference extends MY_Controller {
 	{
 		if($this->input->post("kTeach")){
 			$kTeach = $this->input->post("kTeach");
-			if($kTeach == $this->session->userdata("userID") || $this->session->userdata("userID") == 1000){
+			if($kTeach == $this->session->userdata("userID") || $this->session->userdata("userID") == ROOT_USER){
 				$type = $this->input->post("type");
 				$value = $this->input->post("value");
 				$output = $this->preference->update($kTeach, $type, $value);

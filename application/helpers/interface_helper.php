@@ -167,7 +167,9 @@ function create_button_bar($buttons, $options = NULL)
 			}
 		}
 		if (array_key_exists ( "dbRole", $button )) {
-			if($button ['dbRole'] == DB_ROLE){
+			if($button["dbRole"] == "not-superuser" && USER_ID != ROOT_USER){
+				$display = TRUE;
+			}elseif($button ['dbRole'] == DB_ROLE){
 				$display = TRUE;
 			}else {
 				$display = FALSE;

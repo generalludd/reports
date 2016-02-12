@@ -12,7 +12,7 @@ class user extends MY_Controller
 	{
 		$kTeach = $this->input->get("kTeach");
 		$userID = $this->session->userdata("userID");
-		if($kTeach == $userID || $userID == 1000){
+		if($kTeach == $userID || $userID == ROOT_USER){
 			$data["kTeach"] = $kTeach;
 			$this->load->view("auth/changepass", $data);
 		}
@@ -25,7 +25,7 @@ class user extends MY_Controller
 
 		$userID = $this->session->userdata("userID");
 		$this->load->model("auth_model");
-		if($kTeach == $userID || $userID == 1000){
+		if($kTeach == $userID || $userID == ROOT_USER){
 			$output = "The passwords did not match";
 			$current_password = $this->input->post("current_password");
 

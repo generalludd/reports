@@ -9,7 +9,7 @@ class admin extends MY_Controller{
 	function __construct()
 	{
 		parent::__construct();
-		if($this->session->userdata("userID") == 1000){
+		if($this->session->userdata("userID") == ROOT_USER){
 			$this->load->model("preference_type_model","preference");
 			$this->load->model("auth_model");
 		}else{
@@ -37,7 +37,7 @@ class admin extends MY_Controller{
 	 */
 	function masquerade()
 	{
-		if($this->session->userdata("userID") == "1000"){ //administrator account
+		if($this->session->userdata("userID") == ROOT_USER){ //administrator account
 			$userID = $this->uri->segment(3);
 			$this->load->model("teacher_model");
 			$teacher = $this->teacher_model->get($userID);

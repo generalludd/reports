@@ -97,6 +97,7 @@ define('X',"<img src='/images/delete.png' alt='' width='12' height='12' border='
 define('APP_VERSION', "6.5");
 //familiar name for student reports.
 define('STUDENT_REPORT','Orange Slip');
+define('ROOT_USER',1000);
 
 
 

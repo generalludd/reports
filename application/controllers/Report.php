@@ -281,7 +281,7 @@ class Report extends MY_Controller
 		$this->email->subject($subject);
 		$this->email->message($message);
 		$this->email->send();
-		if($this->session->userdata("userID") == 1000){
+		if($this->session->userdata("userID") == ROOT_USER){
 			$this->email->print_debugger();
 		}
 		$this->session->set_userdata("notice",sprintf("The %s has been sent to %s at %s",STUDENT_REPORT,$report->advisorFirst,$report->advisorEmail));

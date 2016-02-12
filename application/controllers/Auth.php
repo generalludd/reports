@@ -89,7 +89,7 @@ class Auth extends CI_Controller
 
 		//make sure someone is logged in before logging the logout
 		if($this->session->userdata("userID")){
-			$this->auth_model->log($this->session->userdata("userID"),"logout");
+			//$this->auth_model->log($this->session->userdata("userID"),"logout");
 		}
 		//destroy the session anyway.
 		$this->session->sess_destroy();
@@ -108,8 +108,8 @@ class Auth extends CI_Controller
 		$kTeach = $this->input->post("kTeach");
 		$userID = $this->session->userdata("userID");
 
-		//Unauthorized users are those who are not the master user (1000) and are trying to change someone else's password
-		if($kTeach == $userID || $userID == 1000){
+		//Unauthorized users are those who are not the ROOT_USER and are trying to change someone else's password
+		if($kTeach == $userID || $userID == ROOT_USER){
 			$output = "The passwords did not match";
 			$current_password = $this->input->post("current_password");
 

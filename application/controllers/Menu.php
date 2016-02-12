@@ -5,7 +5,7 @@ class Menu extends MY_Controller {
 	function __construct()
 	{
 		parent::__construct();
-		if($this->session->userdata("userID") == 1000){
+		if($this->session->userdata("userID") == ROOT_USER){
 			$this->load->model("menu_model","menu");
 		}else{
 			redirect("/");
@@ -36,7 +36,7 @@ class Menu extends MY_Controller {
 	function edit()
 	{
 		$kMenu = $this->input->get("kMenu");
-		if($this->session->userdata("userID") == 1000){
+		if($this->session->userdata("userID") == ROOT_USER){
 			$data["menu_item"] = $this->menu->get($kMenu);
 			$data["target"] = "menu/edit";
 			$data["action"] = "update";
@@ -76,7 +76,7 @@ class Menu extends MY_Controller {
 
 	function insert()
 	{
-		if($this->session->userdata("userID") == 1000){
+		if($this->session->userdata("userID") == ROOT_USER){
 			$this->menu->insert();
 		}
 		$this->index();

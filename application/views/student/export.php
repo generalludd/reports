@@ -2,7 +2,7 @@
 
 $filename = "student_export.csv";
 $header = "First Name,Nickname,Last Name,Gender,Birthday,Age,Current Grade,Enrollment Grade,Enrollment Year,Classroom,MS-Group,Classroom Teacher/Advisor,Humanities Teacher,Email,Email Active";
-if($this->session->userdata("userID") == 1000){
+if($this->session->userdata("userID") == ROOT_USER){
 	$header .= ",Email Password";
 }
 $output = array($header);
@@ -26,7 +26,7 @@ foreach($students as $student){
 	}else{
 		$line[] = "No";
 	}
-	if($this->session->userdata("userID") == 1000){
+	if($this->session->userdata("userID") == ROOT_USER){
 		$line[] = $student->stuEmailPassword;
 	}
 

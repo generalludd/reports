@@ -12,7 +12,7 @@ class preference_type extends MY_Controller
 	function __construct()
 	{
 		parent::__construct();
-		if($this->session->userdata("userID") == 1000){
+		if($this->session->userdata("userID") == ROOT_USER){
 			$this->load->model("preference_type_model","preference");
 
 		}else{
@@ -25,7 +25,7 @@ class preference_type extends MY_Controller
 	 */
 	function create()
 	{
-		if($this->session->userdata("userID") == 1000){
+		if($this->session->userdata("userID") == ROOT_USER){
 			$data["preference"] = NULL;
 			$formats = $this->preference->get_formats();
 			$data["formats"] = get_keyed_pairs($formats, array("format","format"));
@@ -66,7 +66,7 @@ class preference_type extends MY_Controller
 	 */
 	function edit()
 	{
-		if($this->session->userdata("userID") == 1000){
+		if($this->session->userdata("userID") == ROOT_USER){
 			$type = $this->input->get("type");
 			$data["preference"] = $this->preference->get($type);
 			$formats = $this->preference->get_formats();
@@ -97,7 +97,7 @@ class preference_type extends MY_Controller
 	 */
 	function delete()
 	{
-		if($this->session->userdata("userID") == 1000)
+		if($this->session->userdata("userID") == ROOT_USER)
 		{
 			$type = $this->input->post("type");
 			$this->preference->delete($type);

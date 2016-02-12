@@ -18,13 +18,14 @@ $user_buttons [] = array (
 		"class" => "link",
 		"text" => "Site Admin",
 		"href" => site_url ( "admin" ),
-		"userID" => 1000 
+		"userID" => ROOT_USER 
 );
 $user_buttons [] = array (
 		"selection" => "feedback",
 		"text" => "Feedback",
 		"type" => "span",
-		"class" => "link create_feedback" 
+		"class" => "link create_feedback" ,
+		"dbRole"=> "not-superuser",
 );
 $user_buttons [] = array (
 		"selection" => "config",

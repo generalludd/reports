@@ -419,7 +419,7 @@ class Attendance extends MY_Controller {
 		$this->email->message ( $message );
 		$this->email->set_alt_message ( $message );
 		$this->email->send ();
-		if ($this->session->userdata ( "userID" ) == 1000) {
+		if ($this->session->userdata ( "userID" ) == ROOT_USER) {
 			$this->email->print_debugger ();
 		}
 		$note = "<p>The front office has been notified of your attendance.</p>";
@@ -487,7 +487,7 @@ class Attendance extends MY_Controller {
 			$this->email->subject ( $subject );
 			$this->email->message ( $message );
 			$this->email->send ();
-			if ($this->session->userdata ( "userID" ) == 1000) {
+			if ($this->session->userdata ( "userID" ) == ROOT_USER) {
 				$this->email->print_debugger ();
 			}
 			

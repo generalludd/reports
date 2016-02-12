@@ -62,7 +62,7 @@ class Teacher_model extends MY_Model {
 		$this->db->order_by ( "gradeEnd", "ASC" );
 		
 		if ($userRole == 1) {
-			if ($userID != 1000) { // only the administrator should have any
+			if ($userID != ROOT_USER) { // only the administrator should have any
 			                       // reason to see the other administrators.
 				$this->db->where ( "dbRole != ", 1 );
 			}
@@ -238,7 +238,7 @@ class Teacher_model extends MY_Model {
 	{
 		// if($this->input->post("dbRole")){
 		$data ["dbRole"] = $this->input->post ( "dbRole" );
-		if ($this->session->userdata ( "dbRole" ) == 1 && $this->session->userdata ( "userID" ) == 1000) {
+		if ($this->session->userdata ( "dbRole" ) == 1 && $this->session->userdata ( "userID" ) == ROOT_USER) {
 			$this->db->where ( "kTeach", $kTeach );
 			$this->db->update ( "teacher", $data );
 		}

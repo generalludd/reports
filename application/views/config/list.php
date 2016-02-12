@@ -1,7 +1,7 @@
 <?php
 $current_group = NULL;
 
-$buttons[] = array("text"=>"Add a Variable","class"=>"button dialog new small","href"=>site_url("config/create"),"userID"=>1000);
+$buttons[] = array("text"=>"Add a Variable","class"=>"button dialog new small","href"=>site_url("config/create"),"userID"=>ROOT_USER);
 echo create_button_bar($buttons);
 ?>
 
