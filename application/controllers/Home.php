@@ -31,5 +31,57 @@ class Home extends MY_Controller
 		$this->load->view('page/index', $data );
 	}
 
+	function fix_ids(){
+		$tables = array(
+				"assignment",
+				"assignment_category",
+				"backup",
+				"benchmark_legend",
+				"chart_legend",
+				"concept",
+				"grade_scale",
+				"narrative",
+				"narrative_edit",
+				"preference",
+				"query_tracking",
+				"student",
+				"student_benchmark",
+				"student_concept",
+				"student_report",
+				"teacher_subject",
+				"template",
+				"user_log",
+		);
+		
+		for($i=0; $i<count($tables);$i++){
+		$table = $tables[$i];
+		 printf("update `%s`,`teacher` set `%s`.`kTeach` = `teacher`.`user_id` where `%s`.`kTeach` = `teacher`.`kTeach`;",$table,$table,$table);
+		
+		}
+		print "update `student`,`teacher` set `student`.`humanitiesTeacher` = `teacher`.`user_id` where `student`.`humanitiesTeacher` = `teacher`.`kTeach`;";
+		print "update `student_report`,`teacher` set `student_report`.`kAdvisor` = `teacher`.`user_id` where `student_report`.`kAdvisor` = `teacher`.`kTeach`;";
+		
+		$modifiers = array(
+				
+				"backup",
+				"benchmark",
+				"benchmark_legend",
+				"chart_legend",
+				"narrative",
+				"student",
+				"student_attendance",
+				"student_report",
+				"subject_sort",
+				"support",
+				"support_file",
+				"template",
+		);
+		for($i=0; $i<count($modifiers);$i++){
+			$modifier = $modifiers[$i];
+			printf("update `%s`,`teacher` set `%s`.`recModified` = `teacher`.`user_id` where `%s`.`recModified` = `teacher`.`kTeach`;",$modifier,$modifier,$modifier);
+		
+		}
+		
+	}
 
 }
