@@ -19,7 +19,7 @@ if(!$gradeEnd){
 <p>Enter the grade range and select the appropriate values as needed.</p>
 <form id='attendance-check' name='attendance-check' action='<?=site_url("attendance/check");?>' method='get'>
 <p><label for='date'>Date: </label><input type='date' id='date' name='date' value='<?php echo date("Y-m-d");?>' required/></p>
-<p><label for='gradeStart'>Grade Range: </label><input type="text" name="gradeStart" id="gradeStart" class="grade" value="<?php echo $gradeStart; ?>" required/>&dash;
+<p><label for='gradeStart'>Grade Range: </label><input type="text" name="gradeStart" id="gradeStart" class="grade" value="<?php echo $gradeStart; ?>" required/>-
 <input type="text" name="gradeEnd"  class="grade" id="gradeEnd" value="<?php echo $gradeEnd;?>" required/></p>
 <?php $css_class = !get_cookie($cookie_day . "kTeach") && (get_cookie($cookie_day . "humanitiesTeacher") || get_cookie($cookie_day. "stuGroup"))?"visible":"hidden";?>
 <div class="middle-school <?php echo $css_class;?>">
