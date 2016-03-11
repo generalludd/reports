@@ -287,8 +287,19 @@ class Assignment_model extends MY_Model {
 	{
 		$kCategory = FALSE;
 		if (array_key_exists ( "kTeach", $values )) {
-			$this->db->insert ( "assignment_category", $values );
-			$kCategory = $this->db->insert_id ();
+			return $this->_replace_into("assignment_category",$values);
+		
+// 			$query = sprintf("REPLACE INTO assignment_category ( `kTeach`, `category`, `weight`, `gradeStart`, `gradeEnd`, `term`, `year`) VALUES('%s','%s','%s','%s','%s','%s','%s')",
+// 					$values->kTeach,
+// 					$values->category,
+// 					$values->weight,
+// 					$values->gradeStart,
+// 					$values->gradeEnd,
+// 					$values->term,
+// 					$values->year
+// 			);
+// 			$this->db->query($query);
+// 			$kCategory = $this->db->insert_id ();
 			$this->_log ( "notice" );
 		}
 		return $kCategory;

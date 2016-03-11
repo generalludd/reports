@@ -8,6 +8,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
 	<span
 		class="button new small add-category"
 		id="teach_<?=$kTeach;?>">Add Category</span></li>
+		<?php if(empty($categories)):?>
+		<li><a href="<?php echo site_url("assignment/duplicate_categories?dialog=1");?>" class="button dialog edit small duplicate-categories" title="Duplicate categories from a previous term" >Duplicate Categories</a></li>
+		<?php endif;?>
 		</ul>
 </div>
 <table
@@ -35,7 +38,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 foreach ($categories as $category) {
     $data["category"] = $category;
     $data["action"] = "update";
-    $this->load->view("assignment/category_row", $data);
+    $this->load->view("assignment/category/row", $data);
 }
 ?>
 	</tbody>

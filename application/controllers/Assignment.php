@@ -69,7 +69,7 @@ class Assignment extends MY_Controller {
 		}
 		if ($date_start && $date_end) {
 			$date_range ['date_start'] = $date_start;
-			$date_range ['date_end'] =  $date_end;
+			$date_range ['date_end'] = $date_end;
 		}
 		
 		$grade_options ['from'] = 'grade';
@@ -206,11 +206,10 @@ class Assignment extends MY_Controller {
 			) );
 			$data ['target'] = 'assignment/batch/index';
 			$data ['title'] = 'Enter Batch Assignments';
-			if($this->input->get("ajax")){
-				$this->_view($data);
-			}else{
+			if ($this->input->get ( "ajax" )) {
+				$this->_view ( $data );
+			} else {
 				$this->load->view ( 'page/index', $data );
-				
 			}
 		}
 	}
@@ -234,7 +233,7 @@ class Assignment extends MY_Controller {
 			$points = $this->input->post ( 'points' );
 		}
 		$students = $this->grade->batch_insert ( $kAssignment, $kTeach, $term, $year, $gradeStart, $gradeEnd, $points );
-		redirect ( "assignment/chart?kTeach=$kTeach&term=$term&year=$year&gradeStart=$gradeStart&gradeEnd=$gradeEnd");
+		redirect ( "assignment/chart?kTeach=$kTeach&term=$term&year=$year&gradeStart=$gradeStart&gradeEnd=$gradeEnd" );
 	}
 
 	/**
@@ -301,10 +300,10 @@ class Assignment extends MY_Controller {
 				'kCategory',
 				'category' 
 		) );
-		$data['title'] = sprintf('Editing Assignment %s', $assignment->assignment);
-		$data['target'] = 'assignment/edit';
+		$data ['title'] = sprintf ( 'Editing Assignment %s', $assignment->assignment );
+		$data ['target'] = 'assignment/edit';
 		if ($this->input->get ( 'ajax' )) {
-			$this->load->view ($data['target'], $data );
+			$this->load->view ( $data ['target'], $data );
 		} else {
 			$this->load->view ( 'page/index', $data );
 		}
@@ -348,18 +347,22 @@ class Assignment extends MY_Controller {
 	 * return a table row for creating assignment weight categories
 	 * (AJAX-based).
 	 */
-	function create_category()
+	function create_category($kTeach)
 	{
 		$data ['category'] = NULL;
 		$data ['action'] = 'insert';
-		$data ['kTeach'] = $this->uri->segment ( 3 );
-		$this->load->view ( 'assignment/category_row', $data );
+		$data['kTeach'] = $kTeach;
+		$this->load->view ( 'assignment/category/row', $data );
 	}
-	
-	function point_types_menu(){
-		$this->load->model("menu_model","menu");
-		$menu_items = get_keyed_pairs($this->menu->get_pairs("points_type"),array("value","label"));
-		echo form_dropdown("points_type",$menu_items);
+
+	function point_types_menu()
+	{
+		$this->load->model ( "menu_model", "menu" );
+		$menu_items = get_keyed_pairs ( $this->menu->get_pairs ( "points_type" ), array (
+				"value",
+				"label" 
+		) );
+		echo form_dropdown ( "points_type", $menu_items );
 	}
 
 	/**
@@ -388,7 +391,7 @@ class Assignment extends MY_Controller {
 			$data ['category'] = $category;
 			$data ['action'] = 'update';
 			$data ['kTeach'] = $kTeach;
-			$this->load->view ( 'assignment/category_row', $data );
+			$this->load->view ( 'assignment/category/row', $data );
 		} else {
 			echo $this->db->last_query ();
 		}
@@ -397,15 +400,15 @@ class Assignment extends MY_Controller {
 	/**
 	 * display a dialog for editing assignment weight categories.
 	 */
-	function edit_categories()
+	function edit_categories($kTeach)
 	{
-		$data ['kTeach'] = $this->uri->segment ( 3 );
+		$data ['kTeach'] = $kTeach;
 		$data ['gradeStart'] = $this->input->get ( 'gradeStart' );
 		$data ['gradeEnd'] = $this->input->get ( 'gradeEnd' );
 		$data ['year'] = $this->input->get ( 'year' );
 		$data ['term'] = $this->input->get ( 'term' );
 		$data ['categories'] = $this->assignment->get_categories ( $data ['kTeach'], $data ['gradeStart'], $data ['gradeEnd'], $data ['year'], $data ['term'] );
-		$data ['target'] = 'assignment/categories';
+		$data ['target'] = 'assignment/category/list';
 		if ($this->input->get ( 'ajax' )) {
 			$target = $data ['target'];
 		} else {
@@ -428,5 +431,32 @@ class Assignment extends MY_Controller {
 		$data ['term'] = $this->input->post ( 'term' );
 		$data ['year'] = $this->input->post ( 'year' );
 		$this->assignment->update_category ( $kCategory, $data );
+	}
+
+	/**
+	 * duplicate the grade categories for a teacher from a previous term
+	 */
+	function duplicate_categories()
+	{
+		if ($this->input->get ( "dialog" ) == 1) {
+			$data ['title'] = "Duplicate Categories from Previous Term";
+			$this->load->view ( "assignment/category/duplicate", $data );
+		} else if ($this->input->get ( "duplicate" ) == 1) {
+			$kTeach = $this->input->get ( "kTeach" );
+			$year = $this->input->get ( "year" );
+			$term = $this->input->get ( "term" );
+			$gradeStart = $this->input->get ( "gradeStart" );
+			$gradeEnd = $this->input->get ( "gradeEnd" );
+			$sourceTerm = $this->input->get ( "sourceTerm" );
+			$sourceYear = $this->input->get ( "sourceYear" );
+			$sourceCategories = $this->assignment->get_categories ( $kTeach, $gradeStart, $gradeEnd, $sourceYear, $sourceTerm );
+			foreach ( $sourceCategories as $source ) {
+				unset($source->kCategory);
+				$source->year = $year;
+				$source->term = $term;
+				$this->assignment->insert_category ( $source );
+			}
+			redirect ( "assignment/chart/?kTeach=$kTeach&gradeStart=$gradeStart&gradeEnd=$gradeEnd&year=$year&term=$term" );
+		}
 	}
 }

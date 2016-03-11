@@ -13,4 +13,16 @@ class MY_Model extends CI_Model {
            $this->session->set_flashdata($target, $this->db->last_query());
        }
     }
+    
+    function _replace_into($table,$fields){
+    	if(!is_array($fields)){
+    		$fields = (array)$fields;
+    	}
+    	$keys = array_keys($fields);
+    	$values = array_values($fields);
+    	$query = sprintf("REPLACE INTO %s (`%s`) VALUES('%s')",$table, implode("`,`",$keys),implode("','",$values));
+    	$this->db->query($query);
+    	return $this->db->insert_id();
+
+    }
 }

@@ -23,7 +23,7 @@ $yearEnd = $year + 1;
 
 	</td>
 	<td>
-	<?=form_dropdown("year", get_year_list(), $year ,sprintf("id='year_%s' class='year %s-year'",get_value($category,"kCategory","new"),$action)); ?>
+	<?=form_dropdown("year", get_year_list(FALSE,TRUE), $year ,sprintf("id='year_%s' class='year %s-year'",get_value($category,"kCategory","new"),$action)); ?>
 	-<input type="text" name="yearEnd" id="yearEnd"
 		readonly value="<?=$yearEnd;?>" size="4" /></td>
 
