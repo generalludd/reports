@@ -1,4 +1,4 @@
-<?php
+<?php //@TODO fix the flow here to be more properly coded. 
 $current_class = FALSE;
 foreach($students as $student): ?>
 <?php $i = 0; //iterate to make sure there are at least 20 rows for each teacher column?>

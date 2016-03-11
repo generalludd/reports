@@ -77,7 +77,7 @@ $button_box = create_button_bar ( $buttons );
 	<h3>Special Needs Support Summary for <?php echo $studentName;?></h3>
 	<div id='message' class='message'></div>
 	<p>
-		<label for="year">Year for this Documentation:</label> <?php echo form_dropdown("year", $year_list, $year, "id='year' class='yearStart'"); ?>&dash;
+		<label for="year">Year for this Documentation:</label> <?php echo form_dropdown("year", $year_list, $year, "id='year' class='yearStart'"); ?>-
 		<input id='yearEnd' name='yearEnd' size="5" maxlength="4" value='<?php echo $year_end; ?>' readonly />
 	</p>
 	<p>
