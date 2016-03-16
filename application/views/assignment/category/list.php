@@ -1,6 +1,5 @@
 <?php
-
-defined('BASEPATH') or exit('No direct script access allowed');
+defined ( 'BASEPATH' ) or exit ( 'No direct script access allowed' );
 ?>
 
 <script>
@@ -16,23 +15,19 @@ $("#category-table").on("blur","input[name='weight']",function(){
 		}else{
 			$("input.total").removeClass("highlight");
 		}
-    // here, you have your su
 });
 </script>
 <div class="button-box">
-<ul class="button-list">
-<li>
-	<span
-		class="button new small add-category"
-		id="teach_<?=$kTeach;?>">Add Category</span></li>
+	<ul class="button-list">
+		<li><span class="button new small add-category" id="teach_<?=$kTeach;?>">Add Category</span></li>
 		<?php if(empty($categories)):?>
-		<li><a href="<?php echo site_url("assignment/duplicate_categories?dialog=1");?>" class="button dialog edit small duplicate-categories" title="Duplicate categories from a previous term" >Duplicate Categories</a></li>
+		<li><a href="<?php echo site_url("assignment/duplicate_categories?dialog=1");?>" class="button dialog edit small duplicate-categories"
+				title="Duplicate categories from a previous term"
+			>Duplicate Categories</a></li>
 		<?php endif;?>
 		</ul>
 </div>
-<table
-	id="category-table"
-	class="list grid">
+<table id="category-table" class="list grid">
 	<thead>
 		<tr class="first">
 			<th colspan=2></th>
@@ -51,37 +46,30 @@ $("#category-table").on("blur","input[name='weight']",function(){
 	</thead>
 	<tbody>
 		<?
-
-foreach ($categories as $category) {
-    $data["category"] = $category;
-    $data["action"] = "update";
-    $this->load->view("assignment/category/row", $data);
-}
-?>
+		
+		foreach ( $categories as $category ) {
+			$data ["category"] = $category;
+			$data ["action"] = "update";
+			$this->load->view ( "assignment/category/row", $data );
+		}
+		?>
 	</tbody>
 	<tfoot>
-	<tr>
-	<td>
-	Total Weight:
-	</td>
-	<td>
+		<tr>
+			<td>Total Weight:</td>
+			<td>
 	<?php $sum = 0;?>
 	<?php foreach($categories as $item):?>
 	<?php $sum += $item->weight;?>
 	<?php endforeach;?>
-	<input type="text" class='total' name="total" value="<?php echo $sum; ?>" size=4 readonly/>
-	</td>
-	<td>
-	</td>
-	<td>
-	</td>
-	<td>
-	</td>
-		<td>
-	</td>
-		<td>
-	</td>
-	</tr>
+	<input type="text" class='total' name="total" value="<?php echo $sum; ?>" size=4 readonly />
+			</td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
 	</tfoot>
 </table>
 <div class="button-box">
