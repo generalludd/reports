@@ -232,7 +232,8 @@
 					$data ["subject"] = $subject;
 					$data ["pass_fail"] = $this->grade_preferences->get_all ( $kStudent, array (
 							"school_year" => $year,
-							"subject" => $subject 
+							"subject" => $subject ,
+							"term"=>$term,
 					) );
 					$data ["print_student_name"] = TRUE;
 					$data ["student"] = $this->student->get ( $kStudent );
