@@ -342,7 +342,7 @@
 						$data ["pass_fail"] = $this->grade_preferences->get_all ( $kStudent, array (
 								"school_year" => $year,
 								"subject" => $subject->subject,
-								"term"=>$subject->term,
+								"term"=>$term,
 						) );
 						if (count ( $data ["grades"] )) {
 							$data ["subject"] = $subject->subject;
