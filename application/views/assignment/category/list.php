@@ -15,6 +15,7 @@ $("#category-table").on("blur","input[name='weight']",function(){
 		}else{
 			$("input.total").removeClass("highlight");
 		}
+		//here calculate the sum of the weights so the user can see if they at 100% or not.
 });
 </script>
 <div class="button-box">
