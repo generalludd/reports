@@ -26,6 +26,7 @@ No
 </td>
 <td style="width: 150px;">
 <?php 
+$buttons = array();
 $buttons[] = array("text"=>"Edit","class"=>array("link","edit","small","dialog"), "href"=>site_url("grade_preference/edit/$preference->id"),"id"=>sprintf("edit-grade-preference_%s",$preference->id));
 $buttons[] = array("text"=>"Delete","class"=>array("link small delete delete-grade-preference"),"id"=>sprintf("delete-grade-preference_%s",$preference->id));
 echo create_button_bar($buttons);
