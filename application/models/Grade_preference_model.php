@@ -12,10 +12,11 @@ class Grade_Preference_model extends CI_Model
 
 	function update($data)
 	{
-		if($this->record_exists($data["kStudent"], $data["subject"], $data["school_year"])){
+		if($this->record_exists($data["kStudent"], $data["subject"], $data["school_year"],$data['term'])){
 			$this->db->where("kStudent", $data["kStudent"]);
 			$this->db->where("subject", $data["subject"]);
 			$this->db->where("school_year", $data["school_year"]);
+			$this->db->where("term",$data['term']);
 			$this->db->update("grade_preference",$data);
 		}else{
 			$this->db->insert("grade_preference",$data);
@@ -24,11 +25,12 @@ class Grade_Preference_model extends CI_Model
 
 	}
 
-	function record_exists($kStudent, $subject, $school_year)
+	function record_exists($kStudent, $subject, $school_year, $term)
 	{
 		$this->db->where("kStudent", $kStudent);
 		$this->db->where("subject", $subject);
 		$this->db->where("school_year", $school_year);
+		$this->db->where("term",$term);
 		$this->db->from("grade_preference");
 		return $this->db->count_all_results();
 	}

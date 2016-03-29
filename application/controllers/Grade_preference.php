@@ -79,6 +79,7 @@ class Grade_preference extends MY_Controller
         $data["kStudent"] = $kStudent;
         $data["subject"] = $this->input->post("subject");
         $data["school_year"] = $this->input->post("school_year");
+        $data["term"] = $this->input->post("term");
         $data["pass_fail"] = $this->input->post("pass_fail");
         $this->preference->update($data);
         redirect("student/view/$kStudent");
