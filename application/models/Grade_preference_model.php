@@ -44,7 +44,7 @@ class Grade_Preference_model extends CI_Model
 
 	function get_all($kStudent, $options){
 		$this->db->where("kStudent", $kStudent);
-		$variables = array("subject","school_year");
+		$variables = array("subject","school_year","term");
 		foreach($variables as $variable){
 			if(array_key_exists($variable, $options) && $options[$variable] != NULL){
 				$this->db->where($variable, $options[$variable]);
