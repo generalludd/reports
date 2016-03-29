@@ -172,6 +172,9 @@ $(document).ready(function() {
 					data: form_data,
 					success: function(data){
 						$("#grade-preference-row_" + my_id).fadeOut();
+					},
+					error: function(data){
+						console.log(data);
 					}
 				});
 			}

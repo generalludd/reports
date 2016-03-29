@@ -3,6 +3,7 @@ class Grade_Preference_model extends CI_Model
 {
 	var $subject;
 	var $school_year;
+	var $term;
 	var $pass_fail;
 
 	function __construct(){

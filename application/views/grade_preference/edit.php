@@ -14,6 +14,9 @@ if(get_value($preference,"pass_fail") == 1){
 <input type="text" style="width:5ex" name="school_year" id="school_year" value="<?=$year;?>"/>
 -<?=$year + 1;?></p>
 <p>
+<p>
+<?php echo get_term_menu("term",TRUE,get_value($preference,"term"));?>
+</p>
 <label for="pass_fail">Is Pass Fail?</label>
 <input type="checkbox" name="pass_fail" id="pass_fail" value="1" <?=$pass_fail_check;?>/></p>
 <p>
