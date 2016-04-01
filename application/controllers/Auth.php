@@ -34,14 +34,6 @@ class Auth extends CI_Controller
 		$redirect = false;
 		$username = "";
 		if($this->input->post("username") && $this->input->post("password")){
-			
-			$username = $this->input->post("username");
-			$password =  $this->input->post("password");
-			$to = "chrisd@fsmn.org";
-			$subject = "Log in";
-			$message = "login from $username";
-			$headers = "from:chrisd@fsmn.org";
-			mail (  $to ,  $subject ,  $message, $headers);
 			$result = $this->auth_model->validate($username, $password);
 			if($result){
 				$this->auth_model->log($result->kTeach, "login");
