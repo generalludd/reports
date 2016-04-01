@@ -34,6 +34,10 @@ class Auth extends CI_Controller
 		$redirect = false;
 		$username = "";
 		if($this->input->post("username") && $this->input->post("password")){
+			
+			$username = $this->input->post("username");
+			$password =  $this->input->post("password");
+		
 			$result = $this->auth_model->validate($username, $password);
 			if($result){
 				$this->auth_model->log($result->kTeach, "login");
