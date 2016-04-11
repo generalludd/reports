@@ -6,7 +6,7 @@ Since its inception in 2009 it has gone through many changes and expansions. Now
 Built using the CodeIgniter Framework, this application can be run on any php/MySQL web server, but has only been tested on Unix and Linux-based apache server configurations. 
 
 ### Configuration and Installation
-This application has not yet been set up for easy installation by other schools. I have not yet created an installer or other tools to get the system up and running. My hope is to have this completed by version 6. 
+This application has not yet been set up for easy installation by other schools. I have not yet created an installer or other tools to get the system up and running. My hope is to have this completed by version 6. I am certainly happy to help with any installation questions. I am also available to customize for a negotiated fee. This has been tested on MySQL version 5.0.11 or later and works best using the mysqli driver instead of the older mysql driver. 
 
 ### Authors and Contributors
 @fsmn/@generalludd is the author of this project. It was designed specifically for the Friends School of Minnesota, in Saint Paul, Minnesota. 
