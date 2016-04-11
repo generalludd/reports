@@ -16,7 +16,7 @@
 	</p>
 	<p>
 		<label for="cutoff_date">Cutoff-Date: </label><input type="date"
-			id="cutoff_date" name="cutoff_date" value="<?=$this->input->cookie("cutoff_date");?>"/>
+			id="cutoff_date" name="cutoff_date" value="<?php echo $this->input->cookie("cutoff_date");?>"/>
 	</p>
 	<p>
 		<label for="subject">Subject: </label>
