@@ -1,4 +1,4 @@
-<?php #login.inc$classes = "";$error_text = FALSE;if($errors){	$classes = " errors";	if(is_array($errors)){
+<?php #login.inc$classes = "";$error_text = FALSE;if($errors){	$classes = "errors";	if(is_array($errors)){
 		foreach($errors as $msg){
 			$error_text =  " -$msg<br/>\n";
 		}
