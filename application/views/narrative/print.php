@@ -5,7 +5,7 @@
 
 <head>
 <meta http-equiv="content-type" content="text/html;charset=utf-8" />
-<title>Report for <?=$title;?>
+<title><?=$title;?>
 </title>
 <script type="text/javascript" src="<?=base_url('js/jquery.min.js'); ?>"></script>
 <link href='<?=base_url('css/color.css');?>' rel='stylesheet' type='text/css' media='screen' />
@@ -41,10 +41,6 @@
             }
             changeFont(pSize, tdSize);
             });
-
-            $('.do-print').live('click', function(event){
-                window.print();
-            });
     })
 
         function changeFont(pSize,tdSize){
@@ -69,8 +65,6 @@
 		<span class='button resetFont'>Reset</span>
 		&nbsp;
 		<span class='button reduceFont'>Reduce</span>
-		&nbsp;
-		<span class='button print do-print'>Print</span>
 	</div>
 	<p class="school">
 		Friends School of Minnesota <br /> 1365 Englewood Avenue <br /> St. Paul, MN 55104
