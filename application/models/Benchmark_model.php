@@ -124,7 +124,6 @@ class Benchmark_model extends CI_Model
 	function update_for_student( $kStudent, $kBenchmark, $kTeach, $grade, $comment = NULL)
 	{
 		$output = FALSE;
-		if(!empty($kBenchmark) && !empty($kStudent)){
 			$data = array("kTeach" => $kTeach, "grade" => $grade);
 			if(isset($comment)){
 				$data["comment"] = $comment;
@@ -133,14 +132,13 @@ class Benchmark_model extends CI_Model
 				$this->db->where("kStudent", $kStudent);
 				$this->db->where("kBenchmark", $kBenchmark);
 				$this->db->update("student_benchmark", $data);
-				$output = TRUE;
+				$output = $kBenchmark;
 			}else{
 				$data["kStudent"] = $kStudent;
 				$data["kBenchmark"] = $kBenchmark;
 				$this->db->insert("student_benchmark", $data);
 				$output = $this->db->insert_id();
 			}
-		}
 		return $output;
 	}
 

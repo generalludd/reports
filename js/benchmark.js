@@ -28,9 +28,11 @@ $(document)
 
 					$('.save_student_benchmark').live('click',
 						function(event){
-							var myStudent=$('#kStudent').val();
-							var myTeach=$('#kTeach').val();
-							var myBenchmark=this.id.split("_")[1];
+						
+						var my_id = $(this).parents("tr").attr("id").split("_");
+							var myBenchmark = my_id[1];
+							var myStudent = my_id[2];
+							var myTeach = my_id[3];
 							var myGrade = $("#g_" + myBenchmark).val();
 							var myComment = $("#c_" + myBenchmark).val();
 							$(this).focus();
@@ -42,7 +44,6 @@ $(document)
 									comment: myComment,
 									ajax: 1
 							};
-							
 							var myUrl = base_url + "benchmark/update_for_student";
 						
 							$.ajax({
@@ -50,8 +51,12 @@ $(document)
 								url: myUrl,
 								data: form_data,
 								success: function(data){
+									console.log(data);
 									$("#ssb_" + myBenchmark).hide();
 									$("#save_" + myBenchmark).html(data).show();
+								},
+								error: function(data){
+									console.log(data);
 								}
 							});
 							

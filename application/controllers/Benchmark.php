@@ -190,6 +190,8 @@ class Benchmark extends MY_Controller {
 		$data ["benchmarks"] = $this->benchmark_model->get_for_student ( $narrative->kStudent, $narrative->narrSubject, $narrative->stuGrade, $narrative->narrTerm, $narrative->narrYear );
 		$student = format_name($narrative->stuFirst,$narrative->stuNickname, $narrative->stuLast);
 		$data['title'] = "Editing Benchmarks for $student: $narrative->narrSubject, $narrative->stuGrade, $narrative->narrTerm, $narrative->narrYear";
+		$data['kStudent'] = $narrative->kStudent;
+		$data['kTeach'] = $narrative->kTeach;
 		$data['target'] = "benchmark/edit_for_student";
 		if($this->input->get("ajax")){
 		$this->load->view ($data['target'], $data );
@@ -200,13 +202,17 @@ class Benchmark extends MY_Controller {
 
 	function update_for_student()
 	{
-		$kStudent = $this->input->get_post ( "kStudent" );
-		$kTeach = $this->input->get_post ( "kTeach" );
-		$kBenchmark = $this->input->get_post ( "kBenchmark" );
-		$grade = $this->input->get_post ( "grade" );
-		$comment = $this->input->get_post ( "comment" );
+		$kStudent = $this->input->post ( "kStudent" );
+		$kTeach = USER_ID;
+		$kBenchmark = $this->input->post ( "kBenchmark" );
+		$grade = $this->input->post ( "grade" );
+		if($grade > 10){
+			echo "Must be less than 10";
+			die();
+		}
+		$comment = $this->input->post ( "comment" );
 		$output = $this->benchmark_model->update_for_student ( $kStudent, $kBenchmark, $kTeach, $grade, $comment );
-		if ($output) {
+		if($output){
 			echo OK;
 		}
 	}
