@@ -12,7 +12,7 @@ foreach($benchmarks as $benchmark){
 	}
 	?>
 	<table>
-	<tr>
+	<tr id="benchmark_<?php echo $benchmark->kBenchmark;?>_<?php echo $kStudent;?>_<?php echo $kTeach;?>">
 	<td class='benchmark-label'><?=$benchmark->benchmark;?></td>
 	<td><input type="text" id="g_<?=$benchmark->kBenchmark;?>" name="grade" size="2" class="benchmark-grade benchmark-string" value="<?=$benchmark->grade;?>"/></td>
 	<td><input type="text" id="c_<?=$benchmark->kBenchmark;?>" name="comment" class="benchmark-comment benchmark-string" value="<?=get_value($benchmark,"comment","");?>"/></td>

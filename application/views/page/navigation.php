@@ -93,7 +93,7 @@ $buttons [] = array (
 				"dialog" 
 		),
 		"href" => site_url ( "benchmark/search" ),
-		"dbRole" => 3 
+		"dbRole" => 2, 
 );
 $buttons [] = array (
 		"selection" => "narrative/teacher_list",
