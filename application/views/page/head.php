@@ -50,16 +50,16 @@ var root_url = '<?=base_url();?>';
 <?php endif; ?>
 
 <!-- TARGET-specific scripts -->
-<script type="text/javascript" src="<?=base_url("js/teacher.js");?>"></script>
-<script type="text/javascript" src="<?=base_url("js/student.js");?>"></script>
-<script type="text/javascript" src="<?=base_url("js/template.js");?>"></script>
-<script type="text/javascript" src="<?=base_url("js/benchmark.js");?>"></script>
-<script type="text/javascript" src="<?=base_url("js/attendance.js");?>"></script>
-<script type="text/javascript" src="<?=base_url("js/support.js");?>"></script>
-<script type="text/javascript" src="<?=base_url("js/narrative.js");?>"></script>
-<script type="text/javascript" src="<?=base_url("js/password.js");?>"></script>
-<script type="text/javascript" src="<?=base_url("js/feedback.js");?>"></script>
-<script type="text/javascript" src="<?=base_url("js/assignment.js");?>"></script>
-<script type="text/javascript" src="<?=base_url("js/report.js");?>"></script>
+<script type="text/javascript" src="<?=base_url("js/teacher.js");?>?data=<?php echo date("i");?>"></script>
+<script type="text/javascript" src="<?=base_url("js/student.js");?>?data=<?php echo date("i");?>"></script>
+<script type="text/javascript" src="<?=base_url("js/template.js");?>?data=<?php echo date("i");?>"></script>
+<script type="text/javascript" src="<?=base_url("js/benchmark.js");?>?data=<?php echo date("i");?>"></script>
+<script type="text/javascript" src="<?=base_url("js/attendance.js");?>?data=<?php echo date("i");?>"></script>
+<script type="text/javascript" src="<?=base_url("js/support.js");?>?data=<?php echo date("i");?>"></script>
+<script type="text/javascript" src="<?=base_url("js/narrative.js");?>?data=<?php echo date("i");?>"></script>
+<script type="text/javascript" src="<?=base_url("js/password.js");?>?data=<?php echo date("i");?>"></script>
+<script type="text/javascript" src="<?=base_url("js/feedback.js");?>?data=<?php echo date("i");?>"></script>
+<script type="text/javascript" src="<?=base_url("js/assignment.js");?>?data=<?php echo date("i");?>"></script>
+<script type="text/javascript" src="<?=base_url("js/report.js");?>?data=<?php echo date("i");?>"></script>
 
-<script type="text/javascript" src="<?=base_url("js/legend.js");?>"></script>
+<script type="text/javascript" src="<?=base_url("js/legend.js");?>?data=<?php echo date("i");?>"></script>
