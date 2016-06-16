@@ -121,7 +121,7 @@
 					}
 				}
 			} else {
-				if ($submits_report_card == "yes") {
+				if ($submits_report_card == "yes" && $narrative->narrGrade) {
 					print "<div class='grade'>Mid-Year Term Grade: $narrative->narrGrade</div>";
 					
 					if ($narrTerm == "Year-End") {
