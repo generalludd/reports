@@ -211,12 +211,12 @@ $config['encryption_key'] = '35af20d423f5327bc9f6ae95c8f245c0';
  * seconds between CI refreshing Session Information |
  */
 $config['sess_cookie_name'] = 'ci_session';
-$config['sess_expiration'] = 14400;
+$config['sess_expiration'] = 28800;
 $config['sess_driver'] = 'database';
 $config['sess_use_database'] = TRUE;
 $config['sess_table_name'] = 'user_sessions';
 $config['sess_match_ip'] = FALSE;
-$config['sess_time_to_update'] = 7200;
+$config['sess_time_to_update'] = 3600;
 
 /*
  * |-------------------------------------------------------------------------- |
