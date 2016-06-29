@@ -1,4 +1,15 @@
 <?php
+
+if($print): ?>
+	<style type="text/css">
+	body{
+	font-size: 13px;
+	font-family: georgia, serif;
+	}
+	
+	</style>
+	
+<?php endif;
 // support/view.php
 $had_meeting = "No";
 
