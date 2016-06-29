@@ -114,7 +114,7 @@
 					}
 					$final_grade_output = FALSE;
 					if (array_key_exists ( $narrative->narrSubject, $mid_year_grades )) {
-						if ($final_grade [$narrative->narrSubject]) {
+						if (isset($final_grade) && $final_grade [$narrative->narrSubject]) {
 							$final_grade_output = sprintf ( " (%s&#037;)", $final_grade [$narrative->narrSubject] );
 						}
 						printf ( "<div class='grade'>%s Final Grade: %s%s</div>", $narrative->narrSubject, $year_grade [$narrative->narrSubject] ['grade'], $final_grade_output );
