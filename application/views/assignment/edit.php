@@ -16,9 +16,13 @@ $date = get_value($assignment,"date");
 <input type="text" name="assignment" id="assignment" value="<?=get_value($assignment,"assignment");?>" required size="25"/>
 </p>
 <p>
+<label for="subject">Subject: </label>
+<?php echo form_dropdown("subject",$subjects,get_value($assignment,"subject", $subject),"id='subject' required");?>
+</p>
+<p>
 <label for="kCategory">Category: </label>
 <span id="cat_span">
-<?=form_dropdown("kCategory",$categories,get_value($assignment,"kCategory",get_cookie("kCategory")),"id='kCategory' required");?>
+<?php echo form_dropdown("kCategory",$categories,get_value($assignment,"kCategory",get_cookie("kCategory")),"id='kCategory' required");?>
 </span>
 </p>
 
@@ -40,10 +44,7 @@ $date = get_value($assignment,"date");
 <label for="date">Date: </label>
 <input type="date" name="date" id="date" required value="<?=$date;?>"/>
 </p>
-<p>
-<label for="subject">Subject: </label>
-<?=form_dropdown("subject",$subjects,get_value($assignment,"subject"),"id='subject' required");?>
-</p>
+
 <p>
 <label for="gradeStart">Grade: </label>
 <input type="text" id="gradeStart" name="gradeStart" value="<?=$gradeStart; ?>" required size="3"

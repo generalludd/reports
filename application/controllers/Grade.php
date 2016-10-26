@@ -19,7 +19,7 @@
 		 * the query script get_for_student in this context returns all the
 		 * assignments possible for easy editing as a chart.
 		 */
-		function edit($kStudent,$kTeach)
+		function edit($kStudent,$kTeach, $subject)
 		{
 			$this->load->model ( "menu_model" );
 			if ($kStudent && $kTeach) {
@@ -54,6 +54,7 @@
 				$data ["kStudent"] = $kStudent;
 				$data ["kTeach"] = $kTeach;
 				$options ["kTeach"] = $kTeach;
+				$options['subject'] = $subject;
 				$data ["grades"] = $this->assignment->get_for_student ( $kStudent, $term, $year, $options );
 				$data ["target"] = "grade/edit";
 				$this->load->model("student_model");

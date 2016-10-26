@@ -31,11 +31,12 @@ $("#category-table").on("blur","input[name='weight']",function(){
 <table id="category-table" class="list grid">
 	<thead>
 		<tr class="first">
-			<th colspan=2></th>
+			<th colspan=3></th>
 			<th colspan=2>Grade</th>
 			<th colspan=3></th>
 		</tr>
 		<tr>
+			<td>Subject</td>
 			<th>Category</th>
 			<th>Weight</th>
 			<th>Start</th>
@@ -57,7 +58,7 @@ $("#category-table").on("blur","input[name='weight']",function(){
 	</tbody>
 	<tfoot>
 		<tr>
-			<td>Total Weight:</td>
+			<td colspan=2>Total Weight:</td>
 			<td>
 	<?php $sum = 0;?>
 	<?php foreach($categories as $item):?>

@@ -5,6 +5,7 @@ $year = get_value ( $category, "year", get_current_year () );
 $yearEnd = $year + 1;
 ?>
 <tr <?=($action == "insert"?"id='tr-teach_$kTeach'":"");?>>
+<td><?php echo form_dropdown("subject",$subjects,get_value($category,"subject"),"class='$action-subject'"); ?>
 	<td><input type="text" name="category" class="<?=$action;?>-category"
 		id="category_<?=get_value($category,"kCategory","new");?>"
 		value="<?=get_value($category,"category");?>" /></td>

@@ -91,13 +91,16 @@ class Assignment_model extends MY_Model {
 	 * @param array $date_range        	
 	 * @return query result rows
 	 */
-	function get_grades($kTeach, $term, $year, $gradeStart, $gradeEnd, $stuGroup = NULL, $date_range = array(), $sort_order = NULL)
+	function get_grades($kTeach, $term, $year, $gradeStart, $gradeEnd, $stuGroup = NULL, $date_range = array(), $sort_order = NULL, $subject = NULL)
 	{
 		$this->db->from ( "assignment" );
 		$this->db->where ( "assignment.term", $term );
 		$this->db->where ( "assignment.year", $year );
 		$this->db->where ( "assignment.kTeach", $kTeach );
 		$this->db->where ( "(assignment.gradeStart = $gradeStart OR assignment.gradeEnd = $gradeEnd)" );
+		if($subject){
+		$this->db->where("assignment.subject", $subject);
+		}
 		if ($stuGroup) {
 			$this->db->where ( "student.stuGroup", $stuGroup );
 		}
@@ -125,6 +128,7 @@ class Assignment_model extends MY_Model {
 		$this->db->select ( "assignment.kTeach, assignment.assignment,assignment.points as assignment_total,assignment.subject, assignment.term,assignment.year" );
 		$this->db->select ( "category.weight,category.category" );
 		$result = $this->db->get ()->result ();
+		$this->_log();
 		return $result;
 	}
 
@@ -216,6 +220,10 @@ class Assignment_model extends MY_Model {
 			$this->db->where ( "assignment.gradeEnd<=", $gradeEnd );
 		}
 		
+		if(array_key_exists("subject", $options)){
+			$this->db->where("assignment.subject",$options['subject']);
+		}
+		
 		// $this->db->where("assignment.gradeStart = category.gradeStart");
 		// $this->db->where("assignment.gradeEnd = category.gradeEnd");
 		
@@ -236,7 +244,6 @@ class Assignment_model extends MY_Model {
 		$this->db->order_by ( "assignment.kAssignment" );
 		$this->db->order_by ( "assignment.kCategory" );
 		$result = $this->db->get ()->result ();
-		$this->_log();
 		return $result;
 	}
 
@@ -250,7 +257,7 @@ class Assignment_model extends MY_Model {
 	 * @param array $date_range        	
 	 * @return query result object array
 	 */
-	function get_for_teacher($kTeach, $term, $year, $gradeStart, $gradeEnd, $date_range = array())
+	function get_for_teacher($kTeach, $term, $year, $gradeStart, $gradeEnd, $subject,  $date_range = array())
 	{
 		$this->db->where ( "assignment.kTeach", $kTeach );
 		$this->db->where ( "assignment.term", $term );
@@ -259,6 +266,7 @@ class Assignment_model extends MY_Model {
 		if ($date_range) {
 			$this->db->where ( sprintf ( "(`assignment`.`date` BETWEEN '%s' AND '%s')", $date_range ["date_start"], $date_range ["date_end"] ) );
 		}
+		$this->db->where("assignment.subject",$subject);
 		$this->db->from ( "assignment" );
 		$this->db->join ( "assignment_category as category", "assignment.kCategory = category.kCategory", "LEFT" );
 		$this->db->join ( "teacher", "assignment.kTeach=teacher.kTeach", "LEFT" );
@@ -321,7 +329,7 @@ class Assignment_model extends MY_Model {
 		return $result;
 	}
 
-	function get_categories($kTeach, $gradeStart, $gradeEnd, $year, $term)
+	function get_categories($kTeach, $gradeStart, $gradeEnd, $year, $term , $subject)
 	{
 		$this->db->distinct ( "category" );
 		if ($kTeach) {
@@ -332,12 +340,13 @@ class Assignment_model extends MY_Model {
 		$this->db->where ( "gradeEnd", $gradeEnd );
 		$this->db->where ( "year", $year );
 		$this->db->where ( "term", $term );
+		$this->db->where ("subject", $subject);
 		$this->db->order_by ( "weight", "DESC" );
 		$result = $this->db->get ( "assignment_category" )->result ();
 		return $result;
 	}
 
-	function count_categories($kTeach, $gradeStart, $gradeEnd, $year, $term)
+	function count_categories($kTeach, $gradeStart, $gradeEnd, $year, $term, $subject)
 	{
 		$this->db->select ( "COUNT(kCategory) as count" );
 		$this->db->where ( "kTeach", $kTeach );
@@ -345,6 +354,7 @@ class Assignment_model extends MY_Model {
 		$this->db->where ( "gradeEnd", $gradeEnd );
 		$this->db->where ( "term", $term );
 		$this->db->where ( "year", $year );
+		$this->db->where("subject",$subject);
 		$result = $this->db->get ( "assignment_category" )->row ();
 		return $result->count;
 	}

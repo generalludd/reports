@@ -18,25 +18,25 @@ $buttons [] = array (
 <?= create_button_bar($buttons);?>
 <p>A minimum of two rows are required.</p>
 
-<form name="batch-insert-assignments" id="batch-insert-assignments" method="post" action="<?=site_url("assignment/insert_batch");?>">
+<form name="batch-insert-assignments" id="batch-insert-assignments" method="post" action="<?=site_url("assignment/insert_batch?subject=$subject");?>">
 	<input type="hidden" name="kTeach" value="<?=$kTeach;?>" />
 	<input type="hidden" name="year" value="<?=$year;?>" />
 	<input type="hidden" name="term" value="<?=$term;?>" />
 	<input type="hidden" name="gradeStart" value="<?=$gradeStart;?>" />
 	<input type="hidden" name="gradeEnd" value="<?=$gradeEnd;?>" />
+	<input type="hidden" name="subject" value="<?php echo $subject;?>"/>
 
 	<table class="grid" id="batch-assignment-table">
 		<thead>
 			<tr>
+				<th>Subject</th>
 				<th>Category</th>
 				<th>Assignment</th>
 				<th>Points</th>
 				<th>
 					<a title="Give every student the max points available from the start." class="link" href="#max-pts">Max Pts*</a>
 				</th>
-				<th>Date (mm/dd/yyyy)</th>
-				<th>Subject</th>
-		
+				<th>Date (mm/dd/yyyy)</th>		
 		</thead>
 		<tbody>
 <? $this->load->view("assignment/batch/row");?>

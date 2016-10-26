@@ -43,11 +43,24 @@ class Assignment extends MY_Controller {
 		}
 		
 		bake_cookie ( 'stuGroup', $stuGroup );
+		$subject = FALSE;
+		if($this->input->get("subject")){
+			$subject = $this->input->get("subject");
+			bake_cookie("subject", $subject);
+			$data['subject'] = $subject;
+		}
+		
 		
 		$year = get_current_year ();
 		if ($this->input->get ( 'year' )) {
 			$year = $this->input->get ( 'year' );
 			bake_cookie ( 'year', $year );
+		}
+		
+		$subject = NULL;
+		if($this->input->get('subject')){
+			$subject = $this->input->get('subject');
+			bake_cookie('subject',$subject);
 		}
 		
 		$date_range = array ();
@@ -71,7 +84,7 @@ class Assignment extends MY_Controller {
 			$date_range ['date_start'] = $date_start;
 			$date_range ['date_end'] = $date_end;
 		}
-		
+		$grade_options ['subject'] = $subject;
 		$grade_options ['from'] = 'grade';
 		$grade_options ['join'] = 'assignment';
 		if ($sort_order = $this->input->get ( 'student_sort_order' )) {
@@ -81,14 +94,14 @@ class Assignment extends MY_Controller {
 		} else {
 			$sort_order = get_cookie ( 'student_sort_order' );
 		}
-		$data ['grades'] = $this->assignment->get_grades ( $kTeach, $term, $year, $gradeStart, $gradeEnd, $stuGroup, $date_range, $sort_order );
+		$data ['grades'] = $this->assignment->get_grades ( $kTeach, $term, $year, $gradeStart, $gradeEnd, $stuGroup, $date_range, $sort_order, $subject );
 		foreach ( $data ['grades'] as $grade ) {
 			$grade_options ['subject'] = $grade->subject;
 			$grade->final_grade = $this->assignment->get_for_student ( $grade->kStudent, $grade->term, $grade->year, $grade_options );
 		}
-		$data ['assignments'] = $this->assignment->get_for_teacher ( $kTeach, $term, $year, $gradeStart, $gradeEnd, $date_range );
+		$data ['assignments'] = $this->assignment->get_for_teacher ( $kTeach, $term, $year, $gradeStart, $gradeEnd, $subject, $date_range );
 		
-		$data ['category_count'] = $this->assignment->count_categories ( $kTeach, $gradeStart, $gradeEnd, $year, $term );
+		$data ['category_count'] = $this->assignment->count_categories ( $kTeach, $gradeStart, $gradeEnd, $year, $term, $subject );
 		
 		$data ['kTeach'] = $kTeach;
 		$data ['term'] = $term;
@@ -116,6 +129,12 @@ class Assignment extends MY_Controller {
 		if ($kTeach) {
 			$data ['kTeach'] = $kTeach;
 		}
+		$this->load->model("subject_model");
+		$subjects = $this->subject_model->get_for_teacher ( $kTeach );
+		$data ['subjects'] = get_keyed_pairs ( $subjects, array (
+				'subject',
+				'subject'
+		) );
 		$data ['term'] = $this->input->cookie ( 'term' );
 		$data ['year'] = $this->input->cookie ( 'year' );
 		$data ['gradeStart'] = $this->input->cookie ( 'assignment_grade_start' );
@@ -152,13 +171,15 @@ class Assignment extends MY_Controller {
 		$gradeEnd = $this->input->cookie ( 'assignment_grade_end' );
 		$year = $this->input->cookie ( 'year' );
 		$term = $this->input->cookie ( 'term' );
-		$categories = $this->assignment->get_categories ( $userID, $gradeStart, $gradeEnd, $year, $term );
+		$subject = $this->input->get("subject");
+		$data['subject'] = $subject;
+		$categories = $this->assignment->get_categories ( $userID, $gradeStart, $gradeEnd, $year, $term, $subject );
 		if (empty ( $categories )) {
 			$gradeRange = sprintf ( 'grades %s to %s', $gradeStart, $gradeEnd );
 			if ($gradeStart == $gradeEnd) {
 				$gradeRange = sprintf ( 'grade %s', $gradeStart );
 			}
-			printf ( '<p>You must create categories for %s first for %s, %s.<p/>', $gradeRange, $term, $year );
+			printf ( '<p>You must create categories for grade(s) %s  for %s first for %s, %s.<p/>', $gradeRange, $subject, $term, $year );
 		} else {
 			$data ['categories'] = get_keyed_pairs ( $categories, array (
 					'kCategory',
@@ -177,8 +198,8 @@ class Assignment extends MY_Controller {
 		$gradeEnd = $this->input->get ( 'gradeEnd' );
 		$year = $this->input->get ( 'year' );
 		$term = $this->input->get ( 'term' );
-		
-		$categories = $this->assignment->get_categories ( $kTeach, $gradeStart, $gradeEnd, $year, $term );
+		$subject = $this->input->get('subject');
+		$categories = $this->assignment->get_categories ( $kTeach, $gradeStart, $gradeEnd, $year, $term , $subject);
 		if (empty ( $categories )) {
 			$gradeRange = sprintf ( 'grades %s to %s', $gradeStart, $gradeEnd );
 			if ($gradeStart == $gradeEnd) {
@@ -192,6 +213,7 @@ class Assignment extends MY_Controller {
 			$data ['gradeEnd'] = $gradeEnd;
 			$data ['year'] = $year;
 			$data ['term'] = $term;
+			$data ['subject'] = $subject;
 			$data ['count'] = 0; // used in the batch row adding option
 			$this->load->model ( 'subject_model' );
 			
@@ -246,6 +268,7 @@ class Assignment extends MY_Controller {
 		$year = $this->input->post ( 'year' );
 		$gradeStart = $this->input->post ( 'gradeStart' );
 		$gradeEnd = $this->input->post ( 'gradeEnd' );
+		$subject = $this->input->post('subject');
 		$assignment = $this->input->post ( 'assignment' );
 		$count = count ( $assignment );
 		
@@ -259,6 +282,7 @@ class Assignment extends MY_Controller {
 		$values ['term'] = $term;
 		$values ['gradeStart'] = $gradeStart;
 		$values ['gradeEnd'] = $gradeEnd;
+		$values ['subject'] = $subject;
 		if ($count < 2) {
 			$this->session->set_flashdata ( 'warning', 'You need to enter at least two assignments for this to work' );
 			redirect ( 'assignment/create_batch' );
@@ -276,7 +300,8 @@ class Assignment extends MY_Controller {
 				$kAssignment = $this->assignment->insert ( $values );
 				$this->grade->batch_insert ( $kAssignment, $kTeach, $term, $year, $gradeStart, $gradeEnd, $points [$i] );
 			}
-			redirect ( "assignment/chart?kTeach=$kTeach&term=$term&year=$year&gradeStart=$gradeStart&gradeEnd=$gradeEnd" );
+			
+			redirect ( "assignment/chart?kTeach=$kTeach&term=$term&year=$year&gradeStart=$gradeStart&gradeEnd=$gradeEnd&subject=$subject[0]" );
 		}
 	}
 
@@ -295,7 +320,8 @@ class Assignment extends MY_Controller {
 		) );
 		$data ['assignment'] = $assignment;
 		$data ['action'] = 'update';
-		$categories = $this->assignment->get_categories ( $assignment->kTeach, $assignment->gradeStart, $assignment->gradeEnd, $assignment->year, $assignment->term );
+		$data['subject'] = $assignment->subject;
+		$categories = $this->assignment->get_categories ( $assignment->kTeach, $assignment->gradeStart, $assignment->gradeEnd, $assignment->year, $assignment->term , $assignment->subject);
 		$data ['categories'] = get_keyed_pairs ( $categories, array (
 				'kCategory',
 				'category' 
@@ -322,7 +348,8 @@ class Assignment extends MY_Controller {
 		$year = $this->input->post ( 'year' );
 		$gradeStart = $this->input->post ( 'gradeStart' );
 		$gradeEnd = $this->input->post ( 'gradeEnd' );
-		redirect ( "assignment/chart?kTeach=$kTeach&term=$term&year=$year&gradeStart=$gradeStart&gradeEnd=$gradeEnd" );
+		$subject = $this->input->post ('subject');
+		redirect ( "assignment/chart?kTeach=$kTeach&term=$term&year=$year&gradeStart=$gradeStart&gradeEnd=$gradeEnd&subject=$subject" );
 	}
 
 	/**
@@ -352,6 +379,12 @@ class Assignment extends MY_Controller {
 		$data ['category'] = NULL;
 		$data ['action'] = 'insert';
 		$data['kTeach'] = $kTeach;
+		$this->load->model("subject_model");
+		$subjects = $this->subject_model->get_for_teacher ( $kTeach );
+		$data ['subjects'] = get_keyed_pairs ( $subjects, array (
+				'subject',
+				'subject'
+		) );
 		$this->load->view ( 'assignment/category/row', $data );
 	}
 
@@ -363,6 +396,32 @@ class Assignment extends MY_Controller {
 				"label" 
 		) );
 		echo form_dropdown ( "points_type", $menu_items );
+	}
+	
+	function get_categories(){
+		if($this->input->get("kTeach")){
+			$kTeach = $this->input->get("kTeach");
+		}
+		if($this->input->get("subject")){
+			$subject = $this->input->get("subject");
+		}
+		$term = get_current_term();
+		if($this->input->get("term")){
+			$term = $this->input->get("term");
+		}
+		$year = get_current_year();
+		if($this->input->get("year")){
+			$year = $this->input->get("year");
+		}
+		if($this->input->get("gradeStart")){
+			$gradeStart = $this->input->get("gradeStart");
+		}
+		if($this->input->get("gradeEnd")){
+			$gradeEnd = $this->input->get("gradeEnd");
+		}
+		$category_list = $this->assignment->get_categories($kTeach, $gradeStart, $gradeEnd , $year, $term, $subject);
+		$categories = get_keyed_pairs($category_list, array("kCategory","category"));
+		echo form_dropdown("category[]",$categories);
 	}
 
 	/**
@@ -377,6 +436,7 @@ class Assignment extends MY_Controller {
 		$gradeEnd = $this->input->post ( 'gradeEnd' );
 		$year = $this->input->post ( 'year' );
 		$term = $this->input->post ( 'term' );
+		$subject = $this->input->post('subject');
 		$data = array ();
 		if ($category && $weight && $gradeStart && $gradeEnd) {
 			$data ['category'] = $category;
@@ -386,8 +446,15 @@ class Assignment extends MY_Controller {
 			$data ['gradeEnd'] = $gradeEnd;
 			$data ['year'] = $year;
 			$data ['term'] = $term;
+			$data ['subject'] = $subject;
 			$kCategory = $this->assignment->insert_category ( $data );
 			$category = $this->assignment->get_category ( $kCategory );
+			$this->load->model("subject_model");
+			$subjects = $this->subject_model->get_for_teacher ( $kTeach );
+			$data ['subjects'] = get_keyed_pairs ( $subjects, array (
+					'subject',
+					'subject'
+			) );
 			$data ['category'] = $category;
 			$data ['action'] = 'update';
 			$data ['kTeach'] = $kTeach;
@@ -407,7 +474,14 @@ class Assignment extends MY_Controller {
 		$data ['gradeEnd'] = $this->input->get ( 'gradeEnd' );
 		$data ['year'] = $this->input->get ( 'year' );
 		$data ['term'] = $this->input->get ( 'term' );
-		$data ['categories'] = $this->assignment->get_categories ( $data ['kTeach'], $data ['gradeStart'], $data ['gradeEnd'], $data ['year'], $data ['term'] );
+		$data['subject'] = $this->input->get('subject');
+		$this->load->model("subject_model");
+		$subjects = $this->subject_model->get_for_teacher ( $kTeach );
+		$data ['subjects'] = get_keyed_pairs ( $subjects, array (
+				'subject',
+				'subject'
+		) );
+		$data ['categories'] = $this->assignment->get_categories ( $data ['kTeach'], $data ['gradeStart'], $data ['gradeEnd'], $data ['year'], $data ['term'], $data['subject'] );
 		$data ['target'] = 'assignment/category/list';
 		if ($this->input->get ( 'ajax' )) {
 			$target = $data ['target'];
@@ -449,7 +523,8 @@ class Assignment extends MY_Controller {
 			$gradeEnd = $this->input->get ( "gradeEnd" );
 			$sourceTerm = $this->input->get ( "sourceTerm" );
 			$sourceYear = $this->input->get ( "sourceYear" );
-			$sourceCategories = $this->assignment->get_categories ( $kTeach, $gradeStart, $gradeEnd, $sourceYear, $sourceTerm );
+			$subject = $this->input->get('subject');
+			$sourceCategories = $this->assignment->get_categories ( $kTeach, $gradeStart, $gradeEnd, $sourceYear, $sourceTerm, $subject );
 			foreach ( $sourceCategories as $source ) {
 				unset($source->kCategory);
 				$source->year = $year;

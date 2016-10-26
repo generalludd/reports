@@ -20,6 +20,10 @@ if(empty($year)){
 	<label for="stuGroup">Student Group (Middle School Specialists Only): </label>
 	<?=form_dropdown("stuGroup",array(""=>"","A"=>"A","B"=>"B"),$stuGroup,"id='stuGroup'");?>
 	</p>
+	<p>
+	<label for="subject">Subject: </label>
+	<?=form_dropdown("subject",$subjects,"","id='subject' required");?>
+	</p>
 <p>	<label for="term">Term:
 </label><?=get_term_menu('term', $term);?></p>
 <p> <label for="year">Year: </label>

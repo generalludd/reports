@@ -6,8 +6,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 ?>
 <tr class="assignment">
+<td>
+<?php echo form_dropdown("subject[]",$subjects,"","required");?>
+</td>
 	<td>
-<?=form_dropdown("kCategory[]",$categories,"","id='kCategory' required");?>
+<?php echo form_dropdown("kCategory[]",$categories,"","id='kCategory' required");?>
 </td>
 	<td><input
 		type="text"
@@ -34,8 +37,4 @@ defined('BASEPATH') or exit('No direct script access allowed');
 		required
 		size="13"
 		value="" /></td>
-	<td>
-<?=form_dropdown("subject[]",$subjects);?>
-</td>
-
 </tr>

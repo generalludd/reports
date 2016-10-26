@@ -27,22 +27,22 @@ if ($kTeach == $this->session->userdata ( "userID" )) {
 			"text" => "Edit Categories",
 			"class" => "button edit dialog",
 			"selection" => "grades",
-			"href" => site_url ( "assignment/edit_categories/$kTeach?year=$year&term=$term&gradeStart=$gradeStart&gradeEnd=$gradeEnd" ) 
+			"href" => site_url ( "assignment/edit_categories/$kTeach?year=$year&term=$term&gradeStart=$gradeStart&gradeEnd=$gradeEnd&subject=$subject" ) 
 	);
 }
 if($category_count > 0){
 	
 $buttons [] = array (
 		"text" => "Add Assignment",
-		"href" => site_url ( "assignment/create/$kTeach" ),
+		"href" => site_url ( "assignment/create/$kTeach?subject=$subject" ),
 		"class" => "button dialog new" 
 );
 $buttons [] = array (
 		"text" => "Batch Add Assignments",
 		"selection" => "",
 		"title" => "Insert batches of assignments at once (Beta!)",
-		"href" => site_url ( "assignment/create_batch?kTeach=$kTeach&term=$term&year=$year&gradeStart=$gradeStart&gradeEnd=$gradeEnd" ),
-		"class" => "button new dialog"
+		"href" => site_url ( "assignment/create_batch?kTeach=$kTeach&term=$term&year=$year&gradeStart=$gradeStart&gradeEnd=$gradeEnd&subject=$subject" ),
+		"class" => "button new"
 );
 }
 $buttons [] = array (
@@ -120,7 +120,7 @@ if (! empty ( $assignments )) {
 			</th>
 			<? endforeach; ?>
 			<th class='assignment-button'>
-			<?php echo create_button(array("text"=>"Add Assignment","href"=>site_url("assignment/create/$kTeach"),"class"=>"button dialog new") )?>
+			<?php echo create_button(array("text"=>"Add Assignment","href"=>site_url("assignment/create/$kTeach?subject=$subject"),"class"=>"button dialog new") )?>
 			</th>
 		</tr>
 		<tr class="second">
@@ -150,7 +150,7 @@ if (! empty ( $assignments )) {
 				$href = site_url ( sprintf ( "grade/report_card?kStudent=%s&year=%s&term=%s&subject=%s&print=true", $grade->kStudent, $this->input->cookie ( "year" ), $this->input->cookie ( "term" ), $header->subject ) );
 				$rows [$grade->kStudent] ["edit-button"] = sprintf ( "<td class='student-button'>%s</td>", create_button ( array (
 						"text" => "Edit",
-						"href" => site_url ( "grade/edit/$grade->kStudent/$grade->kTeach" ),
+						"href" => site_url ( "grade/edit/$grade->kStudent/$grade->kTeach/$grade->subject" ),
 						"class" => array (
 								"button",
 								"edit",
@@ -205,7 +205,7 @@ if (! empty ( $assignments )) {
 	<?=$category_count == 0?"<p style='padding-bottom: 1em;'>You may need to create categories before creating assignments.</p>":""; ?>
 	<?=create_button_bar($buttons);?>
 <? if($category_count > 0){ ?>
-<p>You have not entered any assignments or grades for this term.</p>
+<p>You have not entered any <?php echo $subject; ?> assignments or grades for this term.</p>
 <?
 	} // end if category_count
 } //end if assignments

@@ -307,6 +307,7 @@ $(document).ready(function(){
 	
 	$(".category-insert").live("click",function(){
 		myTeach = this.id.split("_")[1];
+		mySubject = $("#tr-teach_" + myTeach + " .insert-subject").val();
 		myCategory = $("#tr-teach_" + myTeach + " .insert-category").val();
 		myWeight = $("#tr-teach_" + myTeach + " .insert-weight").val();
 		myStart = $("#tr-teach_" + myTeach + " .insert-gradeStart").val();
@@ -315,6 +316,7 @@ $(document).ready(function(){
 		myTerm = $("#tr-teach_" + myTeach + " #term_new").val();
 		form_data = {
 				kTeach: myTeach,
+				subject: mySubject,
 				category: myCategory,
 				weight: myWeight,
 				gradeStart: myStart,
