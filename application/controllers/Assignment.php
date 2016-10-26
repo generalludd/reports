@@ -247,6 +247,7 @@ class Assignment extends MY_Controller {
 		$year = $this->input->post ( 'year' );
 		$gradeStart = $this->input->post ( 'gradeStart' );
 		$gradeEnd = $this->input->post ( 'gradeEnd' );
+		$subject = $this->input->post('subject');
 		$points = 0;
 		bake_cookie ( 'kCategory', $this->input->post ( 'kCategory' ) );
 		$prepopulate = $this->input->post ( 'prepopulate' );
@@ -255,7 +256,7 @@ class Assignment extends MY_Controller {
 			$points = $this->input->post ( 'points' );
 		}
 		$students = $this->grade->batch_insert ( $kAssignment, $kTeach, $term, $year, $gradeStart, $gradeEnd, $points );
-		redirect ( "assignment/chart?kTeach=$kTeach&term=$term&year=$year&gradeStart=$gradeStart&gradeEnd=$gradeEnd" );
+		redirect ( "assignment/chart?kTeach=$kTeach&term=$term&year=$year&gradeStart=$gradeStart&gradeEnd=$gradeEnd&subject=$subject" );
 	}
 
 	/**
