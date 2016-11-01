@@ -1,4 +1,7 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');?>
+<?php if(isset($standalone)):?>
+<h3><?php echo $title; ?></h3>
+<?php endif; ?>
 <? if($legend): ?>
 <div class='legend'>
 <p><strong><?=$legend->title;?></strong></p>
