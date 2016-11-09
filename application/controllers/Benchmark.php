@@ -216,35 +216,48 @@ class Benchmark extends MY_Controller {
 			echo OK;
 		}
 	}
-	
-	function select_student($kStudent){
-		$this->load->model("student_model","student");
-		$this->load->model("menu_model");
-		$data ["student"] = $this->student->get($kStudent);
-		$data ["action"] = "update";
-		$grades = $this->menu_model->get_pairs ( "grade" );
-		$data ["gradePairs"] = get_keyed_pairs ( $grades, array (
-				"value",
-				"label"
-		) );
-		$gender = $this->menu_model->get_pairs ( "gender" );
-		$data ["genderPairs"] = get_keyed_pairs ( $gender, array (
-				"value",
-				"label"
-		) );
-		
-		$subjects = $this->subject_model->get_all(array("gradeStart"=>5, "gradeEnd"=>8));
-		$data ["subjects"] = get_keyed_pairs ( $subjects, array (
-				"subject",
-				"subject"
-		), FALSE );
-		print_r($data);
-		
+
+	function select_student($kStudent = NULL)
+	{
+		if ($kStudent) {
+			$this->load->model ( "student_model", "student" );
+			$this->load->model ( "menu_model" );
+			$data ["student"] = $this->student->get ( $kStudent );
+			$data ["action"] = "update";
+			$subjects = $this->subject_model->get_all ( array (
+					"gradeStart" => 5,
+					"gradeEnd" => 8 
+			) );
+			$data ["subjects"] = get_keyed_pairs ( $subjects, array (
+					"subject",
+					"subject" 
+			), FALSE );
+			$data ['target'] = "benchmark/select";
+			$data ['title'] = "Search for Student Benchmarks";
+			if ($this->input->get ( "ajax" ) == 1) {
+				$this->load->view ( $data ['target'], $data );
+			} else {
+				$this->load->view ( "page/index", $data );
+			}
+		} else {
+			$kStudent = $this->input->get("kStudent");
+			$subject = $this->input->get("subject");
+			$grade = $this->input->get("gradeStart");
+			$year= $this->input->get("year");
+			$term = $this->input->get("term");
+			$quarter = NULL;
+			if($this->input->get("quarter")){
+				$quarter = $this->input->get("quarter");
+			}
+			$this->print_student($kStudent, $subject, $quarter, $term, $year);
+			
+				
+		}
 	}
 
 	function edit_student($kStudent)
 	{
-		$this->load->model("student_model","student");
+		$this->load->model ( "student_model", "student" );
 		$student = $this->student->get ( $kStudent );
 		$subject = $this->input->get ( "subject" );
 		$student_grade = get_current_grade ( $student->baseGrade, $student->baseYear );
@@ -256,19 +269,19 @@ class Benchmark extends MY_Controller {
 			$term = $this->input->get ( 'term' );
 		}
 		
-		$year = get_current_year();
-		if($this->input->get('year')){
-			$year = $this->input->get('year');
+		$year = get_current_year ();
+		if ($this->input->get ( 'year' )) {
+			$year = $this->input->get ( 'year' );
 		}
 		
 		$data ["benchmarks"] = $this->benchmark_model->get_for_student ( $kStudent, $subject, $student_grade, $term, $year );
-		$student_name = format_name($student->stuFirst, $student->stuLast,  $student->stuNickname);
+		$student_name = format_name ( $student->stuFirst, $student->stuLast, $student->stuNickname );
 		$data ['title'] = "Editing Benchmarks for $student_name: $subject, $student_grade, $term, $year";
 		$data ['kStudent'] = $kStudent;
-		if($this->input->get('kTeach')){
-			$data ['kTeach'] = $this->input->get('kTeach');
-		}else{
-			$data['kTeach'] = USER_ID;
+		if ($this->input->get ( 'kTeach' )) {
+			$data ['kTeach'] = $this->input->get ( 'kTeach' );
+		} else {
+			$data ['kTeach'] = USER_ID;
 		}
 		$data ['target'] = "benchmark/edit_for_student";
 		if ($this->input->get ( "ajax" )) {
@@ -277,30 +290,32 @@ class Benchmark extends MY_Controller {
 			$this->load->view ( "page/index", $data );
 		}
 	}
-	
+
 	/**
 	 * Create a printable report for the benchmarks for a student, subject, term and year for printing.
-	 * @param int $kStudent
-	 * @param string $subject
-	 * @param string $term
-	 * @param int $year
+	 * 
+	 * @param int $kStudent        	
+	 * @param string $subject        	
+	 * @param string $term        	
+	 * @param int $year        	
 	 */
-	function print_student($kStudent, $subject, $term, $year){
-		$this->load->model("student_model","student");
-		$student = $this->student->get($kStudent);
-		$student_grade = get_current_grade($student->baseGrade, $student->baseYear, $year);
+	function print_student($kStudent, $subject, $quarter, $term, $year)
+	{
+		$this->load->model ( "student_model", "student" );
+		$student = $this->student->get ( $kStudent );
+		$student_grade = get_current_grade ( $student->baseGrade, $student->baseYear, $year );
 		$data ["benchmarks"] = $this->benchmark_model->get_for_student ( $kStudent, $subject, $student_grade, $term, $year );
-		$data['title'] = sprintf("Benchmarks for %s. Subject: %s, Grade: %s, Term: %s %s", format_name($student->stuFirst, $student->stuLast, $student->stuNickname), $subject, $student_grade, $term, $year);
-		$data['target'] = "benchmark/chart";
-		$this->load->model("benchmark_legend_model","legend");
+		$data ['title'] = sprintf ( "Benchmarks for %s. Subject: %s, Grade: %s, Term: %s %s", format_name ( $student->stuFirst, $student->stuLast, $student->stuNickname ), $subject, $student_grade, $term, $year );
+		$data ['target'] = "benchmark/chart";
+		$this->load->model ( "benchmark_legend_model", "legend" );
 		$data ['legend'] = $this->legend->get_one ( array (
 				"kTeach" => USER_ID,
 				"subject" => $subject,
 				"term" => $term,
-				"year" => $year
+				"year" => $year 
 		) );
-		$data['standalone'] = TRUE;
-		$this->load->view("page/index",$data);
+		$data ['standalone'] = TRUE;
+		$this->load->view ( "page/index", $data );
 	}
 
 	function get_legend()

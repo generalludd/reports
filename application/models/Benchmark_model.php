@@ -1,7 +1,7 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 
-class Benchmark_model extends CI_Model
+class Benchmark_model extends MY_Model
 {
 	var $term;
 	var $year;
@@ -105,7 +105,7 @@ class Benchmark_model extends CI_Model
 		if($subject != "all"){
 			$this->db->where("benchmark.subject", $subject);
 		}
-		$this->db->where("(benchmark.gradeStart = $grade OR benchmark.gradeEnd = $grade)");
+		$this->db->where("(benchmark.gradeStart <= $grade OR benchmark.gradeEnd >= $grade)");
 		$this->db->where("benchmark.term", $term);
 		$this->db->where("benchmark.year", $year);
 		if($category){
@@ -116,6 +116,7 @@ class Benchmark_model extends CI_Model
 		$this->db->select("benchmark.*,student_benchmark.comment,student_benchmark.grade");
 		$this->db->from("benchmark");
 		$result = $this->db->get()->result();
+		$this->_log();
 		return $result;
 
 	}

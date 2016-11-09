@@ -103,7 +103,7 @@
 		$data ['benchmarks'] = FALSE;
 		$has_benchmarks = FALSE;
 		// benchmarks are only used in grades 5 and up.
-		if ($stuGrade > 4) {
+		if ($stuGrade > 5) {
 			$submits_report_card = $this->preference->get ( $narrative->kTeach, "submits_report_card" );
 			if (array_key_exists ( $narrative->narrSubject, $grades ) && isset ( $grades [$narrative->narrSubject] )) {
 				printf ( "<div class='grade'>%s Term Grade: %s</div>", $narrTerm, $grades [$narrative->narrSubject] );

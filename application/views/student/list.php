@@ -97,18 +97,24 @@ $current_grade = $stuGrade;
 				"class" => "button",
 				"text" => "Narratives" 
 		);
-		$buttons [] = array (
-				"selection" => "attendance",
-				"href" => site_url ( "attendance/search/$student->kStudent?startDate=$start_date&endDate=$today" ),
-				"class" => "button",
-				"text" => "Attendance" 
+		$buttons[] = array(
+				"selection" => "benchmark",
+				"href" => site_url("benchmark/select_student/8463?ajax=1"),
+				"class" =>"button dialog",
+				"text" => "Benchmarks",
 		);
-		$buttons [] = array (
-				"selection" => "attendance",
-				"href" => site_url ( "attendance/create/$student->kStudent" ),
-				"class" => "button dialog new",
-				"text" => "Add Attendance" 
-		);
+// 		$buttons [] = array (
+// 				"selection" => "attendance",
+// 				"href" => site_url ( "attendance/search/$student->kStudent?startDate=$start_date&endDate=$today" ),
+// 				"class" => "button",
+// 				"text" => "Attendance" 
+// 		);
+// 		$buttons [] = array (
+// 				"selection" => "attendance",
+// 				"href" => site_url ( "attendance/create/$student->kStudent" ),
+// 				"class" => "button dialog new",
+// 				"text" => "Add Attendance" 
+// 		);
 		$buttons [] = array (
 				"selection" => "support",
 				"href" => site_url ( "support/list_all/$student->kStudent" ),
