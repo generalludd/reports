@@ -20,10 +20,10 @@ if(count($benchmarks)>0 && $benchmarks != 0){
 	$currentQuarter = 0;
 	foreach($benchmarks as $benchmark){
 		
-		if($benchmark->quarter != $currentQuarter){
-			$currentQuarter = $benchmark->quarter;
-			print "<tr><td colspan=2><strong>Quarter $benchmark->quarter</strong></td></tr>";
-		}
+// 		if($benchmark->quarter != $currentQuarter){
+// 			$currentQuarter = $benchmark->quarter;
+// 			print "<tr><td colspan=2><strong>Quarter $benchmark->quarter</strong></td></tr>";
+// 		}
 		echo "<tr>";
 		if($benchmark->category!=$currentCategory){
 			$currentCategory=$benchmark->category;
