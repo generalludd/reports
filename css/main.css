@@ -1005,7 +1005,7 @@ ul.buttons li {
 	width: 60%;
 }
 /*** BENCHMARK STYLES ***/
-table#benchmarks {
+table.chart {
 	font-size: 1em;
 }
 
