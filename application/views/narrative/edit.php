@@ -74,7 +74,7 @@ if(!empty($conditional_buttons)){
 		<?=form_dropdown('narrYear', get_year_list(), $narrYear, "id='narrYear'");?>
 		- <input id="yearEnd" type="text" name="yearEnd" readonly
 			maxlength="4" size="5" value="<?=$yearEnd; ?>" />
-		<?php if($stuGrade >= 5):?>
+		<?php if($stuGrade >= 6):?>
 		</p>
 		<!-- @TODO Put calculated final grade here.  -->
 		<p>Course Grade (middle school only):
@@ -87,6 +87,7 @@ if(!empty($conditional_buttons)){
 			<?php endif;?>
 		<?php endif;?>
 	</p>
+	<p>
 	<?php
 	if($conditional_bar){
 		echo $conditional_bar;

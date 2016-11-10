@@ -30,23 +30,23 @@ $buttons [] = array (
 		"text" => '<input type="text" id="stuSearch" name="stuSearch" class="mobile" size="20" value="find students" />',
 		"type" => "pass-through" 
 );
-$buttons [] = array (
-		"selection" => "attendance",
-		"text" => "Check Attendance",
-		"class" => "search button dialog mobile",
-		"href" => site_url ( "attendance/check?search=1" ) 
-);
-$buttons [] = array (
-		"selection" => "attendance",
-		"text" => "Search Attendance",
-		"class" => array (
-				"button",
-				"dialog" 
-		),
-		"href" => site_url ( "attendance/show_search" ),
-		"title" => "Search attendance records",
-		"dbRole" => 1 
-);
+// $buttons [] = array (
+// 		"selection" => "attendance",
+// 		"text" => "Check Attendance",
+// 		"class" => "search button dialog mobile",
+// 		"href" => site_url ( "attendance/check?search=1" ) 
+// );
+// $buttons [] = array (
+// 		"selection" => "attendance",
+// 		"text" => "Search Attendance",
+// 		"class" => array (
+// 				"button",
+// 				"dialog" 
+// 		),
+// 		"href" => site_url ( "attendance/show_search" ),
+// 		"title" => "Search attendance records",
+// 		"dbRole" => 1 
+// );
 $buttons [] = array (
 		"selection" => "student",
 		"text" => "New Student",
@@ -79,12 +79,7 @@ $buttons [] = array (
 		"href" => site_url ( "student/search?hasNeeds=1&year=" . get_current_year () ),
 		"dbRole" => 3 
 );
-$buttons [] = array (
-		"selection" => "template",
-		"text" => "Subject Templates",
-		"href" => site_url ( "template/list_templates/?kTeach=$userID&term=$term&year=$year" ),
-		"dbRole" => 2 
-);
+
 $buttons [] = array (
 		"selection" => "benchmark",
 		"text" => "Benchmarks",
@@ -94,6 +89,14 @@ $buttons [] = array (
 		),
 		"href" => site_url ( "benchmark/search" ),
 		"dbRole" => 2, 
+		"title"=> "Edit your benchmark templates",
+);
+
+$buttons [] = array (
+		"selection" => "template",
+		"text" => "Subject Templates",
+		"href" => site_url ( "template/list_templates/?kTeach=$userID&term=$term&year=$year" ),
+		"dbRole" => 2
 );
 $buttons [] = array (
 		"selection" => "narrative/teacher_list",
@@ -143,7 +146,8 @@ if ($dbRole == 2) {
 	$buttons [] = array (
 			"selection" => "student",
 			"text" => "List Students",
-			"href" => site_url ( "student/search?kTeach=$userID&year=" . get_current_year () ) 
+			"href" => site_url ( "student/search?kTeach=$userID&year=" . get_current_year () ) ,
+			"title"=>"List your students",
 	);
 }
 print create_button_bar ( $buttons );
