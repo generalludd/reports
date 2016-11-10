@@ -99,7 +99,7 @@ $current_grade = $stuGrade;
 		);
 		$buttons[] = array(
 				"selection" => "benchmark",
-				"href" => site_url("benchmark/select_student/8463?ajax=1"),
+				"href" => site_url("benchmark/select_student/$student->kStudent"),
 				"class" =>"button dialog",
 				"text" => "Benchmarks",
 		);

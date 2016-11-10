@@ -8,7 +8,7 @@ $output = "<p></p>";
 if($benchmarks){
 	$table[] =  "<table id='benchmarks' class='list'>";
 	foreach($benchmarks as $benchmark){
-		$termDisplay = $benchmark->term . " " . format_schoolyear($benchmark->year);
+		$termDisplay = sprintf("%s, Quarter %s %s", $benchmark->term, $benchmark->quarter, format_schoolyear($benchmark->year));
 		if($benchmark->gradeStart != $benchmark->gradeEnd){
 			$currentGrade = "Grades $benchmark->gradeStart-$benchmark->gradeEnd";
 		}else{

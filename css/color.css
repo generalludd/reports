@@ -112,10 +112,10 @@ input.link {
 }
 
 .button.active {
-	color: #efefef;
+	border: solid black 1px;
 }
 
-.button:hover, submit:hover {
+.button:hover, submit:hover, .button.active {
 	color: #ffffff;
 	background-color: #51a351;
 	text-decoration: none;
