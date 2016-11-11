@@ -45,6 +45,7 @@ class Auth extends CI_Controller
 				$data["username"] = $username;
 				$data["dbRole"] = $result->dbRole;
 				$data["userID"] = $result->kTeach;
+				
 				//useful cookies for enhanced user experience
 				bake_cookie("gradeStart", $result->gradeStart);
 				bake_cookie("gradeEnd", $result->gradeEnd);
