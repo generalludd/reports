@@ -28,16 +28,21 @@ class Benchmark extends MY_Controller {
 		$data ["subjects"] = $this->subject_model->get_for_teacher ( $kTeach );
 		$data ["subject_list"] = get_keyed_pairs ( $data ["subjects"], array (
 				"subject",
-				"subject" 
+				"subject"
 		), FALSE );
 		$data ["yearStart"] = get_current_year ();
 		$data ["yearEnd"] = $data ["yearStart"] + 1;
+		if(!get_cookie("benchmark_grade_start") || !get_cookie("benchmark_grade_end")){
 		$teacher = $this->teacher_model->get ( $kTeach, array (
 				"gradeStart",
-				"gradeEnd" 
+				"gradeEnd"
 		) );
 		$data ["gradeStart"] = $teacher->gradeStart;
 		$data ["gradeEnd"] = $teacher->gradeEnd;
+	}else{
+		$data['gradeStart'] = get_cookie("benchmark_grade_start");
+		$data['gradeEnd'] = get_cookie("benchmark_grade_end");
+	}
 		$data ['target'] = "benchmark/search";
 		$data ['title'] = "Searching Benchmarks";
 		if ($this->input->get ( "ajax" )) {
@@ -53,12 +58,17 @@ class Benchmark extends MY_Controller {
 			$year = $this->input->get ( "year" );
 			$term = $this->input->get ( "term" );
 			$subject = $this->input->get ( "subject" );
+			bake_cookie("benchmark_subject",$subject);
 			if($this->input->get('quarter')){
 				$options['quarter'] = $this->input->get('quarter');
 			}
 			$quarter = $this->input->get("quarter");
+			bake_cookie("benchmark_quarter",$quarter);
 			$options['grade_range'] ["gradeStart"] = $this->input->get ( "gradeStart" );
+			bake_cookie("benchmark_grade_start", $this->input->get("gradeStart"));
+
 			$options['grade_range'] ["gradeEnd"] = $this->input->get ( "gradeEnd" );
+			bake_cookie("benchmark_grade_end", $this->input->get("gradeEnd"));
 			$data ["kTeach"] = $this->input->get ( "kTeach" );
 			$data ["benchmarks"] = $this->benchmark_model->get_list ($term, $year, $subject, $options );
 			$data ["title"] = "Benchmark Editing";
@@ -84,7 +94,7 @@ class Benchmark extends MY_Controller {
 		$subjects = $this->subject_model->get_for_teacher ( $kTeach );
 		$data ["subjects"] = get_keyed_pairs ( $subjects, array (
 				"subject",
-				"subject" 
+				"subject"
 		), FALSE );
 		$data ["action"] = "update";
 		$data ["target"] = "benchmark/edit";
@@ -113,7 +123,7 @@ class Benchmark extends MY_Controller {
 		$subjects = $this->subject_model->get_for_teacher ( $kTeach );
 		$data ["subjects"] = get_keyed_pairs ( $subjects, array (
 				"subject",
-				"subject" 
+				"subject"
 		), FALSE );
 		$data ["action"] = "insert";
 		$data ["target"] = "benchmark/edit";
@@ -142,7 +152,7 @@ class Benchmark extends MY_Controller {
 		$subjects = $this->subject_model->get_for_teacher ( $kTeach );
 		$data ["subjects"] = get_keyed_pairs ( $subjects, array (
 				"subject",
-				"subject" 
+				"subject"
 		), FALSE );
 		$data ["action"] = "insert";
 		$data ["target"] = "benchmark/edit";
@@ -235,7 +245,7 @@ class Benchmark extends MY_Controller {
 			) );
 			$data ["subjects"] = get_keyed_pairs ( $subjects, array (
 					"subject",
-					"subject" 
+					"subject"
 			), FALSE );
 			$data ['target'] = "benchmark/select";
 			$data ['title'] = "Search for Student Benchmarks";
@@ -255,8 +265,8 @@ class Benchmark extends MY_Controller {
 				$quarter = $this->input->get("quarter");
 			}
 			$this->print_student($kStudent, $subject, $quarter, $term, $year);
-			
-				
+
+
 		}
 	}
 
@@ -273,7 +283,7 @@ class Benchmark extends MY_Controller {
 		if ($this->input->get ( 'term' )) {
 			$term = $this->input->get ( 'term' );
 		}
-		
+
 		$year = get_current_year ();
 		if ($this->input->get ( 'year' )) {
 			$year = $this->input->get ( 'year' );
@@ -282,7 +292,7 @@ class Benchmark extends MY_Controller {
 		if($this->input->get("quarter")){
 			$quarter = $this->input->get("quarter");
 		}
-		
+
 		$data ["benchmarks"] = $this->benchmark_model->get_for_student ( $kStudent, $subject, $student_grade, $term, $year, $quarter );
 		$student_name = format_name ( $student->stuFirst, $student->stuLast, $student->stuNickname );
 		$data ['title'] = "Editing Benchmarks for $student_name: $subject, $student_grade, $term, $year";
@@ -302,11 +312,11 @@ class Benchmark extends MY_Controller {
 
 	/**
 	 * Create a printable report for the benchmarks for a student, subject, term and year for printing.
-	 * 
-	 * @param int $kStudent        	
-	 * @param string $subject        	
-	 * @param string $term        	
-	 * @param int $year        	
+	 *
+	 * @param int $kStudent
+	 * @param string $subject
+	 * @param string $term
+	 * @param int $year
 	 */
 	function print_student($kStudent, $subject, $quarter, $term, $year)
 	{
@@ -321,7 +331,7 @@ class Benchmark extends MY_Controller {
 				"kTeach" => USER_ID,
 				"subject" => $subject,
 				"term" => $term,
-				"year" => $year 
+				"year" => $year
 		) );
 		$data['student'] = $student;
 		$data['kStudent'] = $kStudent;
@@ -339,7 +349,7 @@ class Benchmark extends MY_Controller {
 		$this->load->model ( "benchmark_legend_model" );
 		$legend = $this->benchmark_legend_model->get ();
 	}
-	
+
 	// @TODO create a system for sorting categories
 /**
  * -needs a new table, or some kind of general sorting table with flexible keys

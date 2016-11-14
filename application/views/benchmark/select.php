@@ -6,10 +6,10 @@
 <input type="hidden" name="kStudent" value="<?php echo $student->kStudent;?>"/>
 <p>
 <label for="grade">Grade Range</label>
-<input type="text" name="gradeStart" value="" style="width:2em;"/>-<input type="text" name="gradeEnd" value="" style="width: 2em;"/>
+<input type="text" name="gradeStart" value="<?php echo get_cookie("assignment_grade_end");?>" style="width:2em;"/>-<input type="text" name="gradeEnd" value="<?php echo get_cookie("assignment_grade_end");?>" style="width: 2em;"/>
 </p>
 <p>
-<label for="subject">Subject:</label> 
+<label for="subject">Subject:</label>
 <?php echo form_dropdown('subject', $subjects, get_cookie("subject") , "id='subject'"); ?>
 </p>
 <p>

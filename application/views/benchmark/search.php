@@ -3,12 +3,12 @@
 <form id="benchmarkSearch" action="<?=site_url("benchmark/teacher_list");?>" method="get" name="benchmarkSearch">
 	<p>
 		<input type="hidden" name="kTeach" id="kTeach" value="<?=$kTeach;?>" />
-		<label for="subject">Subject:</label> 
-<?=form_dropdown('subject', $subject_list, "", "id='subject'"); ?>
+		<label for="subject">Subject:</label>
+<?=form_dropdown('subject', $subject_list, get_cookie("benchmark_subject"), "id='subject'"); ?>
     </p>
 	<p>
 		<label for="quarter">Quarter: </label>
-<?php echo form_dropdown('quarter',array(0=>"",1=>1,2=>2,3=>3,4=>4), get_cookie("quarter"),"id='quarter'" );?>
+<?php echo form_dropdown('quarter',array(0=>"",1=>1,2=>2,3=>3,4=>4), get_cookie("benchmark_quarter"),"id='quarter'" );?>
 </p>
 	<p>
 		<label for="term">Term:</label> <?=$termMenu; ?>

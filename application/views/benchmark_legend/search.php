@@ -6,11 +6,11 @@ $current_year = get_current_year();
 <input type="hidden" name="kTeach" id="kTeach" value="<?=$kTeach;?>" />
 <p>
 <label for="subject">Subject: </label>
-<?=form_dropdown("subject", $subjects, "","id='subject'");?></p>
+<?=form_dropdown("subject", $subjects, get_cookie("benchmark_subject"), "id='subject'");?></p>
 <p>
 <label for="gradeStart">Grade Range: </label>
-<input type="text" id="gradeStart" name="gradeStart" size="2" maxlength="1" value=""/>-
-<input type="text" id="gradeEnd" name="gradeEnd" size="2" maxlength="1" value=""/>
+<input type="text" id="gradeStart" name="gradeStart" size="2" maxlength="1" value="<?php echo $grades->gradeStart;?>"/>-
+<input type="text" id="gradeEnd" name="gradeEnd" size="2" maxlength="1" value="<?php echo $grades->gradeEnd;?>"/>
 </p>
 <p>
 <label for="term">Term: </label><?=get_term_menu("term", get_current_term(),TRUE);?>
