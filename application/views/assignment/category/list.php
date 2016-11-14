@@ -30,17 +30,17 @@ $("#category-table").on("blur","input[name='weight']",function(){
 </div>
 <table id="category-table" class="list grid">
 	<thead>
-		<tr class="first">
+		<tr class="first" style="border-bottom: none;">
 			<th colspan=3></th>
-			<th colspan=2>Grade</th>
+			<th colspan=2 style="border-bottom: none;">Grade in School</th>
 			<th colspan=3></th>
 		</tr>
 		<tr>
 			<td>Subject</td>
 			<th>Category</th>
 			<th>Weight</th>
-			<th>Start</th>
-			<th>End</th>
+			<th style="border-top: none;">Start</th>
+			<th style="border-top: none;">End</th>
 			<th>Term</th>
 			<th>Year</th>
 			<th></th>
@@ -48,7 +48,7 @@ $("#category-table").on("blur","input[name='weight']",function(){
 	</thead>
 	<tbody>
 		<?
-		
+
 		foreach ( $categories as $category ) {
 			$data ["category"] = $category;
 			$data ["action"] = "update";
