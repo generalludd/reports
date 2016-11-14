@@ -111,15 +111,20 @@ class Benchmark extends MY_Controller {
 		$data ["kBenchmark"] = "";
 		$kTeach = $this->session->userdata ( "userID" );
 		$teacher = $this->teacher_model->get ( $kTeach );
-		$data ["gradeStart"] = $teacher->gradeStart;
-		$data ["gradeEnd"] = $teacher->gradeEnd;
+		if(get_cookie("benchmark_grade_start") || get_cookie("benchmark_grade_end")){
+			$data ["gradeStart"] = get_cookie("benchmark_grade_start");
+			$data ["gradeEnd"] = get_cookie("benchmark_grade_end");
+		}else{
+			$data ["gradeStart"] = $teacher->gradeStart;
+			$data ["gradeEnd"] = $teacher->gradeEnd;
+		}
 		$data ["year"] = get_current_year ();
 		$data ["term"] = get_current_term ();
-		$data ["subject"] = "";
+		$data ["subject"] = get_cookie("benchmark_subject");
 		$data ["category"] = "";
 		$data ["benchmark"] = "";
 		$data ["weight"] = 0;
-		$data['quarter'] = FALSE;
+		$data['quarter'] = get_cookie("benchmark_quarter");
 		$subjects = $this->subject_model->get_for_teacher ( $kTeach );
 		$data ["subjects"] = get_keyed_pairs ( $subjects, array (
 				"subject",

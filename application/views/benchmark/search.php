@@ -1,4 +1,5 @@
-<?php ?>
+<?php
+ ?>
 <h3><?php echo $title;?></h3>
 <form id="benchmarkSearch" action="<?=site_url("benchmark/teacher_list");?>" method="get" name="benchmarkSearch">
 	<p>

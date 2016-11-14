@@ -6,15 +6,15 @@
 <input type="hidden" name="kStudent" value="<?php echo $student->kStudent;?>"/>
 <p>
 <label for="grade">Grade Range</label>
-<input type="text" name="gradeStart" value="<?php echo get_cookie("assignment_grade_end");?>" style="width:2em;"/>-<input type="text" name="gradeEnd" value="<?php echo get_cookie("assignment_grade_end");?>" style="width: 2em;"/>
+<input type="text" name="gradeStart" value="" style="width:2em;"/>-<input type="text" name="gradeEnd" value="" style="width: 2em;"/>
 </p>
 <p>
 <label for="subject">Subject:</label>
-<?php echo form_dropdown('subject', $subjects, get_cookie("subject") , "id='subject'"); ?>
+<?php echo form_dropdown('subject', $subjects, $subject , "id='subject'"); ?>
 </p>
 <p>
 <label for="quarter">Quarter</label>
-<?php echo form_dropdown('quarter',array(0=>"",1=>1,2=>2,3=>3,4=>4), get_cookie("quarter"),"id='quarter'" );?>
+<?php echo form_dropdown('quarter',array(0=>"",1=>1,2=>2,3=>3,4=>4), $quarter,"id='quarter'" );?>
 </p>
 <p>
 <label for="term">Term</label>

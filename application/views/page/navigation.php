@@ -23,29 +23,29 @@ $year = get_current_year ();
 $buttons [] = array (
 		"selection" => "home",
 		"text" => "Home",
-		"href" => site_url () 
+		"href" => site_url ()
 );
 $buttons [] = array (
 		"selection" => "search",
 		"text" => '<input type="text" id="stuSearch" name="stuSearch" class="mobile" size="20" value="find students" />',
-		"type" => "pass-through" 
+		"type" => "pass-through"
 );
 // $buttons [] = array (
 // 		"selection" => "attendance",
 // 		"text" => "Check Attendance",
 // 		"class" => "search button dialog mobile",
-// 		"href" => site_url ( "attendance/check?search=1" ) 
+// 		"href" => site_url ( "attendance/check?search=1" )
 // );
 // $buttons [] = array (
 // 		"selection" => "attendance",
 // 		"text" => "Search Attendance",
 // 		"class" => array (
 // 				"button",
-// 				"dialog" 
+// 				"dialog"
 // 		),
 // 		"href" => site_url ( "attendance/show_search" ),
 // 		"title" => "Search attendance records",
-// 		"dbRole" => 1 
+// 		"dbRole" => 1
 // );
 $buttons [] = array (
 		"selection" => "student",
@@ -53,18 +53,18 @@ $buttons [] = array (
 		"class" => array (
 				"button",
 				"new",
-				"dialog" 
+				"dialog"
 		),
 		"href" => site_url ( "student/create" ),
 		"title" => "Add a new student to the database",
-		"dbRole" => 1 
+		"dbRole" => 1
 );
 $buttons [] = array (
 		"selection" => "teacher",
 		"text" => "List Teachers",
 		"href" => site_url ( "teacher?gradeStart=0&gradeEnd=8" ),
 		"title" => "List all the teachers &amp; other users in the database",
-		"dbRole" => 1 
+		"dbRole" => 1
 );
 $buttons [] = array (
 		"selection" => "narrative",
@@ -77,18 +77,18 @@ $buttons [] = array (
 		"selection" => "support",
 		"text" => "Learning Support",
 		"href" => site_url ( "student/search?hasNeeds=1&year=" . get_current_year () ),
-		"dbRole" => 3 
+		"dbRole" => 3
 );
 
 $buttons [] = array (
 		"selection" => "benchmark",
-		"text" => "Benchmarks",
+		"text" => "Benchmark Templates",
 		"class" => array (
 				"button",
-				"dialog" 
+				"dialog"
 		),
 		"href" => site_url ( "benchmark/search" ),
-		"dbRole" => 2, 
+		"dbRole" => 2,
 		"title"=> "Edit your benchmark templates",
 );
 
@@ -103,22 +103,22 @@ $buttons [] = array (
 		"text" => "Current Narratives",
 		"class" => array (
 				"button",
-				"dialog" 
+				"dialog"
 		),
 		"href" => site_url ( "narrative/search_teacher_narratives/$userID" ),
 		"title" => "List all of your narratives",
-		"dbRole" => 2 
+		"dbRole" => 2
 );
 $buttons [] = array (
 		"selection" => "narrative/show_missing",
 		"text" => "Missing Narratives",
 		"class" => array (
 				"button",
-				"dialog" 
+				"dialog"
 		),
 		"href" => site_url ( "narrative/search_missing/$userID" ),
 		"title" => "Show the students for whom you have not yet written a report this term",
-		"dbRole" => 2 
+		"dbRole" => 2
 );
 if ($dbRole == 2) {
 	if ($isAdvisor) {
@@ -126,7 +126,7 @@ if ($dbRole == 2) {
 				"selection" => "report/get_list",
 				"text" => sprintf ( "%ss%s", STUDENT_REPORT, $count ),
 				"href" => site_url ( "report/get_list/advisor/$userID" ),
-				"title" => sprintf ( "Show your %ss %s", strtolower ( STUDENT_REPORT ), $count_text ) 
+				"title" => sprintf ( "Show your %ss %s", strtolower ( STUDENT_REPORT ), $count_text )
 		);
 	}
 	if ($gradeEnd > 4) {
@@ -135,14 +135,14 @@ if ($dbRole == 2) {
 				"text" => "Grades",
 				"class" => array (
 						"button",
-						"dialog" 
+						"dialog"
 				),
 				"id" => "sa_$userID",
 				"title" => "Search for current grade charts",
-				"href" => site_url ( "assignment/search/$userID" ) 
+				"href" => site_url ( "assignment/search/$userID" )
 		);
 	}
-	
+
 	$buttons [] = array (
 			"selection" => "student",
 			"text" => "List Students",
@@ -153,8 +153,3 @@ if ($dbRole == 2) {
 print create_button_bar ( $buttons );
 
 ?>
-
-
-
-
-

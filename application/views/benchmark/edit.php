@@ -1,5 +1,4 @@
-<?php
-?>
+<?php ?>
 <h3><?php echo $title;?></h3>
 <form
 	id="benchmark"
@@ -37,7 +36,7 @@
 			required
 			maxlength="1"/>&nbsp;
 			<label for="quarter">Quarter</label>
-<?php echo form_dropdown('quarter',array(0=>"",1=>1,2=>2,3=>3,4=>4), $quarter,"id='quarter'" );?>
+<?php echo form_dropdown('quarter',array(0=>"",1=>1,2=>2,3=>3,4=>4), get_cookie('benchmark_quarter'),"id='quarter'" );?>
 			<label for="term">Term: </label><?=get_term_menu('term', $term);?> <label
 			for="year">Year: </label>
 <?=form_dropdown('year',get_year_list(), $year, "id='year' class='year' required");?>
