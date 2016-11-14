@@ -15,10 +15,10 @@ $yearEnd = $year + 1;
 	<td><input type="text" name="gradeStart"
 		class="<?=$action;?>-gradeStart"
 		id="gradeStart_<?=get_value($category,"kCategory","new");?>"
-		value="<?=get_value($category,"gradeStart");?>" size="2" /></td>
+		value="<?=get_value($category,"gradeStart",get_cookie("assignment_grade_start"));?>" size="2" /></td>
 	<td><input type="text" name="gradeEnd" class="<?=$action;?>-gradeEnd"
 		id="gradeEnd_<?=get_value($category,"kCategory","new");?>"
-		value="<?=get_value($category,"gradeEnd");?>" size="2" /></td>
+		value="<?=get_value($category,"gradeEnd", get_cookie("assignment_grade_end"));?>" size="2" /></td>
 	<td>
 	<?=get_term_menu(sprintf("term_%s",get_value($category,"kCategory","new")), get_value($category,"term",get_current_term()),FALSE,array("classes"=>sprintf("%s-term",$action)));?>
 

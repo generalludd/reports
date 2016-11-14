@@ -74,14 +74,14 @@ if(!empty($conditional_buttons)){
 		<?=form_dropdown('narrYear', get_year_list(), $narrYear, "id='narrYear'");?>
 		- <input id="yearEnd" type="text" name="yearEnd" readonly
 			maxlength="4" size="5" value="<?=$yearEnd; ?>" />
-		<?php if($stuGrade >= 6):?>
+		<?php if($stuGrade >= 6 && get_value($narrative,'narrSubject') != "Humanities"):?>
 		</p>
 		<!-- @TODO Put calculated final grade here.  -->
 		<p>Course Grade (middle school only):
 			<? if($this->input->cookie("submits_report_card") && $this->input->cookie("submits_report_card") == "yes" && ! get_value($narrative,"narrGrade",FALSE)): ?>
 			<span id="course_grade"><?=$default_grade;?></span>&nbsp;<a class='button small override-narrative-grade' href="#" title="override-narrative-grade allows a teacher who usually provides student grades to override the grade under special circumstances
 			">Override</a>
-			
+
 			<? else: ?>
 				<span id="course_grade"><input type="text" name="narrGrade" id="narrGrade" value='<?=get_value($narrative,'narrGrade', $default_grade);?>' size="27"></span>
 			<?php endif;?>
@@ -106,4 +106,3 @@ window.setInterval(function(){
 }, 60000);
 
 </script>
-

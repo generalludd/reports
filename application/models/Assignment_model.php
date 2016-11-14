@@ -26,9 +26,9 @@ class Assignment_model extends MY_Model {
 				"term",
 				"year",
 				"gradeStart",
-				"gradeEnd" 
+				"gradeEnd"
 		);
-		
+
 		for($i = 0; $i < count ( $variables ); $i ++) {
 			$myVariable = $variables [$i];
 			if ($this->input->post ( $myVariable )) {
@@ -82,13 +82,13 @@ class Assignment_model extends MY_Model {
 	 * get all the grades for a given teacher, term, grade range, student
 	 * grouping and an optional date-range limiter.
 	 *
-	 * @param int $kTeach        	
-	 * @param varchar $term        	
-	 * @param int $year        	
-	 * @param int $gradeStart        	
-	 * @param int $gradeEnd        	
-	 * @param string $stuGroup        	
-	 * @param array $date_range        	
+	 * @param int $kTeach
+	 * @param varchar $term
+	 * @param int $year
+	 * @param int $gradeStart
+	 * @param int $gradeEnd
+	 * @param string $stuGroup
+	 * @param array $date_range
 	 * @return query result rows
 	 */
 	function get_grades($kTeach, $term, $year, $gradeStart, $gradeEnd, $stuGroup = NULL, $date_range = array(), $sort_order = NULL, $subject = NULL)
@@ -136,8 +136,8 @@ class Assignment_model extends MY_Model {
 	 * get grades for a given assignement optionally limited to a specific
 	 * student grouping
 	 *
-	 * @param integer $kAssignment        	
-	 * @param string $stuGroup        	
+	 * @param integer $kAssignment
+	 * @param string $stuGroup
 	 * @return object array of grades for a given assignment
 	 *         This returns an array of all the grades (as objects) for a given
 	 *         assignment so they can be edited quickly in a column
@@ -181,21 +181,21 @@ class Assignment_model extends MY_Model {
 	 * year with options including the current teacher.
 	 * Perhaps this should be with the grade model. But here it is!
 	 *
-	 * @param int $kStudent        	
-	 * @param string $term        	
-	 * @param int $year        	
+	 * @param int $kStudent
+	 * @param string $term
+	 * @param int $year
 	 * @param array $options,
 	 *        	a limiter including the teacher (kTeach),
 	 *        	subject. grade_range is a puzzlement given the term and year
 	 *        	are required.
 	 * @return array of student grade objects, the result of the query
-	 *        
+	 *
 	 */
 	function get_for_student($kStudent, $term, $year, $options = array())
 	{
 		$from = "assignment";
 		$join = "grade";
-		
+
 		if (array_key_exists ( "from", $options ) && array_key_exists ( "join", $options )) {
 			$from = $options ["from"];
 			$join = $options ["join"];
@@ -204,7 +204,7 @@ class Assignment_model extends MY_Model {
 			$this->db->where ( "assignment.term", $term );
 		}
 		$this->db->where ( "assignment.year", $year );
-		
+
 		// $this->db->where("grade.kStudent",$kStudent);
 		if (array_key_exists ( "kTeach", $options )) {
 			$this->db->where ( "assignment.kTeach", $options ["kTeach"] );
@@ -212,21 +212,21 @@ class Assignment_model extends MY_Model {
 		if (array_key_exists ( "subject", $options )) {
 			$this->db->where ( "assignment.subject", $options ["subject"] );
 		}
-		
+
 		if (array_key_exists ( "grade_range", $options )) {
 			$gradeStart = $options ["grade_range"] ["gradeStart"];
 			$gradeEnd = $options ["grade_range"] ["gradeEnd"];
 			$this->db->where ( "assignment.gradeStart>=", $gradeStart );
 			$this->db->where ( "assignment.gradeEnd<=", $gradeEnd );
 		}
-		
+
 		if(array_key_exists("subject", $options)){
 			$this->db->where("assignment.subject",$options['subject']);
 		}
-		
+
 		// $this->db->where("assignment.gradeStart = category.gradeStart");
 		// $this->db->where("assignment.gradeEnd = category.gradeEnd");
-		
+
 		$this->db->from ( $from );
 		$this->db->join ( $join, "assignment.kAssignment=grade.kAssignment AND grade.kStudent = $kStudent", "LEFT" );
 		$this->db->join ( "student", "student.kStudent=grade.kStudent", "LEFT" );
@@ -249,12 +249,12 @@ class Assignment_model extends MY_Model {
 
 	/**
 	 *
-	 * @param int $kTeach        	
-	 * @param varchar $term        	
-	 * @param int $year        	
-	 * @param int $gradeStart        	
-	 * @param int $gradeEnd        	
-	 * @param array $date_range        	
+	 * @param int $kTeach
+	 * @param varchar $term
+	 * @param int $year
+	 * @param int $gradeStart
+	 * @param int $gradeEnd
+	 * @param array $date_range
 	 * @return query result object array
 	 */
 	function get_for_teacher($kTeach, $term, $year, $gradeStart, $gradeEnd, $subject,  $date_range = array())
@@ -282,7 +282,7 @@ class Assignment_model extends MY_Model {
 	function delete($kAssignment)
 	{
 		$delete_array = array (
-				"kAssignment" => $kAssignment 
+				"kAssignment" => $kAssignment
 		);
 		$this->db->delete ( "assignment", $delete_array );
 		$this->db->delete ( "grade", $delete_array );
@@ -296,7 +296,7 @@ class Assignment_model extends MY_Model {
 		$kCategory = FALSE;
 		if (array_key_exists ( "kTeach", $values )) {
 			return $this->_replace_into("assignment_category",$values);
-		
+
 // 			$query = sprintf("REPLACE INTO assignment_category ( `kTeach`, `category`, `weight`, `gradeStart`, `gradeEnd`, `term`, `year`) VALUES('%s','%s','%s','%s','%s','%s','%s')",
 // 					$values->kTeach,
 // 					$values->category,
@@ -343,6 +343,7 @@ class Assignment_model extends MY_Model {
 		$this->db->where ("subject", $subject);
 		$this->db->order_by ( "weight", "DESC" );
 		$result = $this->db->get ( "assignment_category" )->result ();
+		$this->_log();
 		return $result;
 	}
 
