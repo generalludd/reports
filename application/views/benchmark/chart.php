@@ -15,6 +15,7 @@ if(count($benchmarks)>0 && $benchmarks != 0){
 	print "<div class='section'>";
 	print "<table class='chart list'>";
 	$i=1;
+	$currentSubject = "";
 	$currentCategory = "";
 	$comments = array();
 	$currentQuarter = 0;
@@ -24,6 +25,10 @@ if(count($benchmarks)>0 && $benchmarks != 0){
 // 			$currentQuarter = $benchmark->quarter;
 // 			print "<tr><td colspan=2><strong>Quarter $benchmark->quarter</strong></td></tr>";
 // 		}
+		if($benchmark->subject != $currentSubject){
+			echo "<tr class='benchmark-row'><td colspan=3><h3>$benchmark->subject</h3></td></tr>";
+			$currentSubject = $benchmark->subject;
+		}
 		echo "<tr  class='benchmark-row'>";
 		if($benchmark->category!=$currentCategory){
 			$currentCategory=$benchmark->category;

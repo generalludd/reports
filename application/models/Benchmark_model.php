@@ -114,7 +114,7 @@ class Benchmark_model extends MY_Model {
 	{
 		
 		// @TODO Real Problem here is finding the benchmarks for grade ranges
-		if ($subject != "all") {
+		if ($subject) {
 			$this->db->where ( "benchmark.subject", $subject );
 		}
 		$this->db->where ( "(benchmark.gradeStart = $grade OR benchmark.gradeEnd = $grade)" );

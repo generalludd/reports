@@ -242,7 +242,8 @@ class Benchmark extends MY_Controller {
 		if ($kStudent) {
 			$this->load->model ( "student_model", "student" );
 			$this->load->model ( "menu_model" );
-			$data ["student"] = $this->student->get ( $kStudent );
+			$student = $this->student->get ( $kStudent );
+			$data ["student"] = $student;
 			$data ["action"] = "update";
 			$subjects = $this->subject_model->get_all ( array (
 					"gradeStart" => 5,
@@ -251,7 +252,14 @@ class Benchmark extends MY_Controller {
 			$data ["subjects"] = get_keyed_pairs ( $subjects, array (
 					"subject",
 					"subject"
-			), FALSE );
+			), TRUE );
+			if($this->input->get("gradeStart") && $this->input->get("gradeEnd")){
+			$data['gradeStart'] = $this->input->get("gradeStart");
+			$data['gradeEnd'] = $this->input->get("gradeEnd");
+			}else{
+				$data['gradeStart'] = get_current_grade($student->baseGrade, $student->baseYear);
+				$data['gradeEnd'] = get_current_grade($student->baseGrade, $student->baseYear);
+			}
 			$data ['target'] = "benchmark/select";
 			$data ['title'] = "Search for Student Benchmarks";
 			if ($this->input->get ( "ajax" ) == 1) {
@@ -329,7 +337,7 @@ class Benchmark extends MY_Controller {
 		$student = $this->student->get ( $kStudent );
 		$student_grade = get_current_grade ( $student->baseGrade, $student->baseYear, $year );
 		$data ["benchmarks"] = $this->benchmark_model->get_for_student ( $kStudent, $subject, $student_grade, $term, $year, $quarter );
-		$data ['title'] = sprintf ( "Benchmarks for %s, %s, Grade: %s, %s, Quarter %s,  %s", format_name ( $student->stuFirst, $student->stuLast, $student->stuNickname ), $subject, $student_grade, $term, $quarter, format_schoolyear($year) );
+		$data ['title'] = sprintf ( "Benchmarks for %s, Grade: %s, %s, Quarter %s,  %s", format_name ( $student->stuFirst, $student->stuLast, $student->stuNickname ), $student_grade, $term, $quarter, format_schoolyear($year) );
 		$data ['target'] = "benchmark/chart";
 		$this->load->model ( "benchmark_legend_model", "legend" );
 		$data ['legend'] = $this->legend->get_one ( array (

@@ -6,7 +6,7 @@
 <input type="hidden" name="kStudent" value="<?php echo $student->kStudent;?>"/>
 <p>
 <label for="grade">Grade Range</label>
-<input type="text" name="gradeStart" value="" style="width:2em;"/>-<input type="text" name="gradeEnd" value="" style="width: 2em;"/>
+<input type="text" name="gradeStart" value="<?php echo $gradeStart; ?>" style="width:2em;"/>-<input type="text" name="gradeEnd" value="<?php echo $gradeEnd;?>" style="width: 2em;"/>
 </p>
 <p>
 <label for="subject">Subject:</label>

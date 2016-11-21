@@ -24,15 +24,25 @@ if($narrTerm == "Mid-Year"){
                 "href" => site_url("narrative/print_student_report/$kStudent/$narrTerm/$narrYear"),
                 "target" => "_blank"
         );
-        if ($stuGrade > 6) {
+        if ($stuGrade >= 6) {
             $print_buttons[] = array(
                     "selection" => "print",
                     "text" => "Print Grades",
                     "class"=>"button small",
                     "href" => site_url(
-                            sprintf("grade/report_card?kStudent=%s&year=%s&term=%s&subject=0", $kStudent, $narrYear, $narrTerm)),
+                         sprintf("grade/report_card?kStudent=%s&year=%s&term=%s&subject=0", $kStudent, $narrYear, $narrTerm)),
                     "target" => "_blank"
             );
+        }
+        if ($stuGrade >= 5) {
+        	$print_buttons[] = array(
+        			"selection" => "print",
+        			"text" => "Print Benchmarks",
+        			"class"=>"button small dialog",
+        			"href" => site_url(
+        					sprintf("benchmark/select_student/%s?gradeStart=%s&gradeEnd=%s", $kStudent,$stuGrade, $stuGrade)),
+        			"target" => "_blank"
+        	);
         }
         ?>
 <?=create_button_bar($print_buttons); ?>
