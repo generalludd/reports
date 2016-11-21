@@ -2,7 +2,7 @@
 defined('BASEPATH') or exit('No direct script access allowed');
 if(count($reports) > 0):
 // list.php Chris Dart Nov 20, 2014 2:48:08 PM chrisdart@cerebratorium.com
-$sortTerm = sprintf("%s %s",$narrTerm,format_schoolyear($narrYear));
+$sortTerm = sprintf("%s %s (Grade %s)",$narrTerm,format_schoolyear($narrYear), $stuGrade);
 $div_classes[] = "column";
 
 if($narrTerm == "Mid-Year"){
@@ -24,7 +24,7 @@ if($narrTerm == "Mid-Year"){
                 "href" => site_url("narrative/print_student_report/$kStudent/$narrTerm/$narrYear"),
                 "target" => "_blank"
         );
-        if ($stuGrade > 4) {
+        if ($stuGrade > 6) {
             $print_buttons[] = array(
                     "selection" => "print",
                     "text" => "Print Grades",
