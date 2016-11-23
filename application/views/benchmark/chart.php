@@ -5,11 +5,7 @@
 <?php $buttons[] = array("selection"=>"benchmarks", "href"=>site_url("benchmark/edit_student/$kStudent?subject=$subject&student_grade=$student_grade&quarter=$quarter&term=$term&year=$year"), "class"=>"button edit dialog", "text"=>"Edit Benchmarks");?>
 <?php echo create_button_bar($buttons);?>
 <?php endif; ?>
-<? if($legend): ?>
-<div class='legend'>
-<p><strong><?=$legend->title;?></strong></p>
-<div><?=$legend->legend;?></div>
-<? endif; ?>
+
 <?
 if(count($benchmarks)>0 && $benchmarks != 0){
 	print "<div class='section'>";
@@ -20,14 +16,13 @@ if(count($benchmarks)>0 && $benchmarks != 0){
 	$comments = array();
 	$currentQuarter = 0;
 	foreach($benchmarks as $benchmark){
-		
-// 		if($benchmark->quarter != $currentQuarter){
-// 			$currentQuarter = $benchmark->quarter;
-// 			print "<tr><td colspan=2><strong>Quarter $benchmark->quarter</strong></td></tr>";
-// 		}
+
 		if($benchmark->subject != $currentSubject){
 			echo "<tr class='benchmark-row'><td colspan=3><h3>$benchmark->subject</h3></td></tr>";
 			$currentSubject = $benchmark->subject;
+		}
+		if(get_value($benchmark, "legend")){
+			echo "<tr class='benchmark-legend'><td colspan=3>$benchmark->legend</td></tr>";
 		}
 		echo "<tr  class='benchmark-row'>";
 		if($benchmark->category!=$currentCategory){

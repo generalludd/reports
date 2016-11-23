@@ -1,5 +1,4 @@
 <?php
-
 defined ( 'BASEPATH' ) or exit ( 'No direct script access allowed' );
 class benchmark_legend extends MY_Controller {
 
@@ -19,14 +18,13 @@ class benchmark_legend extends MY_Controller {
 	function get()
 	{
 		$variables = array (
-				"kTeach",
 				"title",
 				"term",
 				"year",
 				"gradeStart",
 				"gradeEnd",
 				"subject",
-				"legend"
+				"legend" 
 		);
 		$params = array ();
 		for($i = 0; $i < count ( $variables ); $i ++) {
@@ -42,14 +40,11 @@ class benchmark_legend extends MY_Controller {
 	/**
 	 * produce a page displaying the legend info for teachers to evaluate and edit.
 	 */
-	function view()
+	function view($kLegend)
 	{
-		$kLegend = $this->uri->segment ( 3 );
 		$legend = $this->legend->get ( $kLegend );
 		$this->load->model ( "teacher_model" );
 		$data ["legend"] = $legend;
-		$teacher = $this->teacher_model->get ( $legend->kTeach, "teachFirst,teachLast" );
-		$data ["teacher"] = $teacher->teachFirst . " " . $teacher->teachLast;
 		$data ["title"] = "Benchmark Legend";
 		$data ["target"] = "benchmark_legend/view";
 		$this->load->view ( "page/index", $data );
@@ -58,16 +53,15 @@ class benchmark_legend extends MY_Controller {
 	/**
 	 * edit a given benchmark legend.
 	 */
-	function edit()
+	function edit($kLegend)
 	{
-		$kLegend = $this->uri->segment ( 3 );
 		$legend = $this->legend->get ( $kLegend );
 		$data ["legend"] = $legend;
 		$subjects = $this->subject_model->get_for_teacher ( $this->session->userdata ( "userID" ) );
-
+		
 		$data ["subjects"] = get_keyed_pairs ( $subjects, array (
 				"subject",
-				"subject"
+				"subject" 
 		), FALSE );
 		$data ["rich_text"] = TRUE;
 		$data ["action"] = "update";
@@ -83,14 +77,14 @@ class benchmark_legend extends MY_Controller {
 	{
 		$kTeach = $this->session->userdata ( "userID" );
 		$data ["legend"] = ( object ) array (
-				"kTeach" => $kTeach
+				"kTeach" => $kTeach 
 		);
 		$subjects = $this->subject_model->get_for_teacher ( $kTeach );
 		$data ["subjects"] = get_keyed_pairs ( $subjects, array (
 				"subject",
-				"subject"
+				"subject" 
 		), FALSE );
-		$data["rich_text"] = TRUE;
+		$data ["rich_text"] = TRUE;
 		$data ["action"] = "insert";
 		$data ["target"] = "benchmark_legend/edit";
 		$data ["title"] = "Create a New Legend";
@@ -125,20 +119,20 @@ class benchmark_legend extends MY_Controller {
 	{
 		$this->load->model ( "benchmark_legend_model" );
 		$variables = array (
-				"kTeach",
 				"title",
 				"term",
 				"year",
 				"gradeStart",
 				"gradeEnd",
 				"subject",
-				"legend"
+				"legend" 
 		);
 		$params = array ();
 		for($i = 0; $i < count ( $variables ); $i ++) {
 			$myVariable = $variables [$i];
-			if ($this->input->get_post ( $myVariable )) {
-				$params [$myVariable] = $this->input->get_post ( $myVariable );
+			if ($this->input->get ( $myVariable )) {
+				$params [$myVariable] = $this->input->get ( $myVariable );
+				bake_cookie ( "benchmark_" . $myVariable, $params [$myVariable] );
 			}
 		}
 		$data ["params"] = $params;
@@ -162,24 +156,27 @@ class benchmark_legend extends MY_Controller {
 		$grades = $this->menu_model->get_pairs ( "grade" );
 		$data ["grade_list"] = get_keyed_pairs ( $grades, array (
 				"value",
-				"label"
+				"label" 
 		) );
 		$data ["years"] = get_year_list ( TRUE );
 		$subjects = $this->subject_model->get_for_teacher ( $kTeach );
 		$data ["subjects"] = get_keyed_pairs ( $subjects, array (
 				"subject",
-				"subject"
+				"subject" 
 		), TRUE );
-		if(!get_cookie("benchmark_grade_start") || !get_cookie("benchmark_grade_end")){
-
-		$data ["grades"] = $this->teacher_model->get ( $kTeach, array (
-				"gradeStart",
-				"gradeEnd"
-		) );
-	}else{
-		$grades = (object) array("gradeStart"=>get_cookie("benchmark_grade_start"), "gradeEnd"=>get_cookie("benchmark_grade_start"));
-		$data['grades'] =  $grades;
-	}
+		if (! get_cookie ( "benchmark_gradeStart" ) || ! get_cookie ( "benchmark_gradeEnd" )) {
+			
+			$data ["grades"] = $this->teacher_model->get ( $kTeach, array (
+					"gradeStart",
+					"gradeEnd" 
+			) );
+		} else {
+			$grades = ( object ) array (
+					"gradeStart" => get_cookie ( "benchmark_gradeStart" ),
+					"gradeEnd" => get_cookie ( "benchmark_gradeEnd" ) 
+			);
+			$data ['grades'] = $grades;
+		}
 		$data ["title"] = "Search Benchmarks";
 		$data ["target"] = "benchmark_legend/search";
 		if ($this->input->get ( "ajax" )) {

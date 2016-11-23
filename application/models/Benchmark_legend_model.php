@@ -1,6 +1,6 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 
-class benchmark_legend_model extends CI_Model
+class benchmark_legend_model extends MY_Model
 {
 
 	var $kTeach;

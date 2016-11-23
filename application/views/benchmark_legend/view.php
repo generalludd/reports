@@ -8,9 +8,6 @@
 ?>
 <ul>
 <li>
-Teacher: <?=$teacher; ?>
-</li>
-<li>
 School Year: <?=$legend->term;?>, <?=format_schoolyear($legend->year);?>
 </li>
 <li>
