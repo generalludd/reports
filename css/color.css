@@ -391,10 +391,11 @@ tr.benchmark-category {
 tr.benchmark-term {
 	
 }
-
 tr.benchmark-row td.benchmark-text:hover {
 	background-color: #fcfcaa;
 }
+
+
 
 table.list tr:hover {
 	background-color: #cdcdcd;

@@ -739,7 +739,7 @@ label {
 
 .footnote {
 	font-size: .8em;
-	vertical-align: super;
+	/* vertical-align: super; */
 }
 
 .ui-accordion-content {
@@ -1013,6 +1013,10 @@ td.benchmark-label {
 	width: 25em;
 }
 
+tr.benchmark-legend p, tr.benchmark-legend ul{
+	margin: 0;
+}
+
 td input.benchmark-comment {
 	width: 25em;
 }
@@ -1045,6 +1049,17 @@ tr.benchmark-row td.benchmark-text {
 
 tr.benchmark-row td.benchmark-info {
 	width: 150px;
+}
+
+tr.benchmark-row:nth-child(even){
+	background-color: #eee;
+}
+
+tr.benchmark-row:first-child td{
+	border-top: 1px solid #000;
+}
+tr.benchmark-row td{
+	border: 1px solid #000;
 }
 
 #footer {

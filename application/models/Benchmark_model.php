@@ -134,6 +134,7 @@ class Benchmark_model extends MY_Model {
 		$this->_log ("log",TRUE);
 		return $result;
 	}
+	
 
 	function update_for_student($kStudent, $kBenchmark, $kTeach, $grade, $comment = NULL)
 	{
@@ -170,6 +171,14 @@ class Benchmark_model extends MY_Model {
 		$this->db->where ( "kBenchmark", $kBenchmark );
 		$this->db->from ( "student_benchmark" );
 		$result = $this->db->get ()->num_rows ();
+		return $result;
+	}
+	
+	function get_for_student_by_id($kBenchmark, $kStudent){
+		$this->db->where("kBenchmark",$kBenchmark);
+		$this->db->where("kStudent",$kStudent);
+		$this->db->from("student_benchmark");
+		$result = $this->db->get()->row();
 		return $result;
 	}
 
