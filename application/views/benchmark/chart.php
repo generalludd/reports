@@ -26,7 +26,7 @@ $i = 1;
 <?php if($benchmark->grade != "X" && $benchmark->grade !=""):?>
 	<?php	if($benchmark->subject != $currentSubject):?>
 			<tr class='benchmark-header'>
-			<td colspan=3>
+			<td colspan=2>
 				<h3><?php echo $benchmark->subject;?></h3>
 			</td>
 		</tr>
@@ -34,13 +34,13 @@ $i = 1;
 	<?php endif;?>
 	<?php //	if(get_value($benchmark, "legend")):?>
 <!-- 		<tr class='benchmark-legend'> -->
-			<td colspan=2><?php // echo $benchmark->legend;?></td>
+			<!-- <td colspan=2><?php // echo $benchmark->legend;?></td> -->
 <!-- 		</tr> -->
 	<?php //endif;?>
 	<?php	if($benchmark->category!=$currentCategory):?>
 	<?php		$currentCategory=$benchmark->category;?>
 	<tr class="benchmark-row">
-	<td class='benchmark-text' colspan=3>
+	<td class='benchmark-text' colspan=2>
 				<strong><?php echo $benchmark->category;?></strong>
 			</td>
 			</tr>

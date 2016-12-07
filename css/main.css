@@ -1046,8 +1046,6 @@ tr.benchmark-row td {
 }
 
 tr.benchmark-row td.benchmark-text {
-	padding-left: 20px;
-	cursor: pointer;
 }
 
 tr.benchmark-row td.benchmark-info {

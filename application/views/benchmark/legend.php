@@ -1,7 +1,7 @@
 <?php
 ?>
 <p><strong>Benchmark Key</strong></p>
-<p><strong>E</strong> -&nbsp;<strong>E</strong>xceeds expectations</p>
+<p><strong>E</strong> -&nbsp;<strong>E</strong>xceeds expectations (<strong>Not</strong> used for quality standards.)</p>
 <ul>
 <li>Exhibits deep knowledge and understanding of the skill and/or concept.</li>
 <li>Can apply this knowledge in a variety of settings.</li>
