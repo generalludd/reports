@@ -1013,7 +1013,10 @@ td.benchmark-label {
 	width: 25em;
 }
 
-tr.benchmark-legend p, tr.benchmark-legend ul{
+.benchmark-legend{
+	padding: 1em 0;
+}
+.benchmark-legend p, .benchmark-legend ul{
 	margin: 0;
 }
 
@@ -1061,7 +1064,9 @@ tr.benchmark-row:first-child td{
 tr.benchmark-row td{
 	border: 1px solid #000;
 }
-
+td.benchmark-description {
+	padding-left: 2em !important;
+}
 #footer {
 	font-size: .8em;
 	width: 150px;

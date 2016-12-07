@@ -91,6 +91,8 @@ class Benchmark extends MY_Controller {
 		$data ["benchmark"] = $benchmark->benchmark;
 		$data ["weight"] = $benchmark->weight;
 		$data ['quarter'] = $benchmark->quarter;
+		$data['categories'] = $this->benchmark_model->get_categories($benchmark->subject, $benchmark->year, $benchmark->gradeStart, $benchmark->gradeEnd);
+		
 		$subjects = $this->subject_model->get_for_teacher ( $kTeach );
 		$data ["subjects"] = get_keyed_pairs ( $subjects, array (
 				"subject",
@@ -125,6 +127,8 @@ class Benchmark extends MY_Controller {
 		$data ["benchmark"] = "";
 		$data ["weight"] = 0;
 		$data ['quarter'] = get_cookie ( "benchmark_quarter" );
+		$data['categories'] = $this->benchmark_model->get_categories($data["subject"], $data['year'], $data['gradeStart'], $data['gradeEnd']);
+		
 		$subjects = $this->subject_model->get_for_teacher ( $kTeach );
 		$data ["subjects"] = get_keyed_pairs ( $subjects, array (
 				"subject",

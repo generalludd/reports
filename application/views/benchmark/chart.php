@@ -9,6 +9,9 @@
 <?
 if (count ( $benchmarks ) > 0 && $benchmarks != 0) :
 	?>
+	<div class="benchmark-legend">
+	<?php $this->load->view("benchmark/legend");?>
+	</div>
 <div class='section'>
 	<table class='chart list'>
 	<?php
@@ -29,22 +32,22 @@ $i = 1;
 		</tr>
 			<?php $currentSubject = $benchmark->subject;?>
 	<?php endif;?>
-	<?php	if(get_value($benchmark, "legend")):?>
-		<tr class='benchmark-legend'>
-			<td colspan=3><?php echo $benchmark->legend;?></td>
-		</tr>
-	<?php endif;?>
- <tr class=benchmark-row>
+	<?php //	if(get_value($benchmark, "legend")):?>
+<!-- 		<tr class='benchmark-legend'> -->
+			<td colspan=2><?php // echo $benchmark->legend;?></td>
+<!-- 		</tr> -->
+	<?php //endif;?>
 	<?php	if($benchmark->category!=$currentCategory):?>
 	<?php		$currentCategory=$benchmark->category;?>
-	<td class='benchmark-text'>
+	<tr class="benchmark-row">
+	<td class='benchmark-text' colspan=3>
 				<strong><?php echo $benchmark->category;?></strong>
 			</td>
-	<?php else:?>
-			<td></td>
-<?php endif; ?>
+			</tr>
+
+	<?php endif; ?>
+	 <tr class=benchmark-row>
 	<?php 	$mark="";?>
-		
 		<?php
 			if (strlen ( $benchmark->comment ) > 0) {
 				$comment = sprintf ( "<sup>%s</sup><span class='footnote'>%s</span>", $i, $benchmark->comment );
@@ -53,9 +56,9 @@ $i = 1;
 				$comments [] = $comment;
 			} // endif;
 			?>
-		 <td><?php echo $benchmark->benchmark?></td>
-			<td><?php echo $benchmark->grade . $mark;?></td>
-<?php endif;?>
+		 <td class="benchmark-description"><?php echo $benchmark->benchmark?></td>
+		<td><?php echo $benchmark->grade . $mark;?></td>
+<?php  endif;?>
 	<?php endforeach;?>
 	</tr>
 	</table>

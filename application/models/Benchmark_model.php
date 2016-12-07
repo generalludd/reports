@@ -89,6 +89,19 @@ class Benchmark_model extends MY_Model {
 		$result = $this->db->get ()->result ();
 		return $result;
 	}
+	
+	function get_categories($subject, $year, $gradeStart, $gradeEnd){
+		$this->db->from("benchmark");
+		$this->db->where("subject",$subject);
+		$this->db->where("year",$year);
+		$this->db->where("`gradeStart` BETWEEN '$gradeStart' AND '$gradeEnd'", NULL, TRUE);
+		$this->db->where("`gradeEnd` BETWEEN '$gradeStart' AND '$gradeEnd'", NULL, TRUE);
+		$this->db->group_by("category");
+		$this->db->select("category");
+		$result = $this->db->get()->result();
+		return $result;
+		
+	}
 
 	function insert()
 	{

@@ -45,6 +45,7 @@ class benchmark_legend_model extends MY_Model
 
 		$this->db->from("benchmark_legend");
 		$result = $this->db->get()->result();
+		$this->_log();
 		return $result;
 
 

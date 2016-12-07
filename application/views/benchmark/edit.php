@@ -1,4 +1,9 @@
-<?php ?>
+<?php 
+//$categories = array("one","two","three");
+foreach($categories as $c){
+	$category_list[] = sprintf("'%s'", $c->category);
+}
+?>
 <h3><?php echo $title;?></h3>
 <form
 	id="benchmark"
@@ -51,7 +56,7 @@
 			value="<? $yearEnd=$year+1;print $yearEnd; ?>" />
 	</p>
 	<label for="subject">Subject:</label><?=form_dropdown('subject',$subjects,$subject,"id='subject' required");?>
-<p>
+<p class="ui-widget">
 		<label for="category">Category:</label><input
 			type="text"
 			id="category"
@@ -83,3 +88,17 @@
 			value="Save" />
 	</p>
 </form>
+
+ <script type="text/javascript">
+  $( function() {
+    var availableTags = [
+       <?php echo implode(",",$category_list); ?>
+                         
+    ];
+    $( "#category" ).autocomplete({
+      source: availableTags
+    });
+  } );
+  </script>
+
+ 
