@@ -59,7 +59,7 @@ $year=get_current_year();
 
 $buttons[] = array("text"=>"New Benchmark","href"=>site_url("benchmark/create"),"class"=>"dialog new button");
 $buttons[] = array("text"=>"Search for Benchmarks","class"=>"button dialog","href"=>site_url("benchmark/search"));
-$buttons[] = array("text"=>"Edit Chart Legends","class"=>"button dialog edit","href"=>site_url("benchmark_legend/search"));
+//$buttons[] = array("text"=>"Edit Chart Legends","class"=>"button dialog edit","href"=>site_url("benchmark_legend/search"));
 print create_button_bar($buttons);
 ?>
 <?
