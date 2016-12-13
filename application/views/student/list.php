@@ -43,7 +43,9 @@ $default_row_style = array (
 	<?
 				$current_teacher = $student->teacherName;
 			
+			
 	endif;
+		
 		
 	endif;
 		if (array_key_exists ( "humanitiesTeacher", $criteria )) :
@@ -56,7 +58,9 @@ $default_row_style = array (
 		<?
 				$humanities_teacher = $student->humanitiesTeacher;
 			
+			
 		endif;
+		
 		
 		endif;
 		if ($current_grade != $stuGrade) :
@@ -68,7 +72,8 @@ $default_row_style = array (
 	</h4>
 	<?
 			
-$current_grade = $stuGrade;
+			$current_grade = $stuGrade;
+		
 		
 	endif;
 		?>
@@ -97,24 +102,26 @@ $current_grade = $stuGrade;
 				"class" => "button",
 				"text" => "Narratives" 
 		);
-		$buttons[] = array(
-				"selection" => "benchmark",
-				"href" => site_url("benchmark/select_student/$student->kStudent"),
-				"class" =>"button dialog",
+		$buttons [] = array (
+				"selection" => "benchmarks",
+				"href" => site_url ( "student_benchmark/select/?search=true&kStudent=$student->kStudent" ),
+				"class" => "button dialog",
 				"text" => "Benchmarks",
+				"title" => "Search for this student&rsquo;s benchmarks" 
 		);
-// 		$buttons [] = array (
-// 				"selection" => "attendance",
-// 				"href" => site_url ( "attendance/search/$student->kStudent?startDate=$start_date&endDate=$today" ),
-// 				"class" => "button",
-// 				"text" => "Attendance" 
-// 		);
-// 		$buttons [] = array (
-// 				"selection" => "attendance",
-// 				"href" => site_url ( "attendance/create/$student->kStudent" ),
-// 				"class" => "button dialog new",
-// 				"text" => "Add Attendance" 
-// 		);
+		
+		// $buttons [] = array (
+		// "selection" => "attendance",
+		// "href" => site_url ( "attendance/search/$student->kStudent?startDate=$start_date&endDate=$today" ),
+		// "class" => "button",
+		// "text" => "Attendance"
+		// );
+		// $buttons [] = array (
+		// "selection" => "attendance",
+		// "href" => site_url ( "attendance/create/$student->kStudent" ),
+		// "class" => "button dialog new",
+		// "text" => "Add Attendance"
+		// );
 		$buttons [] = array (
 				"selection" => "support",
 				"href" => site_url ( "support/list_all/$student->kStudent" ),
