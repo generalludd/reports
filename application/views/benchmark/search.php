@@ -7,12 +7,12 @@
 		<label for="subject">Subject:</label>
 <?=form_dropdown('subject', $subject_list, get_cookie("benchmark_subject"), "id='subject'"); ?>
     </p>
+<!--	<p>
+ 		<label for="quarter">Quarter: </label> -->
+<?php //echo form_dropdown('quarter',array(0=>"",1=>1,2=>2,3=>3,4=>4), get_cookie("benchmark_quarter"),"id='quarter'" );?>
+<!-- </p> 
 	<p>
-		<label for="quarter">Quarter: </label>
-<?php echo form_dropdown('quarter',array(0=>"",1=>1,2=>2,3=>3,4=>4), get_cookie("benchmark_quarter"),"id='quarter'" );?>
-</p>
-	<p>
-		<label for="term">Term:</label> <?=$termMenu; ?>
+		<label for="term">Term:</label> <?php //echo $termMenu; ?>-->
     <input type="text" name="year" id="year" size="5" maxlength="4" class="year" value="<?=$yearStart; ?>" />
 		-
 		<input type="text" id="yearEnd" class='yearEnd' readonly value="<?=$yearEnd; ?>" size="5" />

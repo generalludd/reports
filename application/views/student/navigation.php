@@ -12,7 +12,7 @@ $buttons[] =array("selection" => "narrative", "href"=>site_url("narrative/studen
 
 // $buttons[] = array("selection"=>"attendance","href"=>site_url("attendance/create/$student->kStudent"),"class"=>"button dialog new","text"=>"Add Attendance");
 
-$buttons[] = array("selection"=>"benchmarks", "href"=>site_url("benchmark/select_student/$kStudent"), "class"=>"button dialog", "text"=>"Benchmarks", "title"=>"Search for this student&rsquo;s benchmarks");
+$buttons[] = array("selection"=>"benchmarks", "href"=>site_url("student_benchmark/select/?search=true&kStudent=$kStudent"), "class"=>"button dialog", "text"=>"Benchmarks", "title"=>"Search for this student&rsquo;s benchmarks");
 $buttons[] = array("selection" => "support", "href"=> site_url("support/list_all/$kStudent"), "text" => "Learning Support" );
 if(get_value($student,"stuGrade",0) >= 6){
 	$buttons[] = array("selection" => "report/get_list/student", "href" => site_url("report/get_list/student/$kStudent"), "text" => sprintf("%ss",STUDENT_REPORT));

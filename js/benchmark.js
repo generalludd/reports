@@ -23,51 +23,62 @@ $(document)
 					}// end function(event)
 				);// end click
 
-		
-				
-
-					$('.save_student_benchmark').live('click',
-						function(event){
-						
+					$(".benchmark-grade, .benchmark-comment").live('keydown',function(event){
 						var my_id = $(this).parents("tr").attr("id").split("_");
-							var myBenchmark = my_id[1];
-							var myStudent = my_id[2];
-							var myTeach = my_id[3];
-							var myGrade = $("#g_" + myBenchmark).val();
-							var myComment = $("#c_" + myBenchmark).val();
-							$(this).focus();
-							var form_data = {
-									kBenchmark: myBenchmark,
-									kStudent: myStudent,
-									kTeach: myTeach,
-									grade: myGrade,
-									comment: myComment,
-									ajax: 1
-							};
-							var myUrl = base_url + "benchmark/update_for_student";
-						
-							$.ajax({
-								type: "post",
-								url: myUrl,
-								data: form_data,
-								success: function(data){
-									console.log(data);
-									$("#ssb_" + myBenchmark).hide();
-									$("#save_" + myBenchmark).html(data).show();
-								},
-								error: function(data){
-									console.log(data);
-								}
-							});
-							
-						}//end function(event)
-					);//end update_student_benchmark.click
+						var myBenchmark = my_id[1];
+						$("#save_" + myBenchmark).fadeOut(1000);
+					});
 					
-					$(".benchmark-string").live('keyup', function(event){
-						var myBenchmark = this.id.split("_")[1];
-						$("#save_" + myBenchmark).hide();
-						$("#ssb_" + myBenchmark).show();
+				
+					
+					$(".benchmark-grade").live('blur', function(event){
+						var my_id = $(this).parents("tr").attr("id").split("_");
+						update_benchmark(my_id);
+						
+					});
+					
+					$(".benchmark-comment").live('blur',function(event){
+						var my_id = $(this).parents("tr").attr("id").split("_");
+						update_benchmark(my_id);
 					});
 
 			}
 		);// end document-ready
+
+function update_benchmark (my_id){
+	var myBenchmark = my_id[1];
+	var myStudent = my_id[2];
+	var myTeach = my_id[3];
+	var myYear = $("#year").val();
+	var myTerm = $("#term").val();
+	var myQuarter = $("#quarter").val();
+	var myGrade = $("#g_" + myBenchmark).val();
+	var myComment = $("#c_" + myBenchmark).val();
+	var form_data = {
+			kBenchmark: myBenchmark,
+			kStudent: myStudent,
+			kTeach: myTeach,
+			grade: myGrade,
+			comment: myComment,
+			quarter: myQuarter,
+			term: myTerm,
+			year: myYear,
+			ajax: 1
+	};
+	var myUrl = base_url + "student_benchmark/update";
+	$.ajax({
+		type: "post",
+		url: myUrl,
+		data: form_data,
+		success: function(data){
+			console.log(data);
+			$("#save_" + myBenchmark).html(data).show();
+
+		},
+		error: function(data){
+			console.log(data);
+
+		}
+	});
+	
+}

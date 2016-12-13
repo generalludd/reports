@@ -39,8 +39,7 @@ if($narrTerm == "Mid-Year"){
         			"selection" => "print",
         			"text" => "Print Benchmarks",
         			"class"=>"button small dialog",
-        			"href" => site_url(
-        					sprintf("benchmark/select_student/%s?gradeStart=%s&gradeEnd=%s", $kStudent,$stuGrade, $stuGrade)),
+        			"href" => site_url("student_benchmark/select/?search=true&kStudent=$kStudent"),
         			"target" => "_blank"
         	);
         }

@@ -37,9 +37,12 @@ class benchmark_legend extends MY_Controller {
 		return $legend;
 	}
 
+	function view(){
+		$this->load->view("benchmark/legend");
+	}
 	/**
 	 * produce a page displaying the legend info for teachers to evaluate and edit.
-	 */
+	
 	function view($kLegend)
 	{
 		$legend = $this->legend->get ( $kLegend );
@@ -49,7 +52,7 @@ class benchmark_legend extends MY_Controller {
 		$data ["target"] = "benchmark_legend/view";
 		$this->load->view ( "page/index", $data );
 	}
-
+ */
 	/**
 	 * edit a given benchmark legend.
 	 */

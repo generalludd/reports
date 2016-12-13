@@ -55,12 +55,9 @@ class Benchmark_model extends MY_Model {
 		return $result;
 	}
 
-	function get_list($term, $year, $subject, $options = array())
+	function get_list( $year, $subject, $options = array())
 	{
-		$this->db->order_by ( "gradeStart,subject,quarter, term,year,category,weight,benchmark", "ASC" );
-		if ($term) {
-			$this->db->where ( 'term', $term );
-		}
+		$this->db->order_by ( "gradeStart,subject,year,category,weight,benchmark", "ASC" );
 		if ($year) {
 			$this->db->where ( 'year', $year );
 		}
@@ -80,9 +77,6 @@ class Benchmark_model extends MY_Model {
 					$this->db->where ( "`gradeEnd` BETWEEN '$gradeStart' AND '$gradeEnd'", NULL, TRUE );
 				}
 			}
-		}
-		if (! empty ( $options ) && array_key_exists ( "quarter", $options )) {
-			$this->db->where ( "quarter", $options ['quarter'] );
 		}
 		$this->db->from ( 'benchmark' );
 		
@@ -125,8 +119,12 @@ class Benchmark_model extends MY_Model {
 
 	function get_for_student($kStudent, $subject, $grade, $term, $year, $quarter = FALSE, $category = FALSE)
 	{
-		
-		// @TODO Real Problem here is finding the benchmarks for grade ranges
+/*select s.kStudent, b.kBenchmark, b.subject, b.`benchmark` 
+ * from benchmark b left outer join student_benchmark s on b.kBenchmark = s.kBenchmark 
+where b.year = 2016 and b.subject = "Humanities" and b.gradeStart = 5 and b.gradeEnd  = 6 
+and (s.kStudent = 8463  or kStudent is null );
+*/
+	// @TODO Real Problem here is finding the benchmarks for grade ranges
 		if ($subject) {
 			$this->db->where ( "benchmark.subject", $subject );
 		}
@@ -138,9 +136,10 @@ class Benchmark_model extends MY_Model {
 		}
 		if($quarter){
 			$this->db->where("benchmark.quarter", $quarter);
+			$this->db->where("(student_benchmark.quarter = $quarter OR student_benchmark.quarter IS NULL)",NULL, TRUE);
 		}
 		$this->db->order_by ( "benchmark.subject, benchmark.category, benchmark.weight ASC" );
-		$this->db->join ( "student_benchmark", "benchmark.kBenchmark=student_benchmark.kBenchmark AND student_benchmark.kStudent=$kStudent", "LEFT" );
+		$this->db->join ( "student_benchmark", "benchmark.kBenchmark=student_benchmark.kBenchmark AND student_benchmark.kStudent=$kStudent", "LEFT OUTER" );
 		$this->db->select ( "benchmark.*,student_benchmark.comment,student_benchmark.grade" );
 		$this->db->from ( "benchmark" );
 		$result = $this->db->get ()->result ();

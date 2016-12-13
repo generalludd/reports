@@ -158,6 +158,16 @@ function get_current_term($targetDate = NULL)
 	return "$term";
 }
 
+function format_quarter($year, $term, $quarter = NULL){
+
+	if($quarter && $quarter > 0 ){
+		$quarter = "Quarter $quarter";
+	}else{
+		$quarter = "All Quarters";
+	}
+	return sprintf("%s %s, %s" , $term, $year, $quarter);
+}
+
 function get_term_menu($id, $currentTerm = null, $initial_blank = FALSE, $options = array(), $is_required = FALSE)
 {
 	$terms = array (

@@ -8,7 +8,7 @@ $output = "<p></p>";
 if($benchmarks){
 	$table[] =  "<table id='benchmarks' class='list'>";
 	foreach($benchmarks as $benchmark){
-		$termDisplay = sprintf("%s, Quarter %s %s", $benchmark->term, $benchmark->quarter, format_schoolyear($benchmark->year));
+		$termDisplay = format_schoolyear($benchmark->year);
 		if($benchmark->gradeStart != $benchmark->gradeEnd){
 			$currentGrade = "Grades $benchmark->gradeStart-$benchmark->gradeEnd";
 		}else{
@@ -59,6 +59,8 @@ $year=get_current_year();
 
 $buttons[] = array("text"=>"New Benchmark","href"=>site_url("benchmark/create"),"class"=>"dialog new button");
 $buttons[] = array("text"=>"Search for Benchmarks","class"=>"button dialog","href"=>site_url("benchmark/search"));
+$buttons[] = array("text"=>"View Chart Legend","class"=>"button dialog edit","href"=>site_url("benchmark_legend/view"));
+
 //$buttons[] = array("text"=>"Edit Chart Legends","class"=>"button dialog edit","href"=>site_url("benchmark_legend/search"));
 print create_button_bar($buttons);
 ?>

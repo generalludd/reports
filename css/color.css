@@ -395,7 +395,9 @@ tr.benchmark-row td.benchmark-text:hover {
 	background-color: #fcfcaa;
 }
 
-
+tr.benchmark-row.not-assessed{
+	color: #888;
+}
 
 table.list tr:hover {
 	background-color: #cdcdcd;

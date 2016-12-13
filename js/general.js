@@ -24,7 +24,7 @@
         window.print();
     });
 	
-	$(".alert,.message,.warning,.notice").live("click",function(){
+	$(".alert,.message,.warning,.notice").live("mouseup",function(){
 		$(this).fadeOut("slow");
 	});
 		
