@@ -130,24 +130,24 @@
 				}
 			}
 			// @TODO modify insert chart issues here.
-			$data ['legend'] = $this->legend->get_one ( array (
-					"kTeach" => $narrative->kTeach,
-					"subject" => $narrative->narrSubject,
-					"term" => $narrative->narrTerm,
-					"year" => $narrative->narrYear 
-			) );
-			$has_benchmarks = $this->benchmark_model->student_has_benchmarks ( $narrative->kStudent, $narrative->narrSubject, $narrative->stuGrade, $narrative->narrTerm, $narrative->narrYear );
+// 			$data ['legend'] = $this->legend->get_one ( array (
+// 					"kTeach" => $narrative->kTeach,
+// 					"subject" => $narrative->narrSubject,
+// 					"term" => $narrative->narrTerm,
+// 					"year" => $narrative->narrYear 
+// 			) );
+// 			$has_benchmarks = $this->benchmark_model->student_has_benchmarks ( $narrative->kStudent, $narrative->narrSubject, $narrative->stuGrade, $narrative->narrTerm, $narrative->narrYear );
 			
-			if ($has_benchmarks) {
-				$data ["benchmarks"] = $this->benchmark_model->get_for_student ( $narrative->kStudent, $narrative->narrSubject, $stuGrade, $narrTerm, $narrYear );
-			}
+// 			if ($has_benchmarks) {
+// 				$data ["benchmarks"] = $this->benchmark_model->get_for_student ( $narrative->kStudent, $narrative->narrSubject, $stuGrade, $narrTerm, $narrYear );
+// 			}
 		}
 		
 		$narrText = stripslashes ( $narrative->narrText );
 		print "<p>$narrText</p>";
-		if ($has_benchmarks) {
-			$this->load->view ( "benchmark/chart", $data );
-		}
+// 		if ($has_benchmarks) {
+// 			$this->load->view ( "benchmark/chart", $data );
+// 		}
 	}
 	// end area for clean up
 	?>

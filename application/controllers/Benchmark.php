@@ -24,6 +24,7 @@ class Benchmark extends MY_Controller {
 	{
 		$kTeach = $this->session->userdata ( "userID" );
 		$data ["kTeach"] = $kTeach;
+		
 		//$data ["termMenu"] = get_term_menu ( "term", get_current_term () );
 		$data ["subjects"] = $this->subject_model->get_for_teacher ( $kTeach );
 		$data ["subject_list"] = get_keyed_pairs ( $data ["subjects"], array (
@@ -33,12 +34,12 @@ class Benchmark extends MY_Controller {
 		$data ["yearStart"] = get_current_year ();
 		$data ["yearEnd"] = $data ["yearStart"] + 1;
 		if (! get_cookie ( "benchmark_grade_start" ) || ! get_cookie ( "benchmark_grade_end" )) {
-			$teacher = $this->teacher_model->get ( $kTeach, array (
-					"gradeStart",
-					"gradeEnd" 
-			) );
-			$data ["gradeStart"] = $teacher->gradeStart;
-			$data ["gradeEnd"] = $teacher->gradeEnd;
+// 			$teacher = $this->teacher_model->get ( $kTeach, array (
+// 					"gradeStart",
+// 					"gradeEnd" 
+// 			) );
+			$data ["gradeStart"] = 5;
+			$data ["gradeEnd"] = 8;
 		} else {
 			$data ['gradeStart'] = get_cookie ( "benchmark_grade_start" );
 			$data ['gradeEnd'] = get_cookie ( "benchmark_grade_end" );
@@ -207,7 +208,7 @@ class Benchmark extends MY_Controller {
 		$this->benchmark_model->delete ( $kBenchmark );
 	}
 
-	function edit_for_student($kNarrative)
+	/* function edit_for_student($kNarrative)
 	{
 		$this->load->model ( "narrative_model" );
 		// @TODO get studentGrade as calculation
@@ -330,7 +331,7 @@ class Benchmark extends MY_Controller {
 		} else {
 			$this->load->view ( "page/index", $data );
 		}
-	}
+	} */
 
 	/**
 	 * Create a printable report for the benchmarks for a student, subject, term and year for printing.

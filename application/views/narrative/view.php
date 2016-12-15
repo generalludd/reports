@@ -15,13 +15,13 @@ $buttons [] = array (
 		"class" => "button edit small",
 		"id" => "n_$narrative->kNarrative"
 ); // ,
-if ($benchmarks_available) {
-	$buttons [] = array (
-			"text" => "Edit Benchmarks",
-			"href" => site_url ( "benchmark/edit_for_student/$narrative->kNarrative" ),
-			"class" => "button dialog small"
-	);
-}
+// if ($benchmarks_available) {
+// 	$buttons [] = array (
+// 			"text" => "Edit Benchmarks",
+// 			"href" => site_url ( "benchmark/edit_for_student/$narrative->kNarrative" ),
+// 			"class" => "button dialog small"
+// 	);
+// }
 if ($backups) {
 	$buttons [] = array (
 			"text" => "Show Backups",
@@ -32,8 +32,9 @@ if ($backups) {
 print create_button_bar ( $buttons );
 ?><div class="narrText"><?=stripslashes($narrative->narrText);?></div><?
 
-if (! empty ( $benchmarks )) {
+// if (! empty ( $benchmarks )) {
 
-	$this->load->view ( "benchmark/chart", array (
-			"benchmarks" => $benchmarks,
-			"legend" => $legend));}?>
+// 	$this->load->view ( "benchmark/chart", array (
+// 			"benchmarks" => $benchmarks,
+// 			"legend" => $legend));// }
+?>

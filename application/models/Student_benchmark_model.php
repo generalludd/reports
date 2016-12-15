@@ -68,6 +68,15 @@ class Student_benchmark_model extends MY_Model {
 		return $result;
 	}
 	
+	function get_one($kStudent, $kBenchmark, $quarter){
+		$this->db->from("student_benchmark");
+		$this->db->where("kStudent",$kStudent);
+		$this->db->where("kBenchmark",$kBenchmark);
+		$this->db->where("quarter",$quarter);
+		$result = $this->db->get()->row();
+		return $result;
+	}
+	
 	function update($kStudent, $kBenchmark, $grade, $comment, $quarter, $term, $year){
 		$output = FALSE;
 		$query = sprintf("REPLACE INTO student_benchmark (kStudent, kBenchmark, quarter, term, year, grade, comment) VALUES('%s','%s','%s','%s','%s','%s','%s')",$kStudent,$kBenchmark,$quarter,$term,$year,$grade,$comment);

@@ -13,18 +13,38 @@
 <?php echo form_dropdown('subject', $subjects, get_cookie("benchmark_subject") , "id='subject'"); ?>
 </p>
 <p>
-<label for="quarter">Quarter</label>
-<?php echo form_dropdown('quarter',array(1=>1,2=>2,3=>3,4=>4), get_cookie("benchmark_quarter"),"id='quarter'" );?>
-</p>
+<label for="year">Year</label>
+<input type="text" name="year" id="year" value="<?php echo get_current_year();?>" style="width:3em;"/>-
+<input type="text" name="yearEnd" id="yearEnd" value="<?php echo get_current_year() + 1;?>" style="width:3em;" readonly/></p>
 <p>
 <label for="term">Term</label>
 <?php echo get_term_menu("term",get_current_term());?>
 </p>
 <p>
-<label for="year">Year</label>
-<input type="text" name="year" id="year" value="<?php echo get_current_year();?>" style="width:3em;"/>-
-<input type="text" name="yearEnd" id="yearEnd" value="<?php echo get_current_year() + 1;?>" style="width:3em;" readonly/></p>
+<label for="quarter">Quarter</label>
+<?php echo form_dropdown('quarter',array(1=>1,2=>2,3=>3,4=>4), get_cookie("benchmark_quarter"),"id='quarter'" );?>
+</p>
 <p>
 <input type="submit" value="Search"/>
 </p>
 </form>
+<script type="text/javascript">
+$("#benchmark_select_for_student #quarter").change(function(){
+console.log($(this).val());
+my_val = $(this).val();
+if(my_val == 1 || my_val == 2){
+	$("#benchmark_select_for_student #term").val("Mid-Year");
+}else{
+	$("#benchmark_select_for_student #term").val("Year-End");	
+}
+});
+$("#benchmark_select_for_student #term").change(function(){
+	console.log($(this).val());
+	my_val = $(this).val();
+	if(my_val == "Mid-Year"){
+		$("#benchmark_select_for_student #quarter").val(1);
+	}else{
+		$("#benchmark_select_for_student #quarter").val(3);	
+	}
+	});
+</script>

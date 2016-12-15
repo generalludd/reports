@@ -9,12 +9,12 @@ $footnotes = array();
 
 ?>
 <?php $this->load->view("student/navigation");?>
-<input type="hidden" name="year" id="year" value="<?php echo $year;?>" />
-<input type="hidden" name="term" id="term" value="<?php echo $term;?>" />
-<input type="hidden" name="quarter" id="quarter" value="<?php echo $quarter;?>" />
+
 <h3>Benchmark Reports for <?php printf("%s, Grade %s", format_name($student->stuFirst, $student->stuLast, $student->stuNickname), $student_grade);?></h3>
 <h4><?php printf("%s, %s", $term, $year); ?></h4>
-<?php $buttons[] = array("selection"=>"benchmarks", "href"=>site_url("student_benchmark/select/?kStudent=$kStudent&subject=$subject&student_grade=$student_grade&quarter=$quarter&term=$term&year=$year"), "class"=>"button", "text"=>"View Benchmarks");?>
+<?php $buttons[] = array("selection"=>"benchmarks", "href"=>site_url("student_benchmark/select/?kStudent=$kStudent&subject=$subject&student_grade=$student_grade&quarter=$quarter&term=$term&year=$year&edit=1"), "class"=>"button edit", "text"=>"Edit");?>
+<?php $buttons[] = array("selection"=>"benchmarks", "href"=>"javascript:print();", "class"=>"button print", "text"=>"Print");?>
+
 <?php echo create_button_bar($buttons, array("class"=>"small"));?>
 <div class="benchmark-legend">
 	<?php $this->load->view("benchmark/legend");?>
@@ -39,33 +39,21 @@ $footnotes = array();
 <tr class="benchmark-header"><td colspan=<?php echo $quarters+1; ?>><?php echo $benchmark->category;?></td></tr>
 <?php $current_category = $benchmark->category;?>
 <?php endif; ?>
-	<tr class="benchmark-row" id="benchmark_<?php echo $benchmark->kBenchmark;?>_<?php echo $kStudent;?>_<?php echo USER_ID;?>">
-	<td class="benchmark-label"><?php echo $benchmark->benchmark;?></td>
-<?php $q = 1; ?>
+	<tr class="benchmark-row">
+	<td ><?php echo $benchmark->benchmark;?></td>
+
 	<?php foreach($benchmark->quarters as $grade): ?>
 		
-		<td class="benchmark-grade">
-		<?php if($quarter == $q):?>
-			<input type="text" id="g_<?=$benchmark->kBenchmark;?>" name="grade" size="2" class="benchmark-grade benchmark-string" value="<?php echo get_value($grade['grade'],'grade');?>"/>
-		<input type="text" id="c_<?=$benchmark->kBenchmark;?>" name="comment" class="benchmark-comment benchmark-string" value="<?=get_value($grade['grade'],"comment","");?>"/>
-		
-		
-		<?php else: ?>
-			<?php echo get_value( $grade['grade'], "grade"); ?>
-					<?php if(get_value($grade['grade'], "comment")):?>
+		<td class="benchmark-grade"><?php echo get_value( $grade['grade'], "grade"); ?>
+		<?php if(get_value($grade['grade'], "comment")):?>
 		<sup><?php echo $footnote_count;?></sup>
 		<?php $footnotes[] = array("count"=>$footnote_count, "comment"=>$grade['grade']->comment);?>
 		<?php $footnote_count ++; ?>
 		
 		<?php endif; ?>
-		<?php endif; ?>
+		</td>
 		
-
-
-	<?php $q++;?>	
 	<?php endforeach; ?>
-	<span style='margin-left:5px' id='save_<?=$benchmark->kBenchmark;?>'></span>
-			</td>
 	</tr>
 <?php endforeach;?>
 </tbody>
@@ -74,10 +62,10 @@ $footnotes = array();
 <?php foreach($footnotes as $footnote):?>
 
 <tr class="benchmark-footnotes">
-<th>
+<td>
 <sup><?php echo $footnote['count'];?></sup>
 <?php echo $footnote['comment'];?>
-</th>
+</td>
 </tr>
 <?php endforeach;?>
 

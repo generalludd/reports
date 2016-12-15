@@ -69,12 +69,17 @@ class Benchmark_model extends MY_Model {
 			if (array_key_exists ( 'gradeStart', $grade_range ) && array_key_exists ( 'gradeEnd', $grade_range )) {
 				$gradeStart = $grade_range ['gradeStart'];
 				$gradeEnd = $grade_range ['gradeEnd'];
-				if ($gradeEnd == "") {
-					$gradeEnd = $gradeStart;
-				}
-				if ($gradeStart != "") {
-					$this->db->where ( "`gradeStart` BETWEEN '$gradeStart' AND '$gradeEnd'", NULL, TRUE );
-					$this->db->where ( "`gradeEnd` BETWEEN '$gradeStart' AND '$gradeEnd'", NULL, TRUE );
+				
+				if($gradeStart == $gradeEnd){
+					$this->db->where("(`gradeStart` = '$gradeStart' OR `gradeEnd` = '$gradeStart')", NULL, TRUE);
+				}else{
+					if ($gradeEnd == "") {
+						$gradeEnd = $gradeStart;
+					}
+					if ($gradeStart != "") {
+						$this->db->where ( "`gradeStart` BETWEEN '$gradeStart' AND '$gradeEnd'", NULL, TRUE );
+						$this->db->where ( "`gradeEnd` BETWEEN '$gradeStart' AND '$gradeEnd'", NULL, TRUE );
+					}
 				}
 			}
 		}

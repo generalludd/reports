@@ -18,8 +18,7 @@ class Student_benchmark extends MY_Controller {
 			$data ["student"] = $student;
 			$data ["action"] = "update";
 			$subjects = $this->subject->get_all ( array (
-					"gradeStart" => 5,
-					"gradeEnd" => 8 
+					"has_benchmarks"=>TRUE,
 			) );
 			$data ["subjects"] = get_keyed_pairs ( $subjects, array (
 					"subject",
@@ -38,32 +37,113 @@ class Student_benchmark extends MY_Controller {
 				$this->load->view ( "page/index", $data );
 			}
 		} else {
+			$this->load->model ( "benchmark_model", "benchmarks" );
+			
 			$kStudent = $this->input->get ( "kStudent" );
-			$student = $this->student->get ( $kStudent );
-			$student_grade = $this->input->get ( "student_grade" );
-			$term = get_current_term ();
-			$year = get_current_year ();
-			$quarter = $this->input->get ( "quarter" );
-			$subject = $this->input->get ("subject");
-			$data ['standalone'] = TRUE;
 			$data ['kStudent'] = $kStudent;
-			$data ['student'] = $student;
-			$data ['year'] = $year;
-			$data ['term'] = $term;
-			$data ['quarter'] = $quarter;
-			$data ['student_grade'] = $student_grade;
-
-			$data ['benchmarks'] = $this->student_benchmark->get ( $kStudent, $student_grade, $term, $year, $quarter, $subject );
-		
+			$subject = $this->input->get ( "subject" );
 			$data ['subject'] = $subject;
-				
-			$data ['title'] = "Benchmarks for " . format_name ( $student->stuFirst, $student->stuLast, $student->stuNickname );
-			if($this->input->get("edit")){
-				$data['target'] = "student_benchmark/edit";
-			}else{
-				$data ['target'] = "student_benchmark/chart";
+			$student_grade = $this->input->get ( "student_grade" );
+			$data ['student_grade'] = $student_grade;
+			$term = $this->input->get ( "term" );
+			$data ['term'] = $term;
+			$year = $this->input->get ( "year" );
+			$data ['year'] = $year;
+			if ($term == "Mid-Year") {
+				$quarters = 2;
+			} else {
+				$quarters = 4;
 			}
+			$data ['quarters'] = $quarters;
+			$quarter = $this->input->get ( "quarter" );
+			$data ['quarter'] = $quarter;
+			
+			if ($kStudent && $term && $year) {
+				$student = $this->student->get ( $kStudent );
+				$data ['student'] = $student;
+				$options = array (
+						"grade_range" => array (
+								"gradeStart" => $student_grade,
+								"gradeEnd" => $student_grade 
+						) 
+				);
+				$benchmarks = $this->benchmarks->get_list ( $year, $subject, $options );
+				foreach ( $benchmarks as $benchmark ) {
+					$benchmark->quarters = array ();
+					for($i = 1; $i <= $quarters; $i ++) {
+						$benchmark->quarters [] = array (
+								"quarter" => $i,
+								"grade" => $this->student_benchmark->get_one ( $kStudent, $benchmark->kBenchmark, $i ) 
+						);
+					}
+				}
+				$data ['benchmarks'] = $benchmarks;
+				if ($this->input->get ( "edit" )) {
+					$data ['target'] = "student_benchmark/edit";
+				} else {
+					$data ['target'] = "student_benchmark/report";
+				}
+				$data ['title'] = "Benchmark Report";
+				
+				$this->load->view ( "page/index", $data );
+			} else {
+				echo "error";
+			}
+		}
+	}
+
+	function report()
+	{
+		$this->load->model ( "benchmark_model", "benchmarks" );
+		
+		$kStudent = $this->input->get ( "kStudent" );
+		$data ['kStudent'] = $kStudent;
+		$subject = $this->input->get ( "subject" );
+		$data ['subject'] = $subject;
+		$student_grade = $this->input->get ( "student_grade" );
+		$data ['student_grade'] = $student_grade;
+		$term = $this->input->get ( "term" );
+		$data ['term'] = $term;
+		$year = $this->input->get ( "year" );
+		$data ['year'] = $year;
+		if ($term == "Mid-Year") {
+			$quarters = 2;
+		} else {
+			$quarters = 4;
+		}
+		$data ['quarters'] = $quarters;
+		$quarter = $this->input->get ( "quarter" );
+		$data ['quarter'] = $quarter;
+		
+		if ($kStudent && $term && $year) {
+			$student = $this->student->get ( $kStudent );
+			$data ['student'] = $student;
+			$options = array (
+					"grade_range" => array (
+							"gradeStart" => $student_grade,
+							"gradeEnd" => $student_grade 
+					) 
+			);
+			$benchmarks = $this->benchmarks->get_list ( $year, $subject, $options );
+			foreach ( $benchmarks as $benchmark ) {
+				$benchmark->quarters = array ();
+				for($i = 1; $i <= $quarters; $i ++) {
+					$benchmark->quarters [] = array (
+							"quarter" => $i,
+							"grade" => $this->student_benchmark->get_one ( $kStudent, $benchmark->kBenchmark, $i ) 
+					);
+				}
+			}
+			if ($this->input->get ( "edit" )) {
+				$data ['benchmarks'] = $this->student_benchmark->get ( $kStudent, $student_grade, $term, $year, $quarter, $subject );
+			} else {
+				$data ['benchmarks'] = $benchmarks;
+			}
+			$data ['title'] = "Benchmark Report";
+			$data ['target'] = "student_benchmark/report";
 			$this->load->view ( "page/index", $data );
+		} else {
+			echo "error";
 		}
 	}
 

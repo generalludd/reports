@@ -282,8 +282,8 @@ class Narrative extends MY_Controller {
 	{
 		$this->load->model ( 'student_model' );
 		$this->load->model ( 'teacher_model' );
-		$this->load->model ( 'benchmark_model' );
-		$this->load->model ( 'benchmark_legend_model', 'legend' );
+// 		$this->load->model ( 'benchmark_model' );
+// 		$this->load->model ( 'benchmark_legend_model', 'legend' );
 		$this->load->model ( 'backup_model' );
 		$this->load->model ( 'preference_model', 'preference' );
 		$kNarrative = $this->uri->segment ( 3 );
@@ -291,17 +291,17 @@ class Narrative extends MY_Controller {
 		$kStudent = $narrative->kStudent;
 		$kTeach = $narrative->kTeach;
 		$data ['narrative'] = $narrative;
-		$data ['has_benchmarks'] = $this->benchmark_model->student_has_benchmarks ( $kStudent, $narrative->narrSubject, $narrative->stuGrade, $narrative->narrTerm, $narrative->narrYear );
-		$data ['benchmarks_available'] = $this->benchmark_model->benchmarks_available ( $narrative->narrSubject, $narrative->stuGrade, $narrative->narrTerm, $narrative->narrYear );
-		if ($data ['has_benchmarks']) {
-			$data ['legend'] = $this->legend->get_one ( array (
-					"kTeach" => $kTeach,
-					"subject" => $narrative->narrSubject,
-					"term" => $narrative->narrTerm,
-					"year" => $narrative->narrYear
-			) );
-			$data ["benchmarks"] = $this->benchmark_model->get_for_student ( $kStudent, $narrative->narrSubject, $narrative->stuGrade, $narrative->narrTerm, $narrative->narrYear );
-		}
+		//$data ['has_benchmarks'] = $this->benchmark_model->student_has_benchmarks ( $kStudent, $narrative->narrSubject, $narrative->stuGrade, $narrative->narrTerm, $narrative->narrYear );
+// 		$data ['benchmarks_available'] = $this->benchmark_model->benchmarks_available ( $narrative->narrSubject, $narrative->stuGrade, $narrative->narrTerm, $narrative->narrYear );
+// 		if ($data ['has_benchmarks']) {
+// 			$data ['legend'] = $this->legend->get_one ( array (
+// 					"kTeach" => $kTeach,
+// 					"subject" => $narrative->narrSubject,
+// 					"term" => $narrative->narrTerm,
+// 					"year" => $narrative->narrYear
+// 			) );
+// 			$data ["benchmarks"] = $this->benchmark_model->get_for_student ( $kStudent, $narrative->narrSubject, $narrative->stuGrade, $narrative->narrTerm, $narrative->narrYear );
+// 		}
 		// determine if grades are manually entered or calculated from grade
 		// report cards.
 		$data ['letter_grade'] = $narrative->narrGrade;
@@ -598,9 +598,9 @@ class Narrative extends MY_Controller {
 			$this->load->model ( "subject_sort_model" );
 			$this->load->model ( "student_model" );
 			$this->load->model ( "attendance_model" );
-			$this->load->model ( "benchmark_model" );
+			//$this->load->model ( "benchmark_model" );
 			// $this->load->model("preference_model");
-			$this->load->model ( "benchmark_legend_model", "legend" );
+			//$this->load->model ( "benchmark_legend_model", "legend" );
 			$kStudent = $this->uri->segment ( 3 );
 			$narrTerm = $this->uri->segment ( 4 );
 			$narrYear = $this->uri->segment ( 5 );
