@@ -26,14 +26,15 @@ var root_url = '<?=base_url();?>';
 <!-- Rich Text Editor Script -->
 <!-- TODO: add this only when on a rich-text editing page -->
 <?php if(isset($rich_text)):?>
-<script src="//tinymce.cachefly.net/4.3/tinymce.min.js"></script>
+<script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
 
 <script>tinymce.init({ selector:'textarea.tinymce',
 	menubar: false,
 	min_height:400,
-	toolbar: 'bold,italic,|,fullpage,|,cut,copy,paste,pastetext,pasteword,cleanup,code,|,undo,redo,|,bullist,numlist',
+	block_formats:'Paragraph=p;Heading=h3;Subhead=h4,Section=h5;Subsection=h6',
+	toolbar: 'bold,italic,formatselect,bullist,numlist,|,fullpage,|,cut,copy,paste,pastetext,pasteword,removeformat,code,|,undo,redo',
 	invalid_styles: 'color font-size font-family line-height font-weight',
-	plugins: 'fullpage,paste,code,wordcount',
+	plugins: 'fullpage,paste,code,wordcount,lists',
 	invalid_elements: 'div,font,a,html,head,body',
 	setup: function (editor) {
 	        editor.on('change', function () {

@@ -608,7 +608,6 @@ h1 {
 
 h2 {
 	font-weight: bold;
-	text-transform: uppercase;
 	text-align: left;
 	position: relative;
 	border-style: solid;
@@ -628,7 +627,6 @@ h3, .support-view legend {
 
 h4 {
 	font-weight: bold;
-	text-transform: uppercase;
 	text-align: left;
 	position: relative;
 	border-style: solid;
