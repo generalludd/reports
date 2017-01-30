@@ -221,6 +221,7 @@ class Narrative_model extends MY_Model
 
 		if (array_key_exists ( "gradeStart", $options ) && array_key_exists ( "gradeEnd", $options ) && $options['gradeStart']!="" && $options['gradeEnd'] != "") {
 			$this->db->where ( sprintf("narrative.stuGrade BETWEEN %s AND %s",$options ["gradeStart"],  $options ["gradeEnd"]), FALSE, FALSE);
+			$this->db->order_by("currentGrade");
 		}
 
 		if (array_key_exists ( "kStudent", $options )) {
@@ -255,6 +256,7 @@ class Narrative_model extends MY_Model
 		$this->db->where ( "narrative.recModifier = modifier.kTeach" );
 		$this->db->select ( "modifier.teachFirst,modifier.teachLast" );
 		$this->db->select ( "narrative.*,(`student`.`baseGrade` + $narrYear - `student`.`baseYear`) as `currentGrade`, student.stuFirst, student.stuLast, student.stuNickname" );
+		$this->db->order_by("student.stuLast, student.stuFirst");
 		$result = $this->db->get ()->result ();
 $this->_log("notice");
 		return $result;
