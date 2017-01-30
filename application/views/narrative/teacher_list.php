@@ -50,12 +50,14 @@ print create_button_bar($buttons);
 ?>	
 	</fieldset>
 <?
-if(!empty($narratives)){
+if(!empty($narratives)):
 	$thisTerm="";
 	$thisStudent="";
 	$thisGrade="";
-	foreach($narratives as $narrative){
-
+	foreach($narratives as $narrative):
+?> 
+<div class="narrative-row row">
+<?php 
 		$student = format_name($narrative->stuFirst, $narrative->stuLast, $narrative->stuNickname);
 		$sortTerm = "$narrative->narrTerm $narrative->narrYear";
 		if($thisGrade != $narrative->currentGrade){
@@ -68,7 +70,7 @@ if(!empty($narratives)){
 			$thisTerm = $sortTerm;
 		}
 		if($student != $thisStudent){
-			echo "<h4 id='student-text_$narrative->kNarrative'>$student</h4>";
+			echo "<h2 class='student-name' id='student-text_$narrative->kNarrative'>$student</h2>";
 			$thisStudent = $student;
 			if($sortTerm == $thisTerm){
 				$thisTerm="";
@@ -97,9 +99,11 @@ if(!empty($narratives)){
 		echo create_button_bar($edit_buttons);
 		echo  "<div id='text_$narrative->kNarrative'>$narrText</div>";
 		$thisTerm = $sortTerm;
-
-	}
-}else{
+?>
+</div>
+<?php 
+	endforeach;
+else:
 
 	if($this->session->userdata("userID") == $kTeach){
 		echo "<p>You have ";
@@ -114,7 +118,7 @@ if(!empty($narratives)){
 	<a href="<?=site_url("");?>" class='button small'>Search for Students</a></p>
 
 	<?
-}
+endif;
 ?>
 <p>
 <a class='button small dialog' href="<?php echo site_url("narrative/search_missing/$kTeach");?>">View

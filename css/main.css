@@ -1,6 +1,5 @@
 @import "ui.all.css";
 
-
 .narrText {
 	padding: 3px;
 	border-style: solid;
@@ -251,6 +250,14 @@ div.narrative {
 	left: 40%
 }
 
+.narrative-row h2.student-name {
+	border-top: 1px solid #3f3f3f;
+	text-transform: none;
+	margin: 0;
+	padding: 0;
+	padding-top: 1em;
+}
+
 /*form elements*/
 .label {
 	font-size: 1em;
@@ -288,9 +295,11 @@ div.narrative {
 	transition: all .25s ease;
 	white-space: nowrap;
 }
-.button-box.small .button-list{
+
+.button-box.small .button-list {
 	margin: .25em 0;
 }
+
 td .button, .row .button, .button.small, .button-box.small .button {
 	padding-top: .25em;
 	padding-bottom: .25em;
@@ -314,13 +323,13 @@ a, .button {
 }
 
 .unread {
-    margin-left: 5px;
-    border-radius: 100%;
-    padding:3px 3px;
-    border: none;
-    font-weight: bold;
-    width: auto;
-    display: inline-block;
+	margin-left: 5px;
+	border-radius: 100%;
+	padding: 3px 3px;
+	border: none;
+	font-weight: bold;
+	width: auto;
+	display: inline-block;
 }
 
 .image_button {
@@ -844,17 +853,17 @@ table.files td.file-name {
 table.files td.file-description {
 	width: 275px;
 }
-table .button-box .button-list  {
-	white-space: nowrap;
 
-	}
+table .button-box .button-list {
+	white-space: nowrap;
+}
 
 table .button-box ul.button-list {
-	
 	margin: 0;
 }
 
 table .button-box .button-list li a {
+	
 }
 
 a.link, input.link, a {
@@ -892,12 +901,15 @@ table.attendance tr:last-child td {
 .attendance th.a-grade {
 	width: auto;
 }
+
 .attendance th.a-class {
 	width: auto;
 }
-.attendance th.a-type{
+
+.attendance th.a-type {
 	width: auto;
 }
+
 .attendance th.a-subtype {
 	width: auto;
 }
@@ -1015,10 +1027,11 @@ td.benchmark-label {
 	width: 25em;
 }
 
-.benchmark-legend{
+.benchmark-legend {
 	padding: 1em 0;
 }
-.benchmark-legend p, .benchmark-legend ul{
+
+.benchmark-legend p, .benchmark-legend ul {
 	margin: 0;
 }
 
@@ -1048,6 +1061,7 @@ tr.benchmark-row td {
 }
 
 tr.benchmark-row td.benchmark-text {
+	
 }
 
 tr.benchmark-row td.benchmark-info {
@@ -1060,26 +1074,29 @@ tr.benchmark-row td.benchmark-grade, th.benchmark-quarters {
 	white-space: nowrap;
 }
 
-tr.benchmark-row:nth-child(even){
+tr.benchmark-row:nth-child(even) {
 	background-color: #eee;
 }
 
-tr.benchmark-row:first-child td{
+tr.benchmark-row:first-child td {
 	border-top: 1px solid #000;
 }
-tr.benchmark-row td, tr.benchmark-row th{
+
+tr.benchmark-row td, tr.benchmark-row th {
 	border: 1px solid #000;
 }
+
 td.benchmark-description {
 	padding-left: 2em !important;
 }
-.student_benchmark table.chart tfoot tr.benchmark-footnotes th{
+
+.student_benchmark table.chart tfoot tr.benchmark-footnotes th {
 	padding: 0;
 	font-size: .9em;
 	text-align: left;
 	font-weight: normal;
-	
 }
+
 #footer {
 	font-size: .8em;
 	width: 150px;
@@ -1400,17 +1417,13 @@ th.grade-confirmation {
 }
 
 @media ( max-width : 736px ) {
-	
 	#navigation .button, #navigation input {
-	display: none;
-}
-
-#navigation .button.mobile, #navigation input.mobile {
-	display: inherit;
-}
-#navigation .button-list li {
-	display: block;
-}
-
-
+		display: none;
+	}
+	#navigation .button.mobile, #navigation input.mobile {
+		display: inherit;
+	}
+	#navigation .button-list li {
+		display: block;
+	}
 }
