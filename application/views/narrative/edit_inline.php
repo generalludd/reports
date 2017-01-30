@@ -16,7 +16,7 @@
 tinymce.init({ selector:'textarea#narrText_' + <?php echo $narrative->kNarrative;?>,
 	menubar: false,
 	min_height:400,
-	block_formats:'Paragraph=p;Heading=h3;Subhead=h4,Section=h5;Subsection=h6',
+	block_formats:'Paragraph=p;Heading=h3;Subhead=h4;Section=h5;Subsection=h6',
 	toolbar: 'bold,italic,formatselect,bullist,numlist,|,fullpage,|,cut,copy,paste,pastetext,removeformat,code,|,undo,redo',
 	invalid_styles: 'color font-size font-family line-height font-weight',
 	plugins: 'fullpage,paste,code,lists',
