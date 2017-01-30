@@ -6,10 +6,10 @@
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <title><?=$title;?></title>
 <meta http-equiv="refresh" content = "28800; url=<?php echo site_url("auth/logout");?>">
-<link type="text/css" rel="stylesheet" media="all" href="<?=base_url("css/main.css")?>" />
-<link type="text/css" rel="stylesheet" media="screen" href="<?=base_url("css/color.css")?>"/>
-<link type="text/css" rel="stylesheet" media="screen" href="<?=base_url("css/popup.css")?>" />
-<link type="text/css" rel="stylesheet" media="print" href="<?=base_url("css/print.css")?>" />
+<link type="text/css" rel="stylesheet" media="all" href="<?=base_url("css/main.css?") . date("U");?>" />
+<link type="text/css" rel="stylesheet" media="screen" href="<?=base_url("css/color.css?") . date("U");?>"/>
+<link type="text/css" rel="stylesheet" media="screen" href="<?=base_url("css/popup.css?") . date("U");?>" />
+<link type="text/css" rel="stylesheet" media="print" href="<?=base_url("css/print.css?") . date("U")?>" />
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 <!-- jquery scripts -->
 <script type="text/javascript">
