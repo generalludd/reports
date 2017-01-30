@@ -33,7 +33,7 @@ var root_url = '<?=base_url();?>';
 	min_height:400,
 	toolbar: 'bold,italic,|,fullpage,|,cut,copy,paste,pastetext,pasteword,cleanup,code,|,undo,redo,|,bullist,numlist',
 	invalid_styles: 'color font-size font-family line-height font-weight',
-	plugins: 'fullpage,paste,code',
+	plugins: 'fullpage,paste,code,wordcount',
 	invalid_elements: 'div,font,a,html,head,body',
 	setup: function (editor) {
 	        editor.on('change', function () {
