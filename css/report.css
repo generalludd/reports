@@ -2,7 +2,8 @@
 
 .control_panel {
 	font-size: 12px;
-	font-family: tahoma, sans-serif;
+	font-family: "Helvetica Neue", tahoma, sans-serif;
+	font-weight: 300;
 }
 .font_label {
 	padding: 5px;
@@ -89,7 +90,7 @@ sup {
 }
 
 body {
-	font-family: "Times New Roman";
+	font-family: "Palatino";
 	width: 6.80in;
 	margin: .35in;
 	font-size: 12pt;
