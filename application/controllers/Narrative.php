@@ -612,8 +612,8 @@ class Narrative extends MY_Controller {
 			}else{
 				$this->load->model ( "attendance_model", "attendance" );
 				$attendance= $this->attendance->get($kStudent,$narrTerm, $narrYear);
-				$data ["tardy"] = $attendance->tardy;
-				$data ["absent"] = $attendance->absent;
+				$data ["tardy"] = get_value($attendance,"tardy");
+				$data ["absent"] = get_value($attendance,"absent");
 			}
 		
 			$data ["narrYear"] = $narrYear;
