@@ -22,7 +22,6 @@ class Attendance_model extends MY_Model {
 	
 	function update($kStudent,$term,$year,$absent,$tardy){
 		$query = sprintf("REPLACE INTO `attendance` (`kStudent`,`term`,`year`,`absent`,`tardy`) VALUES('%s','%s','%s','%s','%s');",$kStudent,$term,$year,$absent,$tardy);
-		echo $query;
 		$this->db->query($query);
 	}
 }
