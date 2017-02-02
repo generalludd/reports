@@ -606,13 +606,11 @@ class Narrative extends MY_Controller {
 			$data ["stuGrade"] = get_current_grade ( $student_obj->baseGrade, $student_obj->baseYear, $narrYear );
 			if($narrYear < 2016){ //old attendance model
 				$this->load->model ( "student_attendance_model", "attendance" );
-				
 				$attendance = $this->attendance->summarize ( $kStudent, $narrTerm, $narrYear );
 				$data ["tardy"] = $attendance ["tardy"];
 				$data ["absent"] = $attendance ["absent"];
 			}else{
 				$this->load->model ( "attendance_model", "attendance" );
-				
 				$attendance= $this->attendance->get($kStudent,$narrTerm, $narrYear);
 				$data ["tardy"] = $attendance->tardy;
 				$data ["absent"] = $attendance->absent;
