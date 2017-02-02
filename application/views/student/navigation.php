@@ -8,9 +8,9 @@ if($today < MID_YEAR){
 $buttons[] = array("selection" => "student/[A-z]", "href" => site_url("student/view/$kStudent"), "text"=>"Student Info");
 
 $buttons[] =array("selection" => "narrative", "href"=>site_url("narrative/student_list/$kStudent"), "text"=>"Narratives");
-// $buttons[] = array("selection" => "attendance", "href"=>  site_url("attendance/search/$kStudent?startDate=$start_date&endDate=$today"), "text" => "Attendance" );
+// $buttons[] = array("selection" => "attendance", "href"=>  site_url("student_attendance/search/$kStudent?startDate=$start_date&endDate=$today"), "text" => "Attendance" );
 
-// $buttons[] = array("selection"=>"attendance","href"=>site_url("attendance/create/$student->kStudent"),"class"=>"button dialog new","text"=>"Add Attendance");
+// $buttons[] = array("selection"=>"attendance","href"=>site_url("student_attendance/create/$student->kStudent"),"class"=>"button dialog new","text"=>"Add Attendance");
 
 $buttons[] = array("selection"=>"benchmarks", "href"=>site_url("student_benchmark/select/?search=true&kStudent=$kStudent"), "class"=>"button dialog", "text"=>"Benchmarks", "title"=>"Search for this student&rsquo;s benchmarks");
 $buttons[] = array("selection" => "support", "href"=> site_url("support/list_all/$kStudent"), "text" => "Learning Support" );

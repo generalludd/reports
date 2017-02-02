@@ -21,4 +21,4 @@
 <li>Needs consistent <strong>s</strong>upport.</li>
 </ul>
 <p><strong>0</strong> -&nbsp;Assignment(s) addressing this benchmark are not complete enough to assess progress.</p>
-<p><strong>X</strong> -&nbsp;Benchmark not assessed.</p>
+<p><strong>X (or blank)</strong> -&nbsp;Benchmark not assessed.</p>

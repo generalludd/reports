@@ -34,16 +34,16 @@ $buttons [] = array (
 // 		"selection" => "attendance",
 // 		"text" => "Check Attendance",
 // 		"class" => "search button dialog mobile",
-// 		"href" => site_url ( "attendance/check?search=1" )
+// 		"href" => site_url ( "student_attendance/check?search=1" )
 // );
 // $buttons [] = array (
-// 		"selection" => "attendance",
+// 		"selection" => "student_attendance",
 // 		"text" => "Search Attendance",
 // 		"class" => array (
 // 				"button",
 // 				"dialog"
 // 		),
-// 		"href" => site_url ( "attendance/show_search" ),
+// 		"href" => site_url ( "student_attendance/show_search" ),
 // 		"title" => "Search attendance records",
 // 		"dbRole" => 1
 // );

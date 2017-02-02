@@ -592,24 +592,32 @@ class Narrative extends MY_Controller {
 	 * print the narratives for a given student for a given term
 	 * @TODO need to add the report cards as appropriate.
 	 */
-	function print_student_report()
+	function print_student_report($kStudent,$narrTerm,$narrYear)
 	{
 		if ($this->uri->segment ( 5 )) {
 			$this->load->model ( "subject_sort_model" );
 			$this->load->model ( "student_model" );
-			$this->load->model ( "attendance_model" );
 			//$this->load->model ( "benchmark_model" );
 			// $this->load->model("preference_model");
 			//$this->load->model ( "benchmark_legend_model", "legend" );
-			$kStudent = $this->uri->segment ( 3 );
-			$narrTerm = $this->uri->segment ( 4 );
-			$narrYear = $this->uri->segment ( 5 );
+
 			$student_obj = $this->student_model->get ( $kStudent, "stuFirst,stuLast,stuNickname,baseGrade,baseYear" );
 			$student = format_name ( $student_obj->stuFirst, $student_obj->stuLast, $student_obj->stuNickname );
 			$data ["stuGrade"] = get_current_grade ( $student_obj->baseGrade, $student_obj->baseYear, $narrYear );
-			$attendance = $this->attendance_model->summarize ( $kStudent, $narrTerm, $narrYear );
-			$data ["tardy"] = $attendance ["tardy"];
-			$data ["absent"] = $attendance ["absent"];
+			if($narrYear < 2016){ //old attendance model
+				$this->load->model ( "student_attendance_model", "attendance" );
+				
+				$attendance = $this->attendance->summarize ( $kStudent, $narrTerm, $narrYear );
+				$data ["tardy"] = $attendance ["tardy"];
+				$data ["absent"] = $attendance ["absent"];
+			}else{
+				$this->load->model ( "attendance_model", "attendance" );
+				
+				$attendance= $this->attendance->get($kStudent,$narrTerm, $narrYear);
+				$data ["tardy"] = $attendance->tardy;
+				$data ["absent"] = $attendance->absent;
+			}
+		
 			$data ["narrYear"] = $narrYear;
 			$data ["narrTerm"] = $narrTerm;
 			$narratives = $this->narrative_model->get_for_student ( $kStudent, array (
@@ -752,5 +760,10 @@ class Narrative extends MY_Controller {
 		$data ["target"] = "narrative/backup_list";
 		$data ["title"] = "Narrative Backups";
 		$this->load->view ( "page/index", $data );
+	}
+	
+	/** New Attendance Record System **/
+	function get_attendance($kStudent,$term,$year){
+		
 	}
 }

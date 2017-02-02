@@ -628,6 +628,7 @@ h3, .support-view legend {
 h4 {
 	font-weight: bold;
 	text-align: left;
+	font-size: 1.2em;
 	position: relative;
 	border-style: solid;
 	border-width: 1px;
@@ -635,12 +636,16 @@ h4 {
 }
 
 h5 {
-	font-size: 1em;
+	font-size: 1.1em;
 	font-weight: bold;
 	text-align: left;
 	border-top-style: solid;
 	border-top-width: 1px;
 	margin: 0;
+}
+
+h6 {
+	font-size: 1.05em;
 }
 
 h3, h4, h5, .support-view legend {
