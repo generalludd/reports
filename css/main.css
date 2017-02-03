@@ -291,7 +291,7 @@ div.narrative {
 	padding: .75em;
 	border: 1px solid black;
 	cursor: pointer;
-	font-size: 1em;
+	font-size: .85em;
 	font-weight: normal;
 	transition: all .25s ease;
 	white-space: nowrap;
@@ -316,7 +316,7 @@ a, .button {
 }
 
 #navigation input[type="text"] {
-	height: 18px;
+	height: .6875em;
 	border: 1px solid transparent;
 	border-radius: 0;
 	padding: .8em .5em;

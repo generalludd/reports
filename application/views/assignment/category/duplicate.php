@@ -8,7 +8,10 @@
 <form name="category-duplicate" id="category-duplicator" method="get" action="<?php echo base_url("assignment/duplicate_categories");?>">
 <input type="hidden" name="kTeach" value="<?php echo USER_ID;?>"/>
 <input type="hidden" name="duplicate" value="1"/>
-
+<p>
+<label for="subject">Subject: </label>
+<?php echo form_dropdown("subject",$subjects,NULL,"id='subject' required");?>
+</p>
 <p class="category row">
 <label for="sourceYear">Source Year: </label>
 	<?php echo form_dropdown("sourceYear", get_year_list(), get_current_year()); ?>

@@ -515,6 +515,13 @@ class Assignment extends MY_Controller {
 	{
 		if ($this->input->get ( "dialog" ) == 1) {
 			$data ['title'] = "Duplicate Categories from Previous Term";
+			$this->load->model("subject_model");
+			$subjects = $this->subject_model->get_for_teacher ( USER_ID );
+			$data ['subjects'] = get_keyed_pairs ( $subjects, array (
+				'subject',
+				'subject'
+			) );
+			
 			$this->load->view ( "assignment/category/duplicate", $data );
 		} else if ($this->input->get ( "duplicate" ) == 1) {
 			$kTeach = $this->input->get ( "kTeach" );
@@ -532,7 +539,7 @@ class Assignment extends MY_Controller {
 				$source->term = $term;
 				$this->assignment->insert_category ( $source );
 			}
-			redirect ( "assignment/chart/?kTeach=$kTeach&gradeStart=$gradeStart&gradeEnd=$gradeEnd&year=$year&term=$term" );
+			redirect ( "assignment/chart/?kTeach=$kTeach&gradeStart=$gradeStart&gradeEnd=$gradeEnd&year=$year&term=$term&subject=$subject" );
 		}
 	}
 }
