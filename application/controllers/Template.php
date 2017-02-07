@@ -137,7 +137,6 @@ class Template extends MY_Controller
 	function edit()
 	{
 		$this->load->model("teacher_model");
-
 		$this->load->model("menu_model");
 		$kTemplate = $this->uri->segment(3);
 		$this->load->model("subject_model");
