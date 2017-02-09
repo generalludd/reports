@@ -7,14 +7,7 @@
 <meta http-equiv="content-type" content="text/html;charset=utf-8" />
 <title><?=$title;?>
 </title>
-<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
-<script type="text/javascript" src="https://code.jquery.com/jquery-migrate-1.3.0.min.js"></script>
-<script type="text/javascript" src="https://code.jquery.com/ui/1.8.24/jquery-ui.min.js"></script>
-
-<link href='<?=base_url('css/color.css');?>' rel='stylesheet' type='text/css' media='screen' />
-
 <link href='<?=base_url('css/report.css');?>' rel='stylesheet' type='text/css' media='all' />
-
 <link href='<?=base_url('css/print.css');?>' rel='stylesheet' type='text/css' media='print' />
 
 <style>
@@ -24,57 +17,9 @@
   margin-left: .5in;
   }
   }</style>
-<script type="text/javascript">
-
-    $(document).ready(function(){
-        var baseP = 16;
-        var baseTd = 14;
-        $('.increaseFont').live('click',function(event){
-            var pSize = parseInt($('p').css('font-size'));
-            pSize += 2;
-            var tdSize = parseInt($('td').css('font-size'));
-            tdSize += 2;
-            changeFont(pSize, tdSize);
-            });
-
-            $('.resetFont').live('click',function(event){
-                changeFont(baseP, baseTd);
-            });
-
-            $('.reduceFont').live('click',function(event){
-            var pSize = parseInt($('p').css('font-size'));
-            pSize -= 2;
-            if (pSize < baseP){
-                pSize = baseP;
-                tdSize = baseTd;
-            }
-            changeFont(pSize, tdSize);
-            });
-    })
-
-        function changeFont(pSize,tdSize){
-            $('p').css('font-size',pSize + 'px');
-            $('td').css('font-size',tdSize + 'px');
-            var footerSize = parseInt(pSize) - 4;
-            $('.footnote').css('font-size', footerSize + 'px');
-        }
-    </script>
 </head>
 
 <body class='narrative-report'>
-	<div class='control_panel no-print'>
-	<?php if($this->session->flashdata("warning")):?>
-	<div class="warning">
-	<?php print $this->session->flashdata("warning");?>
-	</div>
-	<?php endif; ?>
-		<span class='font_label'>Font Size:</span>
-		<span class='button increaseFont'>Increase</span>
-		&nbsp;
-		<span class='button resetFont'>Reset</span>
-		&nbsp;
-		<span class='button reduceFont'>Reduce</span>
-	</div>
 	<p class="school">
 		Friends School of Minnesota <br /> 1365 Englewood Avenue <br /> St. Paul, MN 55104
 	</p>
