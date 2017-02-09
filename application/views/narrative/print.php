@@ -14,7 +14,13 @@
 
 <link href='<?=base_url('css/print.css');?>' rel='stylesheet' type='text/css' media='print' />
 
-
+<style>
+@media (-webkit-min-device-pixel-ratio:0)
+  and (min-resolution:.001dpcm){
+  body{
+  margin-left: .5in;
+  }
+  }</style>
 <script type="text/javascript">
 
     $(document).ready(function(){
