@@ -7,7 +7,10 @@
 <meta http-equiv="content-type" content="text/html;charset=utf-8" />
 <title><?=$title;?>
 </title>
-<script type="text/javascript" src="<?=base_url('js/jquery.min.js'); ?>"></script>
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
+<script type="text/javascript" src="https://code.jquery.com/jquery-migrate-1.3.0.min.js"></script>
+<script type="text/javascript" src="https://code.jquery.com/ui/1.8.24/jquery-ui.min.js"></script>
+
 <link href='<?=base_url('css/color.css');?>' rel='stylesheet' type='text/css' media='screen' />
 
 <link href='<?=base_url('css/report.css');?>' rel='stylesheet' type='text/css' media='all' />
