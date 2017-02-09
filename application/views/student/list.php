@@ -104,7 +104,7 @@ $default_row_style = array (
 		);
 		$buttons [] = array (
 				"selection" => "benchmarks",
-				"href" => site_url ( "student_benchmark/select/?search=true&kStudent=$student->kStudent" ),
+				"href" => site_url ( "student_benchmark/select/?search=true&kStudent=$student->kStudent&refine=1" ),
 				"class" => "button dialog",
 				"text" => "Benchmarks",
 				"title" => "Search for this student&rsquo;s benchmarks" 
