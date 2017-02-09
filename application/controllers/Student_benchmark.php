@@ -31,6 +31,7 @@ class Student_benchmark extends MY_Controller {
 			}
 			$data ['target'] = "student_benchmark/select";
 			$data ['title'] = "Search for Student Benchmarks";
+			$data['refine'] = $this->input->get("refine");
 			if ($this->input->get ( "ajax" ) == 1) {
 				$this->load->view ( $data ['target'], $data );
 			} else {
@@ -43,6 +44,7 @@ class Student_benchmark extends MY_Controller {
 			$data ['kStudent'] = $kStudent;
 			$subject = $this->input->get ( "subject" );
 			$data ['subject'] = $subject;
+			bake_cookie("benchmark_subject",$subject);
 			$student_grade = $this->input->get ( "student_grade" );
 			$data ['student_grade'] = $student_grade;
 			$term = $this->input->get ( "term" );
@@ -57,7 +59,7 @@ class Student_benchmark extends MY_Controller {
 			$data ['quarters'] = $quarters;
 			$quarter = $this->input->get ( "quarter" );
 			$data ['quarter'] = $quarter;
-			
+			bake_cookie("benchmark_quarter",$quarter);
 			if ($kStudent && $term && $year) {
 				$student = $this->student->get ( $kStudent );
 				$data ['student'] = $student;

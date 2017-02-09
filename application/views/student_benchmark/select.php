@@ -10,7 +10,7 @@
 </p>
 <p>
 <label for="subject">Subject:</label>
-<?php echo form_dropdown('subject', $subjects, get_cookie("benchmark_subject") , "id='subject'"); ?>
+<?php echo form_dropdown('subject', $subjects, $refine?get_cookie("benchmark_subject"):"" , "id='subject'"); ?>
 </p>
 <p>
 <label for="year">Year</label>
@@ -22,7 +22,7 @@
 </p>
 <p>
 <label for="quarter">Quarter</label>
-<?php echo form_dropdown('quarter',array(1=>1,2=>2,3=>3,4=>4), get_cookie("benchmark_quarter"),"id='quarter'" );?>
+<?php echo form_dropdown('quarter',array(1=>1,2=>2,3=>3,4=>4), $refine?get_cookie("benchmark_quarter"):"","id='quarter'" );?>
 </p>
 <p>
 <input type="submit" value="Search"/>
