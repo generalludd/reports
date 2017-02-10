@@ -258,7 +258,7 @@ class Narrative_model extends MY_Model
 		$this->db->select ( "narrative.*,(`student`.`baseGrade` + $narrYear - `student`.`baseYear`) as `currentGrade`, student.stuFirst, student.stuLast, student.stuNickname" );
 		$this->db->order_by("student.stuLast, student.stuFirst");
 		$result = $this->db->get ()->result ();
-$this->_log("notice");
+		$this->_log("notice");
 		return $result;
 
 	}

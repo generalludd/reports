@@ -18,16 +18,21 @@ if (count ( $reports ) > 0) :
 	<h4><?=$sortTerm; ?></h4>
 
 <?
-if ($narrYear >= 2016) {
-	echo create_button_bar(array( array (
-			"text" => "Attendance",
-			"title"=>"Edit Attendance",
-			"selection" => "attendance",
-			"class" => "button small new dialog",
-			"href" => site_url ( "attendance/edit/$kStudent/$narrTerm/$narrYear" )
-	)));
-
-}
+	if ($narrYear >= 2016) {
+		echo create_button_bar ( array (
+				array (
+						"text" => "Attendance",
+						"title" => "Edit Attendance",
+						"selection" => "attendance",
+						"class" => "button small new dialog",
+						"href" => site_url ( "attendance/edit/$kStudent/$narrTerm/$narrYear" ) 
+				),
+				array (
+						"type" => "pass-through",
+						"text" => sprintf ( "Absent: %s, Tardy: %s", $attendance ['absent'], $attendance ['tardy'] ) 
+				) 
+		) );
+	}
 	$print_buttons [] = array (
 			"selection" => "print",
 			"class" => "button small",
@@ -40,7 +45,7 @@ if ($narrYear >= 2016) {
 		$print_buttons [] = array (
 				"selection" => "print",
 				"text" => "Print Grades",
-				"title"=>"Print Grades",
+				"title" => "Print Grades",
 				"class" => "button small",
 				"href" => site_url ( sprintf ( "grade/report_card?kStudent=%s&year=%s&term=%s&subject=0", $kStudent, $narrYear, $narrTerm ) ),
 				"target" => "_blank" 
@@ -50,7 +55,7 @@ if ($narrYear >= 2016) {
 		$print_buttons [] = array (
 				"selection" => "print",
 				"text" => "Print Benchmarks",
-				"title"=>"Print Benchmarks",
+				"title" => "Print Benchmarks",
 				"class" => "button small dialog",
 				"href" => site_url ( "student_benchmark/select/?search=true&kStudent=$kStudent" ),
 				"target" => "_blank" 
@@ -77,6 +82,7 @@ if ($narrYear >= 2016) {
 <? foreach($reports as $narrative):?>
 <tr>
 				<td>
+
 					<strong><?=$narrative->narrSubject;?></strong>
 				</td>
 				<td>
@@ -94,6 +100,8 @@ if ($narrYear >= 2016) {
 </tbody>
 	</table>
 </div>
+
+
 
 
 <? endif;

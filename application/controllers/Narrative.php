@@ -353,17 +353,18 @@ class Narrative extends MY_Controller {
 		}
 	}
 
-	function student_list()
+	function student_list($kStudent)
 	{
 		$this->load->model ( "student_model" );
 		$this->load->model ( "teacher_model" );
 		$this->load->model ( "subject_model" );
 		$this->load->model ( "subject_sort_model" );
+		$this->load->model ( "attendance_model", "attendance" );
+		
 
 		$data ["defaultYear"] = get_current_year ();
 		$data ["defaultTerm"] = get_current_term ();
 
-		$kStudent = $this->uri->segment ( 3 );
 		$student = $this->student_model->get ( $kStudent );
 		$studentName = format_name ( $student->stuFirst, $student->stuLast, $student->stuNickname );
 		$data ["studentName"] = $studentName;
@@ -382,29 +383,37 @@ class Narrative extends MY_Controller {
 
 		foreach ( $years as $year ) {
 			$data ['reports'] [$year->narrYear] = array ();
+
 			$reports = $this->narrative_model->get_for_student ( $kStudent, array (
 					"narrYear" => $year->narrYear,
 					"narrTerm" => "Mid-Year"
 			) );
+			$attendance = $year->narrYear >= 2016?$this->attendance->get($kStudent,"Mid-Year", $year->narrYear):NULL;
+				
 			$data ['reports'] [$year->narrYear] [] = $this->load->view ( "narrative/student/list", array (
 					"reports" => $reports,
 					"narrYear" => $year->narrYear,
 					"narrTerm" => "Mid-Year",
 					"kStudent" => $kStudent,
 					"stuGrade" => format_grade($student->baseGrade - $student->baseYear + $year->narrYear),
+					"attendance" => array("absent"=> get_value($attendance,"absent"),"tardy"=>get_value($attendance,"tardy")),
 			), TRUE );
 			$reports = $this->narrative_model->get_for_student ( $kStudent, array (
 					"narrYear" => $year->narrYear,
 					"narrTerm" => "Year-End"
 			) );
+			$attendance = $year->narrYear >= 2016?$this->attendance->get($kStudent,"Year-End", $year->narrYear):NULL;
 			$data ['reports'] [$year->narrYear] [] = $this->load->view ( "narrative/student/list", array (
 					"reports" => $reports,
 					"narrYear" => $year->narrYear,
 					"narrTerm" => "Year-End",
 					"kStudent" => $kStudent,
 					"stuGrade" => format_grade($student->baseGrade - $student->baseYear + $year->narrYear),
+					"attendance" => array("absent"=> get_value($attendance,"absent"),"tardy"=>get_value($attendance,"tardy")),
 			), TRUE );
+
 		}
+		
 		$reportSort = $this->subject_sort_model->get_sort ( $kStudent, $data ["defaultTerm"], $data ["defaultYear"], "narrative" );
 		$data ["reportSort"] = $reportSort;
 		$options ["reportSort"] = $data ["reportSort"];
