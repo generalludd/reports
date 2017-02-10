@@ -45,7 +45,7 @@ $footnotes = array();
 
 	<?php foreach($benchmark->quarters as $grade): ?>
 		
-		<td class="benchmark-grade"><?php echo get_value( $grade['grade'], "grade"); ?>
+		<td class="benchmark-grade"><?php echo get_value( $grade['grade'], "grade","X"); ?>
 		<?php if(get_value($grade['grade'], "comment")):?>
 		<sup><?php echo $footnote_count;?></sup>
 		<?php $footnotes[] = array("count"=>$footnote_count, "comment"=>$grade['grade']->comment);?>
