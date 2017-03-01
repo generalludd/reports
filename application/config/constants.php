@@ -94,7 +94,7 @@ defined('EXIT__AUTO_MAX')      OR define('EXIT__AUTO_MAX', 125); // highest auto
 */
 define('OK', "<img src='/images/ok.png' alt='' width='12' height='12' border='0'>");
 define('X',"<img src='/images/delete.png' alt='' width='12' height='12' border='0'>");
-define('APP_VERSION', "7.5");
+define('APP_VERSION', "7.6");
 //familiar name for student reports.
 define('STUDENT_REPORT','Orange Slip');
 define('ROOT_USER',1000);
