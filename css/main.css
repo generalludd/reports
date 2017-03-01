@@ -326,10 +326,10 @@ a, .button {
 .unread {
 	margin-left: 5px;
 	border-radius: 100%;
-	padding: 3px 3px;
 	border: none;
 	font-weight: bold;
-	width: auto;
+	width: 1.2em;
+	height: 1.2em;
 	display: inline-block;
 }
 
