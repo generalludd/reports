@@ -3,7 +3,7 @@
 if($print): ?>
 	<style type="text/css">
 	body{
-	font-size: 13px;
+	font-size: 16px;
 	font-family: georgia, serif;
 	}
 	
