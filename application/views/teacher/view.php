@@ -22,8 +22,7 @@ if($gradeStart == $gradeEnd){
 <input
 	type="hidden" id="kTeach" name="kTeach"
 	value='<? echo $teacher->kTeach; ?>'>
-<h3>Info for <?php print "$teacher->teachFirst $teacher->teachLast"; ?></h3>
-<?=$button_bar;?>
+<? print $button_bar;?>
 <div class='content inner'>
 <?
 

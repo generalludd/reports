@@ -4,7 +4,6 @@ if($this->session->userdata("dbRole")<3){
 	$current_year = get_current_year();
 }
 ?>
-<h3><?php echo $title; ?></h3>
 <?php 
 $this->load->view("student/navigation", $kStudent);
 if( $has_current == $current_year): ?>

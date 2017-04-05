@@ -176,12 +176,12 @@ a.button {
 	color: #000;
 	text-shadow: none;
 	background-color: #faa732;
-	background-image: -moz-linear-gradient(top, #fbb450, #f89406);
+	background-image: -moz-linear-gradient(top, #fbb450,  #fbb450);
 	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#fbb450),
 		to(#f89406));
-	background-image: -webkit-linear-gradient(top, #fbb450, #f89406);
-	background-image: -o-linear-gradient(top, #fbb450, #f89406);
-	background-image: linear-gradient(to bottom, #fbb450, #f89406);
+	background-image: -webkit-linear-gradient(top, #fbb450,  #fbb450);
+	background-image: -o-linear-gradient(top, #fbb450,  #fbb450);
+	background-image: linear-gradient(to bottom, #fbb450,  #fbb450);
 	background-repeat: repeat-x;
 	border-color: #f89406 #f89406 #ad6704;
 	border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
@@ -189,7 +189,7 @@ a.button {
 
 .button.new:hover {
 	color: #ffffff;
-	background-color: #f89406;
+	background-color:  #fbb450;
 }
 
 /* #DB5F3A */
@@ -252,7 +252,7 @@ a.button {
 	border-color: #aaa;
 }
 
-#stuSearch {
+#student-quick-search {
 	color: #666;
 }
 
@@ -284,7 +284,7 @@ a.button {
 }
 
 /* end div layout elements */
-#advancedSearch {
+#student-search {
 	border: 1px solid #eee;
 	border-radius: 3px;
 	box-shadow: 2px 2px 4px #aaa;
@@ -292,7 +292,7 @@ a.button {
 	background-color: #f1f1f1;
 }
 
-#advancedSearch h2, #advancedSearch h5, #advancedSearch h6 {
+#student-search h2, #student-search h5, #student-search h6 {
 	text-align: center;
 	color: black;
 	box-shadow: none;
@@ -416,4 +416,16 @@ table.grade-chart tr:hover {
 fieldset {
 	border-top-color: #C7D7E9;
 	border-left-color: #C7D7E9;
+}
+
+.block {
+	box-shadow: 3px 3px 3px #999;
+	margin: .5em;
+	padding: .5em;
+	border: 1px solid #eee;
+}
+
+.obscure {
+	text-shadow: rgba(0, 0, 0, 0.4) 0px 0px 15px;
+	color: transparent;
 }

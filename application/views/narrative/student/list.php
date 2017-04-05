@@ -3,7 +3,7 @@ defined ( 'BASEPATH' ) or exit ( 'No direct script access allowed' );
 if (count ( $reports ) > 0) :
 	// list.php Chris Dart Nov 20, 2014 2:48:08 PM chrisdart@cerebratorium.com
 	$sortTerm = sprintf ( "%s %s (Grade %s)", $narrTerm, format_schoolyear ( $narrYear ), $stuGrade );
-	$div_classes [] = "column";
+	$div_classes [] = "block";
 	
 	if ($narrTerm == "Mid-Year") {
 		$div_classes [] = "even";

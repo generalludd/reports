@@ -70,10 +70,7 @@ if (! empty ( $assignments )) {
 		$classes [] = "locked";
 	}
 	?>
-<h2>
-	Grade Chart for
-	<?=sprintf("%s, %s, %s by %s %s", $gradeDisplay, $header->term, format_schoolyear($header->year), $header->teachFirst, $header->teachLast) ;?>
-</h2>
+
 <? if($this->input->get("date_start")):?>
 <h3>
 	<label>Date Range: </label>

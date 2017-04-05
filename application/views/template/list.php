@@ -1,7 +1,6 @@
 <?php
 
 ?>
-<h2>Showing Subject Templates for <?=$teacher;?></h2>
 <fieldset class="search_fieldset"><legend>Search Parameters</legend> <?
 if(!empty($options)){
 

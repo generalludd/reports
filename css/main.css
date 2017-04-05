@@ -21,11 +21,17 @@ body {
 	transition: auto .25s ease;
 }
 
+.front #page-title {
+	display: none;
+}
+
 #page {
 	margin-left: auto;
 	margin-right: auto;
 	position: relative;
 	padding-bottom: 10px;
+	display: flex;
+	flex-direction: column;
 }
 
 .highlight {
@@ -173,6 +179,11 @@ div.login-title {
 	cursor: pointer;
 }
 
+.notice{
+	clear: both;
+	
+}
+
 #message {
 	display: none;
 }
@@ -278,7 +289,7 @@ div.narrative {
 	visibility: hidden;
 }
 
-.button, #advancedSearch, #searchForm fieldset, h2, h3, h4, h5,
+.button, #student-search, #searchForm fieldset, h2, h3, h4, h5,
 	.support-view legend, input[type="submit"], input[type="text"] {
 	-moz-border-radius: 3px;
 	-webkit-border-radius: 3px;
@@ -295,7 +306,9 @@ div.narrative {
 	font-weight: normal;
 	transition: all .25s ease;
 	white-space: nowrap;
+
 }
+
 
 .button-box.small .button-list {
 	margin: .25em 0;
@@ -327,9 +340,7 @@ a, .button {
 	margin-left: 5px;
 	border-radius: 100%;
 	border: none;
-	font-weight: bold;
-	width: 1.2em;
-	height: 1.2em;
+	padding: .25em;
 	display: inline-block;
 }
 
@@ -342,6 +353,8 @@ a, .button {
 
 a.button {
 	text-decoration: none;
+			margin: 0 .25em;
+	
 }
 
 .button-box {
@@ -358,16 +371,15 @@ a.button {
 ul.button-list {
 	list-style: none;
 	padding-left: 0;
+	display: flex;
+	justify-content: flex-start;
 }
 
 ul.button-list li {
-	display: inline-block;
+	display: block;
 	padding: 0;
 }
 
-ul.button-list li .button {
-	margin: 0;
-}
 
 ul.button-list li .button.delete {
 	margin-left: 50px;
@@ -430,7 +442,7 @@ legend {
 	height: auto;
 }
 
-#page-title {
+#site-name {
 	float: left;
 	font-size: 1.3em;
 	font-weight: bold;
@@ -444,13 +456,6 @@ legend {
 	margin: 0;
 }
 
-#navigation {
-	display: inline-block;
-	position: relative;
-	width: 100%;
-	white-space: nowrap;
-	margin-bottom: .5em;
-}
 
 #navigation ul {
 	padding: 0;
@@ -467,14 +472,7 @@ legend {
 }
 
 /* end header page layout elements */ /*main div layout elements */
-#main {
-	position: relative;
-	padding: 0 5em 2em 2em;
-}
 
-#content {
-	
-}
 
 #sidebar {
 	position: absolute;
@@ -542,16 +540,16 @@ input[type='text'].grade {
 	width: 2em;
 }
 
-#advancedSearch {
+#student-search {
 	border-width: 1px;
 	border-style: solid;
 	margin-right: auto;
 	margin-left: auto;
 	width: 50%;
-	min-width: 500px;
+	min-width: 560px;
 }
 
-#advancedSearch h5 {
+#student-search h5 {
 	font-size: 14px;
 	text-align: center;
 	margin: 2px;
@@ -560,8 +558,7 @@ input[type='text'].grade {
 	background-color: transparent;
 }
 
-#advancedSearch h6 {
-	font-size: 13px;
+ #student-search #h3, #student-search h4, #student-search h6 {
 	text-align: center;
 	margin: 0;
 	padding: 0;
@@ -569,40 +566,11 @@ input[type='text'].grade {
 	background-color: transparent;
 }
 
-#advancedSearch  label {
+#student-search  label {
 	padding-left: 2em;
 }
 
-#addConcept {
-	width: 800px;
-	left: 50px;
-	top: 122px;
-	position: absolute;
-	visibility: hidden;
-	padding: 25px;
-	border-style: solid;
-	border-width: 1px;
-}
-
-div.phraseEntry {
-	position: static;
-	top: 25px;
-}
-
-div.rank div.phrase {
-	position: static;
-	right: 11em;
-	bottom: 12px;
-	float: right;
-}
-
-div.phrase {
-	position: static;
-}
-
 h1 {
-	font-size: 18px;
-	font-weight: bold;
 	margin: 0;
 }
 
@@ -972,11 +940,17 @@ fieldset.advanced div.advanced {
 
 fieldset .button-box {
 	display: block;
-	float: right;
 	z-index: 1;
 	position: relative;
 	margin-left: auto;
 	margin-right: auto;
+}
+fieldset .button-box .button-list {
+	justify-content: flex-end;
+}
+
+fieldset .button-box .button-list li a {
+	margin: 0 .25em;
 }
 
 .student-row {
@@ -1351,33 +1325,31 @@ table.report td.field.buttons, table.report th.field.buttons {
 th.grade-confirmation {
 	width: 25px;
 }
-
-/** STUDENT VIEW LAYOUT **/
-#student-info {
-	float: left;
-	width: 40ex;
-}
-
-/*.fieldset {
-	border-radius: 3px 3px 3px 3px;
-	border-color: #eee;
-	background-color: #fff;
-	box-shadow: 1px 1px 1px #ccc;
-	position: relative;
-}*/
-.fieldset h4 {
+.column-group{
+	display: flex;
+	justify-content: space-between;
 	
 }
+/** STUDENT VIEW LAYOUT **/
+#student-info {
+	flex: 1;
+}
 
+.column-secondary{
+	flex: 1;
+	margin-left: 1em;
+}
+.fieldset {
+	padding: 1em;
+	margin-bottom: 1em;
+
+}
 .column {
 	float: left;
 	width: 40%;
 	position: relative;
 	display: block;
-	box-shadow: 3px 3px 3px #999;
-	margin: .5em;
-	padding: .5em;
-	border: 1px solid #eee;
+
 	border-radius: 3px;
 }
 
@@ -1420,6 +1392,28 @@ th.grade-confirmation {
 	font-weight: bold;
 }
 
+.student-narrative-list .report-row {
+	display: flex;
+	
+}
+
+.report-row .block {
+	flex: 1;
+	margin: .5em;
+	padding: .5em;
+}
+
+.report-row table.list {
+	width: 100%;
+}
+
+@media (max-width: 1200px){
+		.report-row {
+	flex-direction: column;
+	justify-content: 
+	}
+
+}
 @media ( max-width : 736px ) {
 	#navigation .button, #navigation input {
 		display: none;
@@ -1430,4 +1424,6 @@ th.grade-confirmation {
 	#navigation .button-list li {
 		display: block;
 	}
+	
+
 }

@@ -27,7 +27,7 @@ $buttons [] = array (
 );
 $buttons [] = array (
 		"selection" => "search",
-		"text" => '<input type="text" id="stuSearch" name="stuSearch" class="mobile" size="20" value="find students" />',
+		"text" => '<input type="text" id="student-quick-search" name="student-quick-search" class="mobile" size="20" placeholder="find students" />',
 		"type" => "pass-through"
 );
 // $buttons [] = array (
@@ -72,12 +72,6 @@ $buttons [] = array (
 		"href" => site_url ( "narrative/search" ),
 		"title" => "Search &amp; Replace Narrative Text",
 		"dbRole"=>1,
-);
-$buttons [] = array (
-		"selection" => "support",
-		"text" => "Learning Support",
-		"href" => site_url ( "student/search?hasNeeds=1&year=" . get_current_year () ),
-		"dbRole" => 3
 );
 
 $buttons [] = array (

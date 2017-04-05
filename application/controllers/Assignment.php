@@ -109,12 +109,13 @@ class Assignment extends MY_Controller {
 		$data ['stuGroup'] = $stuGroup;
 		$data ['gradeStart'] = $gradeStart;
 		$data ['gradeEnd'] = $gradeEnd;
-		
+		$this->load->model("teacher_model","teacher");
+		$teacher = $this->teacher->get($kTeach);
 		if ($this->input->get ( 'print' ) == 1) {
 			// print each student report separated with page breaks.
 		} else {
 			$data ['target'] = 'assignment/chart';
-			$data ['title'] = 'Grade Chart';
+			$data ['title'] = sprintf('%s Grade Chart for %s, %s, %s by %s',$subject, $term, format_schoolyear($year), format_grade_range($gradeStart, $gradeEnd, TRUE), format_name($teacher->teachFirst, $teacher->teachLast));
 			$this->load->view ( 'page/index', $data );
 		}
 	}

@@ -1,0 +1,58 @@
+@CHARSET "UTF-8";
+#header {
+	height: 4em;
+}
+#navigation {
+	flex: 1;
+	position: relative;
+	white-space: normal;
+	margin-bottom: .5em;
+	padding-right: .5em;
+}
+
+#navigation ul {
+	padding: 0;
+	margin: 0;
+		display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+}
+
+#navigation ul li {
+	display: block;
+	padding: .25em 0;
+}
+
+#navigation ul li a {
+	display: block;
+	white-space: normal;
+}
+#main {
+	display: flex;
+	padding: 0;
+	
+}
+#content {
+	flex: 8;
+	vertical-align: top;
+}
+
+#footer {
+	font-size: .8em;
+    width: 100%;
+    position: relative;
+    bottom: initial; 
+   right: initial;
+    text-align: right;
+    clear: both;
+}
+
+#advancedSearch {
+	min-width: 510px;
+	width: 100%;
+	
+}
+
+.student-narrative-list .column {
+	min-width: 476px;
+}

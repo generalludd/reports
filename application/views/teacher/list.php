@@ -1,5 +1,4 @@
 <?php ?>
-	<h2>Teacher List</h2>
 	<fieldset class="search_fieldset">
 		<legend>Search Parameters</legend>
 		<?
@@ -43,11 +42,9 @@ if (! empty($options)) {
 } else {
     echo "<p>Showing all Users.</p>";
 }
-?>
 
-		<div class="button-box">
-			<a class="button dialog search" href="<?php echo site_url("teacher/show_search?refine=1");?>">Refine Search</a>
-		</div>
+ print create_button_bar(array(array("text"=>"Refine Search", "href"=>site_url("teacher/show_search?refine=1"),"class"=>"button dialog search")));
+?>
 	</fieldset>
 	<?=create_button_bar(array(array("text"=>"New User","class"=>"button new dialog","href"=>site_url("teacher/create"),"dbRole"=>1)));?>
 

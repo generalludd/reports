@@ -331,7 +331,7 @@
 				$data ["kStudent"] = $kStudent;
 				$data ["student"] = $student;
 				$output ["student_name"] = format_name ( $student->stuNickname, $student->stuLast );
-				$data ["title"] = $output ["student_name"];
+				$data ["title"] = sprintf("Friends School of Minnesota Report Card for %s", $output ["student_name"]);
 				$output ["charts"] = array ();
 				$i = 0;
 				foreach ( $subjects as $subject ) {

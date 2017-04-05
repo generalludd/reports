@@ -72,15 +72,15 @@ $(document).ready(function() {
 		}
 	});
 	
-			$('#stuSearch').live('keyup', function(event) {
-				var stuSearch = this.value;
-				if (stuSearch.length > 2 && stuSearch != "find students") {
-					searchWords = stuSearch.split(' ');
+			$('#student-quick-search').live('keyup', function(event) {
+				var student_quick_search = this.value;
+				if (student_quick_search.length > 2) {
+					searchWords = student_quick_search.split(' ');
 					myName = searchWords.join('%') + "%";
 					var myUrl = base_url + "student/find_by_name";
 					var formData = {
 						ajax: 1,
-						stuName: stuSearch
+						stuName: student_quick_search
 					};
 					$.ajax({
 						url: myUrl,
@@ -92,7 +92,7 @@ $(document).ready(function() {
 							$("#search_list").css({"z-index": 1000}).html(data).position({
 								my: "left top",
 								at: "left bottom",
-								of: $("#stuSearch"), 
+								of: $("#student-quick-search"), 
 								collision: "fit"
 							}).show();
 					}
@@ -103,24 +103,15 @@ $(document).ready(function() {
 
 
 				}
-			});// end stuSearch.keyup
+			});// end student-quick-search.keyup
 			
 
-			$('#stuSearch').live('focus', function(event) {
-				$('#stuSearch').val('').css( {
+			$('#student-quick-search').live('focus', function(event) {
+				$('#student-quick-search').val('').css( {
 					color : 'black'
 				});
 			});
 			
-			
-			$('#stuSearch').live('blur', function(event) {
-				
-				$("#search_list").fadeOut();
-				$('#stuSearch').css({color:'#666'}).val('find students');
-				//$("#search_list").remove();
-				
-				
-			});
 
 
 				$('.delete_student').live('click', function(event) {

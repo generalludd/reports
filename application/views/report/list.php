@@ -1,17 +1,6 @@
 <?php
 
 defined('BASEPATH') or exit('No direct script access allowed');
-$header[] = STUDENT_REPORT . "s";
-if ($report_type == "student") {
-    $header[] = sprintf("for %s", format_name($person->stuNickname, $person->stuLast));
-} elseif ($report_type == "teacher") {
-    $header[] = sprintf("reported by %s", format_name($person->teachFirst, $person->teachLast));
-} else {
-    $header[] = sprintf("reported to %s", format_name($person->advisorFirst, $person->advisorLast));
-}
-?>
-<h2><?=implode(" ",$header); ?></h2>
-<?
 if ($report_type == "student") {
     $this->load->view("student/navigation", array(
             "student" => $person,
@@ -53,11 +42,9 @@ if (isset($options) && !empty($options)) {
 } else {
     echo "<p>Showing All Submissions</p>";
 }
-?>
 
-	<div class="button-box">
-		<a class="button dialog" href="<?php echo site_url("report/search?report_type=$report_type&report_key=$report_key");?>">Refine Search</a>
-	</div>
+print create_button_bar(array(array("text"=>"Refine Search","href"=>site_url("report/search?report_type=$report_type&report_key=$report_key"),"class"=>"button dialog" )))
+?>
 </fieldset>
 <? if(!empty($reports)): ?>
 <? if($type == "student"):?>
@@ -145,8 +132,6 @@ if (isset($options) && !empty($options)) {
 </table>
 <? else: ?>
 <p>
-	There are no
-	<?=STUDENT_REPORT;?>
-	s for the given search criteria
+	There are no <?php echo STUDENT_REPORT;?>s for the given search criteria
 </p>
 <?endif;

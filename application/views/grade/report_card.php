@@ -16,10 +16,7 @@ if(isset($batch) && $batch){
 <? if(isset($batch) && $batch):?>
 
 <? else: ?>
-		<div class='report-title'>
-			Friends School of Minnesota Report Card for
-			<?=$student_name;?>
-		</div>
+
 		<? endif; ?>
 		<? if($i == 0 ) :
 		$buttons[] = array("selection"=>"none","type"=>"span","class"=>array("button","print","do-print","small"),"text"=>"Print");

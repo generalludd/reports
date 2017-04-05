@@ -7,6 +7,8 @@
 <title><?=$title;?></title>
 <meta http-equiv="refresh" content = "28800; url=<?php echo site_url("auth/logout");?>">
 <link type="text/css" rel="stylesheet" media="all" href="<?=base_url("css/main.css?") . date("U");?>" />
+<link type="text/css" rel="stylesheet" media="all" href="<?=base_url("css/navigation.css?") . date("U");?>" />
+
 <link type="text/css" rel="stylesheet" media="screen" href="<?=base_url("css/color.css?") . date("U");?>"/>
 <link type="text/css" rel="stylesheet" media="screen" href="<?=base_url("css/popup.css?") . date("U");?>" />
 <link type="text/css" rel="stylesheet" media="print" href="<?=base_url("css/print.css?") . date("U")?>" />

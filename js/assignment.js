@@ -72,16 +72,16 @@ $(document).ready(function(){
 	});
 	
 	$('#student-dropdown').live('keyup', function(event) {
-		var stuSearch = this.value;
-		if (stuSearch.length > 2 && stuSearch != "find students") {
-			searchWords = stuSearch.split(' ');
+		var student_quick_search = this.value;
+		if (student_quick_search.length > 2) {
+			searchWords = student_quick_search.split(' ');
 			myName = searchWords.join('%') + "%";
 			var myUrl = base_url + "student/find_by_name";
 			var formData = {
 				ajax: 1,
 				type: "mini",
 				js_class:$("#js_class").val(),
-				stuName: stuSearch
+				stuName: student_quick_search
 			};
 			$.ajax({
 				url: myUrl,
@@ -101,7 +101,7 @@ $(document).ready(function(){
 
 
 		}
-	});// end stuSearch.keyup
+	});// end student-quick-search.keyup
 	$('#student-dropdown').live("blur",function(){
 		$("#search_list").fadeOut();
 	});

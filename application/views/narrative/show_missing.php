@@ -1,8 +1,5 @@
 <?php
 ?>
-
-<h2>Showing Missing Narratives for <?=$teacher;?></h2>
-
 <fieldset class="search_fieldset"><legend>Search Parameters</legend>
 <ul>
 <li>
