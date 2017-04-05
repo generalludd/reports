@@ -352,10 +352,10 @@ a, .button {
 	cursor: pointer;
 }
 
-a.button {
+a.button, input[type='submit'].button{
 	text-decoration: none;
 			margin: 0 .25em;
-	
+	display: inline-block;
 }
 
 .button-box {
@@ -377,14 +377,14 @@ ul.button-list {
 }
 
 ul.button-list li {
-	display: block;
 	padding: 0;
+	display: inherit;
 }
 
 
 ul.button-list li .button.delete {
 	margin-left: 50px;
-	float: none;
+	display: inherit;
 }
 
 .mini-buttons ul.button-list li .button {
@@ -573,6 +573,7 @@ input[type='text'].grade {
 
 h1 {
 	margin: 0;
+	font-size: 1.5em;
 }
 
 h2 {

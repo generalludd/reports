@@ -28,10 +28,6 @@ if(!empty($conditional_buttons)){
 
 
 ?>
-<h3>
-	Narrative for
-	<?=$studentName;?>
-</h3>
 <form id="narrativeEditor"
 	action="<?=site_url("narrative/$action");?>"
 	method="post" name="narrativeEditor">
