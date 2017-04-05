@@ -1,9 +1,3 @@
-<?php ?>
-
-<h3>
-		<?php echo $title;?>
-</h3>
-
 <?php
 $data ["kStudent"] = $student->kStudent;
 $this->load->view ( "student/navigation", $data );
