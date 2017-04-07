@@ -81,7 +81,7 @@ $buttons[] = array(
 				"button",
 				"dialog",
 		),
-		"href"=>site_url("overview/search/$kTeach"),
+		"href"=>site_url("overview/search/$userID"),
 		"dbRole"=>2,
 		"title"=>"Edit overviews for the subjects and grade ranges you teach",
 );
