@@ -544,8 +544,6 @@ input[type='text'].grade {
 #student-search {
 	border-width: 1px;
 	border-style: solid;
-	margin-right: auto;
-	margin-left: auto;
 	width: 50%;
 	min-width: 560px;
 }

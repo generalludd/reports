@@ -10,6 +10,7 @@ class Overview_model extends MY_Model
 	var $year;
 	var $gradeStart = 0;
 	var $gradeEnd = 0;
+	var $isActive;
 	var $recModified;
 	var $recModifier;
 
@@ -23,7 +24,7 @@ class Overview_model extends MY_Model
 
 	function prepare_variables()
 	{
-		$variables = array("kTeach","overview","subject","term","year","gradeStart","gradeEnd");
+		$variables = array("kTeach","overview","subject","term","year","gradeStart","gradeEnd","isActive");
 		for($i = 0; $i < count($variables); $i++){
 			$myVariable = $variables[$i];
 			if($this->input->post($myVariable)){
@@ -117,9 +118,10 @@ class Overview_model extends MY_Model
 
 	function delete($kOverview)
 	{
-		$update_array = array("isActive"=>0);
+		$output = $this->get($kOverview);
 		$this->db->where("kOverview",$kOverview);
-		$this->db->update("overview", $update_array);
+		$this->db->delete("overview");
+		return $output;
 	}
 
 

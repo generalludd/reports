@@ -114,12 +114,11 @@ class Template extends MY_Controller
 	 * search dialog for finding templates. 
 	 * This redirects on submit to the above list_templates() function
 	 */
-	function search()
+	function search($kTeach)
 	{
 		$this->load->model("subject_model");
 		$this->load->model("teacher_model");
 		$this->load->model("menu_model");
-		$kTeach = $this->uri->segment(3);
 		$data["kTeach"] = $kTeach;
 		$grades = $this->menu_model->get_pairs("grade");
 		$data["grade_list"] = get_keyed_pairs($grades,array("value","label"));
@@ -134,11 +133,10 @@ class Template extends MY_Controller
 /**
  * Edit templates based on a uri segment template id (kTemplate)
  */
-	function edit()
+	function edit($kTemplate)
 	{
 		$this->load->model("teacher_model");
 		$this->load->model("menu_model");
-		$kTemplate = $this->uri->segment(3);
 		$this->load->model("subject_model");
 		$template = $this->template_model->get($kTemplate);
 		$data["template"] = $template;

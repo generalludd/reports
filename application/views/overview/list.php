@@ -1,8 +1,7 @@
 <?php
 
 ?>
-<h2>Showing Subject Overviews for <?=$teacher;?></h2>
-<fieldset class="search_fieldset"><legend>Search Parameters</legend> <?
+<fieldset class="search_fieldset"><legend>Search Parameters</legend> <?php
 if(!empty($options)){
 
 	if(array_key_exists("where", $options)){
@@ -41,9 +40,9 @@ echo create_button_bar($buttons);
 ?>
 
 </fieldset>
-<?=create_button_bar(array(array("text"=>"New Overview","class"=>"button new","href"=>site_url("overview/create/$kTeach"))));?>
+<?php print create_button_bar(array(array("text"=>"New Overview","class"=>"button new","href"=>site_url("overview/create/$kTeach"))));?>
 
-<? if(!empty($templates)): ?>
+<?php if(!empty($overviews)): ?>
 <table class="list subject-templates">
         		<thead>
             		<tr>
@@ -51,21 +50,18 @@ echo create_button_bar($buttons);
                 		<th>Subject</th>
                 		<th>Term</th>
                 		<th>Grades</th>
-                		<th>Description</th>
                 		<th>Status</th>
             		</tr>
         		</thead>
         	<tbody>
-<? foreach($templates as $template): ?>
-		<? $currentTerm = $template->term . " " . format_schoolyear($template->year); ?>
-
+<? foreach($overviews as $overview): ?>
+		<? $currentTerm = $overview->term . " " . format_schoolyear($overview->year); ?>
 		<tr>
-    		<td><?=create_button(array("text"=>"Edit","class"=>"button small edit","href"=>site_url("template/edit/$template->kTemplate")));?></td>
-    		<td><strong><?=$template->subject;?></strong></td>
+    		<td><?=create_button(array("text"=>"Edit","class"=>"button small edit","href"=>site_url("overview/edit/$overview->kOverview")));?></td>
+    		<td><strong><?=$overview->subject;?></strong></td>
     		<td><?=$currentTerm?></td>
-    		<td><?=format_grade_range($template->gradeStart, $template->gradeEnd, TRUE);?> </td>
-            <td><?=!empty($template->type)?$template->type:"";?></td>
-            <td class="status"><?=$template->isActive == 0?"Inactive":"Active";?> </td>
+    		<td><?=format_grade_range($overview->gradeStart, $overview->gradeEnd, TRUE);?> </td>
+            <td class="status"><?=$overview->isActive == 0?"Inactive":"Active";?> </td>
        </tr>
 <? endforeach;?>
 	</tbody>
