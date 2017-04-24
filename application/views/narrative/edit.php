@@ -15,6 +15,7 @@ if($action == "insert"){
 	$subjectMenu = form_dropdown('narrSubject', $subjects, get_value($narrative, 'narrSubject'), 'id="narrSubject"');
 	$kTeach = get_value($narrative, 'kTeach');
 }
+
 $conditional_buttons = array();
 $conditional_bar = FALSE;
 //@TODO condense the following 7 lines of code into three/four
@@ -45,8 +46,11 @@ if(!empty($conditional_buttons)){
 	?>
 
 	<input type="hidden" name="target" id="target" value="narrative" /> <input
-		type="hidden" name="ajax" id="ajax" value="0" /> <input type="hidden"
-		name="kStudent" id="kStudent" value='<?=$student->kStudent;?>' /> <input
+		type="hidden" name="ajax" id="ajax" value="0" /> 
+		<input type="hidden"
+		name="kStudent" id="kStudent" value='<?=$student->kStudent;?>' /> 
+		<input type="hidden" name="includeOverview" id="includeOverview" value="<?php print get_value($narrative,"includeOverview");?>"/>
+		<input
 		type="hidden" name="kTeach" id="kTeach" value='<?=$kTeach;?>' /> <input
 		type="hidden" name="kNarrative" id="kNarrative"
 		value='<?=get_value($narrative, 'kNarrative'); ?>' /> <input
@@ -71,7 +75,9 @@ if(!empty($conditional_buttons)){
 		- <input id="yearEnd" type="text" name="yearEnd" readonly
 			maxlength="4" size="5" value="<?=$yearEnd; ?>" />
 		<?php if($stuGrade >= 6 && get_value($narrative,'narrSubject') != "Humanities"):?>
-		</p>
+			</p>
+		
+	
 		<!-- @TODO Put calculated final grade here.  -->
 		<p>Course Grade (middle school only):
 			<? if($this->input->cookie("submits_report_card") && $this->input->cookie("submits_report_card") == "yes" && ! get_value($narrative,"narrGrade",FALSE)): ?>
@@ -83,6 +89,20 @@ if(!empty($conditional_buttons)){
 			<?php endif;?>
 		<?php endif;?>
 	</p>
+	<?php if($overview):?>
+		<div class="overview">
+		
+			<?php if(get_value($narrative,"includeOverview") == 1):?>
+			<?php  print create_button_bar(array(array("text"=>"Remove Overview","class"=>"button small edit remove_overview", "id"=>"include_overview")));?>
+			<div class="overview-text">
+			<?php $this->load->view("overview/view",array("overview"=>$overview));?>
+			</div>
+			<?php else:?>
+				<?php print create_button_bar(array(array("text"=>"Include Overview","class"=>"button small edit include_overview", "id"=>"include_overview")));?>
+			<div class="overview-text"></div>
+			<?php endif;?>
+			</div>
+		<?php endif; ?>
 	<p>
 	<?php
 	if($conditional_bar){
@@ -100,5 +120,29 @@ if(!empty($conditional_buttons)){
 window.setInterval(function(){
 	save_continue_narrative();
 }, 60000);
+$("#include_overview").click(function(){
+	if($(this).hasClass("remove_overview")){
+		$("#includeOverview").val(0);
+		$(".overview-text").html("");
+		$(this).html("Include Overview").addClass("include_overview").removeClass("remove_overview");
+	}else{
+		 console.log("change to remove, right?");
+		 $("#includeOverview").val(1);
+
+	     $(".overview-text").html("");
+		 $(this).html("Remove Overview").removeClass("include_overview").addClass("remove_overview");
+		 $.ajax({
+				type: "get",
+				url: base_url + "overview/view/" + <?php echo $overview->kOverview; ?> + "?ajax=1",
+				success: function(data){
+					$(".overview-text").html(data);
+				}
+			 });
+		}
+	
+});
+
+
+
 
 </script>

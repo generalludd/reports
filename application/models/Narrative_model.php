@@ -13,6 +13,7 @@ class Narrative_model extends MY_Model
 	var $narrSubject;
 	var $narrGrade;
 	var $narrYear;
+	var $includeOverview;
 	var $recModified;
 	var $recModifier;
 
@@ -33,6 +34,7 @@ class Narrative_model extends MY_Model
 				"narrText",
 				"narrTerm",
 				"narrSubject",
+				"includeOverview",
 				"narrGrade",
 				"narrYear"
 		);

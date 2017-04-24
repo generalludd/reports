@@ -55,7 +55,7 @@ class Overview extends MY_Controller {
 			$year = $this->input->post ( "year" );
 			$term = $this->input->post ( "term" );
 			$subject = $this->input->post ( "subject" );
-			redirect ( "overview/view/?kTeach=$kTeach&term=$term&year=$year&subject=$subject" );
+			redirect ( "overview/show_all/?kTeach=$kTeach&term=$term&year=$year&subject=$subject" );
 		}
 	}
 
@@ -109,7 +109,7 @@ class Overview extends MY_Controller {
 				$subject = $this->input->post ( "subject" );
 				$gradeStart = $this->input->post ( "gradeStart" );
 				$gradeEnd = $this->input->post ( "gradeEnd" );
-				redirect ( "overview/view/?kTeach=$kTeach&term=$term&year=$year&subject=$subject&gradeStart=$gradeStart&gradeEnd=$gradeEnd" );
+				redirect ( "overview/show_all/?kTeach=$kTeach&term=$term&year=$year&subject=$subject&gradeStart=$gradeStart&gradeEnd=$gradeEnd" );
 			}
 		}
 	}
@@ -148,7 +148,7 @@ class Overview extends MY_Controller {
 	 * kTeach, term, year, subject, gradeStart, gradeEnd
 	 * Only kTeach is mandatory.
 	 */
-	function view()
+	function show_all()
 	{
 		if ($kTeach = $this->input->get ( "kTeach" )) {
 			$this->load->model ( "teacher_model" );
@@ -185,6 +185,19 @@ class Overview extends MY_Controller {
 			$data ["options"] = $options;
 			$this->load->view ( "page/index", $data );
 		}
+	}
+	
+	function view($kOverview){
+		$overview = $this->overview->get($kOverview);
+		if($this->input->get("ajax")== 1){
+			echo $this->load->view("overview/view",array("overview"=>$overview),TRUE);
+		}else{
+			$data["target"]="overview/view";
+			$data['title'] = "Overview";
+			$data['overview'] = $overview;
+			$this->load->view("page/index",$data);
+		}
+		
 	}
 	
 	private function _delete($kOverview){

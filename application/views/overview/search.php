@@ -3,7 +3,7 @@
 $current_year = get_current_year();
 ?>
 
-<form id="overview_search" name="overview_search" action="<?=site_url("overview/view");?>" method="get">
+<form id="overview_search" name="overview_search" action="<?=site_url("overview/show_all");?>" method="get">
 <input type="hidden" name="kTeach" id="kTeach" value="<?=$kTeach;?>" />
 <p>
 <label for="subject">Subject: </label>
