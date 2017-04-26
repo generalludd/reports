@@ -209,6 +209,9 @@ class Assignment_model extends MY_Model {
 		if (array_key_exists ( "kTeach", $options )) {
 			$this->db->where ( "assignment.kTeach", $options ["kTeach"] );
 		}
+		if(array_key_exists("cutoff_date",$options)){
+			$this->db->where("date<=", $options['cutoff_date']);
+		}
 		if (array_key_exists ( "subject", $options )) {
 			$this->db->where ( "assignment.subject", $options ["subject"] );
 		}
