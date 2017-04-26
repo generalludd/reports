@@ -203,6 +203,6 @@ class Overview extends MY_Controller {
 	private function _delete($kOverview){
 		$overview = $this->overview->delete($kOverview);
 		$this->session->set_flashdata("message","The overview was successfully deleted");
-		redirect ( "overview/view/?kTeach=$overview->kTeach&term=$overview->term&year=$overview->year&subject=$overview->subject&gradeStart=$overview->gradeStart&gradeEnd=$overview->gradeEnd" );
+		redirect ( "overview/show_all/?kTeach=$overview->kTeach&term=$overview->term&year=$overview->year&subject=$overview->subject&gradeStart=$overview->gradeStart&gradeEnd=$overview->gradeEnd" );
 	}
 }

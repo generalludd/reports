@@ -48,7 +48,7 @@
 
 
 	<?php
-	foreach ( $narratives as $narrative ) {
+	foreach ( $narratives as $narrative ):
 		$narrText = stripslashes ( $narrative->narrText );
 		$teacher = "$narrative->teachFirst $narrative->teachLast";
 		print "<div class='subject-row'>";
@@ -96,15 +96,14 @@
 			// if ($has_benchmarks) {
 			// $data ["benchmarks"] = $this->benchmark_model->get_for_student ( $narrative->kStudent, $narrative->narrSubject, $stuGrade, $narrTerm, $narrYear );
 			// }
-		}
-		
-		$narrText = stripslashes ( $narrative->narrText );
-		print "<p>$narrText</p>";
-		// if ($has_benchmarks) {
-		// $this->load->view ( "benchmark/chart", $data );
-		// }
-	}
-	// end area for clean up
-	?>
+		} ?>
+		<div class="narrText">
+		<?php if($narrative->includeOverview && $narrative->overview):?>
+		<h4><?php print $narrative->narrSubject; ?> Overview</h4>
+		<?php print stripslashes($narrative->overview);?>
+		<h4><?php printf("%s's Progress", $student_obj->stuNickname);?></h4>
+		<?php endif;?>
+		<?php print stripslashes($narrative->narrText);?></div>
+		<?php endforeach; ?>
 </body>
 </html>

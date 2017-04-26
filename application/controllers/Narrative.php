@@ -93,12 +93,16 @@ class Narrative extends MY_Controller {
 			$data ['default_grade'] = calculate_letter_grade ( $default_grade, $pass_fail );
 		}
 		
-		$data ['overview'] = $this->overview->get_all ( $kTeach, array (
+		$overview = $this->overview->get_all ( $kTeach, array (
 				"subject" => $data['narrSubject'],
 				"term" => $data ['narrTerm'], 
 				"year" => $data ['narrYear'],
 				"stuGrade" => $student->stuGrade,
 		) , FALSE);
+		$data ['overview'] = FALSE;
+		if($overview){
+			$data ['overview'] = $overview[0];
+		}
 		$data ['narrative'] = NULL;
 		$data ['narrText'] = "";
 		$data ['action'] = "insert";
@@ -299,13 +303,12 @@ class Narrative extends MY_Controller {
 	 */
 	function view($kNarrative)
 	{
-		$this->load->model ( 'student_model' );
 		$this->load->model ( 'teacher_model' );
 		// $this->load->model ( 'benchmark_model' );
 		// $this->load->model ( 'benchmark_legend_model', 'legend' );
 		$this->load->model ( 'backup_model' );
 		$this->load->model ( 'preference_model', 'preference' );
-		$kNarrative = $this->uri->segment ( 3 );
+		$this->load->model('overview_model','overview');
 		$narrative = $this->narrative_model->get ( $kNarrative, TRUE );
 		$kStudent = $narrative->kStudent;
 		$kTeach = $narrative->kTeach;
@@ -344,6 +347,14 @@ class Narrative extends MY_Controller {
 				$letter_grade = calculate_final_grade ( $grades );
 				$data ['letter_grade'] = calculate_letter_grade ( $letter_grade, $pass_fail );
 			}
+		}
+		if($narrative->includeOverview){
+		$data ['overview'] = $this->overview->get_all ( $kTeach, array (
+				"subject" => $narrative->narrSubject,
+				"term" => $narrative->narrTerm,
+				"year" => $narrative->narrYear,
+				"stuGrade" => $narrative->stuGrade,
+		) , FALSE);
 		}
 		$teacher = $this->teacher_model->get ( $kTeach );
 		$studentName = format_name ( $narrative->stuFirst, $narrative->stuLast, $narrative->stuNickname );
@@ -626,14 +637,16 @@ class Narrative extends MY_Controller {
 	 */
 	function print_student_report($kStudent, $narrTerm, $narrYear)
 	{
-		if ($this->uri->segment ( 5 )) {
+		if ($narrYear) {
 			$this->load->model ( "subject_sort_model" );
 			$this->load->model ( "student_model" );
+			$this->load->model("overview_model","overview");
 			// $this->load->model ( "benchmark_model" );
 			// $this->load->model("preference_model");
 			// $this->load->model ( "benchmark_legend_model", "legend" );
 			
 			$student_obj = $this->student_model->get ( $kStudent, "stuFirst,stuLast,stuNickname,baseGrade,baseYear" );
+			$data['student_obj'] = $student_obj;
 			$student = format_name ( $student_obj->stuFirst, $student_obj->stuLast, $student_obj->stuNickname );
 			$data ["stuGrade"] = get_current_grade ( $student_obj->baseGrade, $student_obj->baseYear, $narrYear );
 			if ($narrYear < 2016) { // old attendance model
@@ -656,11 +669,23 @@ class Narrative extends MY_Controller {
 			) );
 			
 			$this->load->model ( "preference_model", "preference" );
-			$data ["narratives"] = $narratives;
 			// get letter grades for the reports
 			$data ['grades'] = array ();
 			foreach ( $narratives as $narrative ) {
 				$kTeach = $narrative->kTeach;
+				
+				$overview = $this->overview->get_all ( $kTeach, array (
+						"subject" => $narrative->narrSubject,
+						"term" => $narrative->narrTerm,
+						"year" => $narrative->narrYear,
+						"stuGrade" => $narrative->stuGrade,
+				) , FALSE);
+				if(!empty($overview) && $narrative->includeOverview){
+				$narrative->overview = $overview[0]->overview;
+				}else{
+					$narrative->overview = FALSE;
+				}
+				
 				$submits_report_card = $this->preference->get ( $kTeach, "submits_report_card" );
 				$data ['grades'] [$narrative->narrSubject] = $narrative->narrGrade;
 				if ($submits_report_card == "yes") {
@@ -702,7 +727,10 @@ class Narrative extends MY_Controller {
 						}
 					}
 				}
+				
 			}
+			$data ["narratives"] = $narratives;
+				
 			$data ["student"] = $student;
 			$data ["title"] = "Narrative Report for $student";
 			$this->load->view ( "narrative/print", $data );

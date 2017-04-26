@@ -1410,7 +1410,13 @@ th.grade-confirmation {
 @media (max-width: 1200px){
 		.report-row {
 	flex-direction: column;
-	justify-content: 
+	}
+	
+	.report-row .block.even {
+	order: 2;
+	}
+	.report-row .block.odd {
+	order: 1;
 	}
 
 }
@@ -1424,6 +1430,11 @@ th.grade-confirmation {
 	#navigation .button-list li {
 		display: block;
 	}
-	
+		.report-row .block.even {
+	order: 1;
+	}
+	.report-row .block.odd {
+	order: 2;
+	}
 
 }

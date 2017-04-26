@@ -49,7 +49,7 @@ if(!empty($conditional_buttons)){
 		type="hidden" name="ajax" id="ajax" value="0" /> 
 		<input type="hidden"
 		name="kStudent" id="kStudent" value='<?=$student->kStudent;?>' /> 
-		<input type="hidden" name="includeOverview" id="includeOverview" value="<?php print get_value($narrative,"includeOverview");?>"/>
+		<input type="hidden" name="includeOverview" id="includeOverview" value="<?php print get_value($narrative,"includeOverview", 1);?>"/>
 		<input
 		type="hidden" name="kTeach" id="kTeach" value='<?=$kTeach;?>' /> <input
 		type="hidden" name="kNarrative" id="kNarrative"
@@ -92,7 +92,7 @@ if(!empty($conditional_buttons)){
 	<?php if($overview):?>
 		<div class="overview">
 		
-			<?php if(get_value($narrative,"includeOverview") == 1):?>
+			<?php if(get_value($narrative,"includeOverview", 1) == 1):?>
 			<?php  print create_button_bar(array(array("text"=>"Remove Overview","class"=>"button small edit remove_overview", "id"=>"include_overview")));?>
 			<div class="overview-text">
 			<?php $this->load->view("overview/view",array("overview"=>$overview));?>
@@ -102,7 +102,7 @@ if(!empty($conditional_buttons)){
 			<div class="overview-text"></div>
 			<?php endif;?>
 			</div>
-		<?php endif; ?>
+			<?php endif;?>
 	<p>
 	<?php
 	if($conditional_bar){
@@ -126,7 +126,6 @@ $("#include_overview").click(function(){
 		$(".overview-text").html("");
 		$(this).html("Include Overview").addClass("include_overview").removeClass("remove_overview");
 	}else{
-		 console.log("change to remove, right?");
 		 $("#includeOverview").val(1);
 
 	     $(".overview-text").html("");

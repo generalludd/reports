@@ -30,7 +30,10 @@ if ($backups) {
 	);
 }
 print create_button_bar ( $buttons );
-?><div class="narrText"><?=stripslashes($narrative->narrText);?></div><?
+?><div class="narrText">
+<?php if($narrative->includeOverview && !empty($overview)):?><h4><?php print $narrative->narrSubject; ?> Overview</h4>
+<?php print stripslashes($overview[0]->overview);?>
+<h4><?php printf("%s's Progress", $narrative->stuNickname);?></h4><?php endif;?><?=stripslashes($narrative->narrText);?></div><?
 
 // if (! empty ( $benchmarks )) {
 
