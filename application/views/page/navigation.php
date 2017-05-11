@@ -74,18 +74,6 @@ $buttons [] = array (
 		"dbRole"=>1,
 );
 
-$buttons[] = array(
-		"selection"=>"overview",
-		"text"=>"Subject Overviews",
-		"class"=> array(
-				"button",
-				"dialog",
-		),
-		"href"=>site_url("overview/search/$userID"),
-		"dbRole"=>2,
-		"title"=>"Edit overviews for the subjects and grade ranges you teach",
-);
-
 $buttons [] = array (
 		"selection" => "benchmark",
 		"text" => "Benchmark Templates",
@@ -96,6 +84,18 @@ $buttons [] = array (
 		"href" => site_url ( "benchmark/search" ),
 		"dbRole" => 2,
 		"title"=> "Edit your benchmark templates",
+);
+
+$buttons[] = array(
+		"selection"=>"overview",
+		"text"=>"Subject Overviews",
+		"class"=> array(
+				"button",
+				"dialog",
+		),
+		"href"=>site_url("overview/search/$userID"),
+		"dbRole"=>2,
+		"title"=>"Edit overviews for the subjects and grade ranges you teach",
 );
 
 $buttons [] = array (
