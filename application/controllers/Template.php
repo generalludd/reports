@@ -241,6 +241,4 @@ class Template extends MY_Controller
 
 
 
-
-
 }
