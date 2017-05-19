@@ -100,15 +100,10 @@ input.link {
 	color: #ffffff;
 	text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
 	background-color: #5bb75b;
-	background-image: -moz-linear-gradient(top, #62c462, #51a351);
-	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#62c462),
-		to(#51a351));
-	background-image: -webkit-linear-gradient(top, #62c462, #51a351);
-	background-image: -o-linear-gradient(top, #62c462, #51a351);
 	background-image: linear-gradient(to bottom, #62c462, #51a351);
 	background-repeat: repeat-x;
 	border-color: #51a351 #51a351 #387038;
-	border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+	transition: .25s ease all;
 }
 
 .button.active {
@@ -151,20 +146,16 @@ a.button {
 	color: #ffffff;
 	text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
 	background-color: #006dcc;
-	background-image: -moz-linear-gradient(top, #0088cc, #0044cc);
-	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#0088cc),
-		to(#0044cc));
-	background-image: -webkit-linear-gradient(top, #0088cc, #0044cc);
-	background-image: -o-linear-gradient(top, #0088cc, #0044cc);
-	background-image: linear-gradient(to bottom, #0088cc, #0044cc);
+	background-image: linear-gradient(to bottom, #0088cc, #006dcc);
 	background-repeat: repeat-x;
-	border-color: #0044cc #0044cc #002a80;
-	border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+	border-color: #006dcc #006dcc #002a80;
 }
 
 .button.edit:hover {
 	color: #ffffff;
-	background-color: #0044cc;
+	background-color: #0088cc;
+		background-image: linear-gradient(to bottom,#006dcc, #0088cc );
+	
 }
 
 .unread {
@@ -176,15 +167,9 @@ a.button {
 	color: #000;
 	text-shadow: none;
 	background-color: #faa732;
-	background-image: -moz-linear-gradient(top, #fbb450,  #fbb450);
-	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#fbb450),
-		to(#f89406));
-	background-image: -webkit-linear-gradient(top, #fbb450,  #fbb450);
-	background-image: -o-linear-gradient(top, #fbb450,  #fbb450);
 	background-image: linear-gradient(to bottom, #fbb450,  #fbb450);
 	background-repeat: repeat-x;
 	border-color: #f89406 #f89406 #ad6704;
-	border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
 }
 
 .button.new:hover {
@@ -198,15 +183,9 @@ a.button {
 	color: #ffffff;
 	text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
 	background-color: #da4f49;
-	background-image: -moz-linear-gradient(top, #ee5f5b, #bd362f);
-	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ee5f5b),
-		to(#bd362f));
-	background-image: -webkit-linear-gradient(top, #ee5f5b, #bd362f);
-	background-image: -o-linear-gradient(top, #ee5f5b, #bd362f);
 	background-image: linear-gradient(to bottom, #ee5f5b, #bd362f);
 	background-repeat: repeat-x;
 	border-color: #bd362f #bd362f #802420;
-	border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
 }
 
 .button.delete:hover {
@@ -215,32 +194,50 @@ a.button {
 
 .button.print, .button.export {
 	background-color: #CF46CC;
-	background: -moz-linear-gradient(top, #CF46CC 0, #8C2D8B 100%);
-	background: linear-gradient(top, #CF46CC 0, #8C2D8B 100%);
-	background: -webkit-linear-gradient(top, #CF46CC 0, #8C2D8B 100%);
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #CF46CC),
-		color-stop(100%, #8C2D8B));
-	background: -o-linear-gradient(top, #CF46CC 0, #8C2D8B 100%);
-	background: -ms-linear-gradient(top, #CF46CC 0, #8C2D8B 100%);
+	background: linear-gradient(to bottom, #CF46CC 0, #8C2D8B);
+	border-color: #CF46CC #CF46CC #8C2D8B;
+
+}
+
+.button.print:hover {
+		background-color: #CF46CC;
+	background: linear-gradient(to bottom, #CF46CC 0, #8C2D8B);
 }
 
 .button .tardy {
 	color: #000;
 	background-color: #F8DA06;
-		background-image: -moz-linear-gradient(top, #F8DA06, #f89406);
-	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#F8DA06),
-		to(#f89406));
-	background-image: -webkit-linear-gradient(top, #F8DA06, #f89406);
-	background-image: -o-linear-gradient(top, #F8DA06, #f89406);
 	background-image: linear-gradient(to bottom, #F8DA06, #f89406);
 	background-repeat: repeat-x;
 	border-color: #f89406 #f89406 #ad6704;
-	border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
 }
 
 .link.delete {
 	color: #da4f49;
 }
+
+.accordion .ui-state-default {
+    border: 1px solid #fff;
+    background: #e8e8e8;
+    background-image: linear-gradient(to bottom ,#e8e8e8, #cdcdcd);
+    font-weight: normal;
+    color: #000;
+    font-size: 1.2em;
+}
+
+.accordion .ui-state-default a{
+	color: #000;
+}
+.accordion .ui-state-active {
+    border: 1px solid #aaaaaa;
+    background: #ffffff;
+    font-weight: normal;
+    color: #212121;
+}
+.accordion .ui-state-active a {
+	font-size: 1.2em;
+	}
+
 /* #CAD6E9 */
 /* #C3D0E2 */
 /* header page layout elements */

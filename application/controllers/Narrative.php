@@ -626,8 +626,19 @@ class Narrative extends MY_Controller {
 		}
 		$data ["students"] = $this->student_model->get_students_by_grade ( $data ["gradeStart"], $data ["gradeEnd"], $constraints );
 		$data ["teacher"] = $this->teacher_model->get_name ( $data ["kTeach"] );
-		$data ["target"] = "narrative/show_missing";
-		$data ["title"] = "Showing Missing Narratives for " . $data ["teacher"];
+		if($kTemplate = $this->input->get("apply_template")){
+			$this->load->model("template_model","template");
+			
+			$template = $this->template->get($kTemplate);
+			$data['template'] = $template;
+			$data['target'] = "template/batch_apply";
+			$data ["title"] = sprintf("Batch apply template for %s (%s) %s, %s. Grades %s",$template->subject, $template->type, $template->term, format_schoolyear($template->year), format_grade_range($template->gradeStart, $template->gradeEnd));
+				
+		}else{
+			$data ["target"] = "narrative/show_missing";
+			$data ["title"] = "Showing Missing Narratives for " . $data ["teacher"];
+		}
+
 		$this->load->view ( "page/index", $data );
 	}
 
@@ -770,6 +781,33 @@ class Narrative extends MY_Controller {
 		} else {
 			$this->load->view ( "page/index", $data );
 		}
+	}
+	
+	/**
+	 * create a narrative using an existing template via an ajax call
+	 * 
+	 */
+	function apply_template($kStudent, $kTemplate){
+		$this->load->model("template_model","template");
+		$this->load->model("student_model","student");
+		$template = $this->template->get($kTemplate);
+		$student = $this->student->get($kStudent);
+		if(!$this->narrative->has_narrative($kStudent, $template->kTeach, $template->subject, $template->term, $template->year)){
+			$values = array (
+					"kStudent"=>kStudent,
+				"kTeach"=>$template->kTeach,
+				"stuGrade"=>$student->stuGrade,
+				"narrText"=>parse_template($template->template, $student->stuNickname, $student->stuGender),
+				"narrTerm"=>$template->term,
+				"narrSubject"=>$template->subject,
+				"narrYear"=>$template->year,
+				"recModified" => mysql_timestamp (),
+				"recModifier" => $this->session->userdata ( 'userID' ),
+			);
+			return $this->narrative->insert($values);
+		}
+		/*check get template, check if student is correctly matched*/
+		
 	}
 
 	/**

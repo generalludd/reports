@@ -52,6 +52,7 @@ echo create_button_bar($buttons);
                 		<th>Grades</th>
                 		<th>Description</th>
                 		<th>Status</th>
+                		<th></th>
             		</tr>
         		</thead>
         	<tbody>
@@ -59,12 +60,13 @@ echo create_button_bar($buttons);
 		<? $currentTerm = $template->term . " " . format_schoolyear($template->year); ?>
 
 		<tr>
-    		<td><?=create_button(array("text"=>"Edit","class"=>"button small edit","href"=>site_url("template/edit/$template->kTemplate")));?></td>
+    		<td><?php echo create_button(array("text"=>"Edit","class"=>"button small edit","href"=>site_url("template/edit/$template->kTemplate")));?></td>
     		<td><strong><?=$template->subject;?></strong></td>
     		<td><?=$currentTerm?></td>
     		<td><?=format_grade_range($template->gradeStart, $template->gradeEnd, TRUE);?> </td>
             <td><?=!empty($template->type)?$template->type:"";?></td>
             <td class="status"><?=$template->isActive == 0?"Inactive":"Active";?> </td>
+            <td><?php echo create_button(array("text"=>"Batch Apply","title"=>"Apply templates to a group of students all at once","href"=>site_url("narrative/show_missing?kTeach=$template->kTeach&subject=$template->subject&gradeStart=$template->gradeStart&gradeEnd=$template->gradeEnd&apply_template=$template->kTemplate"), "class"=>"button new"));?></td>
        </tr>
 <? endforeach;?>
 	</tbody>

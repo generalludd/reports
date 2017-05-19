@@ -36,7 +36,7 @@ class Narrative_model extends MY_Model
 				"narrSubject",
 				"includeOverview",
 				"narrGrade",
-				"narrYear"
+				"narrYear",
 		);
 		for($i = 0; $i < count ( $variables ); $i ++) {
 			$myVariable = $variables [$i];
@@ -279,11 +279,15 @@ class Narrative_model extends MY_Model
 	/**
 	 * Setter
 	 */
-	function insert()
+	function insert($values=array())
 	{
+		if(empty($values)){
+			$this->prepare_variables ();
+			$this->db->insert ( 'narrative', $this );
+		}else{
+			$this->db->insert ( 'narrative', $values );
+		}
 
-		$this->prepare_variables ();
-		$this->db->insert ( 'narrative', $this );
 		$kNarrative = $this->db->insert_id ();
 		$recModified = $this->get_value ( $kNarrative, 'recModified' );
 		return array (
