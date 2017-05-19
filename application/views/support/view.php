@@ -74,6 +74,10 @@ if (! $print) {
 	print create_button_bar ( $buttons );
 }
 ?>
+<?php if($entry->strengths):?>
+<h4>Strengths</h4>
+<p><?php echo $entry->strengths; ?></p>
+<?php endif;?>
 <h4>Diagnosis/Description</h4>
 	<p><?=$entry->specialNeed;?></p>
 	<p>
