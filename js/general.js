@@ -64,7 +64,6 @@
 				 url: my_location,
 				 info: my_id
 		 };
-		 console.log(my_id);
 		 $.ajax({
 			 type:"post",
 			 url: my_url,

@@ -633,7 +633,7 @@ class Narrative extends MY_Controller {
 			$data['template'] = $template;
 			$data['target'] = "template/batch_apply";
 			$data ["title"] = sprintf("Batch apply template for %s (%s) %s, %s. Grades %s",$template->subject, $template->type, $template->term, format_schoolyear($template->year), format_grade_range($template->gradeStart, $template->gradeEnd));
-				
+			
 		}else{
 			$data ["target"] = "narrative/show_missing";
 			$data ["title"] = "Showing Missing Narratives for " . $data ["teacher"];
@@ -787,14 +787,17 @@ class Narrative extends MY_Controller {
 	 * create a narrative using an existing template via an ajax call
 	 * 
 	 */
-	function apply_template($kStudent, $kTemplate){
+	function apply_template(){
+		$kStudent = $this->input->get_post("kStudent");
+		$kTemplate = $this->input->get_post("kTemplate");
 		$this->load->model("template_model","template");
 		$this->load->model("student_model","student");
 		$template = $this->template->get($kTemplate);
 		$student = $this->student->get($kStudent);
-		if(!$this->narrative->has_narrative($kStudent, $template->kTeach, $template->subject, $template->term, $template->year)){
+		$has_narrative = $this->narrative_model->has_narrative($kStudent, $template->kTeach, $template->subject, $template->term, $template->year);
+		if(! $has_narrative){
 			$values = array (
-					"kStudent"=>kStudent,
+					"kStudent"=>$kStudent,
 				"kTeach"=>$template->kTeach,
 				"stuGrade"=>$student->stuGrade,
 				"narrText"=>parse_template($template->template, $student->stuNickname, $student->stuGender),
@@ -804,7 +807,7 @@ class Narrative extends MY_Controller {
 				"recModified" => mysql_timestamp (),
 				"recModifier" => $this->session->userdata ( 'userID' ),
 			);
-			return $this->narrative->insert($values);
+			echo json_encode($this->narrative_model->insert($values));
 		}
 		/*check get template, check if student is correctly matched*/
 		
