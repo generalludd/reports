@@ -1,7 +1,8 @@
 <?php
-
 defined ( 'BASEPATH' ) or exit ( 'No direct script access allowed' );
 // student grade chart;
+$this->load->view("student/navigation");
+
 $header = $grades [0];
 $teacher = format_name ( $header->teachFirst, $header->teachLast );
 $year = format_schoolyear ( $header->year );
@@ -13,6 +14,7 @@ $categories = array ();
 $weight_sums = 0;
 $count = 0;
 ?>
+
 <!-- grade/chart -->
 <div class='grade-report report-teacher report-<?=$count;?>'>
 	<div class='report-body'>

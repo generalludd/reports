@@ -32,11 +32,6 @@ $i = 1;
 		</tr>
 			<?php $currentSubject = $benchmark->subject;?>
 	<?php endif;?>
-	<?php //	if(get_value($benchmark, "legend")):?>
-<!-- 		<tr class='benchmark-legend'> -->
-			<!-- <td colspan=2><?php // echo $benchmark->legend;?></td> -->
-<!-- 		</tr> -->
-	<?php //endif;?>
 	<?php	if($benchmark->category!=$currentCategory):?>
 	<?php		$currentCategory=$benchmark->category;?>
 	<tr class="benchmark-row">
@@ -58,7 +53,7 @@ $i = 1;
 			?>
 		 <td class="benchmark-description"><?php echo $benchmark->benchmark?></td>
 		<td><?php echo $benchmark->grade . $mark;?></td>
-<?php  endif;?>
+	<?php  endif;?>
 	<?php endforeach;?>
 	</tr>
 	</table>
