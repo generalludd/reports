@@ -1396,6 +1396,11 @@ th.grade-confirmation {
 	
 }
 
+td.not-assessed {
+	background-color: transparent;
+	color: #efefef;
+}
+
 .report-row .block {
 	flex: 1;
 	margin: .5em;

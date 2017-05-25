@@ -33,16 +33,16 @@ $i = 1;
 			<?php $currentSubject = $benchmark->subject;?>
 	<?php endif;?>
 	<?php	if($benchmark->category!=$currentCategory):?>
-	<?php		$currentCategory=$benchmark->category;?>
-	<tr class="benchmark-row">
-	<td class='benchmark-text' colspan=2>
-				<strong><?php echo $benchmark->category;?></strong>
-			</td>
-			</tr>
-
+		<?php $currentCategory=$benchmark->category;?>
+		<tr class="benchmark-row">
+		<td class='benchmark-text' colspan=2>
+					<strong><?php echo $benchmark->category;?></strong>
+				</td>
+				</tr>
+	
 	<?php endif; ?>
 	 <tr class=benchmark-row>
-	<?php 	$mark="";?>
+	<?php $mark="";?>
 		<?php
 			if (strlen ( $benchmark->comment ) > 0) {
 				$comment = sprintf ( "<sup>%s</sup><span class='footnote'>%s</span>", $i, $benchmark->comment );
@@ -51,7 +51,7 @@ $i = 1;
 				$comments [] = $comment;
 			} // endif;
 			?>
-		 <td class="benchmark-description"><?php echo $benchmark->benchmark?></td>
+		 <td class="benchmark-description"><?php echo $benchmark->benchmark;?></td>
 		<td><?php echo $benchmark->grade . $mark;?></td>
 	<?php  endif;?>
 	<?php endforeach;?>

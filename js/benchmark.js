@@ -31,7 +31,7 @@ $(document)
 					
 				
 					
-					$(".benchmark-grade").live('blur', function(event){
+					$(".benchmark-grade").live('change', function(event){
 						var my_id = $(this).parents("tr").attr("id").split("_");
 						update_benchmark(my_id);
 						
@@ -40,6 +40,17 @@ $(document)
 					$(".benchmark-comment").live('blur',function(event){
 						var my_id = $(this).parents("tr").attr("id").split("_");
 						update_benchmark(my_id);
+					});
+					
+					$(".benchmark-fill-down").live('click',function(event){
+						$(".benchmark-grade").each(function(){
+							if($(this).val()==""){
+							$(this).val("M");
+							var my_id = $(this).parents("tr").attr("id").split("_");
+							update_benchmark(my_id);
+							}
+							
+						});
 					});
 
 			}

@@ -19,6 +19,7 @@ $footnotes = array();
 <div class="benchmark-legend">
 	<?php $this->load->view("benchmark/legend");?>
 	</div>
+	<p><a href="#" class="benchmark-fill-down" title="This will fill all blank grades with an M, but this is in beta testing, so it may still have bugs">Fill all blank entries with "M" (BETA)</a></p>
 <table class="chart list">
 <thead>
 <tr class="benchmark-header">
