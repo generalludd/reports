@@ -794,6 +794,18 @@ class Narrative extends MY_Controller {
 		$this->load->model("student_model","student");
 		$template = $this->template->get($kTemplate);
 		$student = $this->student->get($kStudent);
+		$this->load->model("overview_model","overview");
+		$overview = $this->overview->get_all ( $template->kTeach, array (
+				"subject" => $template->subject,
+				"term" => $template->term,
+				"year" => $template->year,
+				"stuGrade" => $student->stuGrade,
+		) , FALSE);
+		if($overview){
+			$includeOverview = 1;
+		}else{
+			$includeOverview = NULL;
+		}
 		$has_narrative = $this->narrative_model->has_narrative($kStudent, $template->kTeach, $template->subject, $template->term, $template->year);
 		if(! $has_narrative){
 			$values = array (
@@ -804,6 +816,7 @@ class Narrative extends MY_Controller {
 				"narrTerm"=>$template->term,
 				"narrSubject"=>$template->subject,
 				"narrYear"=>$template->year,
+					"includeOverview"=>$includeOverview,
 				"recModified" => mysql_timestamp (),
 				"recModifier" => $this->session->userdata ( 'userID' ),
 			);
