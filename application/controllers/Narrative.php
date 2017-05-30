@@ -53,7 +53,6 @@ class Narrative extends MY_Controller {
 		$this->load->model ( 'subject_model' );
 		$this->load->model ( "overview_model", "overview" );
 		
-		
 		$kStudent = $this->input->get ( 'kStudent' );
 		$kTeach = $this->input->get ( 'kTeach' );
 		$data ['narrSubject'] = $this->input->get ( 'narrSubject' );
@@ -94,14 +93,16 @@ class Narrative extends MY_Controller {
 		}
 		
 		$overview = $this->overview->get_all ( $kTeach, array (
-				"subject" => $data['narrSubject'],
-				"term" => $data ['narrTerm'], 
-				"year" => $data ['narrYear'],
-				"stuGrade" => $student->stuGrade,
-		) , FALSE);
+				"where" => array (
+						"subject" => $data ['narrSubject'],
+						"term" => $data ['narrTerm'],
+						"year" => $data ['narrYear'] 
+				),
+				"stuGrade" => $student->stuGrade 
+		), FALSE );
 		$data ['overview'] = FALSE;
-		if($overview){
-			$data ['overview'] = $overview[0];
+		if ($overview) {
+			$data ['overview'] = $overview [0];
 		}
 		$data ['narrative'] = NULL;
 		$data ['narrText'] = "";
@@ -213,15 +214,17 @@ class Narrative extends MY_Controller {
 			}
 		}
 		$overview = $this->overview->get_all ( $kTeach, array (
-				"subject" => $narrative->narrSubject,
-				"term" => $narrative->narrTerm,
-				"year" => $narrative->narrYear,
-				"stuGrade" => $student->stuGrade,
+				"where" => array (
+						"subject" => $narrative->narrSubject,
+						"term" => $narrative->narrTerm,
+						"year" => $narrative->narrYear 
+				),
+				"stuGrade" => $student->stuGrade 
 		), FALSE );
-		if($overview){
-			$data['overview'] = $overview[0];
-		}else{
-			$data['overview'] = FALSE;
+		if ($overview) {
+			$data ['overview'] = $overview [0];
+		} else {
+			$data ['overview'] = FALSE;
 		}
 		
 		$data ["target"] = "narrative/edit";
@@ -308,7 +311,7 @@ class Narrative extends MY_Controller {
 		// $this->load->model ( 'benchmark_legend_model', 'legend' );
 		$this->load->model ( 'backup_model' );
 		$this->load->model ( 'preference_model', 'preference' );
-		$this->load->model('overview_model','overview');
+		$this->load->model ( 'overview_model', 'overview' );
 		$narrative = $this->narrative_model->get ( $kNarrative, TRUE );
 		$kStudent = $narrative->kStudent;
 		$kTeach = $narrative->kTeach;
@@ -348,13 +351,15 @@ class Narrative extends MY_Controller {
 				$data ['letter_grade'] = calculate_letter_grade ( $letter_grade, $pass_fail );
 			}
 		}
-		if($narrative->includeOverview){
-		$data ['overview'] = $this->overview->get_all ( $kTeach, array (
-				"subject" => $narrative->narrSubject,
-				"term" => $narrative->narrTerm,
-				"year" => $narrative->narrYear,
-				"stuGrade" => $narrative->stuGrade,
-		) , FALSE);
+		if ($narrative->includeOverview) {
+			$data ['overview'] = $this->overview->get_all ( $kTeach, array (
+					"where" => array (
+							"subject" => $narrative->narrSubject,
+							"term" => $narrative->narrTerm,
+							"year" => $narrative->narrYear 
+					),
+					"stuGrade" => $narrative->stuGrade 
+			), FALSE );
 		}
 		$teacher = $this->teacher_model->get ( $kTeach );
 		$studentName = format_name ( $narrative->stuFirst, $narrative->stuLast, $narrative->stuNickname );
@@ -626,19 +631,18 @@ class Narrative extends MY_Controller {
 		}
 		$data ["students"] = $this->student_model->get_students_by_grade ( $data ["gradeStart"], $data ["gradeEnd"], $constraints );
 		$data ["teacher"] = $this->teacher_model->get_name ( $data ["kTeach"] );
-		if($kTemplate = $this->input->get("apply_template")){
-			$this->load->model("template_model","template");
+		if ($kTemplate = $this->input->get ( "apply_template" )) {
+			$this->load->model ( "template_model", "template" );
 			
-			$template = $this->template->get($kTemplate);
-			$data['template'] = $template;
-			$data['target'] = "template/batch_apply";
-			$data ["title"] = sprintf("Batch apply template for %s (%s) %s, %s. Grades %s",$template->subject, $template->type, $template->term, format_schoolyear($template->year), format_grade_range($template->gradeStart, $template->gradeEnd));
-			
-		}else{
+			$template = $this->template->get ( $kTemplate );
+			$data ['template'] = $template;
+			$data ['target'] = "template/batch_apply";
+			$data ["title"] = sprintf ( "Batch apply template for %s (%s) %s, %s. Grades %s", $template->subject, $template->type, $template->term, format_schoolyear ( $template->year ), format_grade_range ( $template->gradeStart, $template->gradeEnd ) );
+		} else {
 			$data ["target"] = "narrative/show_missing";
 			$data ["title"] = "Showing Missing Narratives for " . $data ["teacher"];
 		}
-
+		
 		$this->load->view ( "page/index", $data );
 	}
 
@@ -651,13 +655,13 @@ class Narrative extends MY_Controller {
 		if ($narrYear) {
 			$this->load->model ( "subject_sort_model" );
 			$this->load->model ( "student_model" );
-			$this->load->model("overview_model","overview");
+			$this->load->model ( "overview_model", "overview" );
 			// $this->load->model ( "benchmark_model" );
 			// $this->load->model("preference_model");
 			// $this->load->model ( "benchmark_legend_model", "legend" );
 			
 			$student_obj = $this->student_model->get ( $kStudent, "stuFirst,stuLast,stuNickname,baseGrade,baseYear" );
-			$data['student_obj'] = $student_obj;
+			$data ['student_obj'] = $student_obj;
 			$student = format_name ( $student_obj->stuFirst, $student_obj->stuLast, $student_obj->stuNickname );
 			$data ["stuGrade"] = get_current_grade ( $student_obj->baseGrade, $student_obj->baseYear, $narrYear );
 			if ($narrYear < 2016) { // old attendance model
@@ -686,14 +690,16 @@ class Narrative extends MY_Controller {
 				$kTeach = $narrative->kTeach;
 				
 				$overview = $this->overview->get_all ( $kTeach, array (
-						"subject" => $narrative->narrSubject,
-						"term" => $narrative->narrTerm,
-						"year" => $narrative->narrYear,
-						"stuGrade" => $narrative->stuGrade,
-				) , FALSE);
-				if(!empty($overview) && $narrative->includeOverview){
-				$narrative->overview = $overview[0]->overview;
-				}else{
+						"where" => array (
+								"subject" => $narrative->narrSubject,
+								"term" => $narrative->narrTerm,
+								"year" => $narrative->narrYear 
+						),
+						"stuGrade" => $narrative->stuGrade 
+				), FALSE );
+				if (! empty ( $overview ) && $narrative->includeOverview) {
+					$narrative->overview = $overview [0]->overview;
+				} else {
 					$narrative->overview = FALSE;
 				}
 				
@@ -738,10 +744,9 @@ class Narrative extends MY_Controller {
 						}
 					}
 				}
-				
 			}
 			$data ["narratives"] = $narratives;
-				
+			
 			$data ["student"] = $student;
 			$data ["title"] = "Narrative Report for $student";
 			$this->load->view ( "narrative/print", $data );
@@ -782,48 +787,50 @@ class Narrative extends MY_Controller {
 			$this->load->view ( "page/index", $data );
 		}
 	}
-	
+
 	/**
 	 * create a narrative using an existing template via an ajax call
-	 * 
 	 */
-	function apply_template(){
-		$kStudent = $this->input->get_post("kStudent");
-		$kTemplate = $this->input->get_post("kTemplate");
-		$this->load->model("template_model","template");
-		$this->load->model("student_model","student");
-		$template = $this->template->get($kTemplate);
-		$student = $this->student->get($kStudent);
-		$this->load->model("overview_model","overview");
+	function apply_template()
+	{
+		$kStudent = $this->input->get_post ( "kStudent" );
+		$kTemplate = $this->input->get_post ( "kTemplate" );
+		$this->load->model ( "template_model", "template" );
+		$this->load->model ( "student_model", "student" );
+		$template = $this->template->get ( $kTemplate );
+		$student = $this->student->get ( $kStudent );
+		$this->load->model ( "overview_model", "overview" );
+		//@TODO make a private function for get all overviews. 
 		$overview = $this->overview->get_all ( $template->kTeach, array (
-				"subject" => $template->subject,
-				"term" => $template->term,
-				"year" => $template->year,
-				"stuGrade" => $student->stuGrade,
-		) , FALSE);
-		if($overview){
+				"where" => array (
+						"subject" => $template->subject,
+						"term" => $template->term,
+						"year" => $template->year 
+				),
+				"stuGrade" => $student->stuGrade 
+		), FALSE );
+		if ($overview) {
 			$includeOverview = 1;
-		}else{
+		} else {
 			$includeOverview = NULL;
 		}
-		$has_narrative = $this->narrative_model->has_narrative($kStudent, $template->kTeach, $template->subject, $template->term, $template->year);
-		if(! $has_narrative){
+		$has_narrative = $this->narrative_model->has_narrative ( $kStudent, $template->kTeach, $template->subject, $template->term, $template->year );
+		if (! $has_narrative) {
 			$values = array (
-					"kStudent"=>$kStudent,
-				"kTeach"=>$template->kTeach,
-				"stuGrade"=>$student->stuGrade,
-				"narrText"=>parse_template($template->template, $student->stuNickname, $student->stuGender),
-				"narrTerm"=>$template->term,
-				"narrSubject"=>$template->subject,
-				"narrYear"=>$template->year,
-					"includeOverview"=>$includeOverview,
-				"recModified" => mysql_timestamp (),
-				"recModifier" => $this->session->userdata ( 'userID' ),
+					"kStudent" => $kStudent,
+					"kTeach" => $template->kTeach,
+					"stuGrade" => $student->stuGrade,
+					"narrText" => parse_template ( $template->template, $student->stuNickname, $student->stuGender ),
+					"narrTerm" => $template->term,
+					"narrSubject" => $template->subject,
+					"narrYear" => $template->year,
+					"includeOverview" => $includeOverview,
+					"recModified" => mysql_timestamp (),
+					"recModifier" => $this->session->userdata ( 'userID' ) 
 			);
-			echo json_encode($this->narrative_model->insert($values));
+			echo json_encode ( $this->narrative_model->insert ( $values ) );
 		}
-		/*check get template, check if student is correctly matched*/
-		
+		/* check get template, check if student is correctly matched */
 	}
 
 	/**

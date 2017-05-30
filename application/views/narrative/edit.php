@@ -89,7 +89,7 @@ if(!empty($conditional_buttons)){
 			<?php endif;?>
 		<?php endif;?>
 	</p>
-	<?php if($overview):?>
+	<?php if(!empty($overview)):?>
 		<div class="overview">
 		
 			<?php if(get_value($narrative,"includeOverview", 1) == 1):?>
