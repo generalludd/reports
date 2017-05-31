@@ -29,7 +29,7 @@ class Support extends MY_Controller
 	}
 
 
-	function view()
+	function view($kSupport)
 	{
 		$data["print"] = FALSE;
 		$data["sidebar"] = FALSE;

@@ -41,6 +41,7 @@ $body_classes [] = $this->uri->segment ( 1 );
 <?php  $this->load->view('page/navigation'); ?>
 </nav>
 			<!-- content -->
+			<div id="content-wrapper">
 			<div id="content">
 				<h1 id="page-title"><?php echo $title;?></h1>
 <?php $this->load->view ( $target ); ?>
@@ -48,6 +49,7 @@ $body_classes [] = $this->uri->segment ( 1 );
 			<!-- end content -->
 			<div id="sidebar"></div>
 			<!-- end sidebar -->
+		</div>
 		</div>
 		<div id='search_list'></div>
 		<div id="footer"><?php $this->load->view('page/footer');?>

@@ -475,15 +475,8 @@ legend {
 
 
 #sidebar {
-	position: absolute;
-	font-size: 11px;
-	top: 1%;
-	left: 65%;
-	right: 10%;
-	width: 15%;
-	height: 100%;
-	overflow: auto;
 	display: none;
+	font-size: 12px;
 	padding: 5px;
 	margin-left: 15px;
 	border-style: solid;

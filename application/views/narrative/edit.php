@@ -20,7 +20,7 @@ $conditional_buttons = array();
 $conditional_bar = FALSE;
 //@TODO condense the following 7 lines of code into three/four
 if($hasNeeds){
-	$conditional_buttons[] = array("selection" => "support", "text" => "Show Learning Support", "class" => "button show_support small", "type" => "span", "id" => "need_$hasNeeds->kSupport");
+	$conditional_buttons[] = array("selection" => "support", "text" => "Show Learning Support", "class" => "button sidebar small", "type" => "a", "href" => site_url("support/view/$hasNeeds->kSupport/sidebar"));
 }
 
 if(!empty($conditional_buttons)){
@@ -110,7 +110,7 @@ if(!empty($conditional_buttons)){
 	} ?>
 
 		<textarea id="narrText" name="narrText" class="tinymce"
-			style="width: 99.75%;" rows="19" cols="107">
+		 rows="19" cols="107">
 			<?=get_value($narrative, 'narrText', $narrText);?>
         </textarea>
 	</p>
@@ -127,17 +127,16 @@ $("#include_overview").click(function(){
 		$(this).html("Include Overview").addClass("include_overview").removeClass("remove_overview");
 	}else{
 		 $("#includeOverview").val(1);
-
 	     $(".overview-text").html("");
-		 $(this).html("Remove Overview").removeClass("include_overview").addClass("remove_overview");
+	     $(this).html("Remove Overview").removeClass("include_overview").addClass("remove_overview");
 		 $.ajax({
 				type: "get",
-				url: base_url + "overview/view/" + <?php echo $overview->kOverview; ?> + "?ajax=1",
+				url: base_url + "overview/view/" + <?php echo get_value($overview,"kOverview"); ?> + "?ajax=1",
 				success: function(data){
 					$(".overview-text").html(data);
 				}
-			 });
-		}
+		 });
+	}
 	
 });
 

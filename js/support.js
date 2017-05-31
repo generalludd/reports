@@ -57,18 +57,9 @@ $(document).ready(function() {
 	
 	$('.show_support').live('click', function(event) {
 		// $data=array("kStudent"=>$kStudent,"kTeach"=>$kTeach,"narrTerm"=>$narrTerm,"narrYear"=>$narrYear,"narrSubject"=>$narrSubject);
-		var myStudent = $('#kStudent').val();
-		var myTeacher = $('#kTeach').val();
-		var myTerm = $('#narrTerm').val();
-		var myYear = $('#narrYear').val();
-		var mySubject = $('#narrSubject').val();
 		var myNeed = this.id.split("_")[1];
 		var form_data = {
-				kStudent: myStudent,
-				kTeacher: myTeacher,
-				narrTerm: myTerm,
-				narrYear: myYear,
-				narrSubject: mySubject,
+				
 				kSupport: myNeed,
 				ajax: 1
 		};
@@ -78,8 +69,7 @@ $(document).ready(function() {
 			url: myUrl,
 			data: form_data,
 			success: function(data){
-				showSidebar('Accommodations and Needs',
-						data, '95%', '60%', '35%');
+				showSidebar(data);
 			}
 		});
 		
@@ -178,4 +168,8 @@ function save_continue_support(){
 	});//end ajax
 	$("#ajax").val(0);
 
+}
+
+function show_sidebar(data){
+	$("#content").animate({flex:3},'slow');
 }

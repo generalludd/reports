@@ -88,6 +88,28 @@
 		 });
 	 });
 	 
+	 $(".sidebar").live("click",function(e){
+		 e.preventDefault();
+		 var my_url = $(this).attr("href");
+		 form_data = {
+			ajax: 1
+		 }
+		 $.ajax({
+			 url: my_url,
+			 data: form_data,
+			 type: "get",
+			 success: function(data){
+					$('#content').animate( {
+						flex: 3
+					}, 'fast');
+
+					$('#sidebar').html(data);
+					$('#sidebar').animate({flex: 1},'slow').fadeIn();
+			 }
+		 })
+	 });
+		
+	 
 		$('.delete-item').live('click',
 				function(e){
 			e.preventDefault();
@@ -367,30 +389,18 @@ function showPopup(myTitle,data,popupWidth,x,y){
 
 
 
-function showSidebar(title,data,containerWidth,contentWidth,sidebarWidth){
-	var sidebarLeft=parseInt(contentWidth)+2+"%";
-	//$('#title').html(title);
+function showSidebar(data){
 	$('#content').animate( {
-		width : '65%'
+		flex: 3
 	}, 'fast');
-	var narrTextWidth = $("#narrText_ifr").width();
-	var contentWidth = $("#content").width();
-	var percent = narrTextWidth / contentWidth;
-	if(percent > .7) {
-		$("#narrText_ifr").css({width: '70%'});
-	}
-	$('#sidebar').css({height:'95%'});
+
 	$('#sidebar').html(data);
-	$('#sidebar').animate({width:sidebarWidth,left:sidebarLeft},'normal').fadeIn();
+	$('#sidebar').animate({flex: 1},'slow').fadeIn();
 }
 
 function closeSidebar(){
-	var myWidth=$('#popupSidebar').width();
-	$('#popupSidebar').fadeOut();
-	var mainWidth=$('#popupContainer').width();
-	$('#popupContent').animate({width:'95%'},'normal');
-	$('#popupContainer').animate({width:mainWidth-myWidth},'normal');
-}
+	$("#sidebar").animate({flex:0},'slow').fadeOut();
+	}
 /*
     @function getYear
     @params myTerm string
