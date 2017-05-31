@@ -86,6 +86,7 @@ class Benchmark_model extends MY_Model {
 		$this->db->from ( 'benchmark' );
 		
 		$result = $this->db->get ()->result ();
+		$this->_log();
 		return $result;
 	}
 	
