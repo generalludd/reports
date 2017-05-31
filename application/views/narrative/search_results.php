@@ -1,6 +1,5 @@
 <?php
 ?>
-<h2>Showing Search &amp; Replace Results</h2>
 <fieldset class="search_fieldset"><legend>Search Parameters</legend>
 <ul>
 <li>
