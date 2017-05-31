@@ -105,8 +105,8 @@ class Student_model extends MY_Model
         $this->db->order_by("stuFirst", "ASC");
         $this->db->order_by("stuLast", "ASC");
         $year = get_current_year();
-        $this->db->select("student.*,(baseGrade+$year-baseYear) AS listGrade");
-
+       // $this->db->select("student.*,(baseGrade+$year-baseYear) AS listGrade");
+		$this->db->select("student.*,(baseGrade+$year-baseYear) AS stuGrade");
         $result = $this->db->get("student")->result();
         return $result;
     }
