@@ -39,13 +39,15 @@ if (get_value ( $student, "stuGrade", 0 ) >= 6) {
 			"text" => "Grades",
 			"href" => site_url ( "grade/select_report_card/$kStudent" ) 
 	);
-	
+}
+if (get_value ( $student, "stuGrade", 0 ) >= 5) {	
 	$buttons [] = array (
 			"selection" => "report",
 			"href" => site_url ( "report/get_list/student/$student->kStudent" ),
 			"class" => "button",
 			"text" => sprintf ( "%ss", STUDENT_REPORT ) 
 	);
+
 	$buttons [] = array (
 			"selection" => "report",
 			"href" => site_url ( "report/create/$student->kStudent" ),
