@@ -2,6 +2,7 @@
 $buttons = array();
 if($this->session->userdata("dbRole") == 1 && $kTeach != $this->session->userdata("userID") && $teacher->dbRole == 2){
 	$buttons[] = array("selection" => "narrative", "href" => site_url("narrative/search_teacher_narratives/$kTeach"), "text" => "List Narratives", "class"=>array("button","dialog"),"id"=>"tns_$kTeach");
+	$buttons[] = array("selection"=>"overview","href"=>site_url("overview/search/$kTeach"),"class"=>array("button","dialog"),"text"=>"Subject Overviews","title"=>"View this teacher's subject overviews");
 	$buttons[] = array("selection" => "template/list_templates", "href"=>  site_url("template/list_templates/?kTeach=$kTeach&term=$term&year=$year") , "text" => "Subject Templates" );
 	if($teacher->gradeEnd > 4){
 		$buttons[] = array("href" => site_url("assignment/search/$kTeach"), "text" => "Grades","class"=> array("button","dialog"),"id" =>"sa_$kTeach","title" => "Search for current grade charts");
