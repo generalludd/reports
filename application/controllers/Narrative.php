@@ -507,7 +507,7 @@ class Narrative extends MY_Controller {
 		$data ["rich_text"] = TRUE;
 		$data ["teacher"] = $teacher;
 		$data ["kTeach"] = $kTeach;
-		$data ["title"] = "Showing current narratives for $teacher";
+		$data ["title"] = "Showing current narratives for " . link_teacher($teacher, $kTeach);
 		$data ["target"] = "narrative/teacher_list";
 		if ($this->uri->segment ( 4 ) == "print") {
 			$this->load->view ( "page/print", $data );
@@ -640,7 +640,7 @@ class Narrative extends MY_Controller {
 			$data ["title"] = sprintf ( "Batch apply template for %s (%s) %s, %s. Grades %s", $template->subject, $template->type, $template->term, format_schoolyear ( $template->year ), format_grade_range ( $template->gradeStart, $template->gradeEnd ) );
 		} else {
 			$data ["target"] = "narrative/show_missing";
-			$data ["title"] = "Showing Missing Narratives for " . $data ["teacher"];
+			$data ["title"] = "Showing Missing Narratives for " . link_teacher($data ["teacher"], $data['kTeach']);
 		}
 		
 		$this->load->view ( "page/index", $data );

@@ -168,6 +168,7 @@ class Report extends MY_Controller
 			$this->load->model("teacher_model","teacher");
 			$person = $this->teacher->get($data["report_key"],"teachFirst,teachLast");
 			$name = format_name($person->teachFirst,$person->teachLast);
+			$name = link_teacher($name, $data['report_key']);
 			$preposition = ($data["report_type"]=="teacher"?"by":"to");
 		}
 		$this->load->model("menu_model","menu");
@@ -204,13 +205,13 @@ class Report extends MY_Controller
 				case "teacher":
 					$this->load->model("teacher_model","teacher");
 					$person = $this->teacher->get($key,"teachFirst,teachLast,dbRole,isAdvisor,gradeStart,gradeEnd,kTeach");
-					$title = sprintf("by %s %s", $person->teachFirst,$person->teachLast);
+					$title = sprintf("by %s",link_teacher(format_name($person->teachFirst,$person->teachLast),$key));
 
 					break;
 				case "advisor":
 					$this->load->model("teacher_model","teacher");
 					$person = $this->teacher->get($key,"teachFirst as advisorFirst,teachLast as advisorLast,dbRole,isAdvisor,gradeStart,gradeEnd,kTeach");
-					$title = sprintf("to %s %s",$person->advisorFirst,$person->advisorLast);
+					$title = sprintf("to %s",link_teacher(format_name($person->advisorFirst,$person->advisorLast),$key));
 					break;
 			}
 			$options = array();

@@ -5,14 +5,7 @@ if ($report_type == "student") {
     $this->load->view("student/navigation", array(
             "student" => $person,
     ));
-} else {
-    $this->load->view("teacher/navigation", array(
-            "teacher" => $person,
-            "kTeach" => $person->kTeach,
-            "term" => get_cookie("term"),
-            "year" => get_cookie("year"),
-    ));
-}
+} 
 ?>
 <fieldset class="search_fieldset">
 	<legend>Search Parameters</legend>
@@ -75,7 +68,7 @@ print create_button_bar(array(array("text"=>"Refine Search","href"=>site_url("re
     $current_student = "";
 
     foreach ($reports as $report) {
-        $teacher = format_name($report->teachFirst, $report->teachLast);
+        $teacher = link_teacher(format_name($report->teachFirst, $report->teachLast),$report->kTeach);
         if ($type == "advisor" || $type == "teacher") {
             $student = format_name($report->stuFirst, $report->stuLast, $report->stuNickname);
 

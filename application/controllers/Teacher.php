@@ -19,14 +19,14 @@ class Teacher extends MY_Controller {
 	 */
 	function index()
 	{
-		$data ["target"] = "teacher/list";
-		$data ["options"] = array ();
+		$data ['target'] = "teacher/list";
+		$data ['options'] = array ();
 		if ($this->input->get_post ( "showInactive" )) {
-			$data ["options"] ["showInactive"] = TRUE;
+			$data ['options'] ['showInactive'] = TRUE;
 		}
 		
 		if ($this->input->get_post ( "showAdmin" )) {
-			$data ["options"] ["showAdmin"] = TRUE;
+			$data ['options'] ['showAdmin'] = TRUE;
 		}
 		
 		$roles = $this->input->get_post ( "role" );
@@ -37,28 +37,28 @@ class Teacher extends MY_Controller {
 			);
 		}
 		foreach ( $roles as $role ) {
-			$data ["roles"] [] = array (
+			$data ['roles'] [] = array (
 					"value" => $role,
 					"label" => $this->menu_model->get_label ( "dbRole", $role ) 
 			);
 		}
-		$data ["options"] ["roles"] = $roles;
+		$data ['options'] ['roles'] = $roles;
 		/*
-		 * $data["options"]["gradeRange"]["gradeStart"] = -1;
-		 * $data["options"]["gradeRange"]["gradeEnd"] = -1;
+		 * $data['options']['gradeRange']['gradeStart'] = -1;
+		 * $data['options']['gradeRange']['gradeEnd'] = -1;
 		 * if ($this->input->get("gradeStart") && $this->input->get("gradeEnd")) {
 		 * $gradeStart = $this->input->get("gradeStart");
 		 * $gradeEnd = $this->input->get("gradeEnd");
-		 * $data["options"]["gradeRange"]["gradeStart"] = $gradeStart;
-		 * $data["options"]["gradeRange"]["gradeEnd"] = $gradeEnd;
+		 * $data['options']['gradeRange']['gradeStart'] = $gradeStart;
+		 * $data['options']['gradeRange']['gradeEnd'] = $gradeEnd;
 		 * bake_cookie("gradeStart", $gradeStart);
 		 * bake_cookie("gradeEnd", $gradeEnd);
 		 * }
 		 */
 		
-		$data ["teachers"] = $this->teacher_model->get_all ( $data ["options"] );
-		$data ["options"] ["roles"] = $data ["roles"];
-		$data ["title"] = "List of Teachers";
+		$data ['teachers'] = $this->teacher_model->get_all ( $data ['options'] );
+		$data ['options'] ['roles'] = $data ['roles'];
+		$data ['title'] = "List of Teachers";
 		$this->load->view ( "page/index", $data );
 	}
 
@@ -72,34 +72,34 @@ class Teacher extends MY_Controller {
 	function create()
 	{
 		if ($this->session->userdata ( "dbRole" ) == 1) {
-			$data ["dbRole"] = 2;
-			$data ["action"] = "insert";
-			$data ["target"] = "teacher/edit";
-			$data ["title"] = "Insert a New Teacher";
-			$data ["subjects"] = $this->subject_model->get_all ();
+			$data ['dbRole'] = 2;
+			$data ['action'] = "insert";
+			$data ['target'] = "teacher/edit";
+			$data ['title'] = "Insert a New Teacher";
+			$data ['subjects'] = $this->subject_model->get_all ();
 			$dbRoles = $this->menu_model->get_pairs ( "dbRole" );
-			$data ["dbRoles"] = get_keyed_pairs ( $dbRoles, array (
+			$data ['dbRoles'] = get_keyed_pairs ( $dbRoles, array (
 					"value",
 					"label" 
 			) );
 			$userStatus = $this->menu_model->get_pairs ( "userStatus" );
-			$data ["userStatus"] = get_keyed_pairs ( $userStatus, array (
+			$data ['userStatus'] = get_keyed_pairs ( $userStatus, array (
 					"value",
 					"label" 
 			) );
 			$grades = $this->menu_model->get_pairs ( "grade" );
-			$data ["grades"] = get_keyed_pairs ( $grades, array (
+			$data ['grades'] = get_keyed_pairs ( $grades, array (
 					"value",
 					"label" 
 			) );
 			$classrooms = $this->menu_model->get_pairs ( "classroom" );
-			$data ["classrooms"] = get_keyed_pairs ( $classrooms, array (
+			$data ['classrooms'] = get_keyed_pairs ( $classrooms, array (
 					"value",
 					"label" 
 			) );
-			$data ["teacher"] = NULL;
+			$data ['teacher'] = NULL;
 			if ($this->input->get_post ( "ajax" )) {
-				$this->load->view ( $data ["target"], $data );
+				$this->load->view ( $data ['target'], $data );
 			} else {
 				$this->load->view ( "page/index", $data );
 			}
@@ -117,23 +117,23 @@ class Teacher extends MY_Controller {
 			$kTeach = $this->uri->segment ( 3 );
 			$teacher = $this->teacher_model->get ( $kTeach );
 			if (! empty ( $teacher )) {
-				$data ["year"] = get_current_year ();
-				$data ["term"] = get_current_term ();
-				$data ["kTeach"] = $kTeach;
-				$data ["teacher"] = $teacher;
-				$data ["subjects"] = $this->subject_model->get_for_teacher ( $kTeach );
+				$data ['year'] = get_current_year ();
+				$data ['term'] = get_current_term ();
+				$data ['kTeach'] = $kTeach;
+				$data ['teacher'] = $teacher;
+				$data ['subjects'] = $this->subject_model->get_for_teacher ( $kTeach );
 				$classrooms = $this->menu_model->get_pairs ( "classroom" );
-				$data ["classrooms"] = get_keyed_pairs ( $classrooms, array (
+				$data ['classrooms'] = get_keyed_pairs ( $classrooms, array (
 						"value",
 						"label" 
 				) );
 				$grades = $this->menu_model->get_pairs ( "grade" );
-				$data ["grades"] = get_keyed_pairs ( $grades, array (
+				$data ['grades'] = get_keyed_pairs ( $grades, array (
 						"value",
 						"label" 
 				) );
-				$data ["target"] = "teacher/view";
-				$data ["title"] = "Viewing Information for $teacher->teachFirst $teacher->teachLast";
+				$data ['target'] = "teacher/view";
+				$data ['title'] = "Viewing Information for $teacher->teachFirst $teacher->teachLast";
 				$this->load->view ( "page/index", $data );
 			} else {
 				$this->session->set_flashdata ( "warning", "No such user was found!" );
@@ -154,35 +154,35 @@ class Teacher extends MY_Controller {
 		$kTeach = $this->input->get_post ( "kTeach" );
 		if ($this->session->userdata ( "userID" ) == $kTeach || $this->session->userdata ( "dbRole" ) == 1) {
 			$teacher = $this->teacher_model->get ( $kTeach );
-			$data ["dbRole"] = $this->session->userdata ( "dbRole" );
-			$data ["userID"] = $this->session->userdata ( "userID" );
-			$data ["teacher"] = $teacher;
-			$data ["action"] = "update";
-			$data ["subjects"] = $this->subject_model->get_for_teacher ( $kTeach );
+			$data ['dbRole'] = $this->session->userdata ( "dbRole" );
+			$data ['userID'] = $this->session->userdata ( "userID" );
+			$data ['teacher'] = $teacher;
+			$data ['action'] = "update";
+			$data ['subjects'] = $this->subject_model->get_for_teacher ( $kTeach );
 			$dbRoles = $this->menu_model->get_pairs ( "dbRole" );
-			$data ["dbRoles"] = get_keyed_pairs ( $dbRoles, array (
+			$data ['dbRoles'] = get_keyed_pairs ( $dbRoles, array (
 					"value",
 					"label" 
 			) );
 			$userStatus = $this->menu_model->get_pairs ( "userStatus" );
-			$data ["userStatus"] = get_keyed_pairs ( $userStatus, array (
+			$data ['userStatus'] = get_keyed_pairs ( $userStatus, array (
 					"value",
 					"label" 
 			) );
 			$grades = $this->menu_model->get_pairs ( "grade" );
-			$data ["grades"] = get_keyed_pairs ( $grades, array (
+			$data ['grades'] = get_keyed_pairs ( $grades, array (
 					"value",
 					"label" 
 			) );
 			$classrooms = $this->menu_model->get_pairs ( "classroom" );
-			$data ["classrooms"] = get_keyed_pairs ( $classrooms, array (
+			$data ['classrooms'] = get_keyed_pairs ( $classrooms, array (
 					"value",
 					"label" 
 			) );
-			$data ["target"] = "teacher/edit";
-			$data ["title"] = "Editing $teacher->teachFirst $teacher->teachLast";
+			$data ['target'] = "teacher/edit";
+			$data ['title'] = "Editing $teacher->teachFirst $teacher->teachLast";
 			if ($this->input->get_post ( "ajax" )) {
-				$this->load->view ( $data ["target"], $data );
+				$this->load->view ( $data ['target'], $data );
 			} else {
 				$this->load->view ( 'page/index', $data );
 			}
@@ -251,7 +251,7 @@ class Teacher extends MY_Controller {
 	{
 		$grade_list = $this->menu_model->get_pairs ( "grade" );
 		/*
-		 * $data["grades"] = get_keyed_pairs($grade_list, array(
+		 * $data['grades'] = get_keyed_pairs($grade_list, array(
 		 * "value",
 		 * "label"
 		 * ),TRUE);
@@ -305,14 +305,14 @@ class Teacher extends MY_Controller {
 	 */
 	function add_subject()
 	{
-		$data ["kTeach"] = $this->input->get_post ( "kTeach" );
-		$data ["gradeStart"] = $this->input->get_post ( "gradeStart" );
-		$data ["gradeEnd"] = $this->input->get_post ( "gradeEnd" );
+		$data ['kTeach'] = $this->input->get_post ( "kTeach" );
+		$data ['gradeStart'] = $this->input->get_post ( "gradeStart" );
+		$data ['gradeEnd'] = $this->input->get_post ( "gradeEnd" );
 		
-		$data ["subjects"] = $this->subject_model->get_missing ( $data ["kTeach"], $data );
+		$data ['subjects'] = $this->subject_model->get_missing ( $data ['kTeach'], $data );
 		
 		$grades = $this->menu_model->get_pairs ( "grade" );
-		$data ["grades"] = get_keyed_pairs ( $grades, array (
+		$data ['grades'] = get_keyed_pairs ( $grades, array (
 				"value",
 				"label" 
 		) );

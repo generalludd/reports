@@ -181,7 +181,7 @@ class Overview extends MY_Controller {
 			$data ["kTeach"] = $kTeach;
 			$data ["teacher"] = $this->teacher_model->get_name ( $kTeach );
 			$data ["target"] = "overview/list";
-			$data ["title"] = "Listing Subject Overviews for " . $data ["teacher"];
+			$data ["title"] = "Listing Subject Overviews for " . link_teacher($data ["teacher"], $kTeach);
 			$data ["options"] = $options;
 			$this->load->view ( "page/index", $data );
 		}

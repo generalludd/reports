@@ -19,7 +19,9 @@ class Benchmark extends MY_Controller {
 	{
 		$this->search ();
 	}
-
+/**
+ * @TODO make kTeach a uri segment
+ */
 	function search()
 	{
 		$kTeach = $this->session->userdata ( "userID" );

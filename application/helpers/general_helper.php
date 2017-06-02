@@ -594,6 +594,13 @@ function calculate_letter_grade($points, $pass_fail = FALSE)
 	}
 	return $output;
 }
+/**
+ * format a teacher as a link to their profile page
+ */
+function link_teacher($teacher, $kTeach){
+	$output = sprintf("<a href='%s' title='view record for %s'>%s</a>",site_url("teacher/view/$kTeach"), $teacher, $teacher);
+	return $output;
+}
 
 function bake_cookie($name, $value)
 {

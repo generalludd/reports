@@ -115,7 +115,7 @@ class Assignment extends MY_Controller {
 			// print each student report separated with page breaks.
 		} else {
 			$data ['target'] = 'assignment/chart';
-			$data ['title'] = sprintf('%s Grade Chart for %s, %s, %s by %s',$subject, $term, format_schoolyear($year), format_grade_range($gradeStart, $gradeEnd, TRUE), format_name($teacher->teachFirst, $teacher->teachLast));
+			$data ['title'] = sprintf('%s Grade Chart for %s, %s, %s by %s',$subject, $term, format_schoolyear($year), format_grade_range($gradeStart, $gradeEnd, TRUE), link_teacher(format_name($teacher->teachFirst, $teacher->teachLast),$teacher->kTeach));
 			$this->load->view ( 'page/index', $data );
 		}
 	}

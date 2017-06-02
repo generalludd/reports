@@ -101,7 +101,7 @@ class Template extends MY_Controller
 		$data["kTeach"] = $kTeach;
 		$data["teacher"] = $this->teacher_model->get_name($kTeach);
 		$data["target"] = "template/list";
-		$data["title"] = "Listing Subject Templates for " . $data["teacher"];
+		$data["title"] = "Listing Subject Templates for " . link_teacher($data["teacher"],$kTeach);
 		if($include_inactive){
 			$options["Include Inactive Templates"] = "Yes";
 		}
