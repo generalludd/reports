@@ -16,9 +16,9 @@ class Auth extends CI_Controller
 	 */
 	function index($username = NULL, $errors = NULL)
 	{
-		$data["errors"] = $errors;
-		$data["username"] = $username;
-		$data["target"] = "auth/login";
+		$data['errors'] = $errors;
+		$data['username'] = $username;
+		$data['target'] = "auth/login";
 		$this->load->view("auth/index", $data);
 
 	}
@@ -42,9 +42,9 @@ class Auth extends CI_Controller
 			if($result){
 				$this->auth_model->log($result->kTeach, "login");
 				//required session items for authenticated session
-				$data["username"] = $username;
-				$data["dbRole"] = $result->dbRole;
-				$data["userID"] = $result->kTeach;
+				$data['username'] = $username;
+				$data['dbRole'] = $result->dbRole;
+				$data['userID'] = $result->kTeach;
 				
 				//useful cookies for enhanced user experience
 				bake_cookie("gradeStart", $result->gradeStart);
@@ -64,7 +64,7 @@ class Auth extends CI_Controller
 				if($result->isAdvisor == 1){
 					$this->load->model("student_report_model","report");
 					$unread_reports =  $this->report->get_count($result->kTeach);
-					$data["unread_reports"] = $unread_reports;
+					$data['unread_reports'] = $unread_reports;
 					bake_cookie("unread_reports", $unread_reports);
 				}
 				$this->session->set_userdata($data);
@@ -143,8 +143,8 @@ class Auth extends CI_Controller
 	 */
 	function start_reset($errors = NULL)
 	{
-		$data["errors"] = $errors;
-		$data["target"] = "auth/request_reset";
+		$data['errors'] = $errors;
+		$data['target'] = "auth/request_reset";
 		$this->load->view("auth/index", $data);
 	}
 
@@ -178,11 +178,11 @@ class Auth extends CI_Controller
 	 */
 	function show_reset($errors = NULL)
 	{
-		$data["kTeach"] = $this->uri->segment(3);
-		$data["resetHash"] = $this->uri->segment(4);
-		$data["errors"] = array($errors);
-		if($data["kTeach"] != "" && $data["resetHash"] != ""){
-			$data["target"] = "auth/reset_password";
+		$data['kTeach'] = $this->uri->segment(3);
+		$data['resetHash'] = $this->uri->segment(4);
+		$data['errors'] = array($errors);
+		if($data['kTeach'] != "" && $data['resetHash'] != ""){
+			$data ['target'] = "auth/reset_password";
 			$this->load->view("auth/index", $data);
 		}else{
 			$this->logout();

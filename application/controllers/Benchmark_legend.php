@@ -47,9 +47,9 @@ class benchmark_legend extends MY_Controller {
 	{
 		$legend = $this->legend->get ( $kLegend );
 		$this->load->model ( "teacher_model" );
-		$data ["legend"] = $legend;
-		$data ["title"] = "Benchmark Legend";
-		$data ["target"] = "benchmark_legend/view";
+		$data ['legend'] = $legend;
+		$data ['title'] = "Benchmark Legend";
+		$data ['target'] = "benchmark_legend/view";
 		$this->load->view ( "page/index", $data );
 	}
  */
@@ -59,17 +59,17 @@ class benchmark_legend extends MY_Controller {
 	function edit($kLegend)
 	{
 		$legend = $this->legend->get ( $kLegend );
-		$data ["legend"] = $legend;
+		$data ['legend'] = $legend;
 		$subjects = $this->subject_model->get_for_teacher ( $this->session->userdata ( "userID" ) );
 		
-		$data ["subjects"] = get_keyed_pairs ( $subjects, array (
+		$data ['subjects'] = get_keyed_pairs ( $subjects, array (
 				"subject",
 				"subject" 
 		), FALSE );
-		$data ["rich_text"] = TRUE;
-		$data ["action"] = "update";
-		$data ["target"] = "benchmark_legend/edit";
-		$data ["title"] = "Editing Benchmark Legend";
+		$data ['rich_text'] = TRUE;
+		$data ['action'] = "update";
+		$data ['target'] = "benchmark_legend/edit";
+		$data ['title'] = "Editing Benchmark Legend";
 		$this->load->view ( "page/index", $data );
 	}
 
@@ -79,18 +79,18 @@ class benchmark_legend extends MY_Controller {
 	function create()
 	{
 		$kTeach = $this->session->userdata ( "userID" );
-		$data ["legend"] = ( object ) array (
+		$data ['legend'] = ( object ) array (
 				"kTeach" => $kTeach 
 		);
 		$subjects = $this->subject_model->get_for_teacher ( $kTeach );
-		$data ["subjects"] = get_keyed_pairs ( $subjects, array (
+		$data ['subjects'] = get_keyed_pairs ( $subjects, array (
 				"subject",
 				"subject" 
 		), FALSE );
-		$data ["rich_text"] = TRUE;
-		$data ["action"] = "insert";
-		$data ["target"] = "benchmark_legend/edit";
-		$data ["title"] = "Create a New Legend";
+		$data ['rich_text'] = TRUE;
+		$data ['action'] = "insert";
+		$data ['target'] = "benchmark_legend/edit";
+		$data ['title'] = "Create a New Legend";
 		$this->load->view ( "page/index", $data );
 	}
 
@@ -138,11 +138,11 @@ class benchmark_legend extends MY_Controller {
 				bake_cookie ( "benchmark_" . $myVariable, $params [$myVariable] );
 			}
 		}
-		$data ["params"] = $params;
-		$data ["legends"] = $this->legend->search ( $params );
-		$data ["target"] = "benchmark_legend/list";
-		$data ["title"] = "Benchmark Legend List";
-		$data ["kTeach"] = $this->session->userdata ( "userID" );
+		$data ['params'] = $params;
+		$data ['legends'] = $this->legend->search ( $params );
+		$data ['target'] = "benchmark_legend/list";
+		$data ['title'] = "Benchmark Legend List";
+		$data ['kTeach'] = $this->session->userdata ( "userID" );
 		$this->load->view ( "page/index", $data );
 	}
 
@@ -155,21 +155,21 @@ class benchmark_legend extends MY_Controller {
 		$this->load->model ( "teacher_model" );
 		$this->load->model ( "menu_model" );
 		$kTeach = $this->session->userdata ( "userID" );
-		$data ["kTeach"] = $kTeach;
+		$data ['kTeach'] = $kTeach;
 		$grades = $this->menu_model->get_pairs ( "grade" );
-		$data ["grade_list"] = get_keyed_pairs ( $grades, array (
+		$data ['grade_list'] = get_keyed_pairs ( $grades, array (
 				"value",
 				"label" 
 		) );
-		$data ["years"] = get_year_list ( TRUE );
+		$data ['years'] = get_year_list ( TRUE );
 		$subjects = $this->subject_model->get_for_teacher ( $kTeach );
-		$data ["subjects"] = get_keyed_pairs ( $subjects, array (
+		$data ['subjects'] = get_keyed_pairs ( $subjects, array (
 				"subject",
 				"subject" 
 		), TRUE );
 		if (! get_cookie ( "benchmark_gradeStart" ) || ! get_cookie ( "benchmark_gradeEnd" )) {
 			
-			$data ["grades"] = $this->teacher_model->get ( $kTeach, array (
+			$data ['grades'] = $this->teacher_model->get ( $kTeach, array (
 					"gradeStart",
 					"gradeEnd" 
 			) );
@@ -180,10 +180,10 @@ class benchmark_legend extends MY_Controller {
 			);
 			$data ['grades'] = $grades;
 		}
-		$data ["title"] = "Search Benchmarks";
-		$data ["target"] = "benchmark_legend/search";
+		$data ['title'] = "Search Benchmarks";
+		$data ['target'] = "benchmark_legend/search";
 		if ($this->input->get ( "ajax" )) {
-			$this->load->view ( $data ["target"], $data );
+			$this->load->view ( $data ['target'], $data );
 		} else {
 			$this->load->view ( "page/index", $data );
 		}

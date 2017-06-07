@@ -342,6 +342,8 @@ a, .button {
 	border: none;
 	padding: .25em;
 	display: inline-block;
+	width: 1rem;
+	height: 1rem;
 }
 
 .image_button {

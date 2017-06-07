@@ -22,9 +22,9 @@ class Menu extends MY_Controller {
 	 */
 	function show()
 	{
-		$data["categories"] = $this->menu->get_all();
-		$data["target"] = "menu/list";
-		$data["title"] = "Edit Menu Items";
+		$data['categories'] = $this->menu->get_all();
+		$data['target'] = "menu/list";
+		$data['title'] = "Edit Menu Items";
 		$this->load->view("page/index",$data);
 
 	}
@@ -37,12 +37,12 @@ class Menu extends MY_Controller {
 	{
 		$kMenu = $this->input->get("kMenu");
 		if($this->session->userdata("userID") == ROOT_USER){
-			$data["menu_item"] = $this->menu->get($kMenu);
-			$data["target"] = "menu/edit";
-			$data["action"] = "update";
-			$data["title"] = "Edit Menu Item";
+			$data['menu_item'] = $this->menu->get($kMenu);
+			$data['target'] = "menu/edit";
+			$data['action'] = "update";
+			$data['title'] = "Edit Menu Item";
 			if($this->input->get("ajax")){
-				$this->load->view($data["target"],$data);
+				$this->load->view($data['target'],$data);
 			}else{
 				$this->load->view("page/index",$data);
 			}
@@ -64,12 +64,12 @@ class Menu extends MY_Controller {
 	 */
 	function create()
 	{
-		$data["action"] = "insert";
-		$data["target"] = "menu/edit";
-		$data["title"] = "Insert Menu Item";
-		$data["menu_item"] = NULL;
+		$data['action'] = "insert";
+		$data['target'] = "menu/edit";
+		$data['title'] = "Insert Menu Item";
+		$data['menu_item'] = NULL;
 		$categories = $this->menu->get_categories();
-		$data["categories"] = get_keyed_pairs($categories, array("key","value"),NULL,TRUE);
+		$data['categories'] = get_keyed_pairs($categories, array("key","value"),NULL,TRUE);
 		$this->load->view("menu/edit",$data);
 
 	}

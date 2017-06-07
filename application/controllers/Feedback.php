@@ -17,17 +17,17 @@ class Feedback extends My_Controller {
 	{
 		$path = $this->input->get_post("path");
 		$segments = explode("/", $path);
-		$data["subject"] = "";
-		$data["action"] = "";
-		$data["feedback"] = "";
-		$data["urgency"] = "";
+		$data['subject'] = "";
+		$data['action'] = "";
+		$data['feedback'] = "";
+		$data['urgency'] = "";
 
-		$data["subject"] = $path;//implode(",", $segments);
-		if(!$data["subject"]){
-			$data["subject"] = "General";
+		$data['subject'] = $path;//implode(",", $segments);
+		if(!$data['subject']){
+			$data['subject'] = "General";
 		}
-		$data["target"] = "feedback/edit";
-		$this->load->view($data["target"],$data);
+		$data['target'] = "feedback/edit";
+		$this->load->view($data['target'],$data);
 
 	}
 

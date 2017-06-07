@@ -19,16 +19,16 @@ class Narrative extends MY_Controller {
 	function select_type()
 	{
 		$this->load->model ( "subject_model" );
-		$data ["kStudent"] = $this->input->get ( "kStudent" );
-		$data ["kTeach"] = $this->session->userdata ( "userID" );
+		$data ['kStudent'] = $this->input->get ( "kStudent" );
+		$data ['kTeach'] = $this->session->userdata ( "userID" );
 		$currentTerm = get_current_term ();
-		$data ["term_menu"] = get_term_menu ( "term", $currentTerm );
-		$data ["currentYear"] = get_current_year ();
-		$data ["year_list"] = get_year_list ();
-		$data ["title"] = "Select Narrative Type";
-		$data ["target"] = "narrative/select_type";
-		$subject_list = $this->subject_model->get_for_teacher ( $data ["kTeach"] );
-		$data ["subjects"] = get_keyed_pairs ( $subject_list, array (
+		$data ['term_menu'] = get_term_menu ( "term", $currentTerm );
+		$data ['currentYear'] = get_current_year ();
+		$data ['year_list'] = get_year_list ();
+		$data ['title'] = "Select Narrative Type";
+		$data ['target'] = "narrative/select_type";
+		$subject_list = $this->subject_model->get_for_teacher ( $data ['kTeach'] );
+		$data ['subjects'] = get_keyed_pairs ( $subject_list, array (
 				"subject",
 				"subject" 
 		) );
@@ -80,8 +80,8 @@ class Narrative extends MY_Controller {
 		if ($submits_report_card == "yes") {
 			$this->load->model ( "assignment_model", "assignment" );
 			$this->load->helper ( "grade" );
-			$grade_options ["from"] = "grade";
-			$grade_options ["join"] = "assignment";
+			$grade_options ['from'] = "grade";
+			$grade_options ['join'] = "assignment";
 			$grade_options ['subject'] = $data ['narrSubject'];
 			$this->load->model ( "grade_preference_model", "grade_preferences" );
 			$pass_fail = $this->grade_preferences->get_all ( $kStudent, array (
@@ -119,7 +119,7 @@ class Narrative extends MY_Controller {
 		}
 		
 		// check to see if the student has special needs
-		$data ["hasNeeds"] = $this->support_model->get_current ( $kStudent, "kSupport" );
+		$data ['hasNeeds'] = $this->support_model->get_current ( $kStudent, "kSupport" );
 		$data ['target'] = 'narrative/edit';
 		$data ['title'] = "Add a Narrative for $student->stuFirst $student->stuLast";
 		$this->load->view ( 'page/index', $data );
@@ -164,25 +164,25 @@ class Narrative extends MY_Controller {
 		$kStudent = $narrative->kStudent;
 		$kTeach = $narrative->kTeach;
 		
-		$data ["narrative"] = $narrative;
+		$data ['narrative'] = $narrative;
 		$student = $this->student_model->get ( $kStudent );
-		$data ["student"] = $student;
+		$data ['student'] = $student;
 		$subjects = $this->subject_model->get_for_teacher ( $kTeach );
-		$data ["subjects"] = get_keyed_pairs ( $subjects, array (
+		$data ['subjects'] = get_keyed_pairs ( $subjects, array (
 				"subject",
 				"subject" 
 		) );
 		$teacher = $this->teacher_model->get ( $kTeach );
-		$data ["teacher"] = $teacher;
+		$data ['teacher'] = $teacher;
 		$teachers = $this->teacher_model->get_teacher_pairs ();
-		$data ["teacherPairs"] = get_keyed_pairs ( $teachers, array (
+		$data ['teacherPairs'] = get_keyed_pairs ( $teachers, array (
 				"kTeach",
 				"teacher" 
 		) );
-		$data ["rich_text"] = TRUE;
-		$data ["narrText"] = "";
+		$data ['rich_text'] = TRUE;
+		$data ['narrText'] = "";
 		$studentName = format_name ( $student->stuFirst, $student->stuLast, $student->stuNickname );
-		$data ["hasNeeds"] = $this->support_model->get_current ( $kStudent, "kSupport" );
+		$data ['hasNeeds'] = $this->support_model->get_current ( $kStudent, "kSupport" );
 		
 		// Get the value of the default_grade preference.
 		$data ['default_grade'] = $this->input->cookie ( "default_grade" );
@@ -197,8 +197,8 @@ class Narrative extends MY_Controller {
 		if ($submits_report_card == "yes") {
 			$this->load->model ( "assignment_model", "assignment" );
 			$this->load->helper ( "grade" );
-			$grade_options ["from"] = "grade";
-			$grade_options ["join"] = "assignment";
+			$grade_options ['from'] = "grade";
+			$grade_options ['join'] = "assignment";
 			$grade_options ['subject'] = $narrative->narrSubject;
 			$grades = $this->assignment->get_for_student ( $kStudent, $narrative->narrTerm, $narrative->narrYear, $grade_options );
 			// if grades have been entered then include that grade, otherwise
@@ -227,11 +227,11 @@ class Narrative extends MY_Controller {
 			$data ['overview'] = FALSE;
 		}
 		
-		$data ["target"] = "narrative/edit";
-		$data ["action"] = "update";
-		$data ["title"] = "Editing Narrative Report for $studentName for $narrative->narrSubject";
-		$data ["student"] = $student;
-		$data ["studentName"] = $studentName;
+		$data ['target'] = "narrative/edit";
+		$data ['action'] = "update";
+		$data ['title'] = "Editing Narrative Report for $studentName for $narrative->narrSubject";
+		$data ['student'] = $student;
+		$data ['studentName'] = $studentName;
 		$this->load->view ( "page/index", $data );
 	}
 
@@ -244,7 +244,7 @@ class Narrative extends MY_Controller {
 		// @TODO check with kTeach against user ID or allow only editor/admin
 		// user role
 		$kNarrative = $this->input->get_post ( "kNarrative" );
-		$data ["narrative"] = $this->narrative_model->get ( $kNarrative, FALSE, "kNarrative,narrText,kTeach" );
+		$data ['narrative'] = $this->narrative_model->get ( $kNarrative, FALSE, "kNarrative,narrText,kTeach" );
 		$this->load->view ( "narrative/edit_inline", $data );
 	}
 
@@ -325,7 +325,7 @@ class Narrative extends MY_Controller {
 		// "term" => $narrative->narrTerm,
 		// "year" => $narrative->narrYear
 		// ) );
-		// $data ["benchmarks"] = $this->benchmark_model->get_for_student ( $kStudent, $narrative->narrSubject, $narrative->stuGrade, $narrative->narrTerm, $narrative->narrYear );
+		// $data ['benchmarks'] = $this->benchmark_model->get_for_student ( $kStudent, $narrative->narrSubject, $narrative->stuGrade, $narrative->narrTerm, $narrative->narrYear );
 		// }
 		// determine if grades are manually entered or calculated from grade
 		// report cards.
@@ -337,8 +337,8 @@ class Narrative extends MY_Controller {
 		if ($submits_report_card == "yes") {
 			$this->load->model ( "assignment_model", "assignment" );
 			$this->load->helper ( "grade" );
-			$grade_options ["from"] = "grade";
-			$grade_options ["join"] = "assignment";
+			$grade_options ['from'] = "grade";
+			$grade_options ['join'] = "assignment";
 			$grade_options ['subject'] = $narrative->narrSubject;
 			$this->load->model ( "grade_preference_model", "grade_preferences" );
 			$pass_fail = $this->grade_preferences->get_all ( $kStudent, array (
@@ -365,7 +365,7 @@ class Narrative extends MY_Controller {
 		$studentName = format_name ( $narrative->stuFirst, $narrative->stuLast, $narrative->stuNickname );
 		$data ['target'] = "narrative/view";
 		$data ['title'] = "Viewing Narrative Report for $studentName for $narrative->narrSubject";
-		$data ["backups"] = $this->backup_model->get_all ( $kNarrative );
+		$data ['backups'] = $this->backup_model->get_all ( $kNarrative );
 		$data ['studentName'] = $studentName;
 		$data ['recModifier'] = $this->teacher_model->get ( $narrative->recModifier, 'teachFirst,teachLast' );
 		$data ['teacher'] = format_name ( $teacher->teachFirst, $teacher->teachLast );
@@ -396,16 +396,16 @@ class Narrative extends MY_Controller {
 		$this->load->model ( "subject_sort_model" );
 		$this->load->model ( "attendance_model", "attendance" );
 		
-		$data ["defaultYear"] = get_current_year ();
-		$data ["defaultTerm"] = get_current_term ();
+		$data ['defaultYear'] = get_current_year ();
+		$data ['defaultTerm'] = get_current_term ();
 		
 		$student = $this->student_model->get ( $kStudent );
 		$studentName = format_name ( $student->stuFirst, $student->stuLast, $student->stuNickname );
-		$data ["studentName"] = $studentName;
-		$data ["student"] = $student;
-		$data ["target"] = "narrative/student/list_envelope";
-		$data ["action"] = "add";
-		$data ["title"] = "List of Narratives for $studentName";
+		$data ['studentName'] = $studentName;
+		$data ['student'] = $student;
+		$data ['target'] = "narrative/student/list_envelope";
+		$data ['action'] = "add";
+		$data ['title'] = "List of Narratives for $studentName";
 		if (is_numeric ( $this->uri->segment ( 4 ) )) {
 			$narrYear = $this->uri->segment ( 4 );
 		}
@@ -453,11 +453,11 @@ class Narrative extends MY_Controller {
 			), TRUE );
 		}
 		
-		$reportSort = $this->subject_sort_model->get_sort ( $kStudent, $data ["defaultTerm"], $data ["defaultYear"], "narrative" );
-		$data ["reportSort"] = $reportSort;
-		$options ["reportSort"] = $data ["reportSort"];
-		$data ["userRole"] = $this->session->userdata ( "dbRole" );
-		$data ["userID"] = $this->session->userdata ( "userID" );
+		$reportSort = $this->subject_sort_model->get_sort ( $kStudent, $data ['defaultTerm'], $data ['defaultYear'], "narrative" );
+		$data ['reportSort'] = $reportSort;
+		$options ['reportSort'] = $data ['reportSort'];
+		$data ['userRole'] = $this->session->userdata ( "dbRole" );
+		$data ['userID'] = $this->session->userdata ( "userID" );
 		$this->load->view ( "page/index", $data );
 	}
 
@@ -475,40 +475,40 @@ class Narrative extends MY_Controller {
 		if (empty ( $kTeach )) {
 			$kTeach = $this->input->get ( "kTeach" );
 		}
-		$options ["kTeach"] = $kTeach;
+		$options ['kTeach'] = $kTeach;
 		
 		if ($this->input->get ( "gradeStart" ) >= 0 && $this->input->get ( "gradeEnd" ) >= 0) {
-			$options ["gradeStart"] = $this->input->get ( "gradeStart" );
-			bake_cookie ( "gradeStart", $options ["gradeStart"] );
-			$options ["gradeEnd"] = $this->input->get ( "gradeEnd" );
-			bake_cookie ( "gradeEnd", $options ["gradeEnd"] );
+			$options ['gradeStart'] = $this->input->get ( "gradeStart" );
+			bake_cookie ( "gradeStart", $options ['gradeStart'] );
+			$options ['gradeEnd'] = $this->input->get ( "gradeEnd" );
+			bake_cookie ( "gradeEnd", $options ['gradeEnd'] );
 		} else {
 		}
 		
 		if ($this->input->get ( "subject" )) {
-			$options ["narrSubject"] = $this->input->get ( "subject" );
-			bake_cookie ( "narrative_subject", $options ["narrSubject"] );
+			$options ['narrSubject'] = $this->input->get ( "subject" );
+			bake_cookie ( "narrative_subject", $options ['narrSubject'] );
 		}
 		
-		$options ["narrYear"] = get_current_year ();
+		$options ['narrYear'] = get_current_year ();
 		if ($this->input->get ( "narrYear" )) {
-			$options ["narrYear"] = $this->input->get ( "narrYear" );
-			bake_cookie ( "narrYear", $options ["narrYear"] );
+			$options ['narrYear'] = $this->input->get ( "narrYear" );
+			bake_cookie ( "narrYear", $options ['narrYear'] );
 		}
 		
-		$options ["narrTerm"] = get_current_term ();
+		$options ['narrTerm'] = get_current_term ();
 		if ($this->input->get ( "narrTerm" )) {
-			$options ["narrTerm"] = $this->input->get ( "narrTerm" );
-			bake_cookie ( "narrTerm", $options ["narrTerm"] );
+			$options ['narrTerm'] = $this->input->get ( "narrTerm" );
+			bake_cookie ( "narrTerm", $options ['narrTerm'] );
 		}
-		$data ["narratives"] = $this->narrative_model->get_narratives ( $options );
-		$data ["options"] = $options;
+		$data ['narratives'] = $this->narrative_model->get_narratives ( $options );
+		$data ['options'] = $options;
 		$teacher = $this->teacher_model->get_name ( $kTeach );
-		$data ["rich_text"] = TRUE;
-		$data ["teacher"] = $teacher;
-		$data ["kTeach"] = $kTeach;
-		$data ["title"] = "Showing current narratives for " . link_teacher($teacher, $kTeach);
-		$data ["target"] = "narrative/teacher_list";
+		$data ['rich_text'] = TRUE;
+		$data ['teacher'] = $teacher;
+		$data ['kTeach'] = $kTeach;
+		$data ['title'] = "Showing current narratives for " . link_teacher ( $teacher, $kTeach );
+		$data ['target'] = "narrative/teacher_list";
 		if ($this->uri->segment ( 4 ) == "print") {
 			$this->load->view ( "page/print", $data );
 		} else {
@@ -530,15 +530,15 @@ class Narrative extends MY_Controller {
 		if (empty ( $kTeach )) {
 			$kTeach = $this->session->userdata ( "userID" );
 		}
-		$data ["kTeach"] = $kTeach;
+		$data ['kTeach'] = $kTeach;
 		$teachers = $this->teacher_model->get_teacher_pairs ();
 		$data ['teachers'] = get_keyed_pairs ( $teachers, array (
 				'kTeach',
 				'teacher' 
 		) );
-		$data ["subject"] = $this->input->cookie ( "narrative_subject" ); // $this->session->userdata("narrative_subject");
+		$data ['subject'] = $this->input->cookie ( "narrative_subject" ); // $this->session->userdata("narrative_subject");
 		$subjects = $this->subject_model->get_for_teacher ( $kTeach );
-		$data ["subjects"] = get_keyed_pairs ( $subjects, array (
+		$data ['subjects'] = get_keyed_pairs ( $subjects, array (
 				"subject",
 				"subject" 
 		) );
@@ -548,30 +548,30 @@ class Narrative extends MY_Controller {
 		}
 		$grade_list = $this->menu_model->get_pairs ( "grade" );
 		
-		$data ["grades"] = get_keyed_pairs ( $grade_list, array (
+		$data ['grades'] = get_keyed_pairs ( $grade_list, array (
 				"value",
 				"label" 
 		) );
 		
-		// $data["gradeStart"] = $this->session->userdata("gradeStart");
-		// $data["gradeEnd"] = $this->session->userdata("gradeEnd");
-		$data ["gradeStart"] = $this->input->cookie ( "gradeStart" );
-		$data ["gradeEnd"] = $this->input->cookie ( "gradeEnd" );
-		if (empty ( $data ["gradeStart"] ) || empty ( $data ["gradeEnd"] )) {
+		// $data['gradeStart'] = $this->session->userdata("gradeStart");
+		// $data['gradeEnd'] = $this->session->userdata("gradeEnd");
+		$data ['gradeStart'] = $this->input->cookie ( "gradeStart" );
+		$data ['gradeEnd'] = $this->input->cookie ( "gradeEnd" );
+		if (empty ( $data ['gradeStart'] ) || empty ( $data ['gradeEnd'] )) {
 			$teacher_grades = $this->teacher_model->get ( $kTeach, "gradeStart,gradeEnd" );
-			$data ["gradeStart"] = $teacher_grades->gradeStart;
-			$data ["gradeEnd"] = $teacher_grades->gradeEnd;
+			$data ['gradeStart'] = $teacher_grades->gradeStart;
+			$data ['gradeEnd'] = $teacher_grades->gradeEnd;
 		}
-		$data ["narrTerm"] = $this->input->cookie ( "narrTerm" ); // $this->session->userdata("narrTerm");
-		if (empty ( $data ["narrTerm"] )) {
-			$data ["narrTerm"] = get_current_term ();
+		$data ['narrTerm'] = $this->input->cookie ( "narrTerm" ); // $this->session->userdata("narrTerm");
+		if (empty ( $data ['narrTerm'] )) {
+			$data ['narrTerm'] = get_current_term ();
 		}
-		$data ["narrYear"] = $this->input->cookie ( "narrYear" ); // $this->session->userdata("narrYear");
-		if (empty ( $data ["narrYear"] )) {
-			$data ["narrYear"] = get_current_year ();
+		$data ['narrYear'] = $this->input->cookie ( "narrYear" ); // $this->session->userdata("narrYear");
+		if (empty ( $data ['narrYear'] )) {
+			$data ['narrYear'] = get_current_year ();
 		}
-		$data ["title"] = "Searching Teacher Narratives";
-		$data ["target"] = "narrative/teacher_search";
+		$data ['title'] = "Searching Teacher Narratives";
+		$data ['target'] = "narrative/teacher_search";
 		$this->_view ( $data );
 	}
 
@@ -581,26 +581,26 @@ class Narrative extends MY_Controller {
 	 */
 	function search_missing($kTeach)
 	{
-		$data ["kTeach"] = $kTeach;
+		$data ['kTeach'] = $kTeach;
 		$this->load->model ( "teacher_model" );
 		$this->load->model ( "subject_model" );
 		$this->load->model ( "menu_model" );
 		$teacher = $this->teacher_model->get ( $kTeach );
-		$data ["gradeStart"] = $teacher->gradeStart;
-		$data ["gradeEnd"] = $teacher->gradeEnd;
+		$data ['gradeStart'] = $teacher->gradeStart;
+		$data ['gradeEnd'] = $teacher->gradeEnd;
 		$subject_list = $this->subject_model->get_for_teacher ( $kTeach );
-		$data ["subject"] = $this->input->cookie ( "narrative_subject" ); // $this->session->userdata("narrative_subject");
-		$data ["subjects"] = get_keyed_pairs ( $subject_list, array (
+		$data ['subject'] = $this->input->cookie ( "narrative_subject" ); // $this->session->userdata("narrative_subject");
+		$data ['subjects'] = get_keyed_pairs ( $subject_list, array (
 				"subject",
 				"subject" 
 		) );
 		$grade_list = $this->menu_model->get_pairs ( "grade" );
-		$data ["grades"] = get_keyed_pairs ( $grade_list, array (
+		$data ['grades'] = get_keyed_pairs ( $grade_list, array (
 				"value",
 				"label" 
 		) );
-		$data ["target"] = "narrative/search_missing";
-		$data ["title"] = "Search for Missing Narratives";
+		$data ['target'] = "narrative/search_missing";
+		$data ['title'] = "Search for Missing Narratives";
 		$this->_view ( $data );
 	}
 
@@ -616,31 +616,31 @@ class Narrative extends MY_Controller {
 		$this->load->model ( "subject_model" );
 		$this->load->model ( "student_model" );
 		$this->load->model ( "teacher_model" );
-		$data ["kTeach"] = $this->input->get ( "kTeach" );
-		$data ["gradeStart"] = $this->input->get ( "gradeStart" );
-		$data ["gradeEnd"] = $this->input->get ( "gradeEnd" );
-		$data ["subject"] = $this->input->get ( "subject" );
-		$data ["narrYear"] = get_current_year ();
-		$data ["narrTerm"] = get_current_term ();
-		bake_cookie ( "narrative_subject", $data ["subject"] );
+		$data ['kTeach'] = $this->input->get ( "kTeach" );
+		$data ['gradeStart'] = $this->input->get ( "gradeStart" );
+		$data ['gradeEnd'] = $this->input->get ( "gradeEnd" );
+		$data ['subject'] = $this->input->get ( "subject" );
+		$data ['narrYear'] = get_current_year ();
+		$data ['narrTerm'] = get_current_term ();
+		bake_cookie ( "narrative_subject", $data ['subject'] );
 		$constraints = array ();
-		if ($data ["subject"] == "Humanities") {
-			$constraints ["humanitiesTeacher"] = $data ["kTeach"];
-		} elseif ($data ["subject"] == "Academic Progress" || $data ["subject"] == "Social/Emotional") {
-			$constraints ["kTeach"] = $data ["kTeach"];
+		if ($data ['subject'] == "Humanities") {
+			$constraints ['humanitiesTeacher'] = $data ['kTeach'];
+		} elseif ($data ['subject'] == "Academic Progress" || $data ['subject'] == "Social/Emotional") {
+			$constraints ['kTeach'] = $data ['kTeach'];
 		}
-		$data ["students"] = $this->student_model->get_students_by_grade ( $data ["gradeStart"], $data ["gradeEnd"], $constraints );
-		$data ["teacher"] = $this->teacher_model->get_name ( $data ["kTeach"] );
+		$data ['students'] = $this->student_model->get_students_by_grade ( $data ['gradeStart'], $data ['gradeEnd'], $constraints );
+		$data ['teacher'] = $this->teacher_model->get_name ( $data ['kTeach'] );
 		if ($kTemplate = $this->input->get ( "apply_template" )) {
 			$this->load->model ( "template_model", "template" );
 			
 			$template = $this->template->get ( $kTemplate );
 			$data ['template'] = $template;
 			$data ['target'] = "template/batch_apply";
-			$data ["title"] = sprintf ( "Batch apply template for %s (%s) %s, %s. Grades %s", $template->subject, $template->type, $template->term, format_schoolyear ( $template->year ), format_grade_range ( $template->gradeStart, $template->gradeEnd ) );
+			$data ['title'] = sprintf ( "Batch apply template for %s (%s) %s, %s. Grades %s", $template->subject, $template->type, $template->term, format_schoolyear ( $template->year ), format_grade_range ( $template->gradeStart, $template->gradeEnd ) );
 		} else {
-			$data ["target"] = "narrative/show_missing";
-			$data ["title"] = "Showing Missing Narratives for " . link_teacher($data ["teacher"], $data['kTeach']);
+			$data ['target'] = "narrative/show_missing";
+			$data ['title'] = "Showing Missing Narratives for " . link_teacher ( $data ['teacher'], $data ['kTeach'] );
 		}
 		
 		$this->load->view ( "page/index", $data );
@@ -663,21 +663,21 @@ class Narrative extends MY_Controller {
 			$student_obj = $this->student_model->get ( $kStudent, "stuFirst,stuLast,stuNickname,baseGrade,baseYear" );
 			$data ['student_obj'] = $student_obj;
 			$student = format_name ( $student_obj->stuFirst, $student_obj->stuLast, $student_obj->stuNickname );
-			$data ["stuGrade"] = get_current_grade ( $student_obj->baseGrade, $student_obj->baseYear, $narrYear );
+			$data ['stuGrade'] = get_current_grade ( $student_obj->baseGrade, $student_obj->baseYear, $narrYear );
 			if ($narrYear < 2016) { // old attendance model
 				$this->load->model ( "student_attendance_model", "attendance" );
 				$attendance = $this->attendance->summarize ( $kStudent, $narrTerm, $narrYear );
-				$data ["tardy"] = $attendance ["tardy"];
-				$data ["absent"] = $attendance ["absent"];
+				$data ['tardy'] = $attendance ['tardy'];
+				$data ['absent'] = $attendance ['absent'];
 			} else {
 				$this->load->model ( "attendance_model", "attendance" );
 				$attendance = $this->attendance->get ( $kStudent, $narrTerm, $narrYear );
-				$data ["tardy"] = get_value ( $attendance, "tardy" );
-				$data ["absent"] = get_value ( $attendance, "absent" );
+				$data ['tardy'] = get_value ( $attendance, "tardy" );
+				$data ['absent'] = get_value ( $attendance, "absent" );
 			}
 			
-			$data ["narrYear"] = $narrYear;
-			$data ["narrTerm"] = $narrTerm;
+			$data ['narrYear'] = $narrYear;
+			$data ['narrTerm'] = $narrTerm;
 			$narratives = $this->narrative_model->get_for_student ( $kStudent, array (
 					"narrTerm" => $narrTerm,
 					"narrYear" => $narrYear 
@@ -708,8 +708,8 @@ class Narrative extends MY_Controller {
 				if ($submits_report_card == "yes") {
 					$this->load->model ( "assignment_model", "assignment" );
 					$this->load->helper ( "grade" );
-					$grade_options ["from"] = "grade";
-					$grade_options ["join"] = "assignment";
+					$grade_options ['from'] = "grade";
+					$grade_options ['join'] = "assignment";
 					$grade_options ['subject'] = $narrative->narrSubject;
 					$grades = $this->assignment->get_for_student ( $kStudent, $narrative->narrTerm, $narrative->narrYear, $grade_options );
 					if ($narrative->narrTerm == "Year-End") {
@@ -745,10 +745,10 @@ class Narrative extends MY_Controller {
 					}
 				}
 			}
-			$data ["narratives"] = $narratives;
+			$data ['narratives'] = $narratives;
 			
-			$data ["student"] = $student;
-			$data ["title"] = "Narrative Report for $student";
+			$data ['student'] = $student;
+			$data ['title'] = "Narrative Report for $student";
 			$this->load->view ( "narrative/print", $data );
 		}
 	}
@@ -760,25 +760,25 @@ class Narrative extends MY_Controller {
 	 */
 	function search()
 	{
-		$data ["currentTerm"] = get_current_term ();
-		$data ["terms"] = get_term_menu ( "narrTerm", $data ["currentTerm"] );
-		$data ["currentYear"] = get_current_year ();
-		$data ["years"] = get_year_list ();
+		$data ['currentTerm'] = get_current_term ();
+		$data ['terms'] = get_term_menu ( "narrTerm", $data ['currentTerm'] );
+		$data ['currentYear'] = get_current_year ();
+		$data ['years'] = get_year_list ();
 		$this->load->model ( 'menu_model' );
 		$grade_pairs = $this->menu_model->get_pairs ( "grade" );
-		$data ["grades"] = get_keyed_pairs ( $grade_pairs, array (
+		$data ['grades'] = get_keyed_pairs ( $grade_pairs, array (
 				"value",
 				"label" 
 		) );
 		$this->load->model ( 'teacher_model' );
 		$teacher_pairs = $this->teacher_model->get_teacher_pairs ();
-		$data ["teachers"] = get_keyed_pairs ( $teacher_pairs, array (
+		$data ['teachers'] = get_keyed_pairs ( $teacher_pairs, array (
 				"kTeach",
 				"teacher" 
 		), TRUE );
-		$data ["kTeach"] = $this->session->userdata ( "userID" );
-		$data ["target"] = "narrative/search";
-		$data ["title"] = "Narrative Search & Replace";
+		$data ['kTeach'] = $this->session->userdata ( "userID" );
+		$data ['target'] = "narrative/search";
+		$data ['title'] = "Narrative Search & Replace";
 		$this->session->set_flashdata ( "warning", "Please follow the instructions very carefully. Mistakes may be recoverable, but not without considerable effort!" );
 		
 		if ($this->input->get ( "ajax" ) == 1) {
@@ -800,7 +800,7 @@ class Narrative extends MY_Controller {
 		$template = $this->template->get ( $kTemplate );
 		$student = $this->student->get ( $kStudent );
 		$this->load->model ( "overview_model", "overview" );
-		//@TODO make a private function for get all overviews. 
+		// @TODO make a private function for get all overviews.
 		$overview = $this->overview->get_all ( $template->kTeach, array (
 				"where" => array (
 						"subject" => $template->subject,
@@ -848,18 +848,18 @@ class Narrative extends MY_Controller {
 		$narrYear = $this->input->post ( "narrYear" );
 		$narrTerm = $this->input->post ( "narrTerm" );
 		$data = $this->narrative_model->text_replace ( $search, $replace, $kTeach, $narrYear, $narrTerm, $gradeStart, $gradeEnd );
-		$data ["gradeStart"] = $gradeStart;
-		$data ["gradeEnd"] = $gradeEnd;
-		$data ["teacher"] = $this->teacher_model->get ( $kTeach, array (
+		$data ['gradeStart'] = $gradeStart;
+		$data ['gradeEnd'] = $gradeEnd;
+		$data ['teacher'] = $this->teacher_model->get ( $kTeach, array (
 				"teachFirst",
 				"teachLast" 
 		) );
-		$data ["narrYear"] = $narrYear;
-		$data ["narrTerm"] = $narrTerm;
-		$data ["replace"] = $replace;
-		$data ["search"] = $search;
-		$data ["target"] = "narrative/search_results";
-		$data ["title"] = "Narrative Search & Replace Results";
+		$data ['narrYear'] = $narrYear;
+		$data ['narrTerm'] = $narrTerm;
+		$data ['replace'] = $replace;
+		$data ['search'] = $search;
+		$data ['target'] = "narrative/search_results";
+		$data ['title'] = "Narrative Search & Replace Results";
 		$this->load->view ( "page/index", $data );
 	}
 
@@ -874,10 +874,10 @@ class Narrative extends MY_Controller {
 	function list_backups($kNarrative)
 	{
 		$this->load->model ( "backup_model" );
-		$data ["backups"] = $this->backup_model->get_all ( $kNarrative, "recModified,narrText" );
-		$data ["kNarrative"] = $kNarrative;
-		$data ["target"] = "narrative/backup_list";
-		$data ["title"] = "Narrative Backups";
+		$data ['backups'] = $this->backup_model->get_all ( $kNarrative, "recModified,narrText" );
+		$data ['kNarrative'] = $kNarrative;
+		$data ['target'] = "narrative/backup_list";
+		$data ['title'] = "Narrative Backups";
 		$this->load->view ( "page/index", $data );
 	}
 

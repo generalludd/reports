@@ -13,9 +13,9 @@ class Config extends MY_Controller {
 	function index()
 	{
 		if ($this->session->userdata ( "dbRole" ) == 1) {
-			$data["items"] = $this->config_model->get_all();
-			$data["title"] = "Editing Site-Wide Configuration Variables";
-			$data["target"] = "config/list";
+			$data['items'] = $this->config_model->get_all();
+			$data['title'] = "Editing Site-Wide Configuration Variables";
+			$data['target'] = "config/list";
 			$this->load->view("page/index",$data);
 		}else{
 			$this->session->set_flashdata("message","You are not authorized to configure the global settings.");
@@ -24,24 +24,24 @@ class Config extends MY_Controller {
 	}
 	
 	function create(){
-		$data["title"]= "Add a Global Configuration Variable";
-		$data["target"] = "config/create";
-		$data["action"] = "insert";
-		$data["config"] = NULL;
+		$data['title']= "Add a Global Configuration Variable";
+		$data['target'] = "config/create";
+		$data['action'] = "insert";
+		$data['config'] = NULL;
 		if($this->input->get("ajax")==1){
-			$this->load->view($data["target"],$data);
+			$this->load->view($data['target'],$data);
 		}else{
 			$this->load->view("page/index",$data);
 		}
 	}
 	
 	function edit($kConfig){
-		$data["config"] = $this->config_model->get($kConfig);
-		$data["title"] = "Edit a Global Configuration Variable";
-		$data["target"] = "config/edit";
-		$data["action"] = "update";
+		$data['config'] = $this->config_model->get($kConfig);
+		$data['title'] = "Edit a Global Configuration Variable";
+		$data['target'] = "config/edit";
+		$data['action'] = "update";
 		if($this->input->get("ajax")==1){
-			$this->load->view($data["target"],$data);
+			$this->load->view($data['target'],$data);
 		}else{
 			$this->load->view("page/index",$data);
 		}
@@ -71,10 +71,10 @@ class Config extends MY_Controller {
 		$grade_start = $this->input->get ( "grade_start" );
 		$grade_end = $this->input->get ( "grade_end" );
 		$context = $this->input->get ( "context" );
-		$data ["action"] = "update";
-		$data ["title"] = "Subject Sorting";
-		$data ["target"] = "admin/subject_sort";
-		$data ["sort_order"] = $this->global_subject->get ( $grade_start, $grade_end, $context );
+		$data ['action'] = "update";
+		$data ['title'] = "Subject Sorting";
+		$data ['target'] = "admin/subject_sort";
+		$data ['sort_order'] = $this->global_subject->get ( $grade_start, $grade_end, $context );
 		if ($this->input->get ( "ajax" ) == 1) {
 			$this->load->view ( $data ['target'], $data );
 		} else {

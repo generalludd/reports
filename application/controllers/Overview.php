@@ -13,27 +13,30 @@ class Overview extends MY_Controller {
 		$this->load->model ( "menu_model" );
 		$this->load->model ( "subject_model" );
 		$template = NULL;
-		$data ["overview"] = "";
-		$data ["kTeach"] = $kTeach;
+		$data ['overview'] = "";
+		$data ['kTeach'] = $kTeach;
 		$subjects = $this->subject_model->get_for_teacher ( $kTeach );
-		$data ["subjects"] = get_keyed_pairs ( $subjects, array (
+		$data ['subjects'] = get_keyed_pairs ( $subjects, array (
 				"subject",
 				"subject" 
 		), FALSE );
-		$data ["years"] = get_year_list ();
+		$data ['years'] = get_year_list ();
 		$grades = $this->menu_model->get_pairs ( "grade" );
-		$data ["grade_list"] = get_keyed_pairs ( $grades, array (
+		$data ['grade_list'] = get_keyed_pairs ( $grades, array (
 				"value",
-				"label"
+				"label" 
 		) );
-		$grade = $this->teacher_model->get($kTeach,array("gradeStart","gradeEnd"));
-		$data["gradeStart"] = $grade->gradeStart;
-		$data["gradeEnd"] = $grade->gradeEnd;
+		$grade = $this->teacher_model->get ( $kTeach, array (
+				"gradeStart",
+				"gradeEnd" 
+		) );
+		$data ['gradeStart'] = $grade->gradeStart;
+		$data ['gradeEnd'] = $grade->gradeEnd;
 		$data ['isActive'] = 1;
 		$data ['rich_text'] = TRUE;
-		$data ["target"] = "overview/edit";
-		$data ["action"] = "insert";
-		$data ["title"] = "Editing a Subject Overview";
+		$data ['target'] = "overview/edit";
+		$data ['action'] = "insert";
+		$data ['title'] = "Editing a Subject Overview";
 		$this->load->view ( "page/index", $data );
 	}
 
@@ -69,25 +72,25 @@ class Overview extends MY_Controller {
 		$this->load->model ( "menu_model" );
 		$this->load->model ( "subject_model" );
 		$overview = $this->overview->get ( $kOverview );
-		$data ["overview"] = $overview;
-		$data ["kTeach"] = $overview->kTeach;
+		$data ['overview'] = $overview;
+		$data ['kTeach'] = $overview->kTeach;
 		$subjects = $this->subject_model->get_for_teacher ( $overview->kTeach );
-		$data ["subjects"] = get_keyed_pairs ( $subjects, array (
+		$data ['subjects'] = get_keyed_pairs ( $subjects, array (
 				"subject",
 				"subject" 
 		), FALSE );
-		$data ["years"] = get_year_list ();
+		$data ['years'] = get_year_list ();
 		$grades = $this->menu_model->get_pairs ( "grade" );
-		$data ["gradeStart"] = "";
-		$data ["gradeEnd"] = "";
-		$data ["grade_list"] = get_keyed_pairs ( $grades, array (
+		$data ['gradeStart'] = "";
+		$data ['gradeEnd'] = "";
+		$data ['grade_list'] = get_keyed_pairs ( $grades, array (
 				"value",
 				"label" 
 		) );
 		$data ['rich_text'] = TRUE;
-		$data ["target"] = "overview/edit";
-		$data ["action"] = "update";
-		$data ["title"] = "Editing a Subject Overview";
+		$data ['target'] = "overview/edit";
+		$data ['action'] = "update";
+		$data ['title'] = "Editing a Subject Overview";
 		$this->load->view ( "page/index", $data );
 	}
 
@@ -95,7 +98,7 @@ class Overview extends MY_Controller {
 	{
 		$kOverview = $this->input->post ( "kOverview" );
 		if ($this->input->get ( "delete" )) {
-			$this->_delete($kOverview);
+			$this->_delete ( $kOverview );
 		} else {
 			$data ['kOverview'] = $kOverview;
 			$this->overview->update ( $kOverview );
@@ -123,20 +126,20 @@ class Overview extends MY_Controller {
 		$this->load->model ( "subject_model" );
 		$this->load->model ( "teacher_model" );
 		$this->load->model ( "menu_model" );
-		$data ["kTeach"] = $kTeach;
+		$data ['kTeach'] = $kTeach;
 		$grades = $this->menu_model->get_pairs ( "grade" );
-		$data ["grade_list"] = get_keyed_pairs ( $grades, array (
+		$data ['grade_list'] = get_keyed_pairs ( $grades, array (
 				"value",
 				"label" 
 		) );
-		$data ["years"] = get_year_list ( TRUE );
+		$data ['years'] = get_year_list ( TRUE );
 		$subjects = $this->subject_model->get_for_teacher ( $kTeach );
-		$data ["subject"] = NULL;
-		$data ["subjects"] = get_keyed_pairs ( $subjects, array (
+		$data ['subject'] = NULL;
+		$data ['subjects'] = get_keyed_pairs ( $subjects, array (
 				"subject",
 				"subject" 
 		), TRUE );
-		$data ["grades"] = $this->teacher_model->get ( $kTeach, array (
+		$data ['grades'] = $this->teacher_model->get ( $kTeach, array (
 				"gradeStart",
 				"gradeEnd" 
 		) );
@@ -154,17 +157,17 @@ class Overview extends MY_Controller {
 			$this->load->model ( "teacher_model" );
 			$options = array ();
 			if ($this->input->get ( "term" )) {
-				$options ["where"] ["term"] = $this->input->get ( "term" );
+				$options ['where'] ['term'] = $this->input->get ( "term" );
 			}
 			
 			if ($this->input->get ( "year" )) {
-				$options ["where"] ["year"] = $this->input->get ( "year" );
+				$options ['where'] ['year'] = $this->input->get ( "year" );
 			}
 			
 			if ($this->input->get ( "subject" )) {
-				$options ["where"] ["subject"] = $this->input->get ( "subject" );
-				// $this->session->set_userdata("template_subject",$options["where"]["subject"]);
-				bake_cookie ( "overview_subject", $options ["where"] ["subject"] );
+				$options ['where'] ['subject'] = $this->input->get ( "subject" );
+				// $this->session->set_userdata("template_subject",$options['where']['subject']);
+				bake_cookie ( "overview_subject", $options ['where'] ['subject'] );
 			}
 			
 			$include_inactive = FALSE;
@@ -173,36 +176,39 @@ class Overview extends MY_Controller {
 			}
 			
 			if ($this->input->get ( "gradeStart" ) && $this->input->get ( "gradeEnd" )) {
-				$options ["grade_range"] ["gradeStart"] = $this->input->get ( "gradeStart" );
-				$options ["grade_range"] ["gradeEnd"] = $this->input->get ( "gradeEnd" );
+				$options ['grade_range'] ['gradeStart'] = $this->input->get ( "gradeStart" );
+				$options ['grade_range'] ['gradeEnd'] = $this->input->get ( "gradeEnd" );
 			}
 			
-			$data ["overviews"] = $this->overview->get_all ( $kTeach, $options, $include_inactive );
-			$data ["kTeach"] = $kTeach;
-			$data ["teacher"] = $this->teacher_model->get_name ( $kTeach );
-			$data ["target"] = "overview/list";
-			$data ["title"] = "Listing Subject Overviews for " . link_teacher($data ["teacher"], $kTeach);
-			$data ["options"] = $options;
+			$data ['overviews'] = $this->overview->get_all ( $kTeach, $options, $include_inactive );
+			$data ['kTeach'] = $kTeach;
+			$data ['teacher'] = $this->teacher_model->get_name ( $kTeach );
+			$data ['target'] = "overview/list";
+			$data ['title'] = "Listing Subject Overviews for " . link_teacher ( $data ['teacher'], $kTeach );
+			$data ['options'] = $options;
 			$this->load->view ( "page/index", $data );
 		}
 	}
-	
-	function view($kOverview){
-		$overview = $this->overview->get($kOverview);
-		if($this->input->get("ajax")== 1){
-			echo $this->load->view("overview/view",array("overview"=>$overview),TRUE);
-		}else{
-			$data["target"]="overview/view";
-			$data['title'] = "Overview";
-			$data['overview'] = $overview;
-			$this->load->view("page/index",$data);
+
+	function view($kOverview)
+	{
+		$overview = $this->overview->get ( $kOverview );
+		if ($this->input->get ( "ajax" ) == 1) {
+			echo $this->load->view ( "overview/view", array (
+					"overview" => $overview 
+			), TRUE );
+		} else {
+			$data ['target'] = "overview/view";
+			$data ['title'] = "Overview";
+			$data ['overview'] = $overview;
+			$this->load->view ( "page/index", $data );
 		}
-		
 	}
-	
-	private function _delete($kOverview){
-		$overview = $this->overview->delete($kOverview);
-		$this->session->set_flashdata("message","The overview was successfully deleted");
+
+	private function _delete($kOverview)
+	{
+		$overview = $this->overview->delete ( $kOverview );
+		$this->session->set_flashdata ( "message", "The overview was successfully deleted" );
 		redirect ( "overview/show_all/?kTeach=$overview->kTeach&term=$overview->term&year=$overview->year&subject=$overview->subject&gradeStart=$overview->gradeStart&gradeEnd=$overview->gradeEnd" );
 	}
 }

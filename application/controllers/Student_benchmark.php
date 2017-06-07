@@ -15,12 +15,12 @@ class Student_benchmark extends MY_Controller {
 			$this->load->model ( "menu_model" );
 			$kStudent = $this->input->get ( "kStudent" );
 			$student = $this->student->get ( $kStudent );
-			$data ["student"] = $student;
-			$data ["action"] = "update";
+			$data ['student'] = $student;
+			$data ['action'] = "update";
 			$subjects = $this->subject->get_all ( array (
 					"has_benchmarks"=>TRUE,
 			) );
-			$data ["subjects"] = get_keyed_pairs ( $subjects, array (
+			$data ['subjects'] = get_keyed_pairs ( $subjects, array (
 					"subject",
 					"subject" 
 			), TRUE );
@@ -173,7 +173,7 @@ class Student_benchmark extends MY_Controller {
 		$data ['year'] = $year;
 		$data ['term'] = $term;
 		$data ['quarter'] = $quarter;
-		$data ["benchmarks"] = $this->student_benchmark->get ( $kStudent, $student_grade, $term, $year, $quarter, $subject );
+		$data ['benchmarks'] = $this->student_benchmark->get ( $kStudent, $student_grade, $term, $year, $quarter, $subject );
 		$student_name = format_name ( $student->stuFirst, $student->stuLast, $student->stuNickname );
 		$data ['title'] = "Editing Benchmarks for $student_name: $subject, $student_grade, $term, $year";
 		$data ['kStudent'] = $kStudent;
