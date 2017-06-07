@@ -1,8 +1,9 @@
 <?php
 defined ( 'BASEPATH' ) or exit ( 'No direct script access allowed' );
 // student grade chart;
+if(isset($kStudent) && (!isset($batch) || !$batch)){
 $this->load->view("student/navigation");
-
+}
 $header = $grades [0];
 $teacher = format_name ( $header->teachFirst, $header->teachLast );
 $year = format_schoolyear ( $header->year );
@@ -74,14 +75,14 @@ $count = 0;
 						//if the category has not been added to the total categories then add it to the $categories array for the totals count below. 
 						//If it does exist, just update the totals for the category. 
 						if (! array_key_exists ( $grade->category, $categories )) {
-							$categories [$grade->category] ["category"] = $grade->category;
-							$categories [$grade->category] ["weight"] = $grade->weight;
-							$categories [$grade->category] ["total_points"] = $grade->total_points;
-							$categories [$grade->category] ["points"] = $points;
+							$categories [$grade->category] ['category'] = $grade->category;
+							$categories [$grade->category] ['weight'] = $grade->weight;
+							$categories [$grade->category] ['total_points'] = $grade->total_points;
+							$categories [$grade->category] ['points'] = $points;
 						} else {
 							// get the total possible points for this category;
-							$categories [$grade->category] ["total_points"] += $grade->total_points;
-							$categories [$grade->category] ["points"] += $points;
+							$categories [$grade->category] ['total_points'] += $grade->total_points;
+							$categories [$grade->category] ['points'] += $points;
 							
 						}
 					}
@@ -135,19 +136,19 @@ $count = 0;
 			</thead>
 			<tbody>
 			<? foreach($categories as $category): ?>
-			<? $category_grade = round($category["points"]/$category["total_points"]*100,2);?>
+			<? $category_grade = round($category['points']/$category['total_points']*100,2);?>
 			<tr>
-					<td><?=$category["category"];?></td>
-					<td><?=$category["points"];?></td>
-					<td><?=$category["total_points"]; ?></td>
+					<td><?=$category['category'];?></td>
+					<td><?=$category['points'];?></td>
+					<td><?=$category['total_points']; ?></td>
 					<td><?=$category_grade;?>%</td>
-					<td><?=$category["weight"];?>%</td>
+					<td><?=$category['weight'];?>%</td>
 					<td><?=calculate_letter_grade($category_grade, $pass_fail);?></td>
 
 
 				</tr>
-			<? $assignment_total += $category_grade * $category["weight"]; ?>
-			<? $weight_sums += $category["weight"];?>
+			<? $assignment_total += $category_grade * $category['weight']; ?>
+			<? $weight_sums += $category['weight'];?>
 			<? endforeach; ?>
 		</tbody>
 			<tfoot>

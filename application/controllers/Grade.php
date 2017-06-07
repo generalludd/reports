@@ -31,32 +31,32 @@
 				if (! $term) {
 					$term = $this->input->cookie ( "term" ); // get_current_term();
 				}
-				$options ["grade_range"] ["gradeStart"] = $this->input->get ( "assignment_grade_start" );
-				if (! $options ["grade_range"] ["gradeStart"]) {
-					$options ["grade_range"] ["gradeStart"] = get_cookie ( "assignment_grade_start" );
+				$options ['grade_range'] ['gradeStart'] = $this->input->get ( "assignment_grade_start" );
+				if (! $options ['grade_range'] ['gradeStart']) {
+					$options ['grade_range'] ['gradeStart'] = get_cookie ( "assignment_grade_start" );
 				}
-				$options ["grade_range"] ["gradeEnd"] = $this->input->get ( "assignment_grade_end" );
-				if (! $options ["grade_range"] ["gradeEnd"]) {
-					$options ["grade_range"] ["gradeEnd"] = get_cookie ( "assignment_grade_end" );
+				$options ['grade_range'] ['gradeEnd'] = $this->input->get ( "assignment_grade_end" );
+				if (! $options ['grade_range'] ['gradeEnd']) {
+					$options ['grade_range'] ['gradeEnd'] = get_cookie ( "assignment_grade_end" );
 				}
 				
 				$footnotes = $this->menu_model->get_pairs ( "grade_footnote" );
-				$data ["footnotes"] = get_keyed_pairs ( $footnotes, array (
+				$data ['footnotes'] = get_keyed_pairs ( $footnotes, array (
 						"value",
 						"label" 
 				), TRUE );
 				$status = $this->menu_model->get_pairs ( "grade_status" );
 				
-				$data ["status"] = get_keyed_pairs ( $status, array (
+				$data ['status'] = get_keyed_pairs ( $status, array (
 						"value",
 						"label" 
 				), TRUE );
-				$data ["kStudent"] = $kStudent;
-				$data ["kTeach"] = $kTeach;
-				$options ["kTeach"] = $kTeach;
+				$data ['kStudent'] = $kStudent;
+				$data ['kTeach'] = $kTeach;
+				$options ['kTeach'] = $kTeach;
 				$options['subject'] = $subject;
-				$data ["grades"] = $this->assignment->get_for_student ( $kStudent, $term, $year, $options );
-				$data ["target"] = "grade/edit";
+				$data ['grades'] = $this->assignment->get_for_student ( $kStudent, $term, $year, $options );
+				$data ['target'] = "grade/edit";
 				$this->load->model("student_model");
 				$student = $this->student_model->get_name($kStudent);
 				$data ['title'] = "Editing Grades for $student";
@@ -78,14 +78,14 @@
 			$kStudent = $this->input->get ( "kStudent" );
 			if ($kAssignment && $kStudent) {
 				$this->load->model ( "menu_model" );
-				$data ["grade"] = $this->grade->get ( $kStudent, $kAssignment );
+				$data ['grade'] = $this->grade->get ( $kStudent, $kAssignment );
 				$footnotes = $this->menu_model->get_pairs ( "grade_footnote" );
-				$data ["footnotes"] = get_keyed_pairs ( $footnotes, array (
+				$data ['footnotes'] = get_keyed_pairs ( $footnotes, array (
 						"value",
 						"label" 
 				) );
 				$status = $this->menu_model->get_pairs ( "grade_status" );
-				$data ["status"] = get_keyed_pairs ( $status, array (
+				$data ['status'] = get_keyed_pairs ( $status, array (
 						"value",
 						"label" 
 				) );
@@ -103,22 +103,22 @@
 				$stuGroup = $this->input->cookie ( "stuGroup" );
 			}
 			$this->load->model ( "menu_model" );
-			$data ["assignment"] = $this->assignment->get ( $kAssignment );
-			$data ["grades"] = $this->assignment->get_assignment_grades ( $kAssignment, $stuGroup );
+			$data ['assignment'] = $this->assignment->get ( $kAssignment );
+			$data ['grades'] = $this->assignment->get_assignment_grades ( $kAssignment, $stuGroup );
 			$footnotes = $this->menu_model->get_pairs ( "grade_footnote" );
-			$data ["footnotes"] = get_keyed_pairs ( $footnotes, array (
+			$data ['footnotes'] = get_keyed_pairs ( $footnotes, array (
 					"value",
 					"label" 
 			), TRUE );
 			$status = $this->menu_model->get_pairs ( "grade_status" );
-			$data ["status"] = get_keyed_pairs ( $status, array (
+			$data ['status'] = get_keyed_pairs ( $status, array (
 					"value",
 					"label" 
 			), TRUE );
-			$data ["target"] = "grade/edit_column";
-			$data ["title"] = "Editing Grades for a Given Assignment";
+			$data ['target'] = "grade/edit_column";
+			$data ['title'] = "Editing Grades for a Given Assignment";
 			if ($this->input->get ( "ajax" )) {
-				$this->load->view ( $data ["target"], $data );
+				$this->load->view ( $data ['target'], $data );
 			} else {
 				$this->load->view ( "page/index", $data );
 			}
@@ -130,11 +130,11 @@
 		 */
 		function select_student()
 		{
-			$data ["kTeach"] = $this->input->get ( "kTeach" );
-			$data ["term"] = get_cookie ( "term" );
-			$data ["year"] = get_cookie ( "year" );
-			$data ["js_class"] = "select-student-for-grades";
-			$data ["action"] = "grade/edit";
+			$data ['kTeach'] = $this->input->get ( "kTeach" );
+			$data ['term'] = get_cookie ( "term" );
+			$data ['year'] = get_cookie ( "year" );
+			$data ['js_class'] = "select-student-for-grades";
+			$data ['action'] = "grade/edit";
 			$this->load->view ( "student/mini_selector", $data );
 		}
 
@@ -206,10 +206,10 @@
 						'subject',
 						'subject' 
 				) );
-				$data ["stuGroup"] = FALSE;
+				$data ['stuGroup'] = FALSE;
 				$data ['kTeach'] = $kTeach;
-				$data ["gradeStart"] = get_cookie ( "assignment_grade_start" );
-				$data ["gradeEnd"] = get_cookie ( "assignment_grade_end" );
+				$data ['gradeStart'] = get_cookie ( "assignment_grade_start" );
+				$data ['gradeEnd'] = get_cookie ( "assignment_grade_end" );
 				
 				$data ['ids'] = implode ( ",", $this->input->post ( "ids" ) );
 				$this->load->view ( "grade/batch_selector", $data );
@@ -222,31 +222,31 @@
 				$subject = $this->input->post ( "subject" );
 				$this->load->model ( "student_model", "student" );
 				$options = array ();
-				$options ["from"] = "grade";
-				$options ["join"] = "assignment";
-				$options ["kTeach"] = $kTeach;
+				$options ['from'] = "grade";
+				$options ['join'] = "assignment";
+				$options ['kTeach'] = $kTeach;
 				
 				$this->load->model ( "grade_preference_model", "grade_preferences" );
 				$options ['subject'] = $subject;
 				foreach ( $ids as $kStudent ) {
 					$data = array ();
-					$data ["subject"] = $subject;
-					$data ["pass_fail"] = $this->grade_preferences->get_all ( $kStudent, array (
+					$data ['subject'] = $subject;
+					$data ['pass_fail'] = $this->grade_preferences->get_all ( $kStudent, array (
 							"school_year" => $year,
 							"subject" => $subject ,
 							"term"=>$term,
 					) );
-					$data ["print_student_name"] = TRUE;
-					$data ["student"] = $this->student->get ( $kStudent );
-					$data ["grades"] = $this->assignment->get_for_student ( $kStudent, $term, $year, $options );
-					$data ["batch"] = TRUE;
-					$output ["charts"] [] = $this->load->view ( "grade/chart", $data, TRUE );
+					$data ['print_student_name'] = TRUE;
+					$data ['student'] = $this->student->get ( $kStudent );
+					$data ['grades'] = $this->assignment->get_for_student ( $kStudent, $term, $year, $options );
+					$data ['batch'] = TRUE;
+					$output ['charts'] [] = $this->load->view ( "grade/chart", $data, TRUE );
 				}
 				
-				$output ["title"] = "Batch Report Cards";
-				$output ["term"] = $term;
-				$output ["year"] = $year;
-				$output ["target"] = "grade/report_card";
+				$output ['title'] = "Batch Report Cards";
+				$output ['term'] = $term;
+				$output ['year'] = $year;
+				$output ['target'] = "grade/report_card";
 				$this->load->view ( "page/index", $output );
 			}
 		}
@@ -258,22 +258,22 @@
 		function select_report_card($kStudent)
 		{
 			if ($kStudent) {
-				$data ["kStudent"] = $kStudent;
+				$data ['kStudent'] = $kStudent;
 				$this->load->model ( "student_model" );
 				$student = $this->student_model->get_name ( $kStudent );
 				$term = get_current_term ();
-				$data ["terms"] = get_term_menu ( "term", $term );
+				$data ['terms'] = get_term_menu ( "term", $term );
 				$year = get_current_year ();
-				$data ["years"] = get_year_list ();
+				$data ['years'] = get_year_list ();
 				$subjects = $this->grade->get_subjects ( $kStudent, $term, $year );
-				$data ["subjects"] = get_keyed_pairs ( $subjects, array (
+				$data ['subjects'] = get_keyed_pairs ( $subjects, array (
 						"subject",
 						"subject" 
 				), TRUE );
-				$data ["title"] = "Search For Grades for $student";
-				$data ["target"] = "grade/selector";
+				$data ['title'] = "Search For Grades for $student";
+				$data ['target'] = "grade/selector";
 				if ($this->input->get ( "ajax" )) {
-					$this->load->view ( $data ["target"], $data );
+					$this->load->view ( $data ['target'], $data );
 				} else {
 					$this->load->view ( "page/index", $data );
 				}
@@ -290,30 +290,30 @@
 				$this->load->model ( "student_model", "student" );
 				$kTeach = NULL;
 				$options = array ();
-				$options ["from"] = "grade";
-				$options ["join"] = "assignment";
+				$options ['from'] = "grade";
+				$options ['join'] = "assignment";
 				
 				if ($kTeach = $this->input->get ( "kTeach" )) {
-					$options ["kTeach"] = $kTeach;
+					$options ['kTeach'] = $kTeach;
 				}
-				$output ["cutoff_date"] = FALSE;
+				$output ['cutoff_date'] = FALSE;
 				if ($cutoff_date = $this->input->get ( "cutoff_date" )) {
 					bake_cookie ( "cutoff_date", $cutoff_date );
-					$options ["cutoff_date"] =  $cutoff_date;
-					$output ["cutoff_date"] = format_date($cutoff_date);
+					$options ['cutoff_date'] =  $cutoff_date;
+					$output ['cutoff_date'] = format_date($cutoff_date);
 				}
 				
 				$term = get_current_term ();
 				if ($this->input->get ( "term" )) {
 					$term = $this->input->get ( "term" );
 				}
-				$output ["term"] = $term;
+				$output ['term'] = $term;
 				
 				$year = get_current_year ();
 				if ($this->input->get ( "year" )) {
 					$year = $this->input->get ( "year" );
 				}
-				$output ["year"] = $year;
+				$output ['year'] = $year;
 				$student = $this->student->get ( $kStudent, "stuNickname,stuLast" );
 				
 				//if there's a subject submitted, then use that, otherwise get all the subjects
@@ -327,31 +327,32 @@
 					$subjects = $this->grade->get_subjects ( $kStudent, $term, $year );
 				}
 				
-				$data ["target"] = "grade/report_card";
-				$data ["kStudent"] = $kStudent;
-				$data ["student"] = $student;
-				$output ["student_name"] = format_name ( $student->stuNickname, $student->stuLast );
-				$data ["title"] = sprintf("Friends School of Minnesota Report Card for %s", $output ["student_name"]);
-				$output ["charts"] = array ();
+				$data ['target'] = "grade/report_card";
+				$data ['kStudent'] = $kStudent;
+				$data ['student'] = $student;
+				$data['batch'] = FALSE;
+				$output ['student_name'] = format_name ( $student->stuNickname, $student->stuLast );
+				$data ['title'] = sprintf("Friends School of Minnesota Report Card for %s", $output ['student_name']);
+				$output ['charts'] = array ();
 				$i = 0;
 				foreach ( $subjects as $subject ) {
 					if ($subject->subject != "Music") { // music does not offer grades for print-out
-						$options ["subject"] = $subject->subject;
-						$data ["grades"] = $this->assignment->get_for_student ( $kStudent, $term, $year, $options );
+						$options ['subject'] = $subject->subject;
+						$data ['grades'] = $this->assignment->get_for_student ( $kStudent, $term, $year, $options );
 						// if the student has any grades entered, process them here,
 						// otherwise ignore.
 						$this->load->model ( "grade_preference_model", "grade_preferences" );
-						$data ["pass_fail"] = $this->grade_preferences->get_all ( $kStudent, array (
+						$data ['pass_fail'] = $this->grade_preferences->get_all ( $kStudent, array (
 								"school_year" => $year,
 								"subject" => $subject->subject,
 								"term"=>$term,
 						) );
-						if (count ( $data ["grades"] )) {
-							$data ["subject"] = $subject->subject;
-							$data ["count"] = $i; // count is used to identify the chart
+						if (count ( $data ['grades'] )) {
+							$data ['subject'] = $subject->subject;
+							$data ['count'] = $i; // count is used to identify the chart
 							                      // number in the output for css
 							                      // purposes.
-							$output ["charts"] [] = $this->load->view ( "grade/chart", $data, TRUE );
+							$output ['charts'] [] = $this->load->view ( "grade/chart", $data, TRUE );
 						}
 					}
 				}

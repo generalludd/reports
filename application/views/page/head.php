@@ -23,7 +23,7 @@ var root_url = '<?=base_url();?>';
 <script type="text/javascript" src="https://code.jquery.com/ui/1.8.24/jquery-ui.min.js"></script>
 
 <!-- General Script  -->
-<script type="text/javascript" src="<?=base_url("js/general.js");?>"></script>
+<script type="text/javascript" src="<?=base_url("js/general.js?") . date("U");?>"></script>
 
 <!-- Rich Text Editor Script -->
 <!-- TODO: add this only when on a rich-text editing page -->

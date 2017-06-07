@@ -258,7 +258,7 @@
 		});//end function(event)
 	
 	
-	$('.edit_preference').mouseup( function(event){
+	$('.edit_preference').change( function(event){
 		 myTeach=$('#kTeach').val();
 		var myType=this.id;
 		var myValue=$('#'+this.id).val();
