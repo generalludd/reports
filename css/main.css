@@ -726,7 +726,7 @@ label {
 #searchForm fieldset {
 	border: 1px solid #eee;
 	margin: 5%;
-	box-shadow: 2px 2px 3px #999;
+	box-shadow: 2px 2px 3px #999 inset;
 	background-color: white;
 	border-radius: 3px;
 }
@@ -922,7 +922,7 @@ fieldset.advanced div.advanced {
 	padding-right: 10px;
 	display: block;
 	position: relative;
-	margin-bottom: 20px;
+	margin: 20px 0;
 	border-radius: 3px;
 	box-shadow: 3px 3px 5px #999;
 	border: 1px solid #ddd;

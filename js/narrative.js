@@ -88,7 +88,24 @@ $(document).ready(function() {
 		$("#course_grade").html("<input type='text' name='narrGrade' id='narrGrade' value='" + val + "'/>");
 	});
 	
-
+$(".approve_narrative.inline").live("click",function(event){
+	event.preventDefault();
+	me = $(this);
+	if(me.hasClass("edit")){
+	my_url = me.href;
+	form_data = {
+			ajax: 1
+	}
+	$.ajax({
+		type: "post",
+		url: my_url,
+		data: form_data,
+		success: function(data){
+			me.removeClass("approve_narrative").html("Approved");
+		}
+	});
+	}
+});
 
 	$('.save_close_narrative').live("click",function(event) {
 		event.preventDefault();

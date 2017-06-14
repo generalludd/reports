@@ -138,6 +138,14 @@ input.link {
 	background-position: 0;
 }
 
+.button.inactive {
+	color: #343434;
+	background-color: #cdcdcd;
+		background-image: linear-gradient(to bottom, #cdcdcd, #ddd);
+		border: none;
+}
+
+
 a.button {
 	color: #fff;
 }

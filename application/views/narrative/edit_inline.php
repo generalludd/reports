@@ -8,26 +8,8 @@
 	<input type="hidden"
     name="kTeach" id="kTeach" value='<?="$narrative->kTeach"; ?>' />
 
-<div><textarea id="narrText_<?php echo $narrative->kNarrative;?>" name="narrText" 
+<div><textarea id="narrText_<?php echo $narrative->kNarrative;?>" name="narrText" class="tinymce"
 	style="width: 99.75%;" rows="19" cols="107"><?=stripslashes($narrative->narrText);?></textarea></div>
 <p><span class="button new save_narrative_inline">Save</span></p>
 </form>
-<script>
-tinymce.init({ selector:'textarea#narrText_' + <?php echo $narrative->kNarrative;?>,
-	menubar: false,
-	min_height:400,
-	block_formats:'Paragraph=p;Heading=h3;Subhead=h4;Section=h5;Subsection=h6',
-	toolbar: 'bold,italic,formatselect,bullist,numlist,|,fullpage,|,cut,copy,paste,pastetext,removeformat,code,|,undo,redo,searchreplace',
-	invalid_styles: 'color font-size font-family line-height font-weight',
-	plugins: 'fullpage,paste,code,lists,searchreplace,wordcount',
-	invalid_elements: 'div,font,a',
-	setup: function (editor) {
-	        editor.on('change', function () {
-	            editor.save();
-	        });
-	    },
-	    browser_spellcheck: true,
-	    contextmenu: false
-
-	});
-</script> 
+<script src="<?php echo base_url("js/tinymce.js");?>"></script>
