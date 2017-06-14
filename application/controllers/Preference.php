@@ -18,9 +18,8 @@ class Preference extends MY_Controller {
 	/**
 	 * view preference based on the teacher id from the uri
 	 */
-	function view()
+	function view($kTeach)
 	{
-		$kTeach = $this->uri->segment ( 3 );
 		$data ['preferences'] = $this->preference->get_all ( $kTeach );
 		$data ['kTeach'] = $kTeach;
 		$this->load->model ( "teacher_model", "teacher" );
