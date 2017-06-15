@@ -1406,6 +1406,11 @@ td.not-assessed {
 	width: 100%;
 }
 
+blockquote {
+	border-left: 1px solid #ccc;
+	padding-left: .5em;
+	margin-left: .25em;
+}
 @media (max-width: 1200px){
 		.report-row {
 	flex-direction: column;
