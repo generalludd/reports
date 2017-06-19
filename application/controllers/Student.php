@@ -23,6 +23,7 @@ class Student extends MY_Controller {
 	{
 		$kStudent = $this->uri->segment ( 3 );
 		$student = $this->student_model->get ( $kStudent );
+		$student->pronouns = $this->menu_model->get_label("gender",$student->stuGender);
 		$data ['student'] = $student;
 		$data ['teacherName'] = "";
 		if (! empty ( $student->kTeach )) {
@@ -37,6 +38,8 @@ class Student extends MY_Controller {
 		// $data['humanitiesTeacher'] =
 		// $this->teacher_model->get($student->humanitiesTeacher,"teachFirst")->teachFirst;
 		// }
+		
+		
 		$data ['target'] = "student/view";
 		$data ['title'] = "Viewing $student->stuFirst $student->stuLast";
 		if ($this->input->post ( "ajax" )) {

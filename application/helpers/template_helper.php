@@ -18,14 +18,22 @@ function parse_template($template,$name,$gender){
 
 function parse_pronouns($text,$gender){
     $searchArray = array("Himself","himself","His","his","Him","him","He","he");
-    $replaceArray = array("Herself","herself","Her","her","Her","her","She","she");
-    if($gender == "F" or $gender == "Female"){
-        for($i = 0;$i < count($replaceArray); $i++){
+    $sheArray = array("Herself","herself","Her","her","Her","her","She","she");
+    $theyArray = array("Themself","themself","Their","their","Them","them","They","they");
+    if($gender == "F" or $gender == "S"){
+        for($i = 0;$i < count($sheArray); $i++){
             $term = $searchArray[$i];
             $search = "/\b$term\b/";
-            $replace = $replaceArray[$i];
+            $replace = $sheArray[$i];
             $text = preg_replace($search, $replace, $text);
         }
+    }elseif($gender == "T" or $gender == "O"){
+    	for($i = 0;$i < count($theyArray); $i++){
+    		$term = $searchArray[$i];
+    		$search = "/\b$term\b/";
+    		$replace = $theyArray[$i];
+    		$text = preg_replace($search, $replace, $text);
+    	}
     }
     return $text;
 }
