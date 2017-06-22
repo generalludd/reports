@@ -551,6 +551,19 @@ input[type='text'].grade {
 	background-color: transparent;
 }
 
+h5, h6 {
+	font-size: 1em; 
+	font-weight: bold;
+	margin-bottom: 0;
+	margin-top: .5em;
+	font-style: italic;
+}
+
+h5{
+		font-size: 1.1em; 
+}
+
+
  #student-search #h3, #student-search h4, #student-search h6 {
 	text-align: center;
 	margin: 0;
