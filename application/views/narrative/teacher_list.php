@@ -83,7 +83,14 @@ if(!empty($narratives)):
 		echo "<p><b>$narrative->narrSubject</b></p>";
 		$edit_buttons[] = array("selection"=>"view","text"=>"View","href"=> site_url("narrative/view/$narrative->kNarrative"), "title"=>"$narrSummary","class"=>"button small");
 		$edit_buttons[] = array("selection" =>"edit_inline","text"=>"Edit Inline","class" =>"button edit small edit_narrative_inline", "id" => "enil_$narrative->kNarrative", "title" => "Edit this narrative here" );
-
+// 		if($kTeach != USER_ID ){
+// 			if($narrative->narrApprover == NULL){
+// 				$edit_buttons[] = array("selection"=>"approve","text"=>"Approve","href"=>base_url("narrative/approve/$narrative->kNarrative"),"class"=>"inline button approve_narrative small edit");
+// 			}else{
+// 				$edit_buttons[] = array("selection"=>"approve","text"=>"Approved","class"=>"button inactive");
+				
+// 			}
+// 		}
 		if($narrative->stuGrade >= 5){
 			$button_type = "new";
 			$button_text = "Add Grade";
@@ -97,6 +104,11 @@ if(!empty($narratives)):
 		$edit_buttons[] = array("selection" => "message", "type" => "span", "class" => "text","text" => "(Last edited on " . format_timestamp($narrative->recModified) . " by $narrative->teachFirst $narrative->teachLast)", "id" => "time_$narrative->kNarrative");
 
 		echo create_button_bar($edit_buttons);
+		echo "<div class='narrative_status' id='narrative-status_$narrative->kNarrative'>";
+		if($narrative->narrApprover){
+			echo "<span class='message'>Approved by $narrative->approverFirst $narrative->approverLast on $narrative->narrApproved</span>";
+		}
+		echo "</div>";
 		echo  "<div id='text_$narrative->kNarrative'>$narrText</div>";
 		$thisTerm = $sortTerm;
 ?>

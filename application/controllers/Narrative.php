@@ -244,7 +244,7 @@ class Narrative extends MY_Controller {
 		// @TODO check with kTeach against user ID or allow only editor/admin
 		// user role
 		$kNarrative = $this->input->get_post ( "kNarrative" );
-		$data ['narrative'] = $this->narrative_model->get ( $kNarrative, FALSE, "kNarrative,narrText,kTeach" );
+		$data ['narrative'] = $this->narrative_model->get ( $kNarrative, FALSE, "kNarrative,narrText,narrative.kTeach" );
 		$this->load->view ( "narrative/edit_inline", $data );
 	}
 
@@ -280,8 +280,14 @@ class Narrative extends MY_Controller {
 		if ($kTeach == $userID || $dbRole == 1) {
 			$this->narrative_model->update_text ( $kNarrative, $narrText );
 		}
-		$output = $this->narrative_model->get ( $kNarrative, FALSE, "narrText, recModified" );
-		echo $output->narrText . "||" . format_timestamp ( $output->recModified );
+		//$output = $this->narrative_model->get ( $kNarrative, FALSE, "narrText, narrative.recModified, narrative.recModifier" );
+		//@TODO change to json
+		//echo $output->narrText . "||" . format_timestamp ( $output->recModified );
+		$narrative = $this->narrative_model->get($kNarrative);
+	
+		$recModified = format_timestamp($narrative->recModified);
+		$recModifier = format_name($narrative->approverFirst, $narrative->approverLast);
+		echo json_encode(array("narrText"=> $narrative->narrText, "datestamp"=>sprintf("(Last edited on %s by %s)",$recModified,$recModifier)));
 	}
 
 	/**
@@ -316,6 +322,11 @@ class Narrative extends MY_Controller {
 		$kStudent = $narrative->kStudent;
 		$kTeach = $narrative->kTeach;
 		$data ['narrative'] = $narrative;
+		if($narrative->narrApprover != NULL){
+			$data['isApproved'] = TRUE;
+		}else{
+			$data['isApproved'] = FALSE;
+		}
 		// $data ['has_benchmarks'] = $this->benchmark_model->student_has_benchmarks ( $kStudent, $narrative->narrSubject, $narrative->stuGrade, $narrative->narrTerm, $narrative->narrYear );
 		// $data ['benchmarks_available'] = $this->benchmark_model->benchmarks_available ( $narrative->narrSubject, $narrative->stuGrade, $narrative->narrTerm, $narrative->narrYear );
 		// if ($data ['has_benchmarks']) {
@@ -468,10 +479,9 @@ class Narrative extends MY_Controller {
 	 * This accepts a number of other options to limit or expand the search
 	 * results.
 	 */
-	function teacher_list()
+	function teacher_list($kTeach = NULL)
 	{
 		$this->load->model ( "teacher_model" );
-		$kTeach = $this->uri->segment ( 3 );
 		if (empty ( $kTeach )) {
 			$kTeach = $this->input->get ( "kTeach" );
 		}
@@ -879,6 +889,22 @@ class Narrative extends MY_Controller {
 		$data ['target'] = "narrative/backup_list";
 		$data ['title'] = "Narrative Backups";
 		$this->load->view ( "page/index", $data );
+	}
+	
+	function approve($kNarrative){
+			$narrative = $this->narrative_model->get($kNarrative);
+			if( USER_ID != $narrative->kTeach ){
+				$this->narrative_model->update_value($kNarrative, "narrApprover",USER_ID,FALSE);
+				$this->narrative_model->update_value($kNarrative,"narrApproved",mysql_timestamp(),FALSE);
+			}
+			$narrative = $this->narrative_model->get($kNarrative);
+				
+			if($this->input->get("ajax")){
+				echo json_encode($narrative);
+			}else{
+				redirect("narrative/view/$kNarrative");
+			}
+		
 	}
 
 	/**

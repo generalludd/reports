@@ -63,6 +63,8 @@ class Narrative_model extends MY_Model
 		$this->db->where ( 'kNarrative', $kNarrative );
 		if ($fields) {
 			$this->db->select ( $fields );
+		}else{
+			$this->db->select("narrative.*");
 		}
 		if ($include_student) {
 			$year = get_current_year();
@@ -72,7 +74,10 @@ class Narrative_model extends MY_Model
 		} else {
 			$this->db->from ( "narrative" );
 		}
+		$this->db->join("teacher as approver","narrative.recModifier = approver.kTeach","LEFT");
+		$this->db->select("approver.teachFirst as approverFirst, approver.teachLast as approverLast");
 		$result = $this->db->get ()->row ();
+		$this->_log();
 		return $result;
 
 	}
@@ -255,8 +260,10 @@ class Narrative_model extends MY_Model
 
 		$this->db->from ( "narrative,teacher as modifier" );
 		$this->db->join ( "student", "narrative.kStudent = student.kStudent", "left" );
+		$this->db->join("teacher as approver","narrative.narrApprover = approver.kTeach","LEFT");
 		$this->db->where ( "narrative.recModifier = modifier.kTeach" );
 		$this->db->select ( "modifier.teachFirst,modifier.teachLast" );
+		$this->db->select("approver.teachFirst as approverFirst, approver.teachLast as approverLast");
 		$this->db->select ( "narrative.*,(`student`.`baseGrade` + $narrYear - `student`.`baseYear`) as `currentGrade`, student.stuFirst, student.stuLast, student.stuNickname" );
 		$this->db->order_by("student.stuLast, student.stuFirst");
 		$result = $this->db->get ()->result ();

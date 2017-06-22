@@ -40,14 +40,18 @@ $(document).ready(function() {
 			};
 			var myUrl = base_url + "narrative/update_inline";
 			$.ajax({
+				dataType: "json",
 				url: myUrl,
 				type: 'POST',
 				data: form_data,
 				success: function(data){
-					output = data.split("||");
-					$("#text_" + myNarrative).html(output[0]);
-					$("#time_" + myNarrative).html(output[1]);
+					
+					$("#text_" + myNarrative).html(data['narrText']);
+					$("#time_" + myNarrative).html(data['datestamp']);
 					$("#enil_" + myNarrative).html("Edit Inline").addClass("edit").removeClass("new").removeClass("save_narrative_inline").addClass("edit_narrative_inline").focus();
+				},
+				error: function(data){
+					console.log(data);
 				}// end success-function
 			}); //end ajax
 			$('html, body').animate({ scrollTop: $("#student-text_" + myNarrative).offset().top}, 1000);

@@ -95,7 +95,6 @@ class Overview_model extends MY_Model
 		$this->db->order_by("gradeStart,gradeEnd");
 		$this->db->from('overview');
 		$result = $this->db->get()->result();
-		$this->_log();
 		return $result;
 	}
 

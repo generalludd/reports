@@ -6,7 +6,13 @@ $report_grade = $narrative->narrGrade;
 if ($letter_grade) {
 	$report_grade = $letter_grade;
 }
-?><h3><?php print "Grade $stuGrade, $narrative->narrTerm $narrative->narrYear";?></h3><p>	<a href="<?=site_url("narrative/student_list/$narrative->kStudent");?>" class='button small'>Back to Narratives</a></p><p>	<span class='highlight'>Last Modified: <?=format_timestamp( $narrative->recModified); ?> by <?="$recModifier->teachFirst $recModifier->teachLast"; ?></span></p><p>Written by: <?=$teacher;?></p> <? //if($hasSuggestions): ?><!-- <p> --><!-- 	<span class="highlight">Has Suggested Edits</span> --><!-- </p> --> <? //endif; ?><!-- middle schoolers get letter grades in some classes --><? if($stuGrade >= 6 && $report_grade && $narrative->narrSubject !="Humanities"): ?><p>Report Grade: <?=$report_grade; ?></p><? endif; ?><?php
+?><h3><?php print "Grade $stuGrade, $narrative->narrTerm $narrative->narrYear";?></h3><p>	<a href="<?=site_url("narrative/student_list/$narrative->kStudent");?>" class='button small'>Back to Narratives</a></p><p>	<span class='highlight'>Last Modified: <?=format_timestamp( $narrative->recModified); ?> by <?="$recModifier->teachFirst $recModifier->teachLast"; ?></span></p><p>Written by: <?=$teacher;?></p> <? //if($hasSuggestions): ?><!-- <p> --><!-- 	<span class="highlight">Has Suggested Edits</span> --><!-- </p> --> <? //endif; ?><!-- middle schoolers get letter grades in some classes --><? if($stuGrade >= 6 && $report_grade && $narrative->narrSubject !="Humanities"): ?><p>Report Grade: <?=$report_grade; ?></p><? endif; ?>
+
+<?php if($isApproved):?>
+<div id="narrative_status">
+	This Narrative was approved on <?php echo $narrative->narrApproved; ?> by <?php echo format_name($narrative->approverFirst, $narrative->approverLast); ?>
+</div>
+<?php endif; ?><?php
 
 
 $buttons [] = array (
