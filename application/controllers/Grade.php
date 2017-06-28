@@ -332,7 +332,7 @@ class Grade extends MY_Controller {
 			$data ['student'] = $student;
 			$data ['batch'] = FALSE;
 			$output ['student_name'] = format_name ( $student->stuNickname, $student->stuLast );
-			$data ['title'] = sprintf ( "Friends School of Minnesota Report Card for %s", $output ['student_name'] );
+			$data ['title'] = sprintf ( "Report Card for %s, %s %s", $output ['student_name'] , $term, format_schoolyear($year) );
 			$output ['charts'] = array ();
 			$i = 0;
 			foreach ( $subjects as $subject ) {

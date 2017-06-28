@@ -23,7 +23,8 @@ if(isset($batch) && $batch){
 		echo create_button_bar($buttons);
 		endif; ?>
 		<div class='report-header report-term'>
-			<?="$term, " . format_schoolyear($year, $term);?>
+		&nbsp;
+			<?php //"$term, " . format_schoolyear($year, $term);?>
 		</div>
 
 		<? if(isset($cutoff_date) && $cutoff_date):?>

@@ -371,7 +371,7 @@ class Benchmark extends MY_Controller {
 		$data ['term'] = $term;
 		$data ['year'] = $year;
 		$data ['standalone'] = TRUE;
-		$data ['title'] = sprintf ( "Benchmarks for %s, Grade: %s, %s, Quarter %s,  %s", format_name ( $student->stuFirst, $student->stuLast, $student->stuNickname ), $student_grade, $term, $quarter, format_schoolyear ( $year ) );
+		$data ['title'] = sprintf ( "%s's Benchmarks, Grade: %s, %s, Quarter %s,  %s", format_name ( $student->stuFirst, $student->stuLast, $student->stuNickname ), $student_grade, $term, $quarter, format_schoolyear ( $year ) );
 		$data ['target'] = "benchmark/chart";
 		$this->load->view ( "page/index", $data );
 	}

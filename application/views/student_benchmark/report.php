@@ -10,8 +10,6 @@ $footnotes = array();
 ?>
 <?php $this->load->view("student/navigation");?>
 
-<h3>Benchmark Reports for <?php printf("%s, Grade %s", format_name($student->stuFirst, $student->stuLast, $student->stuNickname), $student_grade);?></h3>
-<h4><?php printf("%s, %s", $term, $year); ?></h4>
 <?php $buttons[] = array("selection"=>"benchmarks", "href"=>site_url("student_benchmark/select/?kStudent=$kStudent&subject=$subject&student_grade=$student_grade&quarter=$quarter&term=$term&year=$year&edit=1"), "class"=>"button edit", "text"=>"Edit");?>
 <?php $buttons[] = array("selection"=>"benchmarks", "href"=>"javascript:print();", "class"=>"button print", "text"=>"Print");?>
 <?php $buttons[] = array("selection" => "benchmarks", "href"=>site_url("student_benchmark/select?search=1&refine=1&kStudent=$kStudent"), "class"=>"button dialog","text"=>"Refine Search");?>

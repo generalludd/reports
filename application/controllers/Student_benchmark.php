@@ -85,7 +85,7 @@ class Student_benchmark extends MY_Controller {
 				} else {
 					$data ['target'] = "student_benchmark/report";
 				}
-				$data ['title'] = "Benchmark Report";
+				$data ['title'] = sprintf("Benchmarks for %s, Grade %s, %s, %s",format_name($student->stuFirst, $student->stuLast, $student->stuNickname), $student_grade, $term, format_schoolyear($year));
 				
 				$this->load->view ( "page/index", $data );
 			} else {

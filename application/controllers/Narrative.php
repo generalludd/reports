@@ -758,7 +758,7 @@ class Narrative extends MY_Controller {
 			$data ['narratives'] = $narratives;
 			
 			$data ['student'] = $student;
-			$data ['title'] = "Narrative Report for $student";
+			$data ['title'] = sprintf("Narratives for %s, %s %s", $student, $narrTerm, format_schoolyear($narrYear) );
 			$this->load->view ( "narrative/print", $data );
 		}
 	}
