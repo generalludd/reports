@@ -433,7 +433,7 @@ class Narrative extends MY_Controller {
 					"narrYear" => $year->narrYear,
 					"narrTerm" => "Mid-Year" 
 			) );
-			$attendance = $year->narrYear >= 2016 ? $this->attendance->get ( $kStudent, "Mid-Year", $year->narrYear ) : NULL;
+			$attendance = $year->narrYear == 2016 ? $this->attendance->get_2016 ( $kStudent, "Mid-Year", $year->narrYear ) : NULL;
 			
 			$data ['reports'] [$year->narrYear] [] = $this->load->view ( "narrative/student/list", array (
 					"reports" => $reports,
@@ -450,7 +450,7 @@ class Narrative extends MY_Controller {
 					"narrYear" => $year->narrYear,
 					"narrTerm" => "Year-End" 
 			) );
-			$attendance = $year->narrYear >= 2016 ? $this->attendance->get ( $kStudent, "Year-End", $year->narrYear ) : NULL;
+			$attendance = $year->narrYear == 2016 ? $this->attendance->get_2016 ( $kStudent, "Year-End", $year->narrYear ) : NULL;
 			$data ['reports'] [$year->narrYear] [] = $this->load->view ( "narrative/student/list", array (
 					"reports" => $reports,
 					"narrYear" => $year->narrYear,
@@ -674,16 +674,16 @@ class Narrative extends MY_Controller {
 			$data ['student_obj'] = $student_obj;
 			$student = format_name ( $student_obj->stuFirst, $student_obj->stuLast, $student_obj->stuNickname );
 			$data ['stuGrade'] = get_current_grade ( $student_obj->baseGrade, $student_obj->baseYear, $narrYear );
-			if ($narrYear < 2016) { // old attendance model
+			if ($narrYear == 2016) { // temporary attendance model
+				$this->load->model ( "attendance_model", "attendance" );
+				$attendance = $this->attendance->get_2016 ( $kStudent, $narrTerm, $narrYear );
+				$data ['tardy'] = get_value ( $attendance, "tardy" );
+				$data ['absent'] = get_value ( $attendance, "absent" );
+			} else {
 				$this->load->model ( "student_attendance_model", "attendance" );
 				$attendance = $this->attendance->summarize ( $kStudent, $narrTerm, $narrYear );
 				$data ['tardy'] = $attendance ['tardy'];
 				$data ['absent'] = $attendance ['absent'];
-			} else {
-				$this->load->model ( "attendance_model", "attendance" );
-				$attendance = $this->attendance->get ( $kStudent, $narrTerm, $narrYear );
-				$data ['tardy'] = get_value ( $attendance, "tardy" );
-				$data ['absent'] = get_value ( $attendance, "absent" );
 			}
 			
 			$data ['narrYear'] = $narrYear;

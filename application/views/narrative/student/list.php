@@ -18,7 +18,7 @@ if (count ( $reports ) > 0) :
 	<h4><?=$sortTerm; ?></h4>
 
 <?
-	if ($narrYear >= 2016) {
+	if ($narrYear == 2016) {
 		echo create_button_bar ( array (
 				array (
 						"text" => "Attendance",
