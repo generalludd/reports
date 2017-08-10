@@ -18,21 +18,7 @@ if (count ( $reports ) > 0) :
 	<h4><?=$sortTerm; ?></h4>
 
 <?
-	if ($narrYear == 2016) {
-		echo create_button_bar ( array (
-				array (
-						"text" => "Attendance",
-						"title" => "Edit Attendance",
-						"selection" => "attendance",
-						"class" => "button small new dialog",
-						"href" => site_url ( "attendance/edit/$kStudent/$narrTerm/$narrYear" ) 
-				),
-				array (
-						"type" => "pass-through",
-						"text" => sprintf ( "Absent: %s, Tardy: %s", $attendance ['absent'], $attendance ['tardy'] ) 
-				) 
-		) );
-	}
+
 	$print_buttons [] = array (
 			"selection" => "print",
 			"class" => "button small",
