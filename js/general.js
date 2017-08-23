@@ -72,8 +72,10 @@
 				if($(me).hasClass("attendance-check")){
 					if($(me).hasClass("absent")){
 						attendance_type = "Absent";
-					}else{
+					}else if($(me).hasClass("tardy")){
 						attendance_type = "Tardy";
+					}else{
+						attendance_type = "Present";
 					}
 					$(me).parents(".checklist.row").children("p.student-info").append("<span class='highlight'>" + attendance_type + "</span>");
 					$(me).parents(".checklist.row").css("background-color","#EDEDED");

@@ -333,7 +333,7 @@ class Attendance extends MY_Controller {
 					} elseif ($humanitiesTeacher) {
 						$teacher = $this->teacher->get ( $humanitiesTeacher );
 					}
-					$teachClass = sprintf ( ", %s", $teacher->teachClass );
+					//$teachClass = sprintf ( ", %s", $teacher->teachClass );
 				}
 				$data ['options'] = $options;
 				$data ["students"] = $students;
@@ -401,27 +401,27 @@ class Attendance extends MY_Controller {
 // 			}
 
 // 		}
-		if ($search_array) {
-			$search_array['startDate'] = $date;
-			$search_array['attendType'] = array("Absent","Tardy");
-			$data ['records'] = $this->attendance->search ( $search_array );
-		} else {
-			$data ['records'] = $this->attendance->get_for_teacher ( $date, $kTeach );
-		}
+// 		if ($search_array) {
+// 			$search_array['startDate'] = $date;
+// 			$search_array['attendType'] = array("Absent","Tardy");
+// 			$data ['records'] = $this->attendance->search ( $search_array );
+// 		} else {
+// 			$data ['records'] = $this->attendance->get_for_teacher ( $date, $kTeach );
+// 		}
 		
-		$data ['teacher_name'] = format_name ( $teacher->teachFirst, $teacher->teachLast );
-		$message = $this->load->view ( "attendance/checklist/email", $data, TRUE );
-		$this->email->from ( $teacher->email );
-		$this->email->to ( "chrisd@fsmn.org" );
-		// $this->email->cc($teacher->email);
+// 		$data ['teacher_name'] = format_name ( $teacher->teachFirst, $teacher->teachLast );
+// 		$message = $this->load->view ( "attendance/checklist/email", $data, TRUE );
+// 		$this->email->from ( $teacher->email );
+// 		$this->email->to ( "chrisd@fsmn.org" );
+// 		// $this->email->cc($teacher->email);
 		
-		$this->email->subject ( $subject );
-		$this->email->message ( $message );
-		$this->email->set_alt_message ( $message );
-		$this->email->send ();
-		if ($this->session->userdata ( "userID" ) == ROOT_USER) {
-			$this->email->print_debugger ();
-		}
+// 		$this->email->subject ( $subject );
+// 		$this->email->message ( $message );
+// 		$this->email->set_alt_message ( $message );
+// 		$this->email->send ();
+// 		if ($this->session->userdata ( "userID" ) == ROOT_USER) {
+// 			$this->email->print_debugger ();
+// 		}
 		$note = "<p>The front office has been notified of your attendance.</p>";
 		if ($this->input->get ( "ajax" )) {
 			echo $note;
