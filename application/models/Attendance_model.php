@@ -183,7 +183,7 @@ class Attendance_model extends MY_Model {
 			
 			if (key_exists ( "attendType", $options )) {
 				if (! empty ( $options ["attendType"] )) {
-					$this->db->where ( "attendType", $options ["attendType"] );
+					$this->db->where_in ( "attendType", $options ["attendType"] );
 				}
 			}
 			
@@ -192,7 +192,7 @@ class Attendance_model extends MY_Model {
 					$this->db->where ( "attendSubtype", $options ["attendSubtype"] );
 				}
 			}
-			if ($options ["kStudent"] > 0) {
+			if (array_key_exists("kStudent",$options) && $options ["kStudent"] > 0) {
 				$this->db->where ( "student_attendance.kStudent", $options ["kStudent"] );
 			}
 			$this->db->where ( "`student_attendance`.`kStudent`", "`student`.`kStudent`", FALSE );
