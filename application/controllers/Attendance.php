@@ -323,7 +323,9 @@ class Attendance extends MY_Controller {
 						$kTeach = $this->session->userdata ( "userID" );
 					}
 					$student->attendance = $this->attendance->get_by_date ( $date, $student->kStudent );
-					$student->buttons = $this->_checklist_buttons ( $date, $student->kStudent, $kTeach, array("kAttendance"=>get_value ( $student->attendance, "kAttendance" )) );
+					$student->buttons = $this->_checklist_buttons ( $date, $student->kStudent, $kTeach, array (
+							"kAttendance" => get_value ( $student->attendance, "kAttendance" ) 
+					) );
 				}
 				$teachClass = "";
 				if ($gradeEnd < 5 || ($gradeStart == 5 && $gradeEnd == 8) || $humanitiesTeacher) {
@@ -333,7 +335,7 @@ class Attendance extends MY_Controller {
 					} elseif ($humanitiesTeacher) {
 						$teacher = $this->teacher->get ( $humanitiesTeacher );
 					}
-					//$teachClass = sprintf ( ", %s", $teacher->teachClass );
+					// $teachClass = sprintf ( ", %s", $teacher->teachClass );
 				}
 				$data ['options'] = $options;
 				$data ["students"] = $students;
@@ -356,7 +358,9 @@ class Attendance extends MY_Controller {
 			$this->truancy_notification ( $this->attendance->check_truancy ( $kStudent ) );
 			if ($kAttendance) {
 				$kTeach = $this->session->userdata ( "userID" );
-				echo $this->_checklist_buttons ( $date, $kStudent, $kTeach, array("kAttendance"=>$kAttendance ));
+				echo $this->_checklist_buttons ( $date, $kStudent, $kTeach, array (
+						"kAttendance" => $kAttendance 
+				) );
 			}
 		}
 	}
@@ -367,9 +371,11 @@ class Attendance extends MY_Controller {
 			if ($kTeach = $this->input->get ( "kTeach" )) {
 				$record = $this->attendance->revert ( $kAttendance, $kTeach );
 				$kTeach = $this->session->userdata ( "userID" );
-				if($record->attendOverride == 1){
-					echo $this->_checklist_buttons ( $record->attendDate, $record->kStudent, $kTeach, array("override"=>TRUE) );
-				}else{
+				if ($record->attendOverride == 1) {
+					echo $this->_checklist_buttons ( $record->attendDate, $record->kStudent, $kTeach, array (
+							"override" => TRUE 
+					) );
+				} else {
 					echo $this->_checklist_buttons ( $record->attendDate, $record->kStudent, $kTeach );
 				}
 			}
@@ -385,43 +391,45 @@ class Attendance extends MY_Controller {
 		$data ['subject'] = $subject;
 		$search_array = FALSE;
 		
-// 		$options = array (
-// 				"humanitiesTeacher",
-// 				"stuGroup",
-// 				"kTeach",
-// 				"gradeStart",
-// 				"gradeEnd" 
-// 		);
-// 		$cookie_day = "";  // sprintf ( "%s-", date ( "D" ) );
-// 		for ( $i=0;$i<count($options);$i++ ) {
-// 			print get_cookie($cookie_day . $options[$i]);
-				
-// 			if (get_cookie ( $options[$i] )) {
-// 				$search_array [$options[$i]] = get_cookie ($cookie_day .  $options[$i] );
-// 			}
-
-// 		}
-// 		if ($search_array) {
-// 			$search_array['startDate'] = $date;
-// 			$search_array['attendType'] = array("Absent","Tardy");
-// 			$data ['records'] = $this->attendance->search ( $search_array );
-// 		} else {
-// 			$data ['records'] = $this->attendance->get_for_teacher ( $date, $kTeach );
-// 		}
+		$options = array (
+				"humanitiesTeacher",
+				"stuGroup",
+				"kTeach",
+				"gradeStart",
+				"gradeEnd" 
+		);
+		$cookie_day = ""; // sprintf ( "%s-", date ( "D" ) );
+		for($i = 0; $i < count ( $options ); $i ++) {
+			print get_cookie ( $cookie_day . $options [$i] );
+			
+			if (get_cookie ( $options [$i] )) {
+				$search_array [$options [$i]] = get_cookie ( $cookie_day . $options [$i] );
+			}
+		}
+		if ($search_array) {
+			$search_array ['startDate'] = $date;
+			$search_array ['attendType'] = array (
+					"Absent",
+					"Tardy" 
+			);
+			$data ['records'] = $this->attendance->search ( $search_array );
+		} else {
+			$data ['records'] = $this->attendance->get_for_teacher ( $date, $kTeach );
+		}
 		
-// 		$data ['teacher_name'] = format_name ( $teacher->teachFirst, $teacher->teachLast );
-// 		$message = $this->load->view ( "attendance/checklist/email", $data, TRUE );
-// 		$this->email->from ( $teacher->email );
-// 		$this->email->to ( "chrisd@fsmn.org" );
-// 		// $this->email->cc($teacher->email);
+		$data ['teacher_name'] = format_name ( $teacher->teachFirst, $teacher->teachLast );
+		$message = $this->load->view ( "attendance/checklist/email", $data, TRUE );
+		$this->email->from ( $teacher->email );
+		$this->email->to ( "frontoffice@fsmn.org" );
+		$this->email->cc ( $teacher->email );
 		
-// 		$this->email->subject ( $subject );
-// 		$this->email->message ( $message );
-// 		$this->email->set_alt_message ( $message );
-// 		$this->email->send ();
-// 		if ($this->session->userdata ( "userID" ) == ROOT_USER) {
-// 			$this->email->print_debugger ();
-// 		}
+		$this->email->subject ( $subject );
+		$this->email->message ( $message );
+		$this->email->set_alt_message ( $message );
+		$this->email->send ();
+		if ($this->session->userdata ( "userID" ) == ROOT_USER) {
+			$this->email->print_debugger ();
+		}
 		$note = "<p>The front office has been notified of your attendance.</p>";
 		if ($this->input->get ( "ajax" )) {
 			echo $note;
@@ -452,8 +460,6 @@ class Attendance extends MY_Controller {
 		print "Days Tardy: " . $attendance ['tardy'] . ", Days Absent: " . $attendance ["absent"];
 	}
 
-
-	
 	/**
 	 *
 	 * @param stdObj $record
@@ -471,9 +477,9 @@ class Attendance extends MY_Controller {
 			}
 			$student = format_name ( $record->stuNickname, $record->stuLast );
 			$subject = sprintf ( "Truancy alert for %s", $student );
-			if ($subtype == "Unexcused" ) {
+			if ($subtype == "Unexcused") {
 				$threshold = UNEXCUSED_THRESHOLD;
-			}elseif($subtype == "Illness"){
+			} elseif ($subtype == "Illness") {
 				$threshold = ILLNESS_THRESHOLD;
 			} else {
 				$threshold = TRUANCY_THRESHOLD;
@@ -497,14 +503,13 @@ class Attendance extends MY_Controller {
 
 	function _checklist_buttons($date, $kStudent, $kTeach, $options = array())
 	{
-		if (array_key_exists("kAttendance",$options) && $options["kAttendance"] != NULL) {
-			$kAttendance = $options['kAttendance'];
+		if (array_key_exists ( "kAttendance", $options ) && $options ["kAttendance"] != NULL) {
+			$kAttendance = $options ['kAttendance'];
 			$buttons [] = array (
 					"text" => "Revert",
 					"class" => "button inline edit small revert-absence",
 					"href" => base_url ( "attendance/revert?kTeach=$kTeach&kAttendance=$kAttendance" ) 
 			);
-		
 		} else {
 			$buttons [] = array (
 					"text" => "Mark Tardy <i class='fa fa-clock-o'></i>",
@@ -523,8 +528,8 @@ class Attendance extends MY_Controller {
 					"class" => "button inline small present attendance-check",
 					"href" => base_url ( "attendance/absent?date=$date&kStudent=$kStudent&attendType=Present" ),
 					"id" => sprintf ( "Present_%s_%s", $date, $kStudent ) 
-					
-			);
+			)
+			;
 		}
 		return create_button_bar ( $buttons );
 	}
