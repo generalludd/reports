@@ -399,23 +399,23 @@ class Attendance extends MY_Controller {
 				"gradeEnd" 
 		);
 		$cookie_day = ""; // sprintf ( "%s-", date ( "D" ) );
-		for($i = 0; $i < count ( $options ); $i ++) {
-			print get_cookie ( $cookie_day . $options [$i] );
+// 		for($i = 0; $i < count ( $options ); $i ++) {
+// 			print get_cookie ( $cookie_day . $options [$i] );
 			
-			if (get_cookie ( $options [$i] )) {
-				$search_array [$options [$i]] = get_cookie ( $cookie_day . $options [$i] );
-			}
-		}
-		if ($search_array) {
-			$search_array ['startDate'] = $date;
-			$search_array ['attendType'] = array (
-					"Absent",
-					"Tardy" 
-			);
-			$data ['records'] = $this->attendance->search ( $search_array );
-		} else {
+// 			if (get_cookie ( $options [$i] )) {
+// 				$search_array [$options [$i]] = get_cookie ( $cookie_day . $options [$i] );
+// 			}
+// 		}
+// 		if ($search_array) {
+// 			$search_array ['startDate'] = $date;
+// 			$search_array ['attendType'] = array (
+// 					"Absent",
+// 					"Tardy" 
+// 			);
+// 			$data ['records'] = $this->attendance->search ( $search_array );
+// 		} else {
 			$data ['records'] = $this->attendance->get_for_teacher ( $date, $kTeach );
-		}
+// 		}
 		
 		$data ['teacher_name'] = format_name ( $teacher->teachFirst, $teacher->teachLast );
 		$message = $this->load->view ( "attendance/checklist/email", $data, TRUE );
