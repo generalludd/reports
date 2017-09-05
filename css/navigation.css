@@ -1,7 +1,5 @@
 @CHARSET "UTF-8";
-#header {
-	height: 4em;
-}
+
 #navigation {
 	flex: 1;
 	position: relative;

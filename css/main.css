@@ -442,10 +442,11 @@ legend {
 	padding: 0;
 	position: relative;
 	height: auto;
+	display: flex;
+	flex-direction: row;
 }
 
 #site-name {
-	float: left;
 	font-size: 1.3em;
 	font-weight: bold;
 }
@@ -465,8 +466,7 @@ legend {
 }
 
 #utility {
-	float: right;
-	clear: right;
+
 }
 
 #utility p {
@@ -1452,5 +1452,15 @@ blockquote {
 	.report-row .block.odd {
 	order: 2;
 	}
-
+	
+	#main{
+	flex-direction: column;
+	}
+	#header{
+	flex-direction: column;
+	}
+	#student-search {
+	min-width: inherit;
+	width: 100%;
+	}
 }
