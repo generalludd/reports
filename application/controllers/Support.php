@@ -144,7 +144,7 @@ class Support extends MY_Controller {
 		$config ['upload_path'] = './uploads';
 		$this->load->helper ( 'directory' );
 		$config ['allowed_types'] = 'gif|jpg|png|pdf|rtf|PDF|JPG|JPEG|RTF|doc|docx|DOC|DOCX';
-		$config ['max_size'] = '15288'; // rely on PHP's built-in limit
+		$config ['max_size'] = '0'; // rely on PHP's built-in limit
 		$config ['max_width'] = '0';
 		$config ['max_height'] = '0';
 		
@@ -155,7 +155,10 @@ class Support extends MY_Controller {
 			$error = array (
 					'error' => $this->upload->display_errors () 
 			);
-			print_r ( $error );
+			$this->session->set_flashdata("warning",$error['error']);
+			$kSupport = $this->input->post ( "kSupport" );		
+			redirect ( "support/edit/$kSupport" );
+				
 			// $this->list_all($kStudent,$error);
 		} else {
 			$file_data = $this->upload->data ();
