@@ -14,6 +14,9 @@ if(array_key_exists("grades", $criteria)){
 <ul>
 	<li>Year: <strong><?=format_schoolyear($criteria["year"]);?></strong></li>
 	<li>Grades: <strong><?=$grades?></strong></li>
+	<?php if(array_key_exists("grouping",$criteria)):?>
+		<li><strong>Grouping by Grade</strong></li>
+	<?php endif; ?>
 	<? if(array_key_exists("hasNeeds", $criteria)): ?>
 		<li><strong>Showing only students with additional support requirements</strong></li>
 	<? endif; ?>

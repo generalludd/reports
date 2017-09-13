@@ -239,6 +239,12 @@ class Student extends MY_Controller {
 			$options ['sorting'] = $sorting;
 			bake_cookie ( "sorting", $sorting );
 		}
+		$grouping = NULL;
+		if($this->input->get("grouping")){
+			$grouping = $this->input->get("grouping");
+			$options['grouping'] = $grouping;
+			bake_cookie('grouping',$grouping);
+		}
 		// $this->session->set_userdata($session);
 		$data ['students'] = $this->student_model->get_all ( $year, $options );
 		$options['year'] = $year;

@@ -40,43 +40,36 @@ $default_row_style = array (
 		<?="Students of $student->teacherName ($student->teachClass)";?>
 	</h3>
 
-	<?
-				$current_teacher = $student->teacherName;
+	<?php 
+				$current_teacher = $student->teacherName;?>
+	<?php endif;?>
 			
-			
-	endif;
-		
-		
-	endif;
-		if (array_key_exists ( "humanitiesTeacher", $criteria )) :
-			if ($humanities_teacher != $student->humanitiesTeacher) :
+	<?php endif; ?>
+	<?php 	if (array_key_exists ( "humanitiesTeacher", $criteria )) : ?>
+	<?php 		if ($humanities_teacher != $student->humanitiesTeacher) : ?>
 				?>
 		<h3 class='teacher_row'>
-			<?="$student->humanitiesTeacher's Humanities Class"?>
+			<?php echo "$student->humanitiesTeacher's Humanities Class"?>
 		</h3>
 	
-		<?
-				$humanities_teacher = $student->humanitiesTeacher;
+		<?php
+				$humanities_teacher = $student->humanitiesTeacher; ?>
 			
 			
-		endif;
+		<?php endif; ?>
 		
 		
-		endif;
-		if ($current_grade != $stuGrade) :
-			?>
+		<?php endif; ?>
+		<?php if ($current_grade != $stuGrade && array_key_exists("grouping",$criteria)): ?>
 
 	<h4 class='grade_row'>
 		Grade
-		<?= format_grade($stuGrade)?>
+		<?php echo format_grade($stuGrade)?>
 	</h4>
-	<?
-			
-			$current_grade = $stuGrade;
+	<?php	$current_grade = $stuGrade; ?>
 		
 		
-	endif;
-		?>
+	<?php endif;?>
 	<div class='<?=implode(" ",$row_style);?>'>
 		<div class='<?=implode(" ", $student_style);?>'>
 			<a href=<?=site_url("student/view/$student->kStudent");?> class='link'><?="$name";?></a>
@@ -84,9 +77,13 @@ $default_row_style = array (
 			<? if(get_value($student,"stuEmailPermission") == 1): ?>
 			<? echo "&nbsp;" . format_email($student->stuEmail);?>
 			<? endif;?>
+						<?php if(!array_key_exists("grouping",$criteria)):?>
+			Grade: <?php echo $stuGrade;?>
+			<?php endif;?>
 			<? if(get_value($student,"stuGroup") == "A"|| get_value($student,"stuGroup") == "B"):?>
 			<? echo "&nbsp;Group: $student->stuGroup";?>
 			<? endif;?>
+
 		</div>
 		<?
 		$this->load->view("student/navigation",array("student"=>$student, "kStudent"=>$student->kStudent, "style"=>"mini-buttons"));

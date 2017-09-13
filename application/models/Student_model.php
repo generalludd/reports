@@ -276,8 +276,9 @@ class Student_model extends MY_Model
     		$this->db->order_by("teacher.gradeStart");
     		$this->db->order_by("teacher.teachClass");
     	}
-    	$this->db->order_by("stuGrade", "ASC");
-    	
+    	if(array_key_exists("grouping",$options)){
+    		$this->db->order_by("stuGrade", "ASC");
+    	}
     	if(array_key_exists("sorting",$options)){
     		if($options["sorting"] == "last_first"){
     			$this->db->order_by("student.stuLast");
