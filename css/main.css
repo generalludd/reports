@@ -444,6 +444,7 @@ legend {
 	height: auto;
 	display: flex;
 	flex-direction: row;
+	justify-content: space-between;
 }
 
 #site-name {
@@ -657,6 +658,11 @@ li.attendance:first-child {
 }
 /*column boxes (see attendance_list.inc.html)
 */
+.column {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-evenly;
+}
 .columnbox {
 	width: 100%;
 }
@@ -1352,27 +1358,13 @@ th.grade-confirmation {
 
 }
 .column {
-	float: left;
-	width: 40%;
 	position: relative;
 	display: block;
-
 	border-radius: 3px;
 }
 
-.column.even {
-	clear: left;
-	margin-right: .5em;
-}
 
-.column.odd {
-	clear: right;
-	margin-left: .5em;
-}
 
-.column-3 {
-	width: auto;
-}
 
 .class-listing.column-3 {
 	width: 1.75in;

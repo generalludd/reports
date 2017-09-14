@@ -25,15 +25,14 @@ class Teacher extends MY_Controller {
 			$data ['options'] ['showInactive'] = TRUE;
 		}
 		
-		if ($this->input->get_post ( "showAdmin" )) {
-			$data ['options'] ['showAdmin'] = TRUE;
-		}
+		
 		
 		$roles = $this->input->get_post ( "role" );
 		if (! $roles) {
 			$roles = array (
-					0 => 2,
-					1 => 3 
+					0 => 1,
+					1 => 2,
+					2 => 3 
 			);
 		}
 		foreach ( $roles as $role ) {
@@ -43,18 +42,6 @@ class Teacher extends MY_Controller {
 			);
 		}
 		$data ['options'] ['roles'] = $roles;
-		/*
-		 * $data['options']['gradeRange']['gradeStart'] = -1;
-		 * $data['options']['gradeRange']['gradeEnd'] = -1;
-		 * if ($this->input->get("gradeStart") && $this->input->get("gradeEnd")) {
-		 * $gradeStart = $this->input->get("gradeStart");
-		 * $gradeEnd = $this->input->get("gradeEnd");
-		 * $data['options']['gradeRange']['gradeStart'] = $gradeStart;
-		 * $data['options']['gradeRange']['gradeEnd'] = $gradeEnd;
-		 * bake_cookie("gradeStart", $gradeStart);
-		 * bake_cookie("gradeEnd", $gradeEnd);
-		 * }
-		 */
 		
 		$data ['teachers'] = $this->teacher_model->get_all ( $data ['options'] );
 		$data ['options'] ['roles'] = $data ['roles'];

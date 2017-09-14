@@ -1,4 +1,5 @@
 <?php ?>
+<!-- teacher/list.php -->
 	<fieldset class="search_fieldset">
 		<legend>Search Parameters</legend>
 		<?
@@ -47,27 +48,27 @@ if (! empty($options)) {
 ?>
 	</fieldset>
 	<?=create_button_bar(array(array("text"=>"New User","class"=>"button new dialog","href"=>site_url("teacher/create"),"dbRole"=>1)));?>
+<div class="column-group">
 
 <? foreach($roles as $role):?>
-<div class="column column-3">
-	<h4><?=$role["label"];?></h4>
-	<table class="list">
-		<tbody>
-<? foreach ($teachers as $teacher):?>
-<? if($teacher->dbRole == $role["value"]):?>
+<div class="column">
+	<h4><?php echo $role["label"];?></h4>
+<ul>
+<?php foreach($teachers as $teacher):?>
+<?php if($teacher->dbRole == $role['value']):?>
+<?php $css = $teacher->status === 0? "disabled inactive":"active";?>
+<li class="<?php echo $css;?>">
+<a href="<?php echo site_url("teacher/view/$teacher->kTeach");?>" class="link">
+<?php echo format_name($teacher->teachFirst, $teacher->teachLast); ?>
+</a><?php echo $teacher->dbRole != 1? sprintf(" (%s)", format_grade_range($teacher->gradeStart, $teacher->gradeEnd)): "";?>
+</li>
+<?php endif;?>
+<?php endforeach; ?>
+</ul>
 
-				<tr <? echo $teacher->status != 1? "class='disabled inactive'":"";?>>
-				<td style="width: 50%;"><a
-					href="<?=site_url("teacher/view/$teacher->kTeach");?>"
-					class='link'><?=format_name($teacher->teachFirst,$teacher->teachLast);?></a></td>
-				<td><? echo $teacher->dbRole !=1 ?  format_grade_range($teacher->gradeStart, $teacher->gradeEnd): ""; ?> </td>
-			</tr>
-
-<? endif; ?>
-<? endforeach; ?>
-</tbody>
-	</table>
 </div>
-<? endforeach;?>
+
+<?php endforeach; ?>
+</div>
 
 

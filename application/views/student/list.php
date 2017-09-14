@@ -7,53 +7,56 @@ $default_row_style = array (
 		"row" 
 );
 ?>
+<!-- student/list.php -->
 <div class='student_list'>
 
 
-	<?php
+<?php
+
+foreach ( $students as $student ) :
 	
-	foreach ( $students as $student ) :
-		$student_style = array (
-				"student-name" 
-		);
-		$stuGrade = get_value ( $student, "stuGrade", get_current_grade ( $student->baseGrade, $student->baseYear, get_current_year () ) );
-		$enrolled = "";
-		$row_style = $default_row_style;
-		if ($student->isEnrolled == 0) {
-			// $student_style[] = "disabled";
-			$row_style ["tag"] = "disabled";
-			$enrolled = "<span>(Not Enrolled)</span>";
-			
-			if ($student->isGraduate == 1) {
-				$row_style ["tag"] = "highlight";
-				$enrolled = "(Alumna)";
-				if ($student->stuGender == "M") {
-					$enrolled = "(Alumnus)";
-				}
-			}
-		}
-		$name = format_name ( $student->stuFirst, $student->stuLast, $student->stuNickname );
-		if (array_key_exists ( "kTeach", $criteria )) :
-			if ($current_teacher != $student->teacherName) :
-				?>
+	$student_style = array (
+			"student-name" 
+	);
+	
+	$stuGrade = get_value ( $student, "stuGrade", get_current_grade ( $student->baseGrade, $student->baseYear, get_current_year () ) );
+	$enrolled = "";
+	$row_style = $default_row_style;
+	if ($student->isEnrolled == 0) :
+		$row_style ["tag"] = "disabled";
+		$enrolled = "<span>(Not Enrolled)</span>";
+		
+		if ($student->isGraduate == 1) :
+			$row_style ["tag"] = "highlight";
+			$enrolled = "(Alumn)";
+		
+				
+			endif;
+	
+		endif;
+	$name = format_name ( $student->stuFirst, $student->stuLast, $student->stuNickname );
+	if (array_key_exists ( "kTeach", $criteria )) :
+		if ($current_teacher != $student->teacherName) :
+			?>
+				<!-- teacher_row -->
 	<h3 class='teacher_row'>
-		<?="Students of $student->teacherName ($student->teachClass)";?>
+		<? echo "Students of $student->teacherName ($student->teachClass)";?>
 	</h3>
 
-	<?php 
-				$current_teacher = $student->teacherName;?>
+	<?php $current_teacher = $student->teacherName; ?>
 	<?php endif;?>
 			
 	<?php endif; ?>
 	<?php 	if (array_key_exists ( "humanitiesTeacher", $criteria )) : ?>
 	<?php 		if ($humanities_teacher != $student->humanitiesTeacher) : ?>
-				?>
+				
 		<h3 class='teacher_row'>
 			<?php echo "$student->humanitiesTeacher's Humanities Class"?>
 		</h3>
 	
 		<?php
-				$humanities_teacher = $student->humanitiesTeacher; ?>
+			$humanities_teacher = $student->humanitiesTeacher;
+			?>
 			
 			
 		<?php endif; ?>
@@ -86,8 +89,12 @@ $default_row_style = array (
 
 		</div>
 		<?
-		$this->load->view("student/navigation",array("student"=>$student, "kStudent"=>$student->kStudent, "style"=>"mini-buttons"));
-		?>
+	$this->load->view ( "student/navigation", array (
+			"student" => $student,
+			"kStudent" => $student->kStudent,
+			"style" => "mini-buttons" 
+	) );
+	?>
 	</div>
 	<? endforeach; ?>
 </div>
