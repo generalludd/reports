@@ -1,6 +1,7 @@
-<?php
+<?php ?>
+<!-- student_attendance/list.php -->
+<?php 
 $student_link = NULL;
-$search_title = "<h3>$title</h3>";
 $button_bar = "";
 // $search_button = "<div class='button-box'><a class='button dialog' href='>Modify Search</span></div>";
 $search_button = create_button_bar ( array (
@@ -32,7 +33,6 @@ if ($action == "search") {
 }
 
 
-print $search_title;
 print $button_bar;
 print $search_fieldset;
 if ($this->session->userdata ( "dbRole" ) == 1) :

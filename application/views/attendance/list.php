@@ -44,7 +44,7 @@ if (! empty ( $attendance )) :
 	
 	?>
 <?php if($kStudent):?>
-
+<!-- attendance/list.php -->
 <?php 	print create_button_bar(array(array("selection"=>"attendance","href"=>site_url("attendance/create/$student->kStudent"),"class"=>"button dialog new","text"=>"Add Attendance")));?>
 <h4>Attendance Summary</h4>
 <p>Days Absent: <strong><?php echo $summary['absent'];?></strong>, Days Tardy: <strong><?php echo $summary['tardy'];?></strong></p>
