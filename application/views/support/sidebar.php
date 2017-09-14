@@ -45,6 +45,14 @@ $buttons[] = array("selection" => "close", "type" => "span", "text"=>"Close", "c
 print create_button_bar($buttons);
 ?>
 <h3><?=$year . "-" . $year_end?></h3>
+<?php if($entry->strengths):?>
+<h4>Strengths</h4>
+<p><?php echo $entry->strengths; ?></p>
+<?php endif;?>
+<?php if($entry->strategies):?>
+<h4>Strategies</h4>
+<p><?php echo $entry->strategies; ?></p>
+<?php endif;?>
 <h4>Diagnosis/Description</h4>
 <p><?=$entry->specialNeed;?></p>
 <p>Has had fall meeting: <strong><?=$had_meeting;?></strong></p>

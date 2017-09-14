@@ -65,6 +65,7 @@ $buttons [] = array (
 
 $button_box = create_button_bar ( $buttons );
 ?>
+<!-- support/edit.php -->
 <form name="support-editor" id="support-editor" class="editor" action="<?php echo site_url("support/$action");?>" method="post">
 
 
@@ -81,61 +82,78 @@ $button_box = create_button_bar ( $buttons );
 		<input id='yearEnd' name='yearEnd' size="5" maxlength="4" value='<?php echo $year_end; ?>' readonly />
 	</p>
 	<p>
-	<label for="meeting">Fall Meeting Completed for <?php echo format_schoolyear(get_value($support,"year", $year)); ?></label>
-		<input type="checkbox" id="meeting" name="meeting" value="1" <?php echo $meetingChecked;?> /> 
+		<label for="meeting">Fall Meeting Completed for <?php echo format_schoolyear(get_value($support,"year", $year)); ?></label>
+		<input type="checkbox" id="meeting" name="meeting" value="1" <?php echo $meetingChecked;?> />
 	</p>
 	<p>
-				<label for="hasIEP">Has Active IEP:</label>
-				<input type="checkbox" id="hasIEP" name="hasIEP" value="1" <?php echo $iepChecked; ?> />
-			</p>
-			<p>
-				<label for="hasSPPS">Receives SPPS Services</label>
-				<input type="checkbox" id="hasSPPS" name="hasSPPS" value="1" <?php echo $sppsChecked; ?> />
-			</p>
+		<label for="hasIEP">Has Active IEP:</label>
+		<input type="checkbox" id="hasIEP" name="hasIEP" value="1" <?php echo $iepChecked; ?> />
+	</p>
+	<p>
+		<label for="hasSPPS">Receives SPPS Services</label>
+		<input type="checkbox" id="hasSPPS" name="hasSPPS" value="1" <?php echo $sppsChecked; ?> />
+	</p>
 	<p>
 		<label for="testDate">Date <?php echo $support->stuFirst; ?> was formally tested: </label>
 		<input type="date" name="testDate" id="testDate" value="<?php echo $test_date;?>" size="17">
 	</p>
 	<div class='<?php if(get_cookie("accordion") == "enable"){print "accordion";} ?>' id='needAccordion'>
-	<h3><a>Strengths</a></h3>
-	<div>
+		<h3>
+			<a>Strengths</a>
+		</h3>
+		<div>
+	
 	<p class="notice">Enter ONLY the student's strengths here.</p>
-				<textarea name="strengths" id="strengths" class="tinymce" style="width: 99%" rows="10" cols="91"><?php echo get_value($support,"strengths");?></textarea>
+			<textarea name="strengths" id="strengths" class="tinymce" style="width: 99%" rows="10" cols="91" readonly ><?php echo get_value($support,"strengths");?></textarea>
+
 	</div>
-			<h3>
+
+
+		<h3>
 			<a>Strategies</a>
 		</h3>
 		<div>
+		
 			<p class="notice">Strategies in place for students</p>
-			<textarea name="strategies" id="strategies" class="tinymce" style="width: 99%" rows="15" cols="91"><?php echo get_value($support,"strategies");?></textarea>
+			<textarea name="strategies" id="strategies" class="tinymce" style="width: 99%" rows="15" cols="91" readonly><?php echo get_value($support,"strategies");?></textarea>
+
 		</div>
+
 		<h3>
 			<a>Special Need/Diagnosis</a>
 		</h3>
 		<div>
+		
 			<p class="notice">Use this only for description/diagnosis. Please enter meds, Galtier attendance, etc under "Outside Services" section below
 				this.</p>
-			<textarea name="specialNeed" id="specialNeed" class="tinymce" style="width: 99%" rows="25" cols="91"><?php echo get_value($support,"specialNeed");?></textarea>
+			<textarea name="specialNeed" id="specialNeed" class="tinymce" style="width: 99%" rows="25" cols="91"><?php echo get_value($support,"specialNeed", "No Special Needs Entered");?></textarea>
+
 		</div>
 
 		<h3>
-		<a href="#">Accommodations at FSM</a>
+			<a href="#">Accommodations at FSM</a>
 		</h3>
 		<div>
+		
 			<textarea name="modification" id="modification" class="tinymce" style="width: 99%" rows="13" cols="91"><?=get_value($support,"modification"); ?></textarea>
+
 		</div>
+		
 		<h3 id="services-section">
 			<a>Outside services, Galtier, medications or other treatments</a>
 		</h3>
 		<div>
+		
 			<div class='notice'>i.e. Orton-Gillingham, Galtier, Homework Help, etc. Include start and end date if applicable.</div>
 			<textarea name="outsideSupport" id="outsideSupport" rows="15" style="width: 99%" class="tinymce"><?php echo get_value($support, "outsideSupport"); ?></textarea>
+
 		</div>
+		
 		<h3 id="attachment-section">
 			<a>File Attachments</a>
 		</h3>
 		<div>
-			<div class="alert hidden" id="attachment-content-warning" style="width: 45%">Make sure that any important points covered in attached files
+			<div class="alert" id="attachment-content-warning" style="width: 45%">Make sure that any important points covered in attached files
 				are also summarized above. This makes it easier for faculty and aides to quickly read a student's profile.</div>
 			<p>
 				<span class='insert-message notice <?php echo $show_item;?>'>You must save this document before you can attach files.</span>
@@ -143,7 +161,7 @@ $button_box = create_button_bar ( $buttons );
 				<span class="button show-support-file-uploader <?php echo $hide_item;?>">Add a File</span>
 			</p>
 		
-			<? if($support_files): ?>
+			<?php if($support_files): ?>
 				<table id="support-file-list" class="files list">
 				<thead>
 					<tr>
@@ -157,7 +175,7 @@ $button_box = create_button_bar ( $buttons );
 					</tr>
 				</thead>
 				<tbody>
-						<? foreach($support_files as $file):?>
+						<?php foreach($support_files as $file):?>
 							<tr id='fr_<?php echo $file->kFile;?>'>
 						<td>
 							<a href='<?php echo base_url("uploads/$file->file_name");?>' target='_blank'><?php echo $file->file_display_name;?></a>
@@ -172,7 +190,6 @@ $button_box = create_button_bar ( $buttons );
 			</table>
 			<?php endif; ?>
 		</div>
-
 
 	</div>
 

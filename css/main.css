@@ -295,6 +295,18 @@ div.narrative {
 	border-radius: 3px;
 }
 
+.support-view .button-box{
+	display: none;
+}
+.support-view:hover {
+	background-color: #efefef;
+}
+.support-view:hover .button-box{
+	display: block;
+float: right;	
+}
+
+
 .button {
 	text-align: center;
 	position: static;
