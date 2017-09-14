@@ -102,6 +102,13 @@ $button_box = create_button_bar ( $buttons );
 	<p class="notice">Enter ONLY the student's strengths here.</p>
 				<textarea name="strengths" id="strengths" class="tinymce" style="width: 99%" rows="10" cols="91"><?php echo get_value($support,"strengths");?></textarea>
 	</div>
+			<h3>
+			<a>Strategies</a>
+		</h3>
+		<div>
+			<p class="notice">Strategies in place for students</p>
+			<textarea name="strategies" id="strategies" class="tinymce" style="width: 99%" rows="15" cols="91"><?php echo get_value($support,"strategies");?></textarea>
+		</div>
 		<h3>
 			<a>Special Need/Diagnosis</a>
 		</h3>
@@ -110,6 +117,7 @@ $button_box = create_button_bar ( $buttons );
 				this.</p>
 			<textarea name="specialNeed" id="specialNeed" class="tinymce" style="width: 99%" rows="25" cols="91"><?php echo get_value($support,"specialNeed");?></textarea>
 		</div>
+
 		<h3>
 		<a href="#">Accommodations at FSM</a>
 		</h3>

@@ -1340,9 +1340,17 @@ th.grade-confirmation {
 }
 .column-group{
 	display: flex;
-	justify-content: space-between;
-	
 }
+
+ul.no-style.list {
+	padding: 0;
+	padding-right: 1em;
+}
+ul.no-style.list li {
+list-style: none;
+padding: .25em 0;
+}
+
 /** STUDENT VIEW LAYOUT **/
 #student-info {
 	flex: 1;

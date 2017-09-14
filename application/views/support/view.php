@@ -78,6 +78,10 @@ if (! $print) {
 <h4>Strengths</h4>
 <p><?php echo $entry->strengths; ?></p>
 <?php endif;?>
+<?php if($entry->strategies):?>
+<h4>Strategies</h4>
+<p><?php echo $entry->strategies; ?></p>
+<?php endif;?>
 <h4>Diagnosis/Description</h4>
 	<p><?=$entry->specialNeed;?></p>
 	<p>

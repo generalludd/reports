@@ -53,7 +53,7 @@ if (! empty($options)) {
 <? foreach($roles as $role):?>
 <div class="column">
 	<h4><?php echo $role["label"];?></h4>
-<ul>
+<ul class="no-style list">
 <?php foreach($teachers as $teacher):?>
 <?php if($teacher->dbRole == $role['value']):?>
 <?php $css = $teacher->status === 0? "disabled inactive":"active";?>
