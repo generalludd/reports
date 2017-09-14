@@ -32,7 +32,7 @@ body {
 	padding-bottom: 10px;
 	display: flex;
 	flex-direction: column;
- }
+}
 
 .highlight {
 	padding: 2px;
@@ -179,9 +179,8 @@ div.login-title {
 	cursor: pointer;
 }
 
-.notice{
+.notice {
 	clear: both;
-	
 }
 
 #message {
@@ -295,17 +294,21 @@ div.narrative {
 	border-radius: 3px;
 }
 
-.support-view .button-box{
-	display: none;
+.support-view {
+	transition: ease all .25s;
 }
+
+.support-view .button-box {
+	float: right;
+}
+
 .support-view:hover {
 	background-color: #efefef;
 }
-.support-view:hover .button-box{
-	display: block;
-float: right;	
-}
 
+.support-view:hover .button-box {
+	display: block;
+}
 
 .button {
 	text-align: center;
@@ -317,9 +320,7 @@ float: right;
 	font-weight: normal;
 	transition: all .25s ease;
 	white-space: nowrap;
-
 }
-
 
 .button-box.small .button-list {
 	margin: .25em 0;
@@ -365,9 +366,9 @@ a, .button {
 	cursor: pointer;
 }
 
-a.button, input[type='submit'].button{
+a.button, input[type='submit'].button {
 	text-decoration: none;
-			margin: 0 .25em;
+	margin: 0 .25em;
 	display: inline-block;
 }
 
@@ -393,7 +394,6 @@ ul.button-list li {
 	padding: 0;
 	display: inherit;
 }
-
 
 ul.button-list li .button.delete {
 	margin-left: 50px;
@@ -472,14 +472,13 @@ legend {
 	margin: 0;
 }
 
-
 #navigation ul {
 	padding: 0;
 	margin: 0;
 }
 
 #utility {
-
+	
 }
 
 #utility p {
@@ -487,8 +486,6 @@ legend {
 }
 
 /* end header page layout elements */ /*main div layout elements */
-
-
 #sidebar {
 	display: none;
 	font-size: 12px;
@@ -565,19 +562,18 @@ input[type='text'].grade {
 }
 
 h5, h6 {
-	font-size: 1em; 
+	font-size: 1em;
 	font-weight: bold;
 	margin-bottom: 0;
 	margin-top: .5em;
 	font-style: italic;
 }
 
-h5{
-		font-size: 1.1em; 
+h5 {
+	font-size: 1.1em;
 }
 
-
- #student-search #h3, #student-search h4, #student-search h6 {
+#student-search #h3, #student-search h4, #student-search h6 {
 	text-align: center;
 	margin: 0;
 	padding: 0;
@@ -675,6 +671,7 @@ li.attendance:first-child {
 	flex-direction: row;
 	justify-content: space-evenly;
 }
+
 .columnbox {
 	width: 100%;
 }
@@ -970,6 +967,7 @@ fieldset .button-box {
 	margin-left: auto;
 	margin-right: auto;
 }
+
 fieldset .button-box .button-list {
 	justify-content: flex-end;
 }
@@ -1350,7 +1348,8 @@ table.report td.field.buttons, table.report th.field.buttons {
 th.grade-confirmation {
 	width: 25px;
 }
-.column-group{
+
+.column-group {
 	display: flex;
 }
 
@@ -1358,9 +1357,10 @@ ul.no-style.list {
 	padding: 0;
 	padding-right: 1em;
 }
+
 ul.no-style.list li {
-list-style: none;
-padding: .25em 0;
+	list-style: none;
+	padding: .25em 0;
 }
 
 /** STUDENT VIEW LAYOUT **/
@@ -1368,23 +1368,21 @@ padding: .25em 0;
 	flex: 1;
 }
 
-.column-secondary{
+.column-secondary {
 	flex: 1;
 	margin-left: 1em;
 }
+
 .fieldset {
 	padding: 1em;
 	margin-bottom: 1em;
-
 }
+
 .column {
 	position: relative;
 	display: block;
 	border-radius: 3px;
 }
-
-
-
 
 .class-listing.column-3 {
 	width: 1.75in;
@@ -1413,7 +1411,6 @@ padding: .25em 0;
 
 .student-narrative-list .report-row {
 	display: flex;
-	
 }
 
 td.not-assessed {
@@ -1435,19 +1432,19 @@ blockquote {
 	margin-left: .5em;
 	margin-right: .5em;
 }
-@media (max-width: 1200px){
-		.report-row {
-	flex-direction: column;
+
+@media ( max-width : 1200px) {
+	.report-row {
+		flex-direction: column;
 	}
-	
 	.report-row .block.even {
-	order: 2;
+		order: 2;
 	}
 	.report-row .block.odd {
-	order: 1;
+		order: 1;
 	}
-
 }
+
 @media ( max-width : 736px ) {
 	#navigation .button, #navigation input {
 		display: none;
@@ -1458,21 +1455,20 @@ blockquote {
 	#navigation .button-list li {
 		display: block;
 	}
-		.report-row .block.even {
-	order: 1;
+	.report-row .block.even {
+		order: 1;
 	}
 	.report-row .block.odd {
-	order: 2;
+		order: 2;
 	}
-	
-	#main{
-	flex-direction: column;
+	#main {
+		flex-direction: column;
 	}
-	#header{
-	flex-direction: column;
+	#header {
+		flex-direction: column;
 	}
 	#student-search {
-	min-width: inherit;
-	width: 100%;
+		min-width: inherit;
+		width: 100%;
 	}
 }
