@@ -47,3 +47,8 @@ var root_url = '<?=base_url();?>';
 <script type="text/javascript" src="<?=base_url("js/report.js");?>?data=<?php echo date("i");?>"></script>
 
 <script type="text/javascript" src="<?=base_url("js/legend.js");?>?data=<?php echo date("i");?>"></script>
+<?php if(isset($scripts) && !empty($scripts)):?>
+<?php foreach($scripts as $script):?>
+<script type="text/javascript" src="<?php echo base_url("js/$script");?>?data=<?php echo date("i");?>"></script>
+<?php endforeach;?>
+<?php endif; ?>

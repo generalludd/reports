@@ -253,6 +253,11 @@ class Student extends MY_Controller {
 		if ($this->input->get ( "export" )) {
 			$this->load->helper ( "download" );
 			$this->load->view ( "student/export", $data );
+		}elseif($this->input->get("class-sort")){
+			$data['teachers'] = $this->teacher_model->get_by_subject("Humanities");
+			$data['scripts'] = array("portlet.js");
+			$data['target'] = "student/class/portlet";
+			$this->load->view("page/index",$data);
 		} else {
 			$data ['target'] = "student/results";
 			$this->load->view ( "page/index", $data );
