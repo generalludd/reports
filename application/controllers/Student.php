@@ -23,7 +23,7 @@ class Student extends MY_Controller {
 	{
 		$kStudent = $this->uri->segment ( 3 );
 		$student = $this->student_model->get ( $kStudent );
-		$student->pronouns = $this->menu_model->get_label("gender",$student->stuGender);
+		$student->pronouns = $this->menu_model->get_label ( "gender", $student->stuGender );
 		$data ['student'] = $student;
 		$data ['teacherName'] = "";
 		if (! empty ( $student->kTeach )) {
@@ -38,7 +38,6 @@ class Student extends MY_Controller {
 		// $data['humanitiesTeacher'] =
 		// $this->teacher_model->get($student->humanitiesTeacher,"teachFirst")->teachFirst;
 		// }
-		
 		
 		$data ['target'] = "student/view";
 		$data ['title'] = "Viewing $student->stuFirst $student->stuLast";
@@ -58,7 +57,7 @@ class Student extends MY_Controller {
 	function find_by_name()
 	{
 		$stuName = $this->input->get ( "stuName" );
-		$data['criteria'] = array();
+		$data ['criteria'] = array ();
 		$target = "student/list";
 		if ($this->input->get ( "type" ) == "mini") {
 			$target = "student/mini_list";
@@ -143,6 +142,84 @@ class Student extends MY_Controller {
 		}
 	}
 
+	function edit_classes()
+	{
+		if ($this->input->get ( "search" )) {
+			$data ['title'] = "Sort Classes";
+			$data ['target'] = "student/class/search";
+			$data ['currentYear'] = get_current_year ();
+			$data ['yearList'] = get_year_list ();
+			if ($this->input->get ( "ajax" )) {
+				$this->load->view ( $data ['target'], $data );
+			} else {
+				$this->load->view ( "page/index", $data );
+			}
+		}else{
+			$options = array ();
+			$grades = array ();
+			burn_cookie ( "grades" );
+			if ($this->input->get ( "grades" )) {
+				$grades = $this->input->get ( "grades" );
+				if (! empty ( $grades )) {
+					$options ['grades'] = $grades;
+					bake_cookie ( "grades", implode ( ",", $grades ) );
+				}
+			}
+			if($type = $this->input->get("type")){
+				$options['type'] = $type;
+			}
+			$year = get_current_year();
+			if($this->input->get("year")){
+				$year = $this->input->get("year");
+			}
+			$data ['students'] = $this->student_model->get_all ( $year, $options );
+			switch($type){
+				case "humanitiesTeacher":
+					$data ['groups'] = $this->teacher_model->get_by_subject ( "Humanities" );
+						break;
+				case "ab":
+					$data['groups'] = array("A","B");
+					break;
+				case "classroom":
+					$data['groups'] = $this->teacher_model->get_teacher_pairs(2, 1, "lower-school");
+					break;
+				case "advisory":
+					$data['groups'] = $this->teacher_model->get_teacher_pairs(2,1,"advisor");
+					break;
+				
+			}
+			$data['type'] = $type;
+			$data ['scripts'] = array (
+					"portlet.js"
+			);
+			$data['title'] = "Organize Students by $type";
+			$data ['target'] = "student/class/portlet";
+			$this->load->view ( "page/index", $data );
+		}
+	}
+
+	function update_class()
+	{
+		$kStudent = $this->input->post ( "kStudent" );
+		$type = $this->input->post ( "type" );
+		$id = $this->input->post ( "id" );
+		$result = 0;
+		switch ($type) {
+			case "humanitiesTeacher" :
+				$data ["humanitiesTeacher"] = $id;
+				break;
+			case "classroom" :
+			case "advisory":
+				$data ["kTeach"] = $id;
+				break;
+			case "ab" :
+				$data ['stuGroup'] = $id;
+				break;
+		}
+		$result = $this->student_model->update_value ( $kStudent, $data );
+		echo $result;
+	}
+
 	function insert()
 	{
 		$kStudent = $this->student_model->insert ();
@@ -220,7 +297,7 @@ class Student extends MY_Controller {
 		if ($this->input->get ( "kTeach" )) {
 			$kTeach = $this->input->get ( "kTeach" );
 			$options ['kTeach'] = $kTeach;
-			$options ['teacher'] = $this->teacher_model->get($kTeach)->teachName;
+			$options ['teacher'] = $this->teacher_model->get ( $kTeach )->teachName;
 			bake_cookie ( "kTeach", $kTeach );
 		}
 		
@@ -229,7 +306,7 @@ class Student extends MY_Controller {
 		if ($this->input->get ( "humanitiesTeacher" )) {
 			$humanitiesTeacher = $this->input->get ( "humanitiesTeacher" );
 			$options ['humanitiesTeacher'] = $humanitiesTeacher;
-			$options ['humanitiesName'] = $this->teacher_model->get($humanitiesTeacher)->teachName;
+			$options ['humanitiesName'] = $this->teacher_model->get ( $humanitiesTeacher )->teachName;
 			bake_cookie ( "humanitiesTeacher", $humanitiesTeacher );
 		}
 		
@@ -240,30 +317,25 @@ class Student extends MY_Controller {
 			bake_cookie ( "sorting", $sorting );
 		}
 		$grouping = NULL;
-		if($this->input->get("grouping")){
-			$grouping = $this->input->get("grouping");
-			$options['grouping'] = $grouping;
-			bake_cookie('grouping',$grouping);
+		if ($this->input->get ( "grouping" )) {
+			$grouping = $this->input->get ( "grouping" );
+			$options ['grouping'] = $grouping;
+			bake_cookie ( 'grouping', $grouping );
 		}
 		// $this->session->set_userdata($session);
 		$data ['students'] = $this->student_model->get_all ( $year, $options );
-		$options['year'] = $year;
-		$data['criteria'] = $options;
+		$options ['year'] = $year;
+		$data ['criteria'] = $options;
 		$data ['title'] = "Student List";
 		if ($this->input->get ( "export" )) {
 			$this->load->helper ( "download" );
 			$this->load->view ( "student/export", $data );
-		}elseif($this->input->get("class-sort")){
-			$data['teachers'] = $this->teacher_model->get_by_subject("Humanities");
-			$data['scripts'] = array("portlet.js");
-			$data['target'] = "student/class/portlet";
-			$this->load->view("page/index",$data);
+
 		} else {
 			$data ['target'] = "student/results";
 			$this->load->view ( "page/index", $data );
 		}
 	}
-
 	
 	// @TODO this needs to also check teacher email accounts to avoid
 	// duplication there.

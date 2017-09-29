@@ -25,10 +25,23 @@ $( function() {
 });
 
 function dragged(my_item){
-	kStudent = $(my_item).attr("id").split("_")[1];
+	my_student = $(my_item).attr("id").split("_")[1];
 	my_parent = $(my_item).parent(".class").attr("id");
-	kTeach = my_parent.split("_")[1];
+	my_id = my_parent.split("_")[1];
 	my_type = my_parent.split("_")[2];
-	
+	console.log(my_type);
+	 form_data = {
+			 kStudent: my_student,
+			 id: my_id,
+			 type: my_type
+	 }
+	 $.ajax({
+		 type: "post",
+		 data: form_data,
+		 url: base_url + "student/update_class",
+		 success: function(data){
+			console.log(data); 
+		 }
+	 });
 	
 }

@@ -4,14 +4,21 @@
 .columns{
 display: flex;
 flex-direction: row;
-justify-content: space-evenly; 
+justify-content: ; 
 }
+.class{
+border:1px dotted #333;
+padding: 0 1em; 
+margin-right: 1em;
+}
+
   .portlet {
     margin: 0 1em 1em 0;
     padding: 0.3em;
   }
   .portlet:hover{
   cursor: move;
+  background-color: #ddd;
   }
   .portlet-header {
     padding: 0.2em 0.3em;
@@ -38,9 +45,9 @@ justify-content: space-evenly;
   <?php endforeach; ?>
 </div>
  <!-- loop through teachers -->
- <?php foreach($teachers as $teacher):?>
-<div class="class" id="teacher_<?php echo $teacher->kTeach;?>_<?php echo "humanitiesTeacher";?>">
- <h3><?php echo format_name($teacher->teachFirst, $teacher->teachLast);?></h3>
+ <?php foreach($groups as $group):?>
+<div class="class" id="group_<?php echo $group->kTeach;?>_<?php echo $type;?>">
+ <h3><?php echo $group->teacher;?></h3>
 </div>
 <?php endforeach; ?>
 </div>

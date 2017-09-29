@@ -666,11 +666,13 @@ li.attendance:first-child {
 }
 /*column boxes (see attendance_list.inc.html)
 */
-.column {
+.column{
 	display: flex;
 	flex-direction: row;
 	justify-content: space-evenly;
 }
+
+
 
 .columnbox {
 	width: 100%;
@@ -687,6 +689,20 @@ li.attendance:first-child {
 .fifthcolumn {
 	width: 20%;
 	float: left;
+}
+
+ul.rows{
+	display: flex;
+	flex-direction: row;
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	
+}
+ul.rows li {
+	display: block;
+	list-style: none;
+	padding-right: 1em;
 }
 
 /* Editor for Student Info page */
@@ -1378,11 +1394,6 @@ ul.no-style.list li {
 	margin-bottom: 1em;
 }
 
-.column {
-	position: relative;
-	display: block;
-	border-radius: 3px;
-}
 
 .class-listing.column-3 {
 	width: 1.75in;

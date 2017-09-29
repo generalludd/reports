@@ -367,6 +367,7 @@ class Student_model extends MY_Model
     {
         $this->db->where('kStudent', $kStudent);
         $this->db->update('student', $data);
+        return $this->db->last_query();
     }
 
     function update_grades ()
