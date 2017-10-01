@@ -2,7 +2,7 @@
 <!-- teacher/list.php -->
 	<fieldset class="search_fieldset">
 		<legend>Search Parameters</legend>
-		<?
+		<?php 
 if (! empty($options)) {
 
     $keys = array_keys($options);
@@ -47,10 +47,10 @@ if (! empty($options)) {
  print create_button_bar(array(array("text"=>"Refine Search", "href"=>site_url("teacher/show_search?refine=1"),"class"=>"button dialog search")));
 ?>
 	</fieldset>
-	<?=create_button_bar(array(array("text"=>"New User","class"=>"button new dialog","href"=>site_url("teacher/create"),"dbRole"=>1)));?>
+	<?php  echo create_button_bar(array(array("text"=>"New User","class"=>"button new dialog","href"=>site_url("teacher/create"),"dbRole"=>1)));?>
 <div class="column-group">
 
-<? foreach($roles as $role):?>
+<?php foreach($roles as $role):?>
 <div class="column">
 	<h4><?php echo $role["label"];?></h4>
 <ul class="no-style list">

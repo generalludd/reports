@@ -955,7 +955,7 @@ class CI_Loader {
 		// to standard PHP echo statements.
 		if ( ! is_php('5.4') && ! ini_get('short_open_tag') && config_item('rewrite_short_tags') === TRUE)
 		{
-			echo eval('?>'.preg_replace('/;*\s*\?>/', '; ?>', str_replace('<?=', '<?php echo ', file_get_contents($_ci_path))));
+			echo eval('?>'.preg_replace('/;*\s*\?>/', '; ?>', str_replace('<?php  echo ', '<?php echo ', file_get_contents($_ci_path))));
 		}
 		else
 		{

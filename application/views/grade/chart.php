@@ -17,18 +17,18 @@ $count = 0;
 ?>
 
 <!-- grade/chart -->
-<div class='grade-report report-teacher report-<?=$count;?>'>
+<div class='grade-report report-teacher report-<?php  echo $count;?>'>
 	<div class='report-body'>
 		<div class='report-header'>
-	<?="$header->subject, $teacher";?>
-	<? if($pass_fail):?>
+	<?php  echo "$header->subject, $teacher";?>
+	<?php if($pass_fail):?>
 	<br />Grades are Pass/Fail
-	<? endif;?>
+	<?php endif;?>
 </div>
 
-<? if(isset($print_student_name)):?>
-<h2><?=format_name($student->stuFirst,$student->stuLast, $student->stuNickname);?></h2>
-<? endif; ?>
+<?php if(isset($print_student_name)):?>
+<h2><?php  echo format_name($student->stuFirst,$student->stuLast, $student->stuNickname);?></h2>
+<?php endif; ?>
 
 
 	<table class="report-card">
@@ -43,30 +43,30 @@ $count = 0;
 				</tr>
 			</thead>
 			<tbody>
-			<?
+			<?php
 			
 			foreach ( $grades as $grade ) {
 				if (($grade->points > 0 && $grade->total_points == 0) || ($grade->total_points > 0)) {
 					?>
 			<tr>
-					<td><?=format_date($grade->date);?></td>
-					<td><?=$grade->assignment; ?>
+					<td><?php  echo format_date($grade->date);?></td>
+					<td><?php  echo $grade->assignment; ?>
 				</td>
-					<td><?=$grade->category;?>
+					<td><?php  echo $grade->category;?>
 				</td>
-					<td><?=$grade->status?$grade->status:$grade->points;?>
-				<?
+					<td><?php  echo $grade->status?$grade->status:$grade->points;?>
+				<?php
 					
 					if ($grade->footnote) {
 						echo "<sup>$grade->footnote</sup>";
 						$footnotes [$grade->footnote] = $grade->label;
 					}
 					?></td>
-					<td><?=$grade->total_points > 0?$grade->total_points:capitalize($grade->points_type);?>
+					<td><?php  echo $grade->total_points > 0?$grade->total_points:capitalize($grade->points_type);?>
 				</td>
 
 				</tr>
-			<?
+			<?php
 					
 					// if the student does not have an assignment listed as absent,excused, incomplete, redo, then calculate the grade otherwise ignore
 					if (empty ( $grade->status )) {
@@ -92,7 +92,7 @@ $count = 0;
 		</tbody>
 
 		</table>
-	<?
+	<?php
 	
 	if (! empty ( $footnotes )) :
 		asort ( $footnotes );
@@ -102,24 +102,24 @@ $count = 0;
 	<div class='footnotes'>
 			<div class='caption'>Notes</div>
 			<ul>
-			<?
+			<?php 
 		
 		for($i = 0; $i < count ( $keys ); $i ++) :
 			?>
 
-			<li><?=sprintf("%s: %s", $keys[$i],$values[$i]);?></li>
-			<? endfor;?>
+			<li><?php  echo sprintf("%s: %s", $keys[$i],$values[$i]);?></li>
+			<?php endfor;?>
 		</ul>
 		</div>
-	<? endif; ?>
+	<?php endif; ?>
 	</div>
 	<div class='report-summary'>
 		<div class='report-header'>
-	<?=$header->subject; ?>
+	<?php  echo $header->subject; ?>
 	Category Summary
-	<? if($pass_fail):?>
+	<?php if($pass_fail):?>
 	<br />Grades are Pass/Fail
-	<? endif;?>
+	<?php endif;?>
 </div>
 
 
@@ -135,24 +135,24 @@ $count = 0;
 			
 			</thead>
 			<tbody>
-			<? foreach($categories as $category): ?>
-			<? $category_grade = round($category['points']/$category['total_points']*100,2);?>
+			<?php foreach($categories as $category): ?>
+			<?php $category_grade = round($category['points']/$category['total_points']*100,2);?>
 			<tr>
-					<td><?=$category['category'];?></td>
-					<td><?=$category['points'];?></td>
-					<td><?=$category['total_points']; ?></td>
-					<td><?=$category_grade;?>%</td>
-					<td><?=$category['weight'];?>%</td>
-					<td><?=calculate_letter_grade($category_grade, $pass_fail);?></td>
+					<td><?php  echo $category['category'];?></td>
+					<td><?php  echo $category['points'];?></td>
+					<td><?php  echo $category['total_points']; ?></td>
+					<td><?php  echo $category_grade;?>%</td>
+					<td><?php  echo $category['weight'];?>%</td>
+					<td><?php  echo calculate_letter_grade($category_grade, $pass_fail);?></td>
 
 
 				</tr>
-			<? $assignment_total += $category_grade * $category['weight']; ?>
-			<? $weight_sums += $category['weight'];?>
-			<? endforeach; ?>
+			<?php $assignment_total += $category_grade * $category['weight']; ?>
+			<?php $weight_sums += $category['weight'];?>
+			<?php endforeach; ?>
 		</tbody>
 			<tfoot>
-			<?
+			<?php 
 			$grade_total = 0;
 			$category_count = 0;
 			$total_grade = round ( $assignment_total / $weight_sums, 1 );

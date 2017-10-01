@@ -6,7 +6,7 @@
 <?php echo create_button_bar($buttons);?>
 <?php endif; ?>
 
-<?
+<?php 
 if (count ( $benchmarks ) > 0 && $benchmarks != 0) :
 	?>
 	<div class="benchmark-legend">

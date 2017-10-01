@@ -30,7 +30,7 @@ class Home extends MY_Controller {
 		$teachers = $this->teacher->get_teacher_pairs ( 2, 1, "homeroom" );
 		$data ['teachers'] = get_keyed_pairs ( $teachers, array (
 				"kTeach",
-				"teacher" 
+				"teacherName"
 		), TRUE );
 		$humanitiesTeachers = $this->teacher->get_for_subject ( "humanities" );
 		$data ['humanitiesTeachers'] = get_keyed_pairs ( $humanitiesTeachers, array (

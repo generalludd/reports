@@ -2,10 +2,10 @@
 
 <div class="login">
 <div class="login-title">Password Reset</div>
-<form action="<?=site_url("auth/send_reset"); ?>" method="post"
+<form action="<?php  echo site_url("auth/send_reset"); ?>" method="post"
 	name="login_form" id="login_form">
 
-<?
+<?php
 if($errors):
 	if(is_array($errors)){
 		foreach($errors as $msg){
@@ -16,9 +16,9 @@ if($errors):
 	}
 	?>
 	<div class="error-text">
-<? print $output; ?>
+<?php print $output; ?>
 </div>
-<?
+<?php
 endif;
 ?>
 

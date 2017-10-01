@@ -6,20 +6,20 @@
   #reportSorting li { background-image: url(/css/images/edit_item.png);background-repeat: no-repeat;background-position-y:center }
   </style>
 
-<form id="sort_report" action="<?=site_url("config/$action");?>" method="post" name="sort_report">
- <input type="hidden" name="subjects" id="subjects" size=65 value="<?=$sort_order->subjects; ?>">
+<form id="sort_report" action="<?php  echo site_url("config/$action");?>" method="post" name="sort_report">
+ <input type="hidden" name="subjects" id="subjects" size=65 value="<?php  echo $sort_order->subjects; ?>">
 <label for="grade_start">Starting Grade: </label>
-<input type="number" name="grade_start" id="grade_start" value="<?=$sort_order->grade_start;?>"/>
+<input type="number" name="grade_start" id="grade_start" value="<?php  echo $sort_order->grade_start;?>"/>
 <label for="grade_start">Ending Grade: </label>
-<input type="number" name="grade_end" id="grade_end" value="<?=$sort_order->grade_end;?>"/>
-<p><label for="context">Context</label><?=form_dropdown("context",array("narratives"=>"Narratives","grades"=>"Grades"),get_value($sort_order,"context","grades"));?>
+<input type="number" name="grade_end" id="grade_end" value="<?php  echo $sort_order->grade_end;?>"/>
+<p><label for="context">Context</label><?php  echo form_dropdown("context",array("narratives"=>"Narratives","grades"=>"Grades"),get_value($sort_order,"context","grades"));?>
     </p>
-    <? $subjects = explode(",",$sort_order->subjects);?>
+    <?php $subjects = explode(",",$sort_order->subjects);?>
 <ul id="reportSorting">
 
 <?foreach($subjects as $subject):?>
-	<li><?=$subject;?></li>
-<?endforeach;?>
+	<li><?php  echo $subject;?></li>
+<?php endforeach;?>
 </ul>
     <p><input type="submit" class='button' value="Save"/></p>
 </form>

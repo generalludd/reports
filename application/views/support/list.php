@@ -7,22 +7,22 @@ if($this->session->userdata("dbRole")<3){
 <?php 
 $this->load->view("student/navigation", $kStudent);
 if( $has_current == $current_year): ?>
-<p><?=$student_name?> already has a support entry for <?php echo format_schoolyear($current_year);?>.
-<? if($this->session->userdata("dbRole") == 1): ?>
+<p><?php  echo $student_name?> already has a support entry for <?php echo format_schoolyear($current_year);?>.
+<?php if($this->session->userdata("dbRole") == 1): ?>
 <?php $next_year = $current_year + 1;?>
-<a class="button new small" href="<?=site_url("support/create/$kStudent/$next_year");?>">Add for Next Year</a>
-<? endif;?>
+<a class="button new small" href="<?php  echo site_url("support/create/$kStudent/$next_year");?>">Add for Next Year</a>
+<?php endif;?>
 </p>
-<? elseif(!$support || $has_current != $current_year): ?>
+<?php elseif(!$support || $has_current != $current_year): ?>
 <fieldset class="support-view">
-<legend><?=format_schoolyear(get_current_year());?></legend>
-<p><?=$student_name;?> does not have any learning support entries for <?=format_schoolyear($current_year);?>. 
-<? if($this->session->userdata("dbRole") < 3): ?>
-<a class="button new small" href="<?=site_url("support/create/$kStudent");?>">Add New</a>
-<? endif;?>
+<legend><?php  echo format_schoolyear(get_current_year());?></legend>
+<p><?php  echo $student_name;?> does not have any learning support entries for <?php  echo format_schoolyear($current_year);?>.
+<?php if($this->session->userdata("dbRole") < 3): ?>
+<a class="button new small" href="<?php  echo site_url("support/create/$kStudent");?>">Add New</a>
+<?php endif;?>
 </p>
 </fieldset>
-<? endif;
+<?php endif;
 
 $data["print"] = FALSE;
 foreach($support as $entry){

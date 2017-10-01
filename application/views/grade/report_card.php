@@ -8,17 +8,17 @@ if(isset($batch) && $batch){
 ?>
 
 <!-- grade/report_card -->
-<div id='report-card' class="<?=implode(" ",$classes);?>">
+<div id='report-card' class="<?php  echo implode(" ",$classes);?>">
 
-	<? foreach($charts as $chart): ?>
+	<?php foreach($charts as $chart): ?>
 
-	<div class='report-chart report-<?=$i;?>'>
-<? if(isset($batch) && $batch):?>
+	<div class='report-chart report-<?php  echo $i;?>'>
+<?php if(isset($batch) && $batch):?>
 
-<? else: ?>
+<?php else: ?>
 
-		<? endif; ?>
-		<? if($i == 0 ) :
+		<?php endif; ?>
+		<?php if($i == 0 ) :
 		$buttons[] = array("selection"=>"none","type"=>"span","class"=>array("button","print","do-print","small"),"text"=>"Print");
 		echo create_button_bar($buttons);
 		endif; ?>
@@ -27,16 +27,16 @@ if(isset($batch) && $batch){
 			<?php //"$term, " . format_schoolyear($year, $term);?>
 		</div>
 
-		<? if(isset($cutoff_date) && $cutoff_date):?>
+		<?php if(isset($cutoff_date) && $cutoff_date):?>
 		<div class='report-header report-cutoff'>
 			For grades given through
-			<?=$cutoff_date;?>
+			<?php  echo $cutoff_date;?>
 		</div>
-		<? endif;?>
-		<?=$chart; ?>
+		<?php endif;?>
+		<?php  echo $chart; ?>
 	</div>
-	<? $i++; //iterate to row numbers?>
+	<?php $i++; //iterate to row numbers?>
 
-	<? endforeach; ?>
+	<?php endforeach; ?>
 
 </div>

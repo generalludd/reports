@@ -17,7 +17,7 @@ user_guide/*
 .project
 /.project
 /.buildpath
-
+/.idea
 application/config/email.php
 
 application/config/email.php

@@ -14,16 +14,16 @@ $buttons [] = array (
 
 ?>
 
-<h2>Inserting batch assignments for <? printf("%s, %s, Grade(s): %s",$term, format_schoolyear($year), format_grade_range($gradeStart, $gradeEnd)); ?> </h2>
-<?= create_button_bar($buttons);?>
+<h2>Inserting batch assignments for <?php printf("%s, %s, Grade(s): %s",$term, format_schoolyear($year), format_grade_range($gradeStart, $gradeEnd)); ?> </h2>
+<?php  echo  create_button_bar($buttons);?>
 <p>A minimum of two rows are required.</p>
 
-<form name="batch-insert-assignments" id="batch-insert-assignments" method="post" action="<?=site_url("assignment/insert_batch?subject=$subject");?>">
-	<input type="hidden" name="kTeach" value="<?=$kTeach;?>" />
-	<input type="hidden" name="year" value="<?=$year;?>" />
-	<input type="hidden" name="term" value="<?=$term;?>" />
-	<input type="hidden" name="gradeStart" value="<?=$gradeStart;?>" />
-	<input type="hidden" name="gradeEnd" value="<?=$gradeEnd;?>" />
+<form name="batch-insert-assignments" id="batch-insert-assignments" method="post" action="<?php  echo site_url("assignment/insert_batch?subject=$subject");?>">
+	<input type="hidden" name="kTeach" value="<?php  echo $kTeach;?>" />
+	<input type="hidden" name="year" value="<?php  echo $year;?>" />
+	<input type="hidden" name="term" value="<?php  echo $term;?>" />
+	<input type="hidden" name="gradeStart" value="<?php  echo $gradeStart;?>" />
+	<input type="hidden" name="gradeEnd" value="<?php  echo $gradeEnd;?>" />
 	<input type="hidden" name="subject" value="<?php echo $subject;?>"/>
 
 	<table class="grid" id="batch-assignment-table">
@@ -39,8 +39,8 @@ $buttons [] = array (
 				<th>Date (mm/dd/yyyy)</th>		
 		</thead>
 		<tbody>
-<? $this->load->view("assignment/batch/row");?>
-<? $this->load->view("assignment/batch/row");?>
+<?php $this->load->view("assignment/batch/row");?>
+<?php $this->load->view("assignment/batch/row");?>
 
 </tbody>
 	</table>

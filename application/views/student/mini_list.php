@@ -6,8 +6,8 @@
 	$name = format_name($student->stuFirst,$student->stuLast,$student->stuNickname);
 	?>
 	<p>
-		<span class='link <?=$js_class;?>'
-			id='ss_<?=$student->kStudent;?>'><?="$name";?> </span>
+		<span class='link <?php  echo $js_class;?>'
+			id='ss_<?php  echo $student->kStudent;?>'><?php  echo "$name";?> </span>
 	</p>
-<? endforeach; ?>
+<?php endforeach; ?>
 </div>

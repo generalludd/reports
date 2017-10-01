@@ -69,7 +69,7 @@ if (! empty ( $attendance )) :
 		</tr>
 	</thead>
 	<tbody>
-	<?
+	<?php 
 	$current_class = "";?>
 	<?php foreach ( $attendance as $item ) :?>
 	<tr>
@@ -88,12 +88,12 @@ if (! empty ( $attendance )) :
 		
 	<?php $attendDate = format_date ( $item->attendDate, 'standard' );?>
 	<td class='no-print'>
-			<? if($this->session->userdata("dbRole") == 1): //@TODO Clean this Up!?>
+			<?php if($this->session->userdata("dbRole") == 1): //@TODO Clean this Up!?>
 <?php $buttons[]= array("text"=>"Edit","href"=> site_url("attendance/edit/$item->kAttendance"), "class"=>"dialog edit small button","id"=> "a_$item->kAttendance");?>
 			
 			<?php echo create_button_bar($buttons); ?>
 				
-				<? endif; ?>
+				<?php endif; ?>
 				</td>
 		<td style="white-space: nowrap;"><a href="<?php echo site_url("student/view/$item->kStudent");?>" title="view details for <?php echo $student_name; ?>"><?php echo $student_name;?></a></td>
 		<?php if($kStudent):?>
@@ -101,19 +101,19 @@ if (! empty ( $attendance )) :
 		<?php endif; ?>
 		<td><?php echo format_grade($item->stuGrade);?></td>
 		<td><?php echo format_classroom($item->teachClass, $item->stuGrade, $item->stuGroup);?></td>
-		<td><?=$item->attendType;?></td>
-		<td><?=$item->attendSubtype;?></td>
-		<td><?=$item->attendLength;?></td>
-		<td><?=$item->attendNote;?><?php echo $item->attendOverride?" <span class='highlight'>($item->teachFirst $item->teachLast has marked this student as present during daily attendance. Please delete accordingly.)</span>":"";?></td>
+		<td><?php  echo $item->attendType;?></td>
+		<td><?php  echo $item->attendSubtype;?></td>
+		<td><?php  echo $item->attendLength;?></td>
+		<td><?php  echo $item->attendNote;?><?php echo $item->attendOverride?" <span class='highlight'>($item->teachFirst $item->teachLast has marked this student as present during daily attendance. Please delete accordingly.)</span>":"";?></td>
 
 		</tr>
 
-		<? endforeach; ?>
+		<?php endforeach; ?>
 	</tbody>
 </table>
 
 
- <?
+ <?php 
 else :
 	if ($kStudent) :?>
 	<p><a href="<?php echo site_url("student/view/$kStudent");?>" title="View student's record"><?php echo format_name($student->stuNickname, $student->stuLast)?></a> does not have any attendance entries for the selected search</p>

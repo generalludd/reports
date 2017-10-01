@@ -3,7 +3,7 @@
 
 <fieldset class="search_fieldset">
 <legend>Search Parameters</legend>
-<?
+<?php 
 if(!empty($options)){
 
 	$keys = array_keys($options);
@@ -49,7 +49,7 @@ $buttons[] = array("text"=>"Refine Search","href"=>site_url("narrative/search_te
 print create_button_bar($buttons);
 ?>	
 	</fieldset>
-<?
+<?php 
 if(!empty($narratives)):
 	$thisTerm="";
 	$thisStudent="";
@@ -126,10 +126,10 @@ else:
 	echo "not written any reports yet for this term.</p>";
 	?>
 <p>
-<a href="<?=site_url("template/list_templates/?kTeach=$kTeach");?>" class="button small">Edit Templates</a>
-	<a href="<?=site_url("");?>" class='button small'>Search for Students</a></p>
+<a href="<?php  echo site_url("template/list_templates/?kTeach=$kTeach");?>" class="button small">Edit Templates</a>
+	<a href="<?php  echo site_url("");?>" class='button small'>Search for Students</a></p>
 
-	<?
+	<?php 
 endif;
 ?>
 <p>

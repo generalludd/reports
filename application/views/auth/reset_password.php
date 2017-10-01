@@ -12,11 +12,11 @@ endif;
 ?>
 <div class="login resetter">
 <div class="login-title">Password Reset</div>
-<form id="password-resetter" name="password-resetter" action="<?=site_url("auth/complete_reset")?>" method="post" >
+<form id="password-resetter" name="password-resetter" action="<?php  echo site_url("auth/complete_reset")?>" method="post" >
 
-<div id='password_note' class='notice error-text' style="display:none"><?=$output;?></div>
-<input type="hidden" name="resetHash" id="resetHash" value="<?=$resetHash;?>"/>
-<input type="hidden" name="kTeach" id="kTeach" value="<?=$kTeach;?>"/>
+<div id='password_note' class='notice error-text' style="display:none"><?php  echo $output;?></div>
+<input type="hidden" name="resetHash" id="resetHash" value="<?php  echo $resetHash;?>"/>
+<input type="hidden" name="kTeach" id="kTeach" value="<?php  echo $kTeach;?>"/>
 <div class="reset-fields login-inputs">
 <p><label for="new_password">New Password: </label><br/>
 <input type="password" id="new_password" name="new_password" required value="" placeholder="new password"/></p>

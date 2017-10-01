@@ -4,7 +4,7 @@ $this->load->view("teacher/navigation",array("teacher"=>$teacher, "kTeach" => $k
 ?>
 <h2>Set Preferences for your Account</h2>
 <input
-	type='hidden' id='kTeach' name='kTeach' value='<?=$kTeach;?>' />
+	type='hidden' id='kTeach' name='kTeach' value='<?php  echo $kTeach;?>' />
 <p class='notice'>Note that this is a beta testing area. Do not make
 changes unless you understand how each of these work.</p>
 

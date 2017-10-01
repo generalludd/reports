@@ -22,7 +22,7 @@ echo create_button_bar($buttons);
 		</tr>
 	</thead>
 	<tbody>
-		<?
+		<?php
 		echo implode("\r",$output);
 		?>
 

@@ -40,7 +40,7 @@ foreach ( $students as $student ) :
 			?>
 				<!-- teacher_row -->
 	<h3 class='teacher_row'>
-		<? echo "Students of $student->teacherName ($student->teachClass)";?>
+		<?php echo "Students of $student->teacherName ($student->teachClass)";?>
 	</h3>
 
 	<?php $current_teacher = $student->teacherName; ?>
@@ -73,22 +73,22 @@ foreach ( $students as $student ) :
 		
 		
 	<?php endif;?>
-	<div class='<?=implode(" ",$row_style);?>'>
-		<div class='<?=implode(" ", $student_style);?>'>
-			<a href=<?=site_url("student/view/$student->kStudent");?> class='link'><?="$name";?></a>
-			<?=$enrolled;?>
-			<? if(get_value($student,"stuEmailPermission") == 1): ?>
-			<? echo "&nbsp;" . format_email($student->stuEmail);?>
-			<? endif;?>
+	<div class='<?php  echo implode(" ",$row_style);?>'>
+		<div class='<?php  echo implode(" ", $student_style);?>'>
+			<a href=<?php  echo site_url("student/view/$student->kStudent");?> class='link'><?php  echo "$name";?></a>
+			<?php  echo $enrolled;?>
+			<?php if(get_value($student,"stuEmailPermission") == 1): ?>
+			<?php echo "&nbsp;" . format_email($student->stuEmail);?>
+			<?php endif;?>
 						<?php if(!array_key_exists("grouping",$criteria)):?>
 			Grade: <?php echo $stuGrade;?>
 			<?php endif;?>
-			<? if(get_value($student,"stuGroup") == "A"|| get_value($student,"stuGroup") == "B"):?>
-			<? echo "&nbsp;Group: $student->stuGroup";?>
-			<? endif;?>
+			<?php if(get_value($student,"stuGroup") == "A"|| get_value($student,"stuGroup") == "B"):?>
+			<?php echo "&nbsp;Group: $student->stuGroup";?>
+			<?php endif;?>
 
 		</div>
-		<?
+		<?php 
 	$this->load->view ( "student/navigation", array (
 			"student" => $student,
 			"kStudent" => $student->kStudent,
@@ -96,5 +96,5 @@ foreach ( $students as $student ) :
 	) );
 	?>
 	</div>
-	<? endforeach; ?>
+	<?php endforeach; ?>
 </div>

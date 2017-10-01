@@ -44,7 +44,7 @@ if($print){
 $buttons[] = array("selection" => "close", "type" => "span", "text"=>"Close", "class" => "button close-sidebar", "id" => "close-sidebar");
 print create_button_bar($buttons);
 ?>
-<h3><?=$year . "-" . $year_end?></h3>
+<h3><?php  echo $year . "-" . $year_end?></h3>
 <?php if($entry->strengths):?>
 <h4>Strengths</h4>
 <p><?php echo $entry->strengths; ?></p>
@@ -54,20 +54,20 @@ print create_button_bar($buttons);
 <p><?php echo $entry->strategies; ?></p>
 <?php endif;?>
 <h4>Diagnosis/Description</h4>
-<p><?=$entry->specialNeed;?></p>
-<p>Has had fall meeting: <strong><?=$had_meeting;?></strong></p>
-<p>Test Date: <strong><?=$test_date;?></strong></p>
+<p><?php  echo $entry->specialNeed;?></p>
+<p>Has had fall meeting: <strong><?php  echo $had_meeting;?></strong></p>
+<p>Test Date: <strong><?php  echo $test_date;?></strong></p>
 
 <h4>Outside Support/Treatments</h4>
-<div><?=$entry->outsideSupport?></div>
-<p>IEP on File: <strong><?=$has_iep;?></strong></p>
-<p>Saint Paul Public Schools Support: <strong><?=$has_spps;?></strong></p>
-<? if($entry->modification): ?>
+<div><?php  echo $entry->outsideSupport?></div>
+<p>IEP on File: <strong><?php  echo $has_iep;?></strong></p>
+<p>Saint Paul Public Schools Support: <strong><?php  echo $has_spps;?></strong></p>
+<?php if($entry->modification): ?>
 <h4>Accommodations</h4>
-<div><?=$entry->modification; ?></div>
-<? endif;?>
+<div><?php  echo $entry->modification; ?></div>
+<?php endif;?>
 
-<? if(!empty($files_array) && !$print):?>
+<?php if(!empty($files_array) && !$print):?>
 <div class='file-attachments'>
 <h4 >File Attachments</h4>
 <table class="list files">
@@ -78,10 +78,10 @@ print create_button_bar($buttons);
 		</tr>
 	</thead>
 	<tbody>
-	<? foreach($files_array as $file):?>
-	<tr><td class='file-name'><a href='<?=base_url("uploads/$file->file_name");?>' target='_blank'><?=$file->file_display_name;?></a></td>
-	<td class='file-description'><?=$file->file_description;?></td></tr>
-	<? endforeach; ?>
+	<?php foreach($files_array as $file):?>
+	<tr><td class='file-name'><a href='<?php  echo base_url("uploads/$file->file_name");?>' target='_blank'><?php  echo $file->file_display_name;?></a></td>
+	<td class='file-description'><?php  echo $file->file_description;?></td></tr>
+	<?php endforeach; ?>
 	</tbody>
 </table>
 <?	endif; ?></div>

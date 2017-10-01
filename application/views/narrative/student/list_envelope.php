@@ -15,7 +15,7 @@ echo create_button_bar ( $buttons );
 <?php if (isset($reports) && count ( $reports ) > 0) :?>
 <?php 	foreach ( $reports as $report ) :	?>
 <div class="report-row">
-<? foreach ( $report as $term ) : ?>
+<?php foreach ( $report as $term ) : ?>
 			<?php echo $term; ?> 
 		<?php endforeach; ?>
 </div>

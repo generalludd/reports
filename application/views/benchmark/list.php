@@ -64,6 +64,6 @@ $buttons[] = array("text"=>"View Chart Legend","class"=>"button dialog edit","hr
 //$buttons[] = array("text"=>"Edit Chart Legends","class"=>"button dialog edit","href"=>site_url("benchmark_legend/search"));
 print create_button_bar($buttons);
 ?>
-<?
+<?php 
 //$output .= "<input type='hidden' id='term' name='term' value='$term'/><input type='hidden' id='year' name='year' value='$year>'/>";
 print $output;

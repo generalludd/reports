@@ -52,8 +52,8 @@ if ($print) {
 
 ?>
 <fieldset class="support-view">
-	<legend><?=$year . "-" . $year_end?></legend>
-<?
+	<legend><?php  echo $year . "-" . $year_end?></legend>
+<?php 
 
 if (! $print) {
 	
@@ -83,28 +83,28 @@ if (! $print) {
 <p><?php echo $entry->strategies; ?></p>
 <?php endif;?>
 <h4>Diagnosis/Description</h4>
-	<p><?=$entry->specialNeed;?></p>
+	<p><?php  echo $entry->specialNeed;?></p>
 	<p>
-		Has had fall meeting: <strong><?=$had_meeting;?></strong>
+		Has had fall meeting: <strong><?php  echo $had_meeting;?></strong>
 	</p>
 	<p>
-		Test Date: <strong><?=$test_date;?></strong>
+		Test Date: <strong><?php  echo $test_date;?></strong>
 	</p>
 
 	<h4>Outside Support/Treatments</h4>
-	<div><?=$entry->outsideSupport?></div>
+	<div><?php  echo $entry->outsideSupport?></div>
 	<p>
-		IEP on File: <strong><?=$has_iep;?></strong>
+		IEP on File: <strong><?php  echo $has_iep;?></strong>
 	</p>
 	<p>
-		Saint Paul Public Schools Support: <strong><?=$has_spps;?></strong>
+		Saint Paul Public Schools Support: <strong><?php  echo $has_spps;?></strong>
 	</p>
-<? if($entry->modification): ?>
+<?php if($entry->modification): ?>
 <h4>Accommodations</h4>
-	<div><?=$entry->modification; ?></div>
-<? endif;?>
+	<div><?php  echo $entry->modification; ?></div>
+<?php endif;?>
 
-<? if(!empty($files_array) && !$print):?>
+<?php if(!empty($files_array) && !$print):?>
 <div class='file-attachments'>
 		<h4>File Attachments</h4>
 		<table class="list files">
@@ -119,14 +119,14 @@ if (! $print) {
 				</tr>
 			</thead>
 			<tbody>
-	<? foreach($files_array as $file):?>
+	<?php foreach($files_array as $file):?>
 	<tr>
 					<td class='file-name'>
-						<a href='<?=base_url("uploads/$file->file_name");?>' target='_blank'><?=$file->file_display_name;?></a>
+						<a href='<?php  echo base_url("uploads/$file->file_name");?>' target='_blank'><?php  echo $file->file_display_name;?></a>
 					</td>
-					<td class='file-description'><?=$file->file_description;?></td>
+					<td class='file-description'><?php  echo $file->file_description;?></td>
 				</tr>
-	<? endforeach; ?>
+	<?php endforeach; ?>
 	</tbody>
 		</table>
 	</div>

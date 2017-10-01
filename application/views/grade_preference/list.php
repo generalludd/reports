@@ -12,15 +12,15 @@
 </tr>
 </thead>
 <tbody>
-<? foreach($grade_preferences as $preference):?>
+<?php foreach($grade_preferences as $preference):?>
 
-<tr id="grade-preference-row_<?=$preference->id;?>">
-<td><?=$preference->subject;?></td>
-<td class="no-wrap"><?=format_schoolyear($preference->school_year);?></td>
+<tr id="grade-preference-row_<?php  echo $preference->id;?>">
+<td><?php  echo $preference->subject;?></td>
+<td class="no-wrap"><?php  echo format_schoolyear($preference->school_year);?></td>
 <td class="no-wrap"><?php echo $preference->term;?></td>
-<td><? if( $preference->pass_fail == 1):?>
+<td><?php if( $preference->pass_fail == 1):?>
 Yes
-<? else: ?>
+<?php else: ?>
 No
 <?endif;?>
 </td>
@@ -34,6 +34,6 @@ echo create_button_bar($buttons);
 ?>
 </td>
 </tr>
-<? endforeach;?>
+<?php endforeach;?>
 </tbody>
 </table>

@@ -9,28 +9,28 @@ if(empty($year)){
 
 ?>
 
-<form style="max-width:370px" id="batch-grade-selector" name="batch-grade-selector" action="<?=site_url("grade/batch_print");?>" method="post">
-<input type="hidden" id="kTeach" name="kTeach" value="<?=$kTeach; ?>"/>
-<input type="hidden" id="ids" name="ids" value="<?=$ids;?>"/>
+<form style="max-width:370px" id="batch-grade-selector" name="batch-grade-selector" action="<?php  echo site_url("grade/batch_print");?>" method="post">
+<input type="hidden" id="kTeach" name="kTeach" value="<?php  echo $kTeach; ?>"/>
+<input type="hidden" id="ids" name="ids" value="<?php  echo $ids;?>"/>
 <input type="hidden" id="action" name="action" value="print"/>
 <!-- <p>
 <label for="gradeStart">Grade: </label>
-<input type="text" id="gradeStart" name="gradeStart" value="<?=$gradeStart; ?>" size="3"
+<input type="text" id="gradeStart" name="gradeStart" value="<?php  echo $gradeStart; ?>" size="3"
 	maxlength="1"> -<input type="text" id="gradeEnd" name="gradeEnd"
-	value="<?=$gradeEnd;?>" size="3" maxlength="1"> </p>
+	value="<?php  echo $gradeEnd;?>" size="3" maxlength="1"> </p>
 	<p>
 	<label for="stuGroup">Student Group (Middle School Specialists Only): </label>
-	<?=form_dropdown("stuGroup",array(""=>"","A"=>"A","B"=>"B"),$stuGroup,"id='stuGroup'");?>
+	<?php  echo form_dropdown("stuGroup",array(""=>"","A"=>"A","B"=>"B"),$stuGroup,"id='stuGroup'");?>
 	</p>-->
 	<p><label for="subject"></label>
-	<?=form_dropdown("subject",$subjects);?>
+	<?php  echo form_dropdown("subject",$subjects);?>
 	</p>
 <p>	<label for="term">Term:
-</label><?=get_term_menu('term', $term);?></p>
+</label><?php  echo get_term_menu('term', $term);?></p>
 <p> <label for="year">Year: </label>
-<?=form_dropdown('year',get_year_list(), $year, "id='year' class='year'");?>
+<?php  echo form_dropdown('year',get_year_list(), $year, "id='year' class='year'");?>
 -<input id="yearEnd" type="text" name="yearEnd" class='yearEnd' readonly
-	maxlength="4" size="5" value="<? $yearEnd=$year+1;print $yearEnd; ?>" /></p>
+	maxlength="4" size="5" value="<?php $yearEnd=$year+1;print $yearEnd; ?>" /></p>
 	<p>
 	<input type="submit" class="button"/>
 	</p>

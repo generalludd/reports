@@ -1,9 +1,9 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 ?>
-<form id="log_search" name="log_search" action="<?=site_url("admin/show_log");?>" method="get">
+<form id="log_search" name="log_search" action="<?php  echo site_url("admin/show_log");?>" method="get">
 <p>
 <label for="username">Users: </label>
-<?=form_dropdown("username",$users,NULL,"id='username'");?>
+<?php  echo form_dropdown("username",$users,NULL,"id='username'");?>
 </p>
 <p>
 <label for="action">Action: </label><br/>

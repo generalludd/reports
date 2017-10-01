@@ -125,7 +125,7 @@ class Student extends MY_Controller {
 			$teachers = $this->teacher_model->get_teacher_pairs ();
 			$data ['teacherPairs'] = get_keyed_pairs ( $teachers, array (
 					"kTeach",
-					"teacher" 
+					"teacherName"
 			) );
 			$data ['target'] = "student/edit";
 			$data ['title'] = sprintf ( "Edit %s", format_name ( $student->stuFirst, $student->stuLast, $student->stuNickname ) );
@@ -149,12 +149,38 @@ class Student extends MY_Controller {
 			$data ['target'] = "student/class/search";
 			$data ['currentYear'] = get_current_year ();
 			$data ['yearList'] = get_year_list ();
+			$data['school'] = array(
+			  "lower-school"=>"Lower School",
+        "middle-school"=>"Middle School",
+      );
+			$data['middle-school-groups'] =array(
+			  "56-humanities"=>"5/6 Humanities",
+        "78-humanities" => "7/8 Humanities",
+        "56a"=>"5/6A",
+        "56b"=>"5/6B",
+        "78a"=>"7/8A",
+        "78b"=>"7/8B",
+        "advisory"=>"Advisory",
+      );
+			$data["lower-school-groupings"] = array(
+			  "kindergarten"=>"Kindergarten",
+        "1-2"=>"Jungle/Prairie",
+        "3-4"=>"Tundray/Bayou",
+      );
+			$data['groupings'] = array(
+			  ""=>"",
+        "humanitiesTeacher"=>"Humanities",
+        "classroom"=>"Classroom",
+        "advisory"=>"Advisory",
+        "ab"=>"MS A/B Groups",
+        );
 			if ($this->input->get ( "ajax" )) {
 				$this->load->view ( $data ['target'], $data );
 			} else {
 				$this->load->view ( "page/index", $data );
 			}
 		}else{
+		  $this->load->helper("portlet");
 			$options = array ();
 			$grades = array ();
 			burn_cookie ( "grades" );
@@ -175,25 +201,35 @@ class Student extends MY_Controller {
 			$data ['students'] = $this->student_model->get_all ( $year, $options );
 			switch($type){
 				case "humanitiesTeacher":
-					$data ['groups'] = $this->teacher_model->get_by_subject ( "Humanities" );
-						break;
+					$data ['groups'] = $this->teacher_model->get_for_subject ( "Humanities" );
+          $data ['target'] = "student/class/humanities";
+
+          break;
 				case "ab":
 					$data['groups'] = array("A","B");
-					break;
+          $data ['target'] = "student/class/ab";
+
+          break;
 				case "classroom":
-					$data['groups'] = $this->teacher_model->get_teacher_pairs(2, 1, "lower-school");
-					break;
+					$data['groups'] = $this->teacher_model->get_by_grade_range($grades);
+
+          $data ['target'] = "student/class/classroom";
+
+          break;
 				case "advisory":
 					$data['groups'] = $this->teacher_model->get_teacher_pairs(2,1,"advisor");
-					break;
+          $data ['target'] = "student/class/classroom";
+          break;
 				
 			}
 			$data['type'] = $type;
 			$data ['scripts'] = array (
 					"portlet.js"
 			);
-			$data['title'] = "Organize Students by $type";
-			$data ['target'] = "student/class/portlet";
+			$data ['styles'] = array(
+			  "portlet.css",
+      );
+			$data['title'] = "Organize Students by " . ucfirst($type);
 			$this->load->view ( "page/index", $data );
 		}
 	}
@@ -297,7 +333,7 @@ class Student extends MY_Controller {
 		if ($this->input->get ( "kTeach" )) {
 			$kTeach = $this->input->get ( "kTeach" );
 			$options ['kTeach'] = $kTeach;
-			$options ['teacher'] = $this->teacher_model->get ( $kTeach )->teachName;
+			$options ['teacher'] = $this->teacher_model->get ( $kTeach )->teacherName;
 			bake_cookie ( "kTeach", $kTeach );
 		}
 		
@@ -306,7 +342,7 @@ class Student extends MY_Controller {
 		if ($this->input->get ( "humanitiesTeacher" )) {
 			$humanitiesTeacher = $this->input->get ( "humanitiesTeacher" );
 			$options ['humanitiesTeacher'] = $humanitiesTeacher;
-			$options ['humanitiesName'] = $this->teacher_model->get ( $humanitiesTeacher )->teachName;
+			$options ['humanitiesName'] = $this->teacher_model->get ( $humanitiesTeacher )->teacherName;
 			bake_cookie ( "humanitiesTeacher", $humanitiesTeacher );
 		}
 		

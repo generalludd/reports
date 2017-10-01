@@ -5,33 +5,33 @@ $i = 0; //iteration of row numbers for css styling and printing
 
 ?>
 <h1 class='no-print'>Report Card Printout for Teacher</h1>
-<? $buttons[] = array("selection"=>"none","type"=>"span","class"=>array("button","print","do-print"),"text"=>"Print");
+<?php $buttons[] = array("selection"=>"none","type"=>"span","class"=>array("button","print","do-print"),"text"=>"Print");
 echo create_button_bar($buttons); ?>
 <div id='report-card'>
 
-	<? foreach($charts as $chart): ?>
+	<?php foreach($charts as $chart): ?>
 
-	<div class='report-chart report-<?=$i;?>'>
+	<div class='report-chart report-<?php  echo $i;?>'>
 
 		<div class='report-title'>
 			Friends School of Minnesota <br />Report Card for
-			<?=$students[$i];?>
+			<?php  echo $students[$i];?>
 		</div>
 
 		<div class='report-header report-term'>
-			<?="$term, $year";?>
+			<?php  echo "$term, $year";?>
 		</div>
 
-		<? if($cutoff_date):?>
+		<?php if($cutoff_date):?>
 		<div class='report-header report-cutoff'>
 			For grades given through
-			<?=$cutoff_date;?>
+			<?php  echo $cutoff_date;?>
 		</div>
-		<? endif;?>
-		<?=$chart; ?>
+		<?php endif;?>
+		<?php  echo $chart; ?>
 	</div>
-	<? $i++; //iterate to row numbers?>
+	<?php $i++; //iterate to row numbers?>
 
-	<? endforeach; ?>
+	<?php endforeach; ?>
 
 </div>

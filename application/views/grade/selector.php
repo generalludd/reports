@@ -1,18 +1,18 @@
 <?php ?>
 <h4><?php echo $title;?></h4>
 <form id="report_card_selector" name="report_card_selector"
-	action="<?=site_url("grade/report_card");?>" 
+	action="<?php  echo site_url("grade/report_card");?>"
 	method="get" target="blank">
 	<input type="hidden" id="kStudent" name="kStudent"
-		value="<?=$kStudent;?>" />
+		value="<?php  echo $kStudent;?>" />
 
 	<p>
 		<label for="year">Year: </label>
-		<?=form_dropdown("year",$years,get_current_year());?>
+		<?php  echo form_dropdown("year",$years,get_current_year());?>
 	</p>
 	<p>
 		<label for="term">Term:</label>
-		<?=$terms;?>
+		<?php  echo $terms;?>
 	</p>
 	<p>
 		<label for="cutoff_date">Cutoff-Date: </label><input type="date"
@@ -20,7 +20,7 @@
 	</p>
 	<p>
 		<label for="subject">Subject: </label>
-		<?=form_dropdown("subject",$subjects);?>
+		<?php  echo form_dropdown("subject",$subjects);?>
 	</p>
 	<p>
 		<input type="submit" value="search" />

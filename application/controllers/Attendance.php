@@ -251,7 +251,7 @@ class Attendance extends MY_Controller {
 			$humanities_teachers = $this->teacher->get_for_subject ( "humanities" );
 			$data ['humanities_teachers'] = get_keyed_pairs ( $humanities_teachers, array (
 					"kTeach",
-					"teacherName" 
+					"teacherName"
 			), TRUE );
 			$data ['stuGroup'] = array (
 					"",

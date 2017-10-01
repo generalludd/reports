@@ -1,5 +1,5 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed'); ?>
-<?
+<?php 
 
 $year = get_current_year();
 $term = get_current_term();
@@ -16,7 +16,7 @@ value="<?php echo get_value($legend, "gradeEnd", get_cookie("benchmark_grade_end
 <label for="year">Year: </label>
 <?php echo form_dropdown('year',get_year_list(), get_value($legend, "year", $year), "id='year' class='year'");?>
 -<input id="yearEnd" type="text" name="yearEnd" class='yearEnd' readonly
-	maxlength="4" size="5" value="<? $yearEnd=$year+1;print $yearEnd; ?>" /></p>
+	maxlength="4" size="5" value="<?php $yearEnd=$year+1;print $yearEnd; ?>" /></p>
 
 <label for="subject">Subject:</label><?php echo form_dropdown('subject',$subjects,get_value($legend, "subject",get_cookie("benchmark_subject")),"id='subject' required");?>
 <p><label for="title">Title:</label><input type="text"

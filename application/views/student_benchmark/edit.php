@@ -47,8 +47,8 @@ $footnotes = array();
 		
 		<td class="benchmark-grade">
 		<?php if($quarter == $q):?>
-			<input type="text" id="g_<?=$benchmark->kBenchmark;?>" name="grade" size="2" class="benchmark-grade benchmark-string" value="<?php echo get_value($grade['grade'],'grade');?>"/>
-		<input type="text" id="c_<?=$benchmark->kBenchmark;?>" name="comment" class="benchmark-comment benchmark-string" value="<?=get_value($grade['grade'],"comment","");?>"/>
+			<input type="text" id="g_<?php  echo $benchmark->kBenchmark;?>" name="grade" size="2" class="benchmark-grade benchmark-string" value="<?php echo get_value($grade['grade'],'grade');?>"/>
+		<input type="text" id="c_<?php  echo $benchmark->kBenchmark;?>" name="comment" class="benchmark-comment benchmark-string" value="<?php  echo get_value($grade['grade'],"comment","");?>"/>
 		
 		
 		<?php else: ?>
@@ -65,7 +65,7 @@ $footnotes = array();
 
 	<?php $q++;?>	
 	<?php endforeach; ?>
-	<span style='margin-left:5px' id='save_<?=$benchmark->kBenchmark;?>'></span>
+	<span style='margin-left:5px' id='save_<?php  echo $benchmark->kBenchmark;?>'></span>
 			</td>
 	</tr>
 <?php endforeach;?>

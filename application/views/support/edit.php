@@ -135,7 +135,7 @@ $button_box = create_button_bar ( $buttons );
 		</h3>
 		<div>
 		
-			<textarea name="modification" id="modification" class="tinymce" style="width: 99%" rows="13" cols="91"><?=get_value($support,"modification"); ?></textarea>
+			<textarea name="modification" id="modification" class="tinymce" style="width: 99%" rows="13" cols="91"><?php  echo get_value($support,"modification"); ?></textarea>
 
 		</div>
 		

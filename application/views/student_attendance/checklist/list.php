@@ -8,7 +8,7 @@ $kTeach = $this->session->userdata("userID");
 <div class="checklist class-listing">
 <?php foreach ($students as $student): ?>
 <div id="student-attendance_<?php echo $student->kStudent; ?>" class="checklist row">
-			<p class="student-info"><a href="<? echo base_url("attendance/search/$student->kStudent");?>"><?php echo format_name($student->stuNickname,$student->stuLast); ?></a>
+			<p class="student-info"><a href="<?php echo base_url("attendance/search/$student->kStudent");?>"><?php echo format_name($student->stuNickname,$student->stuLast); ?></a>
 			<?php if($student->attendance): ?>
 				<span class="highlight">
 					<?php print format_attendance ( $student->attendance ); ?>

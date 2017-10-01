@@ -17,7 +17,7 @@ if(!$gradeEnd){
 ?>
 <h2><?php echo $title;?></h2>
 <p>Enter the grade range and select the appropriate values as needed.</p>
-<form id='attendance-check' name='attendance-check' action='<?=site_url("attendance/check");?>' method='get'>
+<form id='attendance-check' name='attendance-check' action='<?php  echo site_url("attendance/check");?>' method='get'>
 <p><label for='date'>Date: </label><input type='date' id='date' name='date' value='<?php echo date("Y-m-d");?>' required/></p>
 <p><label for='gradeStart'>Grade Range: </label><input type="text" name="gradeStart" id="gradeStart" class="grade" value="<?php echo $gradeStart; ?>" required/>-
 <input type="text" name="gradeEnd"  class="grade" id="gradeEnd" value="<?php echo $gradeEnd;?>" required/></p>

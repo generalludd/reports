@@ -2,7 +2,7 @@
 ?>
 <fieldset class="search_fieldset">
 	<legend>Search Parameters</legend>
-	<?
+	<?php 
 	if(!empty($params)){
 
 		$keys = array_keys($params);
@@ -34,11 +34,11 @@
 
 <p>
 	<a class="button new"
-		href="<?=site_url("benchmark_legend/create/$kTeach")?>">New Benchmark
+		href="<?php  echo site_url("benchmark_legend/create/$kTeach")?>">New Benchmark
 		Legend</a>
 </p>
 <div>
-	<?
+	<?php 
 	$activeTerm = "";
 	if(!empty($legends)){
 		foreach($legends as $legend):
@@ -46,20 +46,20 @@
 		if($currentTerm != $activeTerm){
 			?>
 	<h4>
-		<?=$currentTerm?>
+		<?php  echo $currentTerm?>
 	</h4>
-	<?  $activeTerm = $currentTerm;
+	<?php  $activeTerm = $currentTerm;
 		}
 		?>
 	<p>
-		<a href="<?=site_url("benchmark_legend/edit/$legend->kLegend")?>" class="button">Edit</a>
+		<a href="<?php  echo site_url("benchmark_legend/edit/$legend->kLegend")?>" class="button">Edit</a>
 		&nbsp;
-		<?="$legend->subject, $currentTerm, " . format_grade_range($legend->gradeStart, $legend->gradeEnd, TRUE);?>
+		<?php  echo "$legend->subject, $currentTerm, " . format_grade_range($legend->gradeStart, $legend->gradeEnd, TRUE);?>
 
 	</p>
 	<hr />
 
-	<?
+	<?php 
 	endforeach;
 	}else{
 		echo "<p>There were no results for this search.</p>";

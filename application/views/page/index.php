@@ -16,21 +16,21 @@ $body_classes [] = $this->uri->segment ( 1 );
 <!DOCTYPE html>
 <html>
 <head>
-<? $this->load->view('page/head');?>
+<?php $this->load->view('page/head');?>
 </head>
-<body class="<?=implode(" ",$body_classes);?>">
+<body class="<?php  echo implode(" ",$body_classes);?>">
 	<div id="page">
 <?php if(!$print): ?>
 <div id='header'>
 
-<? if($_SERVER['HTTP_HOST'] == "reports"): ?>
+<?php if($_SERVER['HTTP_HOST'] == "reports"): ?>
 <div id="site-name">
 				WARNING: THIS IS THE STAGING SERVER. CHANGES MADE HERE ARE IMAGINARY!</div>
-<? else: ?>
+<?php else: ?>
 <div id='site-name'>Friends School Student Information System</div>
-<? endif;?>
+<?php endif;?>
 <div id="top-nav">
-				<div id='utility'><? $this->load->view('page/utility');?></div>
+				<div id='utility'><?php $this->load->view('page/utility');?></div>
 
 			</div>
 		</div>

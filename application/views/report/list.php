@@ -9,7 +9,7 @@ if ($report_type == "student") {
 ?>
 <fieldset class="search_fieldset">
 	<legend>Search Parameters</legend>
-	<?
+	<?php 
 if (isset($options) && !empty($options)) {
 
     $keys = array_keys($options);
@@ -39,13 +39,13 @@ if (isset($options) && !empty($options)) {
 print create_button_bar(array(array("text"=>"Refine Search","href"=>site_url("report/search?report_type=$report_type&report_key=$report_key"),"class"=>"button dialog" )))
 ?>
 </fieldset>
-<? if(!empty($reports)): ?>
-<? if($type == "student"):?>
+<?php if(!empty($reports)): ?>
+<?php if($type == "student"):?>
 <p>
-	<strong> Advisor: <?=format_name($reports[0]->advisorFirst, $reports[0]->advisorLast);?>
+	<strong> Advisor: <?php  echo format_name($reports[0]->advisorFirst, $reports[0]->advisorLast);?>
 	</strong>
 </p>
-<? endif;?>
+<?php endif;?>
 <table class="report list">
 	<thead>
 		<tr>
@@ -64,7 +64,7 @@ print create_button_bar(array(array("text"=>"Refine Search","href"=>site_url("re
 	</thead>
 	<tbody>
 
-		<?
+		<?php 
     $current_student = "";
 
     foreach ($reports as $report) {
@@ -80,16 +80,16 @@ print create_button_bar(array(array("text"=>"Refine Search","href"=>site_url("re
         }
         ?>
 		<tr>
-			<td class='field report-category'><?=$report->category;if ($report->category == "Missing Homework") {if ($report->assignment_status == 1) {echo " (Turned In Late)";}}?></td>
-			<td class='field report-teacher-name'><?=$teacher;?>
+			<td class='field report-category'><?php  echo $report->category;if ($report->category == "Missing Homework") {if ($report->assignment_status == 1) {echo " (Turned In Late)";}}?></td>
+			<td class='field report-teacher-name'><?php  echo $teacher;?>
 			</td>
-			<td class='field report-date'><?=format_date($report->report_date);?>
+			<td class='field report-date'><?php  echo format_date($report->report_date);?>
 			</td>
-			<td class='field report-assignment'><?=$report->assignment;?></td>
-			<td class='field report-comment'><?=$report->comment;?></td>
-			<td class='field report-rank'><?=$report->label;?>
+			<td class='field report-assignment'><?php  echo $report->assignment;?></td>
+			<td class='field report-comment'><?php  echo $report->comment;?></td>
+			<td class='field report-rank'><?php  echo $report->label;?>
 			</td>
-			<td class='field report-is-read'><?
+			<td class='field report-is-read'><?php 
         $checked = "";
         $is_read = X;
         if ($report->is_read == 1) {
@@ -100,22 +100,22 @@ print create_button_bar(array(array("text"=>"Refine Search","href"=>site_url("re
             ?> <input
 				type="checkbox"
 				value="1"
-				id="is-read_<?=$report->kReport;?>"
+				id="is-read_<?php  echo $report->kReport;?>"
 				class="report-is-read"
 				name="is_read"
-				<?=$checked;?> /> <? else: ?>
-				<?=$is_read;?> <? endif; ?></td>
-			<td class='field report-parent-contact'><?=$report->parent_contact;?>
+				<?php  echo $checked;?> /> <?php else: ?>
+				<?php  echo $is_read;?> <?php endif; ?></td>
+			<td class='field report-parent-contact'><?php  echo $report->parent_contact;?>
 			</td>
-			<td class='field report-contact-method'><?=$report->contact_method;?>
+			<td class='field report-contact-method'><?php  echo $report->contact_method;?>
 			</td>
-			<td class='field report-contact-date'><? if($report->contact_date): echo format_date($report->contact_date);endif;?>
+			<td class='field report-contact-date'><?php if($report->contact_date): echo format_date($report->contact_date);endif;?>
 			</td>
 			<td class='field buttons'><a
-				href="<?=site_url("report/edit/$report->kReport");?>"
+				href="<?php  echo site_url("report/edit/$report->kReport");?>"
 				class="button edit dialog">Edit</a></td>
 
-			<?
+			<?php 
 
 }
 
@@ -123,7 +123,7 @@ print create_button_bar(array(array("text"=>"Refine Search","href"=>site_url("re
 		</tr>
 	</tbody>
 </table>
-<? else: ?>
+<?php else: ?>
 <p>
 	There are no <?php echo STUDENT_REPORT;?>s for the given search criteria
 </p>

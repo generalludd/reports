@@ -1,7 +1,7 @@
 <?php
 
 ?>
-<fieldset class="search_fieldset"><legend>Search Parameters</legend> <?
+<fieldset class="search_fieldset"><legend>Search Parameters</legend> <?php 
 if(!empty($options)){
 
 	if(array_key_exists("where", $options)){
@@ -40,9 +40,9 @@ echo create_button_bar($buttons);
 ?>
 
 </fieldset>
-<?=create_button_bar(array(array("text"=>"New Template","class"=>"button new","href"=>site_url("template/create/$kTeach"))));?>
+<?php  echo create_button_bar(array(array("text"=>"New Template","class"=>"button new","href"=>site_url("template/create/$kTeach"))));?>
 
-<? if(!empty($templates)): ?>
+<?php if(!empty($templates)): ?>
 <table class="list subject-templates">
         		<thead>
             		<tr>
@@ -56,22 +56,22 @@ echo create_button_bar($buttons);
             		</tr>
         		</thead>
         	<tbody>
-<? foreach($templates as $template): ?>
-		<? $currentTerm = $template->term . " " . format_schoolyear($template->year); ?>
+<?php foreach($templates as $template): ?>
+		<?php $currentTerm = $template->term . " " . format_schoolyear($template->year); ?>
 
 		<tr>
     		<td><?php echo create_button(array("text"=>"Edit","class"=>"button small edit","href"=>site_url("template/edit/$template->kTemplate")));?></td>
-    		<td><strong><?=$template->subject;?></strong></td>
-    		<td><?=$currentTerm?></td>
-    		<td><?=format_grade_range($template->gradeStart, $template->gradeEnd, TRUE);?> </td>
-            <td><?=!empty($template->type)?$template->type:"";?></td>
-            <td class="status"><?=$template->isActive == 0?"Inactive":"Active";?> </td>
+    		<td><strong><?php  echo $template->subject;?></strong></td>
+    		<td><?php  echo $currentTerm?></td>
+    		<td><?php  echo format_grade_range($template->gradeStart, $template->gradeEnd, TRUE);?> </td>
+            <td><?php  echo !empty($template->type)?$template->type:"";?></td>
+            <td class="status"><?php  echo $template->isActive == 0?"Inactive":"Active";?> </td>
             <td><?php echo create_button(array("text"=>"Batch Apply","title"=>"Apply templates to a group of students all at once","href"=>site_url("narrative/show_missing?kTeach=$template->kTeach&subject=$template->subject&gradeStart=$template->gradeStart&gradeEnd=$template->gradeEnd&apply_template=$template->kTemplate"), "class"=>"button new"));?></td>
        </tr>
-<? endforeach;?>
+<?php endforeach;?>
 	</tbody>
 </table>
-<? else: ?>
+<?php else: ?>
 	<p>There were no results for this search.</p>
-<? endif;
+<?php endif;
 

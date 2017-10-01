@@ -52,8 +52,8 @@ $buttons [] = array (
 		"href" => "#" 
 );
 ?>
-<input type="hidden" name="kTeach" id="kTeach" value="<?=$kTeach;?>" />
-<?
+<input type="hidden" name="kTeach" id="kTeach" value="<?php  echo $kTeach;?>" />
+<?php
 if (! empty ( $assignments )) {
 	
 	/*
@@ -71,66 +71,66 @@ if (! empty ( $assignments )) {
 	}
 	?>
 
-<? if($this->input->get("date_start")):?>
+<?php if($this->input->get("date_start")):?>
 <h3>
 	<label>Date Range: </label>
-<?=sprintf("%s-%s",$this->input->get("date_start"), $this->input->get("date_end"));?>
+<?php  echo sprintf("%s-%s",$this->input->get("date_start"), $this->input->get("date_end"));?>
 </h3>
-<? elseif(count($assignments > 10)): ?>
+<?php elseif(count($assignments > 10)): ?>
 <div class="alert">
 	You can reduce the number of assignments displayed by entering a date range when you run your grade search.<br />This can speed up editing when
 	you are dealing with large numbers of assignments.
 </div>
-<? endif;?>
- <?=create_button_bar($buttons);?>
-<table class='<?=implode(" ",$classes);?>'>
+<?php endif;?>
+ <?php  echo create_button_bar($buttons);?>
+<table class='<?php  echo implode(" ",$classes);?>'>
 	<thead>
 		<tr class="first">
-			<th colspan='2'><?=$header_string;?>
+			<th colspan='2'><?php  echo $header_string;?>
 			</th>
 			<th></th>
 			<th></th>
 			<th class='chart-final-grade'>Final Grade</th>
-			<?
+			<?php
 	
 	$assignment_keys = array ();
 	foreach ( $assignments as $assignment ) :
 		?>
 
-			<th id="as_<?=$assignment->kAssignment;?>" class="assignment-field buttons">
+			<th id="as_<?php  echo $assignment->kAssignment;?>" class="assignment-field buttons">
 				<div>
-					<a class="dialog edit small button" id="ase_<?=$assignment->kAssignment;?>"
+					<a class="dialog edit small button" id="ase_<?php  echo $assignment->kAssignment;?>"
 						href="<?php echo site_url("assignment/edit/$assignment->kAssignment");?>" title="Edit this assignment"
 					>Edit</a>
-					<span class="chart-assignment"><?=$assignment->assignment;?></span>
+					<span class="chart-assignment"><?php  echo $assignment->assignment;?></span>
 					<br />
-					<span class='chart-category'><?=$assignment->category;?> </span>
+					<span class='chart-category'><?php  echo $assignment->category;?> </span>
 					<br />
 					<!-- an assignment with 0 points is calculated as a make-up points for assignments -->
-					<span class='chart-points'> <?=$assignment->points>0?$assignment->points. " Points" : capitalize($assignment->points_type);?>
+					<span class='chart-points'> <?php  echo $assignment->points>0?$assignment->points. " Points" : capitalize($assignment->points_type);?>
 			</span>
 					<br />
-					<span class='chart-date'><?=format_date($assignment->date);?>
+					<span class='chart-date'><?php  echo format_date($assignment->date);?>
 			</span>
 				</div>
-			<? $assignment_keys[] = $assignment->kAssignment;?>
+			<?php $assignment_keys[] = $assignment->kAssignment;?>
 			</th>
-			<? endforeach; ?>
+			<?php endforeach; ?>
 			<th class='assignment-button'>
 			<?php echo create_button(array("text"=>"Add Assignment","href"=>site_url("assignment/create/$kTeach?subject=$subject"),"class"=>"button dialog new") )?>
 			</th>
 		</tr>
 		<tr class="second">
 			<th colspan=5></th>
-		<? foreach($assignment_keys as $key):?>
+		<?php foreach($assignment_keys as $key):?>
 		<th class="buttons">
-				<a href="<?php echo site_url("grade/edit_column/$key");?>" class='dialog small button' id='ace_<?=$key;?>'>Edit Grades</a>
+				<a href="<?php echo site_url("grade/edit_column/$key");?>" class='dialog small button' id='ace_<?php  echo $key;?>'>Edit Grades</a>
 			</th>
-		<? endforeach;?>
+		<?php endforeach;?>
 		</tr>
 	</thead>
 	<tbody>
-		<?
+		<?php
 	
 	if (! empty ( $grades )) {
 		
@@ -197,13 +197,13 @@ if (! empty ( $assignments )) {
 <div class='button-box'>
 	<span class='button new show-student-selector'>Add Student</span>
 </div>
-<? }else{ ?>
+<?php }else{ ?>
 
-	<?=$category_count == 0?"<p style='padding-bottom: 1em;'>You may need to create categories before creating assignments.</p>":""; ?>
-	<?=create_button_bar($buttons);?>
-<? if($category_count > 0){ ?>
+	<?php  echo $category_count == 0?"<p style='padding-bottom: 1em;'>You may need to create categories before creating assignments.</p>":""; ?>
+	<?php  echo create_button_bar($buttons);?>
+<?php if($category_count > 0){ ?>
 <p>You have not entered any <?php echo $subject; ?> assignments or grades for this term.</p>
-<?
+<?php
 	} // end if category_count
 } //end if assignments
 

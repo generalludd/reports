@@ -25,9 +25,10 @@ defined ( 'BASEPATH' ) or exit ( 'No direct script access allowed' );
  */
 $allowed_domains = array (
 		'reports',
+		'docker.dev',
 		'reports.fsmn.org' 
 );
-$default_domain = 'reports.fsmn.org';
+$default_domain = 'reports:8000';
 
 if (in_array ( $_SERVER ['HTTP_HOST'], $allowed_domains, TRUE )) {
 	$domain = $_SERVER ['HTTP_HOST'];
@@ -518,7 +519,7 @@ $config ['time_reference'] = 'local';
  * | Note: You need to have eval() enabled for this to work.
  * |
  */
-$config ['rewrite_short_tags'] = FALSE;
+$config ['rewrite_short_tags'] = TRUE;
 
 /*
  * |--------------------------------------------------------------------------

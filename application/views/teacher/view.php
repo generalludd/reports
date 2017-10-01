@@ -21,10 +21,10 @@ if($gradeStart == $gradeEnd){
 ?>
 <input
 	type="hidden" id="kTeach" name="kTeach"
-	value='<? echo $teacher->kTeach; ?>'>
-<? print $button_bar;?>
+	value='<?php echo $teacher->kTeach; ?>'>
+<?php print $button_bar;?>
 <div class='content inner'>
-<?
+<?php 
 
 $userID = $this->session->userdata("userID");
 if($kTeach == $userID || $userID == ROOT_USER){
@@ -41,8 +41,8 @@ if($kTeach == $userID || $userID == ROOT_USER){
 
 }
 ?>
-<p><label>First Name: </label><? print $teacher->teachFirst; ?></p>
-<p><label>Last Name: </label><? print $teacher->teachLast; ?></p>
+<p><label>First Name: </label><?php print $teacher->teachFirst; ?></p>
+<p><label>Last Name: </label><?php print $teacher->teachLast; ?></p>
 <p><label>User Account Status: </label> <?php
 if($teacher->status==1){
 	print "Enabled";
@@ -50,7 +50,7 @@ if($teacher->status==1){
 	print "Disabled";
 }
 ?></p>
-<? //@TODO change the text version of dbRole to pull the menu variable value from the DB instead of hard coding these values ?>
+<?php //@TODO change the text version of dbRole to pull the menu variable value from the DB instead of hard coding these values ?>
 <p><label>Database Role: </label> <?php
 switch($teacher->dbRole){
 	case 1:
@@ -66,18 +66,18 @@ switch($teacher->dbRole){
 
 ?></p>
 <?php  if(get_value($teacher, "dbRole",NULL) == 2):?>
-<p><label>Classroom:</label> <? print $teacher->teachClass; ?></p>
-<p><label>Grade Range Taught: </label><? print $gradeRange;?></p>
+<p><label>Classroom:</label> <?php print $teacher->teachClass; ?></p>
+<p><label>Grade Range Taught: </label><?php print $gradeRange;?></p>
 
 
 	<h4>Subjects Taught</h4>
 	<p>This information is used to generate any menus indicating the subjects
-	<? if($userID == $teacher->kTeach){
+	<?php if($userID == $teacher->kTeach){
 		print " you teach.";
 	}else{
 		print get_value($teacher, 'teachFirst'). " teaches.";
 	}?></p>
-<?
+<?php 
 $this->load->view("teacher/subject_list");
 echo "<p><span class='add_subject button small new' id='t_$teacher->kTeach'>Add a Subject</span></p>";
 

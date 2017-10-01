@@ -13,11 +13,11 @@ if (count ( $reports ) > 0) :
 	
 	?>
 
-<div class="<?=implode(" ",$div_classes);?>">
+<div class="<?php  echo implode(" ",$div_classes);?>">
 
-	<h4><?=$sortTerm; ?></h4>
+	<h4><?php  echo $sortTerm; ?></h4>
 
-<?
+<?php 
 
 	$print_buttons [] = array (
 			"selection" => "print",
@@ -48,7 +48,7 @@ if (count ( $reports ) > 0) :
 		);
 	}
 	?>
-<?=create_button_bar($print_buttons); ?>
+<?php  echo create_button_bar($print_buttons); ?>
 
         <table class='list'>
 		<thead>
@@ -65,23 +65,23 @@ if (count ( $reports ) > 0) :
 		</thead>
 		<tbody>
 
-<? foreach($reports as $narrative):?>
+<?php foreach($reports as $narrative):?>
 <tr>
 				<td>
 
-					<strong><?=$narrative->narrSubject;?></strong>
+					<strong><?php  echo $narrative->narrSubject;?></strong>
 				</td>
 				<td>
-					<a href="<?=site_url("narrative/teacher_list/$narrative->kTeach");?>"><?=format_name($narrative->teachFirst,$narrative->teachLast);?></a>
+					<a href="<?php  echo site_url("narrative/teacher_list/$narrative->kTeach");?>"><?php  echo format_name($narrative->teachFirst,$narrative->teachLast);?></a>
 				</td>
-				<td><?=format_timestamp($narrative->recModified);?></td>
+				<td><?php  echo format_timestamp($narrative->recModified);?></td>
 				<td>
-					<a class="button small" href="<?=site_url("narrative/view/$narrative->kNarrative");?>">View/Edit</a>
+					<a class="button small" href="<?php  echo site_url("narrative/view/$narrative->kNarrative");?>">View/Edit</a>
 
 				</td>
 			</tr>
 
-<? endforeach; ?>
+<?php endforeach; ?>
 
 </tbody>
 	</table>
@@ -90,4 +90,4 @@ if (count ( $reports ) > 0) :
 
 
 
-<? endif;
+<?php endif;

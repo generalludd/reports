@@ -132,7 +132,7 @@ class Teacher_model extends MY_Model {
 			}
 		} else {
 			$this->db->select ( $select );
-			$this->db->select ( "CONCAT(teacher.teachFirst, ' ', teacher.teachLast) as teachName", FALSE );
+			$this->db->select ( "CONCAT(teacher.teachFirst, ' ', teacher.teachLast) as teacherName", FALSE );
 		}
 		$result = $this->db->get ()->row ();
 		$this->_log();
@@ -188,8 +188,8 @@ class Teacher_model extends MY_Model {
 				) );
 			}
 		}
-		
-		$this->db->select ( "CONCAT(teachFirst,' ',teachLast) as teacher", false );
+
+		$this->db->select ( "CONCAT(teachFirst,' ',teachLast) as teacherName", false );
 		$this->db->select ( 'kTeach' );
 		$direction = "ASC";
 		$order_field = "teachFirst";
@@ -210,19 +210,39 @@ class Teacher_model extends MY_Model {
 		return $result->teacher;
 	}
 
-	function get_by_subject($subject)
-	{
-		$this->db->where ( "subject", $subject );
-		$this->db->from ( "teacher" );
-		$this->db->join ( "teacher_subject", "teacher_subject.kTeach=teacher.kTeach" );
-		$this->db->where ( "teacher.status", 1 );
-		$this->db->select ( "teacher.*" );
-		$this->db->select ( "teacher_subject.gradeStart,teacher_subject.gradeEnd,teacher_subject.subject, teacher_subject.kSubject" );
-		$this->db->order_by ( "teacher.teachLast" );
-		$result = $this->db->get ()->result ();
-		return $result;
-	}
+  /**
+   * get all teachers for a given subject
+   *
+   * @param string $subject
+   * @return object array
+   */
+  function get_for_subject($subject)
+  {
+    $this->db->from ( "teacher" );
+    $this->db->join ( "teacher_subject", "teacher.kTeach = teacher_subject.kTeach" );
+    $this->db->where ( "teacher.status", 1 );
+    $this->db->where ( "teacher_subject.subject", $subject );
+    $this->db->order_by ( "teacher.teachfirst" );
+    $this->db->select ( "CONCAT(teachFirst,' ', teachLast) as teacherName", FALSE );
+    $this->db->select ( "teacher.kTeach" );
+    $result = $this->db->get ()->result ();
+    return $result;
+  }
 
+  function get_by_grade_range($gradeRange){
+    $grades = implode(",", $gradeRange);
+    $this->db->from("teacher");
+    $this->db->where_in("gradeStart", $gradeRange);
+    $this->db->where_in("gradeEnd",$gradeRange);
+    $this->db->where("status",1);
+    $this->db->where("dbRole",2);//teacher
+    $this->db->select ( "CONCAT(teachFirst,' ', teachLast) as teacherName", FALSE );
+    $this->db->select ("teacher.*");
+    $result = $this->db->get()->result();
+    $this->_log();
+    return $result;
+
+  }
 	/**
 	 * Setter
 	 */
@@ -260,24 +280,7 @@ class Teacher_model extends MY_Model {
 		return $result;
 	}
 
-	/**
-	 * get all teachers for a given subject
-	 *
-	 * @param string $subject        	
-	 * @return object array
-	 */
-	function get_for_subject($subject)
-	{
-		$this->db->from ( "teacher" );
-		$this->db->join ( "teacher_subject", "teacher.kTeach = teacher_subject.kTeach" );
-		$this->db->where ( "teacher.status", 1 );
-		$this->db->where ( "teacher_subject.subject", $subject );
-		$this->db->order_by ( "teacher.teachfirst" );
-		$this->db->select ( "CONCAT(teachFirst,' ', teachLast) as teacherName", FALSE );
-		$this->db->select ( "teacher.kTeach" );
-		$result = $this->db->get ()->result ();
-		return $result;
-	}
+
 
 	function insert_subject($kTeach, $subject, $gradeStart, $gradeEnd)
 	{

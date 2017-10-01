@@ -5,10 +5,10 @@
 
 <head>
 <meta http-equiv="content-type" content="text/html;charset=utf-8" />
-<title><?=$title;?>
+<title><?php  echo $title;?>
 </title>
-<link href='<?=base_url('css/report.css');?>' rel='stylesheet' type='text/css' media='all' />
-<link href='<?=base_url('css/print.css');?>' rel='stylesheet' type='text/css' media='print' />
+<link href='<?php  echo base_url('css/report.css');?>' rel='stylesheet' type='text/css' media='all' />
+<link href='<?php  echo base_url('css/print.css');?>' rel='stylesheet' type='text/css' media='print' />
 
 <style>
 @media ( -webkit-min-device-pixel-ratio :0) and
@@ -25,22 +25,22 @@
 		Friends School of Minnesota <br /> 1365 Englewood Avenue <br /> St. Paul, MN 55104
 	</p>
 	<p class="title">
-		<b><?
+		<b><?php 
 		echo $narrTerm;
 		?> NARRATIVE REPORT </b>
 	</p>
 	<p class='term'>
-		<? echo format_schoolyear($narrYear) . " Academic Year"; ?>
+		<?php echo format_schoolyear($narrYear) . " Academic Year"; ?>
 	</p>
 	<p>
-		<span class="student">Student: <? echo $student; ?>
+		<span class="student">Student: <?php echo $student; ?>
 		</span>
-		<span style='text-align: right; float: right'>Absent: <? echo $absent; ?>
+		<span style='text-align: right; float: right'>Absent: <?php echo $absent; ?>
 		</span>
 		<br />
-		<span class="student">Grade: <? echo format_grade($stuGrade); ?>
+		<span class="student">Grade: <?php echo format_grade($stuGrade); ?>
 		</span>
-		<span style='text-align: right; float: right'>Tardy: <? echo $tardy; ?>
+		<span style='text-align: right; float: right'>Tardy: <?php echo $tardy; ?>
 		</span>
 
 	</p>

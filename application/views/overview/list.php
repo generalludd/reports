@@ -54,19 +54,19 @@ echo create_button_bar($buttons);
             		</tr>
         		</thead>
         	<tbody>
-<? foreach($overviews as $overview): ?>
-		<? $currentTerm = $overview->term . " " . format_schoolyear($overview->year); ?>
+<?php foreach($overviews as $overview): ?>
+		<?php $currentTerm = $overview->term . " " . format_schoolyear($overview->year); ?>
 		<tr>
-    		<td><?=create_button(array("text"=>"Edit","class"=>"button small edit","href"=>site_url("overview/edit/$overview->kOverview")));?></td>
-    		<td><strong><?=$overview->subject;?></strong></td>
-    		<td><?=$currentTerm?></td>
-    		<td><?=format_grade_range($overview->gradeStart, $overview->gradeEnd, TRUE);?> </td>
-            <td class="status"><?=$overview->isActive == 0?"Inactive":"Active";?> </td>
+    		<td><?php  echo create_button(array("text"=>"Edit","class"=>"button small edit","href"=>site_url("overview/edit/$overview->kOverview")));?></td>
+    		<td><strong><?php  echo $overview->subject;?></strong></td>
+    		<td><?php  echo $currentTerm?></td>
+    		<td><?php  echo format_grade_range($overview->gradeStart, $overview->gradeEnd, TRUE);?> </td>
+            <td class="status"><?php  echo $overview->isActive == 0?"Inactive":"Active";?> </td>
        </tr>
-<? endforeach;?>
+<?php endforeach;?>
 	</tbody>
 </table>
-<? else: ?>
+<?php else: ?>
 	<p>There were no results for this search.</p>
-<? endif;
+<?php endif;
 

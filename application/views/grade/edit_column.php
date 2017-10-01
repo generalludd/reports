@@ -3,14 +3,14 @@
 
 ?>
 <div class='header'>
-<h3>Assignment: <?=$assignment->assignment;?></h3>
+<h3>Assignment: <?php  echo $assignment->assignment;?></h3>
 <ul>
-<li><label>Category: </label><?=$assignment->category;?></li>
-<li><label>Total Points: </label><?=$assignment->points>0?$assignment->points. " Points" :capitalize($assignment->points_type);?></li>
-<li><label>Date: </label><?=format_date($assignment->date);?></li>
+<li><label>Category: </label><?php  echo $assignment->category;?></li>
+<li><label>Total Points: </label><?php  echo $assignment->points>0?$assignment->points. " Points" :capitalize($assignment->points_type);?></li>
+<li><label>Date: </label><?php  echo format_date($assignment->date);?></li>
 <?if($stuGroup = $this->input->cookie("stuGroup")): ?>
-<li><label>Student Group: </label><?=$stuGroup;?></li>
-<? endif;?>
+<li><label>Student Group: </label><?php  echo $stuGroup;?></li>
+<?php endif;?>
 </ul>
 </div>
 <table class='grade-editor'>
@@ -24,36 +24,36 @@
 		</tr>
 	</thead>
 	<tbody>
-		<?
+		<?php 
 		//tabindex is set to allow editors to tab down to the grade point value fields (see below)
 		$tabindex = 1;
 		foreach($grades as $grade){
 			?>
-		<tr id="<?=get_value($grade, "kGrade",0);?>">
-			<td class='grade-description'><?=format_name($grade->stuNickname,$grade->stuLast);?>
+		<tr id="<?php  echo get_value($grade, "kGrade",0);?>">
+			<td class='grade-description'><?php  echo format_name($grade->stuNickname,$grade->stuLast);?>
 			</td>
 			<td class='grade-value'><input type="text"
-				id="g_<?=$grade->kAssignment;?>_<?=$grade->kStudent;?>" name="points" size="2"
+				id="g_<?php  echo $grade->kAssignment;?>_<?php  echo $grade->kStudent;?>" name="points" size="2"
 				class="column-grade assignment-string assignment-field"
-				value="<?=get_value($grade,"points");?>" autocomplete="off" tabindex="<?=$tabindex;?>" />
+				value="<?php  echo get_value($grade,"points");?>" autocomplete="off" tabindex="<?php  echo $tabindex;?>" />
 			</td>
-			<td class='grade-status'><?=form_dropdown("status",$status, get_value($grade,"status"),sprintf("id='status_%s_%s' class='assignment-field'",$grade->kAssignment,$grade->kStudent));?>
+			<td class='grade-status'><?php  echo form_dropdown("status",$status, get_value($grade,"status"),sprintf("id='status_%s_%s' class='assignment-field'",$grade->kAssignment,$grade->kStudent));?>
 			</td>
-			<td class='grade-footnote'><?=form_dropdown("footnote",$footnotes, get_value($grade,"footnote"),
+			<td class='grade-footnote'><?php  echo form_dropdown("footnote",$footnotes, get_value($grade,"footnote"),
 					sprintf("id='footnote_%s_%s' class='assignment-field'",$grade->kAssignment, $grade->kStudent));?>
 
 			</td>
 			<td class='grade-button'><span style='margin-left: 5px;'
-				id='save_<?=$grade->kAssignment;?>_<?=$grade->kStudent;?>'></span>
+				id='save_<?php  echo $grade->kAssignment;?>_<?php  echo $grade->kStudent;?>'></span>
 			</td>
 		</tr>
 
-		<?
+		<?php 
 		//increment the tabindex for the next row item.
 		$tabindex++;
 } ?>
 	</tbody>
 </table>
 <div class='button-box'>
-	<span class='button small close_grade_editor' tabindex="<?=$tabindex;?>">Close</span>
+	<span class='button small close_grade_editor' tabindex="<?php  echo $tabindex;?>">Close</span>
 </div>

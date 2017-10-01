@@ -3,7 +3,7 @@
 
 <fieldset class="search_fieldset">
 	<legend>Search Parameters</legend>
-	<?
+	<?php
 	if(!empty($options)){
 
 		$keys = array_keys($options);
@@ -32,6 +32,6 @@
 		<a class="button log_search">Refine Search</a>
 	</div>
 </fieldset>
-<?
+<?php
 $classes = array("table_class"=>"list");
 print format_table($logs,$header,$classes);

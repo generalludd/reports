@@ -2,14 +2,14 @@
 ?>
 
 <form id="narrative_inline_editor" name="narrative_inline_editor"
-	action="<?=site_url("narrative/update_inline");?>" method="post">
+	action="<?php  echo site_url("narrative/update_inline");?>" method="post">
 	<input type="hidden"
-	name="kNarrative" id="kNarrative" value='<?="$narrative->kNarrative"; ?>' />
+	name="kNarrative" id="kNarrative" value='<?php  echo "$narrative->kNarrative"; ?>' />
 	<input type="hidden"
-    name="kTeach" id="kTeach" value='<?="$narrative->kTeach"; ?>' />
+    name="kTeach" id="kTeach" value='<?php  echo "$narrative->kTeach"; ?>' />
 
 <div><textarea id="narrText_<?php echo $narrative->kNarrative;?>" name="narrText" class="tinymce"
-	style="width: 99.75%;" rows="19" cols="107"><?=stripslashes($narrative->narrText);?></textarea></div>
+	style="width: 99.75%;" rows="19" cols="107"><?php  echo stripslashes($narrative->narrText);?></textarea></div>
 <p><span class="button new save_narrative_inline">Save</span></p>
 </form>
 <script src="<?php echo base_url("js/tinymce.js");?>"></script>
