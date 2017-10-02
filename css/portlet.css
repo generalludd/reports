@@ -15,8 +15,9 @@
 }
 
 .portlet {
-  margin: 0 1em 1em 0;
-  padding: 0.3em;
+  margin:.25em 0;
+  padding: 0;
+  border: 1px dotted #ccc;
 }
 .portlet:hover{
   cursor: move;
@@ -24,7 +25,7 @@
 }
 .portlet-header , .student-details{
   padding: 0.2em 0.3em;
-  margin-bottom: 0.5em;
+  margin-bottom: 0;
   position: relative;
 }
 .portlet-content {
@@ -42,4 +43,19 @@
 }
 .portlet ul li {
   list-style: none;
+}
+
+@media print {
+	body {
+	font-size: 12px;
+	}
+	.class{
+	margin: 0;
+	}
+	.portlet{
+	border: none;
+	}
+	#students{
+	display: none;
+	}
 }

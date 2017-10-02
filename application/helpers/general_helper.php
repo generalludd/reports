@@ -332,6 +332,10 @@ function format_classroom($student_class, $student_grade, $student_group = NULL)
 	return $class;
 }
 
+function format_classrooms($grades,$type){
+
+}
+
 function format_grade_text($number = 0)
 {
 	switch ($number) {

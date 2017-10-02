@@ -49,9 +49,9 @@ function dragged(my_item){
       data: form_data,
       url: base_url + "student/update_class",
       success: function (data) {
-        if (my_type == "ab") {
-          $("#" + $(my_item).attr("id") + " .ab-group").html(my_id);
-        }
+//        if (my_type == "ab") {
+//          $("#" + $(my_item).attr("id") + " .ab-group").html(my_id);
+//        }
       }
     });
   }
