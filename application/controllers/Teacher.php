@@ -225,7 +225,7 @@ class Teacher extends MY_Controller {
 		$teachers = $this->teacher_model->get_teacher_pairs ( $db_role, $status, $teacher_group );
 		$selections = get_keyed_pairs ( $teachers, array (
 				"kTeach",
-				"teacher" 
+				"teacherName" 
 		), TRUE );
 		$output = form_dropdown ( "kTeach", $selections, $kTeach, $settings );
 		echo $output;

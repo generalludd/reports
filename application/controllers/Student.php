@@ -88,7 +88,7 @@ class Student extends MY_Controller {
 		$teachers = $this->teacher_model->get_teacher_pairs ();
 		$data ['teacherPairs'] = get_keyed_pairs ( $teachers, array (
 				"kTeach",
-				"teacher" 
+				"teacherName" 
 		) );
 		$data ['target'] = "student/edit";
 		$data ['title'] = "Add a New Student";

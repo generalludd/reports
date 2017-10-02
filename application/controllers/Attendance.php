@@ -67,6 +67,9 @@ class Attendance extends MY_Controller {
 			$data ["attendance"] = $this->attendance->get ( $kAttendance );
 			$data ["kStudent"] = $data ["attendance"]->kStudent;
 			$data ["student"] = $this->student_model->get_name ( $data ["kStudent"] );
+			if ($redirect = $this->input->get ( "redirect" )) {
+				$data ['redirect'] = $redirect;
+			}
 			$data ['title'] = sprintf ( "Editing Attendance for %s", $data ['student'] );
 			$data ['target'] = "attendance/edit";
 			$this->load->model ( "menu_model" );
@@ -133,7 +136,11 @@ class Attendance extends MY_Controller {
 			$this->attendance->update ( $kAttendance );
 		}
 		$kStudent = $this->input->post ( "kStudent" );
-		redirect ( "attendance/search/$kStudent?showAll=1" );
+		if ($redirect = $this->input->post ( "redirect" )) {
+			redirect (urldecode( $redirect) );
+		} else {
+			redirect ( "attendance/search/$kStudent?showAll=1" );
+		}
 	}
 
 	/**
@@ -251,7 +258,7 @@ class Attendance extends MY_Controller {
 			$humanities_teachers = $this->teacher->get_for_subject ( "humanities" );
 			$data ['humanities_teachers'] = get_keyed_pairs ( $humanities_teachers, array (
 					"kTeach",
-					"teacherName"
+					"teacherName" 
 			), TRUE );
 			$data ['stuGroup'] = array (
 					"",
@@ -411,9 +418,8 @@ class Attendance extends MY_Controller {
 					"Absent",
 					"Tardy" 
 			);
-			print_r($search_array);
+			print_r ( $search_array );
 			$data ['records'] = $this->attendance->search ( $search_array );
-				
 		} else {
 			$data ['records'] = $this->attendance->get_for_teacher ( $date, $kTeach );
 		}
@@ -529,8 +535,7 @@ class Attendance extends MY_Controller {
 					"class" => "button inline small present attendance-check",
 					"href" => base_url ( "attendance/absent?date=$date&kStudent=$kStudent&attendType=Present" ),
 					"id" => sprintf ( "Present_%s_%s", $date, $kStudent ) 
-			)
-			;
+			);
 		}
 		return create_button_bar ( $buttons );
 	}

@@ -1,5 +1,6 @@
 <?php 
 //$categories = array("one","two","three");
+$category_list = array();
 foreach($categories as $c){
 	$category_list[] = sprintf("'%s'", $c->category);
 }

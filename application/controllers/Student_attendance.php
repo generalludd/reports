@@ -63,6 +63,9 @@ class Student_attendance extends MY_Controller {
 	{
 		if ($kAttendance) {
 			$this->load->model ( "student_model" );
+			if($redirect = $this->input->get("redirect")){
+			$data['redirect'] = $redirect;
+			}
 			$data ['kAttendance'] = $kAttendance;
 			$data ['attendance'] = $this->attendance->get ( $kAttendance );
 			$data ['kStudent'] = $data ['attendance']->kStudent;
@@ -133,7 +136,11 @@ class Student_attendance extends MY_Controller {
 			$this->attendance->update ( $kAttendance );
 		}
 		$kStudent = $this->input->post ( "kStudent" );
-		redirect ( "student_attendance/search/$kStudent?showAll=1" );
+		if ($this->input->post ( "redirect" )) {
+			redirect ( $this->input->post ( "redirect" ) );
+		} else {
+			redirect ( "student_attendance/search/$kStudent?showAll=1" );
+		}
 	}
 
 	/**
@@ -267,7 +274,7 @@ class Student_attendance extends MY_Controller {
 			}
 			$data ['teachers'] = get_keyed_pairs ( $teachers, array (
 					"kTeach",
-					"teacher" 
+					"teacherName" 
 			), TRUE );
 			$data ['target'] = "student_attendance/checklist/search";
 			$data ['title'] = "Check Attendance";

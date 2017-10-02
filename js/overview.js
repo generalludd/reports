@@ -11,7 +11,7 @@ $('.cancel_form').live('click',
 			if(action) {
 				var really_act = confirm("This is your last chance to back out. Any unsaved changes you have made will be lost!");
 				if(really_act) {
-			document.location= base_url + "overview/view/?kTeach="+ kTeach + "&term=" + myTerm + "&year=" + myYear + "&subject=" + mySubject + "&gradeStart=" + gradeStart + "&gradeEnd=" + gradeEnd;
+			document.location= base_url + "overview/show_all/?kTeach="+ kTeach + "&term=" + myTerm + "&year=" + myYear + "&subject=" + mySubject + "&gradeStart=" + gradeStart + "&gradeEnd=" + gradeEnd;
 				}
 			}
 		}//end function(event)

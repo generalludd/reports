@@ -668,8 +668,7 @@ li.attendance:first-child {
 */
 .column{
 	display: flex;
-	flex-direction: row;
-	justify-content: space-evenly;
+	flex-direction: column;
 }
 
 

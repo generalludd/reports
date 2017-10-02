@@ -177,7 +177,7 @@ class Narrative extends MY_Controller {
 		$teachers = $this->teacher_model->get_teacher_pairs ();
 		$data ['teacherPairs'] = get_keyed_pairs ( $teachers, array (
 				"kTeach",
-				"teacher" 
+				"teacherName" 
 		) );
 		$data ['rich_text'] = TRUE;
 		$data ['narrText'] = "";
@@ -544,7 +544,7 @@ class Narrative extends MY_Controller {
 		$teachers = $this->teacher_model->get_teacher_pairs ();
 		$data ['teachers'] = get_keyed_pairs ( $teachers, array (
 				'kTeach',
-				'teacher' 
+				'teacherName' 
 		) );
 		$data ['subject'] = $this->input->cookie ( "narrative_subject" ); // $this->session->userdata("narrative_subject");
 		$subjects = $this->subject_model->get_for_teacher ( $kTeach );
@@ -784,7 +784,7 @@ class Narrative extends MY_Controller {
 		$teacher_pairs = $this->teacher_model->get_teacher_pairs ();
 		$data ['teachers'] = get_keyed_pairs ( $teacher_pairs, array (
 				"kTeach",
-				"teacher" 
+				"teacherName" 
 		), TRUE );
 		$data ['kTeach'] = $this->session->userdata ( "userID" );
 		$data ['target'] = "narrative/search";

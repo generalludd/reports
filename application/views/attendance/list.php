@@ -45,7 +45,7 @@ if (! empty ( $attendance )) :
 	?>
 <?php if($kStudent):?>
 <!-- attendance/list.php -->
-<?php 	print create_button_bar(array(array("selection"=>"attendance","href"=>site_url("attendance/create/$student->kStudent"),"class"=>"button dialog new","text"=>"Add Attendance")));?>
+<?php 	print create_button_bar(array(array("selection"=>"attendance","href"=>site_url("attendance/create/$student->kStudent?redirect=" .$_SERVER['QUERY_STRING']),"class"=>"button dialog new","text"=>"Add Attendance")));?>
 <h4>Attendance Summary</h4>
 <p>Days Absent: <strong><?php echo $summary['absent'];?></strong>, Days Tardy: <strong><?php echo $summary['tardy'];?></strong></p>
 <?php endif; ?>
@@ -87,7 +87,7 @@ if (! empty ( $attendance )) :
 	<?php $attendDate = format_date ( $item->attendDate, 'standard' );?>
 	<td class='no-print'>
 			<?php if($this->session->userdata("dbRole") == 1): //@TODO Clean this Up!?>
-<?php $buttons[]= array("text"=>"Edit","href"=> site_url("attendance/edit/$item->kAttendance"), "class"=>"dialog edit small button","id"=> "a_$item->kAttendance");?>
+<?php $buttons[]= array("text"=>"Edit","href"=> site_url("attendance/edit/$item->kAttendance?redirect=" . uri_query()), "class"=>"dialog edit small button","id"=> "a_$item->kAttendance");?>
 			
 			<?php echo create_button_bar($buttons); ?>
 				

@@ -15,6 +15,8 @@ if(get_value($attendance,"attendDate",FALSE)){
 	<input type="hidden"
 	name="kStudent" id="kStudent"
 	value="<?php  echo get_value($attendance, "kStudent", $kStudent);?>" />
+		<input type="hidden" name="redirect" value="<?php echo isset($redirect)?$redirect:"";?>"/>
+	
 <input type="hidden" name="kAttendance" id="kAttendance"
 	value="<?php  echo $kAttendance; ?>" />
 <input type="hidden" name="action" id="action" value="<?php  echo $action?>"/>

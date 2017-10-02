@@ -332,9 +332,6 @@ function format_classroom($student_class, $student_grade, $student_group = NULL)
 	return $class;
 }
 
-function format_classrooms($grades,$type){
-
-}
 
 function format_grade_text($number = 0)
 {
@@ -622,4 +619,8 @@ function burn_cookie($name)
 			"value" => "",
 			"expire" => NULL 
 	) );
+}
+
+function uri_query(){
+	return urlencode(uri_string() . "/?" .  $_SERVER['QUERY_STRING']);
 }
