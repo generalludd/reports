@@ -70,7 +70,7 @@ $buttons [] = array (
 
 $buttons [] = array (
 		"selection" => "attendance",
-		"href" => site_url ( "student_attendance/create/$student->kStudent" ),
+		"href" => site_url ( "student_attendance/create/$kStudent" ),
 		"class" => "button dialog new",
 		"text" => "Add Attendance" 
 );
