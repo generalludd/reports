@@ -61,6 +61,19 @@ class Student_attendance_model extends MY_Model {
 		$result = $this->db->get ()->result ();
 		return $result;
 	}
+	/**
+	 * get all the students whose attendance was not marked for a given date. 
+	 * @param unknown $date
+	 */
+	function get_unmarked($date){
+		$query = sprintf(" SELECT * FROM `student` WHERE `student`.`isEnrolled` AND `kStudent` NOT IN (
+				SELECT `student_attendance`.`kStudent` from `student_attendance`
+				WHERE `student_attendance`.`attendDate` = '%s'
+				)",$date);
+		$result = $this->db->query($query)->result();
+		
+		return $result;
+	}
 
 	function insert()
 	{

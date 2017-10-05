@@ -43,14 +43,20 @@ $current_student = NULL;
 if (! empty ( $attendance )) :
 	
 	?>
+	<div class="rows">
 <?php if($kStudent):?>
 <!-- attendance/list.php -->
 <?php 	print create_button_bar(array(array("selection"=>"attendance","href"=>site_url("attendance/create/$student->kStudent?redirect=" .$_SERVER['QUERY_STRING']),"class"=>"button dialog new","text"=>"Add Attendance")));?>
 <h4>Attendance Summary</h4>
 <p>Days Absent: <strong><?php echo $summary['absent'];?></strong>, Days Tardy: <strong><?php echo $summary['tardy'];?></strong></p>
 <?php endif; ?>
-
-<table class='attendance' style='clear:both;'>
+<?php if(!empty($unmarked)):?>
+<div class="unmarked">
+<h3>Students Missing from Attendance</h3>
+<?php $this->load->view("attendance/checklist/list",array("students"=>$unmarked,"unmarked"=>TRUE));?>
+</div>
+<?php endif; ?>
+<table class='attendance' style="order:-1">
 	<thead>
 		<tr>
 			<th class='a-button no-print'></th>
@@ -111,6 +117,8 @@ if (! empty ( $attendance )) :
 </table>
 
 
+</div>
+
  <?php 
 else :
 	if ($kStudent) :?>
@@ -124,8 +132,6 @@ else :
 	
 
 	<?php endif; ?>
-<?php endif;
-
-
+<?php endif;?>
 
 

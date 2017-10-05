@@ -388,11 +388,16 @@ ul.button-list {
 	padding-left: 0;
 	display: flex;
 	justify-content: flex-start;
+	flex-flow: wrap;
 }
 
 ul.button-list li {
 	padding: 0;
 	display: inherit;
+}
+
+ul.button-list li a.button {
+	margin: .25em;
 }
 
 ul.button-list li .button.delete {
@@ -690,7 +695,7 @@ li.attendance:first-child {
 	float: left;
 }
 
-ul.rows{
+ul.rows, .rows{
 	display: flex;
 	flex-direction: row;
 	list-style: none;
@@ -702,6 +707,10 @@ ul.rows li {
 	display: block;
 	list-style: none;
 	padding-right: 1em;
+}
+
+.unmarked {
+	margin-left: 1em;
 }
 
 /* Editor for Student Info page */

@@ -137,7 +137,7 @@ class Attendance extends MY_Controller {
 		}
 		$kStudent = $this->input->post ( "kStudent" );
 		if ($redirect = $this->input->post ( "redirect" )) {
-			redirect (urldecode( $redirect) );
+			redirect ( urldecode ( $redirect ) );
 		} else {
 			redirect ( "attendance/search/$kStudent?showAll=1" );
 		}
@@ -237,13 +237,29 @@ class Attendance extends MY_Controller {
 		$data ['attendance'] = $this->attendance->search ( $data );
 		
 		$data ['summary'] = NULL;
+		$data['unmarked'] = array();
 		
 		if ($kStudent) {
 			$data ['summary'] = $this->attendance->summarize ( $kStudent, get_current_term (), get_current_year () );
+		}else{
+			if($startDate = $endDate || $endDate == NULL){
+				$this->load->model ( "student_attendance_model", "student_attendance" );
+				
+				$unmarked = $this->student_attendance->get_unmarked($this->input->get('startDate'));
+				print $this->db->last_query();
+				foreach ( $unmarked as $student ) {
+			
+					$kTeach = $this->session->userdata ( "userID" );
+					$student->attendance = $this->attendance->get_by_date ( $startDate, $student->kStudent );
+					$student->buttons = $this->_checklist_buttons ( $startDate, $student->kStudent, $kTeach );
+				}
+				$data ['unmarked'] = $unmarked;
+			}
 		}
 		// @TODO add a line displaying the search query
 		
 		$data ["title"] = sprintf ( "Attendance Search Results: %s", format_date_range ( $startDate, $endDate ) );
+		
 		$data ["target"] = "attendance/list";
 		$data ["action"] = "search";
 		$this->load->view ( "page/index", $data );
@@ -351,6 +367,21 @@ class Attendance extends MY_Controller {
 				$this->load->view ( "page/index", $data );
 			}
 		}
+	}
+
+	function show_unmarked()
+	{
+		$this->load->model ( "student_attendance_model", "student_attendance" );
+		$date = $this->input->get ( "date" );
+		$students = $this->student_attendance->get_unmarked ( $date );
+		if(empty($students)){
+			$this->session->set_flashdata("notice","All students appear to have been accounted for on this date");
+		}
+		$options [] = array ();
+		$data ['students'] = $students;
+		$data ["target"] = "attendance/checklist/list";
+		$data ["title"] = sprintf ( "Missing Attendance for %s", format_date ( $date, "standard" ) );
+		$this->load->view ( "page/index", $data );
 	}
 
 	function absent()
