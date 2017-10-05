@@ -246,7 +246,6 @@ class Attendance extends MY_Controller {
 				$this->load->model ( "student_attendance_model", "student_attendance" );
 				
 				$unmarked = $this->student_attendance->get_unmarked($this->input->get('startDate'));
-				print $this->db->last_query();
 				foreach ( $unmarked as $student ) {
 			
 					$kTeach = $this->session->userdata ( "userID" );
