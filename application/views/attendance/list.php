@@ -5,7 +5,7 @@ $button_bar = "";
 $search_button = create_button_bar ( array (
 		array (
 				"text" => "Refine Search",
-				"href" => site_url ( "attendance/show_search/$kStudent" ),
+				"href" => site_url ( "attendance/show_search/$kStudent?refine=1" ),
 				"class" => "button search dialog" 
 		) 
 ) );
@@ -43,13 +43,14 @@ $current_student = NULL;
 if (! empty ( $attendance )) :
 	
 	?>
-	<div class="rows">
-<?php if($kStudent):?>
+	<?php if($kStudent):?>
 <!-- attendance/list.php -->
 <?php 	print create_button_bar(array(array("selection"=>"attendance","href"=>site_url("attendance/create/$student->kStudent?redirect=" .$_SERVER['QUERY_STRING']),"class"=>"button dialog new","text"=>"Add Attendance")));?>
-<h4>Attendance Summary</h4>
+<h4>Attendance Summary for <?php echo format_schoolyear(get_current_year());?></h4>
 <p>Days Absent: <strong><?php echo $summary['absent'];?></strong>, Days Tardy: <strong><?php echo $summary['tardy'];?></strong></p>
 <?php endif; ?>
+	<div class="rows">
+
 <?php if(!empty($unmarked)):?>
 <div class="unmarked">
 <h3>Students Missing from Attendance</h3>

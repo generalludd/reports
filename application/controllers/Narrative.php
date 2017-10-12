@@ -680,7 +680,7 @@ class Narrative extends MY_Controller {
 				$data ['tardy'] = get_value ( $attendance, "tardy" );
 				$data ['absent'] = get_value ( $attendance, "absent" );
 			} else {
-				$this->load->model ( "student_attendance_model", "attendance" );
+				$this->load->model ( "attendance_model", "attendance" );
 				$attendance = $this->attendance->summarize ( $kStudent, $narrTerm, $narrYear );
 				$data ['tardy'] = $attendance ['tardy'];
 				$data ['absent'] = $attendance ['absent'];

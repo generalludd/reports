@@ -64,13 +64,13 @@ $buttons [] = array (
 
 $buttons [] = array (
 		"selection" => "attendance",
-		"href" => site_url ( "student_attendance/search/$kStudent?startDate=$start_date&endDate=$today" ),
+		"href" => site_url ( "attendance/search/$kStudent?startDate=$start_date&endDate=$today" ),
 		"text" => "Attendance" 
 );
 
 $buttons [] = array (
 		"selection" => "attendance",
-		"href" => site_url ( "student_attendance/create/$kStudent" ),
+		"href" => site_url ( "attendance/create/$kStudent" ),
 		"class" => "button dialog new",
 		"text" => "Add Attendance" 
 );
