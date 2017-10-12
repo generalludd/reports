@@ -181,13 +181,13 @@ class Attendance_model extends MY_Model {
 				$this->db->where ( "attendDate BETWEEN '$startDate' AND '$endDate'" );
 			}
 			
-			if (key_exists ( "attendType", $options )) {
+			if (array_key_exists ( "attendType", $options )) {
 				if (! empty ( $options ["attendType"] )) {
 					$this->db->where_in ( "attendType", $options ["attendType"] );
 				}
 			}
 			
-			if (key_exists ( "attendSubtype", $options )) {
+			if (array_key_exists ( "attendSubtype", $options )) {
 				if (! empty ( $options ["attendSubtype"] )) {
 					$this->db->where ( "attendSubtype", $options ["attendSubtype"] );
 				}
@@ -195,6 +195,8 @@ class Attendance_model extends MY_Model {
 			if (array_key_exists("kStudent",$options) && $options ["kStudent"] > 0) {
 				$this->db->where ( "student_attendance.kStudent", $options ["kStudent"] );
 			}
+			
+
 			$this->db->where ( "`student_attendance`.`kStudent`", "`student`.`kStudent`", FALSE );
 			$this->db->from ( "student_attendance" );
 			$this->db->from ( "student" );
@@ -211,6 +213,7 @@ class Attendance_model extends MY_Model {
 			$this->db->order_by ( "student.stuFirst" );
 			$this->db->order_by ( "attendDate", "DESC" );
 			$result = $this->db->get ()->result ();
+			$this->_log();
 			return $result;
 		} else {
 			return FALSE;

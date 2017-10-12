@@ -27,6 +27,9 @@ if(!$gradeEnd){
 </p>
 <p>-OR-</p>
 <p><label for="stuGroup">Middle School Student Group: </label><?php echo form_dropdown("stuGroup",$stuGroup,get_cookie($cookie_day . "stuGroup"),"id='stuGroup'");?></p>
+<p><label for="exemption">Show all students, show only students with subject exemptions (such as those not taking Spanish),<br/>exclude students with subject emptions</label><br/>
+<?php echo form_dropdown("exemption",$exemptions, "all","id='exemption'");?></p>
+<p>Leave this as is unless instructed otherwise</p>
 </div>
 <?php $css_class = get_cookie($cookie_day. "kTeach" ) || ($lowerschool && $teacher->gradeStart < 5 && $teacher->gradeStart !=0) ?"visible":"hidden";?>
 <?php $kTeach = get_cookie($cookie_day. "kTeach");?>
