@@ -138,14 +138,14 @@ $buttons [] = array (
 		"dbRole" => 2 
 );
 if ($dbRole == 2) {
-	if ($isAdvisor) {
-		$buttons [] = array (
-				"selection" => "report/get_list",
-				"text" => sprintf ( "%ss%s", STUDENT_REPORT, $count ),
-				"href" => site_url ( "report/get_list/advisor/$userID" ),
-				"title" => sprintf ( "Show your %ss %s", strtolower ( STUDENT_REPORT ), $count_text ) 
-		);
-	}
+// 	if ($isAdvisor) {
+// 		$buttons [] = array (
+// 				"selection" => "report/get_list",
+// 				"text" => sprintf ( "%ss%s", STUDENT_REPORT, $count ),
+// 				"href" => site_url ( "report/get_list/advisor/$userID" ),
+// 				"title" => sprintf ( "Show your %ss %s", strtolower ( STUDENT_REPORT ), $count_text ) 
+// 		);
+// 	}
 	if ($gradeEnd > 4) {
 		$buttons [] = array (
 				"selection" => "assignment",

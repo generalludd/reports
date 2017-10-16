@@ -10,11 +10,11 @@ if($this->session->userdata("dbRole") == 1 && $kTeach != $this->session->userdat
 	$buttons[] = array("selection" => "student/teacher_student_list", "href"=>site_url("student/teacher_student_list/$kTeach"), "text"=>"List Students");
 	$buttons[] = array("selection" => "narrative/teacher_list", "href"=> site_url("narrative/teacher_list/$kTeach/print"), "text" => "Print Narratives" );
 
-}
-if($teacher->dbRole == 2 && $teacher->isAdvisor == 1){
-		$buttons[] = array("selection"=>"report/get_list/advisor", "href" =>site_url("report/get_list/advisor/$kTeach"),"text" => sprintf("%ss",STUDENT_REPORT));
-}
-$buttons[] = array("selection" =>"report/get_list/teacher","href"=>site_url("report/get_list/teacher/$kTeach"),"text"=> sprintf("Submitted %ss", STUDENT_REPORT));
+ }
+// if($teacher->dbRole == 2 && $teacher->isAdvisor == 1){
+// 		$buttons[] = array("selection"=>"report/get_list/advisor", "href" =>site_url("report/get_list/advisor/$kTeach"),"text" => sprintf("%ss",STUDENT_REPORT));
+// }
+// $buttons[] = array("selection" =>"report/get_list/teacher","href"=>site_url("report/get_list/teacher/$kTeach"),"text"=> sprintf("Submitted %ss", STUDENT_REPORT));
 
 $buttons[] = array("selection"=>"teacher/view","text"=>"Account Info","href"=>site_url("teacher/view/$kTeach"));
 
