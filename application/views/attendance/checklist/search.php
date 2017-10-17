@@ -17,10 +17,7 @@ $lowerschool = $teacher->gradeEnd - $teacher->gradeStart <=1?TRUE:FALSE ;
 </p>
 <p>-OR-</p>
 <p><label for="stuGroup">Middle School Student Group: </label><?php echo form_dropdown("stuGroup",$stuGroup,get_cookie("stuGroup"),"id='stuGroup'");?></p>
-<p><label for="exemption">Show or exclude exempt students</label>
-<p>Show all students, show only students with subject exemptions (such as those not taking Spanish),<br/>exclude students with subject exemptions.</p>
-<?php echo form_dropdown("exemption",$exemptions, "all","id='exemption'");?></p>
-<p>Leave this as is unless instructed otherwise.</p>
+
 </div>
 <?php $css_class = get_cookie( "kTeach" ) || ($lowerschool && $teacher->gradeStart < 5 && $teacher->gradeStart !=0) ?"visible":"hidden";?>
 <?php $kTeach = get_cookie( "kTeach");?>
@@ -29,6 +26,10 @@ $lowerschool = $teacher->gradeEnd - $teacher->gradeStart <=1?TRUE:FALSE ;
 <p><label for="kTeach">Classroom Teacher or Advisor: </label><span id="kTeach-wrapper"><?php echo form_dropdown("kTeach",$teachers,get_cookie("kTeach"),"id='kTeach'");?></span>
 </p>
 </div>
+<p><label for="exemption">Show or exclude exempt students</label>
+<p>Show all students, show only students with subject exemptions (such as those not taking Spanish),<br/>exclude students with subject exemptions.</p>
+<?php echo form_dropdown("exemption",$exemptions, "all","id='exemption'");?></p>
+<p>Leave this as is unless instructed otherwise.</p>
 <p>
 <input type="submit" value="Search" class="button"/>
 </p>
