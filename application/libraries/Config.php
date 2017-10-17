@@ -12,7 +12,7 @@ class Config {
 	
 	public function get_config($key){
 		$this->CI->load->model("config_model","config");
-		return $this-CI->config->get_by_key($key); 
+		return $this->CI->config->get_by_key($key); 
 	}
 	
 }

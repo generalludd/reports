@@ -54,8 +54,8 @@ class Support extends MY_Controller {
 		$options = array (
 				"school_year" => get_current_year ()
 		);
-		$this->load->model ( "grade_preference_model", "preference" );
-		$data ['grade_preferences'] = $this->preference->get_all ( $support->kStudent, $options );
+		$this->load->model ( "course_preference_model", "preference" );
+		$data ['course_preferences'] = $this->preference->get_all ( $support->kStudent, $options );
 		$data ['title'] = "Viewing Support Record for " . $data ['student'];
 		$data ['target'] = "support/view";
 		if ($data ['sidebar']) {

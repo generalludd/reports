@@ -309,7 +309,7 @@ class Attendance extends MY_Controller {
 					"kTeach",
 					"teacherName" 
 			), TRUE );
-			$data ['exemptions'] = array("all"=>"All","show"=>"Show","exclude"=>"Exclude");
+			$data ['exemptions'] = array("all"=>"Show All Students","show"=>"Show Only Exempt Students","exclude"=>"Exclude Exempt Students");
 			$data ['target'] = "attendance/checklist/search";
 			$data ['title'] = "Check Attendance";
 			if ($this->input->get ( "ajax" ) == 1) {
