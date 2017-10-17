@@ -148,10 +148,10 @@ $(document).ready(function() {
 		});
 		
 		
-		$("#grade-preferences").on("click",".delete-grade-preference",function(){
+		$("#course-preferences").on("click",".delete-course-preference",function(){
 			my_id = this.id.split("_")[1];
 			console.log(my_id);
-			question = confirm("Are you sure you want to delete this grade preference? This cannot be undone!");
+			question = confirm("Are you sure you want to delete this course preference? This cannot be undone!");
 			if(question){
 				form_data = {
 						id:my_id,
@@ -159,7 +159,7 @@ $(document).ready(function() {
 				};
 				$.ajax({
 					type: "post",
-					url: base_url + "grade_preference/delete",
+					url: base_url + "course_preference/delete",
 					data: form_data,
 					success: function(data){
 						$("#grade-preference-row_" + my_id).fadeOut();

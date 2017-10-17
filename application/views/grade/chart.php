@@ -21,7 +21,7 @@ $count = 0;
 	<div class='report-body'>
 		<div class='report-header'>
 	<?php  echo "$header->subject, $teacher";?>
-	<?php if($pass_fail):?>
+	<?php if($course_preference):?>
 	<br />Grades are Pass/Fail
 	<?php endif;?>
 </div>
@@ -117,7 +117,7 @@ $count = 0;
 		<div class='report-header'>
 	<?php  echo $header->subject; ?>
 	Category Summary
-	<?php if($pass_fail):?>
+	<?php if($course_preference):?>
 	<br />Grades are Pass/Fail
 	<?php endif;?>
 </div>
@@ -143,7 +143,7 @@ $count = 0;
 					<td><?php  echo $category['total_points']; ?></td>
 					<td><?php  echo $category_grade;?>%</td>
 					<td><?php  echo $category['weight'];?>%</td>
-					<td><?php  echo calculate_letter_grade($category_grade, $pass_fail);?></td>
+					<td><?php  echo calculate_letter_grade($category_grade, $course_preference);?></td>
 
 
 				</tr>
@@ -156,7 +156,7 @@ $count = 0;
 			$grade_total = 0;
 			$category_count = 0;
 			$total_grade = round ( $assignment_total / $weight_sums, 1 );
-			echo sprintf ( "<tr class='final-grade'><td class='label' colspan=4>Grade</td><td colspan=2>%s&#37; (%s)</td><tr>", $total_grade, calculate_letter_grade ( $total_grade, $pass_fail ) );
+			echo sprintf ( "<tr class='final-grade'><td class='label' colspan=4>Grade</td><td colspan=2>%s&#37; (%s)</td><tr>", $total_grade, calculate_letter_grade ( $total_grade, $course_preference ) );
 			
 			?>
 

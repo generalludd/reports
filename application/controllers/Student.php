@@ -19,9 +19,8 @@ class Student extends MY_Controller {
 	/**
 	 * show a sutdent's information based on the student's id
 	 */
-	function view()
+	function view($kStudent)
 	{
-		$kStudent = $this->uri->segment ( 3 );
 		$student = $this->student_model->get ( $kStudent );
 		$student->pronouns = $this->menu_model->get_label ( "gender", $student->stuGender );
 		$data ['student'] = $student;
@@ -32,8 +31,8 @@ class Student extends MY_Controller {
 		$options = array (
 				"school_year" => get_current_year () 
 		);
-		$this->load->model ( "grade_preference_model", "preference" );
-		$data ['grade_preferences'] = $this->preference->get_all ( $kStudent, $options );
+		$this->load->model ( "course_preference_model", "preference" );
+		$data ['course_preferences'] = $this->preference->get_all ( $kStudent, $options );
 		// if($student->stuGrade > 4){
 		// $data['humanitiesTeacher'] =
 		// $this->teacher_model->get($student->humanitiesTeacher,"teachFirst")->teachFirst;

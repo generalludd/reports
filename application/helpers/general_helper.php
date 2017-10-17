@@ -552,7 +552,7 @@ function format_table($data, $header = array(), $options = array())
 	return implode ( "", $table );
 }
 
-function calculate_letter_grade($points, $pass_fail = FALSE)
+function calculate_letter_grade($points, $course_preference = FALSE)
 {
 	$letters = array (
 			"9" => "A",
@@ -586,7 +586,7 @@ function calculate_letter_grade($points, $pass_fail = FALSE)
 		$letter = $letters [$tens];
 		$output = $letter . $valence;
 	}
-	if ($pass_fail) {
+	if ($course_preference) {
 		if($points > 59){
 			$output = "Pass";
 		}else{

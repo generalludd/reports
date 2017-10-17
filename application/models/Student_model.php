@@ -192,11 +192,12 @@ class Student_model extends MY_Model {
 		if (array_key_exists ( "exemption", $constraints )) {
 			switch ($constraints ['exemption']) {
 				case "show" :
-					$this->db->join ( "student_exemption", "student.kStudent=student_exemption.kStudent AND $year = student_exemption.schoolYear" );
+					$this->db->join ( "course_preference", "student.kStudent=course_preference.kStudent AND $year = course_preference.school_year" );
+					$this->db->where("course_preference.preference","exempt");
 					break;
 				case "exclude" :
-					$this->db->join ( "student_exemption", "student.kStudent=student_exemption.kStudent", "LEFT" );
-					$this->db->where ( "student_exemption.schoolYear IS NULL", NULL, FALSE );
+					$this->db->join ( "course_preference", "student.kStudent=course_preference.kStudent", "LEFT" );
+					$this->db->where ( "course_preference.school_year IS NULL", NULL, FALSE );
 					break;
 			}
 		}

@@ -226,12 +226,12 @@ class Grade extends MY_Controller {
 			$options ['join'] = "assignment";
 			$options ['kTeach'] = $kTeach;
 			
-			$this->load->model ( "grade_preference_model", "grade_preferences" );
+			$this->load->model ( "course_preference_model", "course_preference" );
 			$options ['subject'] = $subject;
 			foreach ( $ids as $kStudent ) {
 				$data = array ();
 				$data ['subject'] = $subject;
-				$data ['pass_fail'] = $this->grade_preferences->get_all ( $kStudent, array (
+				$data ['course_preference'] = $this->course_preference->get_one ( $kStudent, array (
 						"school_year" => $year,
 						"subject" => $subject,
 						"term" => $term 
@@ -341,8 +341,8 @@ class Grade extends MY_Controller {
 					$data ['grades'] = $this->assignment->get_for_student ( $kStudent, $term, $year, $options );
 					// if the student has any grades entered, process them here,
 					// otherwise ignore.
-					$this->load->model ( "grade_preference_model", "grade_preferences" );
-					$data ['pass_fail'] = $this->grade_preferences->get_all ( $kStudent, array (
+					$this->load->model ( "course_preference_model", "course_preference" );
+					$data ['course_preference'] = $this->course_preference->get_one ( $kStudent, array (
 							"school_year" => $year,
 							"subject" => $subject->subject,
 							"term" => $term 

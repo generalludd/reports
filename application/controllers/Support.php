@@ -13,6 +13,8 @@ class Support extends MY_Controller {
 	function list_all($kStudent = FALSE, $errors = NULL)
 	{
 		$this->load->model ( "student_model" );
+		$this->load->model ( "course_preference_model", "preference" );
+		
 		$student = $this->student_model->get ( $kStudent );
 		$data ['kStudent'] = $kStudent;
 		$data ['student'] = $student;
@@ -20,7 +22,13 @@ class Support extends MY_Controller {
 		$has_current = $this->support_model->get_current ( $kStudent );
 		$data ['has_current'] = get_value ( $has_current, "year" );
 		$data ['title'] = sprintf ( "Viewing Student Support for %s", $data ['student_name'] );
-		$data ['support'] = $this->support_model->get_all ( $kStudent );
+	$support  = $this->support_model->get_all ( $kStudent );
+		foreach($support as $entry){
+
+			$entry->course_preferences = $this->preference->get_all ( $entry->kStudent, array("school_year"=>$entry->year) );
+				
+		}
+		$data['support'] = $support;
 		$data ['target'] = "support/list";
 		$this->load->model ( "file_model" );
 		$data ['support_files'] = $this->file_model->get_for_student ( $kStudent );
@@ -38,12 +46,16 @@ class Support extends MY_Controller {
 		if ($this->uri->segment ( 4 ) == "sidebar") {
 			$data ['sidebar'] = TRUE;
 		}
-		$kSupport = $this->uri->segment ( 3 );
 		$support = $this->support_model->get ( $kSupport );
 		$data ['student'] = format_name ( $support->stuFirst, $support->stuLast, $support->stuNickname );
 		$data ['entry'] = $support;
 		$this->load->model ( "file_model" );
 		$data ['support_files'] = $this->file_model->get_all ( $kSupport );
+		$options = array (
+				"school_year" => get_current_year ()
+		);
+		$this->load->model ( "grade_preference_model", "preference" );
+		$data ['grade_preferences'] = $this->preference->get_all ( $support->kStudent, $options );
 		$data ['title'] = "Viewing Support Record for " . $data ['student'];
 		$data ['target'] = "support/view";
 		if ($data ['sidebar']) {

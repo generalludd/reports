@@ -1,12 +1,16 @@
-<?php #special_need_view.inc
+<?php #support/list
 $current_year = get_current_year();
 if($this->session->userdata("dbRole")<3){
 	$current_year = get_current_year();
 }
 ?>
 <?php 
-$this->load->view("student/navigation", $kStudent);
-if( $has_current == $current_year): ?>
+$this->load->view("student/navigation", $kStudent);?>
+
+
+<?php if( $has_current == $current_year): ?>
+	
+
 <p><?php  echo $student_name?> already has a support entry for <?php echo format_schoolyear($current_year);?>.
 <?php if($this->session->userdata("dbRole") == 1): ?>
 <?php $next_year = $current_year + 1;?>

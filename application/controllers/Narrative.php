@@ -83,13 +83,13 @@ class Narrative extends MY_Controller {
 			$grade_options ['from'] = "grade";
 			$grade_options ['join'] = "assignment";
 			$grade_options ['subject'] = $data ['narrSubject'];
-			$this->load->model ( "grade_preference_model", "grade_preferences" );
-			$pass_fail = $this->grade_preferences->get_all ( $kStudent, array (
+			$this->load->model ( "course_preference_model", "course_preference" );
+			$course_preference = $this->course_preference->get_one ( $kStudent, array (
 					"school_year" => $data ['narrYear'],
 					"subject" => $data ['narrSubject'] 
 			) );
 			$default_grade = calculate_final_grade ( $this->assignment->get_for_student ( $kStudent, $data ['narrTerm'], $data ['narrYear'], $grade_options ) );
-			$data ['default_grade'] = calculate_letter_grade ( $default_grade, $pass_fail );
+			$data ['default_grade'] = calculate_letter_grade ( $default_grade, $course_preference );
 		}
 		
 		$overview = $this->overview->get_all ( $kTeach, array (
@@ -351,15 +351,15 @@ class Narrative extends MY_Controller {
 			$grade_options ['from'] = "grade";
 			$grade_options ['join'] = "assignment";
 			$grade_options ['subject'] = $narrative->narrSubject;
-			$this->load->model ( "grade_preference_model", "grade_preferences" );
-			$pass_fail = $this->grade_preferences->get_all ( $kStudent, array (
+			$this->load->model ( "course_preference_model", "course_preference" );
+			$course_preference = $this->course_preference->get_one ( $kStudent, array (
 					"school_year" => $narrative->narrYear,
 					"subject" => $narrative->narrSubject 
 			) );
 			$grades = $this->assignment->get_for_student ( $kStudent, $narrative->narrTerm, $narrative->narrYear, $grade_options );
 			if (! empty ( $grades )) {
 				$letter_grade = calculate_final_grade ( $grades );
-				$data ['letter_grade'] = calculate_letter_grade ( $letter_grade, $pass_fail );
+				$data ['letter_grade'] = calculate_letter_grade ( $letter_grade, $course_preference );
 			}
 		}
 		if ($narrative->includeOverview) {
@@ -730,26 +730,26 @@ class Narrative extends MY_Controller {
 					// change the narrGrade value if no grades have been entered
 					// for this student.
 					if (! empty ( $grades )) {
-						$this->load->model ( "grade_preference_model", "grade_preferences" );
-						$pass_fail = $this->grade_preferences->get_all ( $kStudent, array (
+						$this->load->model ( "course_preference_model", "course_preference" );
+						$course_preference = $this->course_preference->get_one( $kStudent, array (
 								"school_year" => $data ['narrYear'],
 								"subject" => $narrative->narrSubject 
 						) );
 						$letter_grade = calculate_final_grade ( $grades );
-						$data ['grades'] [$narrative->narrSubject] = calculate_letter_grade ( $letter_grade, $pass_fail );
+						$data ['grades'] [$narrative->narrSubject] = calculate_letter_grade ( $letter_grade, $course_preference );
 						if ($narrative->narrTerm == "Year-End") {
 							$mid_year_grade = calculate_final_grade ( $mid_year_grades );
 							// a false value means no grades were entered for
 							// the term--assumes student was not enrolled.
 							if ($mid_year_grade) {
-								$data ['mid_year_grades'] [$narrative->narrSubject] = calculate_letter_grade ( $mid_year_grade, $pass_fail );
-								$data ['year_grade'] [$narrative->narrSubject] ['percent'] = $pass_fail ? NULL : ($letter_grade + $mid_year_grade) / 2;
+								$data ['mid_year_grades'] [$narrative->narrSubject] = calculate_letter_grade ( $mid_year_grade, $course_preference->preference);
+								$data ['year_grade'] [$narrative->narrSubject] ['percent'] = $course_preference ? NULL : ($letter_grade + $mid_year_grade) / 2;
 								$data ['final_grade'] [$narrative->narrSubject] = calculate_final_grade ( $final_grades );
-								$data ['year_grade'] [$narrative->narrSubject] ['grade'] = calculate_letter_grade ( ($letter_grade + $mid_year_grade) / 2, $pass_fail );
+								$data ['year_grade'] [$narrative->narrSubject] ['grade'] = calculate_letter_grade ( ($letter_grade + $mid_year_grade) / 2, $course_preference );
 							} else {
 								$data ['mid_year_grades'] [$narrative->narrSubject] = "Not Enrolled";
-								$data ['year_grade'] [$narrative->narrSubject] ['percent'] = $pass_fail ? NULL : $letter_grade;
-								$data ['year_grade'] [$narrative->narrSubject] ['grade'] = calculate_letter_grade ( $letter_grade, $pass_fail );
+								$data ['year_grade'] [$narrative->narrSubject] ['percent'] = $course_preference ? NULL : $letter_grade;
+								$data ['year_grade'] [$narrative->narrSubject] ['grade'] = calculate_letter_grade ( $letter_grade, $course_preference );
 							}
 						}
 					}
