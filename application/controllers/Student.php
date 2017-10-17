@@ -28,11 +28,9 @@ class Student extends MY_Controller {
 		if (! empty ( $student->kTeach )) {
 			// $data['teacherName'] = $this->teacher_model->get_name( $student->kTeach);
 		}
-		$options = array (
-				"school_year" => get_current_year () 
-		);
 		$this->load->model ( "course_preference_model", "preference" );
-		$data ['course_preferences'] = $this->preference->get_all ( $kStudent, $options );
+		$data ['course_preferences'] = $this->preference->get_all ( $kStudent);
+
 		// if($student->stuGrade > 4){
 		// $data['humanitiesTeacher'] =
 		// $this->teacher_model->get($student->humanitiesTeacher,"teachFirst")->teachFirst;

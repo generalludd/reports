@@ -83,7 +83,6 @@ class Course_preference extends MY_Controller {
 		$data ['kStudent'] = $kStudent;
 		$data ['subject'] = $this->input->post ( "subject" );
 		$data ['school_year'] = $this->input->post ( "school_year" );
-		$data ['term'] = $this->input->post ( "term" );
 		$data ['preference'] = $this->input->post ( "preference" );
 		$this->preference->update ( $data );
 		if ($this->input->post ( "redirect" )) {

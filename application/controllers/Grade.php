@@ -234,7 +234,6 @@ class Grade extends MY_Controller {
 				$data ['course_preference'] = $this->course_preference->get_one ( $kStudent, array (
 						"school_year" => $year,
 						"subject" => $subject,
-						"term" => $term 
 				) );
 				$data ['print_student_name'] = TRUE;
 				$data ['student'] = $this->student->get ( $kStudent );
@@ -345,7 +344,6 @@ class Grade extends MY_Controller {
 					$data ['course_preference'] = $this->course_preference->get_one ( $kStudent, array (
 							"school_year" => $year,
 							"subject" => $subject->subject,
-							"term" => $term 
 					) );
 					if (count ( $data ['grades'] )) {
 						$data ['subject'] = $subject->subject;

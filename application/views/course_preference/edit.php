@@ -9,9 +9,6 @@
 <input type="text" style="width:5ex" name="school_year" id="school_year" value="<?php  echo $year;?>"/>
 -<?php  echo $year + 1;?></p>
 <p>
-<p>
-<?php echo get_term_menu("term",TRUE,get_value($preference,"term"));?>
-</p>
 <label for="preference">Preference</label>
 <?php echo form_dropdown("preference",$course_preferences,get_value($preference,"preference"));?>
 </p>

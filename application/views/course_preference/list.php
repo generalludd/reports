@@ -12,7 +12,6 @@ defined ( 'BASEPATH' ) or exit ( 'No direct script access allowed' );
 			<tr>
 				<th>Subject</th>
 				<th class="no-wrap">School Year</th>
-				<th class="no-wrap">Term</th>
 				<th>Preference</th>
 				<th></th>
 			</tr>
@@ -23,7 +22,6 @@ defined ( 'BASEPATH' ) or exit ( 'No direct script access allowed' );
 <tr id="grade-preference-row_<?php  echo $preference->id;?>">
 				<td><?php  echo $preference->subject;?></td>
 				<td class="no-wrap"><?php  echo format_schoolyear($preference->school_year);?></td>
-				<td class="no-wrap"><?php echo $preference->term;?></td>
 				<td><?php echo get_value($preference,"preference");?></td>
 				<td style="width: 150px;">
 <?php
