@@ -34,6 +34,10 @@ if(get_value($attendance,"attendDate",FALSE)){
 	id="attendLength" name="attendLength" value="Half-Day"
 	<?php  echo $length_status;?> /><br />
 </p>
+<p class='half-day-type'>
+<label for="attendLengthType">Arriving Late or Departing Early?</label>
+<?php echo form_dropdown("attendLengthType",$length_types,get_value($attendance,"attendLengthType"));?>
+</p>
 <p><label for="attendNote">Note:</label><input type="text"
 	name="attendNote" id="attendNote" size="50"
 	value="<?php  echo get_value($attendance, "attendNote");?>" /></p>

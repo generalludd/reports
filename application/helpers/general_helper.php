@@ -9,7 +9,7 @@ function mysql_timestamp()
 
 /**
  * @function format_date
- * 
+ *
  * @param s $date
  *        	date string
  * @param s $format
@@ -65,9 +65,28 @@ function format_timestamp($timeStamp, $include_time = TRUE)
 	return $output;
 }
 
-function capitalize($key){
-	$key = humanize($key,"_");
-	return ucwords($key);
+function format_student_group($stuGrade, $stuGroup)
+{
+	switch ($stuGrade) {
+		case 5 :
+		case 6 :
+			$output = sprintf ( "5/6%s", $stuGroup );
+			break;
+		case 7 :
+		case 8 :
+			$output = sprintf ( "7/8%s", $stuGroup );
+			break;
+		default :
+			$output = "";
+			break;
+	}
+	return $output;
+}
+
+function capitalize($key)
+{
+	$key = humanize ( $key, "_" );
+	return ucwords ( $key );
 }
 
 function get_value($object, $item, $default = null)
@@ -158,14 +177,14 @@ function get_current_term($targetDate = NULL)
 	return "$term";
 }
 
-function format_quarter($year, $term, $quarter = NULL){
-
-	if($quarter && $quarter > 0 ){
+function format_quarter($year, $term, $quarter = NULL)
+{
+	if ($quarter && $quarter > 0) {
 		$quarter = "Quarter $quarter";
-	}else{
+	} else {
 		$quarter = "All Quarters";
 	}
-	return sprintf("%s %s, %s" , $term, $year, $quarter);
+	return sprintf ( "%s %s, %s", $term, $year, $quarter );
 }
 
 function get_term_menu($id, $currentTerm = null, $initial_blank = FALSE, $options = array(), $is_required = FALSE)
@@ -203,7 +222,7 @@ function get_term_menu($id, $currentTerm = null, $initial_blank = FALSE, $option
 function get_term_start($current_term = FALSE)
 {
 	$current_term || $current_term = get_current_term ();
-	$output = $current_term == "Mid-Year"?YEAR_START:MID_YEAR;
+	$output = $current_term == "Mid-Year" ? YEAR_START : MID_YEAR;
 	return $output;
 }
 
@@ -331,7 +350,6 @@ function format_classroom($student_class, $student_grade, $student_group = NULL)
 	}
 	return $class;
 }
-
 
 function format_grade_text($number = 0)
 {
@@ -587,19 +605,21 @@ function calculate_letter_grade($points, $course_preference = FALSE)
 		$output = $letter . $valence;
 	}
 	if ($course_preference) {
-		if($points > 59){
+		if ($points > 59) {
 			$output = "Pass";
-		}else{
-			$output="Fail";
+		} else {
+			$output = "Fail";
 		}
 	}
 	return $output;
 }
+
 /**
  * format a teacher as a link to their profile page
  */
-function link_teacher($teacher, $kTeach){
-	$output = sprintf("<a href='%s' title='view record for %s'>%s</a>",site_url("teacher/view/$kTeach"), $teacher, $teacher);
+function link_teacher($teacher, $kTeach)
+{
+	$output = sprintf ( "<a href='%s' title='view record for %s'>%s</a>", site_url ( "teacher/view/$kTeach" ), $teacher, $teacher );
 	return $output;
 }
 
@@ -621,6 +641,7 @@ function burn_cookie($name)
 	) );
 }
 
-function uri_query(){
-	return urlencode(uri_string() . "/?" .  $_SERVER['QUERY_STRING']);
+function uri_query()
+{
+	return urlencode ( uri_string () . "/?" . $_SERVER ['QUERY_STRING'] );
 }

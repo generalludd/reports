@@ -8,6 +8,7 @@ class Attendance_model extends MY_Model {
 	var $attendType;
 	var $attendSubtype;
 	var $attendLength;
+	var $attendLengthType;
 	var $attendNote;
 	var $attendOverride;
 	var $recModifier;
@@ -28,6 +29,7 @@ class Attendance_model extends MY_Model {
 				"attendType",
 				"attendSubtype",
 				"attendLength",
+				"attendLengthType",
 				"attendNote" 
 		);
 		
@@ -196,12 +198,36 @@ class Attendance_model extends MY_Model {
 				$this->db->where ( "student_attendance.kStudent", $options ["kStudent"] );
 			}
 			
+			//if we have a grade range parameter and we are not searching for a specific student search the subset accordingly
+			if(array_key_exists("gradeRange",$options)  && !array_key_exists("kStudent",$options)){
+				if(array_key_exists("gradeStart",$options["gradeRange"])&& array_key_exists("gradeEnd",$options['gradeRange'])){
+					$year = get_current_year();
+					$gradeStart = $options['gradeRange']['gradeStart'];
+					$gradeEnd = $options['gradeRange']['gradeEnd'];
+					//@TODO this is a hard-coded option that should be exposed in the UI
+					//lower school is organized by teacher/classroom, middle school by grade
+					if($gradeStart === 0 && $gradeEnd == 4){
+						$this->db->order_by("teacher.kTeach");
+					}elseif($gradeStart == 5 && $gradeEnd == 8){
+						$this->db->order_by("stuGrade");
+					}
+					if($gradeStart == $gradeEnd){
+						$this->db->where ( "`stuGrade` = $gradeStart", FALSE, FALSE );
+						
+					}else{
+						$this->db->where ( "(`baseGrade` - `baseYear`  + $year) BETWEEN  $gradeStart AND $gradeEnd", FALSE, FALSE );
+					}
+					$this->db->where("attendType !=","Present");
+				}
+			}
+			
 
 			$this->db->where ( "`student_attendance`.`kStudent`", "`student`.`kStudent`", FALSE );
 			$this->db->from ( "student_attendance" );
 			$this->db->from ( "student" );
 			$this->db->select ( "student_attendance.*" );
 			$this->db->select ( "student.*" );
+			//@TODO this should be the year based on the submitted dates if they are submitted
 			$year = get_current_year ();
 			$this->db->select ( "($year - student.baseYear + student.baseGrade) as stuGrade", FALSE );
 			$this->db->join ( "teacher", "student.kTeach = teacher.kTeach" );
@@ -228,6 +254,21 @@ class Attendance_model extends MY_Model {
 		$result = $this->db->get ()->row ();
 		return $result;
 	}
+
+	function count_by_group($date, $type, $group = array()){
+		if(array_key_exists("kTeach",$group)){
+			$this->db->where("student.kTeach",$group['kTeach']);
+		}elseif(array_key_exists("stuGrade",$group)){
+			$year = get_current_year();
+			$this->db->where ( "(`baseGrade` - `baseYear`  + $year) =", $group['stuGrade'] );
+		}
+		$this->db->from("student_attendance,student");
+		$this->db->where("attendType",$type);
+		$this->db->where("attendDate",$date);
+		$this->db->where("student_attendance.kStudent = student.kStudent",FALSE,FALSE);
+		return $this->db->count_all_results();
+	}
+	
 
 	/* Deprecated */
 	function attendance_count_for_student($type, $values)

@@ -671,12 +671,10 @@ li.attendance:first-child {
 }
 /*column boxes (see attendance_list.inc.html)
 */
-.column{
+.column {
 	display: flex;
 	flex-direction: column;
 }
-
-
 
 .columnbox {
 	width: 100%;
@@ -695,14 +693,14 @@ li.attendance:first-child {
 	float: left;
 }
 
-ul.rows, .rows{
+ul.rows, .rows {
 	display: flex;
 	flex-direction: row;
 	list-style: none;
 	margin: 0;
 	padding: 0;
-	
 }
+
 ul.rows li {
 	display: block;
 	list-style: none;
@@ -850,6 +848,21 @@ table.grid thead tr.first th {
 
 table.grid tbody tr:last-child {
 	border-bottom: solid 1px #999;
+}
+
+.attendance table.grid.attendance-printout {
+	border: 1px solid #000;
+	border-collapse: collapse;
+}
+
+.attendance table.grid.attendance-printout .record , .attendance table.grid.attendance-printout th {
+	width: auto;
+	white-space: nowrap;
+	padding: .5em .25em;
+}
+
+.attendance table.grid.attendance-printout .record.record-notes{
+	white-space: normal;
 }
 
 table.files {
@@ -1401,7 +1414,6 @@ ul.no-style.list li {
 	padding: 1em;
 	margin-bottom: 1em;
 }
-
 
 .class-listing.column-3 {
 	width: 1.75in;

@@ -14,6 +14,52 @@ class Attendance extends MY_Controller {
 	{
 	}
 
+	function printout()
+	{
+		$today = date ( "Y-m-d" );
+		// get all students for the day
+		$options = array (
+				"gradeRange" => array (
+						"gradeStart" => 0,
+						"gradeEnd" => 4 
+				) ,
+				"attendType"=>"Absent",
+				"startDate"=>$today,
+				"endDate"=>$today,
+		);
+		$lower_school_records = $this->attendance->search ( $options );
+		$current_grade = NULL;
+		$this->load->model("student_model","student");
+		foreach ( $lower_school_records as $record ) {
+			if($current_grade != $record->stuGrade) {
+				$record->count = $this->attendance->count_by_group($today,"present", array("kTeach"=>$record->kTeach));
+				$record->total = count($this->student->get_students_by_class($record->kTeach));
+				$record->group = format_name($record->teachFirst, $record->teachLast);
+				$current_grade = $record->stuGrade;
+			}
+		}
+		$options['gradeRange']['gradeStart'] = 5;
+		$options['gradeRange']['gradeEnd'] = 8;
+		
+		$middle_school_records = $this->attendance->search($options);
+		foreach ( $middle_school_records as $record ) {
+			if($current_grade != $record->stuGrade) {
+				$record->count = $this->attendance->count_by_group($today,"present", array("stuGrade"=>$record->stuGrade));
+				$record->total= count($this->student->get_students_by_grade($record->stuGrade, $record->stuGrade));
+				$record->group = sprintf("Grade %s",$record->stuGrade);
+				$current_grade = $record->stuGrade;
+				
+			}
+		}
+		$records = array_merge($lower_school_records,$middle_school_records);
+		$data['records'] = $records;
+		$data['target'] = "attendance/printout";
+		$data['title'] = "Attendance Printout";
+		$data['today'] = $today;
+		$this->load->view("page/index",$data);
+		
+	}
+
 	/**
 	 * create a dialog for inserting a new attendance entry for a student
 	 * @TODO the error with this script could be converted easily into a CONSTANT
@@ -33,6 +79,11 @@ class Attendance extends MY_Controller {
 			$this->load->model ( "menu_model" );
 			$attendList = $this->menu_model->get_pairs ( "attendance" );
 			$data ["attendTypes"] = get_keyed_pairs ( $attendList, array (
+					"label",
+					"value" 
+			), TRUE );
+			$length_types = $this->menu_model->get_pairs ( "attendance-length-type" );
+			$data ['length_types'] = get_keyed_pairs ( $length_types, array (
 					"label",
 					"value" 
 			), TRUE );
@@ -82,6 +133,11 @@ class Attendance extends MY_Controller {
 			$data ["attendSubtypes"] = get_keyed_pairs ( $attendSublist, array (
 					"value",
 					"label" 
+			), TRUE );
+			$length_types = $this->menu_model->get_pairs ( "attendance-length-type" );
+			$data ['length_types'] = get_keyed_pairs ( $length_types, array (
+					"label",
+					"value"
 			), TRUE );
 			$data ["action"] = "update";
 			if ($this->input->get ( "ajax" )) {
@@ -183,10 +239,10 @@ class Attendance extends MY_Controller {
 				"value",
 				"label" 
 		), TRUE );
-		if($this->input->get("refine")){
-			$data['refine'] = TRUE;
-		}else{
-			$data['refine'] = FALSE;
+		if ($this->input->get ( "refine" )) {
+			$data ['refine'] = TRUE;
+		} else {
+			$data ['refine'] = FALSE;
 		}
 		$data ['target'] = "attendance/search";
 		if ($this->input->get ( "ajax" )) {
@@ -223,48 +279,46 @@ class Attendance extends MY_Controller {
 			$startDate = get_current_term () == "Mid-Year" ? YEAR_START : MID_YEAR;
 			$data ['startDate'] = $startDate;
 		}
-		bake_cookie("attendance-startDate", $startDate);
+		bake_cookie ( "attendance-startDate", $startDate );
 		
 		$endDate = FALSE;
 		$data ["endDate"] = $endDate;
 		if ($this->input->get ( "endDate" )) {
 			$endDate = $this->input->get ( "endDate" );
 			$data ["endDate"] = $endDate;
-			bake_cookie("attendance-endDate", $endDate);
-				
-		}else{
-			burn_cookie("attendance-endDate");
+			bake_cookie ( "attendance-endDate", $endDate );
+		} else {
+			burn_cookie ( "attendance-endDate" );
 		}
 		$data ["attendType"] = NULL;
 		if ($this->input->get ( "attendType" )) {
 			$data ["attendType"] = $this->input->get ( "attendType" );
-			bake_cookie("attendance-attendType", $data['attendType']);
-		}else{
-			burn_cookie("attendance-attendType");
+			bake_cookie ( "attendance-attendType", $data ['attendType'] );
+		} else {
+			burn_cookie ( "attendance-attendType" );
 		}
 		
 		$data ["attendSubtype"] = NULL;
 		if ($this->input->get ( "attendSubtype" )) {
 			$data ["attendSubtype"] = $this->input->get ( "attendSubtype" );
-			bake_cookie("attendance-attendSubtype", $data['attendSubtype']);
-				
-		}else{
-			burn_cookie("attendance-attendSubtype");	
+			bake_cookie ( "attendance-attendSubtype", $data ['attendSubtype'] );
+		} else {
+			burn_cookie ( "attendance-attendSubtype" );
 		}
 		$data ['attendance'] = $this->attendance->search ( $data );
 		
 		$data ['summary'] = NULL;
-		$data['unmarked'] = array();
+		$data ['unmarked'] = array ();
 		
 		if ($kStudent) {
 			$data ['summary'] = $this->attendance->summarize ( $kStudent, get_current_term (), get_current_year () );
-		}else{
-			if($startDate = $endDate || $endDate == NULL){
+		} else {
+			if ($startDate = $endDate || $endDate == NULL) {
 				$this->load->model ( "student_attendance_model", "student_attendance" );
 				
-				$unmarked = $this->student_attendance->get_unmarked($this->input->get('startDate'));
+				$unmarked = $this->student_attendance->get_unmarked ( $this->input->get ( 'startDate' ) );
 				foreach ( $unmarked as $student ) {
-			
+					
 					$kTeach = $this->session->userdata ( "userID" );
 					$student->attendance = $this->attendance->get_by_date ( $startDate, $student->kStudent );
 					$student->buttons = $this->_checklist_buttons ( $startDate, $student->kStudent, $kTeach );
@@ -309,7 +363,11 @@ class Attendance extends MY_Controller {
 					"kTeach",
 					"teacherName" 
 			), TRUE );
-			$data ['exemptions'] = array("all"=>"Show All Students","show"=>"Show Only Exempt Students","exclude"=>"Exclude Exempt Students");
+			$data ['exemptions'] = array (
+					"all" => "Show All Students",
+					"show" => "Show Only Exempt Students",
+					"exclude" => "Exclude Exempt Students" 
+			);
 			$data ['target'] = "attendance/checklist/search";
 			$data ['title'] = "Check Attendance";
 			if ($this->input->get ( "ajax" ) == 1) {
@@ -358,11 +416,11 @@ class Attendance extends MY_Controller {
 					burn_cookie ( $cookie_day . "stuGroup" );
 				}
 				
-				if($exemption = $this->input->get("exemption")){
-					$options['exemption'] = $exemption;
-						bake_cookie('exemption',$exemption);
-				}else{
-					burn_cookie('exemption');
+				if ($exemption = $this->input->get ( "exemption" )) {
+					$options ['exemption'] = $exemption;
+					bake_cookie ( 'exemption', $exemption );
+				} else {
+					burn_cookie ( 'exemption' );
 				}
 				
 				$this->load->model ( "student_model", "student" );
@@ -372,7 +430,7 @@ class Attendance extends MY_Controller {
 					if (! $kTeach) {
 						$kTeach = $this->session->userdata ( "userID" );
 					}
-
+					
 					$student->attendance = $this->attendance->get_by_date ( $date, $student->kStudent );
 					$student->buttons = $this->_checklist_buttons ( $date, $student->kStudent, $kTeach, array (
 							"kAttendance" => get_value ( $student->attendance, "kAttendance" ) 
@@ -402,8 +460,8 @@ class Attendance extends MY_Controller {
 		$this->load->model ( "student_attendance_model", "student_attendance" );
 		$date = $this->input->get ( "date" );
 		$students = $this->student_attendance->get_unmarked ( $date );
-		if(empty($students)){
-			$this->session->set_flashdata("notice","All students appear to have been accounted for on this date");
+		if (empty ( $students )) {
+			$this->session->set_flashdata ( "notice", "All students appear to have been accounted for on this date" );
 		}
 		$options [] = array ();
 		$data ['students'] = $students;
