@@ -76,7 +76,6 @@ class Course_Preference_model extends MY_Model
 		$this->db->select("course_preference.school_year, course_preference.subject, course_preference.id");
 		$this->db->select("menu.label as preference");
 		$result = $this->db->get()->result();
-		$this->_log();
 		return $result;
 	}
 

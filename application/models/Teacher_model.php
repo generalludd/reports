@@ -135,7 +135,6 @@ class Teacher_model extends MY_Model {
 			$this->db->select ( "CONCAT(teacher.teachFirst, ' ', teacher.teachLast) as teacherName", FALSE );
 		}
 		$result = $this->db->get ()->row ();
-		$this->_log();
 		if ($result) {
 			return $result;
 		} else {
@@ -239,7 +238,6 @@ class Teacher_model extends MY_Model {
     $this->db->select ( "CONCAT(teachFirst,' ', teachLast) as teacherName", FALSE );
     $this->db->select ("teacher.*");
     $result = $this->db->get()->result();
-    $this->_log();
     return $result;
 
   }

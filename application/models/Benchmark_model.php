@@ -86,7 +86,6 @@ class Benchmark_model extends MY_Model {
 		$this->db->from ( 'benchmark' );
 		
 		$result = $this->db->get ()->result ();
-		$this->_log();
 		return $result;
 	}
 	
@@ -149,7 +148,6 @@ and (s.kStudent = 8463  or kStudent is null );
 		$this->db->select ( "benchmark.*,student_benchmark.comment,student_benchmark.grade" );
 		$this->db->from ( "benchmark" );
 		$result = $this->db->get ()->result ();
-		$this->_log ("log",TRUE);
 		return $result;
 	}
 	

@@ -218,7 +218,6 @@ class Student_model extends MY_Model {
 		
 		$this->db->from ( "student" );
 		$result = $this->db->get ()->result ();
-		$this->_log ();
 		return $result;
 	}
 
@@ -319,7 +318,6 @@ class Student_model extends MY_Model {
 		$this->db->select ( "CONCAT(humanitiesTeacher.teachFirst, ' ' ,humanitiesTeacher.teachLast) as humanitiesTeacher", FALSE );
 		$this->db->group_by ( "student.kStudent" );
 		$result = $this->db->get ()->result ();
-		$this->_log ();
 		return $result;
 	}
 

@@ -77,7 +77,6 @@ class Narrative_model extends MY_Model
 		$this->db->join("teacher as approver","narrative.recModifier = approver.kTeach","LEFT");
 		$this->db->select("approver.teachFirst as approverFirst, approver.teachLast as approverLast");
 		$result = $this->db->get ()->row ();
-		$this->_log();
 		return $result;
 
 	}
@@ -267,7 +266,6 @@ class Narrative_model extends MY_Model
 		$this->db->select ( "narrative.*,(`student`.`baseGrade` + $narrYear - `student`.`baseYear`) as `currentGrade`, student.stuFirst, student.stuLast, student.stuNickname" );
 		$this->db->order_by("student.stuLast, student.stuFirst");
 		$result = $this->db->get ()->result ();
-		$this->_log("notice");
 		return $result;
 
 	}

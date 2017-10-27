@@ -64,7 +64,6 @@ class Student_benchmark_model extends MY_Model {
 		$this->db->where ( "(student_benchmark.term = '$term' OR student_benchmark.term IS NULL)", NULL, FALSE );
 		$this->db->order_by ( "benchmark.subject, benchmark.category, benchmark.weight, benchmark.benchmark" );
 		$result = $this->db->get ()->result ();
-		$this->_log();
 		return $result;
 	}
 	

@@ -60,7 +60,6 @@ class Grade_model extends MY_Model
         $this->db->select("grade.*");
         $this->db->select("assignment.points as assignment_total");
         $output = $this->db->get()->row();
-        $this->_log("notice");
         return $output;
     }
 
@@ -144,7 +143,6 @@ class Grade_model extends MY_Model
                         $grade_end, array(
                                 "humanitiesTeacher" => $kTeach
                         ));
-                $this->_log("notice");
 
             }
         }
