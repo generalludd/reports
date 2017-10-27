@@ -17,47 +17,74 @@ class Attendance extends MY_Controller {
 	function printout()
 	{
 		$today = date ( "Y-m-d" );
+		if ($this->input->get ( "date" )) {
+			$today = $this->input->get ( "date" );
+		}
+		
+		/*
+		 * sometimes you have to do something messy before you know how to make it clean
+		 * we need to show classes even if there is 100% attendance.
+		 * must start with teachers
+		 * loop through each teacher to get their student count,
+		 * add a record to the teacher for each student's absence record.
+		 */
+		
+		$this->load->model ( "teacher_model", "teacher" );
+		// get lower school teachers
+		$ls_teachers = $this->teacher->get_all ( array (
+				"gradeRange" => array (
+						"gradeStart" => 0,
+						"gradeEnd" => 4 
+				),
+				"roles" => array (
+						2 
+				),
+				"gradeSort" => TRUE 
+		) );
 		// get all students for the day
 		$options = array (
 				"gradeRange" => array (
 						"gradeStart" => 0,
 						"gradeEnd" => 4 
-				) ,
-				"attendType"=>"Absent",
-				"startDate"=>$today,
-				"endDate"=>$today,
+				),
+				"attendType" => "Absent",
+				"startDate" => $today,
+				"endDate" => $today 
 		);
-		$lower_school_records = $this->attendance->search ( $options );
-		$current_grade = NULL;
-		$this->load->model("student_model","student");
-		foreach ( $lower_school_records as $record ) {
-			if($current_grade != $record->stuGrade) {
-				$record->count = $this->attendance->count_by_group($today,"present", array("kTeach"=>$record->kTeach));
-				$record->total = count($this->student->get_students_by_class($record->kTeach));
-				$record->group = format_name($record->teachFirst, $record->teachLast);
-				$current_grade = $record->stuGrade;
-			}
-		}
-		$options['gradeRange']['gradeStart'] = 5;
-		$options['gradeRange']['gradeEnd'] = 8;
+		$this->load->model ( "student_model", "student" );
 		
-		$middle_school_records = $this->attendance->search($options);
-		foreach ( $middle_school_records as $record ) {
-			if($current_grade != $record->stuGrade) {
-				$record->count = $this->attendance->count_by_group($today,"present", array("stuGrade"=>$record->stuGrade));
-				$record->total= count($this->student->get_students_by_grade($record->stuGrade, $record->stuGrade));
-				$record->group = sprintf("Grade %s",$record->stuGrade);
-				$current_grade = $record->stuGrade;
-				
-			}
+		foreach ( $ls_teachers as $teacher ) {
+			$options ['kTeach'] = $teacher->kTeach;
+			$teacher->attendance = $this->attendance->search ( $options );
+			$teacher->count = $this->attendance->count_by_group ( $today, array("Present","Tardy","Appointment"), array (
+					"kTeach" => $teacher->kTeach 
+			) );
+			$teacher->total = count ( $this->student->get_students_by_class ( $teacher->kTeach ) );
 		}
-		$records = array_merge($lower_school_records,$middle_school_records);
-		$data['records'] = $records;
-		$data['target'] = "attendance/printout";
-		$data['title'] = "Attendance Printout";
-		$data['today'] = $today;
-		$this->load->view("page/index",$data);
-		
+		$options ['kTeach'] = FALSE;
+		$ms_grades = array ();
+		for($i = 5; $i < 9; $i ++) {
+			$options ['gradeRange'] ['gradeStart'] = $i;
+			$options ['gradeRange'] ['gradeEnd'] = $i;
+			$my_grade = array (
+					"grade" => $i,
+					"attendance" => $this->attendance->search ( $options ),
+					"count" => $this->attendance->count_by_group ( $today, array("Present","Tardy","Appointment"), array (
+							"stuGrade" => $i 
+					) ),
+					"total" => count ( $this->student->get_students_by_grade ( $i, $i ) ),
+					"group" => sprintf ( "Grade %s", $i ) 
+			);
+			$grade = ( object ) $my_grade;
+			$ms_grades [] = $grade;
+		}
+		$data ['lower_school'] = $ls_teachers;
+		$data ['middle_school'] = $ms_grades;
+		$data['date'] = format_date($today);
+		$data ['target'] = "attendance/printout";
+		$data ['title'] = "Attendance Printout";
+		$data ['today'] = $today;
+		$this->load->view ( "page/index", $data );
 	}
 
 	/**
@@ -137,7 +164,7 @@ class Attendance extends MY_Controller {
 			$length_types = $this->menu_model->get_pairs ( "attendance-length-type" );
 			$data ['length_types'] = get_keyed_pairs ( $length_types, array (
 					"label",
-					"value"
+					"value" 
 			), TRUE );
 			$data ["action"] = "update";
 			if ($this->input->get ( "ajax" )) {

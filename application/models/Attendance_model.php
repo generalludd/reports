@@ -198,6 +198,10 @@ class Attendance_model extends MY_Model {
 				$this->db->where ( "student_attendance.kStudent", $options ["kStudent"] );
 			}
 			
+			if(array_key_exists("kTeach", $options) && $options['kTeach']){
+				$this->db->where("student.kTeach",$options['kTeach']);
+			}
+			
 			//if we have a grade range parameter and we are not searching for a specific student search the subset accordingly
 			if(array_key_exists("gradeRange",$options)  && !array_key_exists("kStudent",$options)){
 				if(array_key_exists("gradeStart",$options["gradeRange"])&& array_key_exists("gradeEnd",$options['gradeRange'])){
@@ -212,7 +216,7 @@ class Attendance_model extends MY_Model {
 						$this->db->order_by("stuGrade");
 					}
 					if($gradeStart == $gradeEnd){
-						$this->db->where ( "`stuGrade` = $gradeStart", FALSE, FALSE );
+						$this->db->where ( "(`baseGrade` - `baseYear`  + $year) = $gradeStart", FALSE, FALSE );
 						
 					}else{
 						$this->db->where ( "(`baseGrade` - `baseYear`  + $year) BETWEEN  $gradeStart AND $gradeEnd", FALSE, FALSE );
@@ -222,9 +226,9 @@ class Attendance_model extends MY_Model {
 			}
 			
 
-			$this->db->where ( "`student_attendance`.`kStudent`", "`student`.`kStudent`", FALSE );
+			//$this->db->where ( "`student_attendance`.`kStudent`", "`student`.`kStudent`", FALSE );
 			$this->db->from ( "student_attendance" );
-			$this->db->from ( "student" );
+			$this->db->join ( "student","student_attendance.kStudent = student.kStudent" );
 			$this->db->select ( "student_attendance.*" );
 			$this->db->select ( "student.*" );
 			//@TODO this should be the year based on the submitted dates if they are submitted
@@ -239,7 +243,6 @@ class Attendance_model extends MY_Model {
 			$this->db->order_by ( "student.stuFirst" );
 			$this->db->order_by ( "attendDate", "DESC" );
 			$result = $this->db->get ()->result ();
-			$this->_log();
 			return $result;
 		} else {
 			return FALSE;
@@ -256,17 +259,23 @@ class Attendance_model extends MY_Model {
 	}
 
 	function count_by_group($date, $type, $group = array()){
+		$this->db->from("student_attendance");
+		$this->db->join("student","student_attendance.kStudent = student.kStudent");
+		
 		if(array_key_exists("kTeach",$group)){
 			$this->db->where("student.kTeach",$group['kTeach']);
 		}elseif(array_key_exists("stuGrade",$group)){
 			$year = get_current_year();
 			$this->db->where ( "(`baseGrade` - `baseYear`  + $year) =", $group['stuGrade'] );
 		}
-		$this->db->from("student_attendance,student");
-		$this->db->where("attendType",$type);
+		if(!is_array($type)){
+			$type = array($type);
+		}
+		$this->db->where_in("attendType", $type);
 		$this->db->where("attendDate",$date);
-		$this->db->where("student_attendance.kStudent = student.kStudent",FALSE,FALSE);
-		return $this->db->count_all_results();
+		$output =  $this->db->count_all_results();
+		$this->_log('warning');
+		return $output;
 	}
 	
 

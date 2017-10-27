@@ -128,7 +128,6 @@ class Assignment_model extends MY_Model {
 		$this->db->select ( "assignment.kTeach, assignment.assignment,assignment.points as assignment_total,assignment.subject, assignment.term,assignment.year" );
 		$this->db->select ( "category.weight,category.category" );
 		$result = $this->db->get ()->result ();
-		$this->_log();
 		return $result;
 	}
 
@@ -311,7 +310,6 @@ class Assignment_model extends MY_Model {
 // 			);
 // 			$this->db->query($query);
 // 			$kCategory = $this->db->insert_id ();
-			$this->_log ( "notice" );
 		}
 		return $kCategory;
 	}
@@ -346,7 +344,6 @@ class Assignment_model extends MY_Model {
 		$this->db->where ("subject", $subject);
 		$this->db->order_by ( "weight", "DESC" );
 		$result = $this->db->get ( "assignment_category" )->result ();
-		$this->_log();
 		return $result;
 	}
 
