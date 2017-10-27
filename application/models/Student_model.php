@@ -197,7 +197,7 @@ class Student_model extends MY_Model {
 					break;
 				case "exclude" :
 					$this->db->join ( "course_preference", "student.kStudent=course_preference.kStudent", "LEFT" );
-					$this->db->where ( "course_preference.school_year IS NULL", NULL, FALSE );
+					$this->db->where ( "(course_preference.school_year IS NULL OR course_preference.preference !='exempt')", NULL, FALSE );
 					break;
 			}
 		}
