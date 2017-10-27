@@ -3,7 +3,7 @@
 ?>
 <!-- views/attendance/report.php -->
 <h4>
-<?php echo $date?>
+<?php echo $date . " Printed at " . date("g:m a"); ?>
 </h4>
 <table class="grid attendance-printout">
 <thead>
