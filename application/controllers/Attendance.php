@@ -109,7 +109,7 @@ class Attendance extends MY_Controller {
 					"label",
 					"value" 
 			), TRUE );
-			$length_types = $this->menu_model->get_pairs ( "attendance-length-type" );
+			$length_types = $this->menu_model->get_pairs ( "attend-length-type" );
 			$data ['length_types'] = get_keyed_pairs ( $length_types, array (
 					"label",
 					"value" 
@@ -161,7 +161,7 @@ class Attendance extends MY_Controller {
 					"value",
 					"label" 
 			), TRUE );
-			$length_types = $this->menu_model->get_pairs ( "attendance-length-type" );
+			$length_types = $this->menu_model->get_pairs ( "attend-length-type" );
 			$data ['length_types'] = get_keyed_pairs ( $length_types, array (
 					"label",
 					"value" 
