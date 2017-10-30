@@ -865,6 +865,19 @@ table.grid tbody tr:last-child {
 	white-space: normal;
 }
 
+.attendance-printout .attendance-group {
+	-webkit-print-color-adjust: exact;
+	background-color: #ffff00 !important;
+	font-weight: bold;
+}
+.attendance-printout .break {
+	text-align: center;
+}
+.attendance-printout .break .no-absences{
+	font-style: italic;
+	font-weight: normal;
+}
+
 table.files {
 	border-spacing: 5px;
 }
