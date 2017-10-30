@@ -1,8 +1,8 @@
 <?php #attendance_edit.inc
 $length_status = "";
 $attendLength = get_value($attendance, "attendLength","");
-if($attendLength == 1){
-	$length_status = "checked";
+if($attendLength == "Half-Day"){
+	$length_status = "checked=checked";
 }
 
 $attendDate = date("Y-m-j");
