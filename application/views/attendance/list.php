@@ -32,20 +32,14 @@ if ($action == "search") {
 	$search_fieldset .= $search_parameters;
 	
 	$search_fieldset .= "</ul>";
-	$search_fieldset .= create_button_bar($search_buttons) . "</fieldset>";
-	
+	$search_fieldset .= create_button_bar ( $search_buttons ) . "</fieldset>";
 }
 
 print $button_bar;
 print $search_fieldset;
-if ($this->session->userdata ( "dbRole" ) == 1) :
+if ($this->session->userdata ( "dbRole" ) == 1) {
 	print $add_button;
-
-
-
-
-
-endif;
+}
 
 $current_student = NULL;
 if (! empty ( $attendance )) :
@@ -107,7 +101,7 @@ if (! empty ( $attendance )) :
 	<?php $attendDate = format_date ( $item->attendDate, 'standard' );?>
 	<td class='no-print'>
 			<?php if($this->session->userdata("dbRole") == 1): //@TODO Clean this Up!?>
-<?php $buttons[]= array("text"=>"Edit","href"=> site_url("attendance/edit/$item->kAttendance?redirect=" . uri_query()), "class"=>"dialog edit small button","id"=> "a_$item->kAttendance");?>
+			<?php $buttons[]= array("text"=>"Edit","href"=> site_url("attendance/edit/$item->kAttendance?redirect=" . uri_query()), "class"=>"dialog edit small button","id"=> "a_$item->kAttendance");?>
 			
 			<?php echo create_button_bar($buttons); ?>
 				
@@ -136,11 +130,12 @@ if (! empty ( $attendance )) :
 </div>
 
 
-<?phpelse :
-	
+<?php else:?>
+<!-- no records found -->
 
-	if ($kStudent) :
-		?>
+
+<?php if ($kStudent):?>
+<!-- response if no records and search was specifically for a student -->
 <p>
 	<a href="<?php echo site_url("student/view/$kStudent");?>" title="View student's record"><?php echo format_name($student->stuNickname, $student->stuLast)?></a>
 	does not have any attendance entries for the selected search
@@ -149,11 +144,14 @@ if (! empty ( $attendance )) :
 <?php echo $add_button; ?>
 	 
 
-	<?php else : ?>
+	<?php else: ?>
+<!-- not for a specific student and no records found -->
 <p>No records for the given search were found</p>
 
 
 <?php endif; ?>
+<!-- end if student and no records found -->
 <?php endif;?>
+<!-- end if records found -->
 
 
