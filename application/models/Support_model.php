@@ -11,7 +11,6 @@ class Support_model extends CI_Model {
 	var $strengths;
 	var $strategies;
 	var $testDate;
-	var $supportStaff;
 	var $outsideSupport;
 	var $hasIEP;
 	var $hasSPPS;
@@ -32,7 +31,6 @@ class Support_model extends CI_Model {
 				"strengths",
 				"strategies",
 				"testDate",
-				"supportStaff",
 				"outsideSupport",
 				"hasIEP",
 				"hasSPPS" 
