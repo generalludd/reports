@@ -24,11 +24,9 @@ defined ( 'BASEPATH' ) or exit ( 'No direct script access allowed' );
  * |
  */
 $allowed_domains = array (
-		'reports',
-		'docker.dev',
-		'reports.fsmn.org' 
+	$_SERVER ['HTTP_HOST'] 
 );
-$default_domain = 'reports:8000';
+$default_domain = 'reports.fsmn.org';
 
 if (in_array ( $_SERVER ['HTTP_HOST'], $allowed_domains, TRUE )) {
 	$domain = $_SERVER ['HTTP_HOST'];
