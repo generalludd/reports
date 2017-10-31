@@ -340,7 +340,7 @@ class Attendance extends MY_Controller {
 		if ($kStudent) {
 			$data ['summary'] = $this->attendance->summarize ( $kStudent, get_current_term (), get_current_year () );
 		} else {
-			if ($startDate = $endDate || $endDate == NULL) {
+			if ($startDate == $endDate || $endDate == NULL) {
 				$this->load->model ( "student_attendance_model", "student_attendance" );
 				
 				$unmarked = $this->student_attendance->get_unmarked ( $this->input->get ( 'startDate' ) );
@@ -404,6 +404,9 @@ class Attendance extends MY_Controller {
 			}
 		} else {
 			if ($date = $this->input->get ( "date" )) {
+				/*cookie_day was intended to set the cookies to be saved for the given day of the week
+				 * This ended up not being as useful as it was annoying
+				 */
 				$cookie_day = ""; // sprintf ( "%s-", date ( "D" ) );
 				burn_cookie ( $cookie_day . "kTeach" );
 				if ($kTeach = $this->input->get ( "kTeach" )) {
