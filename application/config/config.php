@@ -34,11 +34,7 @@ if (in_array ( $_SERVER ['HTTP_HOST'], $allowed_domains, TRUE )) {
 	$domain = $default_domain;
 }
 
-if ($_SERVER ['SERVER_PORT'] == 443) {
-	$config ['base_url'] = 'https://' . $domain;
-} else {
-	$config ['base_url'] = 'http://' . $domain;
-}
+$config ['base_url'] = 'https://' . $domain;
 
 /*
  * |--------------------------------------------------------------------------
