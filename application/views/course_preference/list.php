@@ -54,7 +54,7 @@ defined ( 'BASEPATH' ) or exit ( 'No direct script access allowed' );
 	</table>
 <?php endif;?>
 <p>
-<a href="<?php echo site_url("course_preference/create/$student->kStudent");?>" class="link new dialog" id="<?php printf ( "add-course-preference_%s", $student->kStudent);?>">Add Course Preference</a>
+<a href="<?php echo site_url("course_preference/create/$kStudent");?>" class="link new dialog" id="<?php printf ( "add-course-preference_%s", $kStudent);?>">Add Course Preference</a>
 </p>
 
 </div>

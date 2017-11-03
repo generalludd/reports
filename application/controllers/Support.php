@@ -1,5 +1,4 @@
 <?php
-
 if (! defined ( 'BASEPATH' ))
 	exit ( 'No direct script access allowed' );
 class Support extends MY_Controller {
@@ -22,13 +21,14 @@ class Support extends MY_Controller {
 		$has_current = $this->support_model->get_current ( $kStudent );
 		$data ['has_current'] = get_value ( $has_current, "year" );
 		$data ['title'] = sprintf ( "Viewing Student Support for %s", $data ['student_name'] );
-	$support  = $this->support_model->get_all ( $kStudent );
-		foreach($support as $entry){
-
-			$entry->course_preferences = $this->preference->get_all ( $entry->kStudent, array("school_year"=>$entry->year) );
-				
+		$support = $this->support_model->get_all ( $kStudent );
+		foreach ( $support as $entry ) {
+			
+			$entry->course_preferences = $this->preference->get_all ( $entry->kStudent, array (
+					"school_year" => $entry->year 
+			) );
 		}
-		$data['support'] = $support;
+		$data ['support'] = $support;
 		$data ['target'] = "support/list";
 		$this->load->model ( "file_model" );
 		$data ['support_files'] = $this->file_model->get_for_student ( $kStudent );
@@ -40,6 +40,7 @@ class Support extends MY_Controller {
 	{
 		$data ['print'] = FALSE;
 		$data ['sidebar'] = FALSE;
+		// @TODO change this to queries instead of uri segments.
 		if ($this->uri->segment ( 4 ) == "print") {
 			$data ['print'] = TRUE;
 		}
@@ -47,15 +48,18 @@ class Support extends MY_Controller {
 			$data ['sidebar'] = TRUE;
 		}
 		$support = $this->support_model->get ( $kSupport );
-		$data ['student'] = format_name ( $support->stuFirst, $support->stuLast, $support->stuNickname );
-		$data ['entry'] = $support;
+		$student = format_name ( $support->stuFirst, $support->stuLast, $support->stuNickname );
 		$this->load->model ( "file_model" );
 		$data ['support_files'] = $this->file_model->get_all ( $kSupport );
 		$options = array (
-				"school_year" => get_current_year ()
+				"school_year" => get_current_year () 
 		);
 		$this->load->model ( "course_preference_model", "preference" );
-		$data ['course_preferences'] = $this->preference->get_all ( $support->kStudent, $options );
+		$support->course_preferences = $this->preference->get_all ( $support->kStudent, $options );
+		$support->student = $student;
+		$data ['student'] =$student;
+		$data ['entry'] = $support;
+		
 		$data ['title'] = "Viewing Support Record for " . $data ['student'];
 		$data ['target'] = "support/view";
 		if ($data ['sidebar']) {
@@ -167,10 +171,10 @@ class Support extends MY_Controller {
 			$error = array (
 					'error' => $this->upload->display_errors () 
 			);
-			$this->session->set_flashdata("warning",$error['error']);
-			$kSupport = $this->input->post ( "kSupport" );		
+			$this->session->set_flashdata ( "warning", $error ['error'] );
+			$kSupport = $this->input->post ( "kSupport" );
 			redirect ( "support/edit/$kSupport" );
-				
+			
 			// $this->list_all($kStudent,$error);
 		} else {
 			$file_data = $this->upload->data ();
