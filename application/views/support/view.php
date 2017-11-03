@@ -55,7 +55,7 @@ if ($print) {
 <fieldset class="support-view">
 	<legend><?php  echo $year . "-" . $year_end?></legend>
 	<!--  grade preferences are only used for middleschoolers and enrolled students.  -->
-				<?php $this->load->view("course_preference/list",array('course_preferences' => $entry->course_preferences));?>
+				<?php // $this->load->view("course_preference/list",array('course_preferences' => $entry->course_preferences));?>
 <?php 
 
 if (! $print) {
