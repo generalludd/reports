@@ -11,5 +11,5 @@
 	<?php  echo $backup->narrText;?>
 	</div>
 
-<?endforeach;
+<?php endforeach;
 

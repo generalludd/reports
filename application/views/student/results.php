@@ -27,7 +27,7 @@ if(array_key_exists("grades", $criteria)){
 
 	<?php if(array_key_exists("stuGroup",$criteria)):?>
 	    <li>Specialist Group:<strong> <?php  echo $criteria["stuGroup"];?></strong>
-    <?endif;?>
+    <?php endif;?>
     
     <?php if(array_key_exists("kTeach",$criteria)):?>
     <li>Classroom Teacher or Advisor: <strong><?php echo $criteria['teacher']; ?></strong></li>

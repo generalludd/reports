@@ -27,7 +27,7 @@ if($preference){
 <?php 
 if($readonly):?>
 <input type="text" <?php  echo $readonly;?> id="format" name="format" value="<?php  echo get_value($preference, "format");?>"/>
-<?else:
+<?php else:
 echo form_dropdown("format", $formats, get_value($preference, "format"), "id='format' $readonly" );
 endif;?>
 </p>

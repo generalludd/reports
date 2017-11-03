@@ -127,4 +127,4 @@ print create_button_bar(array(array("text"=>"Refine Search","href"=>site_url("re
 <p>
 	There are no <?php echo STUDENT_REPORT;?>s for the given search criteria
 </p>
-<?endif;
+<?php endif;

@@ -8,7 +8,7 @@
 <li><label>Category: </label><?php  echo $assignment->category;?></li>
 <li><label>Total Points: </label><?php  echo $assignment->points>0?$assignment->points. " Points" :capitalize($assignment->points_type);?></li>
 <li><label>Date: </label><?php  echo format_date($assignment->date);?></li>
-<?if($stuGroup = $this->input->cookie("stuGroup")): ?>
+<?php if($stuGroup = $this->input->cookie("stuGroup")): ?>
 <li><label>Student Group: </label><?php  echo $stuGroup;?></li>
 <?php endif;?>
 </ul>

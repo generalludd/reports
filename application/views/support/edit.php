@@ -185,7 +185,7 @@ $button_box = create_button_bar ( $buttons );
 							<span class='button delete delete-support-file' id='dsf_<?php echo $file->kFile;?>'>Delete</span>
 						</td>
 					</tr>
-						<?endforeach; ?>
+						<?php endforeach; ?>
 					</tbody>
 			</table>
 			<?php endif; ?>

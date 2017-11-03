@@ -84,5 +84,5 @@ print create_button_bar($buttons);
 	<?php endforeach; ?>
 	</tbody>
 </table>
-<?	endif; ?></div>
+<?php	endif; ?></div>
 

@@ -41,7 +41,7 @@ if($isAdvisor){
 <?php if(get_value($teacher,"dbRole",NULL) == 2):?>
 <label for="isAdvisor">Is a Middle School Advisor: </label>
 <input type="checkbox" name="isAdvisor" id="isAdvisor" value="1" <?php  echo $advisor_checked;?>/>
-<?endif;?>
+<?php endif;?>
 </fieldset>
 
 <?php  if(get_value($teacher, "dbRole",NULL) >= 2):?>

@@ -3,7 +3,7 @@ $date = date("Y-m-d");
 $kTeach = $this->session->userdata("userID");
 ?>
 
-<h3><?echo $title; ?></h3>
+<h3><?php echo $title; ?></h3>
 <h4>Be sure to click the "Attendance Complete" button at the bottom when you are done!</h4>
 <div class="checklist class-listing">
 <?php foreach ($students as $student): ?>

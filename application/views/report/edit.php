@@ -116,7 +116,7 @@ if($contact_date){
 		<input type="submit" value="Save" class="button" />
 		<?php if($action == "update"):?>
 		<span class="button delete report_delete">Delete</span>
-		<?endif;?>
+		<?php endif;?>
 	</div>
 </form>
 </div>

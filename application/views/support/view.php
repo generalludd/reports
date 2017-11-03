@@ -134,6 +134,6 @@ if (! $print) {
 		</table>
 	</div>
 		
-<?	endif; ?>
+<?php	endif; ?>
 
 </fieldset>

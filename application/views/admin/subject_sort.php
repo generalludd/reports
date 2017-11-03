@@ -17,7 +17,7 @@
     <?php $subjects = explode(",",$sort_order->subjects);?>
 <ul id="reportSorting">
 
-<?foreach($subjects as $subject):?>
+<?php foreach($subjects as $subject):?>
 	<li><?php  echo $subject;?></li>
 <?php endforeach;?>
 </ul>
