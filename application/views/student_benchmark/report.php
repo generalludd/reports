@@ -38,6 +38,11 @@ $footnotes = array();
 <tr class="benchmark-header"><td colspan=<?php echo $quarters+1; ?>><?php echo $benchmark->category;?></td></tr>
 <?php $current_category = $benchmark->category;?>
 <?php endif; ?>
+<?php $my_row = 0; ?>
+<?php foreach ($benchmark->quarters as $quarter):?>
+	<?php $my_row += in_array(get_value($quarter['grade'],"grade"), array("E","M","P","S"));?>
+<?php endforeach; ?>
+<?php if($my_row):?>
 	<tr class="benchmark-row">
 	<td ><?php echo $benchmark->benchmark;?></td>
 
@@ -54,6 +59,8 @@ $footnotes = array();
 		
 	<?php endforeach; ?>
 	</tr>
+	<?php endif;?>
+	
 <?php endforeach;?>
 </tbody>
 <?php if(!empty($footnotes)):?>

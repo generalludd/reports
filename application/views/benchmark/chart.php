@@ -15,15 +15,13 @@ if (count ( $benchmarks ) > 0 && $benchmarks != 0) :
 <div class='section'>
 	<table class='chart list'>
 	<?php
-	
-$i = 1;
+	$i = 1;
 	$currentSubject = "";
 	$currentCategory = "";
 	$comments = array ();
 	$currentQuarter = 0;
-	foreach ( $benchmarks as $benchmark ) :
-		?>
-<?php if($benchmark->grade != "X" && $benchmark->grade !=""):?>
+	foreach ( $benchmarks as $benchmark ) : ?>
+	<?php if($benchmark->grade != "X" && $benchmark->grade !=""):?>
 	<?php	if($benchmark->subject != $currentSubject):?>
 			<tr class='benchmark-header'>
 			<td colspan=2>
@@ -32,15 +30,15 @@ $i = 1;
 		</tr>
 			<?php $currentSubject = $benchmark->subject;?>
 	<?php endif;?>
-	<?php	if($benchmark->category!=$currentCategory):?>
+	<?php if($benchmark->category!=$currentCategory):?>
 		<?php $currentCategory=$benchmark->category;?>
 		<tr class="benchmark-row">
 		<td class='benchmark-text' colspan=2>
-					<strong><?php echo $benchmark->category;?></strong>
-				</td>
-				</tr>
+		 <strong><?php echo $benchmark->category;?></strong>
+		</td>
+		</tr>
 	
-	<?php endif; ?>
+		<?php endif; ?>
 	 <tr class=benchmark-row>
 	<?php $mark="";?>
 		<?php
