@@ -499,8 +499,10 @@ $config ['compress_output'] = FALSE;
  * | helper' page of the user guide for information regarding date handling.
  * |
  */
-$config ['time_reference'] = 'UM6';
-//date_default_timezone_set('America/Chicago');
+$config ['time_reference'] = 'local';
+
+//the above doesn't work, so here we are!
+date_default_timezone_set('America/Chicago');
 
 /*
  * |--------------------------------------------------------------------------
