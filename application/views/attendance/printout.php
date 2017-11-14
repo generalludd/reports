@@ -11,8 +11,7 @@
 			<th>Count</th>
 			<th>Classroom/Grade</th>
 			<th>Full-Day Absence</th>
-			<th>Half-Day Absence</th>
-			<th>Appointment</th>
+			<th>Partial Absence</th>
 			<th>Notes</th>
 	</thead>
 	<tbody>
@@ -29,8 +28,7 @@
 						<td colspan="2"></td>
 						<?php $student_name = format_name($attendance->stuFirst, $attendance->stuLast, $attendance->stuNickname);?>
 						<td class="record record-full-day"><?php echo $attendance->attendType == "Absent"&& !$attendance->attendLength? $student_name:"";?></td>
-						<td class="record record-half-day"><?php echo $attendance->attendType == "Absent" && $attendance->attendLength? sprintf( "%s<br/><em>%s</em>",$student_name, $attendance->attendLengthType): ""; ?></td>
-						<td class="record record-appointment"><?php echo $attendance->attendType == "Appointment"?$student_name:"";?></td>
+						<td class="record record-half-day"><?php echo ($attendance->attendType == "Absent" && $attendance->attendLength) ||$attendance->attendType == "Appointment" ? sprintf( "%s<br/><em>%s</em>",$student_name, $attendance->attendLengthType): ""; ?></td>
 						<td class="record record-notes"><?php echo $attendance->attendNote;?></td>
 					</tr>
 				<?php endforeach;?>
@@ -55,8 +53,7 @@
 						<td colspan="2"></td>
 						<?php $student_name = format_name($attendance->stuFirst, $attendance->stuLast, $attendance->stuNickname);?>
 						<td class="record record-full-day"><?php echo $attendance->attendType == "Absent"&& !$attendance->attendLength? $student_name:"";?></td>
-						<td class="record record-half-day"><?php echo $attendance->attendType == "Absent" && $attendance->attendLength? sprintf( "%s<br/><em>%s</em>",$student_name, $attendance->attendLengthType): ""; ?></td>
-						<td class="record record-appointment"><?php echo $attendance->attendType == "Appointment"?$student_name:"";?></td>
+						<td class="record record-half-day"><?php echo ($attendance->attendType == "Absent" && $attendance->attendLength) ||$attendance->attendType == "Appointment" ? sprintf( "%s<br/><em>%s</em>",$student_name, $attendance->attendLengthType): ""; ?></td>
 						<td class="record record-notes"><?php echo $attendance->attendNote;?></td>
 					</tr>
 				<?php endforeach;?>
