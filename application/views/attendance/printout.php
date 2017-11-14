@@ -12,6 +12,7 @@
 			<th>Classroom/Grade</th>
 			<th>Full-Day Absence</th>
 			<th>Half-Day Absence</th>
+			<th>Appointment</th>
 			<th>Notes</th>
 	</thead>
 	<tbody>
@@ -19,7 +20,7 @@
 			<?php $teacher = format_name($record->teachFirst, $record->teachLast);?>
 			<tr class="attendance-group"><td><?php printf("%s/%s",  get_value($record,"count"), get_value($record,"total")); ?></td>
 				<td class="group-name"><?php print $teacher; ?></td>
-				<td class="break" colspan="3"><?php echo empty($record->attendance)?"<span class='no-absences'>No absences for $teacher's class</span>":""; ?></td>
+				<td class="break" colspan="4"><?php echo empty($record->attendance)?"<span class='no-absences'>No absences for $teacher's class</span>":""; ?></td>
 			</tr>
 			<?php if(!empty($record->attendance)):?>
 			
@@ -29,6 +30,7 @@
 						<?php $student_name = format_name($attendance->stuFirst, $attendance->stuLast, $attendance->stuNickname);?>
 						<td class="record record-full-day"><?php echo $attendance->attendType == "Absent"&& !$attendance->attendLength? $student_name:"";?></td>
 						<td class="record record-half-day"><?php echo $attendance->attendType == "Absent" && $attendance->attendLength? sprintf( "%s<br/><em>%s</em>",$student_name, $attendance->attendLengthType): ""; ?></td>
+						<td class="record record-appointment"><?php echo $attendance->attendType == "Appointment"?$student_name:"";?></td>
 						<td class="record record-notes"><?php echo $attendance->attendNote;?></td>
 					</tr>
 				<?php endforeach;?>
@@ -45,7 +47,7 @@
 			<tr class="attendance-group">
 				<td><?php printf("%s/%s",  get_value($record,"count"), get_value($record,"total")); ?></td>
 				<td  class="group-name"><?php echo $record->group;?></td>
-				<td class="break" colspan="3"><?php echo empty($record->attendance)?"<span class='no-absences'>No absences for $record->group</span>":""; ?></td>
+				<td class="break" colspan="4"><?php echo empty($record->attendance)?"<span class='no-absences'>No absences for $record->group</span>":""; ?></td>
 			</tr>
 			<?php if(!empty($record->attendance)):?>
 				<?php foreach($record->attendance as $attendance):?>
@@ -54,6 +56,7 @@
 						<?php $student_name = format_name($attendance->stuFirst, $attendance->stuLast, $attendance->stuNickname);?>
 						<td class="record record-full-day"><?php echo $attendance->attendType == "Absent"&& !$attendance->attendLength? $student_name:"";?></td>
 						<td class="record record-half-day"><?php echo $attendance->attendType == "Absent" && $attendance->attendLength? sprintf( "%s<br/><em>%s</em>",$student_name, $attendance->attendLengthType): ""; ?></td>
+						<td class="record record-appointment"><?php echo $attendance->attendType == "Appointment"?$student_name:"";?></td>
 						<td class="record record-notes"><?php echo $attendance->attendNote;?></td>
 					</tr>
 				<?php endforeach;?>

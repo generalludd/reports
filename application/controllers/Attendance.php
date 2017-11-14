@@ -47,7 +47,7 @@ class Attendance extends MY_Controller {
 						"gradeStart" => 0,
 						"gradeEnd" => 4 
 				),
-				"attendType" => "Absent",
+				"attendType" => array("Absent","Appointment"),
 				"startDate" => $today,
 				"endDate" => $today 
 		);

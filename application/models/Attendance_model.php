@@ -243,6 +243,7 @@ class Attendance_model extends MY_Model {
 			$this->db->order_by ( "student.stuFirst" );
 			$this->db->order_by ( "attendDate", "DESC" );
 			$result = $this->db->get ()->result ();
+			$this->_log();
 			return $result;
 		} else {
 			return FALSE;
@@ -274,7 +275,6 @@ class Attendance_model extends MY_Model {
 		$this->db->where_in("attendType", $type);
 		$this->db->where("attendDate",$date);
 		$output =  $this->db->count_all_results();
-		$this->_log('warning');
 		return $output;
 	}
 	
