@@ -853,12 +853,13 @@ table.grid tbody tr:last-child {
 .attendance table.grid.attendance-printout {
 	border: 1px solid #000;
 	border-collapse: collapse;
+	font-size: .9em;
 }
 
 .attendance table.grid.attendance-printout .record , .attendance table.grid.attendance-printout th {
 	width: auto;
 	white-space: nowrap;
-	padding: .5em .25em;
+	padding: .25em;
 }
 
 .attendance table.grid.attendance-printout .record.record-notes{
