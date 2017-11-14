@@ -163,8 +163,8 @@ class Attendance extends MY_Controller {
 			), TRUE );
 			$length_types = $this->menu_model->get_pairs ( "attend-length-type" );
 			$data ['length_types'] = get_keyed_pairs ( $length_types, array (
-					"label",
-					"value" 
+					"value",
+					"label" 
 			), TRUE );
 			$data ["action"] = "update";
 			if ($this->input->get ( "ajax" )) {
