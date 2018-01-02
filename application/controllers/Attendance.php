@@ -47,7 +47,10 @@ class Attendance extends MY_Controller {
 						"gradeStart" => 0,
 						"gradeEnd" => 4 
 				),
-				"attendType" => array("Absent","Appointment"),
+				"attendType" => array (
+						"Absent",
+						"Appointment" 
+				),
 				"startDate" => $today,
 				"endDate" => $today 
 		);
@@ -56,7 +59,11 @@ class Attendance extends MY_Controller {
 		foreach ( $ls_teachers as $teacher ) {
 			$options ['kTeach'] = $teacher->kTeach;
 			$teacher->attendance = $this->attendance->search ( $options );
-			$teacher->count = $this->attendance->count_by_group ( $today, array("Present","Tardy","Appointment"), array (
+			$teacher->count = $this->attendance->count_by_group ( $today, array (
+					"Present",
+					"Tardy",
+					"Appointment" 
+			), array (
 					"kTeach" => $teacher->kTeach 
 			) );
 			$teacher->total = count ( $this->student->get_students_by_class ( $teacher->kTeach ) );
@@ -69,7 +76,11 @@ class Attendance extends MY_Controller {
 			$my_grade = array (
 					"grade" => $i,
 					"attendance" => $this->attendance->search ( $options ),
-					"count" => $this->attendance->count_by_group ( $today, array("Present","Tardy","Appointment"), array (
+					"count" => $this->attendance->count_by_group ( $today, array (
+							"Present",
+							"Tardy",
+							"Appointment" 
+					), array (
 							"stuGrade" => $i 
 					) ),
 					"total" => count ( $this->student->get_students_by_grade ( $i, $i ) ),
@@ -80,7 +91,7 @@ class Attendance extends MY_Controller {
 		}
 		$data ['lower_school'] = $ls_teachers;
 		$data ['middle_school'] = $ms_grades;
-		$data['date'] = format_date($today);
+		$data ['date'] = format_date ( $today );
 		$data ['target'] = "attendance/printout";
 		$data ['title'] = "Attendance Printout";
 		$data ['today'] = $today;
@@ -404,7 +415,8 @@ class Attendance extends MY_Controller {
 			}
 		} else {
 			if ($date = $this->input->get ( "date" )) {
-				/*cookie_day was intended to set the cookies to be saved for the given day of the week
+				/*
+				 * cookie_day was intended to set the cookies to be saved for the given day of the week
 				 * This ended up not being as useful as it was annoying
 				 */
 				$cookie_day = ""; // sprintf ( "%s-", date ( "D" ) );
@@ -565,7 +577,6 @@ class Attendance extends MY_Controller {
 					"Absent",
 					"Tardy" 
 			);
-			print_r ( $search_array );
 			$data ['records'] = $this->attendance->search ( $search_array );
 		} else {
 			$data ['records'] = $this->attendance->get_for_teacher ( $date, $kTeach );
@@ -574,9 +585,13 @@ class Attendance extends MY_Controller {
 		$data ['teacher_name'] = format_name ( $teacher->teachFirst, $teacher->teachLast );
 		$message = $this->load->view ( "attendance/checklist/email", $data, TRUE );
 		$this->email->from ( $teacher->email );
-		$this->email->to ( "frontoffice@fsmn.org" );
-		$this->email->cc ( $teacher->email );
-		
+		//catch emails when in development (aka not reports.fsmn.org)
+		if ($_SERVER ['HTTP_HOST'] == "reports.fsmn.org") {
+			$this->email->to ( "frontoffice@fsmn.org" );
+			$this->email->cc ( $teacher->email );
+		} else {
+			$this->email->to ( "chrisd@fsmn.org" );
+		}
 		$this->email->subject ( $subject );
 		$this->email->message ( $message );
 		$this->email->set_alt_message ( $message );
