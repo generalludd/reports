@@ -211,8 +211,8 @@ class Attendance extends MY_Controller {
 					$subtype = FALSE;
 					$truancy = $this->attendance->check_truancy ( $kStudent );
 				}
-				$is_absent = $this->attendance->get_by_date($attendDate,$kStudent)->attendType;
-				if($is_absent == "Absent"){
+				$current_absence = $this->attendance->get_by_date($attendDate,$kStudent);
+				if($current_absence->attendType == "Absent" || $current_absence->attendType == "Tardy" || $current_absence->attendSubtype == "Unexcused"){
 					$this->truancy_notification ( $truancy, $subtype );
 				}
 			}
@@ -525,6 +525,7 @@ class Attendance extends MY_Controller {
 			$date = $data [1];
 			$kStudent = $data [2];
 			$kAttendance = $this->attendance->mark ( $date, $kStudent, $type );
+			
 			$this->truancy_notification ( $this->attendance->check_truancy ( $kStudent ) );
 			if ($kAttendance) {
 				$kTeach = $this->session->userdata ( "userID" );
