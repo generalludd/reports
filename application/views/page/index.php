@@ -23,7 +23,7 @@ $body_classes [] = $this->uri->segment ( 1 );
 <?php if(!$print): ?>
 <div id='header'>
 
-<?php if($_SERVER['HTTP_HOST'] == "reports"): ?>
+<?php if($_SERVER['HTTP_HOST'] != "reports.fsmn.org"): ?>
 <div id="site-name">
 				WARNING: THIS IS THE STAGING SERVER. CHANGES MADE HERE ARE IMAGINARY!</div>
 <?php else: ?>
