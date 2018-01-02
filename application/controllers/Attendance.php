@@ -199,8 +199,9 @@ class Attendance extends MY_Controller {
 			$kStudent = $this->input->post ( "kStudent" );
 			$kAttendance = $this->attendance->insert ();
 			$error = FALSE;
+			$attendDate = $this->input->post("attendDate");
 			if (! $kAttendance) {
-				$error = "This student already has an attendance record for " . format_date ( $this->input->post ( "attendDate" ) );
+				$error = "This student already has an attendance record for " . format_date ( $attendDate );
 				$this->session->set_flashdata ( "warning", $error );
 			} else {
 				$subtype = $this->input->post ( "attendSubtype" );
@@ -210,7 +211,10 @@ class Attendance extends MY_Controller {
 					$subtype = FALSE;
 					$truancy = $this->attendance->check_truancy ( $kStudent );
 				}
-				$this->truancy_notification ( $truancy, $subtype );
+				$is_absent = $this->attendance->get_by_date($attendDate,$kStudent)->attendType;
+				if($is_absent == "Absent"){
+					$this->truancy_notification ( $truancy, $subtype );
+				}
 			}
 			
 			redirect ( "attendance/search/$kStudent?showAll=1" );
@@ -657,7 +661,12 @@ class Attendance extends MY_Controller {
 			$body ['handbook'] = sprintf ( "This exceeds the limit of %s %s absences as identified in the school handbook.", $threshold, strtolower ( $subtype ) );
 			$body ['link'] = sprintf ( "You can view %s's record <a href='%s'>here.</a>", $record->stuNickname, site_url ( "attendance/search/$record->kStudent?startDate=$startDate" ) );
 			$this->email->from ( "frontoffice@fsmn.org" );
-			$this->email->to ( "head@fsmn.org,assistanthead@fsmn.org" );
+			//catch emails when in development (aka not reports.fsmn.org)
+			if ($_SERVER ['HTTP_HOST'] == "reports.fsmn.org") {
+				$this->email->to ( "head@fsmn.org,assistanthead@fsmn.org" );
+			}else{
+				$this->email->to("chrisd@fsmn.org");
+			}
 			$message = implode ( "\n", $body );
 			$this->email->subject ( $subject );
 			$this->email->message ( $message );

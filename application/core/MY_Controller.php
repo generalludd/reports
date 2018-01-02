@@ -21,6 +21,8 @@ class MY_Controller extends CI_Controller
             die();
         }else{
         	$this->load->model("config_model");
+        	/*these constants seem unnecessary, but they are defined on the fly. It may be better to make them into global variables
+        	for the controller. */
         	define("YEAR_START", get_current_year() . "-" . $this->config_model->get_by_key ( "year-start" )->config_value);
         	define("MID_YEAR", get_current_year() + 1 . "-" .  $this->config_model->get_by_key ( "mid-year" )->config_value);
         	//currently editing cut-off is not used. 
