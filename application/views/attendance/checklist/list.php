@@ -22,5 +22,5 @@ $kTeach = $this->session->userdata("userID");
 <?php endforeach; ?>
 </div>
 <?php if(!isset($unmarked)):?>
-<?php echo create_button_bar(array(array("text"=>"Attendance Complete","class"=>"button insert","href"=>base_url("attendance/complete/$date/$kTeach"))));?>
+<?php echo create_button_bar(array(array("text"=>"Attendance Complete","class"=>"button insert","href"=>base_url("attendance/complete/$date/$kTeach" . $_SERVER['QUERY_STRING']))));?>
 <?php endif; 
