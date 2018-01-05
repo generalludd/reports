@@ -7,7 +7,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 ?>
 <tr class="assignment">
 <td>
-<?php echo form_dropdown("subject[]",$subjects,"","required");?>
+<?php echo form_dropdown("subject[]",$subjects,$subject,"required");?>
 </td>
 	<td>
 <?php echo form_dropdown("kCategory[]",$categories,"","id='kCategory' required");?>
