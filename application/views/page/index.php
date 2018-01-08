@@ -24,8 +24,8 @@ $body_classes [] = $this->uri->segment ( 1 );
 <div id='header'>
 
 <?php if($_SERVER['HTTP_HOST'] != "reports.fsmn.org"): ?>
-<div id="site-name">
-				WARNING: THIS IS THE STAGING SERVER. CHANGES MADE HERE ARE IMAGINARY!</div>
+<div id="site-name" class="warning marquee"><div>
+				WARNING: THIS IS THE STAGING SERVER. CHANGES MADE HERE ARE IMAGINARY!</div></div>
 <?php else: ?>
 <div id='site-name'>Friends School Student Information System</div>
 <?php endif;?>
