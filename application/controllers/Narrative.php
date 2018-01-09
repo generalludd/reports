@@ -742,7 +742,7 @@ class Narrative extends MY_Controller {
 							// a false value means no grades were entered for
 							// the term--assumes student was not enrolled.
 							if ($mid_year_grade) {
-								$data ['mid_year_grades'] [$narrative->narrSubject] = calculate_letter_grade ( $mid_year_grade, $course_preference->preference);
+								$data ['mid_year_grades'] [$narrative->narrSubject] = calculate_letter_grade ( $mid_year_grade, $course_preference);
 								$data ['year_grade'] [$narrative->narrSubject] ['percent'] = $course_preference ? NULL : ($letter_grade + $mid_year_grade) / 2;
 								$data ['final_grade'] [$narrative->narrSubject] = calculate_final_grade ( $final_grades );
 								$data ['year_grade'] [$narrative->narrSubject] ['grade'] = calculate_letter_grade ( ($letter_grade + $mid_year_grade) / 2, $course_preference );
