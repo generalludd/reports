@@ -69,10 +69,10 @@ class Narrative extends MY_Controller {
 		$teacher = $this->teacher_model->get ( $kTeach );
 		$data ['teacher'] = $teacher;
 		$teachers = $this->teacher_model->get_teacher_pairs ();
-		$data ['teacherPairs'] = get_keyed_pairs ( $teachers, array (
-				'kTeach',
-				'teacher' 
-		) );
+//		$data ['teacherPairs'] = get_keyed_pairs ( $teachers, array (
+//				'kTeach',
+//				'teacher'
+//		) );
 		$data ['studentName'] = format_name ( $student->stuFirst, $student->stuLast, $student->stuNickname );
 		$data ['default_grade'] = $this->input->cookie ( "default_grade" );
 		$data ['rich_text'] = TRUE;
