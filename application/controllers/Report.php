@@ -41,7 +41,7 @@ class Report extends MY_Controller {
 			$teachers = $this->teacher_model->get_teacher_pairs ();
 			$data ['teachers'] = get_keyed_pairs ( $teachers, array (
 					'kTeach',
-					'teacher' 
+					'teacherName' 
 			), NULL, NULL, array (
 					'value' => "Myself",
 					'name' => $data ['kTeach'] 
@@ -127,7 +127,7 @@ class Report extends MY_Controller {
 			$teachers = $this->teacher_model->get_teacher_pairs ();
 			$data ['teachers'] = get_keyed_pairs ( $teachers, array (
 					'kTeach',
-					'teacher' 
+					'teacherName' 
 			), NULL, NULL, array (
 					'value' => "Myself",
 					'name' => $data ['kTeach'] 
