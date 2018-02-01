@@ -34,7 +34,7 @@ if (in_array ( $_SERVER ['HTTP_HOST'], $allowed_domains, TRUE )) {
 	$domain = $default_domain;
 }
 
-$config ['base_url'] = 'https://' . $domain;
+$config ['base_url'] = 'http://' . $domain;
 
 /*
  * |--------------------------------------------------------------------------
