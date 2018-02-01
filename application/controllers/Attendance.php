@@ -641,6 +641,7 @@ class Attendance extends MY_Controller {
 	 */
 	function truancy_notification($record, $subtype = FALSE)
 	{
+		return FALSE; //not in use
 		if (($subtype == "Unexcused" && $record->total > UNEXCUSED_THRESHOLD) || $record->total > TRUANCY_THRESHOLD) {
 			$subtype || $subtype = "total";
 			$today = date ( 'Y-m-d' );
