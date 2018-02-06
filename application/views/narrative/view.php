@@ -29,7 +29,7 @@ if ($letter_grade) {
 
 <?php if($isApproved):?>
 <div id="narrative_status">
-	This Narrative was approved on <?php echo $narrative->narrApproved; ?> by <?php echo format_name($narrative->approverFirst, $narrative->approverLast); ?>
+	This narrative was approved on <?php echo format_timestamp($narrative->narrApproved); ?> by <?php echo format_name($narrative->approverFirst, $narrative->approverLast); ?>
 </div>
 <?php endif; ?>
 <?php

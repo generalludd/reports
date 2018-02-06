@@ -38,7 +38,7 @@ if(!empty($conditional_buttons)){
 	$edit_buttons[] = array("type"=>"pass-through","text"=>"<input type='submit' class='button save_close_narrative' value='Save & Close'/>" );
 	$edit_buttons[] = array("selection" => "cancel_narrative", "text" => "Cancel", "class" => "button cancel_narrative", "type" => "span");
 	if($kTeach != USER_ID && get_value($narrative,"kNarrative",FALSE) && $narrative->narrApprover == NULL){
-		//$edit_buttons[] = array("selection"=>"narrative","text"=>"Approve","href"=>base_url("narrative/approve/$narrative->kNarrative"),"class"=>"inline button approve_narrative");
+		$edit_buttons[] = array("selection"=>"narrative","text"=>"Approve","href"=>base_url("narrative/approve/$narrative->kNarrative"),"class"=>"inline button approve_narrative");
 	}
 	if($action == "update" ){
 		$edit_buttons[] = array("selection" => "delete_narrative", "text" => "Delete", "class" => "button delete delete_narrative", "type" => "span",
@@ -49,7 +49,7 @@ if(!empty($conditional_buttons)){
 	?>
 	<div id="narrative_status">
 	<?php if(get_value($narrative,"kNarrative",FALSE) && $narrative->narrApprover != NULL):?>
-	This Narrative was approved on <?php echo $narrative->narrApproved; ?> by <?php echo format_name($narrative->approverFirst, $narrative->approverLast); ?>
+	This Narrative was approved on <?php echo format_timestamp($narrative->narrApproved); ?> by <?php echo format_name($narrative->approverFirst, $narrative->approverLast); ?>
 	<?php endif;?>
 </div>
 	<input type="hidden" name="target" id="target" value="narrative" /> <input

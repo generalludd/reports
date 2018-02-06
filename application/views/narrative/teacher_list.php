@@ -81,9 +81,9 @@ if(!empty($narratives)):
 		$narrSummary = $narrSplit[0];
 		$narrText = stripslashes($narrative->narrText);
 		echo "<p><b>$narrative->narrSubject</b></p>";
-		echo "<div id='time_$narrative->kNarrative' class='text'>(Last edited on " . format_timestamp($narrative->recModified) . " by $narrative->teachFirst $narrative->teachLast)</div>";
+		echo "<div id='time_$narrative->kNarrative' class='text'>Last edited on " . format_timestamp($narrative->recModified) . " by $narrative->teachFirst $narrative->teachLast</div>";
 		if($narrative->narrApprover){
-			echo "<span class='text'>Approved by $narrative->approverFirst $narrative->approverLast on $narrative->narrApproved</span>";
+			echo "<span class='text'>Approved by $narrative->approverFirst $narrative->approverLast on ". format_timestamp($narrative->narrApproved) . "</span>";
 		}
 		$edit_buttons[] = array("selection"=>"view","text"=>"View","href"=> site_url("narrative/view/$narrative->kNarrative"), "title"=>"$narrSummary","class"=>"button small");
 		$edit_buttons[] = array("selection" =>"edit_inline","text"=>"Edit Inline","class" =>"button edit small edit_narrative_inline", "id" => "enil_$narrative->kNarrative", "title" => "Edit this narrative here" );
