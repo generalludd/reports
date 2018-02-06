@@ -16,6 +16,8 @@ class Narrative_model extends MY_Model
 	var $includeOverview;
 	var $recModified;
 	var $recModifier;
+	var $narrApprover;
+	var $narrApproved;
 
 	function __construct()
 	{
