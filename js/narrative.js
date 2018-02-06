@@ -105,7 +105,7 @@ $(".approve_narrative.inline").live("click",function(event){
 		url: my_url,
 		data: form_data,
 		success: function(data){
-			me.removeClass("approve_narrative").html("Approved");
+			me.removeClass("approve_narrative").removeClass("edit").addClass("inactive").html("Approved");
 		}
 	});
 	}
