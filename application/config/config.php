@@ -24,17 +24,23 @@ defined ( 'BASEPATH' ) or exit ( 'No direct script access allowed' );
  * |
  */
 $allowed_domains = array (
-	$_SERVER ['HTTP_HOST'] 
+		'reports.fsmn.org',
+		'docker.dev',
+		'staging.fsmn.org',
+		'reports' 
 );
 $default_domain = 'reports.fsmn.org';
 
 if (in_array ( $_SERVER ['HTTP_HOST'], $allowed_domains, TRUE )) {
 	$domain = $_SERVER ['HTTP_HOST'];
-} else {
-	$domain = $default_domain;
+	if(in_array($domain,array('reports.fsmn.org', 'staging.fsmn.org','reports'))){
+		$domain = "https://" . $domain;
+	}else{
+		$domain = "http://" . $domain;
+	}
 }
 
-$config ['base_url'] = '//' . $domain;
+$config ['base_url'] = $domain;
 
 /*
  * |--------------------------------------------------------------------------
@@ -501,8 +507,8 @@ $config ['compress_output'] = FALSE;
  */
 $config ['time_reference'] = 'local';
 
-//the above doesn't work, so here we are!
-date_default_timezone_set('America/Chicago');
+// the above doesn't work, so here we are!
+date_default_timezone_set ( 'America/Chicago' );
 
 /*
  * |--------------------------------------------------------------------------
