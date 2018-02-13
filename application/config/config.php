@@ -29,23 +29,22 @@ $allowed_domains = array (
 		'staging.fsmn.org',
 		'reports' 
 );
-// $default_domain = 'reports.fsmn.org';
+$secure_domains =  array (
+		'reports.fsmn.org',
+		'staging.fsmn.org',
+		'reports' 
+);
 
- if (in_array ( $_SERVER ['HTTP_HOST'], $allowed_domains, TRUE )) {
- 	$domain = $_SERVER ['HTTP_HOST'];
- }
-// 	if(in_array($domain,array('reports.fsmn.org', 'staging.fsmn.org','reports'))){
-// 		$domain = "https://" . $domain;
-// 	}else{
-// 		$domain = "http://" . $domain;
-// 	}
-// }
- if($_SERVER['SERVER_PORT'] == 443){
- 	$config['base_url'] = "https://" . $domain;
- }else{
- 	$config ['base_url'] = "http://" .  $domain;
- 	
- }
+if (in_array ( $_SERVER ['HTTP_HOST'], $allowed_domains, TRUE )) {
+	$domain = $_SERVER ['HTTP_HOST'];
+}
+if (in_array ( $domain,$secure_domains)) {
+	$protocol = "https://";
+} else {
+	$protocol = "http://";
+}
+
+$config ['base_url'] = $protocol . $domain;
 
 /*
  * |--------------------------------------------------------------------------
