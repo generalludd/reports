@@ -43,7 +43,6 @@ if (in_array ( $domain,$secure_domains)) {
 } else {
 	$protocol = "http://";
 }
-echo $protocol;
 
 $config ['base_url'] = $protocol . $domain;
 
