@@ -29,18 +29,23 @@ $allowed_domains = array (
 		'staging.fsmn.org',
 		'reports' 
 );
-$default_domain = 'reports.fsmn.org';
+// $default_domain = 'reports.fsmn.org';
 
-if (in_array ( $_SERVER ['HTTP_HOST'], $allowed_domains, TRUE )) {
-	$domain = $_SERVER ['HTTP_HOST'];
-	if(in_array($domain,array('reports.fsmn.org', 'staging.fsmn.org','reports'))){
-		$domain = "https://" . $domain;
-	}else{
-		$domain = "http://" . $domain;
-	}
-}
-
-$config ['base_url'] = $domain;
+ if (in_array ( $_SERVER ['HTTP_HOST'], $allowed_domains, TRUE )) {
+ 	$domain = $_SERVER ['HTTP_HOST'];
+ }
+// 	if(in_array($domain,array('reports.fsmn.org', 'staging.fsmn.org','reports'))){
+// 		$domain = "https://" . $domain;
+// 	}else{
+// 		$domain = "http://" . $domain;
+// 	}
+// }
+ if($_SERVER['SERVER_PORT'] == 443){
+ 	$config['base_url'] = "https://" . $domain;
+ }else{
+ 	$config ['base_url'] = "http://" .  $domain;
+ 	
+ }
 
 /*
  * |--------------------------------------------------------------------------
@@ -384,7 +389,7 @@ $config ['encryption_key'] = '35af20d423f5327bc9f6ae95c8f245c0';
  * | except for 'cookie_prefix' and 'cookie_httponly', which are ignored here.
  * |
  */
-if ($domain != $default_domain) {
+if ($domain == "reports") {
 	$config ['sess_driver'] = 'files';
 	$config ['sess_cookie_name'] = 'ci_session';
 	$config ['sess_expiration'] = 28800;
