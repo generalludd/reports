@@ -106,10 +106,6 @@ input.link {
 	transition: .25s ease all;
 }
 
-.button.active {
-	border: solid black 1px;
-}
-
 .button:hover, submit:hover, .button.active {
 	color: #ffffff;
 	background-color: #51a351;

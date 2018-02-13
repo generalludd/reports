@@ -396,9 +396,6 @@ ul.button-list li {
 	display: inherit;
 }
 
-ul.button-list li a.button {
-	margin: .25em;
-}
 
 ul.button-list li .button.delete {
 	margin-left: 50px;
