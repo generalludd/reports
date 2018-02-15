@@ -282,7 +282,7 @@ class Narrative extends MY_Controller {
 	
 		$recModified = format_timestamp($narrative->recModified);
 		$recModifier = format_name($narrative->approverFirst, $narrative->approverLast);
-		echo json_encode(array("narrText"=> $narrative->narrText, "datestamp"=>sprintf("(Last edited on %s by %s)",$recModified,$recModifier)));
+		echo json_encode(array("narrText"=> $narrative->narrText, "datestamp"=>sprintf("Last edited on %s by %s",$recModified,$recModifier)));
 	}
 
 	/**

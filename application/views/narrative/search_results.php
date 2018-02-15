@@ -27,7 +27,7 @@ if($count > 0):
 		$text = str_replace($replace, "<span class='highlight'>$replace</span>", $narrative->narrText);
 		$edit_buttons = array();
 		$edit_buttons[] = array("selection"=>"view","text"=>"View","href"=> site_url("narrative/view/$narrative->kNarrative"));
-		$edit_buttons[] = array("selection" => "message", "type" => "span", "class" => "text","text" => sprintf("(Last edited on %s " , format_timestamp($narrative->recModified) ), "id" => "time_$narrative->kNarrative");
+		$edit_buttons[] = array("selection" => "message", "type" => "span", "class" => "text","text" => sprintf("Last edited on %s " , format_timestamp($narrative->recModified) ), "id" => "time_$narrative->kNarrative");
 		?>
 		<h3><?php  echo $narrative->narrSubject;?> Narrative for <?php  echo $student;?></h3>
 		<?php  echo create_button_bar($edit_buttons);?>
