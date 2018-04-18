@@ -26,28 +26,37 @@ $(document)
 					$(".benchmark-grade, .benchmark-comment").live('keydown',function(event){
 						var my_id = $(this).parents("tr").attr("id").split("_");
 						var myBenchmark = my_id[1];
-						$("#save_" + myBenchmark).fadeOut(1000);
+						$("#save_" + my_id[1]).fadeOut(1000);
 					});
 					
 				
 					
-					$(".benchmark-grade").live('change', function(event){
+					$(".benchmark-grade").blur(function(event){
 						var my_id = $(this).parents("tr").attr("id").split("_");
 						update_benchmark(my_id);
+						console.log("change");
+						$("#save_" + my_id[1]).fadeOut(1000);
+
 						
 					});
 					
-					$(".benchmark-comment").live('blur',function(event){
+					$(".benchmark-comment").blur(function(event){
 						var my_id = $(this).parents("tr").attr("id").split("_");
 						update_benchmark(my_id);
+						console.log("blur");
+						$("#save_" + my_id[1]).fadeOut(1000);
+
 					});
 					
-					$(".benchmark-fill-down").live('click',function(event){
+					$(".benchmark-fill-down").click(function(event){
 						$(".benchmark-grade").each(function(){
 							if($(this).val()==""){
 							$(this).val("M");
 							var my_id = $(this).parents("tr").attr("id").split("_");
 							update_benchmark(my_id);
+							console.log('filldown');
+							$("#save_" + my_id[1]).fadeOut(1000);
+
 							}
 							
 						});
@@ -82,12 +91,11 @@ function update_benchmark (my_id){
 		url: myUrl,
 		data: form_data,
 		success: function(data){
-			console.log(data);
 			$("#save_" + myBenchmark).html(data).show();
-
 		},
 		error: function(data){
 			console.log(data);
+			$("#save_" + myBenchmark).html(data).show();
 
 		}
 	});
