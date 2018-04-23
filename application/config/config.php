@@ -234,7 +234,13 @@ $config ['directory_trigger'] = 'd';
  * | your log files will fill up very fast.
  * |
  */
-$config ['log_threshold'] = 3;
+
+if($_SERVER ['HTTP_HOST'] == "reports.fsmn.org"){
+	$log_threshold = 1;
+}else{
+	$log_threshold = 4;
+}
+$config ['log_threshold'] = $log_threshold;
 
 /*
  * |--------------------------------------------------------------------------
