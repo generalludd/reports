@@ -40,7 +40,7 @@ $footnotes = array();
 <?php endif; ?>
 <?php $my_row = 0; ?>
 <?php foreach ($benchmark->quarters as $quarter):?>
-	<?php $my_row += in_array(get_value($quarter['grade'],"grade"), array("E","M","P","S"));?>
+	<?php $my_row += in_array(get_value($quarter['grade'],"grade"), array("E","M","P","S","0"));?>
 <?php endforeach; ?>
 <?php if($my_row):?>
 	<tr class="benchmark-row">

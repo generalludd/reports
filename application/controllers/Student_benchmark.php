@@ -196,6 +196,9 @@ class Student_benchmark extends MY_Controller {
 		$kTeach = USER_ID;
 		$kBenchmark = $this->input->post ( "kBenchmark" );
 		$grade = $this->input->post ( "grade" );
+		if($grade === 0){
+			$grade = "0";
+		}
 		$quarter = $this->input->post ( "quarter" );
 		$term = $this->input->post ( "term" );
 		$year = $this->input->post ( "year" );
