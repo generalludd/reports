@@ -149,12 +149,10 @@ class Narrative_model extends MY_Model
 
 	/**
 	 *
-	 * @param
-	 *        	$kStudent
-	 * @param
-	 *        	$narrTerm
-	 * @param $narrYear This
-	 *        	creates a menu of subjects for which a student has not yet had reports written for the given year and term.
+	 * @param $kStudent integer
+	 * @param 	$narrTerm string
+	 * @param $narrYear integer
+	 *  This creates a menu of subjects for which a student has not yet had reports written for the given year and term.
 	 */
 	function get_current_student_subjects($kStudent, $narrTerm, $narrYear)
 	{
