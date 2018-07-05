@@ -14,6 +14,7 @@ class Student_model extends MY_Model {
 	var $humanitiesTeacher;
 	var $isEnrolled;
 	var $isGraduate;
+	var $yearDeparted;
 	var $stuEmail;
 	var $stuEmailPermission;
 	var $stuEmailPassword;
@@ -107,6 +108,7 @@ class Student_model extends MY_Model {
 		// $this->db->select("student.*,(baseGrade+$year-baseYear) AS listGrade");
 		$this->db->select ( "student.*,(baseGrade+$year-baseYear) AS stuGrade" );
 		$result = $this->db->get ( "student" )->result ();
+		
 		return $result;
 	}
 
@@ -260,6 +262,8 @@ class Student_model extends MY_Model {
 					0,
 					1 
 			) );
+			$this->db->where("student.baseYear < " , $year);//were they enrolled before the search year?
+			$this->db->join("(select `narrative`.`kStudent` FROM `narrative` WHERE `narrative`.`narrYear` = $year ORDER BY `narrYear` DESC) as `narrative`","narrative.kStudent = student.kStudent");
 		} else {
 			$this->db->where ( "(`isEnrolled` = 1 OR `isGraduate` = 1)", NULL, FALSE );
 		}
@@ -280,8 +284,10 @@ class Student_model extends MY_Model {
 			$this->db->order_by ( "humanitiesTeacher.teachFirst" );
 			$humanitiesTeacher = $options ['humanitiesTeacher'];
 			$this->db->join ( "teacher as humanitiesTeacher", "student.humanitiesTeacher = humanitiesTeacher.kTeach" );
+			$this->db->select ( "CONCAT(humanitiesTeacher.teachFirst, ' ' ,humanitiesTeacher.teachLast) as humanitiesTeacher", FALSE );
+			
 		} else {
-			$this->db->join ( "teacher as humanitiesTeacher", "student.humanitiesTeacher = humanitiesTeacher.kTeach", "LEFT" );
+			//$this->db->join ( "teacher as humanitiesTeacher", "student.humanitiesTeacher = humanitiesTeacher.kTeach", "LEFT" );
 		}
 		
 		if (array_key_exists ( "hasNeeds", $options )) {
@@ -315,9 +321,9 @@ class Student_model extends MY_Model {
 		$this->db->select ( "student.*,(baseGrade+$year-baseYear) AS stuGrade", TRUE );
 		$this->db->select ( "CONCAT(teacher.teachFirst, ' ' , teacher.teachLast) as teacherName", FALSE );
 		$this->db->select ( "teacher.teachClass" );
-		$this->db->select ( "CONCAT(humanitiesTeacher.teachFirst, ' ' ,humanitiesTeacher.teachLast) as humanitiesTeacher", FALSE );
 		$this->db->group_by ( "student.kStudent" );
 		$result = $this->db->get ()->result ();
+		$this->_log();
 		return $result;
 	}
 

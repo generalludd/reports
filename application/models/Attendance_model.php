@@ -307,7 +307,9 @@ class Attendance_model extends MY_Model {
 		$result = $this->db->get ()->num_rows ();
 		return $result;
 	}
-
+	
+	
+//@TODO need to add the ability to include start and end dates. 
 	function summarize($kStudent, $term, $year)
 	{
 		$this->load->model ( "config_model" );
@@ -332,6 +334,7 @@ class Attendance_model extends MY_Model {
 		$this->db->from ( "student_attendance" );
 		
 		$result = $this->db->get ()->result ();
+		$this->_log();
 		$absent = 0;
 		$tardy = 0;
 		if ($result != false) {

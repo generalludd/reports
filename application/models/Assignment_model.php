@@ -246,6 +246,7 @@ class Assignment_model extends MY_Model {
 		$this->db->order_by ( "assignment.kAssignment" );
 		$this->db->order_by ( "assignment.kCategory" );
 		$result = $this->db->get ()->result ();
+		$this->_log();
 		return $result;
 	}
 
@@ -278,7 +279,6 @@ class Assignment_model extends MY_Model {
 		$this->db->order_by ( "assignment.term" );
 		$this->db->order_by ( "assignment.year" );
 		$output = $this->db->get ()->result ();
-		$this->_log();
 		return $output;
 	}
 
