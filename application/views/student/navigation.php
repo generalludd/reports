@@ -40,22 +40,22 @@ if (get_value ( $student, "stuGrade", 0 ) >= 6) {
 			"href" => site_url ( "grade/select_report_card/$kStudent" ) 
 	);
 }
-// if (get_value ( $student, "stuGrade", 0 ) >= 5) {
-// 	$buttons [] = array (
-// 			"selection" => "report",
-// 			"href" => site_url ( "report/get_list/student/$student->kStudent" ),
-// 			"class" => "button",
-// 			"text" => sprintf ( "%ss", STUDENT_REPORT ) 
-// 	);
+if (get_value ( $student, "stuGrade", 0 ) >= 5) {
+	$buttons [] = array (
+			"selection" => "report",
+			"href" => site_url ( "report/get_list/student/$student->kStudent" ),
+			"class" => "button",
+			"text" => sprintf ( "%ss", STUDENT_REPORT ) 
+	);
 	
-// 	$buttons [] = array (
-// 			"selection" => "report",
-// 			"href" => site_url ( "report/create/$student->kStudent" ),
-// 			"text" => sprintf ( "Add %s", STUDENT_REPORT ),
-// 			"class" => "button new dialog",
-// 			"id" => sprintf ( "add-report_%s", $student->kStudent ) 
-// 	);
-// }
+	$buttons [] = array (
+			"selection" => "report",
+			"href" => site_url ( "report/create/$student->kStudent" ),
+			"text" => sprintf ( "Add %s", STUDENT_REPORT ),
+			"class" => "button new dialog",
+			"id" => sprintf ( "add-report_%s", $student->kStudent ) 
+	);
+}
 $buttons [] = array (
 		"selection" => "support",
 		"href" => site_url ( "support/list_all/$kStudent" ),

@@ -452,7 +452,7 @@ function get_subject_order($subjects = NULL)
 {
 	// @TODO there should be a UI-available tool for global sorting.
 	if (! $subjects) {
-		$subjects = "Introduction,Academic Progress,Humanities,Reading,Writing,Science,Math,Social Studies,Social Studies/Science,Social/Emotional,Music,Physical Education,Spanish,Art";
+		$subjects = "Introduction,Academic Progress,Humanities,Reading,Writing,Science,Math,Social Studies,Social Studies/Science,Social/Emotional,Music,Physical Education,Spanish,Art,Learning Support";
 	}
 	$subjectOrder = "CASE ";
 	$list = explode ( ",", $subjects );
