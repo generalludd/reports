@@ -126,7 +126,7 @@ function get_current_year()
 {
 	$year = date ( "Y" ); // get the current year
 	$month = date ( "n" ); // get the current month as an integer
-	if ($month < 8) {
+	if ($month < 7) {
 		$year = $year - 1; // if the current month is during the spring term
 	}
 	return $year;
