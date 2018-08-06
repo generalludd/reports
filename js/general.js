@@ -19,6 +19,12 @@
 		})
 	});
 
+	$("#yearStart").live('blur', function(event) {
+		var yearStart = parseInt(this.value);
+		var yearEnd = yearStart + 1;
+		console.log(yearEnd);
+		$("#yearEnd").val(yearEnd);
+	});// end keyUp
 	
 	$('.button.do-print').live('click', function(event){
         window.print();

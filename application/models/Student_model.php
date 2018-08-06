@@ -39,6 +39,7 @@ class Student_model extends MY_Model {
 				'baseYear',
 				'humanitiesTeacher',
 				'isEnrolled',
+				'yearDeparted',
 				'isGraduate',
 				'stuEmail',
 				'stuEmailPermission',

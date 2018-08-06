@@ -160,7 +160,7 @@ function get_year_list($initial_blank = FALSE, $next_year = FALSE)
  * for term names, durations and cutoffs.
  * for now it is hard-coded.
  *
- * @param date $targetDate        	
+ * @param DateTime $targetDate         	
  */
 function get_current_term($targetDate = NULL)
 {
