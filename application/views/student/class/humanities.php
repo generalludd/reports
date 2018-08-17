@@ -1,7 +1,7 @@
 <?php
 $teacher_ids = array();
 foreach($groups as $group){
-    $teacher_ids[] = $group->teacherName;
+    $teacher_ids[] = $group->kTeach;
 }
 ?>
 <!-- student/class/classroom.php -->
@@ -21,7 +21,7 @@ foreach($groups as $group){
 <div class="class" id="group_<?php echo $group->kTeach;?>_<?php echo $type;?>">
  <h3><?php echo $group->teacherName;?></h3>
     <?php foreach($students as $student):?>
-  <?php if($group->teacherName == $student->humanitiesTeacher): ?>
+  <?php if($group->kTeach == $student->humanitiesTeacher): ?>
       <?php $this->load->view("student/class/portlet", array("student"=>$student))?>
    <?php endif; ?>
     <?php endforeach; ?>
