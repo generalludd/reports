@@ -188,6 +188,7 @@ class Student extends MY_Controller {
 				$year = $this->input->get ( "year" );
 			}
 			$options ['grouping'] = TRUE;
+			$options['gender'] = TRUE;
 			$data ['students'] = $this->student_model->get_all ( $year, $options );
 			switch ($type) {
 				case "humanitiesTeacher" :

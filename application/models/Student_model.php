@@ -149,6 +149,7 @@ class Student_model extends MY_Model {
 		$this->db->where ( 'student.kTeach', $kTeach );
 		$this->db->where ( "`student`.`kTeach`=`teacher`.`kTeach`" );
 		$this->db->order_by ( "stuGrade", "ASC" );
+		$this->db->order_by("stuGender","ASC");
 		$this->db->order_by ( 'stuLast', 'ASC' );
 		$this->db->order_by ( 'stuFirst', 'ASC' );
 		$this->db->from ( 'student' );
@@ -302,6 +303,9 @@ class Student_model extends MY_Model {
 		}
 		if (array_key_exists ( "grouping", $options )) {
 			$this->db->order_by ( "stuGrade", "ASC" );
+		}
+		if(array_key_exists("gender",$options)){
+			$this->db->order_by("stuGender","ASC");
 		}
 		if (array_key_exists ( "sorting", $options )) {
 			if ($options ["sorting"] == "last_first") {
