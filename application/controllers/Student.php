@@ -142,19 +142,19 @@ class Student extends MY_Controller {
 	function edit_classes()
 	{
 		if ($this->input->get ( "search" )) {
-			$this->_search_classes ();
+			$this->_search_classes ("edit");
 		} else {
 			$this->_manage_classes ( "edit" );
 		}
 	}
 
-	function _search_classes()
+	function _search_classes($action = "view")
 	{
 		$data ['title'] = "Sort Classes";
 		$data ['target'] = "student/class/search";
 		$data ['currentYear'] = get_current_year ();
 		$data ['yearList'] = get_year_list ();
-		
+		$data['action'] = $action . "_classes";
 		$data ['groupings'] = array (
 				"" => "",
 				"humanitiesTeacher" => "Humanities",
@@ -264,7 +264,7 @@ class Student extends MY_Controller {
 	function view_classes()
 	{
 		if ($this->input->get ( "search" )) {
-			$this->_search_classes ();
+			$this->_search_classes ("view");
 		} else {
 			$this->_manage_classes ();
 		}

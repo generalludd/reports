@@ -13,7 +13,7 @@ $middle_school = implode("\r", create_grade_checklist(5,8,"grades"));
         flex-direction: column;
     }
 </style>
-<form id="class-search" action="<?php  echo site_url("student/edit_classes");?>" method="get">
+<form id="class-search" action="<?php  echo site_url("student/$action");?>" method="get">
 <div class="fieldset">
 <label for="year">School Year</label><br/>
 <?php echo form_dropdown('year', $yearList, $currentYear,"id='year' class='year'"); ?>
