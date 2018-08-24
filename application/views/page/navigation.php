@@ -78,6 +78,17 @@ $buttons [] = array (
 		"dbRole" => 1 
 );
 $buttons [] = array (
+		"selection" => "student",
+		"text" => "View Classes",
+		"href" => site_url ( "student/view_classes?search=1&ajax=1" ),
+		"title" => "View students in the various classrooms, advisories, A/B, and humanities",
+		"class" => array (
+				"button",
+				"dialog"
+		),
+		"dbRole" => 2
+);
+$buttons [] = array (
 		"selection" => "narrative",
 		"text" => "Narrative Search &amp; Replace",
 		"href" => site_url ( "narrative/search" ),

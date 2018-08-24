@@ -29,8 +29,8 @@ class Student extends MY_Controller {
 			// $data['teacherName'] = $this->teacher_model->get_name( $student->kTeach);
 		}
 		$this->load->model ( "course_preference_model", "preference" );
-		$data ['course_preferences'] = $this->preference->get_all ( $kStudent);
-
+		$data ['course_preferences'] = $this->preference->get_all ( $kStudent );
+		
 		// if($student->stuGrade > 4){
 		// $data['humanitiesTeacher'] =
 		// $this->teacher_model->get($student->humanitiesTeacher,"teachFirst")->teachFirst;
@@ -142,106 +142,131 @@ class Student extends MY_Controller {
 	function edit_classes()
 	{
 		if ($this->input->get ( "search" )) {
-			$data ['title'] = "Sort Classes";
-			$data ['target'] = "student/class/search";
-			$data ['currentYear'] = get_current_year ();
-			$data ['yearList'] = get_year_list ();
-			
-			$data ['groupings'] = array (
-					"" => "",
-					"humanitiesTeacher" => "Humanities",
-					"classroom" => "Classroom",
-					"advisory" => "Advisory",
-					"ab" => "MS A/B Groups" 
-			);
-			if ($this->input->get ( "ajax" )) {
-				$this->load->view ( $data ['target'], $data );
-			} else {
-				$this->load->view ( "page/index", $data );
-			}
+			$this->_search_classes ();
 		} else {
-			$this->load->helper ( "portlet" );
-			$options = array ();
-			$grades = array ();
-			if ($type = $this->input->get ( "type" )) {
-				$options ['type'] = $type;
-				if ($type == "advisory") {
-					$options ['grades'] = array (
-							5,
-							6,
-							7,
-							8 
-					);
+			$this->_manage_classes ( "edit" );
+		}
+	}
+
+	function _search_classes()
+	{
+		$data ['title'] = "Sort Classes";
+		$data ['target'] = "student/class/search";
+		$data ['currentYear'] = get_current_year ();
+		$data ['yearList'] = get_year_list ();
+		
+		$data ['groupings'] = array (
+				"" => "",
+				"humanitiesTeacher" => "Humanities",
+				"classroom" => "Classroom",
+				"advisory" => "Advisory",
+				"ab" => "MS A/B Groups" 
+		);
+		if ($this->input->get ( "ajax" )) {
+			$this->load->view ( $data ['target'], $data );
+		} else {
+			$this->load->view ( "page/index", $data );
+		}
+	}
+
+	function _manage_classes($action = "view")
+	{
+		$this->load->helper ( "portlet" );
+		$options = array ();
+		$grades = array ();
+		if ($type = $this->input->get ( "type" )) {
+			$options ['type'] = $type;
+			if ($type == "advisory") {
+				$options ['grades'] = array (
+						5,
+						6,
+						7,
+						8 
+				);
+			}
+		}
+		burn_cookie ( "grades" );
+		if ($this->input->get ( "grades" )) {
+			$grades = $this->input->get ( "grades" );
+			if (! empty ( $grades )) {
+				$options ['grades'] = $grades;
+				bake_cookie ( "grades", implode ( ",", $grades ) );
+			}
+		}
+		
+		$year = get_current_year ();
+		if ($this->input->get ( "year" )) {
+			$year = $this->input->get ( "year" );
+		}
+		$options ['grouping'] = TRUE;
+		$options ['gender'] = TRUE;
+		$data ['students'] = $this->student_model->get_all ( $year, $options );
+		switch ($type) {
+			case "humanitiesTeacher" :
+				$data ['groups'] = $this->teacher_model->get_for_subject ( "Humanities" );
+				$data ['target'] = "student/class/humanities";
+				$title = sprintf ( "Middle School %s Humanities", implode ( "/", $grades ) );
+				break;
+			case "ab" :
+				$data ['groups'] = array (
+						"A",
+						"B" 
+				);
+				$data ['target'] = "student/class/ab";
+				$title = sprintf ( "Middle School %s A/B", implode ( "/", $grades ) );
+				break;
+			case "classroom" :
+				$data ['groups'] = $this->teacher_model->get_by_grade_range ( $grades );
+				$data ['target'] = "student/class/classroom";
+				switch ($grades) {
+					case array (
+							1,
+							2 
+					) :
+						$title = "Jungle/Prairie";
+						break;
+					case array (
+							3,
+							4 
+					) :
+						$title = "Bayou/Tundra";
+						break;
+					case array (
+							0 
+					) :
+						$title = "Mississippi";
+						break;
 				}
-			}
-			burn_cookie ( "grades" );
-			if ($this->input->get ( "grades" )) {
-				$grades = $this->input->get ( "grades" );
-				if (! empty ( $grades )) {
-					$options ['grades'] = $grades;
-					bake_cookie ( "grades", implode ( ",", $grades ) );
-				}
-			}
-			
-			$year = get_current_year ();
-			if ($this->input->get ( "year" )) {
-				$year = $this->input->get ( "year" );
-			}
-			$options ['grouping'] = TRUE;
-			$options['gender'] = TRUE;
-			$data ['students'] = $this->student_model->get_all ( $year, $options );
-			switch ($type) {
-				case "humanitiesTeacher" :
-					$data ['groups'] = $this->teacher_model->get_for_subject ( "Humanities" );
-					$data ['target'] = "student/class/humanities";
-					$title = sprintf ( "Middle School %s Humanities", implode ( "/", $grades ) );
-					break;
-				case "ab" :
-					$data ['groups'] = array (
-							"A",
-							"B" 
-					);
-					$data ['target'] = "student/class/ab";
-					$title = sprintf ( "Middle School %s A/B", implode ( "/", $grades ) );
-					break;
-				case "classroom" :
-					$data ['groups'] = $this->teacher_model->get_by_grade_range ( $grades );
-					$data ['target'] = "student/class/classroom";
-					switch ($grades) {
-						case array (
-								1,
-								2 
-						) :
-							$title = "Jungle/Prairie";
-							break;
-						case array (
-								3,
-								4 
-						) :
-							$title = "Bayou/Tundra";
-							break;
-						case array (
-								0 
-						) :
-							$title = "Mississippi";
-							break;
-					}
-					break;
-				case "advisory" :
-					$data ['groups'] = $this->teacher_model->get_teacher_pairs ( 2, 1, "advisor" );
-					$title = "Middle School Advisory";
-					$data ['target'] = "student/class/classroom";
-					break;
-			}
-			$data ['type'] = $type;
+				break;
+			case "advisory" :
+				$data ['groups'] = $this->teacher_model->get_teacher_pairs ( 2, 1, "advisor" );
+				$title = "Middle School Advisory";
+				$data ['target'] = "student/class/classroom";
+				break;
+		}
+		$data ['type'] = $type;
+		$data ['styles'] = array (
+				'class_list.css' 
+		);
+		if ($action == "edit") {
 			$data ['scripts'] = array (
 					"portlet.js" 
 			);
+			
 			$data ['styles'] = array (
 					"portlet.css" 
 			);
-			$data ['title'] = "Organize Students by $title " . format_schoolyear ( $year );
-			$this->load->view ( "page/index", $data );
+		}
+		$data ['title'] = sprintf ( "%s %s", $title, format_schoolyear ( $year ) );
+		$this->load->view ( "page/index", $data );
+	}
+
+	function view_classes()
+	{
+		if ($this->input->get ( "search" )) {
+			$this->_search_classes ();
+		} else {
+			$this->_manage_classes ();
 		}
 	}
 
@@ -382,7 +407,7 @@ class Student extends MY_Controller {
 			$this->load->view ( "page/index", $data );
 		}
 	}
-	
+
 	// @TODO this needs to also check teacher email accounts to avoid
 	// duplication there.
 	// @TODO this needs an error catch mechanism for situations where there is

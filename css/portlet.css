@@ -1,19 +1,4 @@
-.columns{
-  display: flex;
-  flex-direction: row;
-}
-.class{
-  border:1px dotted #333;
-  padding: 0 1em;
-  margin-right: 1em;
-}
-.rows{
-  display: flex;
-  flex-wrap: wrap;
-  flex-direction:row;
-
-}
-
+@import '/css/class_list.css';
 .portlet {
   margin:.25em 0;
   padding: 0;
@@ -44,18 +29,12 @@
 .portlet ul li {
   list-style: none;
 }
+#students{
+	display: block;
+}
 
 @media print {
-	body {
-	font-size: 12px;
-	}
-	.class{
-	margin: 0;
-	}
 	.portlet{
 	border: none;
-	}
-	#students{
-	display: none;
 	}
 }
