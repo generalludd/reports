@@ -1,0 +1,31 @@
+.columns{
+  display: flex;
+  flex-direction: row;
+}
+.class{
+  border:1px dotted #333;
+  padding: 0 1em;
+  margin-right: 1em;
+}
+.rows{
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction:row;
+
+}
+#students {
+	display: none;
+}
+@media print {
+	body {
+	font-size: 12px;
+	}
+	.class{
+	margin: 0;
+	border-style: solid;
+	border-color: #ccc;
+	}
+.portlet {
+	margin: 5px 0;
+}
+}

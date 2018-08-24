@@ -77,17 +77,7 @@ $buttons [] = array (
 		),
 		"dbRole" => 1 
 );
-$buttons [] = array (
-		"selection" => "student",
-		"text" => "View Classes",
-		"href" => site_url ( "student/view_classes?search=1&ajax=1" ),
-		"title" => "View students in the various classrooms, advisories, A/B, and humanities",
-		"class" => array (
-				"button",
-				"dialog"
-		),
-		"dbRole" => 2
-);
+
 $buttons [] = array (
 		"selection" => "narrative",
 		"text" => "Narrative Search &amp; Replace",
@@ -177,6 +167,18 @@ if ($dbRole == 2) {
 			"text" => "List Students",
 			"href" => site_url ( "student/search?kTeach=$userID&year=" . get_current_year () ),
 			"title" => "List your students" 
+	);
+}
+if($dbRole==2 || $dbRole ==3){
+	$buttons [] = array (
+			"selection" => "student",
+			"text" => "View Classes",
+			"href" => site_url ( "student/view_classes?search=1&ajax=1" ),
+			"title" => "View students in the various classrooms, advisories, A/B, and humanities",
+			"class" => array (
+					"button",
+					"dialog"
+			),
 	);
 }
 print create_button_bar ( $buttons );
