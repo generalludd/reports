@@ -278,6 +278,9 @@ class Student_model extends MY_Model {
 			$this->db->where ( "student.kTeach", $options ['kTeach'] );
 			$this->db->order_by ( "teacher.teachFirst" );
 		}
+		if(array_key_exists("baseYear",$options)){
+			$this->db->where("student.baseYear", $options['baseYear']);
+		}
 		
 		$this->db->join ( "teacher", "student.kTeach=teacher.kTeach" );
 		

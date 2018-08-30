@@ -382,6 +382,14 @@ class Student extends MY_Controller {
 			bake_cookie ( "humanitiesTeacher", $humanitiesTeacher );
 		}
 		
+		$baseYear = NULL;
+		burn_cookie("baseYear");
+		if($this->input->get("baseYear")){
+			$baseYear = $this->input->get("baseYear");
+			$options['baseYear'] = $baseYear;
+			bake_cookie("baseYear", $baseYear);
+		}
+		
 		$sorting = NULL;
 		if ($this->input->get ( "sorting" )) {
 			$sorting = $this->input->get ( "sorting" );
