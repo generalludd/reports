@@ -27,7 +27,7 @@ $date = get_value($assignment,"date");
 </p>
 
 <div >Enter zero points for make-up or extra-credit points
-<span class='button help' id="Assignment_Zero Points" title="Why would I want to have zero points?">Help</span></div>
+<a href="<?php echo base_url("help/get/9")?>" class='button help' id="Assignment_Zero Points" title="Why would I want to have zero points?">Help</a></div>
 <p>
 <label for="points">Points: </label>
 <input type="text" name="points" id="points" style="width:25px" required value="<?php  echo get_value($assignment,"points");?>"/>

@@ -243,28 +243,6 @@
 	});
 	
 	
-	$('.help').live('click',
-			function(event){
-				var keys=this.id.split("_");//expect the id to be in the format "helpTopic_helpSubtopic"
-				var myTopic=keys[0];
-				var mySubtopic=keys[1];
-				 myUrl = base_url + "help/get";
-				 form_data = {
-						helpTopic: myTopic,
-						helpSubtopic: mySubtopic,
-						ajax: '1'
-				};
-				$.ajax({
-					type: "get",
-					url: myUrl,
-					data: form_data,
-					success: function(data){
-						var title="Help with "+ myTopic + "->"+ mySubtopic;
-						showPopup(title, data, "300px");
-					}
-				});
-		});//end function(event)
-	
 	
 	$('.edit_preference').change( function(event){
 		 myTeach=$('#kTeach').val();

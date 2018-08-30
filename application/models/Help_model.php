@@ -25,6 +25,14 @@ class Help_model extends CI_Model
 		//$this->recModifier = $this->session->userdata('userID');
 	}
 	
+	function get_by_id($kHelp){
+		$this->db->select("helpText");
+		$this->db->from("help");
+		$this->db->where("kHelp",$kHelp);
+		$result =  $this->db->get()->row()->helpText;
+		return $result;
+	}
+	
 	function get($helpTopic,$helpSubtopic=NULL)
 	{
 		$this->db->select("helpText");
