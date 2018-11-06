@@ -50,9 +50,9 @@ body {
 }
 
 /*
-loggedin style changes the background to make sure users can tell they are logged in.
+logged in style changes the background to make sure users can tell they are logged in.
 
-loggedout indicates the opposite.
+logged out indicates the opposite.
 */
 .loggedout {
 	font-size: 1.5em;
@@ -1137,6 +1137,9 @@ tr.benchmark-row td, tr.benchmark-row th {
 
 td.benchmark-description {
 	padding-left: 2em !important;
+}
+.student_benchmark table.chart {
+	width: 100%;
 }
 
 .student_benchmark table.chart tfoot tr.benchmark-footnotes th {

@@ -12,7 +12,7 @@
 <link type="text/css" rel="stylesheet" media="screen" href="<?php  echo base_url("css/color.css?") . date("U");?>"/>
 <link type="text/css" rel="stylesheet" media="screen" href="<?php  echo base_url("css/popup.css?") . date("U");?>" />
 
-<link type="text/css" rel="stylesheet" media="print" href="<?php  echo base_url("css/print.css?") . date("U")?>" />
+<link type="text/css" rel="stylesheet" media="all" href="<?php  echo base_url("css/print.css?") . date("U")?>" />
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 
 <!-- add any special style sheets for this page only -->

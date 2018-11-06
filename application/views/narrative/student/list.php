@@ -42,8 +42,8 @@ if (count ( $reports ) > 0) :
 				"selection" => "print",
 				"text" => "Print Benchmarks",
 				"title" => "Print Benchmarks",
-				"class" => "button small dialog",
-				"href" => site_url ( "student_benchmark/select/?search=true&kStudent=$kStudent" ),
+				"class" => "button small",
+				"href" => site_url ( "student_benchmark/select/?kStudent=$kStudent&year=$narrYear&term=$narrTerm&subject=&student_grade=$stuGrade" ),
 				"target" => "_blank" 
 		);
 	}

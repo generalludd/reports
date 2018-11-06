@@ -20,6 +20,8 @@ $footnotes = array();
         <?php $this->load->view("benchmark/legend"); ?>
     </div>
 <?php foreach ($subjects as $subject): ?>
+<div class="benchmark-group">
+
     <h3><?php echo $subject->subject; ?></h3>
     <table class="chart list">
         <thead>
@@ -64,9 +66,8 @@ $footnotes = array();
             <?php endif; ?>
 
         <?php endforeach; ?>
-        </tbody>
+
         <?php if (!empty($footnotes)): ?>
-            <tfoot>
             <?php foreach ($footnotes as $footnote): ?>
 
                 <tr class="benchmark-footnotes">
@@ -77,9 +78,11 @@ $footnotes = array();
                 </tr>
             <?php endforeach; ?>
 
-            </tfoot>
         <?php endif; ?>
+    </tbody>
     </table>
     <?php $footnotes = array();
     $footnote_count = 1; ?>
+</div>
+
 <?php endforeach;
