@@ -109,7 +109,7 @@ class Student_benchmark extends MY_Controller
 
     }
 
-    function edit_all($kStudent)
+    /*function edit_all($kStudent)
     {
         $student = $this->student->get($kStudent);
         $subject = $this->input->get("subject");
@@ -148,7 +148,7 @@ class Student_benchmark extends MY_Controller
         } else {
             $this->load->view("page/index", $data);
         }
-    }
+    }*/
 
     function update()
     {
