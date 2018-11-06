@@ -6,7 +6,7 @@
 <input type="hidden" name="kStudent" value="<?php echo $student->kStudent;?>"/>
 <p>
 <label for="grade">Grade in School</label>
-<input type="text" name="student_grade" value="<?php echo $student_grade; ?>" style="width:2em;"/>
+<input type="text" name="student_grade" value="<?php echo $refine?get_cookie("benchmark_grade"): $student_grade; ?>" style="width:2em;"/>
 </p>
 <p>
 <label for="subject">Subject:</label>
@@ -14,8 +14,8 @@
 </p>
 <p>
 <label for="year">Year</label>
-<input type="text" name="year" id="year" value="<?php echo get_current_year();?>" style="width:3em;"/>-
-<input type="text" name="yearEnd" id="yearEnd" value="<?php echo get_current_year() + 1;?>" style="width:3em;" readonly/></p>
+<input type="text" name="year" id="year" value="<?php echo $refine?get_cookie("benchmark_year"): get_current_year();?>" style="width:3em;"/>-
+<input type="text" name="yearEnd" id="yearEnd" value="<?php echo $refine?get_cookie("benchmark_year")+1: get_current_year() + 1;?>" style="width:3em;" readonly/></p>
 <p>
 <label for="term">Term</label>
 <?php echo get_term_menu("term",get_current_term());?>

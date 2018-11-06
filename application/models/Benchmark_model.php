@@ -102,6 +102,18 @@ class Benchmark_model extends MY_Model {
 		
 	}
 
+    function get_subjects( $grade, $year)
+    {
+        $this->db->from("benchmark");
+        $this->db->where("$grade BETWEEN benchmark.gradeStart AND benchmark.gradeEnd", NULL, FALSE);
+        $this->db->where("benchmark.year", $year);
+        $this->db->select("benchmark.subject");
+        $this->db->group_by("benchmark.subject");
+        $result = $this->db->get()->result();
+        $this->_log();
+        return $result;
+    }
+
 	function insert()
 	{
 		$this->prepare_variables ();
