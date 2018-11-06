@@ -1142,6 +1142,10 @@ td.benchmark-description {
 	width: 100%;
 }
 
+.student_benchmark table.chart.edit{
+    width: auto;
+}
+
 .student_benchmark table.chart tfoot tr.benchmark-footnotes th {
 	padding: 0;
 	font-size: .9em;

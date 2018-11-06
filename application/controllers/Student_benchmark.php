@@ -99,8 +99,12 @@ class Student_benchmark extends MY_Controller
             }
         }
         $data['subjects'] = $subjects;
-        $data ['title'] = sprintf("FSMN Benchmark Report for %s for %s " , format_name($student->stuFirst, $student->stuLast, $student->stuNickname), format_schoolyear($year));
-        $data ['target'] = "student_benchmark/chart";
+        if ($this->input->get ( "edit" )) {
+            $data ['target'] = "student_benchmark/edit";
+        } else {
+            $data ['target'] = "student_benchmark/chart";
+        }
+        $data ['title'] = sprintf("Benchmarks for %s, Grade %s, %s, %s",format_name($student->stuFirst, $student->stuLast, $student->stuNickname), $student_grade, $term, format_schoolyear($year));
         $this->load->view("page/index", $data);
 
     }
