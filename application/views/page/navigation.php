@@ -94,8 +94,7 @@ $buttons [] = array (
 				"dialog" 
 		),
 		"href" => site_url ( "benchmark/search" ),
-		"dbRole" => 2,
-		"title" => "Edit your benchmark templates" 
+		"title" => "Edit your benchmark templates"
 );
 
 $buttons [] = array (
@@ -182,5 +181,3 @@ if($dbRole==2 || $dbRole ==3){
 	);
 }
 print create_button_bar ( $buttons );
-
-?>

@@ -31,12 +31,7 @@ class Subject_model extends CI_Model {
 	{
 		if ($options) {
 			if (array_key_exists ( "gradeStart", $options ) && array_key_exists ( "gradeEnd", $options )) {
-				// $this->db->or_where("subject.gradeStart BETWEEN " . $gradeRange["gradeStart"] . " AND " . $gradeRange["gradeEnd"]);
-				// $this->db->or_where("subject.gradeEnd BETWEEN " . $gradeRange["gradeStart"] . " AND " . $gradeRange["gradeEnd"]);
-				$this->db->or_where ( "subject.gradeStart <= " . $gradeRange ["gradeStart"] );
-				$this->db->or_where ( "subject.gradeEnd <= " . $gradeRange ["gradeEnd"] );
-				// $this->db->where("gradeStart",$options['gradeStart']);
-				// $this->db->where("gradeEnd",$options['gradeEnd']);
+				$this->db->where ( "(subject.gradeStart <= " . $options ["gradeStart"] . " OR " . "subject.gradeEnd <= " . $options ["gradeEnd"] . ")", NULL, FALSE  );
 			}
 			if (array_key_exists ( "has_benchmarks", $options )) {
 				$this->db->where ( "has_benchmarks", $options ['has_benchmarks'] );
