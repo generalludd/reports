@@ -49,10 +49,6 @@ if ($test_date) {
 	$test_date = "None";
 }
 
-if ($print) {
-	echo "<h2>Learning Support for $student</h2>";
-}
-
 ?>
 
 <fieldset class="support-view">

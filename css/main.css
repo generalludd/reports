@@ -1154,7 +1154,9 @@ td.benchmark-description {
 }
 
 
-
+#printable-header{
+    display: none;
+}
 #footer {
 	font-size: .8em;
 	width: 150px;

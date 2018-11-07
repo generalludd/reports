@@ -20,7 +20,8 @@ $body_classes [] = $this->uri->segment ( 1 );
 </head>
 <body class="<?php  echo implode(" ",$body_classes);?>">
 	<div id="page">
-<?php if(!$print): ?>
+        <div id="printable-header">Friends School of Minnesota Student Academic Reporting System, <?php echo date('M d, Y');?></div>
+        <?php if(!$print): ?>
 <div id='header'>
 
 <?php if($_SERVER['HTTP_HOST'] != "reports.fsmn.org"): ?>
@@ -34,6 +35,7 @@ $body_classes [] = $this->uri->segment ( 1 );
 
 			</div>
 		</div>
+<?php else:?>
 <?php endif; ?>
 <?php $this->load->view("page/messages");?>
 <div id="main">

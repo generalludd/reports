@@ -20,7 +20,7 @@ class Support extends MY_Controller {
 		$data ['student_name'] = format_name ( $student->stuFirst, $student->stuLast, $student->stuNickname );
 		$has_current = $this->support_model->get_current ( $kStudent );
 		$data ['has_current'] = get_value ( $has_current, "year" );
-		$data ['title'] = sprintf ( "Viewing Student Support for %s", $data ['student_name'] );
+		$data ['title'] = sprintf ( "Friends School of Minnesota<br/>Student Support Report for %s", $data ['student_name'] );
 		$support = $this->support_model->get_all ( $kStudent );
 		foreach ( $support as $entry ) {
 			
@@ -60,7 +60,7 @@ class Support extends MY_Controller {
 		$data ['student'] =$student;
 		$data ['entry'] = $support;
 		
-		$data ['title'] = "Viewing Support Record for " . $data ['student'];
+		$data ['title'] = "Learning Support Documentation for $student";
 		$data ['target'] = "support/view";
 		if ($data ['sidebar']) {
 			$this->load->view ( "support/sidebar", $data );
