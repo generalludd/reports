@@ -39,6 +39,7 @@ if($benchmarks){
  		$benchmarkRow = sprintf("<tr class='benchmark-row' id='benchmark_%s'><td class='benchmark-text' title='%s, %s'>%s</td>",$benchmark->kBenchmark,$currentGrade, $termDisplay,$benchmark->benchmark);
 		$benchmarkRow .= sprintf("<td><a class='link dialog' href='%s'>Edit</a></td>",site_url("benchmark/edit/$benchmark->kBenchmark"));
 		$benchmarkRow .= sprintf("<td><a class='link dialog' href='%s'>Duplicate</a></td>",site_url("benchmark/duplicate/$benchmark->kBenchmark"));
+		$benchmarkRow .= sprintf("<td><a class='link' href='%s'>View All Student Entries</a>", site_url("student_benchmark/list_by_benchmark/$benchmark->kBenchmark"));
 		$benchmarkRow .= sprintf("<td><a class='link delete_benchmark' id='delete_%s'>Delete</a></td></tr>",$benchmark->kBenchmark);
 		$table[] = $benchmarkRow;
 

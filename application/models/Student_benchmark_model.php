@@ -85,4 +85,12 @@ class Student_benchmark_model extends MY_Model
         $this->db->query($query);
         return TRUE;
     }
+
+    function get_by_benchmark($kBenchmark){
+        $this->db->from("student_benchmark");
+        $this->db->join("student","student.kStudent=student_benchmark.kStudent");
+        $this->db->where("student_benchmark.kBenchmark",$kBenchmark);
+        $result = $this->db->get()->result();
+        return $result;
+    }
 }

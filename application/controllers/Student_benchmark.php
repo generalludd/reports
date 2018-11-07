@@ -109,46 +109,30 @@ class Student_benchmark extends MY_Controller
 
     }
 
-    /*function edit_all($kStudent)
-    {
-        $student = $this->student->get($kStudent);
-        $subject = $this->input->get("subject");
-        $student_grade = get_current_grade($student->baseGrade, $student->baseYear);
-        if ($this->input->get('student_grade')) {
-            $student_grade = $this->input->get('student_grade');
-        }
-        $term = get_current_term();
-        if ($this->input->get('term')) {
-            $term = $this->input->get('term');
+    function list_by_benchmark($kBenchmark){
+        $this->load->model("benchmark_model", "benchmarks");
+        $benchmark = $this->benchmarks->get($kBenchmark);
+        $data['benchmark'] = $benchmark;
+        $benchmarks = $this->student_benchmark->get_by_benchmark($kBenchmark);
+        $data['benchmarks'] = $benchmarks;
+        $data['title'] = "Benchmark Entries";
+        $data['target'] = "student_benchmark/benchmark_list";
+        $this->load->view("page/index",$data);
+
+    }
+
+    function edit_one($kBenchmark,$kStudent,$quarter){
+        $benchmark = $this->student_benchmark->get_one($kStudent,$kBenchmark,$quarter);
+        $data['benchmark'] = $benchmark;
+        $data['target'] = "student_benchmark/edit_one";
+        $data['title'] = "Editing A Student Benchmark";
+        if($this->input->get("ajax")) {
+            $this->load->view($data['target'], $data);
+        }else{
+            $this->load->view("page/index",$data);
         }
 
-        $year = get_current_year();
-        if ($this->input->get('year')) {
-            $year = $this->input->get('year');
-        }
-        $quarter = FALSE;
-        if ($this->input->get("quarter")) {
-            $quarter = $this->input->get("quarter");
-        }
-        $data ['year'] = $year;
-        $data ['term'] = $term;
-        $data ['quarter'] = $quarter;
-        $data ['benchmarks'] = $this->student_benchmark->get($kStudent, $student_grade, $term, $year, $quarter, $subject);
-        $student_name = format_name($student->stuFirst, $student->stuLast, $student->stuNickname);
-        $data ['title'] = "Editing Benchmarks for $student_name: $subject, $student_grade, $term, $year";
-        $data ['kStudent'] = $kStudent;
-        if ($this->input->get('kTeach')) {
-            $data ['kTeach'] = $this->input->get('kTeach');
-        } else {
-            $data ['kTeach'] = USER_ID;
-        }
-        $data ['target'] = "student_benchmark/edit";
-        if ($this->input->get("ajax")) {
-            $this->load->view($data ['target'], $data);
-        } else {
-            $this->load->view("page/index", $data);
-        }
-    }*/
+    }
 
     function update()
     {
@@ -165,6 +149,9 @@ class Student_benchmark extends MY_Controller
         $output = $this->student_benchmark->update($kStudent, $kBenchmark, $grade, $comment, $quarter, $term, $year);
         if ($output) {
             echo OK;
+        }
+        if($this->input->get("edit_one")){
+            redirect("student_benchmark/list_by_benchmark/$kBenchmark");
         }
     }
 }
