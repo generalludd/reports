@@ -47,22 +47,30 @@ $footnotes = array();
                 </tr>
                 <?php $current_category = $benchmark->category; ?>
             <?php endif; ?>
-            <tr class="benchmark-row"
-                id="benchmark_<?php echo $benchmark->kBenchmark; ?>_<?php echo $kStudent; ?>_<?php echo USER_ID; ?>">
+            <tr class="benchmark-row">
                 <td class="benchmark-label"><?php echo $benchmark->benchmark; ?></td>
                 <?php $q = 1; ?>
                 <?php foreach ($benchmark->quarters as $grade): ?>
 
                 <td class="benchmark-grade">
                     <?php if ($quarter == $q): ?>
-                        <input type="text" id="g_<?php echo $benchmark->kBenchmark; ?>" name="grade" size="2"
+                        <input type="text"
+                               data-benchmark="<?php echo $benchmark->kBenchmark;?>"
+                               data-student="<?php echo $kStudent;?>"
+                               data-year="<?php echo $year;?>"
+                               data-quarter="<?php echo $quarter;?>"
+                               id="g_<?php  $benchmark->kBenchmark; ?>"
+                               name="grade"
+                               size="2"
                                class="benchmark-grade benchmark-string"
                                value="<?php echo get_value($grade['grade'], 'grade'); ?>"/>
-                        <input type="text" id="c_<?php echo $benchmark->kBenchmark; ?>" name="comment"
+                        <input type="text"      data-benchmark="<?php echo $benchmark->kBenchmark;?>"
+                               data-student="<?php echo $kStudent;?>"
+                               data-year="<?php echo $year;?>"
+                               data-quarter="<?php echo $quarter;?>"
+                               name="comment"
                                class="benchmark-comment benchmark-string"
                                value="<?php echo get_value($grade['grade'], "comment", ""); ?>"/>
-
-
                     <?php else: ?>
                         <?php echo get_value($grade['grade'], "grade"); ?>
                         <?php if (get_value($grade['grade'], "comment")): ?>

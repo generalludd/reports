@@ -138,7 +138,7 @@ class Student_benchmark extends MY_Controller
         $benchmark = $this->benchmarks->get($kBenchmark);
         $student_benchmark = $this->student_benchmark->get_one($kStudent, $kBenchmark, $quarter);
         $student = $this->student->get($kStudent);
-        $student_name = format_name($student->stuFirst, $student->stuLast,$student->stuNickname);
+        $student_name = format_name($student->stuFirst, $student->stuLast, $student->stuNickname);
         $data['benchmark'] = $student_benchmark;
         $data['kBenchmark'] = $kBenchmark;
         $data['kStudent'] = $kStudent;
@@ -158,15 +158,17 @@ class Student_benchmark extends MY_Controller
     {
         $kStudent = $this->input->post("kStudent");
         $kBenchmark = $this->input->post("kBenchmark");
-        $grade = $this->input->post("grade");
-        if ($grade === 0) {
-            $grade = "0";
+        $field = $this->input->post("field");
+        $value = $this->input->post("value");
+
+        if ($this->input->post('field') == 'grade') {
+            if ($value === 0) {
+                $value = "0";
+            }
         }
         $quarter = $this->input->post("quarter");
-        $term = $this->input->post("term");
-        $year = $this->input->post("year");
-        $comment = $this->input->post("comment");
-        $output = $this->student_benchmark->update($kStudent, $kBenchmark, $grade, $comment, $quarter, $term, $year);
+        $output = $this->student_benchmark->update($kStudent, $kBenchmark, $quarter, $field, $value);
+
         if ($output) {
             echo OK;
         }

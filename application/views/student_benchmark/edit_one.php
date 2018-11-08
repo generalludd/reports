@@ -19,7 +19,7 @@
         <input type="text" size="10" name="year" value="<?php echo $year; ?>" readonly/>
     </p>
     <p>
-        <label for="term">Grade</label>
+        <label for="term">Benchmark</label>
         <input type="text" size="3" name="grade" value="<?php echo get_value($benchmark,"grade"); ?>"/>
     </p>
     <p>
