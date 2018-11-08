@@ -8,7 +8,7 @@ $(document)
 							kBenchmark: myBenchmark,
 							ajax: 1
 					};
-					choice = confirm("Are you absolutely sure you want to delete this benchmark entry? This cannot be undone!");
+					choice = confirm("Are you absolutely sure you want to delete this benchmark entry? This will ALSO delete all student grades entered for this benchmark. This cannot be undone!");
 					if (choice) {
 						$.ajax({
 							url: myUrl,

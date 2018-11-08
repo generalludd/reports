@@ -132,16 +132,11 @@ class Benchmark_model extends MY_Model {
 	{
 		$delete_array ['kBenchmark'] = $kBenchmark;
 		$this->db->delete ( 'benchmark', $delete_array );
+		$this->db->delete('student_benchmark',$delete_array);
 	}
 
 	function get_for_student($kStudent, $subject, $grade, $term, $year, $quarter = FALSE, $category = FALSE)
 	{
-/*select s.kStudent, b.kBenchmark, b.subject, b.`benchmark` 
- * from benchmark b left outer join student_benchmark s on b.kBenchmark = s.kBenchmark 
-where b.year = 2016 and b.subject = "Humanities" and b.gradeStart = 5 and b.gradeEnd  = 6 
-and (s.kStudent = 8463  or kStudent is null );
-*/
-	// @TODO Real Problem here is finding the benchmarks for grade ranges
 		if ($subject) {
 			$this->db->where ( "benchmark.subject", $subject );
 		}

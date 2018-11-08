@@ -29,14 +29,14 @@
     </tr>
     </thead>
     <tbody>
-    <?php foreach($benchmarks as $item): ?>
+    <?php foreach($students as $student): ?>
         <tr>
-            <td><?php echo format_name($item->stuFirst, $item->stuLast, $item->stuNickname);?></td>
-            <td><?php echo $item->quarter;?></td>
-            <td><?php echo $item->grade;?></td>
-            <td><?php echo $item->comment;?></td>
-            <td><a href="<?php echo base_url("student_benchmark/edit_one/$item->kBenchmark/$item->kStudent/$item->quarter")?>" class="link dialog">Edit</a></td>
-        </tr>
+            <td><?php echo format_name($student->stuFirst, $student->stuLast, $student->stuNickname);?></td>
+            <td><?php echo $quarter;?></td>
+            <td><?php echo get_value($student->benchmark,"grade");?></td>
+            <td><?php echo get_value($student->benchmark,"comment");?></td>
+            <td><a href="<?php echo base_url("student_benchmark/edit_one/$benchmark->kBenchmark/$student->kStudent/$quarter")?>" class="link dialog">Edit</a></td>
+        </tr
     <?php endforeach; ?>
     </tbody>
 

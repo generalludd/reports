@@ -134,15 +134,14 @@ class Student_model extends MY_Model {
 		return $output->$field_name;
 	}
 
-	/**
-	 *
-	 * @param $kTeach int
-	 *        	This returns the students assigned to either a
-	 *        	classroom
-	 *        	teacher or middle school
-	 *        	advisor depending on the grade of the student
-	 *        	
-	 */
+    /*
+     *
+     * @param $kTeach int
+     *  This returns the students assigned to either a
+     *  classroom teacher or middle school
+     *  advisor depending on the grade of the student
+     *
+     **/
 	function get_students_by_class($kTeach, $grade_range = array())
 	{
 		$this->db->where ( 'student.isEnrolled', 1 );
@@ -161,7 +160,7 @@ class Student_model extends MY_Model {
 		return $result;
 	}
 
-	/**
+	/*
 	 * Lists enrolled students by grade with added constraints.
 	 * The constraints array can contain kTeach, and a select variable with
 	 * a list of fields to include in the result
@@ -226,7 +225,7 @@ class Student_model extends MY_Model {
 		return $result;
 	}
 
-	/**
+	/*
 	 *
 	 * @param int $year        	
 	 * @param array $options
@@ -291,9 +290,6 @@ class Student_model extends MY_Model {
 			$humanitiesTeacher = $options ['humanitiesTeacher'];
 			$this->db->join ( "teacher as humanitiesTeacher", "student.humanitiesTeacher = humanitiesTeacher.kTeach" );
 			$this->db->select ( "CONCAT(humanitiesTeacher.teachFirst, ' ' ,humanitiesTeacher.teachLast) as humanitiesTeacher", FALSE );
-			
-		} else {
-			//$this->db->join ( "teacher as humanitiesTeacher", "student.humanitiesTeacher = humanitiesTeacher.kTeach", "LEFT" );
 		}
 		
 		if (array_key_exists ( "hasNeeds", $options )) {
@@ -350,7 +346,7 @@ class Student_model extends MY_Model {
 		return $output;
 	}
 
-	/**
+	/*
 	 * Does the student have records in the system in the narratives, grades,
 	 * etc?
 	 * This is used to determine if a student record can be deleted or not.
@@ -404,7 +400,7 @@ class Student_model extends MY_Model {
 	{
 	}
 
-	/**
+	/*
 	 * Delete student record only if the student has no entries in other tables.
 	 *
 	 * @param number $kStudent        	

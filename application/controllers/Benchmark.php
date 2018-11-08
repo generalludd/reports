@@ -228,19 +228,6 @@ class Benchmark extends MY_Controller
         $student = $this->student->get($kStudent);
         $student_grade = get_current_grade($student->baseGrade, $student->baseYear, $year);
         $benchmarks = $this->benchmark_model->get_for_student($kStudent, $subject, $student_grade, $term, $year, $quarter);
-
-        //$this->load->model ( "benchmark_legend_model", "legend" );
-// 		$current_subject = "";
-// 		foreach ( $benchmarks as $benchmark ) {
-// 			if ($current_subject != $benchmark->subject) {
-// 				$benchmark->legend = $this->legend->get_one ( array (
-// 						"subject" => $benchmark->subject,
-// 						"term" => $term,
-// 						"year" => $year 
-// 				) )->legend;
-// 				$current_subject = $benchmark->subject;
-// 			}
-// 		}
         $data ['benchmarks'] = $benchmarks;
         $data ['student'] = $student;
         $data ['kStudent'] = $kStudent;
