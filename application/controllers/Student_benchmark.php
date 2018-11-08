@@ -113,7 +113,9 @@ class Student_benchmark extends MY_Controller
         $this->load->model("benchmark_model", "benchmarks");
         $benchmark = $this->benchmarks->get($kBenchmark);
         $data['benchmark'] = $benchmark;
-        $benchmarks = $this->student_benchmark->get_by_benchmark($kBenchmark);
+        $quarter = $this->input->get('quarter');
+        $data['quarter'] = $quarter;
+        $benchmarks = $this->student_benchmark->get_by_benchmark($kBenchmark, $quarter);
         $data['benchmarks'] = $benchmarks;
         $data['title'] = "Benchmark Entries";
         $data['target'] = "student_benchmark/benchmark_list";

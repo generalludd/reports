@@ -11,7 +11,7 @@
 <p><?php echo $benchmark->benchmark;?></p>
 <ul>
     <li >Subject: <?php echo $benchmark->subject; ?></li>
-    <li>Term: <?php echo $benchmark->term; ?> Year: <?php echo $benchmark->year; ?></li>
+    <li>Quarter: <?php echo $quarter;?>, <?php echo $benchmark->year; ?></li>
     <li>Grade(s): <?php echo format_grade_range($benchmark->gradeStart, $benchmark->gradeEnd);?></li>
 </ul>
 <p>

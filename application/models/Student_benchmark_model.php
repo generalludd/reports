@@ -57,9 +57,6 @@ class Student_benchmark_model extends MY_Model
         $this->db->select("student_benchmark.kStudent, student_benchmark.grade, student_benchmark.comment, student_benchmark.term, student_benchmark.quarter, student_benchmark.year");
         $this->db->join("student_benchmark", "benchmark.kBenchmark = student_benchmark.kBenchmark $quarters", "LEFT OUTER");
         $this->db->where("(student_benchmark.kStudent IS NULL OR student_benchmark.kStudent = '$kStudent')", NULL, TRUE);
-
-// 		$this->db->where ( "benchmark.gradeStart >= ", $student_grade );
-// 		$this->db->where ( "benchmark.gradeEnd <= ", $student_grade );
         $this->db->where("$student_grade BETWEEN benchmark.gradeStart AND benchmark.gradeEnd", NULL, FALSE);
         $this->db->where("benchmark.year", $year);
         $this->db->where("(student_benchmark.year = '$year' OR student_benchmark.year IS NULL)", NULL, FALSE);
@@ -86,10 +83,11 @@ class Student_benchmark_model extends MY_Model
         return TRUE;
     }
 
-    function get_by_benchmark($kBenchmark){
+    function get_by_benchmark($kBenchmark, $quarter){
         $this->db->from("student_benchmark");
         $this->db->join("student","student.kStudent=student_benchmark.kStudent");
         $this->db->where("student_benchmark.kBenchmark",$kBenchmark);
+        $this->db->where("student_benchmark.quarter",$quarter);
         $result = $this->db->get()->result();
         return $result;
     }
