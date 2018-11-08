@@ -23,8 +23,7 @@
     <tr>
         <th>Student</th>
         <th>Quarter</th>
-        <th>Grade</th>
-        <th>Comments</th>
+        <th>Grade & Comments</th>
         <th></th>
     </tr>
     </thead>
@@ -33,10 +32,27 @@
         <tr>
             <td><?php echo format_name($student->stuFirst, $student->stuLast, $student->stuNickname);?></td>
             <td><?php echo $quarter;?></td>
-            <td><?php echo get_value($student->benchmark,"grade");?></td>
-            <td><?php echo get_value($student->benchmark,"comment");?></td>
+            <td><input type="text"
+                       data-benchmark="<?php echo $benchmark->kBenchmark;?>"
+                       data-student="<?php echo $student->kStudent;?>"
+                       data-quarter="<?php echo $quarter;?>"
+                       id="g_<?php  $benchmark->kBenchmark; ?>"
+                       name="grade"
+                       size="2"
+                       class="benchmark-grade benchmark-string"
+                       value="<?php echo get_value($student->benchmark, 'grade'); ?>"
+                <?php echo $benchmark->year != get_current_year()?"readonly":"";?>
+                />
+                <input type="text"
+                       data-benchmark="<?php echo $benchmark->kBenchmark;?>"
+                       data-student="<?php echo $student->kStudent;?>"
+                       data-quarter="<?php echo $quarter;?>"
+                       name="comment"
+                       class="benchmark-comment benchmark-string"
+                       value="<?php echo get_value($student->benchmark, "comment", ""); ?>"/>
+            </td>
             <td><a href="<?php echo base_url("student_benchmark/edit_one/$benchmark->kBenchmark/$student->kStudent/$quarter")?>" class="link dialog">Edit</a></td>
-        </tr
+        </tr>
     <?php endforeach; ?>
     </tbody>
 

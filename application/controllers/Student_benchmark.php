@@ -158,16 +158,13 @@ class Student_benchmark extends MY_Controller
     {
         $kStudent = $this->input->post("kStudent");
         $kBenchmark = $this->input->post("kBenchmark");
-        $field = $this->input->post("field");
-        $value = $this->input->post("value");
-
-        if ($this->input->post('field') == 'grade') {
-            if ($value === 0) {
-                $value = "0";
-            }
-        }
+        $grade = $this->input->post("grade");
+        $comment = $this->input->post("comment");
         $quarter = $this->input->post("quarter");
-        $output = $this->student_benchmark->update($kStudent, $kBenchmark, $quarter, $field, $value);
+
+
+
+        $output = $this->student_benchmark->update($kStudent, $kBenchmark, $quarter, $grade, $comment);
 
         if ($output) {
             echo OK;

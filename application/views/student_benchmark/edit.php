@@ -85,7 +85,6 @@ $footnotes = array();
 
                     <?php $q++; ?>
                     <?php endforeach; ?>
-                    <span style='margin-left:5px' id='save_<?php echo $benchmark->kBenchmark; ?>'></span>
                 </td>
             </tr>
         <?php endforeach; ?>

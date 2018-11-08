@@ -41,7 +41,22 @@ $(document)
 		);// end document-ready
 
 function update_benchmark (me){
+
+    $("table tr td input").each(function(){
+        $(this).removeClass("ok").removeClass("bad");
+    });
 	let my_field = me.attr('name');
+	let my_sibling = me.siblings("td input").val();
+let my_comment = "";
+let my_grade = "";
+	if(my_field == "grade"){
+	     my_comment = my_sibling;
+	     my_grade = me.val();
+    }else{
+	     my_comment = me.val();
+	     my_grade = my_sibling;
+    }
+
 	let myBenchmark = me.data("benchmark");
 	let myStudent = me.data("student");
 	let myQuarter = me.data('quarter');
@@ -49,21 +64,21 @@ function update_benchmark (me){
 			kBenchmark: myBenchmark,
 			kStudent: myStudent,
      		quarter: myQuarter,
-			field: my_field,
-			value: me.val(),
+			grade: my_grade,
+			comment: my_comment,
 			ajax: 1
 	};
+	console.log(form_data);
 	let myUrl = base_url + "student_benchmark/update";
 	$.ajax({
 		type: "post",
 		url: myUrl,
 		data: form_data,
 		success: function(data){
-			$("#save_" + myBenchmark).html(data).show().fadeOut(1000);
+		    me.addClass("ok").removeClass("bad");
 		},
 		error: function(data){
-			$("#save_" + myBenchmark).html(data).show().fadeOut(1000);
-
+            me.addClass("bad").removeClass("ok");
 		}
 	});
 	

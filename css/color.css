@@ -429,3 +429,10 @@ fieldset {
 	text-shadow: rgba(0, 0, 0, 0.4) 0px 0px 15px;
 	color: transparent;
 }
+
+input.ok{
+	background-color: #2cc36b;
+}
+input.bad{
+	background-color: red;
+}

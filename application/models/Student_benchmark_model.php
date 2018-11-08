@@ -76,15 +76,9 @@ class Student_benchmark_model extends MY_Model
         return $result;
     }
 
-    function update($kStudent, $kBenchmark, $quarter, $field, $value)
+    function update($kStudent, $kBenchmark, $quarter, $grade, $comment)
     {
-        if($field=="grade"){
-            $query = sprintf("REPLACE INTO student_benchmark (kStudent, kBenchmark, quarter, $field) VALUES('%s','%s','%s','%s')", $kStudent, $kBenchmark, $quarter, $value);
-
-        }elseif($field=="comment"){
-            $query = sprintf("REPLACE INTO student_benchmark (kStudent, kBenchmark, quarter, comment) VALUES('%s','%s','%s','%s')", $kStudent, $kBenchmark, $quarter, $value);
-
-        }
+        $query = sprintf("REPLACE INTO student_benchmark (kStudent, kBenchmark, quarter, grade,comment) VALUES('%s','%s','%s','%s','%s')", $kStudent, $kBenchmark, $quarter, $grade, $comment);
         $this->db->query($query);
         return TRUE;
     }
