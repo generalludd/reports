@@ -104,7 +104,7 @@ class Student_benchmark extends MY_Controller
         } else {
             $data ['target'] = "student_benchmark/chart";
         }
-        $data ['title'] = sprintf("Benchmarks for %s, Grade %s, %s, %s", format_name($student->stuFirst, $student->stuLast, $student->stuNickname), $student_grade, $term, format_schoolyear($year));
+        $data ['title'] = sprintf("Benchmarks for %s, Grade %s, Quarter %s, %s", format_name($student->stuFirst, $student->stuLast, $student->stuNickname), $student_grade, $quarter, format_schoolyear($year));
         $this->load->view("page/index", $data);
 
     }
@@ -113,19 +113,21 @@ class Student_benchmark extends MY_Controller
     {
         $this->load->model("benchmark_model", "benchmarks");
         $benchmark = $this->benchmarks->get($kBenchmark);
+        $options = array();
+        if($benchmark->subject == "Humanities"){
+            $options['custom_order'] = 'humanitiesTeacher.teachFirst';
+        }
         $data['benchmark'] = $benchmark;
-
         $quarter = $this->input->get('quarter');
         $data['quarter'] = $quarter;
+        $options['grades'] = $benchmark->gradeStart . ",". $benchmark->gradeEnd;
 
-        $students = $this->student->get_students_by_grade($benchmark->gradeStart, $benchmark->gradeEnd);
+        $students = $this->student->get_all($benchmark->year, $options);
         foreach ($students as $student) {
             $student->benchmark = $this->student_benchmark->get_one($student->kStudent, $kBenchmark, $quarter);
 
         }
         $data['students'] = $students;
-        // $benchmarks = $this->student_benchmark->get_by_benchmark($kBenchmark, $quarter);
-        //$data['benchmarks'] = $benchmarks;
         $data['title'] = "Benchmark Entries";
         $data['target'] = "student_benchmark/benchmark_list";
         $this->load->view("page/index", $data);

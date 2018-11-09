@@ -25,16 +25,8 @@ class Student extends MY_Controller {
 		$student->pronouns = $this->menu_model->get_label ( "gender", $student->stuGender );
 		$data ['student'] = $student;
 		$data ['teacherName'] = "";
-		if (! empty ( $student->kTeach )) {
-			// $data['teacherName'] = $this->teacher_model->get_name( $student->kTeach);
-		}
 		$this->load->model ( "course_preference_model", "preference" );
 		$data ['course_preferences'] = $this->preference->get_all ( $kStudent );
-		
-		// if($student->stuGrade > 4){
-		// $data['humanitiesTeacher'] =
-		// $this->teacher_model->get($student->humanitiesTeacher,"teachFirst")->teachFirst;
-		// }
 		
 		$data ['target'] = "student/view";
 		$data ['title'] = "Viewing $student->stuFirst $student->stuLast";
