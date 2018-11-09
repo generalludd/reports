@@ -22,8 +22,7 @@ $humanitiesTeacher = 0;
 <table class="list">
     <thead>
     <tr>
-        <th>Student</th>
-        <th>Quarter</th>
+        <th colspan="2">Student</th>
         <th>Grade & Comments</th>
     </tr>
     </thead>
@@ -41,7 +40,7 @@ $humanitiesTeacher = 0;
             <td>
                 <?php echo link_student($student,"student_benchmark/select?kStudent=$student->kStudent&student_grade=$student->stuGrade&subject=$benchmark->subject&year=$benchmark->year&quarter=$quarter", "View %s Benchmarks for $benchmark->subject", FALSE); ?>
             </td>
-            <td><?php echo $quarter; ?></td>
+            <td>Q<?php echo $quarter; ?></td>
             <td><input type="text"
                        data-benchmark="<?php echo $benchmark->kBenchmark; ?>"
                        data-student="<?php echo $student->kStudent; ?>"
@@ -59,7 +58,9 @@ $humanitiesTeacher = 0;
                        data-quarter="<?php echo $quarter; ?>"
                        name="comment"
                        class="benchmark-comment benchmark-string"
-                       value="<?php echo get_value($student->benchmark, "comment", ""); ?>"/>
+                       value="<?php echo get_value($student->benchmark, "comment", ""); ?>"
+                    <?php echo $benchmark->year != get_current_year() ? "readonly" : ""; ?>
+                />
             </td>
         </tr>
     <?php endforeach; ?>

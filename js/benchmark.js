@@ -41,14 +41,18 @@ $(document)
 		);// end document-ready
 
 function update_benchmark (me){
+    //only operate on current year benchmarks
+    if(me.attr('readonly')){
+        return false;
+    }
 
     $("table tr td input").each(function(){
         $(this).removeClass("ok").removeClass("bad");
     });
 	let my_field = me.attr('name');
 	let my_sibling = me.siblings("td input").val();
-let my_comment = "";
-let my_grade = "";
+    let my_comment = "";
+    let my_grade = "";
 	if(my_field == "grade"){
 	     my_comment = my_sibling;
 	     my_grade = me.val();
