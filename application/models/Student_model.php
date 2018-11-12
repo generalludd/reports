@@ -169,7 +169,13 @@ class Student_model extends MY_Model {
 	 * @param int $gradeEnd        	
 	 * @param array $constraints        	
 	 */
-	function get_students_by_grade($gradeStart, $gradeEnd, $constraints = array())
+    /**
+     * @param $gradeStart
+     * @param $gradeEnd
+     * @param array $constraints
+     * @return mixed
+     */
+    function get_students_by_grade($gradeStart, $gradeEnd, $constraints = array())
 	{
 		if (array_key_exists ( 'year', $constraints )) {
 			$year = $constraints ['year'];
@@ -215,6 +221,14 @@ class Student_model extends MY_Model {
 			$this->db->select ( "student.*" );
 			$this->db->select ( "`baseGrade` - `baseYear` + $year as `stuGrade`", FALSE );
 		}
+		if(array_key_exists('order_by', $constraints)){
+		    if(!is_array($constraints['order_by'])){
+		        $constraints['order_by'] = array($constraints['order_by']);
+            }
+            foreach($constraints['order_by'] as $constraint) {
+                $this->db->order_by($constraint);
+            }
+        }
 		$this->db->order_by ( "stuGrade" );
 		$this->db->order_by ( "stuLast" );
 		$this->db->order_by ( "stuFirst" );
@@ -286,11 +300,10 @@ class Student_model extends MY_Model {
 		
 		if (array_key_exists ( "humanitiesTeacher", $options )) {
 			$this->db->where ( "student.humanitiesTeacher", $options ['humanitiesTeacher'] );
-			$this->db->order_by ( "humanitiesTeacher.teachFirst" );
-			$humanitiesTeacher = $options ['humanitiesTeacher'];
-			$this->db->join ( "teacher as humanitiesTeacher", "student.humanitiesTeacher = humanitiesTeacher.kTeach" );
-			$this->db->select ( "CONCAT(humanitiesTeacher.teachFirst, ' ' ,humanitiesTeacher.teachLast) as humanitiesTeacher", FALSE );
+			$this->db->order_by ( "student.humanitiesTeacher" );
 		}
+        $this->db->join ( "teacher as humanitiesTeacher", "student.humanitiesTeacher = humanitiesTeacher.kTeach", "LEFT","OUTER" );
+        $this->db->select ( "CONCAT(humanitiesTeacher.teachFirst, ' ' ,humanitiesTeacher.teachLast) as humanitiesTeacherName", FALSE );
 		
 		if (array_key_exists ( "hasNeeds", $options )) {
 			$this->db->join ( "support", "student.kStudent = support.kStudent" );
@@ -307,6 +320,9 @@ class Student_model extends MY_Model {
 		if(array_key_exists("gender",$options)){
 			$this->db->order_by("stuGender","ASC");
 		}
+		if(array_key_exists("custom_order",$options)){
+            $this->db->order_by($options['custom_order']);
+        }
 		if (array_key_exists ( "sorting", $options )) {
 			if ($options ["sorting"] == "last_first") {
 				$this->db->order_by ( "student.stuLast" );

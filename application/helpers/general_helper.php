@@ -17,6 +17,7 @@ function mysql_timestamp()
  *        	description: this shouldn't be in this file, but I didn't want to create a new file with general formatting tools yet.
  *        	idea courtesy:
  *        	http://stackoverflow.com/questions/13194322/php-regex-to-check-date-is-in-yyyy-mm-dd-format
+ * @return string
  */
 function format_date($date, $format = NULL)
 {
@@ -39,9 +40,9 @@ function format_date($date, $format = NULL)
 /**
  * Format a range of two dates, if the second is null or the same as the first, show just one date.
  *
- * @param unknown $date_one        	
+ * @param string $date_one
  * @param string $date_two        	
- * @return unknown
+ * @return string
  */
 function format_date_range($date_one, $date_two = NULL)
 {
@@ -160,7 +161,8 @@ function get_year_list($initial_blank = FALSE, $next_year = FALSE)
  * for term names, durations and cutoffs.
  * for now it is hard-coded.
  *
- * @param DateTime $targetDate         	
+ * @param DateTime $targetDate
+ * @return string
  */
 function get_current_term($targetDate = NULL)
 {
@@ -257,7 +259,8 @@ function get_keyed_pairs($list, $pairs, $initialBlank = NULL, $other = NULL, $al
  * This is currently only used to identify the kind of teacher for a given
  * student based on the student's grade
  *
- * @param int $grade        	
+ * @param int $grade
+ *  @return string
  */
 function get_teacher_type($grade)
 {
@@ -471,6 +474,7 @@ function get_subject_order($subjects = NULL)
  * @param array $list        	
  * @param string $conjunction
  *        	creates a list in proper English list format (lists less than 3 have no comma, list with 3 or more have commas and final conjunction)
+ * @return string
  */
 function grammatical_implode($glue, $list, $conjunction = "and")
 {
@@ -499,6 +503,7 @@ function grammatical_implode($glue, $list, $conjunction = "and")
  * @param varchar $array        	
  * @param varchar $key
  *        	return an array key value if it exists and is not empty
+ * @return string
  */
 function get_array_value($array, $key)
 {
@@ -621,6 +626,27 @@ function link_teacher($teacher, $kTeach)
 {
 	$output = sprintf ( "<a href='%s' title='view record for %s'>%s</a>", site_url ( "teacher/view/$kTeach" ), $teacher, $teacher );
 	return $output;
+}
+
+/** @param $student object
+ * @param $target string
+ * @param $title_template
+ * @param $standard_path bool
+ * @return string
+ */
+
+function link_student($student, $target = 'student/view', $title_template = 'View %s&rsquo;s Record', $standard_path = TRUE)
+{
+    $name = format_name($student->stuFirst, $student->stuLast, $student->stuNickname);
+    if($standard_path){
+        $link = base_url($target . "/" . $student->kStudent);
+    }else{
+        $link = base_url($target);
+    }
+    $title = sprintf($title_template, $name);
+    $output = sprintf("<a href='%s' title='%s'>%s</a>", $link, $title, $name);
+    return $output;
+
 }
 
 function bake_cookie($name, $value)
