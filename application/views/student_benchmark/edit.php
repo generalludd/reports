@@ -64,7 +64,8 @@ $footnotes = array();
                                size="2"
                                class="benchmark-grade benchmark-string"
                                value="<?php echo get_value($grade['grade'], 'grade'); ?>"/>
-                        <input type="text"      data-benchmark="<?php echo $benchmark->kBenchmark;?>"
+                        <input type="text"
+                               data-benchmark="<?php echo $benchmark->kBenchmark;?>"
                                data-student="<?php echo $kStudent;?>"
                                data-year="<?php echo $year;?>"
                                data-quarter="<?php echo $quarter;?>"
@@ -80,9 +81,6 @@ $footnotes = array();
 
                         <?php endif; ?>
                     <?php endif; ?>
-
-
-
                     <?php $q++; ?>
                     <?php endforeach; ?>
                 </td>
