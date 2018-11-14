@@ -27,6 +27,9 @@ ErrorDocument 404 /index.php
 # Set the default handler.
 DirectoryIndex index.php index.html index.htm
 
+#prevent caching
+Header append Cache-Control "no-cache"
+
 # Override PHP settings that cannot be changed at runtime. See
 # sites/default/default.settings.php and drupal_initialize_variables() in
 # includes/bootstrap.inc for settings that can be changed at runtime.
