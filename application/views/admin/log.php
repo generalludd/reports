@@ -1,37 +1,46 @@
-<?php defined('BASEPATH') OR exit('No direct script access allowed');?>
+<?php defined('BASEPATH') OR exit('No direct script access allowed'); ?>
 
 
-<fieldset class="search_fieldset">
-	<legend>Search Parameters</legend>
-	<?php
-	if(!empty($options)){
+    <fieldset class="search_fieldset">
+        <legend>Search Parameters</legend>
+        <?php
+        if (!empty($options)):?>
+            <ul>
+                <?php foreach ($options as $key => $value): ?>
+                    <li><strong><?php echo $key; ?></strong> <?php echo $value; ?></li>
+                <?php endforeach; ?>
+            </ul>
+        <?php else: ?>
+            <p>Showing all Log Entries.</p>
+        <?php endif;
+        ?>
 
-		$keys = array_keys($options);
-		$values = array_values($options);
+        <div class="button-box">
+            <a class="button log_search">Refine Search</a>
+        </div>
+    </fieldset>
+<table class="list">
+    <thead>
+    <tr>
+        <th>Timestamp</th>
+         <th>Action</th>
+    </tr>
+    </thead>
+<tbody>
+<?php $username = FALSE;?>
 
-		echo "<ul>";
+<?php foreach ($logs as $log):?>
+<?php if($log->username != $username):?>
+<tr>
+    <td colspan="2"><?php echo $log->username;?></td>
+</tr>
+<?php $username = $log->username;?>
+<?php endif; ?>
+<tr>
+<td><?php echo format_timestamp($log->time);?></td>
+    <td><?php echo $log->action;?></td>
+</tr>
+<?php endforeach; ?>
+</tbody>
 
-		for($i = 0; $i < count($options); $i++){
-			if($keys[$i] != "date_range"){
-				echo "<li>" . $keys[$i] .": <strong>" . $values[$i]. "</strong></li>";
-			}else{
-				$time_start = format_date($values[$i]["time_start"]);
-				$time_end = format_timestamp($values[$i]["time_end"],FALSE);
-				echo "<li>Date Range: <strong>$time_start-$time_end</strong></li>";
-			}
-		}
-		echo "</ul>";
-
-	}else{
-		echo "<p>Showing all Log Entries.</p>";
-
-	}
-	?>
-
-	<div class="button-box">
-		<a class="button log_search">Refine Search</a>
-	</div>
-</fieldset>
-<?php
-$classes = array("table_class"=>"list");
-print format_table($logs,$header,$classes);
+</table>

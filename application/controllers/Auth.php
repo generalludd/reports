@@ -93,7 +93,7 @@ class Auth extends CI_Controller
 
 		//make sure someone is logged in before logging the logout
 		if($this->session->userdata("userID")){
-			//$this->auth_model->log($this->session->userdata("userID"),"logout");
+		    $this->auth_model->log($this->session->userdata("userID"),"logout");
 		}
 		//destroy the session anyway.
 		$this->session->sess_destroy();

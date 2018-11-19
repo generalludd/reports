@@ -123,4 +123,14 @@ class admin extends MY_Controller {
 		);
 		$this->load->view ( "admin/search_log", $data );
 	}
+
+	function clean_logs(){
+	   if($this->input->get('date')){
+	       $date = $this->input->get('date');
+       }else{
+	       $date = YEAR_START;
+       }
+	    $this->auth_model->clean_logs($date);
+	   redirect("admin");
+    }
 }

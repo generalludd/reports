@@ -563,7 +563,7 @@ function format_table($data, $header = array(), $options = array())
 		$tbody_class = "class='" . $options ["tbody_class"] . "'";
 	}
 	$table [] = "<tbody $tbody_class>";
-	foreach ( $data as $row ) {
+	foreach ( $data as $row => $item ) {
 		$table [] = "<tr>";
 		foreach ( $row as $item ) {
 			$table [] = "<td>" . format_timestamp ( $item ) . "</td>";

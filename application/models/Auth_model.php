@@ -235,4 +235,16 @@ class Auth_model extends CI_Model
 		return $result;
 	}
 
+	function clean_logs($before_date){
+        $this->db->where('time<', $before_date);
+        $this->db->delete('user_log');
+        $this->_log();
+    }
+
+    function _log($target = "log",$live_server = FALSE){
+        if($_SERVER['HTTP_HOST'] == "reports" || $live_server == TRUE){
+            $this->session->set_flashdata($target, $this->db->last_query());
+        }
+    }
+
 }
