@@ -144,24 +144,24 @@ $(document).ready(function(){
 	});
 	
 	$("input.assignment-field").live("blur",function(){
-		myID = this.id.split("_");
-		myAssignment = myID[1];
-		myStudent = myID[2];
+		let myAssignment = $(this).data('id');
+		let myStudent = $(this).data('student');
 		//the parent tr of the entry has the grade id
-		myGrade = $(this).closest("tr").attr("id");
-		myValue = $(this).val();
-		myKey = this.name;
+		let myGrade = $(this).data('grade');
+
+		let myValue = $(this).val();
+		let myKey = $(this).data('name');
 		save_points_inline(myAssignment, myStudent, myKey, myValue, myGrade);
 	});
 	
 	$("select.assignment-field").live("change",function(){
 		myID = this.id.split("_");
-		myAssignment = myID[1];
-		myStudent = myID[2];
+		let myAssignment = $(this).data('id');
+		let myStudent = $(this).data('student');
 		//the parent tr of the entry has the grade id
-		myGrade = $(this).closest("tr").attr("id");
-		myValue = $(this).val();
-		myKey = this.name;
+		let myGrade = $(this).data('grade');
+		let myValue = $(this).val();
+		let myKey = $(this).data('name');
 		save_points_inline(myAssignment, myStudent, myKey, myValue, myGrade);
 		//save_student_points(myAssignment);
 	});
@@ -197,24 +197,26 @@ $(document).ready(function(){
 		window.location.reload();
 	});
 	
-	$(".editable .grade-delete-row .button").live("click",function(){
-		choice = confirm("Are you sure you want to delete this student's grade entries for the entire term? This cannot be undone!");
-		if(choice){
-			second_chance = confirm("This will delete all the grades entered for this student for the current term. Click OK only if you are absolute sure you want to do this!");
-			if(second_chance){
-				myTeach = $("#kTeach").val();
-				myID = this.id.split("_");
-				myStudent = myID[1];
+	$(".editable .grade-delete-row .button").live("click",function(e){
+		e.preventDefault();
+		console.log("Here");
 
-				myTerm = myID[2];
-				myYear = myID[3];
-				form_data = {
+		let choice = confirm("Are you sure you want to delete this student's grade entries for the entire term? This cannot be undone!");
+		if(choice){
+			let second_chance = confirm("This will delete all the grades entered for this student for the current term. Click OK only if you are absolute sure you want to do this!");
+			if(second_chance){
+				let myTeach = $(this).data('teacher');
+				let myStudent = $(this).data('student');
+
+				let myTerm =$(this).data('term');
+				let myYear = $(this).data('year');
+				let form_data = {
 						kTeach: myTeach,
 						kStudent: myStudent,
 						term: myTerm,
 						year: myYear
 				};
-				myUrl = base_url + "grade/delete_row";
+				let myUrl = base_url + "grade/delete_row";
 				
 				$.ajax({
 					type: "post",
@@ -230,7 +232,7 @@ $(document).ready(function(){
 	
 	$(".assignment-delete").live("click",function(){
 		href = window.location.href;
-	
+
 		choice = confirm("Are you sure you want to delete this assignment? It will delete all the related student grades along with it!");
 		if(choice){
 			second_chance = confirm("Are you absolutely sure? This cannot be easily undone if at all.");

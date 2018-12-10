@@ -139,7 +139,7 @@ if (! empty ( $assignments )) {
 			if ($current_student != $grade->kStudent) {
 				$rows [$grade->kStudent] ["name"] = sprintf("<td class='student-name'><a href='%s' title='View %s&rsquo;s student info' class='student'>%s</a></td>",base_url("/student/view/$grade->kStudent"),format_name($grade->stuNickname, $grade->stuLast),format_name($grade->stuNickname, $grade->stuLast));
 				$rows [$grade->kStudent] ["name_string"] = format_name ( $grade->stuNickname, $grade->stuLast );
-				$rows [$grade->kStudent] ["delete"] = sprintf ( "<td class='grade-delete-row'><span class='student delete button' id='dgr_%s_%s_%s' title='Delete the entire row'>Delete</span></td>", $grade->kStudent, $header->term, $header->year );
+				$rows [$grade->kStudent] ["delete"] = sprintf ( "<td class='grade-delete-row'><span class='student delete button' data-teacher='%s' data-student='%s' data-term='%s' data-year='%s' id='dgr_%s_%s_%s' title='Delete the entire row'>Delete</span></td>", $kTeach, $grade->kStudent, $header->term, $header->year, $grade->kStudent, $header->term, $header->year  );
 				$rows [$grade->kStudent] ["kStudent"] = $grade->kStudent;
 				$current_student = $grade->kStudent;
 				$student_points = 0;

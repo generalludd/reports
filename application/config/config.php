@@ -25,7 +25,7 @@ defined ( 'BASEPATH' ) or exit ( 'No direct script access allowed' );
  */
 $allowed_domains = array (
 		'reports.fsmn.org',
-		'docker.dev',
+		'docker.test',
 		'staging.fsmn.org',
 		'reports' 
 );
