@@ -37,10 +37,10 @@
 				class="column-grade assignment-string assignment-field"
 				value="<?php  echo get_value($grade,"points");?>" autocomplete="off" tabindex="<?php  echo $tabindex;?>" />
 			</td>
-			<td class='grade-status'><?php  echo form_dropdown("status",$status, get_value($grade,"status"),sprintf("id='status_%s_%s' class='assignment-field'",$grade->kAssignment,$grade->kStudent));?>
+			<td class='grade-status'><?php  echo form_dropdown("status",$status, get_value($grade,"status"),sprintf("data-id='%s' data-student='%s' id='status_%s_%s' class='assignment-field'",$grade->kAssignment,$grade->kStudent, $grade->kAssignment,$grade->kStudent));?>
 			</td>
 			<td class='grade-footnote'><?php  echo form_dropdown("footnote",$footnotes, get_value($grade,"footnote"),
-					sprintf("id='footnote_%s_%s' class='assignment-field'",$grade->kAssignment, $grade->kStudent));?>
+					sprintf("data-id='%s' data-student='%s' id='footnote_%s_%s' class='assignment-field'",$grade->kAssignment, $grade->kStudent, $grade->kAssignment, $grade->kStudent));?>
 
 			</td>
 			<td class='grade-button'><span style='margin-left: 5px;'
