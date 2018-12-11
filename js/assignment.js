@@ -167,12 +167,12 @@ $(document).ready(function(){
 	});
 	
 	$(".save_cell_grade").live("click",function(){
-		myStudent = $("#kStudent").val();
-		myAssignment = $("#kAssignment").val();
-		myPoints = $("#points_" + myAssignment + "_" + myStudent).val();
-		myStatus = $("#status_" + myAssignment + "_" + myStudent).val();
-		myFootnote = $("#footnote_" + myAssignment + "_" + myStudent).val();
-		form_data = {
+		let myStudent = $("#kStudent").val();
+		let myAssignment = $("#kAssignment").val();
+		let myPoints = $("#points_" + myAssignment + "_" + myStudent).val();
+		let myStatus = $("#status_" + myAssignment + "_" + myStudent).val();
+		let myFootnote = $("#footnote_" + myAssignment + "_" + myStudent).val();
+		let form_data = {
 				kStudent: myStudent,
 				kAssignment: myAssignment,
 				status: myStatus,
@@ -231,15 +231,15 @@ $(document).ready(function(){
 	});
 	
 	$(".assignment-delete").live("click",function(){
-		href = window.location.href;
+		let href = window.location.href;
 
-		choice = confirm("Are you sure you want to delete this assignment? It will delete all the related student grades along with it!");
+		let choice = confirm("Are you sure you want to delete this assignment? It will delete all the related student grades along with it!");
 		if(choice){
-			second_chance = confirm("Are you absolutely sure? This cannot be easily undone if at all.");
+			let second_chance = confirm("Are you absolutely sure? This cannot be easily undone if at all.");
 			if(second_chance){
-				form_data = {
-						kAssignment: $("#kAssignment").val(),
-						url: href
+				let form_data = {
+					kAssignment: $("#kAssignment").val(),
+					url: href
 				};
 				$.ajax({
 					type: "post",
@@ -255,10 +255,9 @@ $(document).ready(function(){
 		}
 
 	});
-	
+
 	$(".update-category, .update-weight, .update-gradeStart, .update-gradeEnd").live("keyup",function(){
 		myId = this.id.split("_")[1];
-		$("#fun").val(myId);
 		$("#update-category_" + myId).fadeIn();
 	});
 	
