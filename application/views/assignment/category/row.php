@@ -24,7 +24,7 @@ $yearEnd = $year + 1;
 
 	</td>
 	<td>
-	<?php  echo form_dropdown("year", get_year_list(FALSE,TRUE), $year ,sprintf("id='year_%s' class='year %s-year'",get_value($category,"kCategory","new"),$action)); ?>
+	<?php  echo form_dropdown("year", get_year_list(FALSE,TRUE), $year ,sprintf("data-id='%s' data-type='year' data-action='new' id='year_%s' class='year %s-year'",get_value($category,"kCategory","new"),$action)); ?>
 	-<input type="text" name="yearEnd" id="yearEnd"
 		readonly value="<?php  echo $yearEnd;?>" size="4" /></td>
 
