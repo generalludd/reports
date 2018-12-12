@@ -371,10 +371,10 @@ class Assignment extends MY_Controller {
 		// redirect('assignment/chart?kTeach=$kTeach&term=$term&year=$year&gradeStart=$gradeStart&gradeEnd=$gradeEnd');
 	}
 
-	/**
-	 * return a table row for creating assignment weight categories
-	 * (AJAX-based).
-	 */
+    /**
+     * @param $kTeach int
+     * @return string
+     */
 	function create_category($kTeach)
 	{
 		$data ['category'] = NULL;
@@ -510,6 +510,7 @@ class Assignment extends MY_Controller {
 		$data ['term'] = $this->input->post ( 'term' );
 		$data ['year'] = $this->input->post ( 'year' );
 		$this->assignment->update_category ( $kCategory, $data );
+		echo $this->db->last_query();
 	}
 
 	/**

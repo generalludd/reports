@@ -257,19 +257,26 @@ $(document).ready(function(){
 	});
 
 	$(".update-category, .update-weight, .update-gradeStart, .update-gradeEnd").live("keyup",function(){
-		myId = this.id.split("_")[1];
+		let myId = this.id.split("_")[1];
 		$("#update-category_" + myId).fadeIn();
 	});
 	
 	$(".category-update").live("click",function(){
-		myId = this.id.split("_")[1];
-		myCategory = $("#category_" + myId).val();
-		myWeight = $("#weight_" + myId).val();
-		myStart = $("#gradeStart_" + myId).val();
-		myEnd = $("#gradeEnd_" + myId).val();
-		myYear = $("#year_" + myId).val();
-		myTerm = $("#term_" + myId).val();
-		form_data = {
+		let myId = $(this).data('category');
+		let myOutput = [];
+		let myData = $("#category-" + myId).find('input');
+		$.each(myData, function(i, field){
+			myOutput.push(field.name + ":" + field.value );
+		});
+
+		let myCategory = $("#category_" + myId).val();
+		let myWeight = $("#weight_" + myId).val();
+		let myStart = $("#gradeStart_" + myId).val();
+		let myEnd = $("#gradeEnd_" + myId).val();
+		let myYear = $("#year_" + myId).val();
+		let myTerm = $("#term_" + myId).val();
+		let form_data = {
+				the_data: myOutput,
 				kCategory: myId,
 				category: myCategory,
 				weight: myWeight,
@@ -278,12 +285,17 @@ $(document).ready(function(){
 				year: myYear,
 				term: myTerm
 		};
+		console.log(form_data);
 		$.ajax({
 			type: "post",
 			url: base_url + "assignment/update_category",
 			data: form_data,
 			success: function(data){
 				$("#update-category_" + myId).fadeOut();
+				console.log(data);
+			},
+			error: function(data){
+				console.log(data);
 			}
 			
 		});
@@ -292,9 +304,11 @@ $(document).ready(function(){
 	});
 	
 	
-	$(".add-category").live("click",function(){
-		myTeach = this.id.split("_")[1];
-		
+	$(".add-category").live("click",function(e){
+		e.preventDefault();
+		let myTeach = $(this).data('teacher');
+		let myURL = $(this).prop("href");
+		console.log(myURL);
 		$.ajax({
 			type:"get",
 			url: base_url + "assignment/create_category/" + myTeach,
@@ -307,15 +321,17 @@ $(document).ready(function(){
 	});
 	
 	$(".category-insert").live("click",function(){
-		myTeach = this.id.split("_")[1];
-		mySubject = $("#tr-teach_" + myTeach + " .insert-subject").val();
-		myCategory = $("#tr-teach_" + myTeach + " .insert-category").val();
-		myWeight = $("#tr-teach_" + myTeach + " .insert-weight").val();
-		myStart = $("#tr-teach_" + myTeach + " .insert-gradeStart").val();
-		myEnd = $("#tr-teach_" + myTeach + " .insert-gradeEnd").val();
-		myYear = $("#tr-teach_" + myTeach + " .insert-year").val();
-		myTerm = $("#tr-teach_" + myTeach + " #term_new").val();
-		form_data = {
+		let myTeach = $(this).data('teacher');
+		let myData = $("#tr-teach_" + myTeach).find('input').serializeArray();
+		console.log(myData[0]);
+		let mySubject = $("#tr-teach_" + myTeach + " .insert-subject").val();
+		let myCategory = $("#tr-teach_" + myTeach + " .insert-category").val();
+		let myWeight = $("#tr-teach_" + myTeach + " .insert-weight").val();
+		let myStart = $("#tr-teach_" + myTeach + " .insert-gradeStart").val();
+		let myEnd = $("#tr-teach_" + myTeach + " .insert-gradeEnd").val();
+		let myYear = $("#tr-teach_" + myTeach + " .insert-year").val();
+		let myTerm = $("#tr-teach_" + myTeach + " #term_new").val();
+		let form_data = {
 				kTeach: myTeach,
 				subject: mySubject,
 				category: myCategory,
@@ -326,6 +342,7 @@ $(document).ready(function(){
 				term: myTerm,
 				ajax: 1
 		};
+		console.log(form_data);
 		$.ajax({
 			type: "post",
 			url: base_url + "assignment/insert_category",
