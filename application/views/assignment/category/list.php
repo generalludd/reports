@@ -20,7 +20,7 @@ $("#category-table").on("blur","input[name='weight']",function(){
 </script>
 <div class="button-box">
 	<ul class="button-list">
-		<li><span class="button new small add-category" id="teach_<?php  echo $kTeach;?>">Add Category</span></li>
+		<li><a href="<?php echo base_url("assignment/create_category/$kTeach");?>" class="button new small add-category" data-teacher="<?php print $kTeach;?>">Add Category</a></li>
 		<?php if(empty($categories)):?>
 		<li><a href="<?php echo site_url("assignment/duplicate_categories?dialog=1");?>" class="button dialog edit small duplicate-categories"
 				title="Duplicate categories from a previous term"
