@@ -434,6 +434,9 @@ ul.button-list li .button.delete {
 textarea {
 	font-size: 1em;
 }
+textarea.full-width{
+	width: 100%;
+}
 
 .delete {
 	float: right;

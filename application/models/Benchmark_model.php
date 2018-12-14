@@ -30,7 +30,7 @@ class Benchmark_model extends MY_Model {
 		for($i = 0; $i < count ( $variables ); $i ++) {
 			$myVariable = $variables [$i];
 			if ($this->input->post ( $myVariable )) {
-				$this->$myVariable = $this->input->post ( $myVariable );
+				$this->$myVariable = addslashes($this->input->post ( $myVariable ));
 			}
 		}
 		
