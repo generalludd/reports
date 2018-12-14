@@ -38,7 +38,7 @@ $footnotes = array();
         <?php foreach ($subject->benchmarks as $benchmark): ?>
             <?php if ($benchmark->category != $current_category): ?>
                 <tr class="benchmark-header">
-                    <td colspan=<?php echo $quarters + 1; ?>><?php echo $benchmark->category; ?></td>
+                    <td colspan=<?php echo $quarters + 1; ?>><?php echo stripslashes($benchmark->category); ?></td>
                 </tr>
                 <?php $current_category = $benchmark->category; ?>
             <?php endif; ?>
@@ -48,7 +48,7 @@ $footnotes = array();
             <?php endforeach; ?>
             <?php if ($my_row): ?>
                 <tr class="benchmark-row">
-                    <td><?php echo $benchmark->benchmark; ?></td>
+                    <td><?php echo stripslashes($benchmark->benchmark); ?></td>
 
                     <?php foreach ($benchmark->quarters as $grade): ?>
 
