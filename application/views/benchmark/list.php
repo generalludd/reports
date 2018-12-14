@@ -32,11 +32,11 @@ if($benchmarks){
 			$thisTerm = $termDisplay;
 		}
 		if($benchmark->category != $thisCategory){
-			$table[] = "<tr class='benchmark-category benchmark-header'><td colspan='7'>Category: $benchmark->category</td></tr>";
+			$table[] = "<tr class='benchmark-category benchmark-header'><td colspan='7'>Category: ". stripslashes($benchmark->category) . "</td></tr>";
 			$thisCategory = $benchmark->category;
 		}
 
- 		$benchmarkRow = sprintf("<tr class='benchmark-row' id='benchmark_%s'><td class='benchmark-text' title='%s, %s'>%s</td>",$benchmark->kBenchmark,$currentGrade, $termDisplay,$benchmark->benchmark);
+ 		$benchmarkRow = sprintf("<tr class='benchmark-row' id='benchmark_%s'><td class='benchmark-text' title='%s, %s'>%s</td>",$benchmark->kBenchmark,$currentGrade, $termDisplay,stripslashes($benchmark->benchmark));
 		$benchmarkRow .= sprintf("<td><a class='link dialog' href='%s'>Edit</a></td>",site_url("benchmark/edit/$benchmark->kBenchmark"));
 		$benchmarkRow .= sprintf("<td><a class='link dialog' href='%s'>Duplicate</a></td>",site_url("benchmark/duplicate/$benchmark->kBenchmark"));
 		$benchmarkRow .= sprintf("<td style='white-space:nowrap;'>Student Entries<br/>
@@ -58,18 +58,13 @@ if($benchmarks){
 
 
 
-//      $chartMessage=getChartMessage($kTeach);
 $term=get_current_term();
 $year=get_current_year();
-//      print $chartMessage;
 
-$buttons[] = array("text"=>"New Benchmark","href"=>site_url("benchmark/create"),"class"=>"dialog new button");
+$buttons[] = array("text"=>"New Benchmark","class"=>"dialog button new","href"=>site_url("benchmark/create"));
 $buttons[] = array("text"=>"Search for Benchmarks","class"=>"button dialog","href"=>site_url("benchmark/search"));
 $buttons[] = array("text"=>"View Chart Legend","class"=>"button dialog edit","href"=>site_url("benchmark_legend/view"));
 
-//$buttons[] = array("text"=>"Edit Chart Legends","class"=>"button dialog edit","href"=>site_url("benchmark_legend/search"));
 print create_button_bar($buttons);
-?>
-<?php 
-//$output .= "<input type='hidden' id='term' name='term' value='$term'/><input type='hidden' id='year' name='year' value='$year>'/>";
+
 print $output;
