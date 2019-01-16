@@ -87,7 +87,11 @@ if (! $print) {
 <h4>Diagnosis/Description</h4>
 	<p><?php  echo $entry->specialNeed;?></p>
 	<p>
-		Has had fall meeting: <strong><?php  echo $had_meeting;?></strong>
+		Has had fall meeting: <strong><?php  echo $had_meeting;?>
+        <?php if($had_meeting == "Yes"):?>
+        (<?php echo format_date($entry->fallMeetingDate);?>)
+        <?php endif;?>
+        </strong>
 	</p>
 	<p>
 		Test Date: <strong><?php  echo $test_date;?></strong>
