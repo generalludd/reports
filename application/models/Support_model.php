@@ -107,6 +107,16 @@ class Support_model extends CI_Model {
 		}
 		return $result;
 	}
+
+	function get_test_dates($kStudent){
+        $this->db->from("support");
+        $this->db->where("kStudent",$kStudent);
+        $this->db->where("testDate IS NOT NULL",FALSE, FALSE);
+        $this->db->select("testDate,year");
+        $this->db->order_by("testDate","ASC");
+        $result =  $this->db->get()->result();
+        return $result;
+    }
 }
 
 

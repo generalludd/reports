@@ -86,6 +86,7 @@ if (! $print) {
 	</p>
 	<p>
 		Test Date: <strong><?php  echo $test_date;?></strong>
+        <?php $this->load->view("support/test_dates",array("current_year"=>$year, "dates"=>$entry->testDates));?>
 	</p>
 	<h4>Outside Support/Treatments</h4>
 	<div><?php  echo $entry->outsideSupport?></div>

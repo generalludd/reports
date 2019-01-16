@@ -27,6 +27,7 @@ class Support extends MY_Controller {
 			$entry->course_preferences = $this->preference->get_all ( $entry->kStudent, array (
 					"school_year" => $entry->year 
 			) );
+			$entry->testDates = $this->support_model->get_test_dates($entry->kStudent);
 		}
 		$data ['support'] = $support;
 		$data ['target'] = "support/list";
@@ -56,7 +57,8 @@ class Support extends MY_Controller {
 		);
 		$this->load->model ( "course_preference_model", "preference" );
 		$support->course_preferences = $this->preference->get_all ( $support->kStudent, $options );
-		$support->student = $student;
+        $support->testDates = $this->support_model->get_test_dates($entry->kStudent);
+        $support->student = $student;
 		$data ['student'] =$student;
 		$data ['entry'] = $support;
 		
@@ -107,7 +109,10 @@ class Support extends MY_Controller {
 		if ($kSupport) {
 			$data ['rich_text'] = TRUE;
 			$data ['action'] = "update";
-			$data ['support'] = $this->support_model->get ( $kSupport );
+			$support = $this->support_model->get ( $kSupport );
+                $support->testDates = $this->support_model->get_test_dates($support->kStudent);
+
+            $data ['support'] = $support;
 			$data ['title'] = "Editing Student Support";
 			$this->load->model ( "file_model" );
 			$data ['support_files'] = $this->file_model->get_all ( $kSupport );
