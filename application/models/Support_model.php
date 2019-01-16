@@ -7,8 +7,7 @@ class Support_model extends CI_Model {
 	var $year;
 	var $specialNeed;
 	var $modification;
-	var $meeting;
-	var $fallMeetingDate;
+	var $meetingNotes;
 	var $strengths;
 	var $strategies;
 	var $testDate;
@@ -28,8 +27,7 @@ class Support_model extends CI_Model {
 				"year",
 				"specialNeed",
 				"modification",
-				"meeting",
-				"fallMeetingDate",
+				"meetingNotes",
 				"strengths",
 				"strategies",
 				"testDate",

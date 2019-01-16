@@ -1,9 +1,4 @@
 <?php
-$meetingChecked = "";
-$meeting = get_value($support, "meeting");
-if ($meeting == 1) {
-    $meetingChecked = "checked";
-}
 
 $iepChecked = "";
 $hasIEP = get_value($support, "hasIEP", 0);
@@ -85,15 +80,10 @@ $button_box = create_button_bar($buttons);
         <input id='yearEnd' name='yearEnd' size="5" maxlength="4" value='<?php echo $year_end; ?>' readonly/>
     </p>
     <p>
-        <label for="meeting">Fall Meeting Completed
-            for <?php echo format_schoolyear(get_value($support, "year", $year)); ?></label>
-        <input type="checkbox" id="meeting" name="meeting" value="1" <?php echo $meetingChecked; ?>
-               class="fall-meeting-completed"/>
+        <label for="meetingNotes">Notes on Meeting(s) Held
+            for <?php echo format_schoolyear(get_value($support, "year", $year)); ?></label><br/>
+        <input type="text" id="meetingNotes" name="meetingNotes" size="100" value="<?php echo get_value($support, "meetingNotes");?>"/>
     </p>
-    <div class="fall-meeting-date <?php echo $meeting != 1 ? "hidden" : ""; ?>">
-        <label for="fallMeetingDate">Meeting Date</label>
-        <input type="date" name="fallMeetingDate" value="<?php echo get_value($support, "fallMeetingDate"); ?>"/>
-    </div>
     <p>
         <label for="hasIEP">Has Active IEP:</label>
         <input type="checkbox" id="hasIEP" name="hasIEP" value="1" <?php echo $iepChecked; ?> />
@@ -220,14 +210,5 @@ $button_box = create_button_bar($buttons);
 <script type="text/javascript">
     $(".show-support-file-uploader").live("mouseover", function () {
         $("#attachment-content-warning").slideDown();
-    });
-    $(".fall-meeting-completed").on("click", function (e) {
-        let my_status = $(this).attr("checked");
-        if (my_status == "checked") {
-            $(".fall-meeting-date").removeClass("hidden");
-        } else {
-            $(".fall-meeting-date").addClass("hidden");
-        }
-
     });
 </script>

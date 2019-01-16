@@ -1,11 +1,4 @@
-<?php #support/view.php
-
-$had_meeting = "No";
-
-
-if($entry->meeting == 1){
-    $had_meeting = "Yes";
-}
+<?php
 
  $has_iep = "No";
  
@@ -55,7 +48,7 @@ print create_button_bar($buttons);
 <?php endif;?>
 <h4>Diagnosis/Description</h4>
 <p><?php  echo $entry->specialNeed;?></p>
-<p>Has had fall meeting: <strong><?php  echo $had_meeting;?></strong></p>
+<p>Notes on Meeting(s) Held: <strong><?php  echo get_value($entry,"meetingsHeld","No");?></strong></p>
 <p>Test Date: <strong><?php  echo $test_date;?></strong></p>
 
 <h4>Outside Support/Treatments</h4>

@@ -90,7 +90,7 @@ function capitalize($key)
 	return ucwords ( $key );
 }
 
-function get_value($object, $item, $default = null)
+function get_value($object, $item, $default = NULL)
 {
 	$output = $default;
 	

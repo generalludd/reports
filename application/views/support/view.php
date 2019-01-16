@@ -14,11 +14,6 @@ if($print): ?>
 	
 <?php endif;
 // support/view.php
-$had_meeting = "No";
-
-if ($entry->meeting == 1) {
-	$had_meeting = "Yes";
-}
 
 $has_iep = "No";
 
@@ -87,16 +82,11 @@ if (! $print) {
 <h4>Diagnosis/Description</h4>
 	<p><?php  echo $entry->specialNeed;?></p>
 	<p>
-		Has had fall meeting: <strong><?php  echo $had_meeting;?>
-        <?php if($had_meeting == "Yes"):?>
-        (<?php echo format_date($entry->fallMeetingDate);?>)
-        <?php endif;?>
-        </strong>
+		Meeting(s) held: <strong><?php echo get_value($entry, "meetingNotes", "No");?></strong>
 	</p>
 	<p>
 		Test Date: <strong><?php  echo $test_date;?></strong>
 	</p>
-
 	<h4>Outside Support/Treatments</h4>
 	<div><?php  echo $entry->outsideSupport?></div>
 	<p>
