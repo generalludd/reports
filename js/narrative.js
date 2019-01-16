@@ -142,7 +142,7 @@ $(".approve_narrative.inline").live("click",function(event){
 		var myNarrative = $("#kNarrative").val();
 		var narrText = $('#narrText').val();
 		var myStudent = $("#kStudent").val();
-		action = confirm("You sure you want to cancel? Any changes you have made will not be saved.\r(Some day I'll be able to tell if you have actually made any changes since the last save.)");
+		action = confirm("You sure you want to cancel? Any changes you have made will not be saved.");
 		if (action) {
 			if (myNarrative != "") {
 				document.location = base_url + "narrative/view/" + myNarrative;
