@@ -177,7 +177,7 @@ if (! empty ( $assignments )) {
 			
 			$rows [$grade->kStudent] ["totals"] = calculate_final_grade ( $grade->final_grade );
 			
-			$rows [$grade->kStudent] ["grades"] [$grade->kAssignment] = sprintf ( "<td class='grade-points edit' id='sag_%s_%s'  title='%s'>%s</td>", $grade->kAssignment, $grade->kStudent, format_name ( $grade->stuNickname, $grade->stuLast ), $points );
+			$rows [$grade->kStudent] ["grades"] [$grade->kAssignment] = sprintf ( "<td class='grade-points edit' id='sag_%s_%s' data-assignment='%s' data-student='%s'  title='%s'>%s</td>", $grade->kAssignment, $grade->kStudent, $grade->kAssignment, $grade->kStudent, format_name ( $grade->stuNickname, $grade->stuLast ), $points );
 		} // end foreach grades
 		
 		foreach ( $rows as $row ) {
