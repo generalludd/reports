@@ -18,6 +18,7 @@ class Student_model extends MY_Model {
 	var $stuEmail;
 	var $stuEmailPermission;
 	var $stuEmailPassword;
+	var $stuLibraryID;
 	var $recModified;
 	var $recModifier;
 
@@ -44,7 +45,8 @@ class Student_model extends MY_Model {
 				'stuEmail',
 				'stuEmailPermission',
 				'stuEmailPassword',
-				'stuGroup' 
+				'stuGroup',
+                'stuLibraryID'
 		);
 		for($i = 0; $i < count ( $variables ); $i ++) {
 			$myVariable = $variables [$i];
