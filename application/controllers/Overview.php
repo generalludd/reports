@@ -30,6 +30,10 @@ class Overview extends MY_Controller {
 				"gradeStart",
 				"gradeEnd" 
 		) );
+		/* if the teacher teaches more than 2 grades (specialists and humanities teachers) we need to narrow the range */
+		if($grade->gradeEnd - $grade->gradeStart > 1){
+		    $grade->gradeEnd = $grade->gradeStart;
+        }
 		$data ['gradeStart'] = $grade->gradeStart;
 		$data ['gradeEnd'] = $grade->gradeEnd;
 		$data ['isActive'] = 1;
