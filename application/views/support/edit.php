@@ -95,7 +95,7 @@ $button_box = create_button_bar($buttons);
     <p>
         <label for="testDate">Date <?php echo $support->stuFirst; ?> was formally tested: </label>
         <input type="date" name="testDate" id="testDate" value="<?php echo $test_date; ?>" size="17">
-        <?php $this->load->view("support/test_dates",array("dates" => $support->testDates, "current_year" => $year));?>
+        <?php $this->load->view("support/test_dates",array("dates" => get_value($support, 'testDates'), "current_year" => $year));?>
     </p>
     <div class='<?php if (get_cookie("accordion") == "enable") {
         print "accordion";
