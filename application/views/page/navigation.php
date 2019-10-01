@@ -31,6 +31,18 @@ $buttons [] = array (
 		"type" => "pass-through" 
 );
 $buttons [] = array (
+  "selection" => "student",
+  "text" => "Organize Classes",
+  "href" => site_url ( "student/edit_classes?search=1&ajax=1" ),
+  "title" => "Organize students into the various classrooms, advisories, A/B, and humanities",
+  "class" => array (
+    "button",
+    "new",
+    "dialog"
+  ),
+  "dbRole" => 1
+);
+$buttons [] = array (
 		"selection" => "attendance",
 		"text" => "Check Attendance",
 		"class" => "search button dialog mobile",
@@ -47,17 +59,7 @@ $buttons [] = array (
 		"title" => "Search attendance records",
 		"dbRole" => 1 
 );
-$buttons [] = array (
-  "selection" => "student",
-  "text" => "Organize Classes",
-  "href" => site_url ( "student/edit_classes?search=1&ajax=1" ),
-  "title" => "Organize students into the various classrooms, advisories, A/B, and humanities",
-  "class" => array (
-    "button",
-    "dialog"
-  ),
-  "dbRole" => 1
-);
+
 $buttons [] = array (
 		"selection" => "student",
 		"text" => "New Student",
