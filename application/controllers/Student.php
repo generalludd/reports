@@ -178,8 +178,24 @@ class Student extends MY_Controller {
 			}
 		}
 		burn_cookie ( "grades" );
+		//because grades can only be organized in specific groupings: k, 1-2, 3-4,
+    // humanities 5-6, humanities 7-8
+    // 5-6A/5-6B, 7-8A/7-8B
 		if ($this->input->get ( "grades" )) {
 			$grades = $this->input->get ( "grades" );
+			switch($grades){
+        case array(1) :
+          $grades = array(1,2);
+          break;
+        case array(3):
+          $grades = array(3,4);
+          break;
+        case array(5):
+          $grades = array(5,6);
+          break;
+        case array(7):
+          $grades = array(7,8);
+      }
 			if (! empty ( $grades )) {
 				$options ['grades'] = $grades;
 				bake_cookie ( "grades", implode ( ",", $grades ) );
