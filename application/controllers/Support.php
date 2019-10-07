@@ -22,7 +22,7 @@ class Support extends MY_Controller
         $data ['student_name'] = format_name($student->stuFirst, $student->stuLast, $student->stuNickname);
         $has_current = $this->support_model->get_current($kStudent);
         $data ['has_current'] = get_value($has_current, "year");
-        $data ['title'] = sprintf("Friends School of Minnesota<br/>Student Support Report for %s", $data ['student_name']);
+        $data ['title'] = sprintf("Friends School of Minnesota<br/>Student Support (504 Plan) Report for %s", $data ['student_name']);
         $support = $this->support_model->get_all($kStudent);
         foreach ($support as $entry) {
 
