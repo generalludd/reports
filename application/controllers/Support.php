@@ -64,7 +64,7 @@ class Support extends MY_Controller
         $data ['student'] = $student;
         $data ['entry'] = $support;
 
-        $data ['title'] = "Learning Support Documentation for $student";
+        $data ['title'] = "Learning Support Documentation (504 Plan) for $student";
         $data ['target'] = "support/view";
         if ($data ['sidebar']) {
             $this->load->view("support/sidebar", $data);
