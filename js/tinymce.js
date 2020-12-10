@@ -3,5 +3,6 @@ tinymce.init({
 	plugins: "quickbars",
 	toolbar: true,
 	menubar: false,
+	browser_spellcheck: true,
 });
 
