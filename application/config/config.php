@@ -1,5 +1,5 @@
 <?php
-defined ( 'BASEPATH' ) or exit ( 'No direct script access allowed' );
+defined('BASEPATH') or exit ('No direct script access allowed');
 
 /*
  * |--------------------------------------------------------------------------
@@ -23,25 +23,25 @@ defined ( 'BASEPATH' ) or exit ( 'No direct script access allowed' );
  * | a PHP script and you can easily do that on your own.
  * |
  */
-$allowed_domains = array (
-		'reports.fsmn.org',
-		'docker.test',
-		'staging.fsmn.org',
-		'reports' 
+$allowed_domains = array(
+  'reports.fsmn.org',
+  'docker.test',
+  'staging.fsmn.org',
+  'reports.test',
 );
-$secure_domains =  array (
-		'reports.fsmn.org',
-		'staging.fsmn.org',
-		'reports' 
+$secure_domains = array(
+  'reports.fsmn.org',
+  'staging.fsmn.org',
 );
 
-if (in_array ( $_SERVER ['HTTP_HOST'], $allowed_domains, TRUE )) {
-	$domain = $_SERVER ['HTTP_HOST'];
+if (in_array($_SERVER ['HTTP_HOST'], $allowed_domains, TRUE)) {
+  $domain = $_SERVER ['HTTP_HOST'];
 }
-if (in_array ( $domain,$secure_domains)) {
-	$protocol = "https://";
-} else {
-	$protocol = "http://";
+if (in_array($domain, $secure_domains)) {
+  $protocol = "https://";
+}
+else {
+  $protocol = "http://";
 }
 
 $config ['base_url'] = $protocol . $domain;
@@ -235,10 +235,11 @@ $config ['directory_trigger'] = 'd';
  * |
  */
 
-if($_SERVER ['HTTP_HOST'] == "reports.fsmn.org"){
-	$log_threshold = 1;
-}else{
-	$log_threshold = 4;
+if ($_SERVER ['HTTP_HOST'] == "reports.fsmn.org") {
+  $log_threshold = 1;
+}
+else {
+  $log_threshold = 4;
 }
 $config ['log_threshold'] = $log_threshold;
 
@@ -395,21 +396,22 @@ $config ['encryption_key'] = '35af20d423f5327bc9f6ae95c8f245c0';
  * |
  */
 if ($domain == "reports") {
-	$config ['sess_driver'] = 'files';
-	$config ['sess_cookie_name'] = 'ci_session';
-	$config ['sess_expiration'] = 28800;
-	$config ['sess_save_path'] = '/tmp';
-	$config ['sess_match_ip'] = FALSE;
-	$config ['sess_time_to_update'] = 3600;
-	$config ['sess_regenerate_destroy'] = FALSE;
-} else {
-	$config ['sess_driver'] = 'database';
-	$config ['sess_cookie_name'] = 'ci_session';
-	$config ['sess_expiration'] = 28800;
-	$config ['sess_save_path'] = 'user_sessions';
-	$config ['sess_match_ip'] = FALSE;
-	$config ['sess_time_to_update'] = 3600;
-	$config ['sess_regenerate_destroy'] = FALSE;
+  $config ['sess_driver'] = 'files';
+  $config ['sess_cookie_name'] = 'ci_session';
+  $config ['sess_expiration'] = 28800;
+  $config ['sess_save_path'] = '/tmp';
+  $config ['sess_match_ip'] = FALSE;
+  $config ['sess_time_to_update'] = 3600;
+  $config ['sess_regenerate_destroy'] = FALSE;
+}
+else {
+  $config ['sess_driver'] = 'database';
+  $config ['sess_cookie_name'] = 'ci_session';
+  $config ['sess_expiration'] = 28800;
+  $config ['sess_save_path'] = 'user_sessions';
+  $config ['sess_match_ip'] = FALSE;
+  $config ['sess_time_to_update'] = 3600;
+  $config ['sess_regenerate_destroy'] = FALSE;
 }
 
 /*
@@ -480,7 +482,7 @@ $config ['csrf_token_name'] = 'csrf_test_name';
 $config ['csrf_cookie_name'] = 'csrf_cookie_name';
 $config ['csrf_expire'] = 7200;
 $config ['csrf_regenerate'] = TRUE;
-$config ['csrf_exclude_uris'] = array ();
+$config ['csrf_exclude_uris'] = array();
 
 /*
  * |--------------------------------------------------------------------------
@@ -518,7 +520,7 @@ $config ['compress_output'] = FALSE;
 $config ['time_reference'] = 'local';
 
 // the above doesn't work, so here we are!
-date_default_timezone_set ( 'America/Chicago' );
+date_default_timezone_set('America/Chicago');
 
 /*
  * |--------------------------------------------------------------------------
