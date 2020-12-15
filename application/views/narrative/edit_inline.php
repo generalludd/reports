@@ -8,8 +8,7 @@
 	<input type="hidden"
     name="kTeach" id="kTeach" value='<?php  echo "$narrative->kTeach"; ?>' />
 
-<div><textarea id="narrText_<?php echo $narrative->kNarrative;?>" name="narrText" class="tinymce"
-	style="width: 99.75%;" rows="19" cols="107"><?php  echo stripslashes($narrative->narrText);?></textarea></div>
+<div><textarea id="narrText_<?php echo $narrative->kNarrative;?>" name="narrText" class="tinymce" style="width: 99.75%;" rows="19" cols="107"><?php  echo stripslashes($narrative->narrText);?></textarea></div>
 <p><span class="button new save_narrative_inline">Save</span></p>
 </form>
 <script src="<?php echo base_url("js/tinymce.js");?>"></script>

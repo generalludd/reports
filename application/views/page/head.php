@@ -37,7 +37,8 @@ var root_url = '<?php  echo base_url();?>';
 <!-- Rich Text Editor Script -->
 <!-- TODO: add this only when on a rich-text editing page -->
 <?php if(isset($rich_text)):?>
-<script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
+<!-- <script src="//cdn.tinymce.com/4/tinymce.min.js"></script> -->
+ <script src="https://cdn.tiny.cloud/1/2eh2l4do7yifx4iq1fja4ochv3x67wrtqinf8h6zopls3g97/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
 <script src="<?php echo base_url("js/tinymce.js");?>"></script>
 	
 <?php endif; ?>
