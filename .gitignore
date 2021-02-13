@@ -18,9 +18,5 @@ user_guide/*
 /.project
 /.buildpath
 /.idea
-application/config/email.php
 
-application/config/email.php
-
-application/config/email.php
 /uploads/
