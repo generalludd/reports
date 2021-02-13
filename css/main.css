@@ -193,7 +193,7 @@ div.login-title {
 
 #new_popup {
 	display: none;
-	visibility: block;
+	visibility: hidden;
 }
 
 /*general display elements */
@@ -333,7 +333,8 @@ td .button, .row .button, .button.small, .button-box.small .button {
 }
 
 td .button {
-	padding: .35em inherit;
+	padding-top: .35rem;
+	padding-bottom: .35rem;
 }
 
 a, .button {
@@ -430,7 +431,6 @@ ul.button-list li .button.delete {
 	
 }
 
-}
 textarea {
 	font-size: 1em;
 }
@@ -448,6 +448,7 @@ textarea.full-width{
 
 label {
 	font-weight: bold;
+	font-size: 1rem;
 }
 
 legend {
@@ -1551,4 +1552,17 @@ blockquote {
 		min-width: inherit;
 		width: 100%;
 	}
+}
+
+select, input {
+	padding: .4rem;
+	border-radius: 3px;
+	border-color: #757575;
+	margin: .25rem .25rem;
+	font-size: inherit;
+	border-style: solid;
+	border-width: 1px;
+}
+input[type="text"], input[type="date"], input[type="number"] {
+
 }
