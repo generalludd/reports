@@ -23,20 +23,18 @@ defined('BASEPATH') or exit ('No direct script access allowed');
  * | a PHP script and you can easily do that on your own.
  * |
  */
-$allowed_domains = array(
+$allowed_domains = [
   'reports.fsmn.org',
   'docker.test',
   'staging.fsmn.org',
   'reports.test',
-);
-$secure_domains = array(
+];
+$secure_domains = [
   'reports.fsmn.org',
   'staging.fsmn.org',
-);
+];
+$domain = $_SERVER ['HTTP_HOST'];
 
-if (in_array($_SERVER ['HTTP_HOST'], $allowed_domains, TRUE)) {
-  $domain = $_SERVER ['HTTP_HOST'];
-}
 if (in_array($domain, $secure_domains)) {
   $protocol = "https://";
 }
@@ -482,7 +480,7 @@ $config ['csrf_token_name'] = 'csrf_test_name';
 $config ['csrf_cookie_name'] = 'csrf_cookie_name';
 $config ['csrf_expire'] = 7200;
 $config ['csrf_regenerate'] = TRUE;
-$config ['csrf_exclude_uris'] = array();
+$config ['csrf_exclude_uris'] = [];
 
 /*
  * |--------------------------------------------------------------------------
