@@ -42,23 +42,25 @@ $buttons [] = array (
   ),
   "dbRole" => 1
 );
-$buttons [] = array (
-		"selection" => "attendance",
-		"text" => "Check Attendance",
-		"class" => "search button dialog mobile",
-		"href" => site_url ( "attendance/check?search=1" ) 
-);
-$buttons [] = array (
-		"selection" => "attendance",
-		"text" => "Search Attendance",
-		"class" => array (
-				"button",
-				"dialog" 
-		),
-		"href" => site_url ( "attendance/show_search" ),
-		"title" => "Search attendance records",
-		"dbRole" => 1 
-);
+
+
+//$buttons [] = array (
+//		"selection" => "attendance",
+//		"text" => "Check Attendance",
+//		"class" => "search button dialog mobile",
+//		"href" => site_url ( "attendance/check?search=1" )
+//);
+//$buttons [] = array (
+//		"selection" => "attendance",
+//		"text" => "Search Attendance",
+//		"class" => array (
+//				"button",
+//				"dialog"
+//		),
+//		"href" => site_url ( "attendance/show_search" ),
+//		"title" => "Search attendance records",
+//		"dbRole" => 1
+//);
 
 $buttons [] = array (
 		"selection" => "student",
@@ -141,28 +143,28 @@ $buttons [] = array (
 		"dbRole" => 2 
 );
 if ($dbRole == 2) {
-	if ($isAdvisor) {
-		$buttons [] = array (
-				
-				"selection" => "report/get_list",
-				"text" => sprintf ( "%ss%s", STUDENT_REPORT, $count ),
-				"href" => site_url ( "report/get_list/advisor/$userID" ),
-				"title" => sprintf ( "Show your %ss %s", strtolower ( STUDENT_REPORT ), $count_text ) 
-		);
-	}
-	if ($gradeEnd > 4) {
-		$buttons [] = array (
-				"selection" => "assignment",
-				"text" => "Grades",
-				"class" => array (
-						"button",
-						"dialog" 
-				),
-				"id" => "sa_$userID",
-				"title" => "Search for current grade charts",
-				"href" => site_url ( "assignment/search/$userID" ) 
-		);
-	}
+//	if ($isAdvisor) {
+//		$buttons [] = array (
+//
+//				"selection" => "report/get_list",
+//				"text" => sprintf ( "%ss%s", STUDENT_REPORT, $count ),
+//				"href" => site_url ( "report/get_list/advisor/$userID" ),
+//				"title" => sprintf ( "Show your %ss %s", strtolower ( STUDENT_REPORT ), $count_text )
+//		);
+//	}
+//	if ($gradeEnd > 4) {
+//		$buttons [] = array (
+//				"selection" => "assignment",
+//				"text" => "Grades",
+//				"class" => array (
+//						"button",
+//						"dialog"
+//				),
+//				"id" => "sa_$userID",
+//				"title" => "Search for current grade charts",
+//				"href" => site_url ( "assignment/search/$userID" )
+//		);
+//	}
 	
 	$buttons [] = array (
 			"selection" => "student",
@@ -174,7 +176,7 @@ if ($dbRole == 2) {
 if($dbRole==2 || $dbRole ==3){
 	$buttons [] = array (
 			"selection" => "student",
-			"text" => "View Classes",
+			"text" => "View Class Groups",
 			"href" => site_url ( "student/view_classes?search=1&ajax=1" ),
 			"title" => "View students in the various classrooms, advisories, A/B, and humanities",
 			"class" => array (
