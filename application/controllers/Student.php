@@ -46,7 +46,7 @@ class Student extends MY_Controller {
 	function find_by_name()
 	{
 		$stuName = $this->input->get ( "stuName" );
-		$data ['criteria'] = array ();
+		$data ['criteria'] = [];
 		$target = "student/list";
 		if ($this->input->get ( "type" ) == "mini") {
 			$target = "student/mini_list";
@@ -323,9 +323,8 @@ class Student extends MY_Controller {
 		echo $result;
 	}
 
-	function teacher_student_list()
+	function teacher_student_list($kTeach)
 	{
-		$kTeach = $this->uri->segment ( 3 );
 		$data ['students'] = $this->student_model->get_students_by_class ( $kTeach );
 		$data ['target'] = "student/list";
 		$data ['title'] = "Student List";

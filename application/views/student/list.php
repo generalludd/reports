@@ -6,6 +6,9 @@ $default_row_style = array (
 		"student-row",
 		"row" 
 );
+if(empty($criteria)){
+    $criteria = [];
+}
 ?>
 <!-- student/list.php -->
 <div class='student_list'>
