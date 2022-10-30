@@ -208,7 +208,11 @@ class Student extends MY_Controller {
 		}
 		$options ['grouping'] = TRUE;
 		$options ['gender'] = TRUE;
-		$data ['students'] = $this->student_model->get_all ( $year, $options );
+		$students = $this->student_model->get_all ( $year, $options );
+    usort($students, function($a, $b){
+       return strcmp($a->stuLast, $b->stuLast);
+    });
+    $data['students'] = $students;
 		switch ($type) {
 			case "humanitiesTeacher" :
 				$data ['groups'] = $this->teacher_model->get_for_subject ( "Humanities" );
