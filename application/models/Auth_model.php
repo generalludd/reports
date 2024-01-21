@@ -50,7 +50,7 @@ class Auth_model extends CI_Model {
     $count = $query->num_rows();
     $output = FALSE;
     if ($count == 1) {
-      $output = $query->row();
+      $output = TRUE;
     }
     return $output;
   }
@@ -95,7 +95,7 @@ class Auth_model extends CI_Model {
    *
    * @param string|null $old
    *
-   * @return boolean
+   * @return \stdClass|null if the process works, return true, if it doesn't (ie. old password is not
    * if the process works, return true, if it doesn't (ie. old password is not
    *   found), returns false.
    */
