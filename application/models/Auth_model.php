@@ -95,20 +95,22 @@ class Auth_model extends CI_Model {
    *
    * @param string|null $old
    *
-   * @return \stdClass|null if the process works, return true, if it doesn't (ie. old password is not
+   * @return bool if the process works, return true, if it doesn't (ie. old password is not
    * if the process works, return true, if it doesn't (ie. old password is not
    *   found), returns false.
    */
-  function change_password(int $kTeach,  string $new, string $old = NULL): ?stdClass{
+  function change_password(int $kTeach,  string $new, string $old = NULL): bool {
     $result = FALSE;
     $username = $this->get_username($kTeach);
     $userID = $this->session->userdata ( "userID" );
+    $clear_hash = TRUE;
 
-    if ($userID == ROOT_USER || $kTeach !== $userID) {
+    if ($userID == ROOT_USER && $kTeach != $userID) {
       $this->load->model('teacher_model', 'teacher');
       $user = $this->teacher->get($kTeach);
       $is_valid = TRUE;
       $old_password = $user->pwd;
+      $clear_hash = FALSE;
     } else {
       $is_valid = $this->validate($username, $old);
       $old_password = $this->encrypt($old);
@@ -117,6 +119,9 @@ class Auth_model extends CI_Model {
       $this->db->where("username", $username);
       $this->db->where("pwd", $old_password);
       $data["pwd"] = $this->encrypt($new);
+      if($clear_hash){
+        $data["resetHash"] = "";
+      }
       $this->db->update("teacher", $data);
       if ($this->validate($username, $new)) {
         $result = TRUE;

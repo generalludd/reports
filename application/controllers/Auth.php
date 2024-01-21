@@ -28,7 +28,7 @@ class Auth extends CI_Controller {
    * experience.
    * (No secure data is publised to these cookies)
    */
-  function login() {
+  function login(): void {
     $redirect = FALSE;
     $username = "";
     if ($this->input->post("username") && $this->input->post("password")) {
@@ -42,7 +42,6 @@ class Auth extends CI_Controller {
         $data['username'] = $username;
         $data['dbRole'] = $result->dbRole;
         $data['userID'] = $result->kTeach;
-
         //useful cookies for enhanced user experience
         bake_cookie("gradeStart", $result->gradeStart);
         bake_cookie("gradeEnd", $result->gradeEnd);
@@ -97,8 +96,10 @@ class Auth extends CI_Controller {
   }
 
   function edit_password(): void {
+    $this->load->model('teacher_model','teacher');
     $kTeach = $this->input->get("kTeach");
     $userID = $this->session->userdata("userID");
+    $data['name'] = $this->teacher->get_name($kTeach);
     if ($kTeach == $userID || $userID == ROOT_USER) {
       $data['userID'] = $userID;
       $data['kTeach'] = $kTeach;
@@ -118,16 +119,25 @@ class Auth extends CI_Controller {
    * This is entirely dependent on ajax and does not function properly without
    * that aspect of the UI.
    */
-  function change_password() {
+  function change_password(): void {
     //declare the default response.
-    $output = "You are not authorized to do this!";
 
     $kTeach = $this->input->post("kTeach");
     $userID = $this->session->userdata("userID");
+    if($kTeach != $userID || $userID == ROOT_USER){
+     // we need to validate the that Root user has entered their correct password.
+      // Load the root user.
+      $this->load->model('teacher_model', 'teacher');
+      $user = $this->teacher->get(ROOT_USER);
+      $is_valid = $this->auth_model->validate($user->username, $this->input->post("current_password"));
+      if(!$is_valid){
+        $this->session->set_flashdata('warning',  'You did not enter your correct password. Please try again.');
+        redirect('teacher/view/' . $kTeach);
+      }
+    }
 
     //Unauthorized users are those who are not the ROOT_USER and are trying to change someone else's password
     if ($kTeach == $userID || $userID == ROOT_USER) {
-      $output = "The passwords did not match";
       $current_password = $this->input->post("current_password");
 
       $new_password = $this->input->post("new_password");
@@ -137,7 +147,15 @@ class Auth extends CI_Controller {
       if ($new_password === $check_password) {
         $result = $this->auth_model->change_password($kTeach, $new_password, $current_password);
         if ($result) {
-          $this->session->set_flashdata('notice', 'Your password has been successfully changed');
+          $flash_message[] = 'The password has been successfully changed';
+          $message_type = 'alert';
+          if($userID == ROOT_USER && $kTeach != $userID){
+            $resetHash = $this->auth_model->set_resetHash($kTeach);
+            $link = site_url("auth/show_reset/$kTeach/$resetHash");
+            $flash_message[] = 'Email this link to the user so they can reset their password.' . $link;
+            $message_type = 'notice';
+          }
+          $this->session->set_flashdata($message_type, implode('<br/>', $flash_message));
         }
         else {
           $this->session->set_flashdata('warning',  'Your original password did not match the one in the database. Please try again');

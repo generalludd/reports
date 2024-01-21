@@ -30,9 +30,9 @@
         window.print();
     });
 	
-	$(".alert,.message,.warning,.notice").live("mouseup",function(){
-		$(this).fadeOut("slow");
-	});
+	// $(".alert,.message,.warning,.notice").live("mouseup",function(){
+	// 	$(this).fadeOut("slow");
+	// });
 		
 	 $("#sortable").sortable({
 	      handle : '.handle',

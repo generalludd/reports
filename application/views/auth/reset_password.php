@@ -35,7 +35,7 @@ endif;
       </p>
     </div>
     <p><input type="submit" name="submit" id="change-password" class="button"
-              style="display:none" value="Reset"/></p>
+               value="Reset"/></p>
 
   </form>
 </div>

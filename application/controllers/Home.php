@@ -12,7 +12,14 @@ class Home extends MY_Controller {
 
 	function index()
 	{
-		$this->load->model ( "menu_model" );
+    $this->load->model ( "teacher_model", "teacher" );
+    $user = $this->teacher->get($this->session->userdata("userID"));
+    if(!empty($user->resetHash)){
+      $message = sprintf('<h3>%s, your password was reset by an administrator. please <a href="%s" class="dialog edit">click here </a> to change your password.</h3>',$user->teachFirst,  site_url("auth/edit_password?kTeach=$user->kTeach"));
+      $this->session->set_flashdata('warning',  $message);
+    }
+
+    $this->load->model ( "menu_model" );
 		if ($this->input->get ( "refine" )) {
 			$data ['refine'] = TRUE;
 		} else {
