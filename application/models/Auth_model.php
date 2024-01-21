@@ -173,7 +173,6 @@ class Auth_model extends CI_Model {
    * @param 32bit varchar $resetHash
    * @param string $password
    *
-   * @return boolean
    * using the hash from a uri as validation, this allows a user to reset a
    *   lost password
    */
