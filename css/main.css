@@ -102,11 +102,9 @@ div.login {
 }
 
 div.login.errors {
-	height: 300px;
 }
 
 #login_form {
-	margin-top: 3em;
 }
 
 div.login-inputs {
@@ -154,17 +152,14 @@ div.login-title {
 	box-shadow: 1px 1px 1px #000;
 }
 
-#login_form .login-text, .reset-fields input, .reset-fields label {
+#login_form .login-text, .reset-fields input, .reset-fields label, .password-reset {
 	width: 90%;
 	margin-left: auto;
 	margin-right: auto;
 	padding: 5px;
 }
 
-#password-resetter {
-	display: block;
-	margin-left: auto;
-	margin-right: auto;
+.password-reset {
 	width: 300px;
 }
 
@@ -369,6 +364,9 @@ a.button, input[type='submit'].button {
 	text-decoration: none;
 	margin: 0 .25em;
 	display: inline-block;
+}
+a.button.hidden, input[type='submit'].button.hidden {
+	display: none;
 }
 
 .button-box {
@@ -1562,4 +1560,9 @@ select, input {
 }
 input[type="text"], input[type="date"], input[type="number"] {
 
+}
+
+
+.hidden {
+	display: none;
 }

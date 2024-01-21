@@ -83,7 +83,7 @@ class Assignment_model extends MY_Model {
 	 * grouping and an optional date-range limiter.
 	 *
 	 * @param int $kTeach
-	 * @param varchar $term
+	 * @param string $term
 	 * @param int $year
 	 * @param int $gradeStart
 	 * @param int $gradeEnd
@@ -253,7 +253,7 @@ class Assignment_model extends MY_Model {
 	/**
 	 *
 	 * @param int $kTeach
-	 * @param varchar $term
+	 * @param string $term
 	 * @param int $year
 	 * @param int $gradeStart
 	 * @param int $gradeEnd

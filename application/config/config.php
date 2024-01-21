@@ -1,4 +1,5 @@
 <?php
+
 defined('BASEPATH') or exit ('No direct script access allowed');
 
 /*
@@ -23,24 +24,15 @@ defined('BASEPATH') or exit ('No direct script access allowed');
  * | a PHP script and you can easily do that on your own.
  * |
  */
-$allowed_domains = [
-  'reports.fsmn.org',
-  'docker.test',
-  'staging.fsmn.org',
-  'reports.test',
-];
+
 $secure_domains = [
   'reports.fsmn.org',
   'staging.fsmn.org',
+  'reports.ddev.site',
 ];
 $domain = $_SERVER ['HTTP_HOST'];
 
-if (in_array($domain, $secure_domains)) {
-  $protocol = "https://";
-}
-else {
-  $protocol = "http://";
-}
+$protocol = "https://";
 
 $config ['base_url'] = $protocol . $domain;
 

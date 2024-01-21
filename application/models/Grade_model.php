@@ -82,7 +82,7 @@ class Grade_model extends MY_Model
     /**
      *
      * @param int $kStudent
-     * @param varchar $term
+     * @param string $term
      * @param int $year
      *            Does the student have grades for the given term?
      */
@@ -102,7 +102,7 @@ class Grade_model extends MY_Model
      *
      * @param int $kAssignment
      * @param int $kTeach
-     * @param varchar $term
+     * @param string $term
      * @param in $year
      *            Finds all the students with a given assignment of the same
      *            term, teacher
@@ -175,7 +175,7 @@ class Grade_model extends MY_Model
      * @param int $kStudent
      * @param int $kAssignment
      * @param double $points
-     * @param varchar $status
+     * @param string $status
      * @param int $footnote
      * @return boolean or insert id
      *         updates and also inserts (if the kStudent-kAssignment pair is not
@@ -210,8 +210,8 @@ class Grade_model extends MY_Model
      *
      * @param int $kStudent
      * @param int $kAssignment
-     * @param varchar $key
-     * @param varchar $value
+     * @param string $key
+     * @param string $value
      * @return FALSE or key name
      *         update a grade value based on kStudent and kAssignment
      */
@@ -237,7 +237,7 @@ class Grade_model extends MY_Model
     /**
      *
      * @param int $kStudent
-     * @param varchar $term
+     * @param string $term
      * @param int $year
      * @param
      *            options array optional expects cutoff_date: standard US date
