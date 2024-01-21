@@ -99,7 +99,7 @@ class Auth_model extends CI_Model {
    * if the process works, return true, if it doesn't (ie. old password is not
    *   found), returns false.
    */
-  function change_password(int $kTeach,  string $new, string $old = NULL,): bool {
+  function change_password(int $kTeach,  string $new, string $old = NULL): ?stdClass{
     $result = FALSE;
     $username = $this->get_username($kTeach);
     $userID = $this->session->userdata ( "userID" );
