@@ -29,6 +29,7 @@ $secure_domains = [
   'reports.fsmn.org',
   'staging.fsmn.org',
   'reports.ddev.site',
+  'phpstack-853172-4244613.cloudwaysapps.com',
 ];
 $domain = $_SERVER ['HTTP_HOST'];
 
