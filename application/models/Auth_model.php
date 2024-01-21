@@ -19,7 +19,7 @@ class Auth_model extends CI_Model {
    * @return boolean
    * does the username exist in the database?
    */
-  function is_user($username) {
+  function is_user(string $username): bool {
     $this->db->where("username", $username);
     $this->db->from("teacher");
     $count = $this->db->get()->num_rows();
@@ -41,7 +41,7 @@ class Auth_model extends CI_Model {
    * match a username to a password and return basic user information for
    *   starting a login session
    */
-  function validate($username, $password) {
+  function validate(string $username, string $password): bool {
     $this->db->where("username", $username);
     $this->db->where("pwd", $this->encrypt($password));
     $this->db->select("teacher.kTeach as kTeach, dbRole,gradeStart,gradeEnd,isAdvisor");
@@ -60,7 +60,7 @@ class Auth_model extends CI_Model {
    * @param int $kTeach
    * get the permissions of the specific user
    */
-  function get_role($kTeach) {
+  function get_role(int $kTeach) {
     $this->db->where("kTeach", $kTeach);
     $this->db->select("dbRole");
     $this->db->from("teacher");
@@ -73,7 +73,7 @@ class Auth_model extends CI_Model {
    * @param string $role
    * set the database role of a given user (admin, teacher, editor, aide)
    */
-  function set_role($kTeach, $role) {
+  function set_role(int $kTeach, string $role): void {
     $this->db->where("kTeach", $kTeach);
     $data["dbRole"] = $role;
     $this->db->update("teacher", $data);
@@ -83,7 +83,7 @@ class Auth_model extends CI_Model {
    * @param int $kTeach
    * get the short name for a given user id
    */
-  function get_username($kTeach) {
+  function get_username(int $kTeach) {
     $this->load->model("teacher_model");
     $teacher = $this->teacher_model->get($kTeach, "username");
     return $teacher->username;
@@ -131,7 +131,7 @@ class Auth_model extends CI_Model {
    * @return string
    * convert any varchar into a 32bit md5 encrypted string
    */
-  function encrypt($text) {
+  function encrypt(string $text): string {
     return md5(md5($text));
   }
 
