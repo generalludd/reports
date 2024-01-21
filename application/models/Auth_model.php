@@ -91,8 +91,9 @@ class Auth_model extends CI_Model {
 
   /**
    * @param int $kTeach
-   * @param string $old
    * @param string $new
+   *
+   * @param string|null $old
    *
    * @return boolean
    * if the process works, return true, if it doesn't (ie. old password is not
