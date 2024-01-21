@@ -37,20 +37,20 @@ class Auth_model extends CI_Model {
    * @param string $username
    * @param string $password
    *
-   * @return boolean
+   * @return \stdClass|null match a username to a password and return basic user information for
    * match a username to a password and return basic user information for
    *   starting a login session
    */
-  function validate(string $username, string $password): bool {
+  function validate(string $username, string $password): ?stdClass {
     $this->db->where("username", $username);
     $this->db->where("pwd", $this->encrypt($password));
     $this->db->select("teacher.kTeach as kTeach, dbRole,gradeStart,gradeEnd,isAdvisor");
     $this->db->from("teacher");
     $query = $this->db->get();
     $count = $query->num_rows();
-    $output = FALSE;
+    $output = NULL;
     if ($count == 1) {
-      $output = TRUE;
+      $output = $query->row();
     }
     return $output;
   }
@@ -189,7 +189,7 @@ class Auth_model extends CI_Model {
    * usually logs logins and log-outs. This could be used for other purposes,
    *   but is not
    */
-  function log($kTeach, $action) {
+  function log(int $kTeach, string $action): void {
     $data["kTeach"] = $kTeach;
     $data["action"] = $action;
     $data["time"] = mysql_timestamp();
