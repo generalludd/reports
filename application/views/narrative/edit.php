@@ -116,9 +116,9 @@ if(!empty($conditional_buttons)){
 		echo $conditional_bar;
 	} ?>
 
-		<textarea id="narrText" name="narrText" class="tinymce"
-		 rows="19" cols="107">
-			<?php  echo get_value($narrative, 'narrText', $narrText);?>
+    <textarea id="narrText" name="narrText" class="ckeditor auto-save"
+                                            rows="19" cols="107">
+  <?php echo htmlspecialchars(get_value($narrative, 'narrText', $narrText), ENT_QUOTES, 'UTF-8'); ?>
         </textarea>
 	</p>
 </form>
