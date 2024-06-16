@@ -37,7 +37,7 @@ class Overview extends MY_Controller {
 		$data ['gradeStart'] = $grade->gradeStart;
 		$data ['gradeEnd'] = $grade->gradeEnd;
 		$data ['isActive'] = 1;
-		$data ['rich_text'] = TRUE;
+		$data['scripts'] = ['ckeditor.js', 'editor.js'];
 		$data ['target'] = "overview/edit";
 		$data ['action'] = "insert";
 		$data ['title'] = "Editing a Subject Overview";
@@ -91,7 +91,7 @@ class Overview extends MY_Controller {
 				"value",
 				"label" 
 		) );
-		$data ['rich_text'] = TRUE;
+		$data['scripts'] = ['ckeditor.js', 'editor.js'];
 		$data ['target'] = "overview/edit";
 		$data ['action'] = "update";
 		$data ['title'] = "Editing a Subject Overview";
