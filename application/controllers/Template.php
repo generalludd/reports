@@ -164,7 +164,7 @@ class Template extends MY_Controller {
 				"value",
 				"label" 
 		) );
-		$data ['rich_text'] = TRUE;
+		$data['scripts'] = ['ckeditor.js', 'editor.js'];
 		$data ['target'] = "template/edit";
 		$data ['action'] = "update";
 		$data ['title'] = "Editing a Subject Template";
@@ -202,7 +202,7 @@ class Template extends MY_Controller {
 				"subject" 
 		), FALSE );
 		$data ['template'] = FALSE;
-		$data ['rich_text'] = TRUE;
+		$data['scripts'] = ['ckeditor.js', 'editor.js'];
 		$data ['target'] = "template/edit";
 		$data ['action'] = "insert";
 		$data ['title'] = "Creating a New Subject Template";

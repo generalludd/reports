@@ -103,7 +103,8 @@ $(".template_search").live("click", function(event){
 });
 
 function save_continue_template(){
-		tinyMCE.triggerSave();
+	let template = window.editor.getData('html');
+	$("#template").val(template);
 		var my_action=$('#action').val();
 		$("#ajax").val(1);
 		var form_data = $("#template_editor").serialize();
