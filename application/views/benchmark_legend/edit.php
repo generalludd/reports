@@ -23,7 +23,7 @@ value="<?php echo get_value($legend, "gradeEnd", get_cookie("benchmark_grade_end
 	id="title" name="title" required value="<?php echo get_value($legend,"title");?>" /></p>
 
 <p><label for="legend">Legend:</label><br />
-<textarea id='legend'  name='legend' class="tinymce" style="width: 100%;height:100px"><?php echo get_value($legend, "legend");?></textarea></p>
+<textarea id='legend'  name='legend' class="ckeditor" style="width: 100%;height:100px"><?php echo get_value($legend, "legend");?></textarea></p>
 
 <p><input type="submit" class='save_legend button' value="Save" /></p>
 </form>

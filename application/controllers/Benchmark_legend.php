@@ -66,7 +66,7 @@ class benchmark_legend extends MY_Controller {
 				"subject",
 				"subject" 
 		), FALSE );
-		$data ['rich_text'] = TRUE;
+		$data ['scripts'] = ['ckeditor.js', 'editor.js'];
 		$data ['action'] = "update";
 		$data ['target'] = "benchmark_legend/edit";
 		$data ['title'] = "Editing Benchmark Legend";
@@ -87,7 +87,7 @@ class benchmark_legend extends MY_Controller {
 				"subject",
 				"subject" 
 		), FALSE );
-		$data ['rich_text'] = TRUE;
+		$data['scripts'] = ['ckeditor.js', 'editor.js'];
 		$data ['action'] = "insert";
 		$data ['target'] = "benchmark_legend/edit";
 		$data ['title'] = "Create a New Legend";
