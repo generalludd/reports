@@ -82,7 +82,7 @@ class Support extends MY_Controller
             } else {
                 $data ['year'] = get_current_year();
             }
-            $data ['rich_text'] = TRUE;
+            $data['scripts'] = ['ckeditor.js', 'editor.js'];
             $data ['action'] = "insert";
             $data ['support'] = $this->student_model->get($kStudent);
             $data ['title'] = "Add Student Support Documentation";
@@ -109,7 +109,7 @@ class Support extends MY_Controller
     function edit($kSupport)
     {
         if ($kSupport) {
-            $data ['rich_text'] = TRUE;
+            $data['scripts'] = ['ckeditor.js', 'editor.js'];
             $data ['action'] = "update";
             $support = $this->support_model->get($kSupport);
             $support->testDates = $this->support_model->get_test_dates($support->kStudent);

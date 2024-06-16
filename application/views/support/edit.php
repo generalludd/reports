@@ -106,7 +106,7 @@ $button_box = create_button_bar($buttons);
         <div>
 
             <p class="notice">Enter ONLY the student's strengths here.</p>
-            <textarea name="strengths" id="strengths" class="tinymce" style="width: 99%" rows="10" cols="91"
+            <textarea name="strengths" id="strengths" class="ckeditor" style="width: 99%" rows="10" cols="91"
                       readonly><?php echo get_value($support, "strengths"); ?></textarea>
 
         </div>
@@ -118,7 +118,7 @@ $button_box = create_button_bar($buttons);
         <div>
 
             <p class="notice">Strategies in place for students</p>
-            <textarea name="strategies" id="strategies" class="tinymce" style="width: 99%" rows="15" cols="91"
+            <textarea name="strategies" id="strategies" class="ckeditor" style="width: 99%" rows="15" cols="91"
                       readonly><?php echo get_value($support, "strategies"); ?></textarea>
 
         </div>
@@ -131,7 +131,7 @@ $button_box = create_button_bar($buttons);
             <p class="notice">Use this only for description/diagnosis. Please enter meds, Galtier attendance, etc under
                 "Outside Services" section below
                 this.</p>
-            <textarea name="specialNeed" id="specialNeed" class="tinymce" style="width: 99%" rows="25"
+            <textarea name="specialNeed" id="specialNeed" class="ckeditor" style="width: 99%" rows="25"
                       cols="91"><?php echo get_value($support, "specialNeed", "No Special Needs Entered"); ?></textarea>
 
         </div>
@@ -141,7 +141,7 @@ $button_box = create_button_bar($buttons);
         </h3>
         <div>
 
-            <textarea name="modification" id="modification" class="tinymce" style="width: 99%" rows="13"
+            <textarea name="modification" id="modification" class="ckeditor" style="width: 99%" rows="13"
                       cols="91"><?php echo get_value($support, "modification"); ?></textarea>
 
         </div>
@@ -155,7 +155,7 @@ $button_box = create_button_bar($buttons);
                 applicable.
             </div>
             <textarea name="outsideSupport" id="outsideSupport" rows="15" style="width: 99%"
-                      class="tinymce"><?php echo get_value($support, "outsideSupport"); ?></textarea>
+                      class="ckeditor"><?php echo get_value($support, "outsideSupport"); ?></textarea>
 
         </div>
 
