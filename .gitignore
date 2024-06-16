@@ -20,3 +20,4 @@ user_guide/*
 /.idea
 
 /uploads/
+/js/ckeditor/node_modules/

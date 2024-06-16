@@ -1,62 +1,62 @@
 $(document).ready(function() {
 
 	
-	$('.edit_narrative_inline').live('click', function(event){
-		//var action = confirm("Are you sure you want to edit this here? This provides limited editing here and provides text only in raw html.");
-		//if(action) {
-			var myTeach = $("#kTeach").val();
-			var myNarrative = this.id.split('_')[1];
-			
-			var form_data = {
-					kNarrative: myNarrative,
-					kTeach: myTeach,
-			};
-			var myUrl = base_url + "narrative/edit_inline";
-
-			$.ajax({
-				url: myUrl,
-				type: 'POST',
-				data: form_data,
-				success: function(data){
-						$("#text_" + myNarrative).html(data);
-						$("#enil_" + myNarrative).html("Save").addClass("new").removeClass("edit").removeClass("edit_narrative_inline").addClass("save_narrative_inline");
-						
-				} //end function
-			});//end ajax
-			$('html, body').animate({ scrollTop: $("#student-text_" + myNarrative).offset().top}, 1000);
-
-	}); //end edit_narrative_inline
-		
-	$('.save_narrative_inline').live('click', function(event){
-			tinyMCE.triggerSave();
-	
-			var myNarrative = $("#kNarrative").val();
-			var myTeach = $("#kTeach").val();
-			var myText = $("#narrText_" + myNarrative).val();
-			var form_data = {
-					kNarrative: myNarrative,
-					narrText: myText,
-					kTeach: myTeach
-			};
-			var myUrl = base_url + "narrative/update_inline";
-			$.ajax({
-				dataType: "json",
-				url: myUrl,
-				type: 'POST',
-				data: form_data,
-				success: function(data){
-					
-					$("#text_" + myNarrative).html(data['narrText']);
-					$("#time_" + myNarrative).html(data['datestamp']);
-					$("#enil_" + myNarrative).html("Edit Inline").addClass("edit").removeClass("new").removeClass("save_narrative_inline").addClass("edit_narrative_inline").focus();
-				},
-				error: function(data){
-					console.log(data);
-				}// end success-function
-			}); //end ajax
-			$('html, body').animate({ scrollTop: $("#student-text_" + myNarrative).offset().top}, 1000);
-
-	});//end edit_narrative_inplace
+	// $('.edit_narrative_inline').live('click', function(event){
+	// 	//var action = confirm("Are you sure you want to edit this here? This provides limited editing here and provides text only in raw html.");
+	// 	//if(action) {
+	// 		var myTeach = $("#kTeach").val();
+	// 		var myNarrative = this.id.split('_')[1];
+	//
+	// 		var form_data = {
+	// 				kNarrative: myNarrative,
+	// 				kTeach: myTeach,
+	// 		};
+	// 		var myUrl = base_url + "narrative/edit_inline";
+	//
+	// 		$.ajax({
+	// 			url: myUrl,
+	// 			type: 'POST',
+	// 			data: form_data,
+	// 			success: function(data){
+	// 					$("#text_" + myNarrative).html(data);
+	// 					$("#enil_" + myNarrative).html("Save").addClass("new").removeClass("edit").removeClass("edit_narrative_inline").addClass("save_narrative_inline");
+	//
+	// 			} //end function
+	// 		});//end ajax
+	// 		$('html, body').animate({ scrollTop: $("#student-text_" + myNarrative).offset().top}, 1000);
+	//
+	// }); //end edit_narrative_inline
+	//
+	// $('.save_narrative_inline').live('click', function(event){
+	// 		tinyMCE.triggerSave();
+	//
+	// 		var myNarrative = $("#kNarrative").val();
+	// 		var myTeach = $("#kTeach").val();
+	// 		var myText = $("#narrText_" + myNarrative).val();
+	// 		var form_data = {
+	// 				kNarrative: myNarrative,
+	// 				narrText: myText,
+	// 				kTeach: myTeach
+	// 		};
+	// 		var myUrl = base_url + "narrative/update_inline";
+	// 		$.ajax({
+	// 			dataType: "json",
+	// 			url: myUrl,
+	// 			type: 'POST',
+	// 			data: form_data,
+	// 			success: function(data){
+	//
+	// 				$("#text_" + myNarrative).html(data['narrText']);
+	// 				$("#time_" + myNarrative).html(data['datestamp']);
+	// 				$("#enil_" + myNarrative).html("Edit Inline").addClass("edit").removeClass("new").removeClass("save_narrative_inline").addClass("edit_narrative_inline").focus();
+	// 			},
+	// 			error: function(data){
+	// 				console.log(data);
+	// 			}// end success-function
+	// 		}); //end ajax
+	// 		$('html, body').animate({ scrollTop: $("#student-text_" + myNarrative).offset().top}, 1000);
+	//
+	// });//end edit_narrative_inplace
 	
 
 	$('.grade_edit').live("click",function(event){
@@ -195,10 +195,10 @@ $(".approve_narrative.inline").live("click",function(event){
 	);// end document.ready
 
 function save_continue_narrative(){
-	tinyMCE.triggerSave();
-	var narrText = $('#narrText').val();
+	let narrText = window.editor.getData('html');
+	$("#narrText").val(narrText);
 	$("#originalText").val(narrText);
-	if (narrText == "") {
+	if (narrText === "") {
 		alert("You haven't entered any text in the narrative yet. No need to save.");
 	} else {
 	var action = $("#action").val();

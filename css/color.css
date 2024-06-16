@@ -318,8 +318,12 @@ h2, h3, .support-view legend, h4, h5, h6, tr.benchmark-grade {
 	color: #3c763d;
 	background-color: #dff0d8;
 	border-color: #d6e9c6;
+	opacity: 1;
 }
-
+.fade-out {
+	background-color: #dff0d8;
+	transition: background-color 2s ease-out;
+}
 .warning {
 	color: #a94442;
 	background-color: #f2dede;

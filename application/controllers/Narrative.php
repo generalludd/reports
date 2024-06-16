@@ -70,7 +70,7 @@ class Narrative extends MY_Controller {
 		$data ['teacher'] = $teacher;
 		$data ['studentName'] = format_name ( $student->stuFirst, $student->stuLast, $student->stuNickname );
 		$data ['default_grade'] = $this->input->cookie ( "default_grade" );
-		$data ['rich_text'] = TRUE;
+		$data['scripts'] = ['ckeditor.js', 'editor.js'];
 		$submits_report_card = $this->input->cookie ( "submits_report_card" );
 		if ($submits_report_card == "yes") {
 			$this->load->model ( "assignment_model", "assignment" );
@@ -161,7 +161,6 @@ class Narrative extends MY_Controller {
 		
 		$data ['narrative'] = $narrative;
 		$student = $this->student_model->get ( $kStudent );
-		$data ['student'] = $student;
 		$subjects = $this->subject_model->get_for_teacher ( $kTeach );
 		$data ['subjects'] = get_keyed_pairs ( $subjects, array (
 				"subject",
@@ -174,7 +173,6 @@ class Narrative extends MY_Controller {
 				"kTeach",
 				"teacherName" 
 		) );
-		$data ['rich_text'] = TRUE;
 		$data ['narrText'] = "";
 		$studentName = format_name ( $student->stuFirst, $student->stuLast, $student->stuNickname );
 		$data ['hasNeeds'] = $this->support_model->get_current ( $kStudent, "kSupport" );
@@ -225,7 +223,8 @@ class Narrative extends MY_Controller {
 		$data ['target'] = "narrative/edit";
 		$data ['action'] = "update";
 		$data ['title'] = "Editing Narrative Report for $studentName for $narrative->narrSubject";
-		$data ['student'] = $student;
+    $data['scripts'] = ['ckeditor.js', 'editor.js'];
+    $data ['student'] = $student;
 		$data ['studentName'] = $studentName;
 		$this->load->view ( "page/index", $data );
 	}
@@ -509,12 +508,13 @@ class Narrative extends MY_Controller {
 		$data ['narratives'] = $this->narrative_model->get_narratives ( $options );
 		$data ['options'] = $options;
 		$teacher = $this->teacher_model->get_name ( $kTeach );
-		$data ['rich_text'] = TRUE;
 		$data ['teacher'] = $teacher;
 		$data ['kTeach'] = $kTeach;
 		$data ['title'] = "Showing current narratives for " . link_teacher ( $teacher, $kTeach );
 		$data ['target'] = "narrative/teacher_list";
-		if ($this->uri->segment ( 4 ) == "print") {
+    $data['scripts'] = ['ckeditor-inline.js','inline-editor.js'];
+
+    if ($this->uri->segment ( 4 ) == "print") {
 			$this->load->view ( "page/print", $data );
 		} else {
 			$this->load->view ( "page/index", $data );
