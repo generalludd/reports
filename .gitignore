@@ -2,8 +2,8 @@
 /application/user_sessions/*
 /application/logs
 /application/cache
-/application/config/database.php
-/application/config/email.php
+/application/config/database.local.php
+/application/config/email.local.php
 */.DS_Store
 .DS_Store
 *.sql

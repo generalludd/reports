@@ -3,4 +3,4 @@ user to allow for more flexibility, for now, the admin user is identified as use
 
 INSERT INTO `teacher` (`kTeach`, `user_id`, `username`, `email`, `teachFirst`, `teachLast`, `pwd`, `teachClass`, `gradeStart`, `gradeEnd`, `isAdvisor`, `dbRole`, `status`, `resetHash`, `recModified`, `recModifier`)
 VALUES
-	(1000, 1, 'administrator', 'email@example.com', 'Database', 'Administrator', '', '', 0, 0, NULL, 1, 1, '', '', '');
+	(1000, 1, 'administrator', 'email@example.com', 'Database', 'Administrator', '', '', 0, 0, NULL, 1, 1, '', '2026-04-17T00:00:00', 'administrator');
