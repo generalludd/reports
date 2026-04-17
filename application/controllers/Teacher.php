@@ -112,8 +112,8 @@ class Teacher extends MY_Controller {
 				$data ['subjects'] = $this->subject_model->get_for_teacher ( $kTeach );
 				$classrooms = $this->menu_model->get_pairs ( "classroom" );
 				$data ['classrooms'] = get_keyed_pairs ( $classrooms, array (
-						"value",
-						"label" 
+						"label",
+						"value"
 				) );
 				$grades = $this->menu_model->get_pairs ( "grade" );
 				$data ['grades'] = get_keyed_pairs ( $grades, array (
