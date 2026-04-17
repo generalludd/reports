@@ -1,6 +1,7 @@
 <?php
 if (! defined ( 'BASEPATH' ))
 	exit ( 'No direct script access allowed' );
+#[AllowDynamicProperties]
 class Teacher_model extends MY_Model {
 	var $teachFirst;
 	var $teachLast;
@@ -205,8 +206,7 @@ class Teacher_model extends MY_Model {
 		$this->db->select ( "CONCAT(teachFirst,' ',teachLast) as teacher", false );
 		$this->db->from ( 'teacher' );
 		$this->db->where ( 'kTeach', $kTeach );
-		$result = $this->db->get ()->row ();
-		return $result->teacher;
+		return $this->db->get()->row()?->teacher;
 	}
 
   /**

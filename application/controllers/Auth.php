@@ -2,6 +2,7 @@
   exit('No direct script access allowed');
 }
 
+#[AllowDynamicProperties]
 class Auth extends CI_Controller {
 
   function __construct() {

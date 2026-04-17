@@ -6,6 +6,7 @@ defined ( 'BASEPATH' ) or exit ( 'No direct script access allowed' );
  * Class allows for administration of global properties for the application.
  * Only the administrative user can access this feature.
  */
+#[AllowDynamicProperties]
 class admin extends MY_Controller {
 
 	function __construct()

@@ -47,6 +47,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * @author		Andrey Andreev
  * @link		https://codeigniter.com/userguide3/libraries/sessions.html
  */
+#[AllowDynamicProperties]
 class CI_Session {
 
 	/**
@@ -389,40 +390,15 @@ class CI_Session {
 	 */
 	protected function _configure_sid_length()
 	{
-		if (PHP_VERSION_ID < 70100)
+		$bits_per_character = (int) ini_get('session.sid_bits_per_character');
+		$sid_length         = (int) ini_get('session.sid_length');
+		if (($bits = $sid_length * $bits_per_character) < 160)
 		{
-			$hash_function = ini_get('session.hash_function');
-			if (ctype_digit($hash_function))
+			// Add as many more characters as necessary to reach at least 160 bits
+			$sid_length += (int) ceil((160 % $bits) / $bits_per_character);
+			// session.sid_length ini_set() was deprecated in PHP 8.4
+			if (PHP_VERSION_ID < 80400)
 			{
-				if ($hash_function !== '1')
-				{
-					ini_set('session.hash_function', 1);
-				}
-
-				$bits = 160;
-			}
-			elseif ( ! in_array($hash_function, hash_algos(), TRUE))
-			{
-				ini_set('session.hash_function', 1);
-				$bits = 160;
-			}
-			elseif (($bits = strlen(hash($hash_function, 'dummy', false)) * 4) < 160)
-			{
-				ini_set('session.hash_function', 1);
-				$bits = 160;
-			}
-
-			$bits_per_character = (int) ini_get('session.hash_bits_per_character');
-			$sid_length         = (int) ceil($bits / $bits_per_character);
-		}
-		else
-		{
-			$bits_per_character = (int) ini_get('session.sid_bits_per_character');
-			$sid_length         = (int) ini_get('session.sid_length');
-			if (($bits = $sid_length * $bits_per_character) < 160)
-			{
-				// Add as many more characters as necessary to reach at least 160 bits
-				$sid_length += (int) ceil((160 % $bits) / $bits_per_character);
 				ini_set('session.sid_length', $sid_length);
 			}
 		}

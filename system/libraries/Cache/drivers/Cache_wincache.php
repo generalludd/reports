@@ -50,6 +50,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * @author		Mike Murkovic
  * @link
  */
+#[AllowDynamicProperties]
 class CI_Cache_wincache extends CI_Driver {
 
 	/**

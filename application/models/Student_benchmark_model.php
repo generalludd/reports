@@ -1,5 +1,6 @@
 <?php
 
+#[AllowDynamicProperties]
 class Student_benchmark_model extends MY_Model
 {
     var $quarter;

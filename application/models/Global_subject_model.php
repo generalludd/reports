@@ -1,5 +1,6 @@
 <?php
 defined ( 'BASEPATH' ) or exit ( 'No direct script access allowed' );
+#[AllowDynamicProperties]
 class Global_Subject_Model extends CI_Model
 {
 	var $grade_start;

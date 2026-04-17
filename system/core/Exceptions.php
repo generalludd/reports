@@ -47,6 +47,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * @author		EllisLab Dev Team
  * @link		https://codeigniter.com/userguide3/libraries/exceptions.html
  */
+#[AllowDynamicProperties]
 class CI_Exceptions {
 
 	/**
@@ -73,7 +74,6 @@ class CI_Exceptions {
 		E_USER_ERROR		=>	'User Error',
 		E_USER_WARNING		=>	'User Warning',
 		E_USER_NOTICE		=>	'User Notice',
-		E_STRICT		=>	'Runtime Notice'
 	);
 
 	/**
@@ -102,7 +102,7 @@ class CI_Exceptions {
 	 */
 	public function log_exception($severity, $message, $filepath, $line)
 	{
-		$severity = isset($this->levels[$severity]) ? $this->levels[$severity] : $severity;
+		$severity = $this->levels[$severity] ?? $severity;
 		log_message('error', 'Severity: '.$severity.' --> '.$message.' '.$filepath.' '.$line);
 	}
 
@@ -242,7 +242,7 @@ class CI_Exceptions {
 			$templates_path = VIEWPATH.'errors'.DIRECTORY_SEPARATOR;
 		}
 
-		$severity = isset($this->levels[$severity]) ? $this->levels[$severity] : $severity;
+		$severity = $this->levels[$severity] ?? $severity;
 
 		// For safety reasons we don't show the full file path in non-CLI requests
 		if ( ! is_cli())

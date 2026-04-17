@@ -2,6 +2,7 @@
 if (! defined ( 'BASEPATH' ))
 	exit ( 'No direct script access allowed' );
 	// @TODO: refine all get_post to the appropriate method.
+#[AllowDynamicProperties]
 class Teacher extends MY_Controller {
 
 	function __construct()

@@ -7,6 +7,7 @@ if (! defined ( 'BASEPATH' ))
  * @author chrisdart
  *         allow users to manage preferences
  */
+#[AllowDynamicProperties]
 class Preference extends MY_Controller {
 
 	function __construct()

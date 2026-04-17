@@ -7,6 +7,7 @@ defined ( 'BASEPATH' ) or exit ( 'No direct script access allowed' );
  * @author administrator
  *         this script is for ajax access to simple php scripts mostly the helper functions.
  */
+#[AllowDynamicProperties]
 class ajax extends CI_Controller {
 
 	function __construct()

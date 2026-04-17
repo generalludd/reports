@@ -1,6 +1,7 @@
 <?php
 
 defined ( 'BASEPATH' ) or exit ( 'No direct script access allowed' );
+#[AllowDynamicProperties]
 class Student_report_model extends CI_Model {
 	var $kStudent;
 	var $kTeach;
@@ -123,8 +124,7 @@ class Student_report_model extends CI_Model {
 		$this->db->where ( "(is_read = 0 OR is_read IS NULL)" ); // why is_read != 1 doesn't work I don't know.
 		$this->db->from ( "student_report" );
 		$this->db->select ( "COUNT(kReport) AS unread_reports" );
-		$result = $this->db->get ()->row ();
-		return $result->unread_reports;
+		return $this->db->get()->row()?->unread_reports;
 	}
 
 	function get_list($type, $key, $options = array())

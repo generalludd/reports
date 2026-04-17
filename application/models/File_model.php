@@ -1,5 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
+#[AllowDynamicProperties]
 class File_model extends CI_Model
 {
 	var $kSupport;

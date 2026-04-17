@@ -47,6 +47,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * @author	Andrey Andreev
  * @link	https://codeigniter.com/userguide3/libraries/sessions.html
  */
+#[AllowDynamicProperties]
 abstract class CI_Session_driver {
 
 	protected $_config;

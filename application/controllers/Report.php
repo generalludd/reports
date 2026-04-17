@@ -11,6 +11,7 @@ if (! defined ( 'BASEPATH' ))
  *         The term "Orange Slip" is defined in config/constants.php
  *        
  */
+#[AllowDynamicProperties]
 class Report extends MY_Controller {
 
 	function __construct()

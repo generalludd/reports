@@ -7,6 +7,7 @@
  * This class works with the "teacher" table.
  * This class offers tools to manage login, access and permissions
  */
+#[AllowDynamicProperties]
 class Auth_model extends CI_Model {
 
   function __construct() {
@@ -64,8 +65,7 @@ class Auth_model extends CI_Model {
     $this->db->where("kTeach", $kTeach);
     $this->db->select("dbRole");
     $this->db->from("teacher");
-    $result = $this->db->get()->row();
-    return $result->dbRole;
+    return $this->db->get()->row()?->dbRole;
   }
 
   /**
@@ -85,8 +85,7 @@ class Auth_model extends CI_Model {
    */
   function get_username(int $kTeach) {
     $this->load->model("teacher_model");
-    $teacher = $this->teacher_model->get($kTeach, "username");
-    return $teacher->username;
+    return $this->teacher_model->get($kTeach, "username")?->username;
   }
 
   /**

@@ -47,6 +47,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * @author		EllisLab Dev Team
  * @link		https://codeigniter.com/database/
  */
+#[AllowDynamicProperties]
 class CI_DB_odbc_utility extends CI_DB_utility {
 
 	/**
