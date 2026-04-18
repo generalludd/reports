@@ -2,6 +2,7 @@
 
 if (! defined ( 'BASEPATH' ))
 	exit ( 'No direct script access allowed' );
+#[AllowDynamicProperties]
 class Subject_model extends CI_Model {
 	var $subject = "";
 	var $gradeStart = "";
@@ -111,8 +112,7 @@ class Subject_model extends CI_Model {
 		$this->db->where ( 'subject', $subject );
 		$this->db->select ( 'kSubject' );
 		$this->db->from ( 'subject' );
-		$result = $this->db->get ()->row ();
-		return $result->kSubject;
+		return $this->db->get()->row()?->kSubject;
 	}
 
 	function get_name($kSubject)
@@ -120,7 +120,6 @@ class Subject_model extends CI_Model {
 		$this->db->where ( 'kSubject', $kSubject );
 		$this->db->select ( 'subject' );
 		$this->db->from ( 'subject' );
-		$result = $this->db->get ()->row ();
-		return $result->subject;
+		return $this->db->get()->row()?->subject;
 	}
 }

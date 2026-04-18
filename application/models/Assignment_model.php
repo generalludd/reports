@@ -1,5 +1,6 @@
 <?php
 defined ( 'BASEPATH' ) or exit ( 'No direct script access allowed' );
+#[AllowDynamicProperties]
 class Assignment_model extends MY_Model {
 	var $kTeach;
 	var $kCategory;
@@ -357,7 +358,6 @@ class Assignment_model extends MY_Model {
 		$this->db->where ( "term", $term );
 		$this->db->where ( "year", $year );
 		$this->db->where("subject",$subject);
-		$result = $this->db->get ( "assignment_category" )->row ();
-		return $result->count;
+		return $this->db->get("assignment_category")->row()?->count;
 	}
 }

@@ -1,5 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
+#[AllowDynamicProperties]
 class Menu_model extends CI_Model
 {
 	var $category = "";
@@ -76,8 +77,7 @@ class Menu_model extends CI_Model
 $this->db->from("menu");
 $this->db->where("category", $category);
 $this->db->where("value" , $value);
-$result = $this->db->get()->row();
-return $result->label;
+return $this->db->get()->row()?->label;
 	}
 
 	function get_categories()

@@ -2,6 +2,7 @@
 
 // My_Model.php Chris Dart Feb 4, 2015 1:31:39 PM chrisdart@cerebratorium.com
 
+#[AllowDynamicProperties]
 class MY_Model extends CI_Model {
 
     function __construct(){

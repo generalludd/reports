@@ -47,6 +47,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * @author	Andrey Andreev
  * @link	https://codeigniter.com/userguide3/libraries/sessions.html
  */
+#[AllowDynamicProperties]
 class CI_SessionWrapper implements SessionHandlerInterface, SessionUpdateTimestampHandlerInterface {
 
 	protected $driver;

@@ -1,5 +1,6 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 //menu.php is an administrative tool restricted to the administrator user
+#[AllowDynamicProperties]
 class Menu extends MY_Controller {
 
 	function __construct()

@@ -1,5 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
  
+#[AllowDynamicProperties]
 class Config_model extends CI_Model
 {
 	var $config_key = NULL;
@@ -50,13 +51,7 @@ class Config_model extends CI_Model
 		$this->db->from("config");
 		$query = $this->db->get();
 		$count = $query->num_rows();
-		$result = false;
-
-		if($count > 0 ) {
-			$result = $query->row();
-		}
-
-		return $result;
+		return $count > 0 ? $query->row() : NULL;
 
 	}
 

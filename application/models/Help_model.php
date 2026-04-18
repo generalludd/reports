@@ -1,5 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
+#[AllowDynamicProperties]
 class Help_model extends CI_Model 
 {
 	var $helpTopic;
@@ -29,8 +30,7 @@ class Help_model extends CI_Model
 		$this->db->select("helpText");
 		$this->db->from("help");
 		$this->db->where("kHelp",$kHelp);
-		$result =  $this->db->get()->row()->helpText;
-		return $result;
+		return $this->db->get()->row()?->helpText;
 	}
 	
 	function get($helpTopic,$helpSubtopic=NULL)
@@ -41,8 +41,7 @@ class Help_model extends CI_Model
 			$this->db->where("helpSubtopic", $helpSubtopic);
 		}
 		$this->db->from("help");
-		$row = $this->db->get()->row();
-		return $row->helpText;
+		return $this->db->get()->row()?->helpText;
 	}//end showHelp
 	
 }

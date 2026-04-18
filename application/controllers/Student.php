@@ -5,6 +5,7 @@ if (! defined ( 'BASEPATH' ))
 /**
  * student management interface *
  */
+#[AllowDynamicProperties]
 class Student extends MY_Controller {
 
 	function __construct()

@@ -1,5 +1,6 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 
+#[AllowDynamicProperties]
 class benchmark_legend_model extends MY_Model
 {
 

@@ -9,6 +9,7 @@ defined ( 'BASEPATH' ) or exit ( 'No direct script access allowed' );
  * having to go into the database. But it does allow modifying preference texts and
  * other features.
  */
+#[AllowDynamicProperties]
 class preference_type extends MY_Controller {
 
 	function __construct()

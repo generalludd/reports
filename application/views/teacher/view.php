@@ -66,7 +66,7 @@ switch($teacher->dbRole){
 
 ?></p>
 <?php  if(get_value($teacher, "dbRole",NULL) == 2):?>
-<p><label>Classroom:</label> <?php print $teacher->teachClass; ?></p>
+<p><label>Classroom:</label> <?php print $teacher->classroom; ?></p>
 <p><label>Grade Range Taught: </label><?php print $gradeRange;?></p>
 
 

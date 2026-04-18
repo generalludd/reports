@@ -49,6 +49,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * @author		EllisLab Dev Team
  * @link		https://codeigniter.com/userguide3/libraries/uri.html
  */
+#[AllowDynamicProperties]
 class CI_URI {
 
 	/**
@@ -57,6 +58,13 @@ class CI_URI {
 	 * @var	array
 	 */
 	public $keyval = array();
+
+	/**
+	 * Config class
+	 *
+	 * @var	object
+	 */
+	protected $config;
 
 	/**
 	 * Current URI string
@@ -128,9 +136,7 @@ class CI_URI {
 						break;
 					case 'PATH_INFO':
 					default:
-						$uri = isset($_SERVER[$protocol])
-							? $_SERVER[$protocol]
-							: $this->_parse_request_uri();
+						$uri = $_SERVER[$protocol] ?? $this->_parse_request_uri();
 						break;
 				}
 			}
@@ -204,9 +210,13 @@ class CI_URI {
 
 		// parse_url() returns false if no host is present, but the path or query string
 		// contains a colon followed by a number
-		$uri = parse_url('http://dummy'.$_SERVER['REQUEST_URI']);
-		$query = isset($uri['query']) ? $uri['query'] : '';
-		$uri = isset($uri['path']) ? $uri['path'] : '';
+		$parsed = parse_url('http://dummy'.$_SERVER['REQUEST_URI']);
+		if ($parsed === FALSE)
+		{
+			return '';
+		}
+		$query = $parsed['query'] ?? '';
+		$uri = $parsed['path'] ?? '';
 
 		if (isset($_SERVER['SCRIPT_NAME'][0]))
 		{
@@ -226,7 +236,7 @@ class CI_URI {
 		{
 			$query = explode('?', $query, 2);
 			$uri = $query[0];
-			$_SERVER['QUERY_STRING'] = isset($query[1]) ? $query[1] : '';
+			$_SERVER['QUERY_STRING'] = $query[1] ?? '';
 		}
 		else
 		{
@@ -255,7 +265,7 @@ class CI_URI {
 	 */
 	protected function _parse_query_string()
 	{
-		$uri = isset($_SERVER['QUERY_STRING']) ? $_SERVER['QUERY_STRING'] : @getenv('QUERY_STRING');
+		$uri = $_SERVER['QUERY_STRING'] ?? (getenv('QUERY_STRING') ?: '');
 
 		if (trim($uri, '/') === '')
 		{
@@ -264,7 +274,7 @@ class CI_URI {
 		elseif (strncmp($uri, '/', 1) === 0)
 		{
 			$uri = explode('?', $uri, 2);
-			$_SERVER['QUERY_STRING'] = isset($uri[1]) ? $uri[1] : '';
+			$_SERVER['QUERY_STRING'] = $uri[1] ?? '';
 			$uri = $uri[0];
 		}
 
@@ -344,7 +354,7 @@ class CI_URI {
 	 */
 	public function segment($n, $no_result = NULL)
 	{
-		return isset($this->segments[$n]) ? $this->segments[$n] : $no_result;
+		return $this->segments[$n] ?? $no_result;
 	}
 
 	// --------------------------------------------------------------------
@@ -364,7 +374,7 @@ class CI_URI {
 	 */
 	public function rsegment($n, $no_result = NULL)
 	{
-		return isset($this->rsegments[$n]) ? $this->rsegments[$n] : $no_result;
+		return $this->rsegments[$n] ?? $no_result;
 	}
 
 	// --------------------------------------------------------------------

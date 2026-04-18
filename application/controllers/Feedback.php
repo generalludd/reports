@@ -1,6 +1,7 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 // feedback.php Chris Dart Jan 6, 2012 9:34:59 AM chrisdart@cerebratorium.com
 
+#[AllowDynamicProperties]
 class Feedback extends My_Controller {
 
 	function __construct()

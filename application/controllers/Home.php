@@ -3,6 +3,7 @@
 if (! defined ( 'BASEPATH' ))
 	exit ( 'No direct script access allowed' );
 	// application "index.php" file. This is home.
+#[AllowDynamicProperties]
 class Home extends MY_Controller {
 
 	function __construct()

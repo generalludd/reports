@@ -1,6 +1,7 @@
 <?php
 if (! defined ( 'BASEPATH' ))
 	exit ( 'No direct script access allowed' );
+#[AllowDynamicProperties]
 class Benchmark_model extends MY_Model {
 	var $quarter;
 	var $term;

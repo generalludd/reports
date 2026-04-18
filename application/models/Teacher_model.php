@@ -1,6 +1,7 @@
 <?php
 if (! defined ( 'BASEPATH' ))
 	exit ( 'No direct script access allowed' );
+#[AllowDynamicProperties]
 class Teacher_model extends MY_Model {
 	var $teachFirst;
 	var $teachLast;
@@ -124,7 +125,8 @@ class Teacher_model extends MY_Model {
 	{
 		$this->db->where ( 'teacher.kTeach', $kTeach );
 		$this->db->from ( 'teacher' );
-		
+    $this->db->join('menu', 'menu.value = teacher.teachClass and menu.category="classroom"', 'left');
+		$this->db->select('menu.label as classroom');
 		// create the selection based on both the query submission
 		if (is_array ( $select )) {
 			foreach ( $select as $item ) {
@@ -205,8 +207,7 @@ class Teacher_model extends MY_Model {
 		$this->db->select ( "CONCAT(teachFirst,' ',teachLast) as teacher", false );
 		$this->db->from ( 'teacher' );
 		$this->db->where ( 'kTeach', $kTeach );
-		$result = $this->db->get ()->row ();
-		return $result->teacher;
+		return $this->db->get()->row()?->teacher;
 	}
 
   /**

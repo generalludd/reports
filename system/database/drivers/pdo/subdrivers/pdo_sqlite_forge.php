@@ -45,6 +45,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * @author		EllisLab Dev Team
  * @link		https://codeigniter.com/userguide3/database/
  */
+#[AllowDynamicProperties]
 class CI_DB_pdo_sqlite_forge extends CI_DB_pdo_forge {
 
 	/**

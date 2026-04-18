@@ -2,6 +2,7 @@
 
 if (! defined ( 'BASEPATH' ))
 	exit ( 'No direct script access allowed' );
+#[AllowDynamicProperties]
 class Narrative_model extends MY_Model
 {
 	var $kNarrative;

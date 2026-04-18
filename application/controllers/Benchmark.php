@@ -2,6 +2,7 @@
 if (!defined('BASEPATH'))
     exit ('No direct script access allowed');
 
+#[AllowDynamicProperties]
 class Benchmark extends MY_Controller
 {
 

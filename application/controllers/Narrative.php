@@ -1,6 +1,7 @@
 <?php
 if (! defined ( 'BASEPATH' ))
 	exit ( 'No direct script access allowed' );
+#[AllowDynamicProperties]
 class Narrative extends MY_Controller {
 
 	function __construct()

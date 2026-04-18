@@ -8,6 +8,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * @link https://github.com/fsmn
  *
  */
+#[AllowDynamicProperties]
 class Menu_lib {
 	protected $CI;
 	

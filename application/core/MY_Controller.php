@@ -1,5 +1,6 @@
 <?php if (! defined('BASEPATH')) exit('No direct script access allowed');
 
+#[AllowDynamicProperties]
 class MY_Controller extends CI_Controller
 {
 
@@ -23,15 +24,15 @@ class MY_Controller extends CI_Controller
         	$this->load->model("config_model");
         	/*these constants seem unnecessary, but they are defined on the fly. It may be better to make them into global variables
         	for the controller. */
-        	define("YEAR_START", get_current_year() . "-" . $this->config_model->get_by_key ( "year-start" )->config_value);
-        	define("MID_YEAR", get_current_year() + 1 . "-" .  $this->config_model->get_by_key ( "mid-year" )->config_value);
-        	//currently editing cut-off is not used. 
-        	define("EDITS_MID_YEAR",get_current_year() + 1 . "-" . $this->config_model->get_by_key("edits_mid-year")->config_value);
-        	define("EDITS_YEAR_END",get_current_year() + 1 . "-" . $this->config_model->get_by_key("edits_year-end")->config_value);
+        	define("YEAR_START", get_current_year() . "-" . ($this->config_model->get_by_key("year-start")?->config_value ?? ''));
+        	define("MID_YEAR", (get_current_year() + 1) . "-" . ($this->config_model->get_by_key("mid-year")?->config_value ?? ''));
+        	//currently editing cut-off is not used.
+        	define("EDITS_MID_YEAR", (get_current_year() + 1) . "-" . ($this->config_model->get_by_key("edits_mid-year")?->config_value ?? ''));
+        	define("EDITS_YEAR_END", (get_current_year() + 1) . "-" . ($this->config_model->get_by_key("edits_year-end")?->config_value ?? ''));
         	 //attendance values for notification thresholds
-        	define('TRUANCY_THRESHOLD',$this->config_model->get_by_key("truancy_threshold")->config_value);
-        	define('UNEXCUSED_THRESHOLD',$this->config_model->get_by_key("unexcused_threshold")->config_value);
-        	define('ILLNESS_THRESHOLD',$this->config_model->get_by_key("illness_threshold")->config_value);
+        	define('TRUANCY_THRESHOLD', $this->config_model->get_by_key("truancy_threshold")?->config_value ?? 0);
+        	define('UNEXCUSED_THRESHOLD', $this->config_model->get_by_key("unexcused_threshold")?->config_value ?? 0);
+        	define('ILLNESS_THRESHOLD', $this->config_model->get_by_key("illness_threshold")?->config_value ?? 0);
         	//user info for permissions
         	 define('USER_ID',$this->session->userdata("userID"));
         	 define('DB_ROLE',$this->session->userdata('dbRole'));

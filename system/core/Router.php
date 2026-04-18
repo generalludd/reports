@@ -49,6 +49,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * @author		EllisLab Dev Team
  * @link		https://codeigniter.com/userguide3/general/routing.html
  */
+#[AllowDynamicProperties]
 class CI_Router {
 
 	/**
@@ -57,6 +58,13 @@ class CI_Router {
 	 * @var	object
 	 */
 	public $config;
+
+	/**
+	 * CI_URI class object
+	 *
+	 * @var	object
+	 */
+	public $uri;
 
 	/**
 	 * List of routes
@@ -186,7 +194,7 @@ class CI_Router {
 			if ( ! isset($this->directory))
 			{
 				$_d = $this->config->item('directory_trigger');
-				$_d = isset($_GET[$_d]) ? trim($_GET[$_d], " \t\n\r\0\x0B/") : '';
+				$_d = trim($_GET[$_d] ?? '', " \t\n\r\0\x0B/");
 
 				if ($_d !== '')
 				{
@@ -301,7 +309,7 @@ class CI_Router {
 			$method = 'index';
 		}
 
-		if ( ! file_exists(APPPATH.'controllers/'.$this->directory.ucfirst($class).'.php'))
+		if ( ! file_exists(APPPATH.'controllers/'.($this->directory ?? '').ucfirst($class).'.php'))
 		{
 			// This will trigger 404 later
 			return;
@@ -339,12 +347,12 @@ class CI_Router {
 		// is found or when such a directory doesn't exist
 		while ($c-- > 0)
 		{
-			$test = $this->directory
+			$test = ($this->directory ?? '')
 				.ucfirst($this->translate_uri_dashes === TRUE ? str_replace('-', '_', $segments[0]) : $segments[0]);
 
 			if ( ! file_exists(APPPATH.'controllers/'.$test.'.php')
 				&& $directory_override === FALSE
-				&& is_dir(APPPATH.'controllers/'.$this->directory.$segments[0])
+				&& is_dir(APPPATH.'controllers/'.($this->directory ?? '').$segments[0])
 			)
 			{
 				$this->set_directory(array_shift($segments), TRUE);
@@ -374,7 +382,7 @@ class CI_Router {
 		$uri = implode('/', $this->uri->segments);
 
 		// Get HTTP verb
-		$http_verb = isset($_SERVER['REQUEST_METHOD']) ? strtolower($_SERVER['REQUEST_METHOD']) : 'cli';
+		$http_verb = strtolower($_SERVER['REQUEST_METHOD'] ?? 'cli');
 
 		// Loop through the route array looking for wildcards
 		foreach ($this->routes as $key => $val)

@@ -1,5 +1,6 @@
 <?php
 
+#[AllowDynamicProperties]
 class Student_benchmark extends MY_Controller
 {
 

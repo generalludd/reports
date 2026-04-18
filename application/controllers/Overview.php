@@ -1,4 +1,5 @@
 <?php
+#[AllowDynamicProperties]
 class Overview extends MY_Controller {
 
 	function __construct()

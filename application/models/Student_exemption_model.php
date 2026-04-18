@@ -1,6 +1,7 @@
 <?php
 if (! defined ( 'BASEPATH' ))
 	exit ( 'No direct script access allowed' );
+#[AllowDynamicProperties]
 class Student_exemption_model extends MY_Model {
 	var $kStudent;
 	var $kSubject;
