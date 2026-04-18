@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: db:3306
--- Generation Time: Apr 17, 2026 at 11:57 PM
+-- Generation Time: Apr 18, 2026 at 12:06 AM
 -- Server version: 11.8.6-MariaDB-ubu2404-log
 -- PHP Version: 8.3.30
 
@@ -687,19 +687,19 @@ CREATE TABLE `teacher` (
 --
 
 INSERT INTO `teacher` (`kTeach`, `user_id`, `username`, `email`, `teachFirst`, `teachLast`, `pwd`, `teachClass`, `gradeStart`, `gradeEnd`, `isAdvisor`, `dbRole`, `status`, `resetHash`, `recModified`, `recModifier`) VALUES
-(1000, 1, 'administrator', 'email@example.com', 'Database', 'Administrator', '696d29e0940a4957748fe3fc9efd22a3', '', 0, 0, NULL, 1, 1, '', '2026-04-17 22:57:28', 'administrator'),
-(1, NULL, 'sjohnson', 'sjohnson@school.edu', 'Sarah', 'Johnson', '3714faf5c6953aad726265f1e94e8bb5', '10', NULL, NULL, 1, 2, 1, NULL, '2026-04-17 23:53:04', '1000'),
-(2, NULL, 'mchen', 'mchen@school.edu', 'Michael', 'Chen', '3714faf5c6953aad726265f1e94e8bb5', '12', 1, 2, 1, 2, 1, NULL, '2026-04-17 23:52:36', '1000'),
-(3, NULL, 'erodriguez', 'erodriguez@school.edu', 'Emily', 'Rodriguez', '3714faf5c6953aad726265f1e94e8bb5', '5', 1, 2, 1, 2, 1, NULL, '2026-04-17 23:54:06', '1000'),
-(4, NULL, 'dthompson', 'dthompson@school.edu', 'David', 'Thompson', '3714faf5c6953aad726265f1e94e8bb5', '15', 3, 4, 1, 2, 1, NULL, '2026-04-17 23:53:36', '1000'),
-(5, NULL, 'lmartinez', 'lmartinez@school.edu', 'Lisa', 'Martinez', '3714faf5c6953aad726265f1e94e8bb5', '2', 3, 4, 1, 2, 1, NULL, '2026-04-17 23:53:27', '1000'),
-(6, NULL, 'jwilson', 'jwilson@school.edu', 'James', 'Wilson', '3714faf5c6953aad726265f1e94e8bb5', '8', 5, 8, 1, 2, 1, NULL, '2026-04-17 23:54:32', '1000'),
-(7, NULL, 'panderson', 'panderson@school.edu', 'Patricia', 'Anderson', '3714faf5c6953aad726265f1e94e8bb5', '9', 5, 8, 1, 2, 1, NULL, '2026-04-17 23:49:28', '1000'),
-(8, NULL, 'rgarcia', 'rgarcia@school.edu', 'Robert', 'Garcia', '3714faf5c6953aad726265f1e94e8bb5', '13', 5, 8, NULL, 2, 1, NULL, '2026-04-17 23:52:54', '1000'),
-(9, NULL, 'jlee', 'jlee@school.edu', 'Jennifer', 'Lee', '3714faf5c6953aad726265f1e94e8bb5', '3', 5, 8, NULL, 2, 1, NULL, '2026-04-17 23:53:17', '1000'),
-(10, NULL, 'tbrown', 'tbrown@school.edu', 'Thomas', 'Brown', '3714faf5c6953aad726265f1e94e8bb5', '1', NULL, 8, NULL, 2, 1, NULL, '2026-04-17 23:51:56', '1000'),
-(11, NULL, 'kwhite', 'kwhite@school.edu', 'Karen', 'White', '3714faf5c6953aad726265f1e94e8bb5', '11', NULL, 8, NULL, 2, 1, NULL, '2026-04-17 23:54:23', '1000'),
-(12, NULL, 'crivera', 'crivera@school.edu', 'Carlos', 'Rivera', '3714faf5c6953aad726265f1e94e8bb5', '14', NULL, 8, NULL, 2, 1, NULL, '2026-04-17 23:53:49', '1000');
+(1, 1, 'administrator', 'email@example.com', 'Database', 'Administrator', '696d29e0940a4957748fe3fc9efd22a3', '', 0, 0, NULL, 1, 1, '', '2026-04-18 00:04:53', 'administrator'),
+(13, 13, 'sjohnson', 'sjohnson@school.edu', 'Sarah', 'Johnson', '3714faf5c6953aad726265f1e94e8bb5', '10', NULL, NULL, 1, 2, 1, NULL, '2026-04-18 00:05:26', '1000'),
+(2, 2, 'mchen', 'mchen@school.edu', 'Michael', 'Chen', '3714faf5c6953aad726265f1e94e8bb5', '12', 1, 2, 1, 2, 1, NULL, '2026-04-18 00:05:26', '1000'),
+(3, 3, 'erodriguez', 'erodriguez@school.edu', 'Emily', 'Rodriguez', '3714faf5c6953aad726265f1e94e8bb5', '5', 1, 2, 1, 2, 1, NULL, '2026-04-18 00:05:26', '1000'),
+(4, 4, 'dthompson', 'dthompson@school.edu', 'David', 'Thompson', '3714faf5c6953aad726265f1e94e8bb5', '15', 3, 4, 1, 2, 1, NULL, '2026-04-18 00:05:26', '1000'),
+(5, 5, 'lmartinez', 'lmartinez@school.edu', 'Lisa', 'Martinez', '3714faf5c6953aad726265f1e94e8bb5', '2', 3, 4, 1, 2, 1, NULL, '2026-04-18 00:05:26', '1000'),
+(6, 6, 'jwilson', 'jwilson@school.edu', 'James', 'Wilson', '3714faf5c6953aad726265f1e94e8bb5', '8', 5, 8, 1, 2, 1, NULL, '2026-04-18 00:05:26', '1000'),
+(7, 7, 'panderson', 'panderson@school.edu', 'Patricia', 'Anderson', '3714faf5c6953aad726265f1e94e8bb5', '9', 5, 8, 1, 2, 1, NULL, '2026-04-18 00:05:26', '1000'),
+(8, 8, 'rgarcia', 'rgarcia@school.edu', 'Robert', 'Garcia', '3714faf5c6953aad726265f1e94e8bb5', '13', 5, 8, NULL, 2, 1, NULL, '2026-04-18 00:05:26', '1000'),
+(9, 9, 'jlee', 'jlee@school.edu', 'Jennifer', 'Lee', '3714faf5c6953aad726265f1e94e8bb5', '3', 5, 8, NULL, 2, 1, NULL, '2026-04-18 00:05:26', '1000'),
+(10, 10, 'tbrown', 'tbrown@school.edu', 'Thomas', 'Brown', '3714faf5c6953aad726265f1e94e8bb5', '1', NULL, 8, NULL, 2, 1, NULL, '2026-04-18 00:05:26', '1000'),
+(11, 11, 'kwhite', 'kwhite@school.edu', 'Karen', 'White', '3714faf5c6953aad726265f1e94e8bb5', '11', NULL, 8, NULL, 2, 1, NULL, '2026-04-18 00:05:26', '1000'),
+(12, 12, 'crivera', 'crivera@school.edu', 'Carlos', 'Rivera', '3714faf5c6953aad726265f1e94e8bb5', '14', NULL, 8, NULL, 2, 1, NULL, '2026-04-18 00:05:26', '1000');
 
 -- --------------------------------------------------------
 
@@ -720,11 +720,11 @@ CREATE TABLE `teacher_subject` (
 --
 
 INSERT INTO `teacher_subject` (`kTeach`, `kSubject`, `subject`, `gradeStart`, `gradeEnd`) VALUES
-(1, 1, 'Reading', 0, 0),
-(1, 2, 'Writing', 0, 0),
-(1, 3, 'Math', 0, 0),
-(1, 4, 'Science', 0, 0),
-(1, 5, 'Social Studies', 0, 0),
+(13, 1, 'Reading', 0, 0),
+(13, 2, 'Writing', 0, 0),
+(13, 3, 'Math', 0, 0),
+(13, 4, 'Science', 0, 0),
+(13, 5, 'Social Studies', 0, 0),
 (2, 6, 'Reading', 1, 2),
 (2, 7, 'Writing', 1, 2),
 (2, 8, 'Math', 1, 2),
@@ -796,7 +796,8 @@ CREATE TABLE `user_log` (
 --
 
 INSERT INTO `user_log` (`kTeach`, `username`, `time`, `action`) VALUES
-(1000, 'administrator', '2026-04-17 22:59:10', 'login');
+(1000, 'administrator', '2026-04-17 22:59:10', 'login'),
+(1000, 'administrator', '2026-04-18 00:04:14', 'login');
 
 -- --------------------------------------------------------
 
@@ -817,7 +818,8 @@ CREATE TABLE `user_sessions` (
 
 INSERT INTO `user_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES
 ('9ne27juh64pn0lg3eksvj3cvchq1a75j', '172.18.0.5', 1776470021, '__ci_last_regenerate|i:1776470021;username|s:13:\"administrator\";dbRole|s:1:\"1\";userID|s:4:\"1000\";'),
-('iihtp4ktra8fsvhahlc1hvlhpeifmttv', '172.18.0.5', 1776470088, '__ci_last_regenerate|i:1776470021;username|s:13:\"administrator\";dbRole|s:1:\"1\";userID|s:4:\"1000\";');
+('iihtp4ktra8fsvhahlc1hvlhpeifmttv', '172.18.0.5', 1776470422, '__ci_last_regenerate|i:1776470021;username|s:13:\"administrator\";dbRole|s:1:\"1\";userID|s:4:\"1000\";'),
+('cgodvoer9bih5adl9l4j7nl35vbedif5', '172.18.0.5', 1776470662, '__ci_last_regenerate|i:1776470646;username|s:13:\"administrator\";dbRole|s:1:\"1\";userID|s:4:\"1000\";');
 
 --
 -- Indexes for dumped tables
